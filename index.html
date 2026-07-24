@@ -237,28 +237,14 @@ body {
     text-align: center;
 }
 
-/* 习惯网格 */
+/* 习惯列表 */
 .habits {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    display: flex;
+    flex-direction: column;
 }
 .habit {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 12px 6px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid var(--border);
+    display: none;
 }
-.habit.active {
-    background: linear-gradient(135deg, var(--orange), var(--orange-light));
-    border-color: transparent;
-}
-.habit-icon { font-size: 20px; }
-.habit-name { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
-.habit.active .habit-name { color: #fff; font-weight: 600; }
 
 /* 财务记录 */
 .fin-input {
@@ -929,7 +915,25 @@ body {
             <div class="sec-title"><span class="dot"></span>每日习惯</div>
             <div class="sec-more"><span id="habitDone">0</span>/<span id="habitTotal">6</span></div>
         </div>
-        <div class="habits" id="habitsGrid"></div>
+
+        <!-- 习惯总进度 -->
+        <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--bg);border-radius:12px;margin-bottom:12px">
+            <div style="position:relative;width:64px;height:64px;flex-shrink:0">
+                <svg width="64" height="64" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
+                    <circle id="habitRing" cx="32" cy="32" r="28" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="175.9" transform="rotate(-90 32 32)"/>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--green)" id="habitPct">0%</div>
+            </div>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">今日习惯打卡</div>
+                <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">完成 <span id="habitDone2">0</span> 个，连续打卡 <span id="habitStreak">0</span> 天</div>
+                <div style="display:flex;gap:4px" id="habitMiniHeat"></div>
+            </div>
+        </div>
+
+        <!-- 习惯列表 -->
+        <div id="habitsGrid"></div>
     </div>
 
 </div>
@@ -1576,23 +1580,54 @@ function addTask() {
 
 // ========== 习惯 ==========
 const habits = [
-    { name: '闲鱼', icon: '📦', key: 'h1' },
-    { name: '内容', icon: '📝', key: 'h2' },
-    { name: '学习', icon: '📚', key: 'h3' },
-    { name: '漫剧', icon: '🎬', key: 'h4' },
-    { name: '运动', icon: '💪', key: 'h5' },
-    { name: '早睡', icon: '😴', key: 'h6' },
-    { name: '复盘', icon: '🤔', key: 'h7' },
-    { name: '发圈', icon: '📱', key: 'h8' },
+    { name: '闲鱼运营', icon: '📦', key: 'h1', desc: '上架/回复/优化' },
+    { name: '内容发布', icon: '📝', key: 'h2', desc: '小红书/抖音/知乎' },
+    { name: '学习输入', icon: '📚', key: 'h3', desc: 'AI工具/行业资讯' },
+    { name: '漫剧更新', icon: '🎬', key: 'h4', desc: '制作或发布1条' },
+    { name: '运动健身', icon: '💪', key: 'h5', desc: '保持体能' },
+    { name: '早睡复盘', icon: '😴', key: 'h6', desc: '23:30前睡+复盘' },
+    { name: '朋友圈', icon: '📱', key: 'h7', desc: '发1条业务圈' },
+    { name: '主动获客', icon: '🎯', key: 'h8', desc: '私信/咨询/跟进' },
 ];
+
+function getHabitStreak() {
+    let streak = 0;
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    while (true) {
+        const key = 'habits_' + d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+        const day = load(key, {});
+        const done = Object.values(day).filter(Boolean).length;
+        const pct = habits.length > 0 ? done / habits.length : 0;
+        if (pct >= 0.5) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    return streak;
+}
+
 function renderHabits() {
     const grid = document.getElementById('habitsGrid');
     grid.innerHTML = '';
     const today = load('habits_' + todayStr(), {});
+
     habits.forEach(h => {
+        const done = !!today[h.key];
         const div = document.createElement('div');
-        div.className = 'habit' + (today[h.key] ? ' active' : '');
-        div.innerHTML = `<div class="habit-icon">${h.icon}</div><div class="habit-name">${h.name}</div>`;
+        div.style.cssText = `display:flex;align-items:center;padding:10px 12px;background:var(--bg);border-radius:10px;margin-bottom:8px;border:1px solid ${done ? 'var(--green)' : 'var(--border)'};cursor:pointer;transition:all 0.2s`;
+        div.innerHTML = `
+            <div style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:${done ? 'var(--green)' : 'var(--card2)'};margin-right:10px;flex-shrink:0;font-size:16px">${done ? '✓' : h.icon}</div>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:${done ? '600' : '400'};color:${done ? '#fff' : 'var(--text)'}">${h.name}</div>
+                <div style="font-size:10px;color:var(--text-dim);margin-top:1px">${h.desc}</div>
+            </div>
+            <div style="width:20px;height:20px;border-radius:50%;border:2px solid ${done ? 'var(--green)' : 'var(--border)'};display:flex;align-items:center;justify-content:center">
+                ${done ? '<div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>' : ''}
+            </div>
+        `;
         div.onclick = () => {
             today[h.key] = !today[h.key];
             save('habits_' + todayStr(), today);
@@ -1600,9 +1635,42 @@ function renderHabits() {
         };
         grid.appendChild(div);
     });
+
     const done = Object.values(today).filter(Boolean).length;
+    const pct = habits.length > 0 ? Math.round(done / habits.length * 100) : 0;
     document.getElementById('habitDone').textContent = done;
+    document.getElementById('habitDone2').textContent = done;
     document.getElementById('habitTotal').textContent = habits.length;
+    document.getElementById('habitPct').textContent = pct + '%';
+    document.getElementById('habitStreak').textContent = getHabitStreak();
+
+    // 进度环
+    const ring = document.getElementById('habitRing');
+    if (ring) {
+        const max = 2 * Math.PI * 28;
+        ring.style.strokeDasharray = max;
+        ring.style.strokeDashoffset = max * (1 - pct / 100);
+    }
+
+    // 最近7天mini热力
+    const heat = document.getElementById('habitMiniHeat');
+    if (heat) {
+        heat.innerHTML = '';
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const key = 'habits_' + d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+            const day = load(key, {});
+            const dayDone = Object.values(day).filter(Boolean).length;
+            const dayPct = habits.length > 0 ? dayDone / habits.length : 0;
+            const alpha = 0.15 + dayPct * 0.85;
+            const isToday = i === 0;
+            const el = document.createElement('div');
+            el.style.cssText = `width:22px;height:22px;border-radius:6px;background:${isToday ? 'var(--green)' : `rgba(0,217,163,${alpha})`};display:flex;align-items:center;justify-content:center;font-size:9px;color:${dayPct >= 0.5 ? '#fff' : 'var(--text-mute)'};border:${isToday ? '2px solid var(--green)' : '1px solid var(--border)'}`;
+            el.textContent = ['日','一','二','三','四','五','六'][d.getDay()];
+            heat.appendChild(el);
+        }
+    }
 }
 
 // ========== 财务 ==========
@@ -2144,10 +2212,13 @@ const bizLineConfig = [
         icon: '🛠',
         color: '#FF6B1A',
         desc: '灵光/妙搭接单 · 客单2000-15000',
-        monthGoal: 80000, // 2个月20万的主力
+        monthGoal: 80000,
         getRevenue: () => {
             const incomes = load('incomes', []);
-            return incomes.filter(i => i.source === 'AI开发').reduce((s,i) => s+i.amount, 0);
+            return incomes.filter(i => {
+                const s = i.source || '';
+                return s.includes('AI开发') || s.includes('AI定制开发') || s.includes('开发');
+            }).reduce((s, i) => s + i.amount, 0);
         },
         steps: [
             'Day1-3: 作品集整理（3-5个案例）',
@@ -2165,7 +2236,10 @@ const bizLineConfig = [
         monthGoal: 15000,
         getRevenue: () => {
             const incomes = load('incomes', []);
-            return incomes.filter(i => i.source === '闲鱼').reduce((s,i) => s+i.amount, 0);
+            return incomes.filter(i => {
+                const s = i.source || '';
+                return s.includes('闲鱼');
+            }).reduce((s, i) => s + i.amount, 0);
         },
         steps: [
             'Day1: 补齐5个产品上架（已上2个）',
@@ -2183,7 +2257,10 @@ const bizLineConfig = [
         monthGoal: 5000,
         getRevenue: () => {
             const incomes = load('incomes', []);
-            return incomes.filter(i => i.source === '漫剧').reduce((s,i) => s+i.amount, 0);
+            return incomes.filter(i => {
+                const s = i.source || '';
+                return s.includes('漫剧');
+            }).reduce((s, i) => s + i.amount, 0);
         },
         steps: [
             '快手继续二创，维持周更3-5条',
@@ -2197,11 +2274,14 @@ const bizLineConfig = [
         name: 'AI营/内容线',
         icon: '📚',
         color: '#00D9A3',
-        desc: '知乎+公众号 · ��过程+陪跑',
-        monthGoal: 100000, // 长期主力
+        desc: '知乎+公众号 · 卖过程+陪跑',
+        monthGoal: 100000,
         getRevenue: () => {
             const incomes = load('incomes', []);
-            return incomes.filter(i => i.source === '其他').reduce((s,i) => s+i.amount, 0);
+            return incomes.filter(i => {
+                const s = i.source || '';
+                return s.includes('知识付费') || s.includes('广告合作') || s.includes('产品售卖');
+            }).reduce((s, i) => s + i.amount, 0);
         },
         steps: [
             'Day1: 知乎发第一篇重启文章',
@@ -2220,7 +2300,10 @@ const bizLineConfig = [
         monthGoal: 20000,
         getRevenue: () => {
             const incomes = load('incomes', []);
-            return incomes.filter(i => i.source === '服务商').reduce((s,i) => s+i.amount, 0);
+            return incomes.filter(i => {
+                const s = i.source || '';
+                return s.includes('报白') || s.includes('服务商');
+            }).reduce((s, i) => s + i.amount, 0);
         },
         steps: [
             '现状: 微信限功能但私聊可用，偶尔捡漏',
