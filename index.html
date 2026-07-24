@@ -820,6 +820,15 @@ body {
         <div id="todayFocus"></div>
     </div>
 
+    <!-- 每日变现日报（自动生成，每天不同） -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>📊 每日变现日报</div>
+            <div class="sec-more" id="reportMeta"></div>
+        </div>
+        <div id="dailyReport"></div>
+    </div>
+
     <!-- 业务线总览（首页快捷视图） -->
     <div class="section">
         <div class="sec-header">
@@ -2335,6 +2344,183 @@ function renderServices() {
     `).join('');
 }
 
+// ========== 每日变现日报（自动生成，每天不同）==========
+// 按星期轮换的变现任务模板
+const dailyTaskTemplates = {
+    1: [ // 周一
+        { text: '闲鱼5个产品检查+优化标题首图', time: '10:00' },
+        { text: '小红书主号发布1条AI应用实战', time: '14:00' },
+        { text: '主动私信5个潜在客户（知乎/小红书）', time: '16:00' },
+        { text: '跟进上周咨询客户，推进成单', time: '17:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    2: [ // 周二
+        { text: '抖音/视频号发布1条AI工具测评', time: '11:00' },
+        { text: '闲鱼上新1个产品+回复咨询', time: '14:00' },
+        { text: '知乎写1篇AI变现回答（带引流）', time: '16:00' },
+        { text: 'AI漫剧账号内容策划', time: '19:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    3: [ // 周三
+        { text: '小红书实验室号发布1条实验记录', time: '10:00' },
+        { text: '客户项目进度推进（AI定制开发）', time: '14:00' },
+        { text: '闲鱼优化+跟进意向客户', time: '16:00' },
+        { text: '复盘本周前3天数据，调整策略', time: '20:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    4: [ // 周四
+        { text: '短视频流量号发布1条创业日记', time: '11:00' },
+        { text: '主动获客：知乎/小红书/闲鱼各1次', time: '14:00' },
+        { text: 'AI漫剧脚本+制作推进', time: '16:00' },
+        { text: '电商服务号内容更新', time: '19:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    5: [ // 周五
+        { text: '小红书主号发布1条商业思考/案例', time: '10:00' },
+        { text: '本周成单客户收尾+收款', time: '14:00' },
+        { text: '闲鱼周末备货+咨询集中回复', time: '16:00' },
+        { text: '本周复盘：收入/支出/转化率', time: '20:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    6: [ // 周六
+        { text: '周末轻量：闲鱼咨询回复', time: '11:00' },
+        { text: '学习1个新AI工具+做笔记', time: '14:00' },
+        { text: '下周内容选题排期', time: '16:00' },
+        { text: 'AI漫剧制作（周末集中产出）', time: '19:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    0: [ // 周日
+        { text: '周日复盘+下周计划制定', time: '10:00' },
+        { text: '6个账号矩阵内容盘点', time: '14:00' },
+        { text: '客户关系维护（发消息/朋友圈）', time: '16:00' },
+        { text: '休息+充电（看行业资讯）', time: '19:00' },
+        { text: '记录本周总变现数据', time: '22:00' },
+    ],
+};
+
+// 每日搞钱箴言（按日期轮换，31条）
+const dailyQuotes = [
+    '不要等完美才行动，完成比完美更重要',
+    '今天不搞钱，明天没钱花',
+    '一个客户也是一个客户，积少成多',
+    '发内容比想内容重要100倍',
+    '闲鱼咨询回复速度=成单率',
+    '先做再优化，别想太多',
+    '每天进步1%，一年37倍',
+    '客户不主动找你，你就主动找客户',
+    '记录数据的人，才能复制定量增长',
+    '小单也是单，大单从小单来',
+    '朋友圈每天发，存在感就是信任感',
+    'AI是工具，变现才是目的',
+    '别刷手机了，去发一条内容',
+    '今天的任务今天做，明天还有明天的仗',
+    '一人公司=自己逼自己',
+    '没有背景就靠执行力',
+    '每一条内容都是资产',
+    '复利效应：今天的内容3个月后还在带流量',
+    '聚焦一个平台做深，比6个平台都浅好',
+    '客户问问题=购买信号，抓紧跟',
+    '价格不是问题，价值才是',
+    '先收钱再做事，别白干',
+    '记录踩坑，避免重复付费',
+    '别人休息你在干，这就是差距',
+    '小红书爆款=标题×首图×前3行',
+    '闲鱼标题写好，流量翻倍',
+    '不要 comparing，专注自己的节奏',
+    '每天1个新咨询，月入30+线索',
+    'AI漫剧赛道，早布局早吃肉',
+    '一人公司最大的成本是时间',
+    '今天又是搞钱的一天，冲',
+];
+
+function renderDailyReport() {
+    const now = new Date();
+    const day = now.getDay(); // 0=周日, 1=周一
+    const date = now.getDate();
+    const weekDays = ['周日','周一','周二','周三','周四','周五','周六'];
+    const monthDay = `${now.getMonth()+1}月${date}日`;
+
+    // 当天任务模板
+    const todayTasks = dailyTaskTemplates[day] || dailyTaskTemplates[1];
+
+    // 今日收入（从localStorage读）
+    const incomes = load('incomes', []);
+    const today = todayStr();
+    const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
+
+    // 本月累计收入
+    const mp = monthPrefix();
+    const monthIncome = incomes.filter(i => i.time.startsWith(mp)).reduce((s,i) => s+i.amount, 0);
+
+    // 本月第几天
+    const dayOfMonth = date;
+
+    // 箴言（按日期轮换，1-31循环）
+    const quote = dailyQuotes[(date - 1) % dailyQuotes.length];
+
+    // 元信息
+    document.getElementById('reportMeta').textContent = `${monthDay} ${weekDays[day]} · 本月第${dayOfMonth}天`;
+
+    const el = document.getElementById('dailyReport');
+
+    // 任务打卡状态（从localStorage读，如果今天有保存过就用保存的，否则用模板）
+    const savedTasks = load('reportTasks_' + today, null);
+    const displayTasks = savedTasks || todayTasks;
+
+    el.innerHTML = `
+        <!-- 日期头 -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px">
+            <div>
+                <div style="font-size:20px;font-weight:700;color:var(--green)">${monthDay}</div>
+                <div style="font-size:11px;color:var(--text-mute)">${weekDays[day]} · 本月第${dayOfMonth}天</div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:11px;color:var(--text-mute)">今日变现</div>
+                <div style="font-size:18px;font-weight:700;color:${todayIncome>0?'var(--green)':'var(--text-mute)'}">${todayIncome>0?'+¥'+todayIncome:'¥0'}</div>
+            </div>
+        </div>
+
+        <!-- 搞钱箴言 -->
+        <div style="padding:10px 12px;background:rgba(255,107,26,0.08);border-left:3px solid var(--orange);border-radius:8px;margin-bottom:10px">
+            <div style="font-size:10px;color:var(--orange);margin-bottom:4px">💡 今日箴言</div>
+            <div style="font-size:13px;color:var(--text);font-weight:500">${quote}</div>
+        </div>
+
+        <!-- 变现任务清单 -->
+        <div style="margin-bottom:10px">
+            <div style="font-size:11px;color:var(--text-mute);margin-bottom:8px">🎯 今日变现任务</div>
+            ${displayTasks.map((t, i) => `
+                <div style="display:flex;align-items:center;padding:8px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="toggleReportTask(${i})">
+                    <div style="width:16px;height:16px;border:2px solid var(--green);border-radius:4px;margin-right:10px;flex-shrink:0;${displayTasks[i].done?'background:var(--green)':''}"></div>
+                    <span style="flex:1;font-size:12px;${displayTasks[i].done?'text-decoration:line-through;color:var(--text-mute)':''}">${t.text}</span>
+                    <span style="font-size:10px;color:var(--text-mute)">${t.time}</span>
+                </div>
+            `).join('')}
+        </div>
+
+        <!-- 本月变现进度 -->
+        <div style="padding:10px;background:var(--bg);border-radius:10px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-mute);margin-bottom:6px">
+                <span>本月累计变现</span>
+                <span>目标 ¥6667/天 × ${dayOfMonth}天 = ¥${(6667*dayOfMonth).toLocaleString()}</span>
+            </div>
+            <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:6px">¥${monthIncome.toLocaleString()}</div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:${Math.min(100, monthIncome/(6667*dayOfMonth)*100)}%;background:linear-gradient(90deg,var(--green),var(--orange));border-radius:3px;transition:width 0.5s"></div>
+            </div>
+        </div>
+    `;
+}
+
+function toggleReportTask(i) {
+    const today = todayStr();
+    const tasks = load('reportTasks_' + today, dailyTaskTemplates[new Date().getDay()] || dailyTaskTemplates[1]);
+    tasks[i].done = !tasks[i].done;
+    save('reportTasks_' + today, tasks);
+    renderDailyReport();
+    if (tasks[i].done) toast('✅ 已完成：' + tasks[i].text);
+}
+
 // ========== 今日聚焦 ==========
 function renderTodayFocus() {
     const tasks = load(getTodayKey(), []);
@@ -2865,6 +3051,7 @@ renderChannelGoals();
 renderBizOverview();
 renderServices();
 renderTodayFocus();
+renderDailyReport();
 renderInspirations();
 updateQuote();
 renderContentMatrix();
