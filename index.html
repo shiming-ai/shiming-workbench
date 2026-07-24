@@ -1,16 +1,2869 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>时铭工作台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>时铭 · 翻盘作战指挥中心</title>
 <style>
-body { margin:0; background:#0a0b0f; color:#fff; font-family:-apple-system,sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; }
-a { color:#FF6B1A; text-decoration:none; font-size:18px; padding:16px 32px; border:1px solid #FF6B1A; border-radius:12px; }
-a:hover { background:#FF6B1A; color:#fff; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f;
+    --card: #13151c;
+    --card-hover: #1a1d27;
+    --border: #1f2230;
+    --text: #e4e6ed;
+    --text-dim: #8b8f9e;
+    --text-mute: #5a5e6e;
+    --orange: #FF6B1A;
+    --orange-light: #FF8C42;
+    --green: #00D9A3;
+    --red: #FF4757;
+    --blue: #4D9DFF;
+    --purple: #A66BFF;
+    --yellow: #FFD93D;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 20px;
+    overflow-x: hidden;
+}
+
+/* 顶部Hero区 */
+.hero {
+    background: linear-gradient(135deg, #1a0d05 0%, #0a0b0f 60%);
+    padding: 24px 16px 20px;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,107,26,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    position: relative;
+}
+.hero-title { font-size: 20px; font-weight: 700; }
+.hero-title .name {
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-sub { font-size: 11px; color: var(--text-mute); margin-top: 4px; }
+.hero-day {
+    text-align: right;
+}
+.day-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1;
+}
+.day-label { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+
+/* 核心数据卡片 */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    position: relative;
+}
+.hero-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+}
+.hero-stat .val { font-size: 18px; font-weight: 700; }
+.hero-stat .lbl { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.val.green { color: var(--green); }
+.val.red { color: var(--red); }
+.val.orange { color: var(--orange); }
+
+/* 主内容区 */
+.content { padding: 0 16px; }
+
+/* Section通用 */
+.section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+}
+.sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.sec-title {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.sec-title .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+
+/* 进度环 */
+.progress-rings {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.ring-wrap { text-align: center; }
+.ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+.ring svg { transform: rotate(-90deg); }
+.ring-bg { stroke: var(--border); fill: none; stroke-width: 6; }
+.ring-fill { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.8s; }
+.ring-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.ring-percent { font-size: 16px; font-weight: 700; }
+.ring-label { font-size: 10px; color: var(--text-mute); margin-top: 6px; }
+
+/* 作战清单 */
+.task-add {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.task-add input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.task-add input:focus { border-color: var(--orange); }
+.task-add button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    width: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.task-list { list-style: none; }
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+.task-item:active { border-color: var(--orange); }
+.task-item.done { opacity: 0.4; }
+.task-item.done .task-text { text-decoration: line-through; }
+.task-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--text-mute);
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.task-item.done .task-check {
+    background: var(--green);
+    border-color: var(--green);
+}
+.task-item.done .task-check::after {
+    content: '✓';
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+}
+.task-text { flex: 1; font-size: 13px; }
+.task-time {
+    font-size: 10px;
+    color: var(--text-mute);
+    background: var(--card);
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+.task-del {
+    color: var(--text-mute);
+    margin-left: 8px;
+    font-size: 16px;
+    width: 24px;
+    text-align: center;
+}
+
+/* 习惯网格 */
+.habits {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+.habit {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+}
+.habit.active {
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    border-color: transparent;
+}
+.habit-icon { font-size: 20px; }
+.habit-name { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+.habit.active .habit-name { color: #fff; font-weight: 600; }
+
+/* 财务记录 */
+.fin-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.fin-input input, .fin-input select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.fin-input button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.fin-list { max-height: 240px; overflow-y: auto; }
+.fin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+.fin-item:last-child { border: none; }
+.fin-source { color: var(--text-dim); }
+.fin-amount { font-weight: 600; }
+.fin-amount.in { color: var(--green); }
+.fin-amount.out { color: var(--red); }
+.fin-time { font-size: 10px; color: var(--text-mute); }
+
+/* 客户CRM */
+.crm-add {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.crm-add input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.crm-add button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 0 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.crm-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+.crm-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.crm-name { font-size: 14px; font-weight: 600; }
+.crm-amount { font-size: 13px; color: var(--orange); font-weight: 600; }
+.crm-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.crm-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--card-hover);
+    color: var(--text-dim);
+}
+.crm-status {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.crm-status.lead { background: rgba(77,157,255,0.15); color: var(--blue); }
+.crm-status.contact { background: rgba(255,217,61,0.15); color: var(--yellow); }
+.crm-status.deal { background: rgba(0,217,163,0.15); color: var(--green); }
+.crm-status.fail { background: rgba(255,71,87,0.15); color: var(--red); }
+
+/* 渠道数据 */
+.channel-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+}
+.ch-tab {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    background: var(--bg);
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+}
+.ch-tab.active {
+    background: var(--orange);
+    color: #fff;
+    border-color: transparent;
+}
+.channel-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.ch-stat {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+}
+.ch-stat .num { font-size: 20px; font-weight: 700; color: var(--orange); }
+.ch-stat .lbl { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.qa-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.qa-btn:active { border-color: var(--orange); }
+
+/* 学习记录 */
+.study-add {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.study-add input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.study-add button {
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.study-item {
+    background: var(--bg);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--purple);
+}
+.study-text { font-size: 13px; }
+.study-time { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 复盘 */
+.review-text {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+.review-save {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    width: 100%;
+}
+.review-history {
+    margin-top: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.review-item {
+    background: var(--bg);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+.review-date { font-size: 11px; color: var(--orange); margin-bottom: 4px; }
+
+/* 周历 */
+.week-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.day-cell {
+    aspect-ratio: 1;
+    background: var(--bg);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    position: relative;
+}
+.day-cell.today {
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+}
+.day-cell.has-income::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--green);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 4px;
+}
+.day-num-cell { font-size: 12px; }
+.day-week { font-size: 9px; color: var(--text-mute); }
+.day-cell.today .day-week { color: rgba(255,255,255,0.7); }
+
+/* 底部导航 */
+.bottom-nav { display: none; } /* 改用侧边栏 */
+
+/* 顶部导航栏 */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background: rgba(10,11,15,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.top-nav-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+.top-nav-title span { color: var(--orange); }
+.top-nav-right {
+    font-size: 11px;
+    color: var(--text-mute);
+}
+
+/* 侧边栏 */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    background: var(--card);
+    z-index: 201;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    overflow-y: auto;
+    padding-bottom: 40px;
+}
+.sidebar.open { transform: translateX(0); }
+
+.sidebar-header {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,107,26,0.1), transparent);
+}
+.sidebar-logo {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+.sidebar-logo span {
+    background: linear-gradient(90deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.sidebar-sub { font-size: 11px; color: var(--text-mute); }
+
+.sidebar-section { padding: 12px 0; }
+.sidebar-section-title {
+    font-size: 10px;
+    color: var(--text-mute);
+    padding: 0 20px 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 14px;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+.sidebar-item:active { background: var(--card2); }
+.sidebar-item.active {
+    color: var(--orange);
+    background: rgba(255,107,26,0.05);
+    border-left-color: var(--orange);
+}
+.sidebar-item-icon { font-size: 18px; width: 24px; text-align: center; }
+.sidebar-item-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--orange);
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* 底部Tab导航 - 隐藏 */
+.bottom-nav { display: none !important; }
+
+.hidden { display: none !important; }
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--orange);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+/* 空状态 */
+.empty {
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 12px;
+    padding: 20px;
+}
+
+/* 内容矩阵样式 */
+.account-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+}
+.account-card.main {
+    border-left: 3px solid var(--orange);
+}
+.account-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.account-name { font-size: 14px; font-weight: 600; }
+.account-platform {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,107,26,0.1);
+    color: var(--orange);
+}
+.account-meta {
+    font-size: 11px;
+    color: var(--text-mute);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.post-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--blue);
+}
+.post-item.posted {
+    border-left-color: var(--green);
+    opacity: 0.75;
+}
+.post-item.idea {
+    border-left-color: var(--purple);
+}
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 6px;
+}
+.post-title { font-size: 13px; font-weight: 600; flex: 1; }
+.post-status {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(77,157,255,0.15);
+    color: var(--blue);
+    white-space: nowrap;
+    margin-left: 8px;
+}
+.post-status.posted { background: rgba(0,217,163,0.15); color: var(--green); }
+.post-status.idea { background: rgba(168,85,247,0.15); color: var(--purple); }
+.post-meta {
+    font-size: 10px;
+    color: var(--text-mute);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+.post-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+.post-actions button {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+.heat-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+}
+.heat-cell.today { border-color: var(--orange); }
+.heat-count { font-size: 14px; font-weight: 700; color: var(--orange); }
+.template-card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+}
+.template-card:active { border-color: var(--orange); }
+.template-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.template-desc { font-size: 10px; color: var(--text-mute); }
+
+/* 滚动条隐藏 */
+::-webkit-scrollbar { display: none; }
 </style>
 </head>
 <body>
-<a href="workbench/index.html">进入时铭工作台 →</a>
+
+<!-- 顶部Hero -->
+<div class="hero">
+    <div class="hero-top">
+        <div>
+    <div class="hero-title"><span class="name">时铭</span> · 工作台</div>
+    <div class="hero-sub">AI一人公司母系统 · MVP验证中 · Day <span id="heroDay">5</span></div>
+        </div>
+        <div class="hero-day">
+            <div class="day-num" id="dayCount">5</div>
+            <div class="day-label">DAY</div>
+        </div>
+    </div>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="val green" id="monthIncome">¥0</div>
+            <div class="lbl">本月收入</div>
+        </div>
+        <div class="hero-stat">
+            <div class="val red" id="monthExpense">¥0</div>
+            <div class="lbl">本月支出</div>
+        </div>
+        <div class="hero-stat">
+            <div class="val orange" id="netProfit">¥0</div>
+            <div class="lbl">本月净利润</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+<!-- ===== 页面1: 今日 ===== -->
+<div id="page-today">
+
+    <!-- 今日聚焦 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>🔥 今日聚焦</div>
+            <div class="sec-more" id="focusDate"></div>
+        </div>
+        <div id="todayFocus"></div>
+    </div>
+
+    <!-- 业务线总览（首页快捷视图） -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>业务线总览</div>
+            <div class="sec-more" onclick="switchPage('channel', document.querySelectorAll('.sidebar-item')[3])">查看详情 ›</div>
+        </div>
+        <div id="bizOverview"></div>
+    </div>
+
+    <!-- 翻盘进度环 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>翻盘进度</div>
+            <div class="sec-more" id="goalSummary">目标: 2月20万</div>
+        </div>
+        <div class="progress-rings">
+            <div class="ring-wrap">
+                <div class="ring">
+                    <svg width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"></circle>
+                        <circle class="ring-fill" id="ring2month" cx="40" cy="40" r="34" stroke="#FFD93D" stroke-dasharray="213.6" stroke-dashoffset="213.6"></circle>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-percent" id="pct2month" style="color:#FFD93D">0%</div>
+                    </div>
+                </div>
+                <div class="ring-label">2月20万</div>
+            </div>
+            <div class="ring-wrap">
+                <div class="ring">
+                    <svg width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"></circle>
+                        <circle class="ring-fill" id="ringGoal" cx="40" cy="40" r="34" stroke="#00D9A3" stroke-dasharray="213.6" stroke-dashoffset="213.6"></circle>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-percent" id="goalPct" style="color:#00D9A3">0%</div>
+                    </div>
+                </div>
+                <div class="ring-label">10月100万</div>
+            </div>
+            <div class="ring-wrap">
+                <div class="ring">
+                    <svg width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"></circle>
+                        <circle class="ring-fill" id="ringDebt" cx="40" cy="40" r="34" stroke="#FF4757" stroke-dasharray="213.6" stroke-dashoffset="213.6"></circle>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-percent" id="debtPct" style="color:#FF4757">0%</div>
+                    </div>
+                </div>
+                <div class="ring-label">退款12万</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 本周日历 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>本周打卡</div>
+            <div class="sec-more" id="weekIncome">本周收入 ¥0</div>
+        </div>
+        <div class="week-calendar" id="weekCalendar"></div>
+    </div>
+
+    <!-- 今日作战清单 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>今日作战清单</div>
+            <div class="sec-more"><span id="taskDone">0</span>/<span id="taskTotal">0</span> 完成</div>
+        </div>
+        <div class="task-add">
+            <input type="text" id="taskInput" placeholder="添加今日任务...">
+            <button onclick="addTask()">+</button>
+        </div>
+        <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- 习惯打卡 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>每日习惯</div>
+            <div class="sec-more"><span id="habitDone">0</span>/<span id="habitTotal">6</span></div>
+        </div>
+        <div class="habits" id="habitsGrid"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面2: 财务 ===== -->
+<div id="page-money" class="hidden">
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>记录收入</div>
+        </div>
+        <div class="fin-input">
+            <input type="number" id="incomeAmount" placeholder="金额">
+            <select id="incomeSource">
+                <option value="闲鱼">闲鱼</option>
+                <option value="AI开发">AI开发</option>
+                <option value="漫剧">漫剧</option>
+                <option value="服务商">服务商</option>
+                <option value="其他">其他</option>
+            </select>
+            <button onclick="addIncome()">+</button>
+        </div>
+        <div class="fin-list" id="incomeList"></div>
+    </div>
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>记录支出</div>
+        </div>
+        <div class="fin-input">
+            <input type="number" id="expenseAmount" placeholder="金额">
+            <select id="expenseSource">
+                <option value="生活费">生活费</option>
+                <option value="还款">还款</option>
+                <option value="业务">业务</option>
+                <option value="其他">其他</option>
+            </select>
+            <button onclick="addExpense()">+</button>
+        </div>
+        <div class="fin-list" id="expenseList"></div>
+    </div>
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>本月汇总</div>
+        </div>
+        <div id="monthSummary"></div>
+    </div>
+
+    <!-- 资金分配器 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 资金分配器</div>
+            <div class="sec-more">50/30/20法则</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
+            每笔收入进来，按比例自动分配，确保能存下钱。<br>
+            <strong style="color:var(--orange)">50%</strong> 生活+还款 · <strong style="color:var(--blue)">30%</strong> 业务周转 · <strong style="color:var(--green)">20%</strong> 强制储蓄
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+            <input type="number" id="allocInput" placeholder="输入一笔收入金额" style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;outline:none">
+            <button onclick="calcAlloc()" style="background:var(--orange);color:#fff;border:none;padding:0 16px;border-radius:10px;cursor:pointer">分配</button>
+        </div>
+        <div id="allocResult"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面3: 客户/订单/退款 ===== -->
+<div id="page-crm" class="hidden">
+
+    <!-- 订单看板 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📋 订单看板</div>
+            <div class="sec-more" id="crmStats">0个进行中</div>
+        </div>
+
+        <!-- 今日数据快览 -->
+        <div id="todayOrderStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px"></div>
+
+        <!-- 添加订单（完整版） -->
+        <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">➕ 新增订单</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="text" id="crmName" placeholder="客户名/微信名" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="text" id="crmBusiness" placeholder="业务类型(报白/解封...)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="number" id="crmAmount" placeholder="收款金额" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="number" id="crmCost" placeholder="成本(0如无)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="text" id="crmPlatform" placeholder="平台(抖音/淘宝...)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="text" id="crmPromiseDays" placeholder="承诺几天交付" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <button onclick="addCrm()" style="width:100%;padding:10px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer">添加订单</button>
+        </div>
+
+        <div id="crmList"></div>
+    </div>
+
+    <!-- 退款追踪 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💸 退款追踪</div>
+            <div class="sec-more" id="refundStats">总计¥0 · 剩余¥0</div>
+        </div>
+
+        <!-- 退款汇总 -->
+        <div id="refundSummary" style="margin-bottom:14px"></div>
+
+        <!-- 添加退款单 -->
+        <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">➕ 新增退款单</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="text" id="refundName" placeholder="客户名" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="text" id="refundBiz" placeholder="业务类型" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="number" id="refundTotal" placeholder="总欠款金额" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="number" id="refundPaid" placeholder="已还金额(0如无)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="date" id="refundPromiseDate" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <select id="refundStatus" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                    <option value="催款中">催款中</option>
+                    <option value="已谈分期">已谈分期</option>
+                    <option value="部分退款">部分退款</option>
+                    <option value="已退款">已退款</option>
+                </select>
+            </div>
+            <button onclick="addRefund()" style="width:100%;padding:10px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer">添加退款单</button>
+        </div>
+
+        <div id="refundList"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面4: 学习+复盘 ===== -->
+<div id="page-study" class="hidden">
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>学习记录</div>
+            <div class="sec-more" id="studyCount">0条</div>
+        </div>
+        <div class="study-add">
+            <input type="text" id="studyInput" placeholder="今天学了什么？">
+            <button onclick="addStudy()">记录</button>
+        </div>
+        <div id="studyList"></div>
+    </div>
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>今日复盘</div>
+        </div>
+        <textarea class="review-text" id="reviewInput" placeholder="今天做对了什么？做错了什么？明天怎么改进？"></textarea>
+        <button class="review-save" onclick="saveReview()">保存复盘</button>
+        <div class="review-history" id="reviewHistory"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面X: 内容矩阵（小红书/知乎/抖音） ===== -->
+<div id="page-content" class="hidden">
+
+    <!-- 账号管理 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📕 账号矩阵</div>
+            <div class="sec-more" id="accountCount">0个账号</div>
+        </div>
+        <div id="accountList"></div>
+
+        <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">➕ 新增账号</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="text" id="acctName" placeholder="账号名（如Crazy Friday）" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="text" id="acctHandle" placeholder="ID（如R26184352）" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <select id="acctPlatform" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                    <option value="小红书">小红书</option>
+                    <option value="知乎">知乎</option>
+                    <option value="抖音">抖音</option>
+                    <option value="快手">快手</option>
+                    <option value="公众号">公众号</option>
+                </select>
+                <input type="text" id="acctPosition" placeholder="定位（如AI一人公司实践）" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <button onclick="addAccount()" style="width:100%;padding:10px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer">添加账号</button>
+        </div>
+    </div>
+
+    <!-- 今日发布任务 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--red)"></span>🔥 今日发布</div>
+            <div class="sec-more" id="todayPublishCount">0/3</div>
+        </div>
+        <div id="todayPublishList"></div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:8px;line-height:1.5">
+            目标：主账号每天至少1条，挑战3条。矩阵号每周至少3条。
+        </div>
+    </div>
+
+    <!-- 内容排期 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>🗓 内容排期</div>
+            <div class="sec-more" onclick="openPostModal()">+ 新建排期</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;overflow-x:auto">
+            <div class="ch-tab active" onclick="filterPosts('all', this)">全部</div>
+            <div class="ch-tab" onclick="filterPosts('pending', this)">待发布</div>
+            <div class="ch-tab" onclick="filterPosts('posted', this)">已发布</div>
+            <div class="ch-tab" onclick="filterPosts('idea', this)">选题库</div>
+        </div>
+        <div id="postList"></div>
+    </div>
+
+    <!-- 7日发布热力 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📈 7日发布热力</div>
+        </div>
+        <div id="publishHeatmap" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+    </div>
+
+    <!-- 内容选题库快捷模板 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>⚡ 爆款选题模板</div>
+        </div>
+        <div id="contentTemplates"></div>
+    </div>
+
+</div>
+
+<!-- 发布排期弹窗 -->
+<div id="postModal" class="hidden" onclick="closePostModal(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center">
+    <div onclick="event.stopPropagation()" style="background:var(--card);width:100%;max-width:420px;border-radius:20px 20px 0 0;padding:20px 16px 30px;border-top:1px solid var(--border)">
+        <div style="text-align:center;font-size:14px;font-weight:600;margin-bottom:16px">📝 新建内容排期</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+            <input type="text" id="postTitle" placeholder="标题/选题" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
+            <select id="postAccount" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none"></select>
+            <select id="postType" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
+                <option value="图文笔记">图文笔记</option>
+                <option value="视频">视频</option>
+                <option value="瞬间">瞬间</option>
+                <option value="文章">文章</option>
+            </select>
+            <input type="date" id="postDate" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
+            <textarea id="postNotes" placeholder="备注：文案方向、关键词、参考链接..." style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none;min-height:80px;resize:vertical;font-family:inherit"></textarea>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+            <button onclick="savePost()" style="flex:1;padding:12px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer">保存</button>
+            <button onclick="closePostModal()" style="flex:1;padding:12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:10px;font-size:13px;cursor:pointer">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- 变现地图 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>💰 变现地图</div>
+        <div class="sec-more">6条收入路径</div>
+    </div>
+    <div id="monetizationMap"></div>
+</div>
+
+<!-- ===== 页面5: 渠道+规划 ===== -->
+<div id="page-channel" class="hidden">
+
+    <!-- 4大渠道数据 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>渠道数据</div>
+        </div>
+        <div class="channel-tabs">
+            <div class="ch-tab active" onclick="switchChannel('xianyu', this)">闲鱼</div>
+            <div class="ch-tab" onclick="switchChannel('zhihu', this)">知乎</div>
+            <div class="ch-tab" onclick="switchChannel('xhs', this)">小红书</div>
+            <div class="ch-tab" onclick="switchChannel('douyin', this)">抖音</div>
+        </div>
+        <div class="channel-stats" id="channelStats"></div>
+        <div class="quick-actions" id="quickActions"></div>
+    </div>
+
+    <!-- 业务线规划 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>业务线规划</div>
+            <div class="sec-more">4条线 · 月目标汇总</div>
+        </div>
+        <div id="bizLines"></div>
+    </div>
+
+    <!-- 渠道目标矩阵 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>渠道目标矩阵</div>
+            <div class="sec-more">2个月突破期</div>
+        </div>
+        <div id="channelGoals"></div>
+    </div>
+
+    <!-- 电商服务商服务清单 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>电商服务商 · 服务清单</div>
+            <div class="sec-more">全平台 · 现有收入入口</div>
+        </div>
+        <div id="serviceList"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面6: 更多工具 ===== -->
+<div id="page-more" class="hidden">
+
+    <!-- 灵感速记 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💡 灵感速记</div>
+            <div class="sec-more" id="inspirationCount">0条</div>
+        </div>
+        <div class="task-add">
+            <input type="text" id="inspirationInput" placeholder="灵感来了，快记下来...">
+            <select id="inspirationTag" style="background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:0 8px;font-size:12px">
+                <option value="内容">内容</option>
+                <option value="产品">产品</option>
+                <option value="商业">商业</option>
+                <option value="工具">工具</option>
+                <option value="其他">其他</option>
+            </select>
+            <button onclick="addInspiration()" style="background:var(--purple);color:#fff;border:none;width:40px;border-radius:10px;font-size:18px;cursor:pointer">+</button>
+        </div>
+        <div id="inspirationList"></div>
+    </div>
+
+    <!-- 报价计算器 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 报价计算器</div>
+        </div>
+        <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">服务类型</div>
+            <select id="quoteType" onchange="updateQuote()" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px">
+                <optgroup label="AI开发服务">
+                    <option value="ai_kefu|2000|5000">AI客服机器人</option>
+                    <option value="ai_dashboard|3000|8000">数据看板搭建</option>
+                    <option value="ai_workflow|3000|10000">工作流自动化</option>
+                    <option value="ai_ecom|3000|15000">电商AI工具定制</option>
+                    <option value="ai_kb|3000|10000">企业知识库</option>
+                </optgroup>
+                <optgroup label="电商服务商">
+                    <option value="ec_baibai|1500|3000">类目报白</option>
+                    <option value="ec_jiefeng|500|2000">账号解封</option>
+                    <option value="ec_shensu|1000|3000">店铺申诉</option>
+                    <option value="ec_weigui|800|2500">店铺违规处理</option>
+                    <option value="ec_zhuanrang|1000|3000">账号合规转让</option>
+                    <option value="ec_huangv|800|2000">黄V认证</option>
+                    <option value="ec_tuangou|1500|3000">团购开通</option>
+                </optgroup>
+            </select>
+        </div>
+        <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">复杂程度</div>
+            <div style="display:flex;gap:6px">
+                <button class="quote-btn" onclick="setQuoteLevel('low', this)" style="flex:1;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;font-size:12px;cursor:pointer">简单</button>
+                <button class="quote-btn active" onclick="setQuoteLevel('mid', this)" style="flex:1;padding:8px;background:var(--orange);border:1px solid var(--orange);color:#fff;border-radius:8px;font-size:12px;cursor:pointer">标准</button>
+                <button class="quote-btn" onclick="setQuoteLevel('high', this)" style="flex:1;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;font-size:12px;cursor:pointer">复杂</button>
+            </div>
+        </div>
+        <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center;border:1px solid var(--border)">
+            <div style="font-size:11px;color:var(--text-mute);margin-bottom:4px">建议报价</div>
+            <div id="quotePrice" style="font-size:28px;font-weight:800;color:var(--orange)">¥3000</div>
+            <div id="quoteRange" style="font-size:11px;color:var(--text-mute);margin-top:4px">区间: ¥2000 - ¥5000</div>
+        </div>
+        <button onclick="copyQuote()" style="width:100%;margin-top:10px;padding:10px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer">复制报价文案</button>
+    </div>
+
+    <!-- 数据备份 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>🔄 数据备份</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
+            你的所有数据存在本地浏览器，清理缓存会丢失。<br>建议每周导出一次备份。
+        </div>
+        <button onclick="exportData()" style="width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer;margin-bottom:8px">📥 导出全部数据</button>
+        <button onclick="document.getElementById('importFile').click()" style="width:100%;padding:12px;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:13px;cursor:pointer">📤 导入数据</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+
+    <!-- 快捷入口 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>🚀 快捷入口</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button onclick="location.href='inspiration.html'" style="padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--orange);font-size:12px;cursor:pointer">💡 AI变现灵感</button>
+            <button onclick="location.href='roadmap.html'" style="padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:12px;cursor:pointer">🗺 母系统路线图</button>
+            <button onclick="clearTodayData()" style="padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--red);font-size:12px;cursor:pointer">🗑 清除今日任务</button>
+            <button onclick="exportData()" style="padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--green);font-size:12px;cursor:pointer">📥 导出数据</button>
+        </div>
+    </div>
+
+</div>
+
+</div><!-- /content -->
+
+<!-- 悬浮快捷按钮 -->
+<div id="floatBtn" onclick="showQuickMenu()" style="position:fixed;bottom:20px;right:16px;width:52px;height:52px;background:linear-gradient(135deg,var(--orange),var(--purple));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;cursor:pointer;z-index:99;box-shadow:0 4px 20px rgba(255,107,26,0.4)">+</div>
+
+<!-- 快捷菜单弹窗 -->
+<div id="quickMenu" class="hidden" onclick="hideQuickMenu(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center">
+    <div onclick="event.stopPropagation()" style="background:var(--card);width:100%;max-width:420px;border-radius:20px 20px 0 0;padding:20px 16px 30px;border-top:1px solid var(--border)">
+        <div style="text-align:center;font-size:14px;font-weight:600;margin-bottom:16px">⚡ 快捷记一笔</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button onclick="quickMenuAction('income')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--green);font-size:13px;cursor:pointer">💰 记收入</button>
+            <button onclick="quickMenuAction('expense')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--red);font-size:13px;cursor:pointer">📉 记支出</button>
+            <button onclick="quickMenuAction('inspiration')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--purple);font-size:13px;cursor:pointer">💡 记灵感</button>
+            <button onclick="quickMenuAction('task')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--orange);font-size:13px;cursor:pointer">✅ 加任务</button>
+            <button onclick="quickMenuAction('consult')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--blue);font-size:13px;cursor:pointer">💬 +1咨询</button>
+            <button onclick="quickMenuAction('study')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--yellow);font-size:13px;cursor:pointer">📚 记学习</button>
+        </div>
+        <button onclick="hideQuickMenu()" style="width:100%;margin-top:12px;padding:12px;background:transparent;border:1px solid var(--border);color:var(--text-mute);border-radius:10px;font-size:13px;cursor:pointer">取消</button>
+    </div>
+</div>
+
+<!-- 顶部导航栏 -->
+<div class="top-nav">
+    <div class="menu-btn" onclick="toggleSidebar()">≡</div>
+    <div class="top-nav-title"><span>时铭</span> · 工作台</div>
+    <div class="top-nav-right" id="navDayCount">Day 5</div>
+</div>
+
+<!-- 侧边栏遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo"><span>时铭</span> · AI一人公司</div>
+        <div class="sidebar-sub">MVP验证中 · Day 5 / 300</div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">核心功能</div>
+        <div class="sidebar-item active" onclick="switchPage('today', this)">
+            <span class="sidebar-item-icon">🏠</span> 工作台首页
+        </div>
+        <div class="sidebar-item" onclick="switchPage('money', this)">
+            <span class="sidebar-item-icon">💰</span> 财务管理
+        </div>
+        <div class="sidebar-item" onclick="switchPage('crm', this)">
+            <span class="sidebar-item-icon">👥</span> 客户/订单/退款
+        </div>
+    <div class="sidebar-item" onclick="switchPage('channel', this)">
+        <span class="sidebar-item-icon">📊</span> 渠道数据
+    </div>
+    <div class="sidebar-item" onclick="switchPage('content', this)">
+        <span class="sidebar-item-icon">📕</span> 内容矩阵
+        <span class="sidebar-item-badge" id="contentBadge">0</span>
+    </div>
+    <div class="sidebar-item" onclick="switchPage('study', this)">
+        <span class="sidebar-item-icon">📚</span> 学习复盘
+    </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">工具箱</div>
+        <div class="sidebar-item" onclick="switchPage('more', this)">
+            <span class="sidebar-item-icon">⚙️</span> 更多工具
+        </div>
+        <div class="sidebar-item" onclick="location.href='inspiration.html'">
+            <span class="sidebar-item-icon">💡</span> AI变现灵感
+        </div>
+        <div class="sidebar-item" onclick="location.href='roadmap.html'">
+            <span class="sidebar-item-icon">🗺</span> 母系统路线图
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">快捷操作</div>
+        <div class="sidebar-item" onclick="showQuickMenu()">
+            <span class="sidebar-item-icon">⚡</span> 快捷记一笔
+        </div>
+        <div class="sidebar-item" onclick="exportData()">
+            <span class="sidebar-item-icon">📥</span> 导出备份
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== 工具函数 ==========
+function load(k, d) { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }
+function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1500);
+}
+function nowStr() {
+    const d = new Date();
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+function todayStr() {
+    const d = new Date();
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+}
+function monthPrefix() {
+    const d = new Date();
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0');
+}
+
+// 启动日期 2026.07.19
+const START_DATE = new Date('2026-07-19');
+const dayDiff = Math.floor((new Date() - START_DATE) / 86400000) + 1;
+document.getElementById('dayCount').textContent = Math.max(1, dayDiff);
+
+// ========== 进度环 ==========
+function renderRings() {
+    const incomes = load('incomes', []);
+    const expenses = load('expenses', []);
+    const mp = monthPrefix();
+    let mIncome = 0, mExpense = 0;
+    incomes.forEach(i => { if (i.time.startsWith(mp)) mIncome += i.amount; });
+    expenses.forEach(e => { if (e.time.startsWith(mp)) mExpense += e.amount; });
+
+    const net = mIncome - mExpense;
+    document.getElementById('monthIncome').textContent = '¥' + mIncome.toLocaleString();
+    document.getElementById('monthExpense').textContent = '¥' + mExpense.toLocaleString();
+    document.getElementById('netProfit').textContent = (net >= 0 ? '¥' : '-¥') + Math.abs(net).toLocaleString();
+    document.getElementById('netProfit').className = 'val ' + (net >= 0 ? 'green' : 'red');
+
+    // 2个月20万目标（按累计净收入算）
+    const allIncome = incomes.reduce((s,i) => s+i.amount, 0);
+    const allExpense = expenses.reduce((s,e) => s+e.amount, 0);
+    const netTotal = allIncome - allExpense;
+    const goal2m = 200000;
+    const pct2m = Math.min(100, Math.round(netTotal / goal2m * 100));
+    document.getElementById('pct2month').textContent = pct2m + '%';
+    document.getElementById('ring2month').style.strokeDashoffset = 213.6 * (1 - pct2m/100);
+
+    // 10月目标100万
+    const finalGoal = 1000000;
+    const gPct = Math.min(100, Math.round(netTotal / finalGoal * 100));
+    document.getElementById('goalPct').textContent = gPct + '%';
+    document.getElementById('ringGoal').style.strokeDashoffset = 213.6 * (1 - gPct/100);
+
+    // 退款12万还款进度
+    const paidDebt = load('paidDebt', 0);
+    const totalDebt = 120000;
+    const dPct = Math.min(100, Math.round(paidDebt / totalDebt * 100));
+    document.getElementById('debtPct').textContent = dPct + '%';
+    document.getElementById('ringDebt').style.strokeDashoffset = 213.6 * (1 - dPct/100);
+
+    document.getElementById('goalSummary').textContent = `累计净收入 ¥${netTotal.toLocaleString()} / 2月20万`;
+}
+
+// ========== 周历 ==========
+function renderWeek() {
+    const cal = document.getElementById('weekCalendar');
+    const incomes = load('incomes', []);
+    const today = new Date();
+    const dayOfWeek = today.getDay() || 7; // 周日=7
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - dayOfWeek + 1);
+
+    const weekNames = ['一','二','三','四','五','六','日'];
+    let weekIncome = 0;
+    cal.innerHTML = '';
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        const dateStr = d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+        const hasIncome = incomes.some(i => i.time.startsWith(dateStr));
+        if (hasIncome) {
+            weekIncome += incomes.filter(i => i.time.startsWith(dateStr)).reduce((s,i)=>s+i.amount,0);
+        }
+        const isToday = d.toDateString() === today.toDateString();
+        const cell = document.createElement('div');
+        cell.className = 'day-cell' + (isToday ? ' today' : '') + (hasIncome ? ' has-income' : '');
+        cell.innerHTML = `<div class="day-num-cell">${d.getDate()}</div><div class="day-week">${weekNames[i]}</div>`;
+        cal.appendChild(cell);
+    }
+    document.getElementById('weekIncome').textContent = `本周收入 ¥${weekIncome.toLocaleString()}`;
+}
+
+// ========== 今日任务 ==========
+function getTodayKey() { return 'tasks_' + todayStr(); }
+let tasks = load(getTodayKey(), [
+    { text: '闲鱼上架剩余3个产品（补齐5个）', time: '14:00', done: false },
+    { text: '知乎发布重启文章', time: '15:00', done: false },
+    { text: '主动获取至少1个新咨询（闲鱼/知乎）', time: '16:00', done: false },
+    { text: '跟进昨日咨询，推进成单', time: '17:00', done: false },
+    { text: '记录今日收入/支出', time: '22:00', done: false },
+    { text: '学习1个AI工具技巧', time: '21:00', done: false },
+]);
+
+function renderTasks() {
+    const list = document.getElementById('taskList');
+    list.innerHTML = '';
+    if (tasks.length === 0) {
+        list.innerHTML = '<div class="empty">暂无任务，添加一个开始今天</div>';
+    }
+    tasks.forEach((t, i) => {
+        const li = document.createElement('li');
+        li.className = 'task-item' + (t.done ? ' done' : '');
+        li.innerHTML = `<div class="task-check" onclick="toggleTask(${i})"></div><div class="task-text">${t.text}</div><div class="task-time">${t.time}</div><div class="task-del" onclick="delTask(${i})">×</div>`;
+        list.appendChild(li);
+    });
+    const done = tasks.filter(t => t.done).length;
+    document.getElementById('taskDone').textContent = done;
+    document.getElementById('taskTotal').textContent = tasks.length;
+}
+function toggleTask(i) { tasks[i].done = !tasks[i].done; save(getTodayKey(), tasks); renderTasks(); }
+function delTask(i) { tasks.splice(i, 1); save(getTodayKey(), tasks); renderTasks(); }
+function addTask() {
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+    if (!text) return;
+    const now = new Date();
+    const time = String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    tasks.push({ text, time, done: false });
+    save(getTodayKey(), tasks);
+    input.value = '';
+    renderTasks();
+    toast('已添加任务');
+}
+
+// ========== 习惯 ==========
+const habits = [
+    { name: '闲鱼', icon: '📦', key: 'h1' },
+    { name: '内容', icon: '📝', key: 'h2' },
+    { name: '学习', icon: '📚', key: 'h3' },
+    { name: '漫剧', icon: '🎬', key: 'h4' },
+    { name: '运动', icon: '💪', key: 'h5' },
+    { name: '早睡', icon: '😴', key: 'h6' },
+    { name: '复盘', icon: '🤔', key: 'h7' },
+    { name: '发圈', icon: '📱', key: 'h8' },
+];
+function renderHabits() {
+    const grid = document.getElementById('habitsGrid');
+    grid.innerHTML = '';
+    const today = load('habits_' + todayStr(), {});
+    habits.forEach(h => {
+        const div = document.createElement('div');
+        div.className = 'habit' + (today[h.key] ? ' active' : '');
+        div.innerHTML = `<div class="habit-icon">${h.icon}</div><div class="habit-name">${h.name}</div>`;
+        div.onclick = () => {
+            today[h.key] = !today[h.key];
+            save('habits_' + todayStr(), today);
+            renderHabits();
+        };
+        grid.appendChild(div);
+    });
+    const done = Object.values(today).filter(Boolean).length;
+    document.getElementById('habitDone').textContent = done;
+    document.getElementById('habitTotal').textContent = habits.length;
+}
+
+// ========== 财务 ==========
+let incomes = load('incomes', []);
+let expenses = load('expenses', []);
+
+function renderFinance() {
+    // 收入列表
+    const il = document.getElementById('incomeList');
+    il.innerHTML = '';
+    if (incomes.length === 0) il.innerHTML = '<div class="empty">暂无收入记录</div>';
+    incomes.slice().reverse().forEach(i => {
+        const d = document.createElement('div');
+        d.className = 'fin-item';
+        d.innerHTML = `<span class="fin-source">${i.source}</span><span class="fin-amount in">+¥${i.amount}</span><span class="fin-time">${i.time}</span>`;
+        il.appendChild(d);
+    });
+    // 支出列表
+    const el = document.getElementById('expenseList');
+    el.innerHTML = '';
+    if (expenses.length === 0) el.innerHTML = '<div class="empty">暂无支出记录</div>';
+    expenses.slice().reverse().forEach(e => {
+        const d = document.createElement('div');
+        d.className = 'fin-item';
+        d.innerHTML = `<span class="fin-source">${e.source}</span><span class="fin-amount out">-¥${e.amount}</span><span class="fin-time">${e.time}</span>`;
+        el.appendChild(d);
+    });
+    // 本月汇总
+    const mp = monthPrefix();
+    const mInc = incomes.filter(i=>i.time.startsWith(mp)).reduce((s,i)=>s+i.amount,0);
+    const mExp = expenses.filter(e=>e.time.startsWith(mp)).reduce((s,e)=>s+e.amount,0);
+    const summary = document.getElementById('monthSummary');
+    summary.innerHTML = `
+        <div class="fin-item"><span class="fin-source">本月收入</span><span class="fin-amount in">+¥${mInc.toLocaleString()}</span></div>
+        <div class="fin-item"><span class="fin-source">本月支出</span><span class="fin-amount out">-¥${mExp.toLocaleString()}</span></div>
+        <div class="fin-item"><span class="fin-source">净利润</span><span class="fin-amount ${mInc-mExp>=0?'in':'out'}">${mInc-mExp>=0?'+':'-'}¥${Math.abs(mInc-mExp).toLocaleString()}</span></div>
+        <div class="fin-item"><span class="fin-source">累计总收入</span><span class="fin-amount in">¥${incomes.reduce((s,i)=>s+i.amount,0).toLocaleString()}</span></div>
+    `;
+}
+function addIncome() {
+    const a = parseFloat(document.getElementById('incomeAmount').value);
+    const s = document.getElementById('incomeSource').value;
+    if (!a) return toast('请输入金额');
+    incomes.push({ amount: a, source: s, time: nowStr() });
+    save('incomes', incomes);
+    document.getElementById('incomeAmount').value = '';
+    renderFinance();
+    renderRings();
+    renderWeek();
+    toast('收入已记录 +¥' + a);
+}
+function addExpense() {
+    const a = parseFloat(document.getElementById('expenseAmount').value);
+    const s = document.getElementById('expenseSource').value;
+    if (!a) return toast('请输入金额');
+    expenses.push({ amount: a, source: s, time: nowStr() });
+    save('expenses', expenses);
+    document.getElementById('expenseAmount').value = '';
+    renderFinance();
+    renderRings();
+    toast('支出已记录 -¥' + a);
+}
+
+// ========== 订单看板（升级版）==========
+let crmList = load('crmList', []);
+
+function renderCrm() {
+    // 今日统计
+    const today = todayStr();
+    const todayOrders = crmList.filter(c => c.time && c.time.startsWith(today));
+    const todayRevenue = todayOrders.reduce((s,c) => s + (c.amount||0), 0);
+    const todayProfit = todayOrders.reduce((s,c) => s + ((c.amount||0) - (c.cost||0)), 0);
+    document.getElementById('todayOrderStats').innerHTML = `
+        <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:18px;font-weight:700;color:var(--orange)">${todayOrders.length}</div>
+            <div style="font-size:10px;color:var(--text-mute)">今日单数</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:18px;font-weight:700;color:var(--green)">¥${todayRevenue}</div>
+            <div style="font-size:10px;color:var(--text-mute)">今日收款</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:18px;font-weight:700;color:var(--blue)">¥${todayProfit}</div>
+            <div style="font-size:10px;color:var(--text-mute)">今日毛利</div>
+        </div>
+    `;
+
+    const list = document.getElementById('crmList');
+    list.innerHTML = '';
+    if (crmList.length === 0) list.innerHTML = '<div class="empty">暂无订单，收到客户就记录</div>';
+
+    crmList.slice().reverse().forEach((c, i) => {
+        const realIdx = crmList.length - 1 - i;
+        const profit = (c.amount || 0) - (c.cost || 0);
+        const statusMap = {
+            lead: { text: '线索', cls: 'lead' },
+            contact: { text: '沟通中', cls: 'contact' },
+            deal: { text: '已成交', cls: 'deal' },
+            fail: { text: '已流失', cls: 'fail' },
+        };
+        const st = statusMap[c.status] || statusMap.lead;
+
+        // 计算交付倒计时
+        let deliveryInfo = '';
+        if (c.promiseDays && c.createdDate) {
+            const created = new Date(c.createdDate);
+            const deadline = new Date(created);
+            deadline.setDate(deadline.getDate() + parseInt(c.promiseDays));
+            const daysLeft = Math.ceil((deadline - new Date()) / 86400000);
+            const overdue = daysLeft < 0;
+            deliveryInfo = `<span style="font-size:10px;padding:2px 6px;border-radius:4px;background:${overdue?'rgba(255,71,87,0.15)':'rgba(255,217,61,0.15)'};color:${overdue?'var(--red)':'var(--yellow)'}">${overdue?'已超期'+Math.abs(daysLeft)+'天':'剩'+daysLeft+'天'}</span>`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'crm-item';
+        div.innerHTML = `
+            <div class="crm-top">
+                <div class="crm-name">${c.name} ${c.business ? '<span style="font-size:11px;color:var(--text-mute)">· '+c.business+'</span>' : ''}</div>
+                <div class="crm-amount">¥${c.amount||0} <span style="font-size:10px;color:var(--text-mute)">(毛利¥${profit})</span></div>
+            </div>
+            <div class="crm-meta">
+                ${c.platform ? '<span class="crm-tag">'+c.platform+'</span>' : ''}
+                ${c.cost ? '<span class="crm-tag">成本¥'+c.cost+'</span>' : ''}
+                <span class="crm-tag">${c.time ? c.time.slice(5,10) : ''}</span>
+                ${deliveryInfo}
+                <span class="crm-status ${st.cls}" onclick="cycleStatus(${realIdx})">${st.text}</span>
+                <span class="crm-status" onclick="setFollowDate(${realIdx})" style="background:var(--card);color:var(--text-mute)">${c.nextFollow ? '跟进'+c.nextFollow.slice(5) : '设跟进'}</span>
+                <span class="crm-status" onclick="copyOrderInfo(${realIdx})" style="background:rgba(77,157,255,0.1);color:var(--blue)">📋复制</span>
+                <span class="crm-status fail" onclick="delCrm(${realIdx})" style="background:rgba(255,71,87,0.1)">删除</span>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+    const active = crmList.filter(c => c.status === 'lead' || c.status === 'contact').length;
+    document.getElementById('crmStats').textContent = active + '个进行中';
+}
+
+function addCrm() {
+    const name = document.getElementById('crmName').value.trim();
+    if (!name) return toast('请输入客户名');
+    const c = {
+        name,
+        business: document.getElementById('crmBusiness').value.trim(),
+        amount: parseFloat(document.getElementById('crmAmount').value) || 0,
+        cost: parseFloat(document.getElementById('crmCost').value) || 0,
+        platform: document.getElementById('crmPlatform').value.trim(),
+        promiseDays: document.getElementById('crmPromiseDays').value.trim(),
+        time: nowStr(),
+        createdDate: todayStr(),
+        status: 'lead',
+        nextFollow: null,
+    };
+    crmList.push(c);
+    save('crmList', crmList);
+    document.getElementById('crmName').value = '';
+    document.getElementById('crmBusiness').value = '';
+    document.getElementById('crmAmount').value = '';
+    document.getElementById('crmCost').value = '';
+    document.getElementById('crmPlatform').value = '';
+    document.getElementById('crmPromiseDays').value = '';
+    renderCrm();
+    toast('订单已添加');
+}
+
+function copyOrderInfo(i) {
+    const c = crmList[i];
+    const text = `客户：${c.name}
+业务：${c.business || '未填'}
+平台：${c.platform || '未填'}
+收款：¥${c.amount||0}
+成本：¥${c.cost||0}
+毛利：¥${(c.amount||0)-(c.cost||0)}
+承诺交付：${c.promiseDays ? c.promiseDays+'天' : '未承诺'}
+状态：${c.status}
+记录时间：${c.time}`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => toast('已复制到剪贴板'));
+    } else {
+        toast('复制失败，请手动复制');
+    }
+}
+
+function setFollowDate(i) {
+    const days = prompt('几天后跟进？(输入数字)', '3');
+    if (!days) return;
+    const d = new Date();
+    d.setDate(d.getDate() + parseInt(days));
+    const dateStr = d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+    crmList[i].nextFollow = dateStr;
+    save('crmList', crmList);
+    renderCrm();
+    toast('跟进时间：' + dateStr);
+}
+
+// ========== 退款追踪 ==========
+let refundList = load('refundList', []);
+
+function renderRefunds() {
+    const list = document.getElementById('refundList');
+    list.innerHTML = '';
+    if (refundList.length === 0) list.innerHTML = '<div class="empty">暂无退款单</div>';
+
+    let totalDebt = 0, totalPaid = 0, totalRemain = 0;
+    refundList.forEach(r => {
+        totalDebt += r.total || 0;
+        totalPaid += r.paid || 0;
+        totalRemain += (r.total || 0) - (r.paid || 0);
+    });
+
+    document.getElementById('refundStats').textContent = `总计¥${totalDebt.toLocaleString()} · 剩余¥${totalRemain.toLocaleString()}`;
+
+    document.getElementById('refundSummary').innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+                <div style="font-size:16px;font-weight:700;color:var(--red)">¥${totalDebt.toLocaleString()}</div>
+                <div style="font-size:10px;color:var(--text-mute)">总欠款</div>
+            </div>
+            <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+                <div style="font-size:16px;font-weight:700;color:var(--green)">¥${totalPaid.toLocaleString()}</div>
+                <div style="font-size:10px;color:var(--text-mute)">已还</div>
+            </div>
+            <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+                <div style="font-size:16px;font-weight:700;color:var(--orange)">¥${totalRemain.toLocaleString()}</div>
+                <div style="font-size:10px;color:var(--text-mute)">剩余</div>
+            </div>
+        </div>
+    `;
+
+    const statusColors = {
+        '催款中': 'rgba(255,71,87,0.15);color:var(--red)',
+        '已谈分期': 'rgba(255,217,61,0.15);color:var(--yellow)',
+        '部分退款': 'rgba(77,157,255,0.15);color:var(--blue)',
+        '已退款': 'rgba(34,197,94,0.15);color:var(--green)',
+    };
+
+    refundList.slice().reverse().forEach((r, i) => {
+        const realIdx = refundList.length - 1 - i;
+        const remain = (r.total || 0) - (r.paid || 0);
+        const isOverdue = r.promiseDate && r.promiseDate < todayStr() && r.status !== '已退款';
+
+        const div = document.createElement('div');
+        div.className = 'crm-item';
+        div.style.borderLeft = '3px solid ' + (isOverdue ? 'var(--red)' : 'var(--orange)');
+        div.innerHTML = `
+            <div class="crm-top">
+                <div class="crm-name">${r.name} ${r.biz ? '<span style="font-size:11px;color:var(--text-mute)">· '+r.biz+'</span>' : ''} ${isOverdue ? '⚠️' : ''}</div>
+                <div class="crm-amount" style="color:var(--red)">¥${remain.toLocaleString()} <span style="font-size:10px;color:var(--text-mute)">剩余</span></div>
+            </div>
+            <div class="crm-meta">
+                <span class="crm-tag">总¥${r.total||0}</span>
+                <span class="crm-tag" style="color:var(--green)">已还¥${r.paid||0}</span>
+                ${r.promiseDate ? '<span class="crm-tag" style="color:'+(isOverdue?'var(--red)':'var(--text-dim)')+'">承诺'+r.promiseDate.slice(5)+'</span>' : ''}
+                <span class="crm-status" style="background:${statusColors[r.status]||statusColors['催款中']}" onclick="cycleRefundStatus(${realIdx})">${r.status}</span>
+                <span class="crm-status" onclick="addRefundPayment(${realIdx})" style="background:rgba(34,197,94,0.1);color:var(--green)">+还款</span>
+                <span class="crm-status" onclick="copyRefundInfo(${realIdx})" style="background:rgba(77,157,255,0.1);color:var(--blue)">📋复制</span>
+                <span class="crm-status fail" onclick="delRefund(${realIdx})" style="background:rgba(255,71,87,0.1)">删除</span>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function addRefund() {
+    const name = document.getElementById('refundName').value.trim();
+    if (!name) return toast('请输入客户名');
+    const promiseDate = document.getElementById('refundPromiseDate').value;
+    const r = {
+        name,
+        biz: document.getElementById('refundBiz').value.trim(),
+        total: parseFloat(document.getElementById('refundTotal').value) || 0,
+        paid: parseFloat(document.getElementById('refundPaid').value) || 0,
+        promiseDate: promiseDate ? promiseDate.replace(/-/g, '.') : null,
+        status: document.getElementById('refundStatus').value,
+        time: nowStr(),
+    };
+    refundList.push(r);
+    save('refundList', refundList);
+    document.getElementById('refundName').value = '';
+    document.getElementById('refundBiz').value = '';
+    document.getElementById('refundTotal').value = '';
+    document.getElementById('refundPaid').value = '';
+    document.getElementById('refundPromiseDate').value = '';
+    renderRefunds();
+    toast('退款单已添加');
+}
+
+function cycleRefundStatus(i) {
+    const order = ['催款中', '已谈分期', '部分退款', '已退款'];
+    const cur = order.indexOf(refundList[i].status);
+    refundList[i].status = order[(cur + 1) % order.length];
+    save('refundList', refundList);
+    renderRefunds();
+}
+
+function addRefundPayment(i) {
+    const amount = prompt('本次还款金额？', '');
+    if (!amount) return;
+    refundList[i].paid = (refundList[i].paid || 0) + parseFloat(amount);
+    if (refundList[i].paid >= refundList[i].total) {
+        refundList[i].status = '已退款';
+    } else if (refundList[i].status === '催款中') {
+        refundList[i].status = '部分退款';
+    }
+    save('refundList', refundList);
+    renderRefunds();
+    toast('还款¥' + amount + '已记录');
+}
+
+function copyRefundInfo(i) {
+    const r = refundList[i];
+    const remain = (r.total||0) - (r.paid||0);
+    const text = `客户：${r.name}
+业务：${r.biz || '未填'}
+总欠款：¥${r.total||0}
+已还：¥${r.paid||0}
+剩余：¥${remain}
+承诺还款日：${r.promiseDate || '未定'}
+状态：${r.status}`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => toast('已复制'));
+    }
+}
+
+function delRefund(i) {
+    if (!confirm('确定删除这条退款单？')) return;
+    refundList.splice(i, 1);
+    save('refundList', refundList);
+    renderRefunds();
+}
+
+// ========== 资金分配器 ==========
+function calcAlloc() {
+    const amount = parseFloat(document.getElementById('allocInput').value);
+    if (!amount) return toast('请输入金额');
+    const living = Math.round(amount * 0.5);
+    const business = Math.round(amount * 0.3);
+    const saving = Math.round(amount * 0.2);
+    document.getElementById('allocResult').innerHTML = `
+        <div style="background:var(--bg);border-radius:12px;padding:16px">
+            <div style="text-align:center;margin-bottom:14px">
+                <div style="font-size:11px;color:var(--text-mute)">分配金额</div>
+                <div style="font-size:24px;font-weight:800;color:var(--orange)">¥${amount.toLocaleString()}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card2);border-radius:8px">
+                    <div><span style="color:var(--orange)">●</span> 生活+还款 50%</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--orange)">¥${living}</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card2);border-radius:8px">
+                    <div><span style="color:var(--blue)">●</span> 业务周转 30%</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--blue)">¥${business}</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card2);border-radius:8px">
+                    <div><span style="color:var(--green)">●</span> 强制储蓄 20%</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--green)">¥${saving}</div>
+                </div>
+            </div>
+            <button onclick="navigator.clipboard.writeText('收入¥${amount}：生活还款¥${living}，业务¥${business}，储蓄¥${saving}').then(()=>alert('已复制'))" style="width:100%;margin-top:12px;padding:10px;background:var(--card);border:1px solid var(--border);color:var(--text-dim);border-radius:8px;font-size:12px;cursor:pointer">📋 复制分配方案</button>
+        </div>
+    `;
+    document.getElementById('allocInput').value = '';
+}
+function cycleStatus(i) {
+    const order = ['lead', 'contact', 'deal', 'fail'];
+    const cur = order.indexOf(crmList[i].status);
+    crmList[i].status = order[(cur + 1) % order.length];
+    save('crmList', crmList);
+    renderCrm();
+}
+function delCrm(i) {
+    crmList.splice(i, 1);
+    save('crmList', crmList);
+    renderCrm();
+}
+
+// ========== 学习 ==========
+let studies = load('studies', []);
+function renderStudies() {
+    const list = document.getElementById('studyList');
+    list.innerHTML = '';
+    if (studies.length === 0) list.innerHTML = '<div class="empty">暂无学习记录</div>';
+    studies.slice().reverse().forEach(s => {
+        const d = document.createElement('div');
+        d.className = 'study-item';
+        d.innerHTML = `${s.text}<div class="study-time">${s.time}</div>`;
+        list.appendChild(d);
+    });
+    document.getElementById('studyCount').textContent = studies.length + '条';
+}
+function addStudy() {
+    const input = document.getElementById('studyInput');
+    const text = input.value.trim();
+    if (!text) return;
+    studies.push({ text, time: nowStr() });
+    save('studies', studies);
+    input.value = '';
+    renderStudies();
+    toast('学习已记录');
+}
+
+// ========== 复盘 ==========
+let reviews = load('reviews', []);
+function renderReviews() {
+    const list = document.getElementById('reviewHistory');
+    list.innerHTML = '';
+    if (reviews.length === 0) list.innerHTML = '<div class="empty">暂无复盘记录</div>';
+    reviews.slice().reverse().forEach(r => {
+        const d = document.createElement('div');
+        d.className = 'review-item';
+        d.innerHTML = `<div class="review-date">${r.time}</div><div>${r.text}</div>`;
+        list.appendChild(d);
+    });
+}
+function saveReview() {
+    const input = document.getElementById('reviewInput');
+    const text = input.value.trim();
+    if (!text) return toast('请输入复盘内容');
+    reviews.push({ text, time: nowStr() });
+    save('reviews', reviews);
+    input.value = '';
+    renderReviews();
+    toast('复盘已保存');
+}
+
+// ========== 渠道数据（4大平台）==========
+let channelData = load('channelData', {
+    // 闲鱼
+    xianyu: { products: 2, consult: 0, orders: 0, revenue: 0 },
+    // 知乎
+    zhihu: { posts: 0, likes: 0, followers: 0, consult: 0 },
+    // 小红书
+    xhs: { posts: 0, likes: 0, followers: 0, consult: 0 },
+    // 抖音
+    douyin: { posts: 0, followers: 19000, views: 0, consult: 0 },
+    // 快手（漫剧主阵地）
+    kuaishou: { posts: 0, followers: 11000, views: 0, revenue: 680 },
+});
+let curChannel = 'xianyu';
+
+const channelConfig = {
+    xianyu: {
+        name: '闲鱼', icon: '📦',
+        stats: () => [
+            { num: channelData.xianyu.products, lbl: '上架产品' },
+            { num: channelData.xianyu.consult, lbl: '咨询数' },
+            { num: channelData.xianyu.orders, lbl: '成单数' },
+        ],
+        actions: [
+            { label: '💬 +1咨询', type: 'xy_consult' },
+            { label: '✅ +1成单', type: 'xy_order' },
+            { label: '📦 +1产品', type: 'xy_product' },
+        ]
+    },
+    zhihu: {
+        name: '知乎', icon: '📝',
+        stats: () => [
+            { num: channelData.zhihu.posts, lbl: '已发文章' },
+            { num: channelData.zhihu.likes, lbl: '点赞数' },
+            { num: channelData.zhihu.followers, lbl: '关注数' },
+        ],
+        actions: [
+            { label: '📝 +1文章', type: 'zh_post' },
+            { label: '💬 +1咨询', type: 'zh_consult' },
+        ]
+    },
+    xhs: {
+        name: '小红书', icon: '📕',
+        stats: () => [
+            { num: channelData.xhs.posts, lbl: '已发笔记' },
+            { num: channelData.xhs.likes, lbl: '点赞数' },
+            { num: channelData.xhs.followers, lbl: '粉丝数' },
+        ],
+        actions: [
+            { label: '📕 +1笔记', type: 'xhs_post' },
+            { label: '💬 +1咨询', type: 'xhs_consult' },
+        ]
+    },
+    douyin: {
+        name: '抖音', icon: '🎬',
+        stats: () => [
+            { num: channelData.douyin.followers, lbl: '粉丝数' },
+            { num: channelData.douyin.posts, lbl: '本周更新' },
+            { num: channelData.douyin.consult, lbl: '咨询数' },
+        ],
+        actions: [
+            { label: '🎬 +1更新', type: 'dy_post' },
+            { label: '💬 +1咨询', type: 'dy_consult' },
+        ]
+    },
+};
+
+function renderChannel() {
+    const cfg = channelConfig[curChannel];
+    const stats = document.getElementById('channelStats');
+    stats.innerHTML = cfg.stats().map(s =>
+        `<div class="ch-stat"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>`
+    ).join('');
+
+    const actions = document.getElementById('quickActions');
+    actions.innerHTML = cfg.actions.map(a =>
+        `<button class="qa-btn" onclick="quickAction('${a.type}')">${a.label}</button>`
+    ).join('');
+}
+
+function switchChannel(ch, el) {
+    curChannel = ch;
+    document.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderChannel();
+}
+
+function quickAction(type) {
+    const d = channelData;
+    switch(type) {
+        case 'xy_consult': d.xianyu.consult++; toast('闲鱼咨询+1'); break;
+        case 'xy_order': d.xianyu.orders++; toast('闲鱼成单+1 🎉'); break;
+        case 'xy_product': d.xianyu.products++; toast('闲鱼产品+1'); break;
+        case 'zh_post': d.zhihu.posts++; toast('知乎文章+1'); break;
+        case 'zh_consult': d.zhihu.consult++; toast('知乎咨询+1'); break;
+        case 'xhs_post': d.xhs.posts++; toast('小红书笔记+1'); break;
+        case 'xhs_consult': d.xhs.consult++; toast('小红书咨询+1'); break;
+        case 'dy_post': d.douyin.posts++; toast('抖音更新+1'); break;
+        case 'dy_consult': d.douyin.consult++; toast('抖音咨询+1'); break;
+    }
+    save('channelData', channelData);
+    renderChannel();
+    renderBizLines();
+}
+
+// ========== 业务线规划 ==========
+const bizLineConfig = [
+    {
+        name: 'AI开发服务',
+        icon: '🛠',
+        color: '#FF6B1A',
+        desc: '灵光/妙搭接单 · 客单2000-15000',
+        monthGoal: 80000, // 2个月20万的主力
+        getRevenue: () => {
+            const incomes = load('incomes', []);
+            return incomes.filter(i => i.source === 'AI开发').reduce((s,i) => s+i.amount, 0);
+        },
+        steps: [
+            'Day1-3: 作品集整理（3-5个案例）',
+            'Day4-7: 闲鱼+知乎上架AI开发服务',
+            'Week2: 跑通第一单交付流程',
+            'Week3-4: 稳定接单，目标3-5单/月',
+            'Month2: 客单价提升至5000+，月入5-8万',
+        ]
+    },
+    {
+        name: '闲鱼AI服务',
+        icon: '📦',
+        color: '#4D9DFF',
+        desc: '5产品矩阵 · 客单50-500',
+        monthGoal: 15000,
+        getRevenue: () => {
+            const incomes = load('incomes', []);
+            return incomes.filter(i => i.source === '闲鱼').reduce((s,i) => s+i.amount, 0);
+        },
+        steps: [
+            'Day1: 补齐5个产品上架（已上2个）',
+            'Day2-3: 优化标题+详情页+首图',
+            'Week2: 每天维护，回复咨询<5分钟',
+            'Week3-4: 积累5+好评，提升排名',
+            'Month2: 稳定月入8000-15000',
+        ]
+    },
+    {
+        name: 'AI漫剧',
+        icon: '🎬',
+        color: '#A66BFF',
+        desc: '快手二创维持 · 探索原创',
+        monthGoal: 5000,
+        getRevenue: () => {
+            const incomes = load('incomes', []);
+            return incomes.filter(i => i.source === '漫剧').reduce((s,i) => s+i.amount, 0);
+        },
+        steps: [
+            '快手继续二创，维持周更3-5条',
+            '抖音考虑转型：漫剧→AI漫剧博主',
+            'Week2: 测试1条AI原创漫剧',
+            'Month2: 建立原创IP系列',
+            'Month3: 漫剧月入3000-5000',
+        ]
+    },
+    {
+        name: 'AI营/内容线',
+        icon: '📚',
+        color: '#00D9A3',
+        desc: '知乎+公众号 · ��过程+陪跑',
+        monthGoal: 100000, // 长期主力
+        getRevenue: () => {
+            const incomes = load('incomes', []);
+            return incomes.filter(i => i.source === '其他').reduce((s,i) => s+i.amount, 0);
+        },
+        steps: [
+            'Day1: 知乎发第一篇重启文章',
+            'Week1: 确定5个栏目（疯狂星期五等）',
+            'Week2: 稳定更新，每2天1篇',
+            'Month1: 积累100+关注，推出小报童',
+            'Month2: 推出实战营999-1999',
+            'Month3: 1对1陪跑3000-5000/月',
+        ]
+    },
+    {
+        name: '电商服务商',
+        icon: '🏪',
+        color: '#FACC15',
+        desc: '全平台 · 报白/解封/申诉/转让/黄V/团购',
+        monthGoal: 20000,
+        getRevenue: () => {
+            const incomes = load('incomes', []);
+            return incomes.filter(i => i.source === '服务商').reduce((s,i) => s+i.amount, 0);
+        },
+        steps: [
+            '现状: 微信限功能但私聊可用，偶尔捡漏',
+            '服务范围: 类目报白/解封/店铺申诉/违规/账号合规转让/黄V认证/团购',
+            'Week1: 整理可接单的服务清单+报价表',
+            'Week2: 闲鱼上架电商服务类产品',
+            'Week3-4: 电商社群精准触达，每周3-5个咨询',
+            'Month2: 稳定接单2-4单/月，客单1000-5000',
+        ]
+    },
+];
+
+function renderBizLines() {
+    const container = document.getElementById('bizLines');
+    container.innerHTML = '';
+    bizLineConfig.forEach(line => {
+        const revenue = line.getRevenue();
+        const pct = Math.min(100, Math.round(revenue / line.monthGoal * 100));
+        const div = document.createElement('div');
+        div.style.cssText = 'background:var(--bg);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid ' + line.color;
+        div.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <div style="font-size:14px;font-weight:600">${line.icon} ${line.name}</div>
+                <div style="font-size:11px;color:var(--text-mute)">${line.desc}</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px">
+                <span>已收入 ¥${revenue.toLocaleString()}</span>
+                <span>月目标 ¥${line.monthGoal.toLocaleString()} · ${pct}%</span>
+            </div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px">
+                <div style="height:100%;width:${pct}%;background:${line.color};border-radius:3px;transition:width 0.5s"></div>
+            </div>
+            <div style="font-size:11px;color:var(--text-mute);line-height:1.6">
+                ${line.steps.map((s,i) => `<div style="margin-bottom:2px">${i+1}. ${s}</div>`).join('')}
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ========== 渠道目标矩阵 ==========
+function renderChannelGoals() {
+    const goals = [
+        { channel: '闲鱼', icon: '📦', cur: channelData.xianyu, goal: '5产品·30咨询·10单/月', revenue: '1.5万' },
+        { channel: '知乎', icon: '📝', cur: channelData.zhihu, goal: '15文章·500关注·5咨询/月', revenue: '引流' },
+        { channel: '小红书', icon: '📕', cur: channelData.xhs, goal: '20笔记·1000粉·3咨询/月', revenue: '引流' },
+        { channel: '抖音', icon: '🎬', cur: channelData.douyin, goal: '转型AI博主·周更3条', revenue: '5千' },
+        { channel: '电商服务商', icon: '🏪', cur: {products: 0, consult: 0, orders: 0}, goal: '全平台·7类服务·2-4单/月', revenue: '2万' },
+    ];
+    const container = document.getElementById('channelGoals');
+    container.innerHTML = goals.map(g => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:18px">${g.icon}</span>
+                <div>
+                    <div style="font-size:13px;font-weight:600">${g.channel}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${g.goal}</div>
+                </div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:13px;color:var(--orange);font-weight:600">${g.revenue}</div>
+                <div style="font-size:10px;color:var(--text-mute)">月预期</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ========== 侧边栏 ==========
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ========== 页面切换 ==========
+function switchPage(page, el) {
+    document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
+    document.getElementById('page-' + page).classList.remove('hidden');
+    document.querySelectorAll('.sidebar-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    window.scrollTo(0, 0);
+    closeSidebar();
+}
+
+// ========== 首页业务线总览 ==========
+function renderBizOverview() {
+    const container = document.getElementById('bizOverview');
+    container.innerHTML = '';
+    bizLineConfig.forEach(line => {
+        const revenue = line.getRevenue();
+        const pct = Math.min(100, Math.round(revenue / line.monthGoal * 100));
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)';
+        div.innerHTML = `
+            <div style="font-size:16px;margin-right:8px">${line.icon}</div>
+            <div style="flex:1">
+                <div style="font-size:12px;font-weight:600">${line.name}</div>
+                <div style="height:4px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden">
+                    <div style="height:100%;width:${pct}%;background:${line.color};border-radius:2px"></div>
+                </div>
+            </div>
+            <div style="text-align:right;margin-left:10px">
+                <div style="font-size:11px;color:${line.color};font-weight:600">¥${revenue.toLocaleString()}</div>
+                <div style="font-size:9px;color:var(--text-mute)">/¥${line.monthGoal >= 10000 ? (line.monthGoal/10000)+'万' : line.monthGoal}</div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ========== 电商服务商服务清单 ==========
+const services = [
+    { name: '类目报白', icon: '📋', desc: '全平台·定向类目准入', price: '1500-3000', platform: '抖音/快手/小红书/视频号' },
+    { name: '账号解封', icon: '🔓', desc: '各平台账号违规解封', price: '500-2000', platform: '全平台' },
+    { name: '店铺申诉', icon: '⚖️', desc: '店铺违规/扣分申诉', price: '1000-3000', platform: '淘宝/拼多多/抖音/快手' },
+    { name: '店铺违规处理', icon: '⚠️', desc: '违规诊断+方案+代办', price: '800-2500', platform: '全平台' },
+    { name: '账号合规转让', icon: '🔄', desc: '账号安全过户转让', price: '1000-3000', platform: '全平台' },
+    { name: '黄V认证', icon: '✓', desc: '企业/个人黄V认证', price: '800-2000', platform: '抖音/快手/小红书' },
+    { name: '团购开通', icon: '🛒', desc: '本地生活团购开通', price: '1500-3000', platform: '抖音/快手/美团' },
+];
+
+function renderServices() {
+    const container = document.getElementById('serviceList');
+    container.innerHTML = services.map(s => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:18px">${s.icon}</span>
+                <div>
+                    <div style="font-size:13px;font-weight:600">${s.name}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${s.desc}</div>
+                    <div style="font-size:9px;color:var(--text-mute);margin-top:2px">${s.platform}</div>
+                </div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:13px;color:var(--yellow);font-weight:600">${s.price}</div>
+                <div style="font-size:9px;color:var(--text-mute)">客单价</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ========== 今日聚焦 ==========
+function renderTodayFocus() {
+    const tasks = load(getTodayKey(), []);
+    const undone = tasks.filter(t => !t.done);
+    const incomes = load('incomes', []);
+    const today = todayStr();
+    const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
+    const channelData = load('channelData', {});
+    const xyConsult = channelData.xianyu ? channelData.xianyu.consult : 0;
+
+    document.getElementById('focusDate').textContent = todayStr();
+
+    const focus = document.getElementById('todayFocus');
+    let focusItems = [];
+
+    if (todayIncome === 0) focusItems.push({ icon: '💰', text: '今天还没有收入，去闲鱼/客户那边推一单' });
+    if (undone.length > 0) focusItems.push({ icon: '⚔️', text: `还有${undone.length}个任务未完成：${undone[0].text}` });
+    if (xyConsult === 0) focusItems.push({ icon: '💬', text: '闲鱼还没有咨询，优化标题和首图' });
+    // 内容发布提醒
+    const todayPosts = load('posts', []).filter(p => p.date === today && p.status === 'pending');
+    if (todayPosts.length > 0) focusItems.push({ icon: '📕', text: `今天还有${todayPosts.length}条内容待发布，先完成小红书主账号` });
+    else focusItems.push({ icon: '📕', text: '今天内容已发完，可以排明天的选题' });
+    if (focusItems.length === 0) focusItems.push({ icon: '🎉', text: '今天的核心任务都完成了，继续搞钱！' });
+
+    focus.innerHTML = focusItems.slice(0, 3).map(f => `
+        <div style="display:flex;align-items:center;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:8px">
+            <span style="font-size:18px;margin-right:10px">${f.icon}</span>
+            <span style="font-size:13px;flex:1">${f.text}</span>
+        </div>
+    `).join('');
+}
+
+// ========== 灵感速记 ==========
+let inspirations = load('inspirations', []);
+function renderInspirations() {
+    const list = document.getElementById('inspirationList');
+    list.innerHTML = '';
+    if (inspirations.length === 0) list.innerHTML = '<div class="empty">暂无灵感，来了就记</div>';
+    inspirations.slice().reverse().forEach((ins, i) => {
+        const realIdx = inspirations.length - 1 - i;
+        const div = document.createElement('div');
+        div.className = 'study-item';
+        div.style.borderLeftColor = 'var(--purple)';
+        div.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:start">
+                <div style="flex:1">
+                    <span style="font-size:10px;padding:2px 6px;background:rgba(168,85,247,0.15);color:var(--purple);border-radius:4px">${ins.tag}</span>
+                    <div style="font-size:13px;margin-top:4px">${ins.text}</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:4px">${ins.time}</div>
+                </div>
+                <span onclick="delInspiration(${realIdx})" style="color:var(--text-mute);cursor:pointer;margin-left:8px">×</span>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+    document.getElementById('inspirationCount').textContent = inspirations.length + '条';
+}
+function addInspiration() {
+    const input = document.getElementById('inspirationInput');
+    const tag = document.getElementById('inspirationTag').value;
+    const text = input.value.trim();
+    if (!text) return;
+    inspirations.push({ text, tag, time: nowStr() });
+    save('inspirations', inspirations);
+    input.value = '';
+    renderInspirations();
+    toast('灵感已记录');
+}
+function delInspiration(i) {
+    inspirations.splice(i, 1);
+    save('inspirations', inspirations);
+    renderInspirations();
+}
+
+// ========== 报价计算器 ==========
+let quoteLevel = 'mid';
+function updateQuote() {
+    const sel = document.getElementById('quoteType').value;
+    const [type, min, max] = sel.split('|');
+    const minN = parseInt(min), maxN = parseInt(max);
+    let price;
+    if (quoteLevel === 'low') price = Math.round(minN + (maxN - minN) * 0.2);
+    else if (quoteLevel === 'mid') price = Math.round(minN + (maxN - minN) * 0.5);
+    else price = Math.round(minN + (maxN - minN) * 0.85);
+    document.getElementById('quotePrice').textContent = '¥' + price.toLocaleString();
+    document.getElementById('quoteRange').textContent = `区间: ¥${minN.toLocaleString()} - ¥${maxN.toLocaleString()}`;
+}
+function setQuoteLevel(level, el) {
+    quoteLevel = level;
+    document.querySelectorAll('.quote-btn').forEach(b => {
+        b.style.background = 'var(--bg)';
+        b.style.border = '1px solid var(--border)';
+        b.style.color = 'var(--text)';
+    });
+    el.style.background = 'var(--orange)';
+    el.style.border = '1px solid var(--orange)';
+    el.style.color = '#fff';
+    updateQuote();
+}
+function copyQuote() {
+    const price = document.getElementById('quotePrice').textContent;
+    const sel = document.getElementById('quoteType');
+    const serviceName = sel.options[sel.selectedIndex].text;
+    const text = `【${serviceName}】\n报价：${price}\n交付周期：3-7个工作日\n含1个月免费维护\n\n需要的话随时找我~`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => toast('报价文案已复制'));
+    } else {
+        toast(text);
+    }
+}
+
+// ========== 数据备份 ==========
+function exportData() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        data[key] = localStorage.getItem(key);
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `工作台备份_${todayStr()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('备份已下载');
+}
+function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
+            toast('导入成功，刷新页面');
+            setTimeout(() => location.reload(), 1500);
+        } catch (err) {
+            toast('导入失败：文件格式错误');
+        }
+    };
+    reader.readAsText(file);
+}
+function clearTodayData() {
+    if (confirm('确定清除今日所有任务？')) {
+        localStorage.removeItem(getTodayKey());
+        tasks = load(getTodayKey(), []);
+        renderTasks();
+        toast('已清除今日任务');
+    }
+}
+
+// ========== 悬浮快捷菜单 ==========
+function showQuickMenu() {
+    document.getElementById('quickMenu').classList.remove('hidden');
+}
+function hideQuickMenu(e) {
+    if (e) e.target.classList.add('hidden');
+    else document.getElementById('quickMenu').classList.add('hidden');
+}
+function quickMenuAction(type) {
+    hideQuickMenu();
+    const items = document.querySelectorAll('.sidebar-item');
+    switch(type) {
+        case 'income':
+            switchPage('money', items[1]);
+            setTimeout(() => document.getElementById('incomeAmount').focus(), 300);
+            break;
+        case 'expense':
+            switchPage('money', items[1]);
+            setTimeout(() => document.getElementById('expenseAmount').focus(), 300);
+            break;
+        case 'inspiration':
+            switchPage('more', items[5]);
+            setTimeout(() => document.getElementById('inspirationInput').focus(), 300);
+            break;
+        case 'task':
+            switchPage('today', items[0]);
+            setTimeout(() => document.getElementById('taskInput').focus(), 300);
+            break;
+        case 'consult':
+            const cd = load('channelData', { xianyu: { consult: 0 } });
+            if (!cd.xianyu) cd.xianyu = { consult: 0, products: 2, orders: 0 };
+            cd.xianyu.consult++;
+            save('channelData', cd);
+            toast('闲鱼咨询+1');
+            break;
+        case 'study':
+            switchPage('study', items[4]);
+            setTimeout(() => document.getElementById('studyInput').focus(), 300);
+            break;
+    }
+}
+
+// ========== CRM跟进提醒 ==========
+function renderCrmReminders() {
+    // 在CRM渲染里增加下次跟进时间
+    const today = new Date();
+    const list = load('crmList', []);
+    const needFollow = list.filter(c => c.nextFollow && c.nextFollow <= todayStr() && c.status !== 'deal' && c.status !== 'fail');
+    if (needFollow.length > 0) {
+        // 可以在首页聚焦里显示
+    }
+}
+
+// ========== 内容矩阵（小红书/知乎/抖音/快手）==========
+let accounts = load('accounts', [
+    { id: 'main_xhs', name: 'Crazy Friday｜疯狂星期五', handle: 'R26184352', platform: '小红书', position: 'AI一人公司实践者', role: '品牌IP号（主阵地）', tags: ['AI应用分享','产品实验记录','商业思考/案例','行业解决方案'], isMain: true, followers: 46, posts: 5, goal: 1000 },
+    { id: 'xhs_2', name: 'Friday Lab.｜星期五实验室', handle: '', platform: '小红书', position: 'AI工具合集+效率技巧', role: '流量截流号', tags: ['AI工具合集','AI效率技巧','实用干货内容','截流引流'], isMain: false, followers: 0, posts: 0, goal: 1000 },
+    { id: 'xhs_3', name: 'CF Lab.｜AI产品实验室', handle: '', platform: '小红书', position: '产品开发过程+技术拆解', role: '实验记录号', tags: ['产品开发过程','技术拆解分享','行业案例拆解','冷启动测试'], isMain: false, followers: 0, posts: 0, goal: 1000 },
+    { id: 'dy_ks', name: 'Crazy Friday·AI｜疯狂星期五AI', handle: '', platform: '抖音/快手', position: 'AI工具测评+创业日记', role: '短视频流量号', tags: ['AI工具测评','AI创业日记','AI搞笑/热点','短视频种草'], isMain: false, followers: 0, posts: 0, goal: 5000 },
+    { id: 'manju', name: '小野原爱｜AI漫剧创作', handle: '', platform: '快手/抖音', position: 'AI漫剧+剧情动画', role: '内容变现号', tags: ['AI漫剧创作','剧情动画内容','涨粉变现','私域引流'], isMain: false, followers: 0, posts: 0, goal: 3000 },
+    { id: 'ec_service', name: '++电商笔记', handle: '', platform: '小红书/私域', position: '报白/解封/代运营服务', role: '电商服务号', tags: ['报白/授权/入驻','违规处理/代运营','电商干货/案例','私域变现'], isMain: false, followers: 0, posts: 0, goal: 500 }
+]);
+let posts = load('posts', []);
+let postFilter = 'all';
+
+const contentTemplates = [
+    { title: 'AI应用分享', desc: '主号：分享一个AI应用场景，展示1人+AI的能力', tag: '品牌IP号', accountRole: '品牌IP号（主阵地）' },
+    { title: '产品实验记录', desc: '主号/实验号：记录从想法到MVP的全过程', tag: '产品实验', accountRole: '实验记录号' },
+    { title: '商业思考/案例', desc: '主号：分析一个AI变现案例或商业决策', tag: '商业思考', accountRole: '品牌IP号（主阵地）' },
+    { title: 'AI工具合集', desc: '流量号：3-5个同类AI工具横向对比', tag: '工具合集', accountRole: '流量截流号' },
+    { title: 'AI效率技巧', desc: '流量号：一个具体场景提效50%的SOP', tag: '效率技巧', accountRole: '流量截流号' },
+    { title: '技术拆解分享', desc: '实验号：把一个AI产品的实现逻辑讲清楚', tag: '技术拆解', accountRole: '实验记录号' },
+    { title: 'AI工具测评', desc: '短视频号：30秒讲清楚一个工具值不值得用', tag: '工具测评', accountRole: '短视频流量号' },
+    { title: 'AI创业日记', desc: '短视频号：今日收入/客户/踩坑真实记录', tag: '创业日记', accountRole: '短视频流量号' },
+    { title: 'AI漫剧剧情', desc: '漫剧号：新剧情/角色/系列更新', tag: '漫剧内容', accountRole: '内容变现号' },
+    { title: '电商干货/案例', desc: '服务号：报白/解封/申诉成功案例', tag: '电商服务', accountRole: '电商服务号' },
+    { title: '一人公司账单', desc: '主号：公开今日收入/支出/复盘，真实感拉满', tag: '成长记录', accountRole: '品牌IP号（主阵地）' },
+    { title: '失败教训', desc: '主号：微信被封/负债经历，反转创业重启', tag: '个人故事', accountRole: '品牌IP号（主阵地）' },
+];
+
+function saveAccounts() { save('accounts', accounts); }
+function savePosts() { save('posts', posts); }
+
+function addAccount() {
+    const name = document.getElementById('acctName').value.trim();
+    const handle = document.getElementById('acctHandle').value.trim();
+    const platform = document.getElementById('acctPlatform').value;
+    const position = document.getElementById('acctPosition').value.trim();
+    if (!name) return toast('请输入账号名');
+    accounts.push({ id: Date.now().toString(), name, handle, platform, position, isMain: false, followers: 0, posts: 0, goal: 1000 });
+    saveAccounts();
+    document.getElementById('acctName').value = '';
+    document.getElementById('acctHandle').value = '';
+    document.getElementById('acctPosition').value = '';
+    renderContentMatrix();
+    toast('账号已添加');
+}
+
+function updateAccountField(i, field, delta) {
+    accounts[i][field] = Math.max(0, (accounts[i][field] || 0) + delta);
+    saveAccounts();
+    renderAccounts();
+}
+
+function delAccount(i) {
+    if (!confirm('确定删除这个账号？')) return;
+    accounts.splice(i, 1);
+    saveAccounts();
+    renderContentMatrix();
+}
+
+function renderAccounts() {
+    const list = document.getElementById('accountList');
+    if (!list) return;
+    document.getElementById('accountCount').textContent = accounts.length + '个账号';
+    list.innerHTML = '';
+    if (accounts.length === 0) list.innerHTML = '<div class="empty">还没有账号，先添加主账号</div>';
+    accounts.forEach((a, i) => {
+        const div = document.createElement('div');
+        div.className = 'account-card ' + (a.isMain ? 'main' : '');
+        div.innerHTML = `
+            <div class="account-top">
+                <div class="account-name">${a.isMain ? '🔥 ' : ''}${a.name}</div>
+                <div style="display:flex;gap:6px">
+                    <span class="account-platform">${a.platform}</span>
+                    <span class="account-platform" style="background:rgba(168,85,247,0.15);color:var(--purple)">${a.role || '普通号'}</span>
+                </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">${a.position || '暂无定位'}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
+                ${(a.tags || []).map(t => `<span style="font-size:9px;padding:2px 6px;background:var(--card2);color:var(--text-mute);border-radius:4px">${t}</span>`).join('')}
+            </div>
+            <div class="account-meta">
+                <span>ID: ${a.handle || '-'}</span>
+                <span>粉丝: ${a.followers || 0}</span>
+                <span>已发: ${a.posts || 0}</span>
+                <span>目标: ${a.goal || 1000}</span>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:8px">
+                <button onclick="updateAccountField(${i}, 'followers', 1)" style="font-size:10px;padding:4px 8px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer">+粉</button>
+                <button onclick="updateAccountField(${i}, 'posts', 1)" style="font-size:10px;padding:4px 8px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer">+发</button>
+                <button onclick="delAccount(${i})" style="font-size:10px;padding:4px 8px;background:var(--card2);border:1px solid var(--border);color:var(--red);border-radius:6px;cursor:pointer;margin-left:auto">删除</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function openPostModal() {
+    const sel = document.getElementById('postAccount');
+    sel.innerHTML = accounts.map((a, i) => `<option value="${a.id}">${a.platform} · ${a.name}</option>`).join('') || '<option value="">请先添加账号</option>';
+    document.getElementById('postDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('postModal').classList.remove('hidden');
+}
+
+function closePostModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('postModal').classList.add('hidden');
+}
+
+function savePost() {
+    const title = document.getElementById('postTitle').value.trim();
+    const accountId = document.getElementById('postAccount').value;
+    const type = document.getElementById('postType').value;
+    const dateVal = document.getElementById('postDate').value;
+    const notes = document.getElementById('postNotes').value.trim();
+    if (!title) return toast('请输入标题');
+    if (!accountId) return toast('请先添加账号');
+    const date = dateVal ? dateVal.replace(/-/g, '.') : todayStr();
+    posts.push({ id: Date.now().toString(), title, accountId, type, date, notes, status: 'pending', time: nowStr() });
+    savePosts();
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postNotes').value = '';
+    closePostModal();
+    renderContentMatrix();
+    toast('排期已保存');
+}
+
+function filterPosts(status, el) {
+    postFilter = status;
+    document.querySelectorAll('#page-content .ch-tab').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderPosts();
+}
+
+function renderPosts() {
+    const list = document.getElementById('postList');
+    if (!list) return;
+    list.innerHTML = '';
+    let filtered = posts;
+    if (postFilter === 'pending') filtered = posts.filter(p => p.status === 'pending');
+    if (postFilter === 'posted') filtered = posts.filter(p => p.status === 'posted');
+    if (postFilter === 'idea') filtered = posts.filter(p => p.status === 'idea');
+    if (filtered.length === 0) list.innerHTML = '<div class="empty">暂无内容</div>';
+
+    filtered.slice().reverse().forEach((p, idx) => {
+        const realIdx = posts.indexOf(p);
+        const acct = accounts.find(a => a.id === p.accountId) || { name: '未知账号', platform: '-' };
+        const isToday = p.date === todayStr();
+        const isOverdue = p.status === 'pending' && p.date < todayStr();
+        const cls = p.status === 'posted' ? 'posted' : (p.status === 'idea' ? 'idea' : '');
+        const statusText = { pending: '待发布', posted: '已发布', idea: '选题' }[p.status];
+        const div = document.createElement('div');
+        div.className = 'post-item ' + cls;
+        div.innerHTML = `
+            <div class="post-header">
+                <div class="post-title">${p.title}</div>
+                <span class="post-status ${p.status}">${statusText}</span>
+            </div>
+            <div class="post-meta">
+                <span>${acct.platform} · ${acct.name}</span>
+                <span>${p.type}</span>
+                <span style="color:${isOverdue?'var(--red)':(isToday?'var(--orange)':'var(--text-mute)')}">${p.date}${isToday?' · 今天':''}${isOverdue?' · 已超期':''}</span>
+            </div>
+            ${p.notes ? `<div style="font-size:11px;color:var(--text-dim);margin-top:4px">${p.notes}</div>` : ''}
+            <div class="post-actions">
+                ${p.status !== 'posted' ? `<button onclick="markPostPosted(${realIdx})" style="background:var(--green);color:#fff">✓ 已发</button>` : `<button onclick="markPostPending(${realIdx})" style="background:var(--card);color:var(--text);border:1px solid var(--border)">撤销</button>`}
+                <button onclick="setPostIdea(${realIdx})" style="background:var(--purple);color:#fff">选题</button>
+                <button onclick="copyPost(${realIdx})" style="background:var(--blue);color:#fff">复制</button>
+                <button onclick="delPost(${realIdx})" style="background:var(--red);color:#fff">删除</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function markPostPosted(i) {
+    posts[i].status = 'posted';
+    const acct = accounts.find(a => a.id === posts[i].accountId);
+    if (acct) { acct.posts = (acct.posts || 0) + 1; saveAccounts(); }
+    savePosts();
+    renderContentMatrix();
+    toast('已标记发布');
+}
+function markPostPending(i) { posts[i].status = 'pending'; savePosts(); renderContentMatrix(); }
+function setPostIdea(i) { posts[i].status = 'idea'; savePosts(); renderContentMatrix(); }
+function copyPost(i) {
+    const p = posts[i];
+    const acct = accounts.find(a => a.id === p.accountId) || { name: '未知账号' };
+    const text = `【${p.title}】\n账号：${acct.name}\n类型：${p.type}\n计划发布：${p.date}\n备注：${p.notes || '无'}`;
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => toast('已复制'));
+}
+function delPost(i) {
+    if (!confirm('确定删除这条排期？')) return;
+    posts.splice(i, 1);
+    savePosts();
+    renderContentMatrix();
+}
+
+function renderTodayPublish() {
+    const list = document.getElementById('todayPublishList');
+    if (!list) return;
+    const today = todayStr();
+    const todayPosts = posts.filter(p => p.date === today);
+    const done = todayPosts.filter(p => p.status === 'posted').length;
+    document.getElementById('todayPublishCount').textContent = `${done}/${Math.max(3, todayPosts.length)}`;
+
+    if (todayPosts.length === 0) {
+        list.innerHTML = '<div class="empty">今天还没有排期，去「内容排期」新建一条</div>';
+        return;
+    }
+    list.innerHTML = todayPosts.map((p, i) => {
+        const realIdx = posts.indexOf(p);
+        const acct = accounts.find(a => a.id === p.accountId) || { name: '未知' };
+        const isDone = p.status === 'posted';
+        return `
+            <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:8px;margin-bottom:8px;border-left:3px solid ${isDone?'var(--green)':'var(--orange)'}">
+                <div style="font-size:20px">${isDone?'✅':'⏰'}</div>
+                <div style="flex:1">
+                    <div style="font-size:13px;font-weight:600;${isDone?'text-decoration:line-through;opacity:0.6':''}">${p.title}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${acct.platform} · ${p.type}</div>
+                </div>
+                ${!isDone ? `<button onclick="markPostPosted(${realIdx})" style="background:var(--green);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer">已发</button>` : ''}
+            </div>
+        `;
+    }).join('');
+}
+
+function renderHeatmap() {
+    const container = document.getElementById('publishHeatmap');
+    if (!container) return;
+    const today = new Date();
+    const labels = ['一','二','三','四','五','六','日'];
+    const dayOfWeek = today.getDay() || 7;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - dayOfWeek + 1);
+    container.innerHTML = '';
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        const ds = d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+        const count = posts.filter(p => p.date === ds && p.status === 'posted').length;
+        const isToday = d.toDateString() === today.toDateString();
+        const cell = document.createElement('div');
+        cell.className = 'heat-cell ' + (isToday ? 'today' : '');
+        cell.innerHTML = `<div class="heat-count">${count}</div><div style="font-size:9px;color:var(--text-mute);margin-top:2px">${labels[i]}</div>`;
+        container.appendChild(cell);
+    }
+}
+
+function renderTemplates() {
+    const container = document.getElementById('contentTemplates');
+    if (!container) return;
+    container.innerHTML = contentTemplates.map((t, i) => `
+        <div class="template-card" onclick="useTemplate(${i})">
+            <div class="template-title">${t.title} <span style="font-size:9px;color:var(--orange);background:rgba(255,107,26,0.1);padding:1px 4px;border-radius:3px">${t.tag}</span></div>
+            <div class="template-desc">${t.desc}</div>
+        </div>
+    `).join('');
+}
+
+function useTemplate(i) {
+    const t = contentTemplates[i];
+    document.getElementById('postTitle').value = t.title;
+    document.getElementById('postNotes').value = t.desc + '，关键词：' + t.tag;
+    openPostModal();
+}
+
+function renderContentBadge() {
+    const today = todayStr();
+    const pending = posts.filter(p => p.date === today && p.status === 'pending').length;
+    const badge = document.getElementById('contentBadge');
+    if (badge) badge.textContent = pending > 0 ? pending : '0';
+}
+
+function renderContentMatrix() {
+    renderAccounts();
+    renderPosts();
+    renderTodayPublish();
+    renderHeatmap();
+    renderTemplates();
+    renderContentBadge();
+    renderMonetizationMap();
+}
+
+// ========== 变现地图 ==========
+const monetizationMap = [
+    { icon: '🛠', name: 'AI定制开发', desc: '为企业/个人定制AI应用/系统/工具', price: '1w-20w+', color: '#FF6B1A' },
+    { icon: '📦', name: '产品售卖', desc: '自研AI工具/应用 · SaaS订阅/一次性买断', price: '199-999+/年', color: '#4D9DFF' },
+    { icon: '📚', name: '知识付费', desc: 'AI课程/训练营/资料 · 系统化知识产品', price: '99-999+', color: '#00D9A3' },
+    { icon: '🏪', name: '电商服务', desc: '报白/授权/入驻/代运营/违规处理', price: '2k-10w+', color: '#FFD93D' },
+    { icon: '📢', name: '广告合作', desc: '品牌广告/产品推广/工具课程活动推广', price: '1k-10w+', color: '#A66BFF' },
+    { icon: '🤝', name: '项目共创/投资', desc: '合伙做项目/产品 · 投资早期AI项目', price: '分成/股权', color: '#FF4757' },
+];
+
+function renderMonetizationMap() {
+    const container = document.getElementById('monetizationMap');
+    if (!container) return;
+    container.innerHTML = monetizationMap.map(m => `
+        <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:8px;border-left:3px solid ${m.color};display:flex;align-items:center;gap:10px">
+            <div style="font-size:24px;width:36px;text-align:center">${m.icon}</div>
+            <div style="flex:1">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+                    <div style="font-size:13px;font-weight:600">${m.name}</div>
+                    <div style="font-size:11px;color:${m.color};font-weight:600">${m.price}</div>
+                </div>
+                <div style="font-size:10px;color:var(--text-mute)">${m.desc}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ========== 初始化 ==========
+renderRings();
+renderWeek();
+renderTasks();
+renderHabits();
+renderFinance();
+renderCrm();
+renderRefunds();
+renderStudies();
+renderReviews();
+renderChannel();
+renderBizLines();
+renderChannelGoals();
+renderBizOverview();
+renderServices();
+renderTodayFocus();
+renderInspirations();
+updateQuote();
+renderContentMatrix();
+</script>
+
 </body>
 </html>
