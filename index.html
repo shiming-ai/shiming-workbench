@@ -1308,7 +1308,8 @@ body {
             你的所有数据存在本地浏览器，清理缓存会丢失。<br>建议每周导出一次备份。
         </div>
         <button onclick="exportData()" style="width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer;margin-bottom:8px">📥 导出全部数据</button>
-        <button onclick="document.getElementById('importFile').click()" style="width:100%;padding:12px;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:13px;cursor:pointer">📤 导入数据</button>
+        <button onclick="document.getElementById('importFile').click()" style="width:100%;padding:12px;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:13px;cursor:pointer;margin-bottom:8px">📤 导入数据</button>
+        <button onclick="restorePresetData()" style="width:100%;padding:12px;background:linear-gradient(135deg,#FF6B1A,#FF8E53);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer">🔄 一键恢复预设数据（账号+今日入账）</button>
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     </div>
 
@@ -2443,8 +2444,11 @@ function renderDailyReport() {
     // 当天任务模板
     const todayTasks = dailyTaskTemplates[day] || dailyTaskTemplates[1];
 
-    // 今日收入（从localStorage读）
-    const incomes = load('incomes', []);
+    // 今日收入（从localStorage读，如果没有用预设默认值）
+    const defaultIncomes = [
+        { amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' }
+    ];
+    const incomes = load('incomes', defaultIncomes);
     const today = todayStr();
     const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
 
@@ -2630,6 +2634,41 @@ function copyQuote() {
     } else {
         toast(text);
     }
+}
+
+// ========== 一键恢复预设数据 ==========
+function restorePresetData() {
+    if (!confirm('将恢复6个账号矩阵 + 今日入账（850收入/500支出）到工作台。\n你手动填的其他数据不会被清除。\n\n确认恢复？')) return;
+
+    // 恢复账号矩阵
+    const presetAccounts = [
+        { id: 'main_xhs', name: 'Crazy Friday｜疯狂星期五', handle: 'R26184352', platform: '小红书', position: 'AI一人公司实践者', role: '品牌IP号（主阵地）', tags: ['AI应用分享','产品实验记录','商业思考/案例','行业解决方案'], isMain: true, followers: 46, posts: 5, goal: 1000 },
+        { id: 'xhs_2', name: 'Friday Lab.｜星期五实验室', handle: '', platform: '小红书', position: 'AI工具合集+效率技巧', role: '流量截流号', tags: ['AI工具合集','AI效率技巧','实用干货内容','截流引流'], isMain: false, followers: 0, posts: 0, goal: 1000 },
+        { id: 'xhs_3', name: 'CF Lab.｜AI产品实验室', handle: '', platform: '小红书', position: '产品开发过程+技术拆解', role: '实验记录号', tags: ['产品开发过程','技术拆解分享','行业案例拆解','冷启动测试'], isMain: false, followers: 0, posts: 0, goal: 1000 },
+        { id: 'dy_ks', name: 'Crazy Friday·AI｜疯狂星期五AI', handle: '', platform: '抖音/快手', position: 'AI工具测评+创业日记', role: '短视频流量号', tags: ['AI工具测评','AI创业日记','AI搞笑/热点','短视频种草'], isMain: false, followers: 0, posts: 0, goal: 5000 },
+        { id: 'manju', name: '小野原爱｜AI漫剧创作', handle: '', platform: '快手/抖音', position: 'AI漫剧+剧情动画', role: '内容变现号', tags: ['AI漫剧创作','剧情动画内容','涨粉变现','私域引流'], isMain: false, followers: 0, posts: 0, goal: 3000 },
+        { id: 'ec_service', name: '++电商笔记', handle: '', platform: '小红书/私域', position: '报白/解封/代运营服务', role: '电商服务号', tags: ['报白/授权/入驻','违规处理/代运营','电商干货/案例','私域变现'], isMain: false, followers: 0, posts: 0, goal: 500 }
+    ];
+    save('accounts', presetAccounts);
+
+    // 恢复今日入账
+    const today = todayStr();
+    const existingIncomes = load('incomes', []);
+    const hasTodayIncome = existingIncomes.some(i => i.time.startsWith(today) && i.source.includes('报白'));
+    if (!hasTodayIncome) {
+        existingIncomes.push({ amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' });
+        save('incomes', existingIncomes);
+    }
+
+    const existingExpenses = load('expenses', []);
+    const hasTodayExpense = existingExpenses.some(e => e.time.startsWith(today) && e.source.includes('报白'));
+    if (!hasTodayExpense) {
+        existingExpenses.push({ amount: 500, source: '报白教育类目成本', time: '2026.07.25 02:20' });
+        save('expenses', existingExpenses);
+    }
+
+    toast('✅ 预设数据已恢复，刷新页面��看');
+    setTimeout(() => location.reload(), 1500);
 }
 
 // ========== 数据备份 ==========
