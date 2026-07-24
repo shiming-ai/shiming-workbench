@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI变现灵感 · 时铭的工作台</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --bg: #050505;
+    --card: #0d0d12;
+    --card2: #13131a;
+    --border: #1f1f2e;
+    --text: #e8e8f0;
+    --text-dim: #8a8aa3;
+    --text-mute: #55556b;
+    --orange: #FF6B1A;
+    --purple: #A855F7;
+    --green: #22C55E;
+    --blue: #3B82F6;
+    --yellow: #FACC15;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 90px;
+}
+.hero {
+    background: radial-gradient(ellipse at top right, rgba(168,85,247,0.15) 0%, transparent 50%);
+    padding: 24px 16px 20px;
+    text-align: center;
+}
+.hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(90deg, #fff, var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-sub { font-size: 12px; color: var(--text-dim); }
+
+.section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 0 16px 16px;
+    border: 1px solid var(--border);
+}
+.sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.sec-title {
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sec-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+
+/* 筛选标签 */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+.filter-tab {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    background: var(--card2);
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+}
+.filter-tab.active {
+    background: var(--orange);
+    color: #fff;
+    border-color: transparent;
+}
+
+/* 灵感卡片 */
+.insp-card {
+    background: var(--card2);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+}
+.insp-card:active { border-color: var(--orange); }
+.insp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+.insp-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(255,107,26,0.1);
+    color: var(--orange);
+}
+.insp-date { font-size: 10px; color: var(--text-mute); }
+.insp-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+.insp-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+.insp-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.insp-action {
+    font-size: 10px;
+    padding: 4px 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 6px;
+    cursor: pointer;
+}
+.insp-action:hover { color: var(--orange); border-color: var(--orange); }
+
+/* 我的收藏 */
+.empty {
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 12px;
+    padding: 20px;
+}
+
+/* 回到工作台 */
+.back-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(5,5,5,0.95);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px 20px;
+    z-index: 100;
+}
+.back-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-title">💡 AI变现灵感</div>
+    <div class="hero-sub">每天更新 · 帮你发现AI赚钱机会</div>
+</div>
+
+<!-- 今日灵感 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">🔥</div>今日灵感</div>
+        <div class="sec-more" id="todayDate"></div>
+    </div>
+    <div id="todayInspiration"></div>
+</div>
+
+<!-- 灵感库 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">📚</div>灵感库</div>
+        <div class="sec-more">可按标签筛选</div>
+    </div>
+    <div class="filter-tabs">
+        <div class="filter-tab active" onclick="filter('all', this)">全部</div>
+        <div class="filter-tab" onclick="filter('AI开发', this)">AI开发</div>
+        <div class="filter-tab" onclick="filter('内容创作', this)">内容创作</div>
+        <div class="filter-tab" onclick="filter('电商', this)">电商</div>
+        <div class="filter-tab" onclick="filter('工具变现', this)">工具变现</div>
+    </div>
+    <div id="inspirationList"></div>
+</div>
+
+<!-- 回到工作台 -->
+<div class="back-bar">
+    <button class="back-btn" onclick="location.href='index.html'">← 返回工作台</button>
+</div>
+
+<script>
+const inspirations = [
+    {
+        date: '2026.07.24',
+        tag: 'AI开发',
+        title: 'AI客服机器人 + 电商场景 = 稳定复购',
+        desc: '用灵光/飞书妙搭帮淘宝/拼多多/抖音商家搭AI客服，处理售前咨询、售后问题。客单价3000-8000，维护费500/月。需求量大，因为商家想省人工。',
+        actions: ['尝试接单', '做Demo'],
+    },
+    {
+        date: '2026.07.24',
+        tag: '内容创作',
+        title: 'AI漫剧博主转型：不卖流量卖方法',
+        desc: '不要只做二创，转型做"我用AI做漫剧"教学博主。粉丝粘性更高，变现路径：卖模板、卖课程、接定制。你已经有1.9w抖音+1.1w快手基础。',
+        actions: ['发转型视频', '做课程大纲'],
+    },
+    {
+        date: '2026.07.24',
+        tag: '工具变现',
+        title: '把服务商经验做成标准化模板',
+        desc: '把类目报白、账号解封、店铺申诉的流程做成SOP模板+话术库，卖给同行或小白。定价99-299，边际成本为零。',
+        actions: ['整理SOP', '上架闲鱼'],
+    },
+    {
+        date: '2026.07.23',
+        tag: '电商',
+        title: '本地生活团购开通是个被低估的刚需',
+        desc: '很多实体店想做抖音团购但不会开通。这个服务客单价1500-3000，操作简单，靠信息不对称赚钱。可在闲鱼/本地社群推广。',
+        actions: ['闲鱼上架', '本地群推广'],
+    },
+    {
+        date: '2026.07.23',
+        tag: 'AI开发',
+        title: '数据看板：小企业的刚需',
+        desc: '帮小电商/工作室搭销售数据看板，自动汇总订单、利润、库存。用飞书妙搭3小时搞定，卖3000-8000。客户续费率极高。',
+        actions: ['做Demo', '找3个潜在客户'],
+    },
+    {
+        date: '2026.07.22',
+        tag: '内容创作',
+        title: '"负债翻盘日记"是顶级流量密码',
+        desc: '真实记录负债80万到翻盘的每一天。人不相信完美人设，但会相信真实的挣扎。你的日记本身就是最好的课程招生素材。',
+        actions: ['发第一篇', '建小报童'],
+    },
+    {
+        date: '2026.07.22',
+        tag: '工具变现',
+        title: 'AI生成商品主图/详情页',
+        desc: '用Midjourney/即梦帮电商卖家生成商品主图、详情页。客单价30-100/组，适合闲鱼引流。量大可以月入过万。',
+        actions: ['上架闲鱼', '做5套样例'],
+    },
+    {
+        date: '2026.07.21',
+        tag: '电商',
+        title: '账号合规转让的灰色刚需',
+        desc: '很多老板需要买现成账号启动业务。账号转让+合规过户服务，客单价1000-3000。注意法律风险，只做合规转让。',
+        actions: ['整理流程', '找客户'],
+    },
+];
+
+function load(k, d) { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }
+function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+
+function todayStr() {
+    const d = new Date();
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+}
+
+let currentFilter = 'all';
+
+function render() {
+    document.getElementById('todayDate').textContent = todayStr();
+
+    const todayList = inspirations.filter(i => i.date === todayStr());
+    const todayEl = document.getElementById('todayInspiration');
+    if (todayList.length === 0) {
+        todayEl.innerHTML = '<div class="empty">今天暂无新灵感，明天再来</div>';
+    } else {
+        todayEl.innerHTML = todayList.map(cardHTML).join('');
+    }
+
+    const list = inspirations.filter(i => currentFilter === 'all' || i.tag === currentFilter);
+    document.getElementById('inspirationList').innerHTML = list.map(cardHTML).join('');
+}
+
+function cardHTML(item) {
+    return `
+        <div class="insp-card">
+            <div class="insp-header">
+                <span class="insp-tag">${item.tag}</span>
+                <span class="insp-date">${item.date}</span>
+            </div>
+            <div class="insp-title">${item.title}</div>
+            <div class="insp-desc">${item.desc}</div>
+            <div class="insp-meta">
+                ${item.actions.map(a => `<span class="insp-action" onclick="saveIdea('${a} - ${item.title}')">${a}</span>`).join('')}
+                <span class="insp-action" onclick="saveIdea('${item.title}')">⭐ 收藏</span>
+            </div>
+        </div>
+    `;
+}
+
+function saveIdea(text) {
+    let saved = load('savedIdeas', []);
+    saved.push({ text, time: todayStr() });
+    save('savedIdeas', saved);
+    alert('已收藏到灵感速记：' + text);
+}
+
+function filter(tag, el) {
+    currentFilter = tag;
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    render();
+}
+
+render();
+</script>
+
+</body>
+</html>
