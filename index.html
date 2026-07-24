@@ -3145,9 +3145,9 @@ function renderAccounts() {
 
             <div class="account-meta">
                 <span>ID: ${a.handle || '-'}</span>
-                <span>粉丝: <span onclick="editAccountNumber(${i}, 'followers')" style="color:var(--orange);cursor:pointer;padding:2px 4px;border-radius:4px;background:rgba(255,107,26,0.1)">${a.followers || 0}</span></span>
-                <span>已发: <span onclick="editAccountNumber(${i}, 'posts')" style="color:var(--orange);cursor:pointer;padding:2px 4px;border-radius:4px;background:rgba(255,107,26,0.1)">${a.posts || 0}</span></span>
-                <span>目标: <span onclick="editAccountNumber(${i}, 'goal')" style="color:var(--orange);cursor:pointer;padding:2px 4px;border-radius:4px;background:rgba(255,107,26,0.1)">${a.goal || 1000}</span></span>
+                <span>粉丝: <span onclick="editAccountNumber(${i}, 'followers')" style="color:var(--text);cursor:pointer;padding-bottom:1px;border-bottom:1px dashed var(--text-dim)">${a.followers || 0}</span></span>
+                <span>已发: <span onclick="editAccountNumber(${i}, 'posts')" style="color:var(--text);cursor:pointer;padding-bottom:1px;border-bottom:1px dashed var(--text-dim)">${a.posts || 0}</span></span>
+                <span>目标: <span onclick="editAccountNumber(${i}, 'goal')" style="color:var(--text);cursor:pointer;padding-bottom:1px;border-bottom:1px dashed var(--text-dim)">${a.goal || 1000}</span></span>
             </div>
             <div style="display:flex;gap:6px;margin-top:8px">
                 <button onclick="updateAccountField(${i}, 'followers', 1)" style="font-size:10px;padding:4px 8px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer">+粉</button>
