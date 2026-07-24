@@ -1576,8 +1576,13 @@ function renderHabits() {
 }
 
 // ========== 财务 ==========
-let incomes = load('incomes', []);
-let expenses = load('expenses', []);
+// 注意：默认数据作为新设备/清缓存时的恢复基准。localStorage已有数据时不覆盖。
+let incomes = load('incomes', [
+    { amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' }
+]);
+let expenses = load('expenses', [
+    { amount: 500, source: '报白教育类目成本', time: '2026.07.25 02:20' }
+]);
 
 function renderFinance() {
     // 收入列表
