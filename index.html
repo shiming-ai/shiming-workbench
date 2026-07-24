@@ -95,7 +95,7 @@ body {
     padding: 12px 10px;
     text-align: center;
 }
-.hero-stat .val { font-size: 18px; font-weight: 700; }
+.hero-stat .val { font-size: 18px; font-weight: 700; word-break: break-all; }
 .hero-stat .lbl { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
 .val.green { color: var(--green); }
 .val.red { color: var(--red); }
@@ -1725,6 +1725,12 @@ function addIncome() {
     renderFinance();
     renderRings();
     renderWeek();
+    renderBizOverview();
+    renderBizLines();
+    renderDailyReport();
+    renderWeekPlan();
+    renderTodayFocus();
+    renderAccounts();
     toast('收入已记录 +¥' + a);
 }
 function addExpense() {
@@ -1736,6 +1742,9 @@ function addExpense() {
     document.getElementById('expenseAmount').value = '';
     renderFinance();
     renderRings();
+    renderDailyReport();
+    renderWeekPlan();
+    renderTodayFocus();
     toast('支出已记录 -¥' + a);
 }
 
@@ -1973,15 +1982,30 @@ function cycleRefundStatus(i) {
 function addRefundPayment(i) {
     const amount = prompt('本次还款金额？', '');
     if (!amount) return;
-    refundList[i].paid = (refundList[i].paid || 0) + parseFloat(amount);
+    const amt = parseFloat(amount);
+    refundList[i].paid = (refundList[i].paid || 0) + amt;
     if (refundList[i].paid >= refundList[i].total) {
         refundList[i].status = '已退款';
     } else if (refundList[i].status === '催款中') {
         refundList[i].status = '部分退款';
     }
     save('refundList', refundList);
+
+    // 联动：更新退款还款总额（翻盘进度环）
+    const paidDebt = load('paidDebt', 0) + amt;
+    save('paidDebt', paidDebt);
+
+    // 联动：记一笔支出
+    const expenses = load('expenses', []);
+    expenses.push({ amount: amt, source: `退款还款·${refundList[i].name}`, time: nowStr() });
+    save('expenses', expenses);
+
     renderRefunds();
-    toast('还款¥' + amount + '已记录');
+    renderRings();
+    renderFinance();
+    renderDailyReport();
+    renderWeekPlan();
+    toast('还款¥' + amount + '已记录，已同步到财务和翻盘进度');
 }
 
 function copyRefundInfo(i) {
@@ -2041,7 +2065,28 @@ function calcAlloc() {
 function cycleStatus(i) {
     const order = ['lead', 'contact', 'deal', 'fail'];
     const cur = order.indexOf(crmList[i].status);
-    crmList[i].status = order[(cur + 1) % order.length];
+    const oldStatus = crmList[i].status;
+    const newStatus = order[(cur + 1) % order.length];
+    crmList[i].status = newStatus;
+
+    // 成交时自动记收入到财务
+    if (newStatus === 'deal' && oldStatus !== 'deal' && crmList[i].amount > 0) {
+        const incomes = load('incomes', []);
+        const source = `${crmList[i].business || '客户'}·${crmList[i].name}`;
+        incomes.push({ amount: crmList[i].amount, source, time: nowStr() });
+        save('incomes', incomes);
+        renderFinance();
+        renderRings();
+        renderWeek();
+        renderBizOverview();
+        renderBizLines();
+        renderDailyReport();
+        renderWeekPlan();
+        renderTodayFocus();
+        renderAccounts();
+        toast(`✅ 成交！已自动入账 ¥${crmList[i].amount}`);
+    }
+
     save('crmList', crmList);
     renderCrm();
 }
@@ -3037,6 +3082,8 @@ function updateAccountField(i, field, delta) {
     accounts[i][field] = Math.max(0, (accounts[i][field] || 0) + delta);
     saveAccounts();
     renderAccounts();
+    renderBizOverview();
+    renderContentBadge();
 }
 
 function delAccount(i) {
@@ -3044,6 +3091,8 @@ function delAccount(i) {
     accounts.splice(i, 1);
     saveAccounts();
     renderContentMatrix();
+    renderBizOverview();
+    renderContentBadge();
 }
 
 function renderAccounts() {
@@ -3127,8 +3176,13 @@ function addAccountIncome(accountIdx) {
     save('incomes', incomes);
     renderAccounts();
     renderFinance();
+    renderRings();
+    renderWeek();
+    renderBizOverview();
+    renderBizLines();
     renderDailyReport();
     renderWeekPlan();
+    renderTodayFocus();
     toast(`已记录 +¥${amount}（${source}）`);
 }
 
@@ -3143,6 +3197,8 @@ function editAccountNumber(i, field) {
     a[field] = num;
     saveAccounts();
     renderAccounts();
+    renderBizOverview();
+    renderContentBadge();
     toast('已更新');
 }
 
