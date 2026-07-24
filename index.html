@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="时铭工作台">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a0b0f'/%3E%3Ctext x='256' y='320' font-size='280' text-anchor='middle' fill='%23FF6B1A'%3E%E6%97%B6%3C/text%3E%3C/svg%3E">
 <title>时铭 · 翻盘作战指挥中心</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -3227,6 +3235,35 @@ renderWeekPlan();
 renderInspirations();
 updateQuote();
 renderContentMatrix();
+
+// ========== 自动版本检测（打开工作台时静默检查更新）==========
+(function autoUpdateCheck() {
+    const CACHE_KEY = 'wb_version_cache';
+    const CHECK_URL = 'https://api.github.com/repos/shiming-ai/shiming-workbench/commits/main';
+    const lastCheck = sessionStorage.getItem('wb_check_time');
+    const now = Date.now();
+
+    // 每次打开只检查一次（sessionStorage会在关闭后清除）
+    if (lastCheck && now - parseInt(lastCheck) < 60000) return;
+    sessionStorage.setItem('wb_check_time', now.toString());
+
+    fetch(CHECK_URL, { cache: 'no-store' })
+        .then(r => r.json())
+        .then(data => {
+            const latestSha = data.sha;
+            const knownSha = localStorage.getItem(CACHE_KEY);
+            if (knownSha && knownSha !== latestSha) {
+                // 有新版本，自动刷新
+                console.log('检测到新版本，自动刷新...');
+                localStorage.setItem(CACHE_KEY, latestSha);
+                setTimeout(() => location.reload(), 500);
+            } else if (!knownSha) {
+                // 首次记录版本
+                localStorage.setItem(CACHE_KEY, latestSha);
+            }
+        })
+        .catch(() => {}); // 静默失败，不影响使用
+})();
 </script>
 
 </body>
