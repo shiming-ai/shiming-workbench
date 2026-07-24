@@ -2969,7 +2969,24 @@ function renderAccounts() {
     document.getElementById('accountCount').textContent = accounts.length + '个账号';
     list.innerHTML = '';
     if (accounts.length === 0) list.innerHTML = '<div class="empty">还没有账号，先添加主账号</div>';
+
+    const today = todayStr();
+    const allIncomes = load('incomes', []);
+
     accounts.forEach((a, i) => {
+        // 计算该账号今日变现（按账号名/角色匹配收入来源）
+        const accountIncome = allIncomes.filter(inc => {
+            if (!inc.time.startsWith(today)) return false;
+            const source = inc.source || '';
+            return source.includes(a.name) ||
+                   (a.role === '电商服务号' && source.includes('报白')) ||
+                   (a.role === '短视频流量号' && source.includes('抖音')) ||
+                   (a.role === '短视频流量号' && source.includes('视频号')) ||
+                   (a.role === '内容变现号' && source.includes('漫剧')) ||
+                   (a.role === '实验记录号' && source.includes('开发')) ||
+                   (a.role === '品牌IP号（主阵地）' && (source.includes('知识') || source.includes('广告')));
+        }).reduce((s, inc) => s + inc.amount, 0);
+
         const div = document.createElement('div');
         div.className = 'account-card ' + (a.isMain ? 'main' : '');
         div.innerHTML = `
@@ -2984,11 +3001,21 @@ function renderAccounts() {
             <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
                 ${(a.tags || []).map(t => `<span style="font-size:9px;padding:2px 6px;background:var(--card2);color:var(--text-mute);border-radius:4px">${t}</span>`).join('')}
             </div>
+
+            <!-- 今日变现 -->
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(0,217,163,0.08);border-radius:8px;margin-bottom:10px">
+                <div>
+                    <div style="font-size:10px;color:var(--text-mute)">今日变现</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--green)">${accountIncome > 0 ? '+¥' + accountIncome : '¥0'}</div>
+                </div>
+                <button onclick="addAccountIncome(${i})" style="font-size:11px;padding:5px 10px;background:var(--green);color:#fff;border:none;border-radius:6px;cursor:pointer">+ 记一笔</button>
+            </div>
+
             <div class="account-meta">
                 <span>ID: ${a.handle || '-'}</span>
-                <span>粉丝: ${a.followers || 0}</span>
-                <span>已发: ${a.posts || 0}</span>
-                <span>目标: ${a.goal || 1000}</span>
+                <span>粉丝: <span onclick="editAccountNumber(${i}, 'followers')" style="color:var(--orange);cursor:pointer;padding:2px 4px;border-radius:4px;background:rgba(255,107,26,0.1)">${a.followers || 0}</span></span>
+                <span>已发: <span onclick="editAccountNumber(${i}, 'posts')" style="color:var(--orange);cursor:pointer;padding:2px 4px;border-radius:4px;background:rgba(255,107,26,0.1)">${a.posts || 0}</span></span>
+                <span>目标: <span onclick="editAccountNumber(${i}, 'goal')" style="color:var(--orange);cursor:pointer;padding:2px 4px;border-radius:4px;background:rgba(255,107,26,0.1)">${a.goal || 1000}</span></span>
             </div>
             <div style="display:flex;gap:6px;margin-top:8px">
                 <button onclick="updateAccountField(${i}, 'followers', 1)" style="font-size:10px;padding:4px 8px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer">+粉</button>
@@ -2998,6 +3025,42 @@ function renderAccounts() {
         `;
         list.appendChild(div);
     });
+}
+
+// 给账号快速记一笔收入，自动同步到财务
+function addAccountIncome(accountIdx) {
+    const a = accounts[accountIdx];
+    const amount = prompt(`给【${a.name}】记一笔收入\n请输入金额：`, '');
+    if (!amount || isNaN(parseFloat(amount))) return;
+
+    const source = a.role === '电商服务号' ? `${a.name}·报白服务` :
+                   a.role === '短视频流量号' ? `${a.name}·短视频` :
+                   a.role === '内容变现号' ? `${a.name}·漫剧` :
+                   a.role === '实验记录号' ? `${a.name}·AI开发` :
+                   `${a.name}·变现`;
+
+    const incomes = load('incomes', []);
+    incomes.push({ amount: parseFloat(amount), source, time: nowStr() });
+    save('incomes', incomes);
+    renderAccounts();
+    renderFinance();
+    renderDailyReport();
+    renderWeekPlan();
+    toast(`已记录 +¥${amount}（${source}）`);
+}
+
+// 直接编辑账号数字字段
+function editAccountNumber(i, field) {
+    const a = accounts[i];
+    const current = a[field] || 0;
+    const val = prompt(`修改 ${a.name} 的 ${field === 'followers' ? '粉丝数' : field === 'posts' ? '已发数' : '目标数'}`, current);
+    if (val === null) return;
+    const num = parseInt(val);
+    if (isNaN(num) || num < 0) return toast('请输入有效数字');
+    a[field] = num;
+    saveAccounts();
+    renderAccounts();
+    toast('已更新');
 }
 
 function openPostModal() {
