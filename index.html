@@ -1449,6 +1449,38 @@ function toast(msg) {
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 1500);
 }
+
+// 通用输入弹窗（替代系统 prompt，风格统一）
+let promptResolve = null;
+function showPrompt(title, defaultValue = '') {
+    return new Promise((resolve) => {
+        promptResolve = resolve;
+        document.getElementById('promptTitle').textContent = title;
+        const input = document.getElementById('promptInput');
+        input.value = defaultValue;
+        input.setAttribute('type', 'text');
+        document.getElementById('promptModal').classList.remove('hidden');
+        setTimeout(() => input.focus(), 50);
+    });
+}
+function closePromptModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('promptModal').classList.add('hidden');
+    if (promptResolve) { promptResolve(null); promptResolve = null; }
+}
+function confirmPrompt() {
+    const val = document.getElementById('promptInput').value.trim();
+    document.getElementById('promptModal').classList.add('hidden');
+    if (promptResolve) { promptResolve(val); promptResolve = null; }
+}
+// 回车确认
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && promptResolve && !document.getElementById('promptModal').classList.contains('hidden')) {
+        confirmPrompt();
+    } else if (e.key === 'Escape' && promptResolve && !document.getElementById('promptModal').classList.contains('hidden')) {
+        closePromptModal();
+    }
+});
 function nowStr() {
     const d = new Date();
     return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
@@ -1867,8 +1899,8 @@ function copyOrderInfo(i) {
     }
 }
 
-function setFollowDate(i) {
-    const days = prompt('几天后跟进？(输入数字)', '3');
+async function setFollowDate(i) {
+    const days = await showPrompt('几天后跟进？', '3');
     if (!days) return;
     const d = new Date();
     d.setDate(d.getDate() + parseInt(days));
@@ -1979,8 +2011,8 @@ function cycleRefundStatus(i) {
     renderRefunds();
 }
 
-function addRefundPayment(i) {
-    const amount = prompt('本次还款金额？', '');
+async function addRefundPayment(i) {
+    const amount = await showPrompt('本次还款金额？');
     if (!amount) return;
     const amt = parseFloat(amount);
     refundList[i].paid = (refundList[i].paid || 0) + amt;
@@ -3160,9 +3192,9 @@ function renderAccounts() {
 }
 
 // 给账号快速记一笔收入，自动同步到财务
-function addAccountIncome(accountIdx) {
+async function addAccountIncome(accountIdx) {
     const a = accounts[accountIdx];
-    const amount = prompt(`给【${a.name}】记一笔收入\n请输入金额：`, '');
+    const amount = await showPrompt(`给【${a.name}】记一笔收入\n请输入金额：`);
     if (!amount || isNaN(parseFloat(amount))) return;
 
     const source = a.role === '电商服务号' ? `${a.name}·报白服务` :
@@ -3187,10 +3219,11 @@ function addAccountIncome(accountIdx) {
 }
 
 // 直接编辑账号数字字段
-function editAccountNumber(i, field) {
+async function editAccountNumber(i, field) {
     const a = accounts[i];
     const current = a[field] || 0;
-    const val = prompt(`修改 ${a.name} 的 ${field === 'followers' ? '粉丝数' : field === 'posts' ? '已发数' : '目标数'}`, current);
+    const label = field === 'followers' ? '粉丝数' : field === 'posts' ? '已发数' : '目标数';
+    const val = await showPrompt(`修改 ${a.name} 的 ${label}`, current.toString());
     if (val === null) return;
     const num = parseInt(val);
     if (isNaN(num) || num < 0) return toast('请输入有效数字');
@@ -3467,6 +3500,18 @@ renderContentMatrix();
         .catch(() => {}); // 静默失败，不影响使用
 })();
 </script>
+
+<!-- 通用输入弹窗 -->
+<div id="promptModal" class="hidden" onclick="closePromptModal(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div onclick="event.stopPropagation()" style="background:var(--card);width:100%;max-width:320px;border-radius:16px;padding:20px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <div id="promptTitle" style="font-size:15px;font-weight:600;margin-bottom:14px;line-height:1.5;color:var(--text)"></div>
+        <input type="text" id="promptInput" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:14px;outline:none;margin-bottom:16px" placeholder="请输入...">
+        <div style="display:flex;gap:10px">
+            <button onclick="closePromptModal()" style="flex:1;padding:11px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:10px;font-size:14px;cursor:pointer">取消</button>
+            <button onclick="confirmPrompt()" style="flex:1;padding:11px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:14px;cursor:pointer">确定</button>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
