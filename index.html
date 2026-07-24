@@ -893,6 +893,15 @@ body {
         <div class="week-calendar" id="weekCalendar"></div>
     </div>
 
+    <!-- 本周变现计划 -->
+    <div class="section" style="border:1px solid rgba(168,85,247,0.3);background:linear-gradient(135deg,rgba(168,85,247,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--purple)"></span>📌 本周变现计划</div>
+            <div class="sec-more" id="weekPlanMeta">第28周</div>
+        </div>
+        <div id="weekPlan"></div>
+    </div>
+
     <!-- 今日作战清单 -->
     <div class="section">
         <div class="sec-header">
@@ -927,10 +936,13 @@ body {
         <div class="fin-input">
             <input type="number" id="incomeAmount" placeholder="金额">
             <select id="incomeSource">
-                <option value="闲鱼">闲鱼</option>
-                <option value="AI开发">AI开发</option>
-                <option value="漫剧">漫剧</option>
-                <option value="服务商">服务商</option>
+                <option value="报白服务">报白服务</option>
+                <option value="AI开发">AI定制开发</option>
+                <option value="漫剧">AI漫剧</option>
+                <option value="知识付费">知识付费</option>
+                <option value="闲鱼">闲鱼售卖</option>
+                <option value="广告合作">广告合作</option>
+                <option value="产品售卖">产品售卖</option>
                 <option value="其他">其他</option>
             </select>
             <button onclick="addIncome()">+</button>
@@ -2345,6 +2357,126 @@ function renderServices() {
     `).join('');
 }
 
+// ========== 每周变现计划（自动生成）==========
+// 按周数轮换的周计划模板
+const weekPlanTemplates = [
+    {
+        theme: '报白服务冲刺周',
+        goal: 5000,
+        days: [
+            { day: '周一', focus: '闲鱼5个产品优化+小红书主号1条', target: '咨询≥3' },
+            { day: '周二', focus: '抖音/视频号发布AI工具测评', target: '新咨询≥1' },
+            { day: '周三', focus: '跟进报白客户+知乎引流回答', target: '成单≥1' },
+            { day: '周四', focus: 'AI漫剧脚本制作+电商服务号更新', target: '咨询≥2' },
+            { day: '周五', focus: '本周成单收尾+小红书商业思考', target: '收款≥1' },
+            { day: '周六', focus: '学习AI工具+下周选题排期', target: '轻量运营' },
+            { day: '周日', focus: '周复盘+6账号内容盘点', target: '计划下周' },
+        ]
+    },
+    {
+        theme: '内容涨粉周',
+        goal: 3000,
+        days: [
+            { day: '周一', focus: '小红书主号AI应用实战+实验室号实验记录', target: '发布2条' },
+            { day: '周二', focus: '抖音创业日记+知乎AI变现回答', target: '发布2条' },
+            { day: '周三', focus: 'AI漫剧新剧情上线+闲鱼咨询跟进', target: '漫剧1集' },
+            { day: '周四', focus: '流量截流号工具合集+电商服务号案例', target: '发布2条' },
+            { day: '周五', focus: '主号商业思考/案例+本周内容复盘', target: '发布1条' },
+            { day: '周六', focus: '爆款分析+下周选题策划', target: '选题5个' },
+            { day: '周日', focus: '休息+行业资讯学习', target: '充电' },
+        ]
+    },
+    {
+        theme: 'AI定制开发获客周',
+        goal: 10000,
+        days: [
+            { day: '周一', focus: '主动私信10个潜在客户（知乎/小红书）', target: '私信10' },
+            { day: '周二', focus: '发布AI开发案例+产品实验记录', target: '发布2条' },
+            { day: '周三', focus: '跟进意向客户+报价方案准备', target: '报价≥1' },
+            { day: '周四', focus: '客户项目推进+抖音工具测评', target: '进度更新' },
+            { day: '周五', focus: '成单推进+小红书一人公司账单', target: '成单≥1' },
+            { day: '周六', focus: 'AI工具学习+技术笔记', target: '学习1个' },
+            { day: '周日', focus: '周复盘+客户关系维护', target: '发朋友圈' },
+        ]
+    },
+    {
+        theme: '漫剧变现突破周',
+        goal: 4000,
+        days: [
+            { day: '周一', focus: 'AI漫剧新系列策划+第1集制作', target: '脚本完成' },
+            { day: '周二', focus: '漫剧第1集发布+小红书引流', target: '发布1集' },
+            { day: '周三', focus: '漫剧第2集制作+闲鱼咨询跟进', target: '制作中' },
+            { day: '周四', focus: '漫剧第2集发布+抖音同步', target: '发布1集' },
+            { day: '周五', focus: '主号发布漫剧幕后+商业思考', target: '发布1条' },
+            { day: '周六', focus: '漫剧数据复盘+下周剧本', target: '复盘' },
+            { day: '周日', focus: '休息+漫剧赛道调研', target: '调研' },
+        ]
+    },
+];
+
+function getWeekNumber() {
+    const d = new Date();
+    const onejan = new Date(d.getFullYear(), 0, 1);
+    return Math.ceil((((d - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+}
+
+function renderWeekPlan() {
+    const weekNum = getWeekNumber();
+    const plan = weekPlanTemplates[(weekNum - 1) % weekPlanTemplates.length];
+
+    // 本周已实现收入
+    const incomes = load('incomes', []);
+    const now = new Date();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    monday.setHours(0, 0, 0, 0);
+    const weekIncome = incomes.filter(i => {
+        const d = new Date(i.time.replace(/\./g, '/').replace(' ', 'T'));
+        return d >= monday;
+    }).reduce((s, i) => s + i.amount, 0);
+
+    const progress = Math.min(100, (weekIncome / plan.goal) * 100);
+
+    document.getElementById('weekPlanMeta').textContent = `第${weekNum}周 · ${plan.theme}`;
+
+    const el = document.getElementById('weekPlan');
+    el.innerHTML = `
+        <!-- 周目标进度 -->
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <span style="font-size:12px;color:var(--text-mute)">本周变现目标</span>
+                <span style="font-size:14px;font-weight:700;color:var(--purple)">¥${plan.goal.toLocaleString()}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <span style="font-size:11px;color:var(--text-dim)">已实现</span>
+                <span style="font-size:13px;font-weight:600;color:var(--green)">¥${weekIncome.toLocaleString()}（${progress.toFixed(0)}%）</span>
+            </div>
+            <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--purple),var(--green));border-radius:4px;transition:width 0.5s"></div>
+            </div>
+        </div>
+
+        <!-- 7天计划 -->
+        ${plan.days.map((d, i) => {
+            const today = new Date().getDay();
+            const dayMap = { '周一': 1, '周二': 2, '周三': 3, '周四': 4, '周五': 5, '周六': 6, '周日': 0 };
+            const isToday = dayMap[d.day] === today;
+            return `
+            <div style="display:flex;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:6px;${isToday ? 'border:1px solid var(--orange)' : ''}">
+                <div style="width:42px;flex-shrink:0;text-align:center">
+                    <div style="font-size:12px;font-weight:700;color:${isToday ? 'var(--orange)' : 'var(--text)'}">${d.day}</div>
+                    ${isToday ? '<div style="font-size:9px;color:var(--orange);margin-top:2px">今天</div>' : ''}
+                </div>
+                <div style="flex:1">
+                    <div style="font-size:12px;color:var(--text);margin-bottom:3px">${d.focus}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">🎯 ${d.target}</div>
+                </div>
+            </div>
+            `;
+        }).join('')}
+    `;
+}
+
 // ========== 每日变现日报（自动生成，每天不同）==========
 // 按星期轮换的变现任务模板
 const dailyTaskTemplates = {
@@ -2352,19 +2484,19 @@ const dailyTaskTemplates = {
         { text: '闲鱼5个产品检查+优化标题首图', time: '10:00' },
         { text: '小红书主号发布1条AI应用实战', time: '14:00' },
         { text: '主动私信5个潜在客户（知乎/小红书）', time: '16:00' },
-        { text: '跟进上周咨询客户，推进成单', time: '17:00' },
+        { text: '跟进上周报白咨询客户，推进成单', time: '17:00' },
         { text: '记录今日变现数据', time: '22:00' },
     ],
     2: [ // 周二
         { text: '抖音/视频号发布1条AI工具测评', time: '11:00' },
         { text: '闲鱼上新1个产品+回复咨询', time: '14:00' },
         { text: '知乎写1篇AI变现回答（带引流）', time: '16:00' },
-        { text: 'AI漫剧账号内容策划', time: '19:00' },
+        { text: 'AI漫剧账号内容策划+脚本', time: '19:00' },
         { text: '记录今日变现数据', time: '22:00' },
     ],
     3: [ // 周三
         { text: '小红书实验室号发布1条实验记录', time: '10:00' },
-        { text: '客户项目进度推进（AI定制开发）', time: '14:00' },
+        { text: '报白客户项目进度推进+交付', time: '14:00' },
         { text: '闲鱼优化+跟进意向客户', time: '16:00' },
         { text: '复盘本周前3天数据，调整策略', time: '20:00' },
         { text: '记录今日变现数据', time: '22:00' },
@@ -2372,13 +2504,13 @@ const dailyTaskTemplates = {
     4: [ // 周四
         { text: '短视频流量号发布1条创业日记', time: '11:00' },
         { text: '主动获客：知乎/小红书/闲鱼各1次', time: '14:00' },
-        { text: 'AI漫剧脚本+制作推进', time: '16:00' },
-        { text: '电商服务号内容更新', time: '19:00' },
+        { text: 'AI漫剧制作推进（周末集中产出）', time: '16:00' },
+        { text: '电商服务号内容更新+报白案例', time: '19:00' },
         { text: '记录今日变现数据', time: '22:00' },
     ],
     5: [ // 周五
         { text: '小红书主号发布1条商业思考/案例', time: '10:00' },
-        { text: '本周成单客户收尾+收款', time: '14:00' },
+        { text: '本周报白成单客户收尾+收款', time: '14:00' },
         { text: '闲鱼周末备货+咨询集中回复', time: '16:00' },
         { text: '本周复盘：收入/支出/转化率', time: '20:00' },
         { text: '记录今日变现数据', time: '22:00' },
@@ -2386,7 +2518,7 @@ const dailyTaskTemplates = {
     6: [ // 周六
         { text: '周末轻量：闲鱼咨询回复', time: '11:00' },
         { text: '学习1个新AI工具+做笔记', time: '14:00' },
-        { text: '下周内容选题排期', time: '16:00' },
+        { text: '下周内容选题排期（5个选题）', time: '16:00' },
         { text: 'AI漫剧制作（周末集中产出）', time: '19:00' },
         { text: '记录今日变现数据', time: '22:00' },
     ],
@@ -3091,6 +3223,7 @@ renderBizOverview();
 renderServices();
 renderTodayFocus();
 renderDailyReport();
+renderWeekPlan();
 renderInspirations();
 updateQuote();
 renderContentMatrix();
