@@ -1344,6 +1344,93 @@ body {
 
 </div>
 
+<!-- ===== 页面: AI定制服务 ===== -->
+<div id="page-service" class="hidden">
+
+    <!-- 服务介绍 -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>🚀 AI定制工作台服务</div>
+        </div>
+        <div style="padding:14px;background:var(--bg);border-radius:12px;margin-bottom:12px">
+            <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--green)">你的业务，AI帮你管</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                199块起，帮你定制一套专属AI工作台系统。<br>
+                客户管理、财务记账、订单追踪、内容排期...全在一个页面。<br>
+                手机打开就能用，数据永不丢失。
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                <span style="font-size:10px;padding:4px 8px;background:rgba(0,217,163,0.15);color:var(--green);border-radius:6px">✅ 1小时交付</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(255,107,26,0.15);color:var(--orange);border-radius:6px">✅ 手机直接用</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(168,85,247,0.15);color:var(--purple);border-radius:6px">✅ 永久域名</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(77,157,255,0.15);color:var(--blue);border-radius:6px">✅ 数据不丢</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5个行业模板 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📦 行业模板</div>
+            <div class="sec-more">5个方向</div>
+        </div>
+        <div id="templateList"></div>
+    </div>
+
+    <!-- 3档定价 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 定价方案</div>
+        </div>
+        <div id="pricingList"></div>
+    </div>
+
+    <!-- 下单表单 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--orange)"></span>📝 立即定制</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <input type="text" id="orderName" placeholder="你的称呼" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+                <input type="text" id="orderWechat" placeholder="微信号/手机" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none">
+            </div>
+            <select id="orderTemplate" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;margin-bottom:8px">
+                <option value="个人IP版">个人IP/一人公司版</option>
+                <option value="电商卖家版">电商卖家版</option>
+                <option value="自由职业版">自由职业者版</option>
+                <option value="餐饮实体店版">餐饮/实体店版</option>
+                <option value="通用职场版">通用职场版</option>
+            </select>
+            <select id="orderLevel" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;margin-bottom:8px">
+                <option value="基础版199">基础版 199元定制+99/月</option>
+                <option value="标准版599">标准版 599元定制+99/月</option>
+                <option value="旗舰版1999">旗舰版 1999元定制+199/月</option>
+            </select>
+            <textarea id="orderNeeds" placeholder="简单描述你的需求：做什么业务？需要哪些功能？" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none;min-height:80px;resize:vertical;font-family:inherit;margin-bottom:10px"></textarea>
+            <button onclick="submitOrder()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--orange),var(--green));color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer">🚀 提交定制需求</button>
+            <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:8px">提交后我会加你微信，1小时内沟通确认</div>
+        </div>
+    </div>
+
+    <!-- 交付流程 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📋 交付流程</div>
+        </div>
+        <div id="deliveryFlow"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>❓ 常见问题</div>
+        </div>
+        <div id="faqList"></div>
+    </div>
+
+</div>
+
 <!-- ===== 页面6: 更多工具 ===== -->
 <div id="page-more" class="hidden">
 
@@ -1501,6 +1588,10 @@ body {
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">工具箱</div>
+        <div class="sidebar-item" onclick="switchPage('service', this)" style="border-left:2px solid var(--green)">
+            <span class="sidebar-item-icon">🚀</span> AI定制服务
+            <span style="font-size:8px;padding:1px 5px;background:var(--green);color:#fff;border-radius:4px;margin-left:auto">赚钱</span>
+        </div>
         <div class="sidebar-item" onclick="switchPage('more', this)">
             <span class="sidebar-item-icon">⚙️</span> 更多工具
         </div>
@@ -2692,6 +2783,186 @@ function renderServices() {
             </div>
         </div>
     `).join('');
+}
+
+// ========== AI定制服务 ==========
+const serviceTemplates = [
+    {
+        icon: '🎯', name: '个人IP/一人公司版', color: 'var(--orange)',
+        target: '博主、自媒体、一人公司、超级个体',
+        features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '搞钱作战室', '翻盘进度环'],
+        price: '599定制+99/月', badge: '🔥 热门',
+        desc: '你正在用的就是这版，经过实战验证'
+    },
+    {
+        icon: '📦', name: '电商卖家版', color: 'var(--blue)',
+        target: '淘宝/拼多多/抖音电商卖家',
+        features: ['订单管理看板', '客户CRM', '库存追踪', '利润自动计算', '退款追踪', '供应商管理'],
+        price: '599定制+99/月', badge: '',
+        desc: '订单+客户+库存+利润，一个页面全搞定'
+    },
+    {
+        icon: '💻', name: '自由职业者版', color: 'var(--purple)',
+        target: '设计师、程序员、文案、咨询顾问',
+        features: ['项目管理', '客户追踪', '时间记录', '报价生成器', '收入统计', '作品集展示'],
+        price: '599定制+99/月', badge: '',
+        desc: '接单+交付+收款，自由职业者的全套工具'
+    },
+    {
+        icon: '🏪', name: '餐饮/实体店版', color: 'var(--yellow)',
+        target: '餐饮老板、奶茶店、个体店',
+        features: ['营业统计', '员工排班', '供应商管理', '会员CRM', '每日盘点', '成本核算'],
+        price: '1999定制+199/月', badge: '💰 高客单',
+        desc: '实体店专属，营业+排班+会员+盘点'
+    },
+    {
+        icon: '📊', name: '通用职场版', color: 'var(--green)',
+        target: '职场人、职员、学生',
+        features: ['任务管理', '学习记录', '习惯打卡', '收支记录', '目标追踪', '周报生成'],
+        price: '199定制+99/月', badge: '入门款',
+        desc: '个人成长+效率管理，适合所有人'
+    },
+];
+
+const pricingPlans = [
+    {
+        name: '基础版', price: 199, monthly: 99, color: 'var(--green)',
+        features: ['选1个模板', '改配色/标题', '基础功能配置', '1次修改机会', '永久域名', '7天售后'],
+        target: '个人/职员/小商贩',
+        popular: false
+    },
+    {
+        name: '标准版', price: 599, monthly: 99, color: 'var(--orange)',
+        features: ['选1个模板', '定制功能模块', '3次修改机会', '1对1需求沟通', '永久域名', '30天售后', '数据导入'],
+        target: '一人公司/自由职业/电商',
+        popular: true
+    },
+    {
+        name: '旗舰版', price: 1999, monthly: 199, color: 'var(--red)',
+        features: ['深度定制', '专属功能开发', '不限修改次数', '1对1专属顾问', '永久域名', '90天售后', '数据导入+培训', '优先支持'],
+        target: '小微企业/团队/餐饮',
+        popular: false
+    },
+];
+
+const deliverySteps = [
+    { step: 1, title: '提交需求', desc: '填写表单，描述你的业务和需求', time: '1分钟' },
+    { step: 2, title: '微信沟通', desc: '我加你微信，确认细节和报价', time: '1小时内' },
+    { step: 3, title: '支付定金', desc: '确认后支付50%定金，开始制作', time: '当天' },
+    { step: 4, title: '定制开发', desc: '用AI快速开发，实时沟通进度', time: '1-3天' },
+    { step: 5, title: '交付验收', desc: '发你链接，手机打开就能用', time: '第3天' },
+    { step: 6, title: '付尾款', desc: '满意后付尾款，开始售后服务', time: '验收后' },
+];
+
+const faqList = [
+    { q: '做出来的是什么？APP吗？', a: '是一个网页版工作台，手机浏览器打开就能用，可以添加到手机桌面，像APP一样。永久域名，不会失效。' },
+    { q: '数据存在哪里？安全吗？', a: '数据存在你自己的浏览器本地，不会上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。' },
+    { q: '我不懂技术能用吗？', a: '完全不用懂技术。你只需要告诉我你的业务和需求，剩下的我全搞定。交付后打开链接就能用。' },
+    { q: '以后想加功能怎么办？', a: '每月维护费包含小功能调整。大功能开发另计费，按需报价。' },
+    { q: '不满意能退吗？', a: '交付前可以提修改意见。交付后3天内不满意全额退款（已产生的定制成本除外）。' },
+    { q: '和别人用同一个模板会一样吗？', a: '模板只是基础框架，我会根据你的业务定制配色、功能、布局，每个人做出来都不一样。' },
+];
+
+function renderServicePage() {
+    // 模板列表
+    document.getElementById('templateList').innerHTML = serviceTemplates.map(t => `
+        <div style="padding:14px;background:var(--bg);border-radius:12px;margin-bottom:10px;border-left:3px solid ${t.color}">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <span style="font-size:24px">${t.icon}</span>
+                    <div>
+                        <div style="font-size:14px;font-weight:600">${t.name} ${t.badge ? `<span style="font-size:9px;padding:2px 6px;background:${t.color}22;color:${t.color};border-radius:4px;margin-left:4px">${t.badge}</span>` : ''}</div>
+                        <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${t.target}</div>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div style="font-size:13px;font-weight:700;color:${t.color}">${t.price}</div>
+                </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">${t.desc}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                ${t.features.map(f => `<span style="font-size:9px;padding:3px 6px;background:var(--card2);color:var(--text-mute);border-radius:4px">${f}</span>`).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    // 定价
+    document.getElementById('pricingList').innerHTML = pricingPlans.map(p => `
+        <div style="padding:14px;background:var(--bg);border-radius:12px;margin-bottom:10px;border:1px solid ${p.popular ? p.color : 'var(--border)'};${p.popular ? 'box-shadow:0 0 20px rgba(255,107,26,0.1)' : ''}">
+            ${p.popular ? '<div style="text-align:center;font-size:10px;color:var(--orange);margin-bottom:8px">⭐ 最多人选</div>' : ''}
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div style="font-size:15px;font-weight:700;color:${p.color}">${p.name}</div>
+                <div style="text-align:right">
+                    <div style="font-size:18px;font-weight:700;color:${p.color}">¥${p.price}</div>
+                    <div style="font-size:9px;color:var(--text-mute)">+¥${p.monthly}/月</div>
+                </div>
+            </div>
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">适合：${p.target}</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+                ${p.features.map(f => `<div style="font-size:11px;color:var(--text);display:flex;align-items:center"><span style="color:${p.color};margin-right:6px">✓</span>${f}</div>`).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    // 交付流程
+    document.getElementById('deliveryFlow').innerHTML = deliverySteps.map(s => `
+        <div style="display:flex;align-items:start;padding:10px 0;border-bottom:1px solid var(--border)">
+            <div style="width:28px;height:28px;border-radius:50%;background:${s.step <= 3 ? 'var(--green)' : 'var(--card2)'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-right:10px;flex-shrink:0">${s.step}</div>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:600">${s.title} <span style="font-size:10px;color:var(--text-mute);font-weight:400">· ${s.time}</span></div>
+                <div style="font-size:11px;color:var(--text-dim);margin-top:2px">${s.desc}</div>
+            </div>
+        </div>
+    `).join('');
+
+    // FAQ
+    document.getElementById('faqList').innerHTML = faqList.map(f => `
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)">Q: ${f.q}</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.6">A: ${f.a}</div>
+        </div>
+    `).join('');
+}
+
+function submitOrder() {
+    const name = document.getElementById('orderName').value.trim();
+    const wechat = document.getElementById('orderWechat').value.trim();
+    const template = document.getElementById('orderTemplate').value;
+    const level = document.getElementById('orderLevel').value;
+    const needs = document.getElementById('orderNeeds').value.trim();
+
+    if (!name) return toast('请填写称呼');
+    if (!wechat) return toast('请填写微信/手机');
+
+    // 生成订单文本
+    const orderText = `【AI工作台定制订单】
+姓名：${name}
+联系：${wechat}
+模板：${template}
+套餐：${level}
+需求：${needs || '待沟通'}
+时间：${nowStr()}
+
+请复制以上信息，加微信发送给我确认。`;
+
+    // 存到工作台
+    const orders = load('serviceOrders', []);
+    orders.push({ name, wechat, template, level, needs, time: nowStr(), status: 'pending' });
+    save('serviceOrders', orders);
+
+    // 复制到剪贴板
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(orderText).then(() => {
+            toast('✅ 订单已生成并复制，请加微信发送给我');
+        });
+    } else {
+        toast(orderText);
+    }
+
+    // 清空表单
+    document.getElementById('orderName').value = '';
+    document.getElementById('orderWechat').value = '';
+    document.getElementById('orderNeeds').value = '';
 }
 
 // ========== 智能报价引擎 ==========
@@ -4002,6 +4273,7 @@ renderBizLines();
 renderChannelGoals();
 renderBizOverview();
 renderServices();
+renderServicePage();
 renderTodayFocus();
 renderDailyReport();
 renderWarRoom();
