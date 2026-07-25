@@ -786,6 +786,256 @@ body {
 .template-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
 .template-desc { font-size: 10px; color: var(--text-mute); }
 
+/* === 落地页定价卡片风格增强 === */
+/* section 增强 */
+.section {
+    position: relative;
+    overflow: hidden;
+}
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    opacity: 0.6;
+}
+/* sec-title emoji 风格 */
+.sec-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+.sec-title .dot { display: none; }
+.sec-title .emoji {
+    font-size: 17px;
+    margin-right: 2px;
+    filter: drop-shadow(0 0 6px rgba(255,107,26,0.3));
+}
+
+/* featured 卡片 - 橙色光晕 */
+.card-featured {
+    border-color: rgba(255,107,26,0.45) !important;
+    box-shadow: 0 0 0 1px rgba(255,107,26,0.15), 0 8px 30px rgba(255,107,26,0.08);
+}
+.card-featured::before {
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    opacity: 1;
+    height: 3px;
+}
+
+/* 彩色边框变体 */
+.card-green {
+    border-color: rgba(0,217,163,0.4) !important;
+    box-shadow: 0 0 0 1px rgba(0,217,163,0.1), 0 6px 24px rgba(0,217,163,0.06);
+}
+.card-green::before { background: linear-gradient(90deg, transparent, var(--green), transparent); opacity: 1; height: 3px; }
+
+.card-red {
+    border-color: rgba(255,71,87,0.4) !important;
+    box-shadow: 0 0 0 1px rgba(255,71,87,0.1), 0 6px 24px rgba(255,71,87,0.06);
+}
+.card-red::before { background: linear-gradient(90deg, transparent, var(--red), transparent); opacity: 1; height: 3px; }
+
+.card-purple {
+    border-color: rgba(168,85,247,0.4) !important;
+    box-shadow: 0 0 0 1px rgba(168,85,247,0.1), 0 6px 24px rgba(168,85,247,0.06);
+}
+.card-purple::before { background: linear-gradient(90deg, transparent, var(--purple), transparent); opacity: 1; height: 3px; }
+
+.card-blue {
+    border-color: rgba(77,157,255,0.4) !important;
+    box-shadow: 0 0 0 1px rgba(77,157,255,0.1), 0 6px 24px rgba(77,157,255,0.06);
+}
+.card-blue::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); opacity: 1; height: 3px; }
+
+/* hero-stat 落地页数字展示 */
+.hero-stat {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border-radius: 16px;
+    padding: 16px 10px;
+    position: relative;
+    overflow: hidden;
+}
+.hero-stat::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.3;
+}
+.hero-stat .val { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.hero-stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* metric-row 横向数据行 */
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 6px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+.metric-row:active { border-color: var(--orange); }
+.metric-row .m-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    flex: 1;
+}
+.metric-row .m-value {
+    font-size: 15px;
+    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+.metric-row .m-value.green { color: var(--green); }
+.metric-row .m-value.red { color: var(--red); }
+.metric-row .m-value.orange { color: var(--orange); }
+.metric-row .m-sub {
+    font-size: 10px;
+    color: var(--text-mute);
+    margin-top: 2px;
+}
+.metric-row .m-left { flex: 1; }
+
+/* check-list 绿色对勾列表 */
+.check-list { list-style: none; }
+.check-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+.check-item:active { border-color: var(--green); }
+.check-mark {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--text-mute);
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.check-item.done .check-mark {
+    background: var(--green);
+    border-color: var(--green);
+}
+.check-item.done .check-mark::after {
+    content: '✓';
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+}
+.check-item.done .check-text {
+    text-decoration: line-through;
+    color: var(--text-mute);
+}
+.check-text { flex: 1; font-size: 13px; }
+.check-time {
+    font-size: 10px;
+    color: var(--text-mute);
+    margin-left: 8px;
+}
+
+/* 推荐徽章 */
+.badge-hot {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--orange), #FFD93D);
+    color: #fff;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* FAB 悬浮加号按钮 */
+.fab {
+    position: fixed;
+    right: 20px;
+    bottom: 28px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 150;
+    box-shadow: 0 8px 24px rgba(255,107,26,0.4), 0 4px 12px rgba(168,85,247,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
+    line-height: 1;
+}
+.fab:active { transform: scale(0.92); }
+.fab.open { transform: rotate(45deg); }
+.fab-menu {
+    position: fixed;
+    right: 24px;
+    bottom: 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 149;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.fab-menu.open {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateY(0);
+}
+.fab-mini {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.fab-mini:active { transform: scale(0.95); }
+.fab-mini .fm-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+.fab-mini.income .fm-icon { background: rgba(0,217,163,0.2); color: var(--green); }
+.fab-mini.expense .fm-icon { background: rgba(255,71,87,0.2); color: var(--red); }
+.fab-mini.task .fm-icon { background: rgba(255,107,26,0.2); color: var(--orange); }
+.fab-mini.top .fm-icon { background: rgba(77,157,255,0.2); color: var(--blue); }
+
 /* 滚动条隐藏 */
 ::-webkit-scrollbar { display: none; }
 </style>
@@ -826,36 +1076,36 @@ body {
 <div id="page-today">
 
     <!-- 今日聚焦 -->
-    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+    <div class="section card-featured">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>🔥 今日聚焦</div>
+            <div class="sec-title"><span class="emoji">🎯</span>每日聚焦</div>
             <div class="sec-more" id="focusDate"></div>
         </div>
         <div id="todayFocus"></div>
     </div>
 
     <!-- 每日变现日报（自动生成，每天不同） -->
-    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+    <div class="section card-green">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>📊 每日变现日报</div>
+            <div class="sec-title"><span class="emoji">📊</span>每日变现日报</div>
             <div class="sec-more" id="reportMeta"></div>
         </div>
         <div id="dailyReport"></div>
     </div>
 
     <!-- 搞钱作战室 -->
-    <div class="section" style="border:1px solid rgba(255,71,87,0.3);background:linear-gradient(135deg,rgba(255,71,87,0.05),transparent)">
+    <div class="section card-red card-featured">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot" style="background:var(--red)"></span>🔥 搞钱作战室</div>
+            <div class="sec-title"><span class="emoji">🔥</span>搞钱作战室</div>
             <div class="sec-more" id="warRoomStreak">连续达标 0 天</div>
         </div>
         <div id="warRoom"></div>
     </div>
 
     <!-- 业务线总览（首页快捷视图） -->
-    <div class="section">
+    <div class="section card-blue">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>业务线总览</div>
+            <div class="sec-title"><span class="emoji">💼</span>业务线总览</div>
             <div class="sec-more" onclick="switchPage('channel', document.querySelectorAll('.sidebar-item')[3])">查看详情 ›</div>
         </div>
         <div id="bizOverview"></div>
@@ -864,7 +1114,7 @@ body {
     <!-- 翻盘进度环 -->
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>翻盘进度</div>
+            <div class="sec-title"><span class="emoji">🎯</span>翻盘进度</div>
             <div class="sec-more" id="goalSummary">目标: 2月20万</div>
         </div>
         <div class="progress-rings">
@@ -910,16 +1160,16 @@ body {
     <!-- 本周日历 -->
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>本周打卡</div>
+            <div class="sec-title"><span class="emoji">📅</span>本周打卡</div>
             <div class="sec-more" id="weekIncome">本周收入 ¥0</div>
         </div>
         <div class="week-calendar" id="weekCalendar"></div>
     </div>
 
     <!-- 本周变现计划 -->
-    <div class="section" style="border:1px solid rgba(168,85,247,0.3);background:linear-gradient(135deg,rgba(168,85,247,0.05),transparent)">
+    <div class="section card-purple">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot" style="background:var(--purple)"></span>📌 本周变现计划</div>
+            <div class="sec-title"><span class="emoji">📌</span>本周变现计划</div>
             <div class="sec-more" id="weekPlanMeta">第28周</div>
         </div>
         <div id="weekPlan"></div>
@@ -928,7 +1178,7 @@ body {
     <!-- 今日作战清单 -->
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>今日作战清单</div>
+            <div class="sec-title"><span class="emoji">⚔️</span>今日作战清单</div>
             <div class="sec-more"><span id="taskDone">0</span>/<span id="taskTotal">0</span> 完成</div>
         </div>
         <div class="task-add">
@@ -941,7 +1191,7 @@ body {
     <!-- 习惯打卡 -->
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>每日习惯</div>
+            <div class="sec-title"><span class="emoji">✨</span>每日习惯</div>
             <div class="sec-more"><span id="habitDone">0</span>/<span id="habitTotal">6</span></div>
         </div>
 
@@ -970,9 +1220,9 @@ body {
 <!-- ===== 页面2: 财务 ===== -->
 <div id="page-money" class="hidden">
 
-    <div class="section">
+    <div class="section card-green">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>记录收入</div>
+            <div class="sec-title"><span class="emoji">💰</span>记录收入</div>
         </div>
         <div class="fin-input">
             <input type="number" id="incomeAmount" placeholder="金额">
@@ -991,9 +1241,9 @@ body {
         <div class="fin-list" id="incomeList"></div>
     </div>
 
-    <div class="section">
+    <div class="section card-red">
         <div class="sec-header">
-            <div class="sec-title"><span class="dot"></span>记录支出</div>
+            <div class="sec-title"><span class="emoji">💸</span>记录支出</div>
         </div>
         <div class="fin-input">
             <input type="number" id="expenseAmount" placeholder="金额">
@@ -1544,22 +1794,12 @@ body {
 </div><!-- /content -->
 
 <!-- 悬浮快捷按钮 -->
-<div id="floatBtn" onclick="showQuickMenu()" style="position:fixed;bottom:20px;right:16px;width:52px;height:52px;background:linear-gradient(135deg,var(--orange),var(--purple));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;cursor:pointer;z-index:99;box-shadow:0 4px 20px rgba(255,107,26,0.4)">+</div>
-
-<!-- 快捷菜单弹窗 -->
-<div id="quickMenu" class="hidden" onclick="hideQuickMenu(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center">
-    <div onclick="event.stopPropagation()" style="background:var(--card);width:100%;max-width:420px;border-radius:20px 20px 0 0;padding:20px 16px 30px;border-top:1px solid var(--border)">
-        <div style="text-align:center;font-size:14px;font-weight:600;margin-bottom:16px">⚡ 快捷记一笔</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <button onclick="quickMenuAction('income')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--green);font-size:13px;cursor:pointer">💰 记收入</button>
-            <button onclick="quickMenuAction('expense')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--red);font-size:13px;cursor:pointer">📉 记支出</button>
-            <button onclick="quickMenuAction('inspiration')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--purple);font-size:13px;cursor:pointer">💡 记灵感</button>
-            <button onclick="quickMenuAction('task')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--orange);font-size:13px;cursor:pointer">✅ 加任务</button>
-            <button onclick="quickMenuAction('consult')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--blue);font-size:13px;cursor:pointer">💬 +1咨询</button>
-            <button onclick="quickMenuAction('study')" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--yellow);font-size:13px;cursor:pointer">📚 记学习</button>
-        </div>
-        <button onclick="hideQuickMenu()" style="width:100%;margin-top:12px;padding:12px;background:transparent;border:1px solid var(--border);color:var(--text-mute);border-radius:10px;font-size:13px;cursor:pointer">取消</button>
-    </div>
+<button class="fab" id="fabBtn" onclick="toggleFab()" aria-label="快捷操作">+</button>
+<div class="fab-menu" id="fabMenu">
+    <div class="fab-mini income" onclick="quickMenuAction('income')"><div class="fm-icon">💰</div>记收入</div>
+    <div class="fab-mini expense" onclick="quickMenuAction('expense')"><div class="fm-icon">📉</div>记支出</div>
+    <div class="fab-mini task" onclick="quickMenuAction('task')"><div class="fm-icon">✅</div>加任务</div>
+    <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
 </div>
 
 <!-- 顶部导航栏 -->
@@ -1621,7 +1861,7 @@ body {
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">快捷操作</div>
-        <div class="sidebar-item" onclick="showQuickMenu()">
+        <div class="sidebar-item" onclick="closeSidebar();setTimeout(()=>showQuickMenu(),300)">
             <span class="sidebar-item-icon">⚡</span> 快捷记一笔
         </div>
         <div class="sidebar-item" onclick="exportData()">
@@ -1786,8 +2026,8 @@ function renderTasks() {
     }
     tasks.forEach((t, i) => {
         const li = document.createElement('li');
-        li.className = 'task-item' + (t.done ? ' done' : '');
-        li.innerHTML = `<div class="task-check" onclick="toggleTask(${i})"></div><div class="task-text">${t.text}</div><div class="task-time">${t.time}</div><div class="task-del" onclick="delTask(${i})">×</div>`;
+        li.className = 'check-item' + (t.done ? ' done' : '');
+        li.innerHTML = `<div class="check-mark" onclick="toggleTask(${i})"></div><div class="check-text" onclick="toggleTask(${i})">${t.text}</div><div class="check-time">${t.time}</div><div class="task-del" onclick="delTask(${i})">×</div>`;
         list.appendChild(li);
     });
     const done = tasks.filter(t => t.done).length;
@@ -1916,8 +2156,8 @@ function renderFinance() {
     if (incomes.length === 0) il.innerHTML = '<div class="empty">暂无收入记录</div>';
     incomes.slice().reverse().forEach(i => {
         const d = document.createElement('div');
-        d.className = 'fin-item';
-        d.innerHTML = `<span class="fin-source">${i.source}</span><span class="fin-amount in">+¥${i.amount}</span><span class="fin-time">${i.time}</span>`;
+        d.className = 'metric-row';
+        d.innerHTML = `<div class="m-left"><div class="m-label" style="font-size:13px;font-weight:600">${i.source}</div><div class="m-sub">${i.time}</div></div><div class="m-value green">+¥${i.amount}</div>`;
         il.appendChild(d);
     });
     // 支出列表
@@ -1926,8 +2166,8 @@ function renderFinance() {
     if (expenses.length === 0) el.innerHTML = '<div class="empty">暂无支出记录</div>';
     expenses.slice().reverse().forEach(e => {
         const d = document.createElement('div');
-        d.className = 'fin-item';
-        d.innerHTML = `<span class="fin-source">${e.source}</span><span class="fin-amount out">-¥${e.amount}</span><span class="fin-time">${e.time}</span>`;
+        d.className = 'metric-row';
+        d.innerHTML = `<div class="m-left"><div class="m-label" style="font-size:13px;font-weight:600">${e.source}</div><div class="m-sub">${e.time}</div></div><div class="m-value red">-¥${e.amount}</div>`;
         el.appendChild(d);
     });
     // 本月汇总
@@ -1936,10 +2176,10 @@ function renderFinance() {
     const mExp = expenses.filter(e=>e.time.startsWith(mp)).reduce((s,e)=>s+e.amount,0);
     const summary = document.getElementById('monthSummary');
     summary.innerHTML = `
-        <div class="fin-item"><span class="fin-source">本月收入</span><span class="fin-amount in">+¥${mInc.toLocaleString()}</span></div>
-        <div class="fin-item"><span class="fin-source">本月支出</span><span class="fin-amount out">-¥${mExp.toLocaleString()}</span></div>
-        <div class="fin-item"><span class="fin-source">净利润</span><span class="fin-amount ${mInc-mExp>=0?'in':'out'}">${mInc-mExp>=0?'+':'-'}¥${Math.abs(mInc-mExp).toLocaleString()}</span></div>
-        <div class="fin-item"><span class="fin-source">累计总收入</span><span class="fin-amount in">¥${incomes.reduce((s,i)=>s+i.amount,0).toLocaleString()}</span></div>
+        <div class="metric-row"><div class="m-label">本月收入</div><div class="m-value green">+¥${mInc.toLocaleString()}</div></div>
+        <div class="metric-row"><div class="m-label">本月支出</div><div class="m-value red">-¥${mExp.toLocaleString()}</div></div>
+        <div class="metric-row"><div class="m-label">净利润</div><div class="m-value ${mInc-mExp>=0?'green':'red'}">${mInc-mExp>=0?'+':'-'}¥${Math.abs(mInc-mExp).toLocaleString()}</div></div>
+        <div class="metric-row"><div class="m-label">累计总收入</div><div class="m-value green">¥${incomes.reduce((s,i)=>s+i.amount,0).toLocaleString()}</div></div>
     `;
 }
 function addIncome() {
@@ -2752,18 +2992,18 @@ function renderBizOverview() {
         const revenue = line.getRevenue();
         const pct = Math.min(100, Math.round(revenue / line.monthGoal * 100));
         const div = document.createElement('div');
-        div.style.cssText = 'display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)';
+        div.className = 'metric-row';
         div.innerHTML = `
-            <div style="font-size:16px;margin-right:8px">${line.icon}</div>
-            <div style="flex:1">
-                <div style="font-size:12px;font-weight:600">${line.name}</div>
-                <div style="height:4px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden">
+            <div style="font-size:18px;margin-right:10px">${line.icon}</div>
+            <div class="m-left">
+                <div class="m-label" style="font-size:13px;font-weight:600;color:var(--text)">${line.name}</div>
+                <div style="height:4px;background:var(--border);border-radius:2px;margin-top:6px;overflow:hidden">
                     <div style="height:100%;width:${pct}%;background:${line.color};border-radius:2px"></div>
                 </div>
             </div>
             <div style="text-align:right;margin-left:10px">
-                <div style="font-size:11px;color:${line.color};font-weight:600">¥${revenue.toLocaleString()}</div>
-                <div style="font-size:9px;color:var(--text-mute)">/¥${line.monthGoal >= 10000 ? (line.monthGoal/10000)+'万' : line.monthGoal}</div>
+                <div class="m-value" style="color:${line.color};font-size:15px">¥${revenue.toLocaleString()}</div>
+                <div class="m-sub">/¥${line.monthGoal >= 10000 ? (line.monthGoal/10000)+'万' : line.monthGoal}</div>
             </div>
         `;
         container.appendChild(div);
@@ -3296,15 +3536,15 @@ function renderWarRoom() {
 
     const el = document.getElementById('warRoom');
     el.innerHTML = `
-        <!-- 今日达标状态 -->
+        <!-- 今日达标状态 + 核心数字 -->
         <div style="padding:14px;background:${isAchieved ? 'linear-gradient(135deg,rgba(0,217,163,0.15),rgba(0,217,163,0.05))' : 'var(--bg)'};border-radius:12px;margin-bottom:12px;border:1px solid ${isAchieved ? 'var(--green)' : 'var(--border)'}">
-            <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
                 <div>
-                    <div style="font-size:13px;font-weight:600;color:${isAchieved ? 'var(--green)' : 'var(--text)'}">${isAchieved ? '✅ 今日已达标' : '⏳ 今日未达标'}</div>
+                    <div style="font-size:14px;font-weight:700;color:${isAchieved ? 'var(--green)' : 'var(--text)'}">${isAchieved ? '✅ 今日已达标' : '⏳ 今日未达标'}</div>
                     <div style="font-size:11px;color:var(--text-dim);margin-top:3px">达标 = 有收入或有成单</div>
                 </div>
                 <div style="text-align:right">
-                    <div style="font-size:20px;font-weight:700;color:${todayIncome > 0 ? 'var(--green)' : 'var(--text-mute)'}">${todayIncome > 0 ? '+¥' + todayIncome : '¥0'}</div>
+                    <div style="font-size:24px;font-weight:800;color:${todayIncome > 0 ? 'var(--green)' : 'var(--text-mute)'};letter-spacing:-0.5px">${todayIncome > 0 ? '+¥' + todayIncome : '¥0'}</div>
                     <div style="font-size:10px;color:var(--text-mute)">${todayDeals}单成交</div>
                 </div>
             </div>
@@ -3436,14 +3676,14 @@ function renderWeekPlan() {
     const el = document.getElementById('weekPlan');
     el.innerHTML = `
         <!-- 周目标进度 -->
-        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:12px">
+        <div class="metric-row" style="display:block;padding:12px;margin-bottom:12px">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
                 <span style="font-size:12px;color:var(--text-mute)">本周变现目标</span>
-                <span style="font-size:14px;font-weight:700;color:var(--purple)">¥${plan.goal.toLocaleString()}</span>
+                <span class="m-value" style="font-size:16px;color:var(--purple)">¥${plan.goal.toLocaleString()}</span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
                 <span style="font-size:11px;color:var(--text-dim)">已实现</span>
-                <span style="font-size:13px;font-weight:600;color:var(--green)">¥${weekIncome.toLocaleString()}（${progress.toFixed(0)}%）</span>
+                <span style="font-size:13px;font-weight:700;color:var(--green)">¥${weekIncome.toLocaleString()}（${progress.toFixed(0)}%）</span>
             </div>
             <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden">
                 <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--purple),var(--green));border-radius:4px;transition:width 0.5s"></div>
@@ -3456,14 +3696,14 @@ function renderWeekPlan() {
             const dayMap = { '周一': 1, '周二': 2, '周三': 3, '周四': 4, '周五': 5, '周六': 6, '周日': 0 };
             const isToday = dayMap[d.day] === today;
             return `
-            <div style="display:flex;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:6px;${isToday ? 'border:1px solid var(--orange)' : ''}">
+            <div class="metric-row" style="${isToday ? 'border:1px solid var(--orange);background:rgba(255,107,26,0.05)' : ''}">
                 <div style="width:42px;flex-shrink:0;text-align:center">
-                    <div style="font-size:12px;font-weight:700;color:${isToday ? 'var(--orange)' : 'var(--text)'}">${d.day}</div>
+                    <div style="font-size:13px;font-weight:700;color:${isToday ? 'var(--orange)' : 'var(--text)'}">${d.day}</div>
                     ${isToday ? '<div style="font-size:9px;color:var(--orange);margin-top:2px">今天</div>' : ''}
                 </div>
-                <div style="flex:1">
-                    <div style="font-size:12px;color:var(--text);margin-bottom:3px">${d.focus}</div>
-                    <div style="font-size:10px;color:var(--text-mute)">🎯 ${d.target}</div>
+                <div class="m-left">
+                    <div class="m-label" style="font-size:12px">${d.focus}</div>
+                    <div class="m-sub">🎯 ${d.target}</div>
                 </div>
             </div>
             `;
@@ -3596,14 +3836,14 @@ function renderDailyReport() {
 
     el.innerHTML = `
         <!-- 日期头 -->
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px">
-            <div>
-                <div style="font-size:20px;font-weight:700;color:var(--green)">${monthDay}</div>
-                <div style="font-size:11px;color:var(--text-mute)">${weekDays[day]} · 本月第${dayOfMonth}天</div>
+        <div class="metric-row" style="background:linear-gradient(135deg,rgba(0,217,163,0.08),transparent);border:1px solid rgba(0,217,163,0.2);margin-bottom:10px">
+            <div class="m-left">
+                <div class="m-value green" style="font-size:20px">${monthDay}</div>
+                <div class="m-sub">${weekDays[day]} · 本月第${dayOfMonth}天</div>
             </div>
             <div style="text-align:right">
-                <div style="font-size:11px;color:var(--text-mute)">今日变现</div>
-                <div style="font-size:18px;font-weight:700;color:${todayIncome>0?'var(--green)':'var(--text-mute)'}">${todayIncome>0?'+¥'+todayIncome:'¥0'}</div>
+                <div class="m-sub">今日变现</div>
+                <div class="m-value ${todayIncome>0?'green':''}" style="font-size:18px;${todayIncome>0?'':'color:var(--text-mute)'}">${todayIncome>0?'+¥'+todayIncome:'¥0'}</div>
             </div>
         </div>
 
@@ -3616,13 +3856,15 @@ function renderDailyReport() {
         <!-- 变现任务清单 -->
         <div style="margin-bottom:10px">
             <div style="font-size:11px;color:var(--text-mute);margin-bottom:8px">🎯 今日变现任务</div>
+            <ul class="check-list">
             ${displayTasks.map((t, i) => `
-                <div style="display:flex;align-items:center;padding:8px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="toggleReportTask(${i})">
-                    <div style="width:16px;height:16px;border:2px solid var(--green);border-radius:4px;margin-right:10px;flex-shrink:0;${displayTasks[i].done?'background:var(--green)':''}"></div>
-                    <span style="flex:1;font-size:12px;${displayTasks[i].done?'text-decoration:line-through;color:var(--text-mute)':''}">${t.text}</span>
-                    <span style="font-size:10px;color:var(--text-mute)">${t.time}</span>
-                </div>
+                <li class="check-item${displayTasks[i].done?' done':''}" onclick="toggleReportTask(${i})">
+                    <div class="check-mark"></div>
+                    <span class="check-text">${t.text}</span>
+                    <span class="check-time">${t.time}</span>
+                </li>
             `).join('')}
+            </ul>
         </div>
 
         <!-- 本月变现进度 -->
@@ -3631,7 +3873,7 @@ function renderDailyReport() {
                 <span>本月累计变现</span>
                 <span>目标 ¥6667/天 × ${dayOfMonth}天 = ¥${(6667*dayOfMonth).toLocaleString()}</span>
             </div>
-            <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:6px">¥${monthIncome.toLocaleString()}</div>
+            <div style="font-size:18px;font-weight:800;color:var(--green);margin-bottom:6px;letter-spacing:-0.5px">¥${monthIncome.toLocaleString()}</div>
             <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
                 <div style="height:100%;width:${Math.min(100, monthIncome/(6667*dayOfMonth)*100)}%;background:linear-gradient(90deg,var(--green),var(--orange));border-radius:3px;transition:width 0.5s"></div>
             </div>
@@ -3673,9 +3915,9 @@ function renderTodayFocus() {
     if (focusItems.length === 0) focusItems.push({ icon: '🎉', text: '今天的核心任务都完成了，继续搞钱！' });
 
     focus.innerHTML = focusItems.slice(0, 3).map(f => `
-        <div style="display:flex;align-items:center;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:8px">
-            <span style="font-size:18px;margin-right:10px">${f.icon}</span>
-            <span style="font-size:13px;flex:1">${f.text}</span>
+        <div class="metric-row">
+            <span style="font-size:20px;margin-right:12px">${f.icon}</span>
+            <span class="m-label" style="font-size:13px">${f.text}</span>
         </div>
     `).join('');
 }
@@ -3836,15 +4078,38 @@ function clearTodayData() {
 }
 
 // ========== 悬浮快捷菜单 ==========
-function showQuickMenu() {
-    document.getElementById('quickMenu').classList.remove('hidden');
+function toggleFab(force) {
+    const btn = document.getElementById('fabBtn');
+    const menu = document.getElementById('fabMenu');
+    let open;
+    if (typeof force === 'boolean') open = force;
+    else open = !menu.classList.contains('open');
+    if (open) {
+        btn.classList.add('open');
+        menu.classList.add('open');
+    } else {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+    }
 }
+// 兼容旧调用：showQuickMenu/hideQuickMenu 现在统一走 toggleFab
+function showQuickMenu() { toggleFab(true); }
 function hideQuickMenu(e) {
-    if (e) e.target.classList.add('hidden');
-    else document.getElementById('quickMenu').classList.add('hidden');
+    if (e && e.target && e.target.id && e.target.id !== 'fabMenu' && e.target.id !== 'fabBtn') return;
+    toggleFab(false);
 }
+// 点击页面其他地方收起 FAB 菜单
+document.addEventListener('click', function(e) {
+    const menu = document.getElementById('fabMenu');
+    const btn = document.getElementById('fabBtn');
+    if (!menu || !btn) return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+    }
+});
 function quickMenuAction(type) {
-    hideQuickMenu();
+    toggleFab(false);
     const items = document.querySelectorAll('.sidebar-item');
     switch(type) {
         case 'income':
