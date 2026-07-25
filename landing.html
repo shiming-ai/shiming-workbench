@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>AI工作台定制 · 199元起，你的业务AI帮你管</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+}
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; overflow-x: hidden; }
+.container { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+
+/* Hero */
+.hero { padding: 60px 16px 40px; text-align: center; background: radial-gradient(ellipse at top, rgba(255,107,26,0.15), transparent 70%); }
+.hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 12px; line-height: 1.3; background: linear-gradient(135deg, var(--orange), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 15px; color: var(--text-dim); margin-bottom: 24px; }
+.hero .price-tag { display: inline-block; font-size: 14px; padding: 8px 20px; background: linear-gradient(135deg, rgba(255,107,26,0.2), rgba(0,217,163,0.2)); border: 1px solid var(--orange); border-radius: 20px; color: var(--orange); font-weight: 600; margin-bottom: 20px; }
+.cta-btn { display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, var(--orange), var(--green)); color: #fff; text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700; box-shadow: 0 8px 30px rgba(255,107,26,0.3); transition: transform 0.2s; }
+.cta-btn:active { transform: scale(0.95); }
+
+/* 痛点 */
+.section { padding: 40px 0; }
+.section-title { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+.section-sub { font-size: 13px; color: var(--text-dim); text-align: center; margin-bottom: 24px; }
+.pain-card { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 12px; border: 1px solid var(--border); display: flex; align-items: start; gap: 14px; }
+.pain-icon { font-size: 28px; flex-shrink: 0; }
+.pain-card h3 { font-size: 15px; margin-bottom: 4px; }
+.pain-card p { font-size: 12px; color: var(--text-dim); }
+
+/* 模板 */
+.template-card { background: var(--card); border-radius: 14px; padding: 16px; margin-bottom: 12px; border-left: 3px solid; }
+.template-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.template-name { font-size: 15px; font-weight: 700; }
+.template-price { font-size: 14px; font-weight: 700; }
+.template-target { font-size: 11px; color: var(--text-mute); margin-bottom: 8px; }
+.template-features { display: flex; flex-wrap: wrap; gap: 4px; }
+.template-features span { font-size: 10px; padding: 3px 8px; background: var(--bg); color: var(--text-dim); border-radius: 4px; }
+
+/* 定价 */
+.pricing-card { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 14px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+.pricing-card.popular { border-color: var(--orange); box-shadow: 0 0 30px rgba(255,107,26,0.15); }
+.pricing-badge { position: absolute; top: 12px; right: -30px; transform: rotate(45deg); background: var(--orange); color: #fff; font-size: 10px; padding: 2px 30px; }
+.pricing-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.pricing-price { font-size: 32px; font-weight: 800; margin-bottom: 4px; }
+.pricing-monthly { font-size: 12px; color: var(--text-dim); margin-bottom: 14px; }
+.pricing-features { list-style: none; }
+.pricing-features li { font-size: 12px; padding: 4px 0; display: flex; align-items: center; }
+.pricing-features li::before { content: '✓'; margin-right: 8px; font-weight: 700; }
+
+/* 流程 */
+.flow-step { display: flex; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.flow-num { width: 32px; height: 32px; border-radius: 50%; background: var(--card); border: 2px solid var(--green); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-right: 12px; flex-shrink: 0; }
+.flow-content h4 { font-size: 14px; margin-bottom: 2px; }
+.flow-content p { font-size: 12px; color: var(--text-dim); }
+.flow-time { font-size: 10px; color: var(--text-mute); margin-left: 6px; }
+
+/* FAQ */
+.faq-item { background: var(--card); border-radius: 10px; padding: 14px; margin-bottom: 8px; }
+.faq-q { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.faq-a { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+/* 下单表单 */
+.order-form { background: var(--card); border-radius: 16px; padding: 20px; border: 1px solid var(--border); }
+.order-form input, .order-form select, .order-form textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; font-size: 13px; outline: none; margin-bottom: 10px; font-family: inherit; }
+.order-form textarea { min-height: 80px; resize: vertical; }
+.order-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--orange), var(--green)); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; }
+.order-btn:active { transform: scale(0.98); }
+
+/* 信任 */
+.trust-bar { display: flex; justify-content: space-around; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 30px 0; }
+.trust-item { text-align: center; }
+.trust-num { font-size: 22px; font-weight: 800; color: var(--green); }
+.trust-label { font-size: 10px; color: var(--text-mute); }
+
+/* 底部 */
+.footer { text-align: center; padding: 40px 16px; color: var(--text-mute); font-size: 12px; }
+.footer a { color: var(--orange); text-decoration: none; }
+
+/* Toast */
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--card); border: 1px solid var(--green); color: var(--green); padding: 12px 24px; border-radius: 30px; font-size: 13px; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="container">
+        <h1>你的业务，AI帮你管</h1>
+        <p>199元起，定制一套专属AI工作台系统<br>客户管理·财务记账·订单追踪·内容排期<br>手机打开就能用，数据永不丢失</p>
+        <div class="price-tag">🔥 199元定制 + 99元/月维护</div>
+        <br>
+        <a href="#order" class="cta-btn">立即定制 →</a>
+    </div>
+</div>
+
+<!-- 信任数据 -->
+<div class="container">
+    <div class="trust-bar">
+        <div class="trust-item">
+            <div class="trust-num">5</div>
+            <div class="trust-label">行业模板</div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-num">1h</div>
+            <div class="trust-label">快速交付</div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-num">∞</div>
+            <div class="trust-label">永久域名</div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-num">30天</div>
+            <div class="trust-label">售后保障</div>
+        </div>
+    </div>
+</div>
+
+<!-- 痛点 -->
+<div class="section">
+    <div class="container">
+        <div class="section-title">这些痛，你有没有？</div>
+        <div class="section-sub">一个人干活，最怕的就是管理混乱</div>
+
+        <div class="pain-card">
+            <div class="pain-icon">😣</div>
+            <div>
+                <h3>客户信息全靠记</h3>
+                <p>微信聊完就忘，跟进到哪了、该收多少钱、什么时候交付，全在脑子里，一乱就漏单</p>
+            </div>
+        </div>
+        <div class="pain-card">
+            <div class="pain-icon">💸</div>
+            <div>
+                <h3>不知道赚了多少</h3>
+                <p>收入支出混在一起，月底算账才发现没存下钱。哪条业务线赚钱、哪条亏钱，完全没数</p>
+            </div>
+        </div>
+        <div class="pain-card">
+            <div class="pain-icon">📱</div>
+            <div>
+                <h3>内容发了就忘</h3>
+                <p>小红书抖音知乎，哪个号今天该发什么、上次发了什么效果，全靠翻聊天记录</p>
+            </div>
+        </div>
+        <div class="pain-card">
+            <div class="pain-icon">🤯</div>
+            <div>
+                <h3>每天不知道先干嘛</h3>
+                <p>事情一堆，分不清轻重缓急。重要的事拖着，琐事做了一大堆，一天下来没产出</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 解决方案 -->
+<div class="section">
+    <div class="container">
+        <div class="section-title">一套系统全搞定</div>
+        <div class="section-sub">5个行业模板，覆盖你的业务场景</div>
+
+        <div class="template-card" style="border-left-color: var(--orange)">
+            <div class="template-header">
+                <div class="template-name">🎯 个人IP/一人公司版</div>
+                <div class="template-price" style="color: var(--orange)">599+99/月</div>
+            </div>
+            <div class="template-target">博主、自媒体、一人公司、超级个体</div>
+            <div class="template-features">
+                <span>客户CRM</span><span>财务记账</span><span>内容矩阵</span><span>变现日报</span><span>搞钱作战室</span>
+            </div>
+        </div>
+
+        <div class="template-card" style="border-left-color: var(--blue)">
+            <div class="template-header">
+                <div class="template-name">📦 电商卖家版</div>
+                <div class="template-price" style="color: var(--blue)">599+99/月</div>
+            </div>
+            <div class="template-target">淘宝/拼多多/抖音电商卖家</div>
+            <div class="template-features">
+                <span>订单看板</span><span>客户CRM</span><span>库存追踪</span><span>利润计算</span><span>退款追踪</span>
+            </div>
+        </div>
+
+        <div class="template-card" style="border-left-color: var(--purple)">
+            <div class="template-header">
+                <div class="template-name">💻 自由职业者版</div>
+                <div class="template-price" style="color: var(--purple)">599+99/月</div>
+            </div>
+            <div class="template-target">设计师、程序员、文案、咨询顾问</div>
+            <div class="template-features">
+                <span>项目管理</span><span>客户追踪</span><span>时间记录</span><span>报价生成</span><span>收入统计</span>
+            </div>
+        </div>
+
+        <div class="template-card" style="border-left-color: var(--yellow)">
+            <div class="template-header">
+                <div class="template-name">🏪 餐饮/实体店版</div>
+                <div class="template-price" style="color: var(--yellow)">1999+199/月</div>
+            </div>
+            <div class="template-target">餐饮老板、奶茶店、个体店</div>
+            <div class="template-features">
+                <span>营业统计</span><span>员工排班</span><span>供应商管理</span><span>会员CRM</span><span>每日盘点</span>
+            </div>
+        </div>
+
+        <div class="template-card" style="border-left-color: var(--green)">
+            <div class="template-header">
+                <div class="template-name">📊 通用职场版</div>
+                <div class="template-price" style="color: var(--green)">199+99/月</div>
+            </div>
+            <div class="template-target">职场人、职员、学生</div>
+            <div class="template-features">
+                <span>任务管理</span><span>学习记录</span><span>习惯打卡</span><span>收支记录</span><span>目标追踪</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 定价 -->
+<div class="section">
+    <div class="container">
+        <div class="section-title">透明定价，不坑人</div>
+        <div class="section-sub">先沟通再付款，不满意可退</div>
+
+        <div class="pricing-card">
+            <div class="pricing-name" style="color: var(--green)">基础版</div>
+            <div class="pricing-price" style="color: var(--green)">¥199</div>
+            <div class="pricing-monthly">+ ¥99/月维护费</div>
+            <ul class="pricing-features" style="color: var(--text-dim)">
+                <li style="color: var(--green)">选1个模板</li>
+                <li style="color: var(--green)">改配色/标题</li>
+                <li style="color: var(--green)">基础功能配置</li>
+                <li style="color: var(--green)">1次修改机会</li>
+                <li style="color: var(--green)">永久域名</li>
+                <li style="color: var(--green)">7天售后</li>
+            </ul>
+        </div>
+
+        <div class="pricing-card popular">
+            <div class="pricing-badge">最多人选</div>
+            <div class="pricing-name" style="color: var(--orange)">标准版</div>
+            <div class="pricing-price" style="color: var(--orange)">¥599</div>
+            <div class="pricing-monthly">+ ¥99/月维护费</div>
+            <ul class="pricing-features" style="color: var(--text-dim)">
+                <li style="color: var(--orange)">选1个模板</li>
+                <li style="color: var(--orange)">定制功能模块</li>
+                <li style="color: var(--orange)">3次修改机会</li>
+                <li style="color: var(--orange)">1对1需求沟通</li>
+                <li style="color: var(--orange)">永久域名</li>
+                <li style="color: var(--orange)">30天售后</li>
+                <li style="color: var(--orange)">数据导入</li>
+            </ul>
+        </div>
+
+        <div class="pricing-card">
+            <div class="pricing-name" style="color: var(--red)">旗舰版</div>
+            <div class="pricing-price" style="color: var(--red)">¥1999</div>
+            <div class="pricing-monthly">+ ¥199/月维护费</div>
+            <ul class="pricing-features" style="color: var(--text-dim)">
+                <li style="color: var(--red)">深度定制</li>
+                <li style="color: var(--red)">专属功能开发</li>
+                <li style="color: var(--red)">不限修改次数</li>
+                <li style="color: var(--red)">1对1专属顾问</li>
+                <li style="color: var(--red)">永久域名</li>
+                <li style="color: var(--red)">90天售后</li>
+                <li style="color: var(--red)">数据导入+培训</li>
+                <li style="color: var(--red)">优先支持</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 交付流程 -->
+<div class="section">
+    <div class="container">
+        <div class="section-title">6步交付，简单透明</div>
+        <div class="section-sub">从沟通到交付，最快1天搞定</div>
+
+        <div class="flow-step">
+            <div class="flow-num">1</div>
+            <div class="flow-content">
+                <h4>提交需求<span class="flow-time">1分钟</span></h4>
+                <p>填表单，说你的业务和想要的功能</p>
+            </div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-num">2</div>
+            <div class="flow-content">
+                <h4>微信沟通<span class="flow-time">1小时内</span></h4>
+                <p>我加你微信，确认细节和报价</p>
+            </div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-num">3</div>
+            <div class="flow-content">
+                <h4>支付定金<span class="flow-time">当天</span></h4>
+                <p>确认后付50%定金，开始制作</p>
+            </div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-num">4</div>
+            <div class="flow-content">
+                <h4>定制开发<span class="flow-time">1-3天</span></h4>
+                <p>用AI快速开发，实时沟通进度</p>
+            </div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-num">5</div>
+            <div class="flow-content">
+                <h4>交付验收<span class="flow-time">第3天</span></h4>
+                <p>发你链接，手机打开就能用</p>
+            </div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-num">6</div>
+            <div class="flow-content">
+                <h4>付尾款<span class="flow-time">验收后</span></h4>
+                <p>满意后付尾款，开始售后服务</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 下单 -->
+<div class="section" id="order">
+    <div class="container">
+        <div class="section-title">立即定制</div>
+        <div class="section-sub">提交后1小时内加你微信沟通</div>
+
+        <div class="order-form">
+            <input type="text" id="landName" placeholder="你的称呼">
+            <input type="text" id="landWechat" placeholder="微信号/手机号">
+            <select id="landTemplate">
+                <option value="个人IP版">个人IP/一人公司版</option>
+                <option value="电商卖家版">电商卖家版</option>
+                <option value="自由职业版">自由职业者版</option>
+                <option value="餐饮实体店版">餐饮/实体店版</option>
+                <option value="通用职场版">通用职场版</option>
+            </select>
+            <select id="landLevel">
+                <option value="基础版199">基础版 199元定制+99/月</option>
+                <option value="标准版599">标准版 599元定制+99/月 ⭐</option>
+                <option value="旗舰版1999">旗舰版 1999元定制+199/月</option>
+            </select>
+            <textarea id="landNeeds" placeholder="简单描述你的需求：做什么业务？需要哪些功能？"></textarea>
+            <button class="order-btn" onclick="submitLandOrder()">🚀 提交定制需求</button>
+            <p style="font-size: 10px; color: var(--text-mute); text-align: center; margin-top: 10px;">提交后我会加你微信，1小时内沟通确认</p>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+    <div class="container">
+        <div class="section-title">常见问题</div>
+
+        <div class="faq-item">
+            <div class="faq-q">Q: 做出来的是什么？APP吗？</div>
+            <div class="faq-a">A: 是一个网页版工作台，手机浏览器打开就能用，可以添加到手机桌面像APP一样。永久域名，不会失效。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Q: 数据存在哪里？安全吗？</div>
+            <div class="faq-a">A: 数据存在你自己的浏览器本地，不会上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Q: 我不懂技术能用吗？</div>
+            <div class="faq-a">A: 完全不用懂技术。你只需要告诉我你的业务和需求，剩下的我全搞定。交付后打开链接就能用。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Q: 以后想加功能怎么办？</div>
+            <div class="faq-a">A: 每月维护费包含小功能调整。大功能开发另计费，按需报价。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Q: 不满意能退吗？</div>
+            <div class="faq-a">A: 交付前可以提修改意见。交付后3天内不满意全额退款（已产生的定制成本除外）。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Q: 和别人用同一个模板会一样吗？</div>
+            <div class="faq-a">A: 模板只是基础框架，我会根据你的业务定制配色、功能、布局，每个人做出来都不一样。</div>
+        </div>
+    </div>
+</div>
+
+<!-- 底部CTA -->
+<div class="section" style="padding-bottom: 60px">
+    <div class="container" style="text-align: center">
+        <h2 style="font-size: 22px; margin-bottom: 12px;">别再靠脑子记了</h2>
+        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 24px;">199块，让AI帮你管业务<br>省下的时间，拿去搞钱</p>
+        <a href="#order" class="cta-btn">立即定制 →</a>
+    </div>
+</div>
+
+<!-- 底部 -->
+<div class="footer">
+    <p>© 2026 时铭AI工作台定制服务</p>
+    <p style="margin-top: 8px;"><a href="https://shiming-ai.github.io/shiming-workbench/">查看我的工作台案例 →</a></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function submitLandOrder() {
+    const name = document.getElementById('landName').value.trim();
+    const wechat = document.getElementById('landWechat').value.trim();
+    const template = document.getElementById('landTemplate').value;
+    const level = document.getElementById('landLevel').value;
+    const needs = document.getElementById('landNeeds').value.trim();
+
+    if (!name) return toast('请填写称呼');
+    if (!wechat) return toast('请填写微信/手机');
+
+    const orderText = `【AI工作台定制订单】
+姓名：${name}
+联系：${wechat}
+模板：${template}
+套餐：${level}
+需求：${needs || '待沟通'}
+
+请复制以上信息，加微信发送给我确认。`;
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(orderText).then(() => {
+            toast('✅ 订单已生成并复制，请加微信发送给我');
+            setTimeout(() => {
+                document.getElementById('landName').value = '';
+                document.getElementById('landWechat').value = '';
+                document.getElementById('landNeeds').value = '';
+            }, 2000);
+        });
+    } else {
+        toast(orderText);
+    }
+}
+</script>
+
+</body>
+</html>
