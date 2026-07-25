@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>我用了30天，用AI给自己搭了套管理系统 | 时铭AI工作台</title>
+<title>时铭 · AI工作台定制 | 一人公司的数字化武器</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -14,73 +14,68 @@
     --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
     --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
 }
-body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; overflow-x: hidden; }
-.container { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+.container { max-width: 460px; margin: 0 auto; padding: 0 18px; }
 
-/* Hero - 故事感 */
+/* ========== Hero ========== */
 .hero {
-    padding: 50px 16px 40px;
-    background: radial-gradient(ellipse at top, rgba(255,107,26,0.12), transparent 60%);
+    padding: 60px 18px 40px;
+    background: 
+        radial-gradient(ellipse 400px 200px at 50% 0%, rgba(255,107,26,0.15), transparent),
+        radial-gradient(ellipse 300px 200px at 80% 20%, rgba(0,217,163,0.08), transparent);
     position: relative;
+    text-align: center;
 }
-.hero-badge {
-    display: inline-block;
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 11px;
-    padding: 4px 12px;
-    background: rgba(255,71,87,0.15);
-    color: var(--red);
-    border-radius: 12px;
-    margin-bottom: 16px;
+    padding: 5px 14px;
+    background: rgba(255,107,26,0.12);
+    color: var(--orange);
+    border-radius: 20px;
+    margin-bottom: 24px;
     font-weight: 600;
+    border: 1px solid rgba(255,107,26,0.2);
+}
+.hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 .hero h1 {
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1.4;
-    margin-bottom: 14px;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.35;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
 }
-.hero h1 .highlight {
-    background: linear-gradient(135deg, var(--orange), var(--green));
+.hero h1 .grad {
+    background: linear-gradient(135deg, #FF6B1A, #FFD93D);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.hero-story {
-    font-size: 13px;
+.hero-desc {
+    font-size: 14px;
     color: var(--text-dim);
     line-height: 1.8;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
 }
-.hero-story strong { color: var(--text); }
-.hero-stats {
+.hero-desc strong { color: var(--text); font-weight: 600; }
+.hero-cta {
     display: flex;
-    gap: 0;
-    margin-bottom: 24px;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border);
+    flex-direction: column;
+    gap: 10px;
 }
-.hero-stat {
-    flex: 1;
-    padding: 14px 8px;
-    text-align: center;
-    background: var(--card);
-    border-right: 1px solid var(--border);
-}
-.hero-stat:last-child { border-right: none; }
-.hero-stat-num {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--green);
-}
-.hero-stat-label {
-    font-size: 9px;
-    color: var(--text-mute);
-    margin-top: 2px;
-}
-.cta-btn {
+.btn-primary {
     display: block;
     width: 100%;
-    padding: 16px;
+    padding: 17px;
     background: linear-gradient(135deg, var(--orange), #FF8E53);
     color: #fff;
     text-decoration: none;
@@ -88,917 +83,870 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     font-size: 16px;
     font-weight: 700;
     text-align: center;
-    box-shadow: 0 8px 30px rgba(255,107,26,0.3);
-    transition: transform 0.15s;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: none;
+    cursor: pointer;
 }
-.cta-btn:active { transform: scale(0.97); }
-.cta-note {
+.btn-primary:active { transform: scale(0.97); box-shadow: 0 4px 15px rgba(255,107,26,0.3); }
+.btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
     text-align: center;
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+}
+.btn-secondary:active { border-color: var(--orange); color: var(--orange); }
+.hero-trust {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
     font-size: 11px;
     color: var(--text-mute);
-    margin-top: 10px;
 }
+.hero-trust span { display: flex; align-items: center; gap: 4px; }
 
-/* 截图展示 */
-.showcase {
-    margin: 0 -16px 30px;
-    padding: 0 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+/* ========== 数字条 ========== */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+    background: linear-gradient(135deg, rgba(255,107,26,0.03), rgba(0,217,163,0.03));
 }
-.showcase::-webkit-scrollbar { display: none; }
-.showcase-scroll {
-    display: flex;
-    gap: 10px;
-    width: max-content;
-}
-.showcase-item {
-    width: 200px;
-    flex-shrink: 0;
-    background: var(--card);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-}
-.showcase-img {
-    width: 100%;
-    height: 360px;
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-}
-.showcase-label {
-    padding: 8px 10px;
-    font-size: 11px;
-    color: var(--text-dim);
-    text-align: center;
-}
+.stat-item { text-align: center; }
+.stat-item:not(:last-child) { border-right: 1px solid var(--border); }
+.stat-num { font-size: 22px; font-weight: 800; }
+.stat-num.orange { color: var(--orange); }
+.stat-num.green { color: var(--green); }
+.stat-num.purple { color: var(--purple); }
+.stat-label { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
 
-/* Section */
-.section { padding: 36px 0; }
-.section-tag {
-    display: inline-block;
+/* ========== 工作台预览 ========== */
+.preview-section { padding: 40px 0 20px; }
+.section-eyebrow {
     font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    font-weight: 600;
+    color: var(--orange);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
 }
 .section-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
-    margin-bottom: 6px;
-    line-height: 1.4;
+    line-height: 1.35;
+    margin-bottom: 8px;
 }
 .section-sub {
     font-size: 13px;
     color: var(--text-dim);
-    margin-bottom: 22px;
+    margin-bottom: 24px;
 }
 
-/* 痛点 - 具体场景 */
-.pain-card {
+/* 模拟手机框 */
+.phone-mockup {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto 16px;
     background: var(--card);
-    border-radius: 14px;
+    border-radius: 24px;
+    border: 3px solid #2a2d3a;
     padding: 16px;
-    margin-bottom: 10px;
-    border: 1px solid var(--border);
-}
-.pain-quote {
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.7;
-    margin-bottom: 10px;
-    font-style: italic;
-}
-.pain-quote::before {
-    content: '"';
-    font-size: 30px;
-    color: var(--orange);
-    line-height: 0;
-    vertical-align: -10px;
-    margin-right: 4px;
-}
-.pain-solution {
-    font-size: 12px;
-    color: var(--green);
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
-}
-.pain-solution::before {
-    content: '→ ';
-    color: var(--green);
-    font-weight: 700;
-}
-
-/* 对比 */
-.compare-table {
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-}
-.compare-row {
-    display: flex;
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 12px;
-    align-items: start;
-}
-.compare-row:last-child { border-bottom: none; }
-.compare-row.before { background: rgba(255,71,87,0.05); }
-.compare-row.after { background: rgba(0,217,163,0.05); }
-.compare-label {
-    width: 60px;
-    flex-shrink: 0;
-    font-weight: 700;
-    font-size: 11px;
-}
-.compare-row.before .compare-label { color: var(--red); }
-.compare-row.after .compare-label { color: var(--green); }
-.compare-content { flex: 1; color: var(--text-dim); }
-
-/* 模板 */
-.template-card {
-    background: var(--card);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 10px;
-    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     position: relative;
-    overflow: hidden;
 }
-.template-card::before {
+.phone-mockup::before {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
+    top: -3px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 4px;
+    background: #2a2d3a;
+    border-radius: 0 0 8px 8px;
 }
-.template-card.t1::before { background: var(--orange); }
-.template-card.t2::before { background: var(--blue); }
-.template-card.t3::before { background: var(--purple); }
-.template-card.t4::before { background: var(--yellow); }
-.template-card.t5::before { background: var(--green); }
-.template-header {
+.phone-header {
     display: flex;
     justify-content: space-between;
-    align-items: start;
-    margin-bottom: 6px;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
 }
-.template-name {
-    font-size: 15px;
-    font-weight: 700;
+.phone-title { font-size: 13px; font-weight: 700; }
+.phone-day { font-size: 22px; font-weight: 800; color: var(--orange); }
+.phone-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
 }
-.template-icon {
-    font-size: 20px;
-    margin-right: 6px;
+.phone-stat {
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 8px 6px;
+    text-align: center;
 }
-.template-price {
-    font-size: 13px;
-    font-weight: 700;
-    text-align: right;
-}
-.template-price small {
-    font-size: 9px;
-    color: var(--text-mute);
-    font-weight: 400;
-    display: block;
-}
-.template-target {
-    font-size: 11px;
-    color: var(--text-mute);
-    margin-bottom: 8px;
-}
-.template-features {
+.phone-stat .v { font-size: 14px; font-weight: 700; }
+.phone-stat .l { font-size: 8px; color: var(--text-mute); margin-top: 1px; }
+.phone-bars { display: flex; flex-direction: column; gap: 5px; }
+.phone-bar {
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-.template-features span {
+    align-items: center;
+    gap: 6px;
     font-size: 10px;
-    padding: 3px 7px;
+}
+.phone-bar-track {
+    flex: 1;
+    height: 6px;
     background: var(--bg);
-    color: var(--text-dim);
-    border-radius: 4px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.phone-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+.phone-bar-label { width: 50px; color: var(--text-dim); font-size: 9px; }
+.phone-bar-val { width: 30px; text-align: right; font-weight: 600; font-size: 9px; }
+
+.preview-caption {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-bottom: 20px;
 }
 
-/* 定价 */
-.pricing-card {
+/* ========== 痛点 ========== */
+.pain-section { padding: 40px 0; }
+.pain-item {
     background: var(--card);
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 18px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     border: 1px solid var(--border);
-    position: relative;
+    transition: border-color 0.2s;
 }
-.pricing-card.popular {
-    border: 2px solid var(--orange);
-    box-shadow: 0 0 30px rgba(255,107,26,0.12);
-}
-.pricing-badge {
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    background: var(--orange);
-    color: #fff;
-    font-size: 10px;
-    padding: 4px 12px;
-    border-radius: 0 14px 0 12px;
-    font-weight: 600;
-}
-.pricing-name {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-.pricing-price {
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-.pricing-price small {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-dim);
-}
-.pricing-monthly {
-    font-size: 11px;
-    color: var(--text-mute);
-    margin-bottom: 14px;
-}
-.pricing-anchor {
-    font-size: 11px;
-    color: var(--text-mute);
+.pain-item:active { border-color: var(--orange); }
+.pain-q {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
     margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px dashed var(--border);
 }
-.pricing-anchor s { color: var(--red); }
-.pricing-features {
-    list-style: none;
-    margin-bottom: 16px;
-}
-.pricing-features li {
+.pain-q-icon {
+    display: inline-block;
+    width: 20px; height: 20px;
+    background: rgba(255,71,87,0.15);
+    color: var(--red);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
     font-size: 12px;
-    padding: 3px 0;
-    color: var(--text-dim);
+    margin-right: 6px;
+    font-weight: 700;
+}
+.pain-a {
+    font-size: 13px;
+    color: var(--green);
+    line-height: 1.6;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
     display: flex;
     align-items: start;
+    gap: 6px;
 }
-.pricing-features li::before {
-    content: '✓';
-    margin-right: 8px;
+.pain-a-icon {
+    width: 20px; height: 20px;
+    background: rgba(0,217,163,0.15);
+    color: var(--green);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
     font-weight: 700;
     flex-shrink: 0;
 }
-.pricing-btn {
-    display: block;
-    width: 100%;
-    padding: 11px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.15s;
-}
-.pricing-btn:active { transform: scale(0.97); }
 
-/* 信任 */
-.trust-section {
-    padding: 30px 16px;
-    background: var(--card);
-    margin: 20px 0;
-}
-.trust-title {
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 18px;
-}
-.trust-grid {
+/* ========== 模板 ========== */
+.template-section { padding: 40px 0; }
+.template-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
 }
-.trust-item {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
+.tpl-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px 14px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
 }
-.trust-num {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--green);
+.tpl-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
 }
-.trust-label {
-    font-size: 10px;
-    color: var(--text-mute);
-    margin-top: 2px;
-}
+.tpl-card.t1::before { background: linear-gradient(90deg, var(--orange), #FF8E53); }
+.tpl-card.t2::before { background: linear-gradient(90deg, var(--blue), #6BB6FF); }
+.tpl-card.t3::before { background: linear-gradient(90deg, var(--purple), #C89AFF); }
+.tpl-card.t4::before { background: linear-gradient(90deg, var(--yellow), #FFE873); }
+.tpl-card.t5::before { background: linear-gradient(90deg, var(--green), #00F5B8); }
+.tpl-icon { font-size: 24px; margin-bottom: 8px; }
+.tpl-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.tpl-desc { font-size: 10px; color: var(--text-mute); line-height: 1.5; margin-bottom: 8px; }
+.tpl-price { font-size: 16px; font-weight: 800; }
+.tpl-price small { font-size: 9px; color: var(--text-mute); font-weight: 400; }
 
-/* 交付流程 */
-.flow-step {
+/* ========== 定价 ========== */
+.pricing-section { padding: 40px 0; }
+.price-anchor {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-bottom: 20px;
+    padding: 10px;
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px dashed var(--border);
+}
+.price-anchor s { color: var(--red); }
+.price-anchor strong { color: var(--green); }
+.price-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: transform 0.15s;
+}
+.price-card:active { transform: scale(0.98); }
+.price-card.featured {
+    border: 2px solid var(--orange);
+    box-shadow: 0 0 40px rgba(255,107,26,0.1);
+}
+.price-badge {
+    position: absolute;
+    top: -1px; right: -1px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff;
+    font-size: 10px;
+    padding: 4px 14px;
+    border-radius: 0 14px 0 12px;
+    font-weight: 700;
+}
+.price-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 4px; }
+.price-name { font-size: 16px; font-weight: 700; }
+.price-amount { font-size: 32px; font-weight: 900; line-height: 1; }
+.price-amount small { font-size: 14px; font-weight: 400; color: var(--text-dim); }
+.price-monthly { font-size: 11px; color: var(--text-mute); margin-bottom: 16px; }
+.price-features { list-style: none; margin-bottom: 18px; }
+.price-features li {
+    font-size: 13px;
+    padding: 4px 0;
+    color: var(--text-dim);
     display: flex;
     align-items: start;
-    padding: 12px 0;
+    gap: 8px;
+}
+.price-features li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 800;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+.price-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.price-btn:active { transform: scale(0.97); }
+
+/* ========== 流程 ========== */
+.flow-section { padding: 40px 0; }
+.flow-card {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
     border-bottom: 1px solid var(--border);
 }
-.flow-step:last-child { border-bottom: none; }
+.flow-card:last-child { border-bottom: none; }
 .flow-num {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--card2);
-    color: var(--green);
+    width: 32px; height: 32px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 800;
     flex-shrink: 0;
-    border: 2px solid var(--green);
 }
-.flow-content { flex: 1; }
-.flow-content h4 {
-    font-size: 13px;
-    margin-bottom: 2px;
-}
-.flow-content p {
-    font-size: 11px;
-    color: var(--text-dim);
-}
+.flow-num.c1 { background: rgba(255,107,26,0.15); color: var(--orange); }
+.flow-num.c2 { background: rgba(77,157,255,0.15); color: var(--blue); }
+.flow-num.c3 { background: rgba(168,107,255,0.15); color: var(--purple); }
+.flow-num.c4 { background: rgba(0,217,163,0.15); color: var(--green); }
+.flow-body { flex: 1; }
+.flow-body h4 { font-size: 14px; margin-bottom: 3px; }
+.flow-body p { font-size: 12px; color: var(--text-dim); }
 .flow-time {
     font-size: 10px;
     color: var(--text-mute);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 6px;
     margin-left: 6px;
 }
 
-/* FAQ */
-.faq-item {
+/* ========== 下单 ========== */
+.order-section { padding: 40px 0; }
+.order-card {
     background: var(--card);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 8px;
-}
-.faq-q {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: var(--text);
-}
-.faq-a {
-    font-size: 12px;
-    color: var(--text-dim);
-    line-height: 1.7;
-}
-
-/* 下单 */
-.order-form {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 18px;
+    border-radius: 18px;
+    padding: 24px 20px;
     border: 1px solid var(--border);
 }
-.order-form input,
-.order-form select,
-.order-form textarea {
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; display: block; }
+.form-input, .form-select, .form-textarea {
     width: 100%;
     background: var(--bg);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 12px;
-    border-radius: 10px;
-    font-size: 13px;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
     outline: none;
-    margin-bottom: 10px;
     font-family: inherit;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
 }
-.order-form input:focus,
-.order-form select:focus,
-.order-form textarea:focus {
-    border-color: var(--orange);
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--orange); }
+.form-textarea { min-height: 90px; resize: vertical; }
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b8f9e' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
 }
-.order-form textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-.order-btn {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, var(--orange), var(--green));
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-}
-.order-btn:active { transform: scale(0.98); }
-
-/* 紧迫感 */
-.urgency {
-    background: linear-gradient(135deg, rgba(255,71,87,0.1), rgba(255,107,26,0.1));
-    border: 1px solid rgba(255,71,87,0.3);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: center;
-    margin-bottom: 16px;
-}
-.urgency-text {
-    font-size: 13px;
-    color: var(--orange);
-    font-weight: 600;
-}
-.urgency-sub {
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.order-note {
     font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 4px;
+    color: var(--text-mute);
+    text-align: center;
+    margin-top: 12px;
 }
 
-/* Footer */
+/* ========== FAQ ========== */
+.faq-section { padding: 40px 0; }
+.faq-item {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+}
+.faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: start;
+    gap: 8px;
+}
+.faq-q::before {
+    content: 'Q';
+    background: rgba(255,107,26,0.15);
+    color: var(--orange);
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.faq-a {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    padding-left: 28px;
+}
+
+/* ========== 底部CTA ========== */
+.final-cta {
+    padding: 50px 18px;
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgba(255,107,26,0.08), transparent 70%);
+}
+.final-cta h2 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+.final-cta p {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+/* ========== Footer ========== */
 .footer {
     text-align: center;
-    padding: 40px 16px;
+    padding: 30px 18px 50px;
     color: var(--text-mute);
-    font-size: 12px;
+    font-size: 11px;
+    border-top: 1px solid var(--border);
 }
-.footer a {
-    color: var(--orange);
-    text-decoration: none;
-}
+.footer a { color: var(--orange); text-decoration: none; }
 
-/* Toast */
+/* ========== Toast ========== */
 .toast {
     position: fixed;
-    bottom: 30px;
+    bottom: 40px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(20px);
     background: var(--card);
     border: 1px solid var(--green);
     color: var(--green);
-    padding: 12px 24px;
+    padding: 14px 28px;
     border-radius: 30px;
     font-size: 13px;
+    font-weight: 600;
     z-index: 999;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
     pointer-events: none;
     white-space: nowrap;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
-.toast.show { opacity: 1; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ========== 紧迫感条 ========== */
+.urgency-bar {
+    background: linear-gradient(135deg, rgba(255,71,87,0.08), rgba(255,107,26,0.08));
+    border: 1px solid rgba(255,107,26,0.2);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.urgency-icon { font-size: 20px; }
+.urgency-text { flex: 1; }
+.urgency-main { font-size: 13px; color: var(--orange); font-weight: 700; }
+.urgency-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
 </style>
 </head>
 <body>
 
-<!-- ===== Hero ===== -->
+<!-- ========== Hero ========== -->
 <div class="hero">
     <div class="container">
-        <div class="hero-badge">🔥 限时：前50名立减100元</div>
+        <div class="hero-eyebrow">
+            <span class="dot"></span>
+            已帮助 37 位一人公司主搭建完成
+        </div>
         <h1>
-            我用<span class="highlight">AI给自己搭了套管理系统</span>，<br>
-            30天后多赚了8500块
+            把你的业务<br>
+            装进<span class="grad">一个手机页面</span>
         </h1>
-        <div class="hero-story">
-            我叫时铭，一人公司实践者。<br>
-            之前客户信息全靠记，收入支出一团乱，每天忙但不知道赚了多少。<br>
-            后来我用AI搭了套<strong>专属工作台</strong>——客户CRM、财务、内容排期、变现日报，全在一个页面。<br>
-            <strong>手机打开就能用，数据永不丢失。</strong>
+        <div class="hero-desc">
+            客户CRM、财务记账、内容排期、变现日报、搞钱作战室<br>
+            <strong>一个链接全搞定，手机打开就能用，数据永不丢</strong>
         </div>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-num">30天</div>
-                <div class="hero-stat-label">从混乱到高效</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">+8500</div>
-                <div class="hero-stat-label">月收入增长</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">1h</div>
-                <div class="hero-stat-label">为你定制交付</div>
-            </div>
+        <div class="hero-cta">
+            <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
+                🚀 我要定制一套
+            </button>
+            <a href="https://shiming-ai.github.io/shiming-workbench/" class="btn-secondary">
+                先看看我的工作台长什么样 →
+            </a>
         </div>
-        <a href="#order" class="cta-btn">我也要一套 →</a>
-        <div class="cta-note">前50名立减100元 · 仅剩23个名额</div>
-    </div>
-</div>
-
-<!-- ===== 工作台截图展示 ===== -->
-<div class="container">
-    <div style="font-size: 13px; font-weight: 700; margin-bottom: 12px; color: var(--text-dim);">👇 左右滑动看我的工作台长什么样</div>
-</div>
-<div class="showcase">
-    <div class="showcase-scroll">
-        <div class="showcase-item">
-            <div class="showcase-img">📊</div>
-            <div class="showcase-label">每日变现日报</div>
-        </div>
-        <div class="showcase-item">
-            <div class="showcase-img">💰</div>
-            <div class="showcase-label">财务+翻盘进度</div>
-        </div>
-        <div class="showcase-item">
-            <div class="showcase-img">📋</div>
-            <div class="showcase-label">客户CRM+交付追踪</div>
-        </div>
-        <div class="showcase-item">
-            <div class="showcase-img">🔥</div>
-            <div class="showcase-label">搞钱作战室</div>
-        </div>
-        <div class="showcase-item">
-            <div class="showcase-img">📕</div>
-            <div class="showcase-label">6账号内容矩阵</div>
+        <div class="hero-trust">
+            <span>✓ 1对1定制</span>
+            <span>✓ 3天交付</span>
+            <span>✓ 不满意可退</span>
         </div>
     </div>
 </div>
-<div class="container" style="text-align: center;">
-    <a href="https://shiming-ai.github.io/shiming-workbench/" style="font-size: 12px; color: var(--orange); text-decoration: none;">点击体验完整工作台 →</a>
+
+<!-- ========== 数字条 ========== -->
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-num orange">5分钟</div>
+        <div class="stat-label">说清需求</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num green">3天</div>
+        <div class="stat-label">交付使用</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num purple">¥199起</div>
+        <div class="stat-label">一杯咖啡钱/月</div>
+    </div>
 </div>
 
-<!-- ===== 痛点 - 真实场景 ===== -->
-<div class="section">
+<!-- ========== 工作台预览 ========== -->
+<div class="preview-section">
     <div class="container">
-        <div class="section-tag" style="background: rgba(255,71,87,0.15); color: var(--red);">你是不是也这样？</div>
-        <div class="section-title">这些场景，你有没有中枪？</div>
-        <div class="section-sub">如果有哪怕一条，你也需要一套工作台</div>
-
-        <div class="pain-card">
-            <div class="pain-quote">客户上周三说要报白，我答应周五跟进，结果今天才想起来...这单黄了。</div>
-            <div class="pain-solution">工作台自动记录客户进度，7天/14天/30天自动提醒回访</div>
+        <div class="section-eyebrow">真实案例</div>
+        <div class="section-title">这是我自己每天在用的工作台</div>
+        <div class="section-sub">不是效果图，是我自己的业务管理工具</div>
+    </div>
+    <div class="phone-mockup">
+        <div class="phone-header">
+            <div class="phone-title">📊 翻盘作战</div>
+            <div class="phone-day">D-47</div>
         </div>
-
-        <div class="pain-card">
-            <div class="pain-quote">月底算账，发现接了5单但只到账2单，剩下3单的尾款忘了催。</div>
-            <div class="pain-solution">成交自动入账，收款状态一目了然，超期未收自动报警</div>
+        <div class="phone-grid">
+            <div class="phone-stat">
+                <div class="v" style="color:var(--green)">¥850</div>
+                <div class="l">今日收入</div>
+            </div>
+            <div class="phone-stat">
+                <div class="v" style="color:var(--red)">¥500</div>
+                <div class="l">今日支出</div>
+            </div>
+            <div class="phone-stat">
+                <div class="v" style="color:var(--orange)">¥350</div>
+                <div class="l">今日利润</div>
+            </div>
         </div>
-
-        <div class="pain-card">
-            <div class="pain-quote">小红书抖音知乎6个号，今天该发哪个号发什么，全靠翻聊天记录。</div>
-            <div class="pain-solution">内容排期+选题模板+7日热力图，发什么不用想</div>
+        <div class="phone-bars">
+            <div class="phone-bar">
+                <div class="phone-bar-label">抖音</div>
+                <div class="phone-bar-track"><div class="phone-bar-fill" style="width:85%;background:var(--orange)"></div></div>
+                <div class="phone-bar-val" style="color:var(--orange)">12.5k</div>
+            </div>
+            <div class="phone-bar">
+                <div class="phone-bar-label">小红书</div>
+                <div class="phone-bar-track"><div class="phone-bar-fill" style="width:72%;background:var(--red)"></div></div>
+                <div class="phone-bar-val" style="color:var(--red)">8.3k</div>
+            </div>
+            <div class="phone-bar">
+                <div class="phone-bar-label">视频号</div>
+                <div class="phone-bar-track"><div class="phone-bar-fill" style="width:60%;background:var(--blue)"></div></div>
+                <div class="phone-bar-val" style="color:var(--blue)">5.6k</div>
+            </div>
+            <div class="phone-bar">
+                <div class="phone-bar-label">知乎</div>
+                <div class="phone-bar-track"><div class="phone-bar-fill" style="width:45%;background:var(--purple)"></div></div>
+                <div class="phone-bar-val" style="color:var(--purple)">3.2k</div>
+            </div>
         </div>
+    </div>
+    <div class="preview-caption">↑ 这不是设计稿，是我手机主屏幕的真实截图模拟</div>
+</div>
 
-        <div class="pain-card">
-            <div class="pain-quote">一天下来感觉忙死了，但问他今天赚了多少，说不出来。</div>
-            <div class="pain-solution">搞钱作战室：每天3大重点+连续达标打卡，逼你有产出</div>
+<!-- ========== 痛点 ========== -->
+<div class="pain-section">
+    <div class="container">
+        <div class="section-eyebrow">你有没有这些烦恼</div>
+        <div class="section-title">这些问题，一套工作台全解决</div>
+        <div class="section-sub">如果有哪怕一条中了，往下看</div>
+
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>客户上周说要跟进，结果忘了，这单黄了</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>CRM自动追踪，7/14/30天智能提醒回访</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>月底算账，接了5单只到账2单，尾款忘了催</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>收款状态一目了然，超期未收自动报警</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>6个号今天发什么？翻半天聊天记录才想起来</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>内容排期+选题模板+7日热力图，打开就发</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>忙了一天，问他今天赚了多少，说不出来</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>搞钱作战室：每日3大重点+连续达标打卡</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>Excel表格越用越乱，手机上根本没法看</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>手机原生体验，添加到桌面就是APP</div>
         </div>
     </div>
 </div>
 
-<!-- ===== 对比 ===== -->
-<div class="section">
+<!-- ========== 模板 ========== -->
+<div class="template-section">
     <div class="container">
-        <div class="section-tag" style="background: rgba(0,217,163,0.15); color: var(--green);">对比一下</div>
-        <div class="section-title">有工作台 vs 没工作台</div>
-        <div class="section-sub">同样是干一天，效率差3倍</div>
+        <div class="section-eyebrow">选你的行业</div>
+        <div class="section-title">5个模板，总有一个适合你</div>
+        <div class="section-sub">选一个最接近的，我帮你改到满意</div>
 
-        <div class="compare-table">
-            <div class="compare-row before">
-                <div class="compare-label">之前</div>
-                <div class="compare-content">客户信息散落在微信/备忘录/脑子里，跟进全靠记</div>
+        <div class="template-grid">
+            <div class="tpl-card t1">
+                <div class="tpl-icon">🎯</div>
+                <div class="tpl-name">一人公司版</div>
+                <div class="tpl-desc">博主·自媒体·超级个体</div>
+                <div class="tpl-price" style="color:var(--orange)">¥599<small>起</small></div>
             </div>
-            <div class="compare-row after">
-                <div class="compare-label">现在</div>
-                <div class="compare-content">客户CRM全流程追踪，成交→交付→复购自动提醒</div>
+            <div class="tpl-card t2">
+                <div class="tpl-icon">📦</div>
+                <div class="tpl-name">电商卖家版</div>
+                <div class="tpl-desc">淘宝·抖音·拼多多</div>
+                <div class="tpl-price" style="color:var(--blue)">¥599<small>起</small></div>
             </div>
-            <div class="compare-row before">
-                <div class="compare-label">之前</div>
-                <div class="compare-content">收入支出混一起，月底才发现没存下钱</div>
+            <div class="tpl-card t3">
+                <div class="tpl-icon">💻</div>
+                <div class="tpl-name">自由职业版</div>
+                <div class="tpl-desc">设计·开发·文案·顾问</div>
+                <div class="tpl-price" style="color:var(--purple)">¥599<small>起</small></div>
             </div>
-            <div class="compare-row after">
-                <div class="compare-label">现在</div>
-                <div class="compare-content">每笔收支自动分类，业务线利润实时可见</div>
+            <div class="tpl-card t4">
+                <div class="tpl-icon">🏪</div>
+                <div class="tpl-name">实体店版</div>
+                <div class="tpl-desc">餐饮·奶茶·零售店</div>
+                <div class="tpl-price" style="color:var(--yellow)">¥1999<small>起</small></div>
             </div>
-            <div class="compare-row before">
-                <div class="compare-label">之前</div>
-                <div class="compare-content">6个号发什么全靠想，经常断更</div>
-            </div>
-            <div class="compare-row after">
-                <div class="compare-label">现在</div>
-                <div class="compare-content">内容排期+12个选题模板，打开就知道发什么</div>
-            </div>
-            <div class="compare-row before">
-                <div class="compare-label">之前</div>
-                <div class="compare-content">每天忙但没产出，重要的事一直拖</div>
-            </div>
-            <div class="compare-row after">
-                <div class="compare-label">现在</div>
-                <div class="compare-content">每日3大重点+连续达标打卡，逼你有产出</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 信任 ===== -->
-<div class="trust-section">
-    <div class="container">
-        <div class="trust-title">为什么选我？</div>
-        <div class="trust-grid">
-            <div class="trust-item">
-                <div class="trust-num">真实案例</div>
-                <div class="trust-label">我自己天天在用</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-num">1小时</div>
-                <div class="trust-label">最快交付速度</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-num">永久域名</div>
-                <div class="trust-label">不会失效</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-num">30天</div>
-                <div class="trust-label">售后保障</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-num">不限设备</div>
-                <div class="trust-label">手机电脑都能用</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-num">数据本地</div>
-                <div class="trust-label">只有你能看</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 模板 ===== -->
-<div class="section">
-    <div class="container">
-        <div class="section-tag" style="background: rgba(255,107,26,0.15); color: var(--orange);">选你的行业</div>
-        <div class="section-title">5个模板，覆盖你的业务</div>
-        <div class="section-sub">选一个最接近的，我帮你定制</div>
-
-        <div class="template-card t1">
-            <div class="template-header">
-                <div><span class="template-icon">🎯</span><span class="template-name">个人IP/一人公司版</span></div>
-                <div class="template-price" style="color: var(--orange)">599<small>+99/月</small></div>
-            </div>
-            <div class="template-target">博主 · 自媒体 · 一人公司 · 超级个体</div>
-            <div class="template-features">
-                <span>客户CRM</span><span>财务记账</span><span>内容矩阵</span><span>变现日报</span><span>搞钱作战室</span>
-            </div>
-        </div>
-
-        <div class="template-card t2">
-            <div class="template-header">
-                <div><span class="template-icon">📦</span><span class="template-name">电商卖家版</span></div>
-                <div class="template-price" style="color: var(--blue)">599<small>+99/月</small></div>
-            </div>
-            <div class="template-target">淘宝 · 拼多多 · 抖音电商</div>
-            <div class="template-features">
-                <span>订单看板</span><span>客户CRM</span><span>库存追踪</span><span>利润计算</span><span>退款追踪</span>
-            </div>
-        </div>
-
-        <div class="template-card t3">
-            <div class="template-header">
-                <div><span class="template-icon">💻</span><span class="template-name">自由职业者版</span></div>
-                <div class="template-price" style="color: var(--purple)">599<small>+99/月</small></div>
-            </div>
-            <div class="template-target">设计师 · 程序员 · 文案 · 顾问</div>
-            <div class="template-features">
-                <span>项目管理</span><span>客户追踪</span><span>时间记录</span><span>报价生成</span><span>收入统计</span>
-            </div>
-        </div>
-
-        <div class="template-card t4">
-            <div class="template-header">
-                <div><span class="template-icon">🏪</span><span class="template-name">餐饮/实体店版</span></div>
-                <div class="template-price" style="color: var(--yellow)">1999<small>+199/月</small></div>
-            </div>
-            <div class="template-target">餐饮 · 奶茶店 · 个体店</div>
-            <div class="template-features">
-                <span>营业统计</span><span>员工排班</span><span>供应商管理</span><span>会员CRM</span><span>每日盘点</span>
-            </div>
-        </div>
-
-        <div class="template-card t5">
-            <div class="template-header">
-                <div><span class="template-icon">📊</span><span class="template-name">通用职场版</span></div>
-                <div class="template-price" style="color: var(--green)">199<small>+99/月</small></div>
-            </div>
-            <div class="template-target">职场人 · 职员 · 学生</div>
-            <div class="template-features">
-                <span>任务管理</span><span>学习记录</span><span>习惯打卡</span><span>收支记录</span><span>目标追踪</span>
+            <div class="tpl-card t5" style="grid-column: span 2;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div class="tpl-icon">📊</div>
+                    <div style="flex:1">
+                        <div class="tpl-name">通用职场版</div>
+                        <div class="tpl-desc">职场人·学生·想管理生活的人</div>
+                    </div>
+                    <div class="tpl-price" style="color:var(--green)">¥199<small>起</small></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ===== 定价 ===== -->
-<div class="section">
+<!-- ========== 定价 ========== -->
+<div class="pricing-section">
     <div class="container">
-        <div class="section-tag" style="background: rgba(0,217,163,0.15); color: var(--green);">透明定价</div>
+        <div class="section-eyebrow">透明定价</div>
         <div class="section-title">三档方案，按需选择</div>
-        <div class="section-sub">先沟通再付款 · 不满意可退</div>
+        <div class="section-sub">先沟通再付款 · 3天交付 · 不满意可退</div>
 
-        <!-- 锚定对比 -->
-        <div style="text-align: center; margin-bottom: 20px; font-size: 12px; color: var(--text-mute);">
-            市场同类定制开发：<s style="color: var(--red)">¥3000-10000</s> · 我的定价：199起
+        <div class="price-anchor">
+            市场同类定制开发 <s>¥3000-10000</s> → 这里 <strong>¥199起</strong>
         </div>
 
-        <div class="pricing-card">
-            <div class="pricing-name" style="color: var(--green)">基础版</div>
-            <div class="pricing-price" style="color: var(--green)">¥199 <small>起</small></div>
-            <div class="pricing-monthly">+ ¥99/月维护费</div>
-            <div class="pricing-anchor">市场价 <s>¥800</s> · 省 ¥601</div>
-            <ul class="pricing-features">
-                <li style="color: var(--green)">选1个模板</li>
-                <li style="color: var(--green)">改配色/标题</li>
-                <li style="color: var(--green)">基础功能配置</li>
-                <li style="color: var(--green)">1次修改机会</li>
-                <li style="color: var(--green)">永久域名</li>
-                <li style="color: var(--green)">7天售后</li>
+        <!-- 基础版 -->
+        <div class="price-card">
+            <div class="price-head">
+                <div class="price-name" style="color:var(--green)">基础版</div>
+                <div class="price-amount" style="color:var(--green)">199<small>元</small></div>
+            </div>
+            <div class="price-monthly">+ ¥99/月维护 · 市场价 ¥800</div>
+            <ul class="price-features">
+                <li>选1个模板快速定制</li>
+                <li>改配色 / 标题 / 基础配置</li>
+                <li>1次修改机会</li>
+                <li>永久域名 + 7天售后</li>
             </ul>
-            <a href="#order" class="pricing-btn" style="background: rgba(0,217,163,0.15); color: var(--green); border: 1px solid var(--green);">选基础版</a>
+            <button class="price-btn" style="background:rgba(0,217,163,0.12);color:var(--green);border:1px solid var(--green)" onclick="selectPlan('基础版199')">
+                选基础版
+            </button>
         </div>
 
-        <div class="pricing-card popular">
-            <div class="pricing-badge">⭐ 最多人选</div>
-            <div class="pricing-name" style="color: var(--orange)">标准版</div>
-            <div class="pricing-price" style="color: var(--orange)">¥599</div>
-            <div class="pricing-monthly">+ ¥99/月维护费</div>
-            <div class="pricing-anchor">市场价 <s>¥2000</s> · 省 ¥1401 · 前50名再减100</div>
-            <ul class="pricing-features">
-                <li style="color: var(--orange)">选1个模板</li>
-                <li style="color: var(--orange)">定制功能模块</li>
-                <li style="color: var(--orange)">3次修改机会</li>
-                <li style="color: var(--orange)">1对1需求沟通</li>
-                <li style="color: var(--orange)">永久域名</li>
-                <li style="color: var(--orange)">30天售后</li>
-                <li style="color: var(--orange)">数据导入</li>
+        <!-- 标准版 -->
+        <div class="price-card featured">
+            <div class="price-badge">⭐ 最多人选</div>
+            <div class="price-head">
+                <div class="price-name" style="color:var(--orange)">标准版</div>
+                <div class="price-amount" style="color:var(--orange)">499<small>元</small></div>
+            </div>
+            <div class="price-monthly">+ ¥99/月维护 · 市场价 ¥2000 · 前50名立减100</div>
+            <ul class="price-features">
+                <li>选1个模板 + 定制功能模块</li>
+                <li>3次修改机会</li>
+                <li>1对1需求沟通</li>
+                <li>数据导入 + 30天售后</li>
+                <li>永久域名 + PWA桌面APP</li>
             </ul>
-            <a href="#order" class="pricing-btn" style="background: var(--orange); color: #fff;">选标准版（立减100）</a>
+            <button class="price-btn" style="background:linear-gradient(135deg,var(--orange),#FF8E53);color:#fff;box-shadow:0 6px 20px rgba(255,107,26,0.3)" onclick="selectPlan('标准版499')">
+                选标准版（立减100）→
+            </button>
         </div>
 
-        <div class="pricing-card">
-            <div class="pricing-name" style="color: var(--red)">旗舰版</div>
-            <div class="pricing-price" style="color: var(--red)">¥1999</div>
-            <div class="pricing-monthly">+ ¥199/月维护费</div>
-            <div class="pricing-anchor">市场价 <s>¥5000</s> · 省 ¥3001</div>
-            <ul class="pricing-features">
-                <li style="color: var(--red)">深度定制</li>
-                <li style="color: var(--red)">专属功能开发</li>
-                <li style="color: var(--red)">不限修改次数</li>
-                <li style="color: var(--red)">1对1专属顾问</li>
-                <li style="color: var(--red)">永久域名</li>
-                <li style="color: var(--red)">90天售后</li>
-                <li style="color: var(--red)">数据导入+培训</li>
-                <li style="color: var(--red)">优先支持</li>
+        <!-- 旗舰版 -->
+        <div class="price-card">
+            <div class="price-head">
+                <div class="price-name" style="color:var(--red)">旗舰版</div>
+                <div class="price-amount" style="color:var(--red)">1999<small>元</small></div>
+            </div>
+            <div class="price-monthly">+ ¥199/月维护 · 市场价 ¥5000</div>
+            <ul class="price-features">
+                <li>深度定制 + 专属功能开发</li>
+                <li>不限修改次数</li>
+                <li>1对1专属顾问</li>
+                <li>数据导入 + 培训 + 90天售后</li>
+                <li>优先支持 + 永久域名</li>
             </ul>
-            <a href="#order" class="pricing-btn" style="background: rgba(255,71,87,0.15); color: var(--red); border: 1px solid var(--red);">选旗舰版</a>
+            <button class="price-btn" style="background:rgba(255,71,87,0.12);color:var(--red);border:1px solid var(--red)" onclick="selectPlan('旗舰版1999')">
+                选旗舰版
+            </button>
         </div>
     </div>
 </div>
 
-<!-- ===== 交付流程 ===== -->
-<div class="section">
+<!-- ========== 交付流程 ========== -->
+<div class="flow-section">
     <div class="container">
-        <div class="section-tag" style="background: rgba(77,157,255,0.15); color: var(--blue);">简单透明</div>
-        <div class="section-title">6步交付，最快1天搞定</div>
+        <div class="section-eyebrow">简单透明</div>
+        <div class="section-title">4步搞定，最快3天用上</div>
 
-        <div class="flow-step">
-            <div class="flow-num">1</div>
-            <div class="flow-content">
-                <h4>提交需求<span class="flow-time">1分钟</span></h4>
-                <p>填表单，说你的业务和想要的功能</p>
+        <div class="flow-card">
+            <div class="flow-num c1">1</div>
+            <div class="flow-body">
+                <h4>提交需求<span class="flow-time">5分钟</span></h4>
+                <p>填下面表单，说你做什么业务、想要什么功能</p>
             </div>
         </div>
-        <div class="flow-step">
-            <div class="flow-num">2</div>
-            <div class="flow-content">
-                <h4>微信沟通<span class="flow-time">1小时内</span></h4>
-                <p>我加你微信，确认细节和报价</p>
+        <div class="flow-card">
+            <div class="flow-num c2">2</div>
+            <div class="flow-body">
+                <h4>微信沟通确认<span class="flow-time">1小时内</span></h4>
+                <p>我加你微信，确认细节、报价，付50%定金</p>
             </div>
         </div>
-        <div class="flow-step">
-            <div class="flow-num">3</div>
-            <div class="flow-content">
-                <h4>支付定金<span class="flow-time">当天</span></h4>
-                <p>确认后付50%定金，开始制作</p>
+        <div class="flow-card">
+            <div class="flow-num c3">3</div>
+            <div class="flow-body">
+                <h4>AI快速开发<span class="flow-time">1-3天</span></h4>
+                <p>用AI工具定制开发，实时沟通进度</p>
             </div>
         </div>
-        <div class="flow-step">
-            <div class="flow-num">4</div>
-            <div class="flow-content">
-                <h4>定制开发<span class="flow-time">1-3天</span></h4>
-                <p>用AI快速开发，实时沟通进度</p>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">5</div>
-            <div class="flow-content">
-                <h4>交付验收<span class="flow-time">第3天</span></h4>
-                <p>发你链接，手机打开就能用</p>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">6</div>
-            <div class="flow-content">
-                <h4>付尾款<span class="flow-time">验收后</span></h4>
-                <p>满意后付尾款，开始售后服务</p>
+        <div class="flow-card">
+            <div class="flow-num c4">4</div>
+            <div class="flow-body">
+                <h4>交付验收<span class="flow-time">满意付尾款</span></h4>
+                <p>发你链接，手机打开就能用，满意再付尾款</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ===== 紧迫感 ===== -->
-<div class="section">
+<!-- ========== 下单 ========== -->
+<div class="order-section" id="order">
     <div class="container">
-        <div class="urgency">
-            <div class="urgency-text">🔥 前50名立减100元 · 仅剩23个名额</div>
-            <div class="urgency-sub">满50名后恢复原价 · 手慢无</div>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 下单 ===== -->
-<div class="section" id="order">
-    <div class="container">
-        <div class="section-tag" style="background: rgba(255,107,26,0.15); color: var(--orange);">立即开始</div>
+        <div class="section-eyebrow">立即开始</div>
         <div class="section-title">填个表，1小时内加你微信</div>
-        <div class="section-sub">不用懂技术，说你的需求就行</div>
+        <div class="section-sub">不用懂技术，说人话就行</div>
 
-        <div class="order-form">
-            <input type="text" id="landName" placeholder="你的称呼">
-            <input type="text" id="landWechat" placeholder="微信号/手机号">
-            <select id="landTemplate">
-                <option value="个人IP版">🎯 个人IP/一人公司版</option>
-                <option value="电商卖家版">📦 电商卖家版</option>
-                <option value="自由职业版">💻 自由职业者版</option>
-                <option value="餐饮实体店版">🏪 餐饮/实体店版</option>
-                <option value="通用职场版">📊 通用职场版</option>
-            </select>
-            <select id="landLevel">
-                <option value="基础版199">基础版 199元定制+99/月</option>
-                <option value="标准版599">标准版 599元定制+99/月 ⭐（前50名减100）</option>
-                <option value="旗舰版1999">旗舰版 1999元定制+199/月</option>
-            </select>
-            <textarea id="landNeeds" placeholder="简单描述：做什么业务？需要哪些功能？"></textarea>
-            <button class="order-btn" onclick="submitLandOrder()">🚀 提交需求（立减100）</button>
-            <p style="font-size: 10px; color: var(--text-mute); text-align: center; margin-top: 10px;">提交后1小时内加你微信 · 不满意不收钱</p>
+        <div class="urgency-bar">
+            <div class="urgency-icon">🔥</div>
+            <div class="urgency-text">
+                <div class="urgency-main">前50名立减100元 · 已用27个名额</div>
+                <div class="urgency-sub">满50名恢复原价，手慢无</div>
+            </div>
+        </div>
+
+        <div class="order-card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">称呼</label>
+                    <input type="text" class="form-input" id="oName" placeholder="怎么称呼你">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">微信/手机</label>
+                    <input type="text" class="form-input" id="oContact" placeholder="微信号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">选模板</label>
+                <select class="form-select" id="oTemplate">
+                    <option value="一人公司版">🎯 一人公司版</option>
+                    <option value="电商卖家版">📦 电商卖家版</option>
+                    <option value="自由职业版">💻 自由职业版</option>
+                    <option value="实体店版">🏪 实体店版</option>
+                    <option value="通用职场版">📊 通用职场版</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">选套餐</label>
+                <select class="form-select" id="oPlan">
+                    <option value="基础版199">基础版 ¥199 + ¥99/月</option>
+                    <option value="标准版499" selected>标准版 ¥499 + ¥99/月 ⭐（立减100）</option>
+                    <option value="旗舰版1999">旗舰版 ¥1999 + ¥199/月</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">你的需求（选填）</label>
+                <textarea class="form-textarea" id="oNeeds" placeholder="做什么业务？需要哪些功能？越具体越好"></textarea>
+            </div>
+            <button class="btn-primary" onclick="submitOrder()" style="margin-top:6px">
+                🚀 提交需求（前50名立减100）
+            </button>
+            <div class="order-note">提交后1小时内加你微信 · 不满意不收钱</div>
         </div>
     </div>
 </div>
 
-<!-- ===== FAQ ===== -->
-<div class="section">
+<!-- ========== FAQ ========== -->
+<div class="faq-section">
     <div class="container">
-        <div class="section-tag" style="background: rgba(168,85,247,0.15); color: var(--purple);">答疑</div>
-        <div class="section-title">你可能想问</div>
+        <div class="section-eyebrow">答疑</div>
+        <div class="section-title">你可能想问的</div>
 
         <div class="faq-item">
-            <div class="faq-q">Q: 做出来的是什么？APP吗？</div>
-            <div class="faq-a">A: 网页版工作台，手机浏览器打开就能用，可以添加到手机桌面像APP一样。永久域名，不会失效。</div>
+            <div class="faq-q">做出来的是什么？APP吗？</div>
+            <div class="faq-a">网页版工作台，手机浏览器打开就能用。可以添加到手机桌面，用起来跟APP一模一样，永久域名不会失效。</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q">Q: 我不懂技术能用吗？</div>
-            <div class="faq-a">A: 完全不用懂技术。你只需要告诉我你的业务和需求，剩下的我全搞定。交付后打开链接就能用。</div>
+            <div class="faq-q">我不懂技术能用吗？</div>
+            <div class="faq-a">完全不用懂技术。你只需要说你的业务和需求，剩下的我全搞定。交付后打开链接就能用，跟发微信一样简单。</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q">Q: 数据存在哪里？安全吗？</div>
-            <div class="faq-a">A: 数据存在你自己的浏览器本地，不会上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。</div>
+            <div class="faq-q">数据存在哪？安全吗？</div>
+            <div class="faq-a">数据存在你自己的手机浏览器本地，不会上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q">Q: 和别人用同一个模板会一样吗？</div>
-            <div class="faq-a">A: 模板只是基础框架，我会根据你的业务定制配色、功能、布局，每个人做出来都不一样。</div>
+            <div class="faq-q">和别人用同一个模板会一样吗？</div>
+            <div class="faq-a">模板只是基础框架。我会根据你的业务定制配色、功能、布局，每个人做出来都不一样。</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q">Q: 不满意能退吗？</div>
-            <div class="faq-a">A: 交付前可以提修改意见。交付后3天内不满意全额退款（已产生的定制成本除外）。</div>
+            <div class="faq-q">不满意能退吗？</div>
+            <div class="faq-a">交付前可以提修改意见。交付后3天内不满意全额退款（已产生的定制成本除外）。</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q">Q: 以后想加功能怎么办？</div>
-            <div class="faq-a">A: 每月维护费包含小功能调整。大功能开发另计费，按需报价。</div>
+            <div class="faq-q">以后想加功能怎么办？</div>
+            <div class="faq-a">每月维护费包含小功能调整。大功能开发另计费，按需报价，绝不乱收费。</div>
         </div>
     </div>
 </div>
 
-<!-- ===== 底部CTA ===== -->
-<div class="section" style="padding-bottom: 50px;">
-    <div class="container" style="text-align: center;">
-        <h2 style="font-size: 20px; margin-bottom: 10px; line-height: 1.5;">
-            别再靠脑子记了<br>
-            <span style="color: var(--orange);">199块，让AI帮你管业务</span>
-        </h2>
-        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 20px;">
-            省下的时间，拿去搞钱
-        </p>
-        <a href="#order" class="cta-btn">立即定制 →</a>
-        <div class="cta-note">前50名立减100 · 仅剩23个名额</div>
-    </div>
+<!-- ========== 底部CTA ========== -->
+<div class="final-cta">
+    <h2>别再靠脑子记了<br><span style="color:var(--orange)">让AI帮你管业务</span></h2>
+    <p>省下的时间，拿去搞钱</p>
+    <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})" style="max-width:300px;margin:0 auto">
+        立即定制 →
+    </button>
 </div>
 
-<!-- ===== Footer ===== -->
+<!-- ========== Footer ========== -->
 <div class="footer">
     <p>© 2026 时铭 · AI工作台定制服务</p>
-    <p style="margin-top: 8px;">
+    <p style="margin-top:8px">
         <a href="https://shiming-ai.github.io/shiming-workbench/">查看我的工作台案例 →</a>
     </p>
 </div>
@@ -1006,43 +954,72 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 <div class="toast" id="toast"></div>
 
 <script>
-function toast(msg) {
+function toast(msg, duration = 2500) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+    setTimeout(() => t.classList.remove('show'), duration);
 }
 
-function submitLandOrder() {
-    const name = document.getElementById('landName').value.trim();
-    const wechat = document.getElementById('landWechat').value.trim();
-    const template = document.getElementById('landTemplate').value;
-    const level = document.getElementById('landLevel').value;
-    const needs = document.getElementById('landNeeds').value.trim();
+function selectPlan(plan) {
+    const select = document.getElementById('oPlan');
+    for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === plan) {
+            select.selectedIndex = i;
+            break;
+        }
+    }
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+    toast('已为你选择 ' + plan.split(/\d/)[0]);
+}
+
+function submitOrder() {
+    const name = document.getElementById('oName').value.trim();
+    const contact = document.getElementById('oContact').value.trim();
+    const template = document.getElementById('oTemplate').value;
+    const plan = document.getElementById('oPlan').value;
+    const needs = document.getElementById('oNeeds').value.trim();
 
     if (!name) return toast('请填写称呼');
-    if (!wechat) return toast('请填写微信/手机');
+    if (!contact) return toast('请填写微信/手机号');
 
     const orderText = `【AI工作台定制订单】
-姓名：${name}
-联系：${wechat}
+━━━━━━━━━━━━━
+称呼：${name}
+联系：${contact}
 模板：${template}
-套餐：${level}
+套餐：${plan}
 需求：${needs || '待沟通'}
+━━━━━━━━━━━━━
 
-请复制以上信息，加微信发送给我确认。`;
+请复制以上信息，加微信发送给我确认 ✅`;
 
-    if (navigator.clipboard) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(orderText).then(() => {
-            toast('✅ 订单已复制，请加微信发送给我');
+            toast('✅ 订单已复制到剪贴板，请加微信发给我');
             setTimeout(() => {
-                document.getElementById('landName').value = '';
-                document.getElementById('landWechat').value = '';
-                document.getElementById('landNeeds').value = '';
-            }, 2000);
+                document.getElementById('oName').value = '';
+                document.getElementById('oContact').value = '';
+                document.getElementById('oNeeds').value = '';
+            }, 2500);
+        }).catch(() => {
+            toast('请长按复制：' + orderText.substring(0, 30) + '...', 4000);
         });
     } else {
-        toast(orderText);
+        // iOS fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = orderText;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            toast('✅ 订单已复制，请加微信发给我');
+        } catch (e) {
+            toast('请手动复制订单信息', 3000);
+        }
+        document.body.removeChild(textarea);
     }
 }
 </script>
