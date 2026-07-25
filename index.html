@@ -827,6 +827,15 @@ body {
         <div id="dailyReport"></div>
     </div>
 
+    <!-- 搞钱作战室 -->
+    <div class="section" style="border:1px solid rgba(255,71,87,0.3);background:linear-gradient(135deg,rgba(255,71,87,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--red)"></span>🔥 搞钱作战室</div>
+            <div class="sec-more" id="warRoomStreak">连续达标 0 天</div>
+        </div>
+        <div id="warRoom"></div>
+    </div>
+
     <!-- 业务线总览（首页快捷视图） -->
     <div class="section">
         <div class="sec-header">
@@ -1077,6 +1086,74 @@ body {
         </div>
 
         <div id="refundList"></div>
+    </div>
+
+    <!-- 智能报价引擎 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--orange)"></span>🎯 智能报价引擎</div>
+            <div class="sec-more">自动3档报价+话术</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+            选服务类型+平台+紧急程度，自动生成3档报价和客户回复话术，直接复制发给客户
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <select id="quoteService" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="报白">类目报白</option>
+                <option value="解封">账号解封</option>
+                <option value="申诉">店铺申诉</option>
+                <option value="黄V">黄V认证</option>
+                <option value="团购">团购开通</option>
+                <option value="AI开发">AI定制开发</option>
+            </select>
+            <select id="quotePlatform" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="抖音">抖音</option>
+                <option value="快手">快手</option>
+                <option value="小红书">小红书</option>
+                <option value="视频号">视频号</option>
+                <option value="淘宝">淘宝</option>
+                <option value="拼多多">拼多多</option>
+                <option value="全平台">全平台</option>
+            </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+            <select id="quoteUrgency" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="normal">正常（3-7天）</option>
+                <option value="urgent">加急（1-2天）</option>
+                <option value="slow">不急（7-15天）</option>
+            </select>
+            <select id="quoteDifficulty" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="easy">简单（常规类目）</option>
+                <option value="medium">中等（需审核）</option>
+                <option value="hard">复杂（特殊类目/违规严重）</option>
+            </select>
+        </div>
+        <button onclick="generateQuote()" style="width:100%;padding:11px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer;margin-bottom:12px">⚡ 生成报价</button>
+        <div id="quoteResult"></div>
+    </div>
+
+    <!-- 交付追踪看板 -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>📦 交付追踪</div>
+            <div class="sec-more" id="deliveryStats">0个进行中</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+            成交订单自动进入交付流水线，7阶段追踪，超期自动报警
+        </div>
+        <div id="deliveryBoard"></div>
+    </div>
+
+    <!-- 客户复购引擎 -->
+    <div class="section" style="border:1px solid rgba(168,85,247,0.3);background:linear-gradient(135deg,rgba(168,85,247,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--purple)"></span>🔁 复购引擎</div>
+            <div class="sec-more" id="repurchaseCount">0个待回访</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+            成交客户7/14/30天自动提醒回访，推荐下一步服务，一个客户变3单
+        </div>
+        <div id="repurchaseList"></div>
     </div>
 
 </div>
@@ -2127,6 +2204,9 @@ function cycleStatus(i) {
         renderWeekPlan();
         renderTodayFocus();
         renderAccounts();
+        renderDeliveryBoard();
+        renderRepurchaseEngine();
+        renderWarRoom();
         toast(`✅ 成交！已自动入账 ¥${crmList[i].amount}`);
     }
 
@@ -2612,6 +2692,376 @@ function renderServices() {
             </div>
         </div>
     `).join('');
+}
+
+// ========== 智能报价引擎 ==========
+const quotePriceTable = {
+    '报白': { easy: [800, 1500], medium: [1500, 3000], hard: [3000, 6000] },
+    '解封': { easy: [300, 800], medium: [800, 2000], hard: [2000, 5000] },
+    '申诉': { easy: [800, 1500], medium: [1500, 3000], hard: [3000, 6000] },
+    '黄V': { easy: [500, 800], medium: [800, 1500], hard: [1500, 3000] },
+    '团购': { easy: [1000, 2000], medium: [2000, 3500], hard: [3500, 6000] },
+    'AI开发': { easy: [2000, 5000], medium: [5000, 15000], hard: [15000, 50000] },
+};
+
+function generateQuote() {
+    const service = document.getElementById('quoteService').value;
+    const platform = document.getElementById('quotePlatform').value;
+    const urgency = document.getElementById('quoteUrgency').value;
+    const difficulty = document.getElementById('quoteDifficulty').value;
+
+    const range = quotePriceTable[service][difficulty];
+    const [min, max] = range;
+
+    // 加急加价30%，不急减价15%
+    const urgencyMult = urgency === 'urgent' ? 1.3 : urgency === 'slow' ? 0.85 : 1;
+
+    // 3档报价
+    const lowPrice = Math.round(min * urgencyMult * 0.8 / 50) * 50;
+    const midPrice = Math.round(((min + max) / 2) * urgencyMult / 50) * 50;
+    const highPrice = Math.round(max * urgencyMult * 1.1 / 50) * 50;
+
+    // 客户筛选建议
+    let advice = '';
+    let adviceColor = 'var(--green)';
+    if (urgency === 'urgent' && difficulty === 'hard') {
+        advice = '⚠️ 加急+复杂单，建议报高价。如果客户嫌贵，说明他不懂行情，可以放掉';
+        adviceColor = 'var(--red)';
+    } else if (service === 'AI开发' && difficulty === 'hard') {
+        advice = '💡 大单子！先收50%定金再动手，别白干';
+        adviceColor = 'var(--orange)';
+    } else if (lowPrice < 500) {
+        advice = '💰 小单快做，30分钟搞定，别花太多时间沟通';
+        adviceColor = 'var(--yellow)';
+    } else {
+        advice = '✅ 正常接单，中档报价成交率最高';
+        adviceColor = 'var(--green)';
+    }
+
+    // 交付周期
+    const deliveryDays = urgency === 'urgent' ? '1-2天' : urgency === 'slow' ? '7-15天' : '3-7天';
+
+    // 生成话术
+    const scripts = {
+        low: `${service}·${platform}\n报价：¥${lowPrice}\n交付：${deliveryDays}\n含1次免费售后\n\n需要的话直接转款排队，当天开始处理~`,
+        mid: `${service}·${platform}\n报价：¥${midPrice}\n交付：${deliveryDays}\n含1个月免费维护+进度每日更新\n\n这个价位性价比最高，大部分客户都选这个~`,
+        high: `${service}·${platform}（VIP服务）\n报价：¥${highPrice}\n交付：${deliveryDays}\n含3个月免费维护+专属顾问+加急处理+结果保障\n\n适合对结果要求高的客户，不成功全额退款`,
+    };
+
+    const el = document.getElementById('quoteResult');
+    el.innerHTML = `
+        <div style="padding:10px;background:var(--bg);border-radius:10px;margin-bottom:10px;border-left:3px solid ${adviceColor}">
+            <div style="font-size:12px;color:${adviceColor};font-weight:600;margin-bottom:4px">📋 接单建议</div>
+            <div style="font-size:12px;color:var(--text)">${advice}</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">预计交付：${deliveryDays}</div>
+        </div>
+        ${[
+            { level: 'low', label: '低价快速成交', price: lowPrice, color: 'var(--green)', desc: '适合预算紧/赶时间客户' },
+            { level: 'mid', label: '中价推荐档', price: midPrice, color: 'var(--orange)', desc: '成交率最高，性价比最优' },
+            { level: 'high', label: '高价筛选档', price: highPrice, color: 'var(--red)', desc: '筛选优质客户，高利润' },
+        ].map(q => `
+            <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px;border:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                    <div>
+                        <span style="font-size:11px;padding:2px 8px;border-radius:4px;background:${q.color}22;color:${q.color}">${q.label}</span>
+                        <div style="font-size:10px;color:var(--text-dim);margin-top:3px">${q.desc}</div>
+                    </div>
+                    <div style="font-size:18px;font-weight:700;color:${q.color}">¥${q.price.toLocaleString()}</div>
+                </div>
+                <div style="font-size:11px;color:var(--text-dim);background:var(--card2);padding:8px;border-radius:6px;margin-top:6px;white-space:pre-wrap;line-height:1.6">${scripts[q.level]}</div>
+                <button onclick="copyQuoteScript('${q.level}')" style="width:100%;margin-top:6px;padding:8px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">📋 复制话术</button>
+            </div>
+        `).join('')}
+    `;
+
+    // 存储话术供复制
+    window._lastQuoteScripts = scripts;
+}
+
+function copyQuoteScript(level) {
+    const text = window._lastQuoteScripts[level];
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => toast('话术已复制，去发给客户'));
+    } else {
+        toast(text);
+    }
+}
+
+// ========== 交付追踪看板 ==========
+const deliveryStages = ['接单', '资料收集', '提交申请', '平台审核', '结果交付', '收款', '售后'];
+const stageDurations = [0.5, 1, 0.5, 3, 1, 0.5, 7]; // 每阶段预计天数
+
+function renderDeliveryBoard() {
+    const crmList = load('crmList', []);
+    // 只显示已成交（deal状态）的订单
+    const deliveries = crmList.filter(c => c.status === 'deal');
+
+    const overdue = deliveries.filter(d => {
+        if (!d.time) return false;
+        const created = new Date(d.time.replace(/\./g, '/').replace(' ', 'T'));
+        const daysPassed = (Date.now() - created.getTime()) / 86400000;
+        const totalStageDays = stageDurations.slice(0, (d.deliveryStage || 0) + 1).reduce((s, v) => s + v, 0);
+        return daysPassed > totalStageDays + 2; // 超期2天
+    });
+
+    document.getElementById('deliveryStats').textContent = `${deliveries.length}个进行中${overdue.length > 0 ? ' · 🔴${overdue.length}个超期' : ''}`;
+
+    const el = document.getElementById('deliveryBoard');
+    if (deliveries.length === 0) {
+        el.innerHTML = '<div class="empty">暂无交付中订单，成交后自动进入</div>';
+        return;
+    }
+
+    el.innerHTML = deliveries.map((d, i) => {
+        const stage = d.deliveryStage || 0;
+        const created = d.time ? new Date(d.time.replace(/\./g, '/').replace(' ', 'T')) : new Date();
+        const daysPassed = ((Date.now() - created.getTime()) / 86400000).toFixed(1);
+        const expectedDays = stageDurations.slice(0, stage + 1).reduce((s, v) => s + v, 0);
+        const isOverdue = parseFloat(daysPassed) > expectedDays + 2;
+        const progress = Math.round((stage / (deliveryStages.length - 1)) * 100);
+
+        return `
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px;border:1px solid ${isOverdue ? 'var(--red)' : 'var(--border)'}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <div>
+                    <div style="font-size:13px;font-weight:600">${d.name} · ${d.business || '未填'}</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${d.platform || ''} · ¥${d.amount||0} · 已${daysPassed}天</div>
+                </div>
+                ${isOverdue ? '<span style="font-size:10px;padding:2px 6px;background:rgba(255,71,87,0.2);color:var(--red);border-radius:4px">超期</span>' : ''}
+            </div>
+            <!-- 阶段进度条 -->
+            <div style="display:flex;gap:2px;margin-bottom:8px">
+                ${deliveryStages.map((s, idx) => `
+                    <div style="flex:1;text-align:center">
+                        <div style="height:6px;background:${idx <= stage ? 'var(--green)' : 'var(--border)'};border-radius:3px;margin-bottom:3px"></div>
+                        <div style="font-size:8px;color:${idx <= stage ? 'var(--green)' : 'var(--text-mute)'}">${s}</div>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="display:flex;gap:6px">
+                ${stage < deliveryStages.length - 1 ?
+                    `<button onclick="advanceDelivery(${crmList.indexOf(d)})" style="flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">→ 进入「${deliveryStages[stage+1]}」</button>` :
+                    '<div style="flex:1;text-align:center;padding:8px;color:var(--green);font-size:12px">✅ 已完成</div>'
+                }
+                <button onclick="window.location.hash='page-crm'" style="padding:8px 12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">详情</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function advanceDelivery(crmIdx) {
+    const crmList = load('crmList', []);
+    if (!crmList[crmIdx]) return;
+    crmList[crmIdx].deliveryStage = (crmList[crmIdx].deliveryStage || 0) + 1;
+    save('crmList', crmList);
+    renderDeliveryBoard();
+    renderCrm();
+    const stage = crmList[crmIdx].deliveryStage;
+    toast(`✅ 已推进到「${deliveryStages[stage]}」`);
+}
+
+// ========== 客户复购引擎 ==========
+const repurchaseChain = {
+    '报白': ['解封', '黄V认证', '团购开通', '代运营'],
+    '解封': ['报白', '店铺申诉', '黄V认证'],
+    '申诉': ['报白', '解封', '代运营'],
+    '黄V': ['团购开通', '报白', '代运营'],
+    '团购': ['报白', '黄V认证', '代运营'],
+    'AI开发': ['知识付费', '产品售卖', '项目共创'],
+};
+
+const repurchaseScripts = {
+    '报白': '上次帮你报白通过后，账号有没有遇到限流？现在可以帮你做黄V认证提升权重，或者开团购直接变现~',
+    '解封': '账号解封后建议做个报白+黄V，防止再次违规，要不要安排？',
+    '黄V': '黄V认证完了，建议开通团购功能，直接在视频里挂商品变现~',
+    '团购': '团购开通了，如果需要代运营帮你跑数据，可以随时找我~',
+    'AI开发': '上次开发的工具用得怎么样？如果有新需求可以做包年维护，或者帮你培训团队使用~',
+};
+
+function renderRepurchaseEngine() {
+    const crmList = load('crmList', []);
+    const dealCustomers = crmList.filter(c => c.status === 'deal' && c.time);
+
+    const today = new Date();
+    const toReview = [];
+
+    dealCustomers.forEach(c => {
+        const dealDate = new Date(c.time.replace(/\./g, '/').replace(' ', 'T'));
+        const daysSince = Math.floor((today - dealDate) / 86400000);
+
+        // 7天/14天/30天回访节点
+        const milestones = [7, 14, 30];
+        const lastReview = c.lastRepurchaseReview || 0;
+        const nextMilestone = milestones.find(m => m > lastReview && daysSince >= m);
+
+        if (nextMilestone) {
+            const nextService = (repurchaseChain[c.business] || ['其他服务'])[0];
+            toReview.push({
+                customer: c,
+                daysSince,
+                milestone: nextMilestone,
+                nextService,
+                script: repurchaseScripts[nextService] || '上次服务用得怎么样？有新需求随时找我~'
+            });
+        }
+    });
+
+    document.getElementById('repurchaseCount').textContent = `${toReview.length}个待回访`;
+
+    const el = document.getElementById('repurchaseList');
+    if (toReview.length === 0) {
+        el.innerHTML = '<div class="empty">暂无待回访客户，成交7天后自动提醒</div>';
+        return;
+    }
+
+    el.innerHTML = toReview.map(item => {
+        const c = item.customer;
+        const crmIdx = crmList.indexOf(c);
+        return `
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px;border-left:3px solid var(--purple)">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+                <div>
+                    <div style="font-size:13px;font-weight:600">${c.name}</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${c.business||'服务'} · 成交${item.daysSince}天 · ¥${c.amount||0}</div>
+                </div>
+                <span style="font-size:10px;padding:2px 8px;background:rgba(168,85,247,0.2);color:var(--purple);border-radius:4px">${item.milestone}天回访</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">🎯 推荐下一步：<strong style="color:var(--purple)">${item.nextService}</strong></div>
+            <div style="font-size:11px;color:var(--text);background:var(--card2);padding:8px;border-radius:6px;margin-bottom:8px;line-height:1.6">${item.script}</div>
+            <div style="display:flex;gap:6px">
+                <button onclick="copyRepurchaseScript('${c.name}')" style="flex:1;padding:8px;background:var(--purple);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">📋 复制话术</button>
+                <button onclick="markRepurchaseDone(${crmIdx}, ${item.milestone})" style="padding:8px 12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">已回访</button>
+            </div>
+        </div>`;
+    }).join('');
+
+    // 存储话术
+    window._repurchaseScripts = {};
+    toReview.forEach(item => {
+        window._repurchaseScripts[item.customer.name] = item.script;
+    });
+}
+
+function copyRepurchaseScript(name) {
+    const text = window._repurchaseScripts[name] || '';
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => toast('回访话术已复制'));
+    }
+}
+
+function markRepurchaseDone(crmIdx, milestone) {
+    const crmList = load('crmList', []);
+    if (!crmList[crmIdx]) return;
+    crmList[crmIdx].lastRepurchaseReview = milestone;
+    save('crmList', crmList);
+    renderRepurchaseEngine();
+    toast('✅ 已标记回访，下次节点自动提醒');
+}
+
+// ========== 搞钱作战室 ==========
+function renderWarRoom() {
+    const today = todayStr();
+    const incomes = load('incomes', DEFAULT_INCOMES);
+    const crmList = load('crmList', []);
+    const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
+    const todayDeals = crmList.filter(c => c.status === 'deal' && c.time && c.time.startsWith(today)).length;
+
+    // 今日达标 = 有收入 OR 有成单
+    const isAchieved = todayIncome > 0 || todayDeals > 0;
+
+    // 连续达标天数
+    let streak = 0;
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    while (true) {
+        const key = d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+        const dayIncome = incomes.filter(i => i.time.startsWith(key)).reduce((s,i) => s+i.amount, 0);
+        const dayDeals = crmList.filter(c => c.status === 'deal' && c.time && c.time.startsWith(key)).length;
+        if (dayIncome > 0 || dayDeals > 0) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    document.getElementById('warRoomStreak').textContent = `连续达标 ${streak} 天`;
+
+    // 本周已达标天数
+    const now = new Date();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    monday.setHours(0,0,0,0);
+    let weekAchieved = 0;
+    for (let i = 0; i < 7; i++) {
+        const checkDate = new Date(monday);
+        checkDate.setDate(monday.getDate() + i);
+        if (checkDate > now) break;
+        const key = checkDate.getFullYear()+'.'+String(checkDate.getMonth()+1).padStart(2,'0')+'.'+String(checkDate.getDate()).padStart(2,'0');
+        const dayIncome = incomes.filter(inc => inc.time.startsWith(key)).reduce((s,inc) => s+inc.amount, 0);
+        const dayDeals = crmList.filter(c => c.status === 'deal' && c.time && c.time.startsWith(key)).length;
+        if (dayIncome > 0 || dayDeals > 0) weekAchieved++;
+    }
+
+    // 今日3大重点（从日报任务里取前3个未完成）
+    const day = new Date().getDay();
+    const todayTasks = load('reportTasks_' + today, dailyTaskTemplates[day] || dailyTaskTemplates[1]);
+    const topTasks = todayTasks.filter(t => !t.done).slice(0, 3);
+
+    const el = document.getElementById('warRoom');
+    el.innerHTML = `
+        <!-- 今日达标状态 -->
+        <div style="padding:14px;background:${isAchieved ? 'linear-gradient(135deg,rgba(0,217,163,0.15),rgba(0,217,163,0.05))' : 'var(--bg)'};border-radius:12px;margin-bottom:12px;border:1px solid ${isAchieved ? 'var(--green)' : 'var(--border)'}">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <div style="font-size:13px;font-weight:600;color:${isAchieved ? 'var(--green)' : 'var(--text)'}">${isAchieved ? '✅ 今日已达标' : '⏳ 今日未达标'}</div>
+                    <div style="font-size:11px;color:var(--text-dim);margin-top:3px">达标 = 有收入或有成单</div>
+                </div>
+                <div style="text-align:right">
+                    <div style="font-size:20px;font-weight:700;color:${todayIncome > 0 ? 'var(--green)' : 'var(--text-mute)'}">${todayIncome > 0 ? '+¥' + todayIncome : '¥0'}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${todayDeals}单成交</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 本周达标日历 -->
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:12px">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">本周达标：${weekAchieved}/7天</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+                ${['一','二','三','四','五','六','日'].map((w, i) => {
+                    const checkDate = new Date(monday);
+                    checkDate.setDate(monday.getDate() + i);
+                    const key = checkDate.getFullYear()+'.'+String(checkDate.getMonth()+1).padStart(2,'0')+'.'+String(checkDate.getDate()).padStart(2,'0');
+                    const dayInc = incomes.filter(inc => inc.time.startsWith(key)).reduce((s,inc) => s+inc.amount, 0);
+                    const dayDl = crmList.filter(c => c.status === 'deal' && c.time && c.time.startsWith(key)).length;
+                    const achieved = dayInc > 0 || dayDl > 0;
+                    const isFuture = checkDate > now;
+                    const isToday = checkDate.toDateString() === now.toDateString();
+                    return `<div style="text-align:center;padding:6px 2px;border-radius:6px;background:${isFuture ? 'var(--card2)' : achieved ? 'rgba(0,217,163,0.15)' : 'var(--card2)'};border:${isToday ? '1px solid var(--orange)' : '1px solid transparent'}">
+                        <div style="font-size:9px;color:var(--text-mute)">${w}</div>
+                        <div style="font-size:13px;margin:2px 0">${checkDate.getDate()}</div>
+                        <div style="font-size:10px">${isFuture ? '' : achieved ? '✅' : '○'}</div>
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>
+
+        <!-- 今日3大重点 -->
+        <div style="padding:12px;background:var(--bg);border-radius:10px">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">🎯 今日3大重点（完成这3个就算赢）</div>
+            ${topTasks.length > 0 ? topTasks.map((t, i) => {
+                const realIdx = todayTasks.indexOf(t);
+                return `
+                <div style="display:flex;align-items:center;padding:10px;background:var(--card2);border-radius:8px;margin-bottom:6px">
+                    <div style="width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0">${i+1}</div>
+                    <div style="flex:1">
+                        <div style="font-size:12px;color:var(--text)">${t.text}</div>
+                        <div style="font-size:10px;color:var(--text-mute);margin-top:2px">⏰ ${t.time}</div>
+                    </div>
+                    <button onclick="toggleReportTask(${realIdx})" style="padding:6px 12px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">完成</button>
+                </div>`;
+            }).join('') : '<div style="text-align:center;padding:14px;color:var(--green);font-size:13px">🎉 今日3大重点全部完成！</div>'}
+        </div>
+    `;
 }
 
 // ========== 每周变现计划（自动生成）==========
@@ -3543,6 +3993,8 @@ renderHabits();
 renderFinance();
 renderCrm();
 renderRefunds();
+renderDeliveryBoard();
+renderRepurchaseEngine();
 renderStudies();
 renderReviews();
 renderChannel();
@@ -3552,6 +4004,7 @@ renderBizOverview();
 renderServices();
 renderTodayFocus();
 renderDailyReport();
+renderWarRoom();
 renderWeekPlan();
 renderInspirations();
 updateQuote();
