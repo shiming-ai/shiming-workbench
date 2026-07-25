@@ -1,0 +1,2875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AI工作台展示版">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>AI工作台 · 展示体验版</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f;
+    --card: #13151c;
+    --card-hover: #1a1d27;
+    --border: #1f2230;
+    --text: #e4e6ed;
+    --text-dim: #8b8f9e;
+    --text-mute: #5a5e6e;
+    --orange: #FF6B1A;
+    --orange-light: #FF8C42;
+    --green: #00D9A3;
+    --red: #FF4757;
+    --blue: #4D9DFF;
+    --purple: #A66BFF;
+    --yellow: #FFD93D;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 20px;
+    overflow-x: hidden;
+}
+
+/* 顶部Hero区 */
+.hero {
+    background: linear-gradient(135deg, #1a0d05 0%, #0a0b0f 60%);
+    padding: 24px 16px 20px;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,107,26,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    position: relative;
+}
+.hero-title { font-size: 20px; font-weight: 700; }
+.hero-title .name {
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-sub { font-size: 11px; color: var(--text-mute); margin-top: 4px; }
+.hero-day {
+    text-align: right;
+}
+.day-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1;
+}
+.day-label { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+
+/* 核心数据卡片 */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    position: relative;
+}
+.hero-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+}
+.hero-stat .val { font-size: 18px; font-weight: 700; word-break: break-all; }
+.hero-stat .lbl { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.val.green { color: var(--green); }
+.val.red { color: var(--red); }
+.val.orange { color: var(--orange); }
+
+/* 主内容区 */
+.content { padding: 0 16px; }
+
+/* Section通用 */
+.section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+}
+.sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.sec-title {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.sec-title .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+
+/* 进度环 */
+.progress-rings {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.ring-wrap { text-align: center; }
+.ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+.ring svg { transform: rotate(-90deg); }
+.ring-bg { stroke: var(--border); fill: none; stroke-width: 6; }
+.ring-fill { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.8s; }
+.ring-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.ring-percent { font-size: 16px; font-weight: 700; }
+.ring-label { font-size: 10px; color: var(--text-mute); margin-top: 6px; }
+
+/* 作战清单 */
+.task-add {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.task-add input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.task-add input:focus { border-color: var(--orange); }
+.task-add button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    width: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.task-list { list-style: none; }
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+.task-item:active { border-color: var(--orange); }
+.task-item.done { opacity: 0.4; }
+.task-item.done .task-text { text-decoration: line-through; }
+.task-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--text-mute);
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.task-item.done .task-check {
+    background: var(--green);
+    border-color: var(--green);
+}
+.task-item.done .task-check::after {
+    content: '✓';
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+}
+.task-text { flex: 1; font-size: 13px; }
+.task-time {
+    font-size: 10px;
+    color: var(--text-mute);
+    background: var(--card);
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+.task-del {
+    color: var(--text-mute);
+    margin-left: 8px;
+    font-size: 16px;
+    width: 24px;
+    text-align: center;
+}
+
+/* 习惯列表 */
+.habits {
+    display: flex;
+    flex-direction: column;
+}
+.habit {
+    display: none;
+}
+
+/* 财务记录 */
+.fin-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.fin-input input, .fin-input select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.fin-input button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.fin-list { max-height: 240px; overflow-y: auto; }
+.fin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+.fin-item:last-child { border: none; }
+.fin-source { color: var(--text-dim); }
+.fin-amount { font-weight: 600; }
+.fin-amount.in { color: var(--green); }
+.fin-amount.out { color: var(--red); }
+.fin-time { font-size: 10px; color: var(--text-mute); }
+
+/* 客户CRM */
+.crm-add {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.crm-add input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.crm-add button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 0 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.crm-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+.crm-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.crm-name { font-size: 14px; font-weight: 600; }
+.crm-amount { font-size: 13px; color: var(--orange); font-weight: 600; }
+.crm-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.crm-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--card-hover);
+    color: var(--text-dim);
+}
+.crm-status {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.crm-status.lead { background: rgba(77,157,255,0.15); color: var(--blue); }
+.crm-status.contact { background: rgba(255,217,61,0.15); color: var(--yellow); }
+.crm-status.deal { background: rgba(0,217,163,0.15); color: var(--green); }
+.crm-status.fail { background: rgba(255,71,87,0.15); color: var(--red); }
+
+/* 渠道数据 */
+.channel-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.channel-tabs::-webkit-scrollbar { display: none; }
+.ch-tab {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    background: var(--bg);
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+}
+.ch-tab.active {
+    background: var(--orange);
+    color: #fff;
+    border-color: transparent;
+}
+.channel-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.ch-stat {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+}
+.ch-stat .num { font-size: 20px; font-weight: 700; color: var(--orange); }
+.ch-stat .lbl { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.qa-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.qa-btn:active { border-color: var(--orange); }
+
+/* 学习记录 */
+.study-add {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.study-add input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+.study-add button {
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.study-item {
+    background: var(--bg);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--purple);
+}
+.study-text { font-size: 13px; }
+.study-time { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 复盘 */
+.review-text {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+.review-save {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    width: 100%;
+}
+.review-history {
+    margin-top: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.review-item {
+    background: var(--bg);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+.review-date { font-size: 11px; color: var(--orange); margin-bottom: 4px; }
+
+/* 周历 */
+.week-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.day-cell {
+    aspect-ratio: 1;
+    background: var(--bg);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    position: relative;
+}
+.day-cell.today {
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+}
+.day-cell.has-income::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--green);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 4px;
+}
+.day-num-cell { font-size: 12px; }
+.day-week { font-size: 9px; color: var(--text-mute); }
+.day-cell.today .day-week { color: rgba(255,255,255,0.7); }
+
+/* 底部导航 */
+.bottom-nav { display: none; } /* 改用侧边栏 */
+
+/* 顶部导航栏 */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background: rgba(10,11,15,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.top-nav-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+.top-nav-title span { color: var(--orange); }
+.top-nav-right {
+    font-size: 11px;
+    color: var(--text-mute);
+}
+
+/* 侧边栏 */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    background: var(--card);
+    z-index: 201;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    overflow-y: auto;
+    padding-bottom: 40px;
+}
+.sidebar.open { transform: translateX(0); }
+
+.sidebar-header {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,107,26,0.1), transparent);
+}
+.sidebar-logo {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+.sidebar-logo span {
+    background: linear-gradient(90deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.sidebar-sub { font-size: 11px; color: var(--text-mute); }
+
+.sidebar-section { padding: 12px 0; }
+.sidebar-section-title {
+    font-size: 10px;
+    color: var(--text-mute);
+    padding: 0 20px 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 14px;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+.sidebar-item:active { background: var(--card2); }
+.sidebar-item.active {
+    color: var(--orange);
+    background: rgba(255,107,26,0.05);
+    border-left-color: var(--orange);
+}
+.sidebar-item-icon { font-size: 18px; width: 24px; text-align: center; }
+.sidebar-item-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--orange);
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* 底部Tab导航 - 隐藏 */
+.bottom-nav { display: none !important; }
+
+.hidden { display: none !important; }
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--orange);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+/* 空状态 */
+.empty {
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 12px;
+    padding: 20px;
+}
+
+/* 内容矩阵样式 */
+.account-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+}
+.account-card.main {
+    border-left: 3px solid var(--orange);
+}
+.account-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.account-name { font-size: 14px; font-weight: 600; }
+.account-platform {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,107,26,0.1);
+    color: var(--orange);
+}
+.account-meta {
+    font-size: 11px;
+    color: var(--text-mute);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.post-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--blue);
+}
+.post-item.posted {
+    border-left-color: var(--green);
+    opacity: 0.75;
+}
+.post-item.idea {
+    border-left-color: var(--purple);
+}
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 6px;
+}
+.post-title { font-size: 13px; font-weight: 600; flex: 1; }
+.post-status {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(77,157,255,0.15);
+    color: var(--blue);
+    white-space: nowrap;
+    margin-left: 8px;
+}
+.post-status.posted { background: rgba(0,217,163,0.15); color: var(--green); }
+.post-status.idea { background: rgba(168,85,247,0.15); color: var(--purple); }
+.post-meta {
+    font-size: 10px;
+    color: var(--text-mute);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+.post-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+.post-actions button {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+.heat-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+}
+.heat-cell.today { border-color: var(--orange); }
+.heat-count { font-size: 14px; font-weight: 700; color: var(--orange); }
+.template-card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+}
+.template-card:active { border-color: var(--orange); }
+.template-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.template-desc { font-size: 10px; color: var(--text-mute); }
+
+/* 展示版浮动横条 */
+.demo-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(255,107,26,0.95), rgba(166,107,255,0.95));
+    color: #fff;
+    text-align: center;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 95;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+}
+.demo-bar a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.demo-bar .demo-arrow {
+    font-size: 16px;
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+}
+
+/* 滚动条隐藏 */
+::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body>
+
+<!-- 顶部Hero -->
+<div class="hero">
+    <div class="hero-top">
+        <div>
+    <div class="hero-title"><span class="name">AI工作台</span> 展示体验</div>
+    <div class="hero-sub">展示体验版 · 点击定制你自己的</div>
+        </div>
+        <div class="hero-day">
+            <div class="day-num" id="dayCount">1</div>
+            <div class="day-label">DEMO</div>
+        </div>
+    </div>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="val green" id="monthIncome">¥2,599</div>
+            <div class="lbl">本月收入</div>
+        </div>
+        <div class="hero-stat">
+            <div class="val red" id="monthExpense">¥350</div>
+            <div class="lbl">本月支出</div>
+        </div>
+        <div class="hero-stat">
+            <div class="val orange" id="netProfit">¥2,249</div>
+            <div class="lbl">本月净利润</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+<!-- ===== 页面1: 今日 ===== -->
+<div id="page-today">
+
+    <!-- 今日聚焦 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>🔥 今日聚焦</div>
+            <div class="sec-more" id="focusDate"></div>
+        </div>
+        <div id="todayFocus"></div>
+    </div>
+
+    <!-- 每日变现日报 -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>📊 每日变现日报</div>
+            <div class="sec-more" id="reportMeta"></div>
+        </div>
+        <div id="dailyReport"></div>
+    </div>
+
+    <!-- 搞钱作战室 -->
+    <div class="section" style="border:1px solid rgba(255,71,87,0.3);background:linear-gradient(135deg,rgba(255,71,87,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--red)"></span>🔥 搞钱作战室</div>
+            <div class="sec-more" id="warRoomStreak">连续达标 0 天</div>
+        </div>
+        <div id="warRoom"></div>
+    </div>
+
+    <!-- 业务线总览 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>业务线总览</div>
+            <div class="sec-more" onclick="switchPage('channel', document.querySelectorAll('.sidebar-item')[3])">查看详情 ›</div>
+        </div>
+        <div id="bizOverview"></div>
+    </div>
+
+    <!-- 翻盘进度环 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>目标进度</div>
+            <div class="sec-more" id="goalSummary">目标: 月入3万</div>
+        </div>
+        <div class="progress-rings">
+            <div class="ring-wrap">
+                <div class="ring">
+                    <svg width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"></circle>
+                        <circle class="ring-fill" id="ring2month" cx="40" cy="40" r="34" stroke="#FFD93D" stroke-dasharray="213.6" stroke-dashoffset="213.6"></circle>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-percent" id="pct2month" style="color:#FFD93D">0%</div>
+                    </div>
+                </div>
+                <div class="ring-label">本月3万</div>
+            </div>
+            <div class="ring-wrap">
+                <div class="ring">
+                    <svg width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"></circle>
+                        <circle class="ring-fill" id="ringGoal" cx="40" cy="40" r="34" stroke="#00D9A3" stroke-dasharray="213.6" stroke-dashoffset="213.6"></circle>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-percent" id="goalPct" style="color:#00D9A3">0%</div>
+                    </div>
+                </div>
+                <div class="ring-label">年入30万</div>
+            </div>
+            <div class="ring-wrap">
+                <div class="ring">
+                    <svg width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"></circle>
+                        <circle class="ring-fill" id="ringDebt" cx="40" cy="40" r="34" stroke="#FF4757" stroke-dasharray="213.6" stroke-dashoffset="213.6"></circle>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-percent" id="debtPct" style="color:#FF4757">0%</div>
+                    </div>
+                </div>
+                <div class="ring-label">初始资金</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 本周日历 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>本周打卡</div>
+            <div class="sec-more" id="weekIncome">本周收入 ¥0</div>
+        </div>
+        <div class="week-calendar" id="weekCalendar"></div>
+    </div>
+
+    <!-- 本周变现计划 -->
+    <div class="section" style="border:1px solid rgba(168,85,247,0.3);background:linear-gradient(135deg,rgba(168,85,247,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--purple)"></span>📌 本周变现计划</div>
+            <div class="sec-more" id="weekPlanMeta">第28周</div>
+        </div>
+        <div id="weekPlan"></div>
+    </div>
+
+    <!-- 今日作战清单 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>今日作战清单</div>
+            <div class="sec-more"><span id="taskDone">0</span>/<span id="taskTotal">0</span> 完成</div>
+        </div>
+        <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- 习惯打卡 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>每日习惯</div>
+            <div class="sec-more"><span id="habitDone">0</span>/<span id="habitTotal">4</span></div>
+        </div>
+
+        <!-- 习惯总进度 -->
+        <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--bg);border-radius:12px;margin-bottom:12px">
+            <div style="position:relative;width:64px;height:64px;flex-shrink:0">
+                <svg width="64" height="64" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
+                    <circle id="habitRing" cx="32" cy="32" r="28" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="175.9" transform="rotate(-90 32 32)"/>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--green)" id="habitPct">0%</div>
+            </div>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">今日习惯打卡</div>
+                <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">完成 <span id="habitDone2">0</span> 个，连续打卡 <span id="habitStreak">0</span> 天</div>
+                <div style="display:flex;gap:4px" id="habitMiniHeat"></div>
+            </div>
+        </div>
+
+        <!-- 习惯列表 -->
+        <div id="habitsGrid"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面2: 财务 ===== -->
+<div id="page-money" class="hidden">
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>收入记录</div>
+        </div>
+        <div class="fin-list" id="incomeList"></div>
+    </div>
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>支出记录</div>
+        </div>
+        <div class="fin-list" id="expenseList"></div>
+    </div>
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>本月汇总</div>
+        </div>
+        <div id="monthSummary"></div>
+    </div>
+
+    <!-- 资金分配器 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 资金分配器</div>
+            <div class="sec-more">50/30/20法则</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
+            每笔收入进来，按比例自动分配，确保能存下钱。<br>
+            <strong style="color:var(--orange)">50%</strong> 生活+还款 · <strong style="color:var(--blue)">30%</strong> 业务周转 · <strong style="color:var(--green)">20%</strong> 强制储蓄
+        </div>
+        <div id="allocResult"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面3: 客户/订单/退款 ===== -->
+<div id="page-crm" class="hidden">
+
+    <!-- 订单看板 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📋 订单看板</div>
+            <div class="sec-more" id="crmStats">0个进行中</div>
+        </div>
+
+        <!-- 今日数据快览 -->
+        <div id="todayOrderStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px"></div>
+
+        <div id="crmList"></div>
+    </div>
+
+    <!-- 智能报价引擎 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--orange)"></span>🎯 智能报价引擎</div>
+            <div class="sec-more">自动3档报价+话术</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+            选服务类型+平台+紧急程度，自动生成3档报价和客户回复话术
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <select id="quoteService" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="报白">类目报白</option>
+                <option value="解封">账号解封</option>
+                <option value="申诉">店铺申诉</option>
+                <option value="黄V">黄V认证</option>
+                <option value="团购">团购开通</option>
+                <option value="AI开发">AI定制开发</option>
+            </select>
+            <select id="quotePlatform" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="抖音">抖音</option>
+                <option value="快手">快手</option>
+                <option value="小红书">小红书</option>
+                <option value="视频号">视频号</option>
+                <option value="淘宝">淘宝</option>
+                <option value="拼多多">拼多多</option>
+                <option value="全平台">全平台</option>
+            </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+            <select id="quoteUrgency" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="normal">正常（3-7天）</option>
+                <option value="urgent">加急（1-2天）</option>
+                <option value="slow">不急（7-15天）</option>
+            </select>
+            <select id="quoteDifficulty" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px">
+                <option value="easy">简单（常规类目）</option>
+                <option value="medium">中等（需审核）</option>
+                <option value="hard">复杂（特殊类目/违规严重）</option>
+            </select>
+        </div>
+        <button onclick="generateQuote()" style="width:100%;padding:11px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer;margin-bottom:12px">⚡ 生成报价</button>
+        <div id="quoteResult"></div>
+    </div>
+
+    <!-- 交付追踪看板 -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>📦 交付追踪</div>
+            <div class="sec-more" id="deliveryStats">0个进行中</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+            成交订单自动进入交付流水线，7阶段追踪，超期自动报警
+        </div>
+        <div id="deliveryBoard"></div>
+    </div>
+
+    <!-- 客户复购引擎 -->
+    <div class="section" style="border:1px solid rgba(168,85,247,0.3);background:linear-gradient(135deg,rgba(168,85,247,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--purple)"></span>🔁 复购引擎</div>
+            <div class="sec-more" id="repurchaseCount">0个待回访</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+            成交客户7/14/30天自动提醒回访，推荐下一步服务，一个客户变3单
+        </div>
+        <div id="repurchaseList"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面4: 学习+复盘 ===== -->
+<div id="page-study" class="hidden">
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>学习记录</div>
+            <div class="sec-more" id="studyCount">0条</div>
+        </div>
+        <div id="studyList"></div>
+    </div>
+
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>今日复盘</div>
+        </div>
+        <div id="reviewHistory"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面X: 内容矩阵 ===== -->
+<div id="page-content" class="hidden">
+
+    <!-- 账号管理 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📕 账号矩阵</div>
+            <div class="sec-more" id="accountCount">0个账号</div>
+        </div>
+        <div id="accountList"></div>
+    </div>
+
+    <!-- 今日发布任务 -->
+    <div class="section" style="border:1px solid rgba(255,107,26,0.3);background:linear-gradient(135deg,rgba(255,107,26,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--red)"></span>🔥 今日发布</div>
+            <div class="sec-more" id="todayPublishCount">0/3</div>
+        </div>
+        <div id="todayPublishList"></div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:8px;line-height:1.5">
+            目标：主账号每天至少1条，挑战3条。矩阵号每周至少3条。
+        </div>
+    </div>
+
+    <!-- 内容排期 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>🗓 内容排期</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;overflow-x:auto">
+            <div class="ch-tab active" onclick="filterPosts('all', this)">全部</div>
+            <div class="ch-tab" onclick="filterPosts('pending', this)">待发布</div>
+            <div class="ch-tab" onclick="filterPosts('posted', this)">已发布</div>
+            <div class="ch-tab" onclick="filterPosts('idea', this)">选题库</div>
+        </div>
+        <div id="postList"></div>
+    </div>
+
+    <!-- 7日发布热力 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📈 7日发布热力</div>
+        </div>
+        <div id="publishHeatmap" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+    </div>
+
+    <!-- 内容选题库快捷模板 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>⚡ 爆款选题模板</div>
+        </div>
+        <div id="contentTemplates"></div>
+    </div>
+
+</div>
+
+<!-- 变现地图 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>💰 变现地图</div>
+        <div class="sec-more">6条收入路径</div>
+    </div>
+    <div id="monetizationMap"></div>
+</div>
+
+<!-- ===== 页面5: 渠道+规划 ===== -->
+<div id="page-channel" class="hidden">
+
+    <!-- 4大渠道数据 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>渠道数据</div>
+        </div>
+        <div class="channel-tabs" style="overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap">
+            <div class="ch-tab active" onclick="switchChannel('xianyu', this)">闲鱼</div>
+            <div class="ch-tab" onclick="switchChannel('zhihu', this)">知乎</div>
+            <div class="ch-tab" onclick="switchChannel('xhs', this)">小红书</div>
+            <div class="ch-tab" onclick="switchChannel('douyin', this)">抖音</div>
+            <div class="ch-tab" onclick="switchChannel('kuaishou', this)">快手</div>
+            <div class="ch-tab" onclick="switchChannel('shipinhao', this)">视频号</div>
+            <div class="ch-tab" onclick="switchChannel('bilibili', this)">B站</div>
+            <div class="ch-tab" onclick="switchChannel('gongzhonghao', this)">公众号</div>
+            <div class="ch-tab" onclick="switchChannel('siyu', this)">私域</div>
+        </div>
+        <div class="channel-stats" id="channelStats"></div>
+        <div class="quick-actions" id="quickActions"></div>
+    </div>
+
+    <!-- 业务线规划 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>业务线规划</div>
+            <div class="sec-more">4条线 · 月目标汇总</div>
+        </div>
+        <div id="bizLines"></div>
+    </div>
+
+    <!-- 渠道目标矩阵 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>渠道目标矩阵</div>
+            <div class="sec-more">2个月突破期</div>
+        </div>
+        <div id="channelGoals"></div>
+    </div>
+
+    <!-- 电商服务商服务清单 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>电商服务商 · 服务清单</div>
+            <div class="sec-more">全平台 · 现有收入入口</div>
+        </div>
+        <div id="serviceList"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面: AI定制服务 ===== -->
+<div id="page-service" class="hidden">
+
+    <!-- 服务介绍 -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3);background:linear-gradient(135deg,rgba(0,217,163,0.05),transparent)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot" style="background:var(--green)"></span>🚀 AI定制工作台服务</div>
+        </div>
+        <div style="padding:14px;background:var(--bg);border-radius:12px;margin-bottom:12px">
+            <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--green)">你的业务，AI帮你管</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                199块起，帮你定制一套专属AI工作台系统。<br>
+                客户管理、财务记账、订单追踪、内容排期...全在一个页面。<br>
+                手机打开就能用，数据永不丢失。
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                <span style="font-size:10px;padding:4px 8px;background:rgba(0,217,163,0.15);color:var(--green);border-radius:6px">✅ 1小时交付</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(255,107,26,0.15);color:var(--orange);border-radius:6px">✅ 手机直接用</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(168,85,247,0.15);color:var(--purple);border-radius:6px">✅ 永久域名</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(77,157,255,0.15);color:var(--blue);border-radius:6px">✅ 数据不丢</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5个行业模板 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📦 行业模板</div>
+            <div class="sec-more">5个方向</div>
+        </div>
+        <div id="templateList"></div>
+    </div>
+
+    <!-- 3档定价 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 定价方案</div>
+        </div>
+        <div id="pricingList"></div>
+    </div>
+
+    <!-- 交付流程 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>📋 交付流程</div>
+        </div>
+        <div id="deliveryFlow"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>❓ 常见问题</div>
+        </div>
+        <div id="faqList"></div>
+    </div>
+
+</div>
+
+<!-- ===== 页面6: 更多工具 ===== -->
+<div id="page-more" class="hidden">
+
+    <!-- 报价计算器 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 报价计算器</div>
+        </div>
+        <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">服务类型</div>
+            <select id="quoteType" onchange="updateQuote()" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px">
+                <optgroup label="AI开发服务">
+                    <option value="ai_kefu|2000|5000">AI客服机器人</option>
+                    <option value="ai_dashboard|3000|8000">数据看板搭建</option>
+                    <option value="ai_workflow|3000|10000">工作流自动化</option>
+                    <option value="ai_ecom|3000|15000">电商AI工具定制</option>
+                    <option value="ai_kb|3000|10000">企业知识库</option>
+                </optgroup>
+                <optgroup label="电商服务商">
+                    <option value="ec_baibai|1500|3000">类目报白</option>
+                    <option value="ec_jiefeng|500|2000">账号解封</option>
+                    <option value="ec_shensu|1000|3000">店铺申诉</option>
+                    <option value="ec_weigui|800|2500">店铺违规处理</option>
+                    <option value="ec_zhuanrang|1000|3000">账号合规转让</option>
+                    <option value="ec_huangv|800|2000">黄V认证</option>
+                    <option value="ec_tuangou|1500|3000">团购开通</option>
+                </optgroup>
+            </select>
+        </div>
+        <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">复杂程度</div>
+            <div style="display:flex;gap:6px">
+                <button class="quote-btn" onclick="setQuoteLevel('low', this)" style="flex:1;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;font-size:12px;cursor:pointer">简单</button>
+                <button class="quote-btn active" onclick="setQuoteLevel('mid', this)" style="flex:1;padding:8px;background:var(--orange);border:1px solid var(--orange);color:#fff;border-radius:8px;font-size:12px;cursor:pointer">标准</button>
+                <button class="quote-btn" onclick="setQuoteLevel('high', this)" style="flex:1;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;font-size:12px;cursor:pointer">复杂</button>
+            </div>
+        </div>
+        <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center;border:1px solid var(--border)">
+            <div style="font-size:11px;color:var(--text-mute);margin-bottom:4px">建议报价</div>
+            <div id="quotePrice" style="font-size:28px;font-weight:800;color:var(--orange)">¥3000</div>
+            <div id="quoteRange" style="font-size:11px;color:var(--text-mute);margin-top:4px">区间: ¥2000 - ¥5000</div>
+        </div>
+    </div>
+
+</div>
+
+</div><!-- /content -->
+
+<!-- 顶部导航栏 -->
+<div class="top-nav">
+    <div class="menu-btn" onclick="toggleSidebar()">≡</div>
+    <div class="top-nav-title"><span>AI</span> · 工作台展示版</div>
+    <div class="top-nav-right" id="navDayCount">Demo</div>
+</div>
+
+<!-- 侧边栏遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo"><span>AI</span> · 工作台</div>
+        <div class="sidebar-sub">展示体验版 · 点击定制你自己的</div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">核心功能</div>
+        <div class="sidebar-item active" onclick="switchPage('today', this)">
+            <span class="sidebar-item-icon">🏠</span> 工作台首页
+        </div>
+        <div class="sidebar-item" onclick="switchPage('money', this)">
+            <span class="sidebar-item-icon">💰</span> 财务管理
+        </div>
+        <div class="sidebar-item" onclick="switchPage('crm', this)">
+            <span class="sidebar-item-icon">👥</span> 客户/订单
+        </div>
+    <div class="sidebar-item" onclick="switchPage('channel', this)">
+        <span class="sidebar-item-icon">📊</span> 渠道数据
+    </div>
+    <div class="sidebar-item" onclick="switchPage('content', this)">
+        <span class="sidebar-item-icon">📕</span> 内容矩阵
+        <span class="sidebar-item-badge" id="contentBadge">0</span>
+    </div>
+    <div class="sidebar-item" onclick="switchPage('study', this)">
+        <span class="sidebar-item-icon">📚</span> 学习复盘
+    </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">工具箱</div>
+        <div class="sidebar-item" onclick="switchPage('service', this)" style="border-left:2px solid var(--green)">
+            <span class="sidebar-item-icon">🚀</span> AI定制服务
+            <span style="font-size:8px;padding:1px 5px;background:var(--green);color:#fff;border-radius:4px;margin-left:auto">赚钱</span>
+        </div>
+        <div class="sidebar-item" onclick="switchPage('more', this)">
+            <span class="sidebar-item-icon">⚙️</span> 更多工具
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 展示版浮动横条 -->
+<div class="demo-bar">
+    <a href="landing.html#order">
+        这是展示版 · 想要一套自己的？点击定制 <span class="demo-arrow">→</span>
+    </a>
+</div>
+
+<script>
+// ========== 硬编码假数据（不读写localStorage） ==========
+const DEMO_INCOMES = [
+    { amount: 800, source: '小红书广告合作', time: '2026.07.25 10:00' },
+    { amount: 1200, source: '知识付费课程销售', time: '2026.07.25 14:30' },
+    { amount: 599, source: 'AI工作台定制', time: '2026.07.25 16:00' },
+    { amount: 350, source: '闲鱼AI工具售卖', time: '2026.07.24 20:15' },
+];
+
+const DEMO_EXPENSES = [
+    { amount: 200, source: 'AI工具订阅', time: '2026.07.25 09:00' },
+    { amount: 150, source: '内容推广', time: '2026.07.24 15:00' },
+];
+
+const DEMO_CRM = [
+    { name: '张总', business: 'AI工作台定制', amount: 599, cost: 0, platform: '微信', promiseDays: '3', time: '2026.07.25 16:00', createdDate: '2026.07.25', status: 'deal', nextFollow: null, deliveryStage: 2 },
+    { name: '李姐', business: '电商报白', amount: 1500, cost: 200, platform: '抖音', promiseDays: '5', time: '2026.07.24 11:00', createdDate: '2026.07.24', status: 'contact', nextFollow: '2026.07.28', deliveryStage: 1 },
+    { name: '王哥', business: '知识付费', amount: 299, cost: 0, platform: '小红书', promiseDays: '1', time: '2026.07.24 09:30', createdDate: '2026.07.24', status: 'deal', nextFollow: null, deliveryStage: 4 },
+    { name: '陈总', business: '设计外包', amount: 2000, cost: 0, platform: '私域', promiseDays: '7', time: '2026.07.23 14:00', createdDate: '2026.07.23', status: 'lead', nextFollow: null, deliveryStage: 0 },
+    { name: '赵总', business: '课程咨询', amount: 0, cost: 0, platform: '知乎', promiseDays: '', time: '2026.07.23 10:00', createdDate: '2026.07.23', status: 'contact', nextFollow: '2026.07.27', deliveryStage: 0 },
+    { name: '刘姐', business: 'AI工作台定制', amount: 199, cost: 0, platform: '微信', promiseDays: '2', time: '2026.07.22 16:00', createdDate: '2026.07.22', status: 'fail', nextFollow: null, deliveryStage: 0 },
+];
+
+const DEMO_ACCOUNTS = [
+    { id: 'main_xhs', name: 'AI效率指南', handle: 'ai_efficiency', platform: '小红书', position: 'AI工具应用+效率提升', role: '品牌IP号（主阵地）', tags: ['AI工具分享','效率技巧','应用实战','干货合集'], isMain: true, followers: 3200, posts: 85, goal: 5000 },
+    { id: 'dy_1', name: 'AI创业日记', handle: 'ai_startup', platform: '抖音', position: 'AI创业记录+工具测评', role: '短视频流量号', tags: ['创业日记','工具测评','AI实战','短视频种草'], isMain: false, followers: 8500, posts: 120, goal: 10000 },
+    { id: 'zh_1', name: 'AI产品实验室', handle: 'ai_lab_zhihu', platform: '知乎', position: 'AI产品拆解+行业分析', role: '知识引流号', tags: ['产品拆解','行业分析','技术解读','深度内容'], isMain: false, followers: 1200, posts: 45, goal: 3000 },
+    { id: 'xhs_2', name: 'AI副业研究所', handle: 'ai_side', platform: '小红书', position: 'AI副业方法+变现案例', role: '流量截流号', tags: ['AI副业','变现案例','实操教程','截流引流'], isMain: false, followers: 1800, posts: 62, goal: 3000 },
+    { id: 'dy_2', name: 'AI漫剧工坊', handle: 'ai_comic', platform: '抖音', position: 'AI漫剧创作+剧情动画', role: '内容变现号', tags: ['AI漫剧','剧情动画','涨粉变现','私域引流'], isMain: false, followers: 5600, posts: 38, goal: 8000 },
+    { id: 'gz_1', name: 'AI效率周刊', handle: 'ai_weekly', platform: '公众号', position: 'AI资讯+工具推荐', role: '私域沉淀号', tags: ['AI资讯','工具推荐','行业动态','私域沉淀'], isMain: false, followers: 800, posts: 24, goal: 2000 },
+];
+
+const DEMO_POSTS = [
+    { id: '1', title: 'AI工具推荐：5个让你效率翻倍的神器', accountId: 'main_xhs', type: '图文笔记', date: '2026.07.25', notes: '关键词：AI工具、效率提升、职场必备', status: 'pending', time: '2026.07.25 09:00' },
+    { id: '2', title: '用AI做副业，第一个月赚了3000', accountId: 'dy_1', type: '视频', date: '2026.07.25', notes: '创业日记系列，真实收入展示', status: 'pending', time: '2026.07.25 10:00' },
+    { id: '3', title: 'AI漫剧第3集：逆袭时刻', accountId: 'dy_2', type: '视频', date: '2026.07.25', notes: '新剧情，延续上周故事线', status: 'pending', time: '2026.07.25 14:00' },
+    { id: '4', title: '拆解3个AI产品的变现模式', accountId: 'zh_1', type: '文章', date: '2026.07.24', notes: '深度分析文，引流到私域', status: 'posted', time: '2026.07.24 15:00' },
+    { id: '5', title: 'AI副业：闲鱼卖AI头像月入5000', accountId: 'xhs_2', type: '图文笔记', date: '2026.07.24', notes: '实操教程，带步骤截图', status: 'posted', time: '2026.07.24 11:00' },
+    { id: '6', title: 'AI周刊第24期：本周最值得关注的5件事', accountId: 'gz_1', type: '文章', date: '2026.07.24', notes: '周更栏目', status: 'posted', time: '2026.07.24 20:00' },
+    { id: '7', title: '测评：ChatGPT vs Claude vs 文心一言', accountId: 'main_xhs', type: '图文笔记', date: '2026.07.26', notes: '横向对比，下周发布', status: 'idea', time: '2026.07.23 16:00' },
+    { id: '8', title: 'AI帮你做PPT，3分钟搞定', accountId: 'xhs_2', type: '图文笔记', date: '2026.07.26', notes: '效率技巧类', status: 'idea', time: '2026.07.23 17:00' },
+];
+
+const DEMO_HABITS = [
+    { name: '内容发布', icon: '📝', key: 'h1', desc: '小红书/抖音/知乎' },
+    { name: '客户跟进', icon: '🤝', key: 'h2', desc: '回复咨询/推进成单' },
+    { name: '学习输入', icon: '📚', key: 'h3', desc: 'AI工具/行业资讯' },
+    { name: '运动健身', icon: '💪', key: 'h4', desc: '保持体能' },
+];
+
+const DEMO_HABIT_TODAY = { h1: true, h2: true, h3: false, h4: false };
+
+const DEMO_STUDIES = [
+    { text: '学习了Cursor的Agent模式，可以自动写代码+调试，效率提升巨大', time: '2026.07.25 21:00' },
+    { text: '研究了AI漫剧的生成流程：ChatGPT写剧本 → Midjourney出图 → 剪映合成', time: '2026.07.24 20:30' },
+    { text: '看了3个AI变现案例，核心都是：工具+内容+私域', time: '2026.07.23 22:00' },
+];
+
+const DEMO_REVIEWS = [
+    { text: '今天收入不错，小红书广告+课程销售+定制服务三管齐下。明天重点跟进陈总的设计外包单，2000的单子不能丢。内容方面要加快发布节奏，主号今天只发了1条。', time: '2026.07.25 22:00' },
+    { text: '今天主要在跟进客户，李姐的报白单推进顺利，预计后天成交。内容发布达标，3个号都有更新。AI漫剧第3集数据一般，需要优化标题和封面。', time: '2026.07.24 22:00' },
+];
+
+const DEMO_INSPIRATIONS = [
+    { text: '做一个AI工具导航站，收录所有好用的AI工具，流量变现', tag: '商业', time: '2026.07.25 18:00' },
+    { text: '小红书爆款公式：痛点标题 + 干货首图 + 前3行钩子', tag: '内容', time: '2026.07.24 16:00' },
+    { text: '可以做一个「AI日报」栏目，每天5分钟看AI圈大事', tag: '产品', time: '2026.07.23 15:00' },
+];
+
+const DEMO_CHANNEL_DATA = {
+    xianyu: { products: 5, consult: 3, orders: 2, revenue: 350 },
+    zhihu: { posts: 45, likes: 3200, followers: 1200, consult: 1 },
+    xhs: { posts: 85, likes: 12000, followers: 3200, consult: 2 },
+    douyin: { posts: 120, followers: 8500, views: 45000, consult: 1 },
+    kuaishou: { posts: 38, followers: 5600, views: 28000, revenue: 680 },
+    shipinhao: { posts: 15, followers: 500, likes: 800, consult: 0 },
+    bilibili: { posts: 8, followers: 300, views: 2000, consult: 0 },
+    gongzhonghao: { posts: 24, followers: 800, reads: 5000, consult: 1 },
+    siyu: { contacts: 350, groups: 3, consult: 2, deals: 1 },
+};
+
+// 通用函数
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1500);
+}
+function todayStr() {
+    const d = new Date();
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+}
+function monthPrefix() {
+    const d = new Date();
+    return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0');
+}
+
+// ========== 进度环 ==========
+function renderRings() {
+    let mIncome = 0, mExpense = 0;
+    const mp = monthPrefix();
+    DEMO_INCOMES.forEach(i => { if (i.time.startsWith(mp)) mIncome += i.amount; });
+    DEMO_EXPENSES.forEach(e => { if (e.time.startsWith(mp)) mExpense += e.amount; });
+
+    const net = mIncome - mExpense;
+    document.getElementById('monthIncome').textContent = '¥' + mIncome.toLocaleString();
+    document.getElementById('monthExpense').textContent = '¥' + mExpense.toLocaleString();
+    document.getElementById('netProfit').textContent = (net >= 0 ? '¥' : '-¥') + Math.abs(net).toLocaleString();
+    document.getElementById('netProfit').className = 'val ' + (net >= 0 ? 'green' : 'red');
+
+    // 本月3万目标
+    const goal2m = 30000;
+    const pct2m = Math.min(100, Math.round(mIncome / goal2m * 100));
+    document.getElementById('pct2month').textContent = pct2m + '%';
+    document.getElementById('ring2month').style.strokeDashoffset = 213.6 * (1 - pct2m/100);
+
+    // 年入30万
+    const finalGoal = 300000;
+    const allIncome = DEMO_INCOMES.reduce((s,i) => s+i.amount, 0);
+    const gPct = Math.min(100, Math.round(allIncome / finalGoal * 100));
+    document.getElementById('goalPct').textContent = gPct + '%';
+    document.getElementById('ringGoal').style.strokeDashoffset = 213.6 * (1 - gPct/100);
+
+    // 初始资金进度
+    const paidDebt = 15000;
+    const totalDebt = 50000;
+    const dPct = Math.min(100, Math.round(paidDebt / totalDebt * 100));
+    document.getElementById('debtPct').textContent = dPct + '%';
+    document.getElementById('ringDebt').style.strokeDashoffset = 213.6 * (1 - dPct/100);
+
+    document.getElementById('goalSummary').textContent = `本月收入 ¥${mIncome.toLocaleString()} / 目标3万`;
+}
+
+// ========== 周历 ==========
+function renderWeek() {
+    const cal = document.getElementById('weekCalendar');
+    const today = new Date();
+    const dayOfWeek = today.getDay() || 7;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - dayOfWeek + 1);
+
+    const weekNames = ['一','二','三','四','五','六','日'];
+    let weekIncome = 0;
+    cal.innerHTML = '';
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        const dateStr = d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
+        const hasIncome = DEMO_INCOMES.some(i => i.time.startsWith(dateStr));
+        if (hasIncome) {
+            weekIncome += DEMO_INCOMES.filter(i => i.time.startsWith(dateStr)).reduce((s,i)=>s+i.amount,0);
+        }
+        const isToday = d.toDateString() === today.toDateString();
+        const cell = document.createElement('div');
+        cell.className = 'day-cell' + (isToday ? ' today' : '') + (hasIncome ? ' has-income' : '');
+        cell.innerHTML = `<div class="day-num-cell">${d.getDate()}</div><div class="day-week">${weekNames[i]}</div>`;
+        cal.appendChild(cell);
+    }
+    document.getElementById('weekIncome').textContent = `本周收入 ¥${weekIncome.toLocaleString()}`;
+}
+
+// ========== 今日任务（只读展示） ==========
+const DEMO_TASKS = [
+    { text: '小红书发布1条AI工具推荐', time: '10:00', done: true },
+    { text: '跟进李姐的报白单，推进成交', time: '14:00', done: true },
+    { text: '抖音发布AI创业日记视频', time: '15:00', done: false },
+    { text: '回复闲鱼咨询（3条待回）', time: '16:00', done: false },
+    { text: 'AI漫剧第3集制作', time: '19:00', done: false },
+    { text: '学习1个AI工具技巧', time: '21:00', done: false },
+];
+
+function renderTasks() {
+    const list = document.getElementById('taskList');
+    list.innerHTML = '';
+    DEMO_TASKS.forEach(t => {
+        const li = document.createElement('li');
+        li.className = 'task-item' + (t.done ? ' done' : '');
+        li.innerHTML = `<div class="task-check"></div><div class="task-text">${t.text}</div><div class="task-time">${t.time}</div>`;
+        list.appendChild(li);
+    });
+    const done = DEMO_TASKS.filter(t => t.done).length;
+    document.getElementById('taskDone').textContent = done;
+    document.getElementById('taskTotal').textContent = DEMO_TASKS.length;
+}
+
+// ========== 习惯（只读展示） ==========
+function renderHabits() {
+    const grid = document.getElementById('habitsGrid');
+    grid.innerHTML = '';
+
+    DEMO_HABITS.forEach(h => {
+        const done = !!DEMO_HABIT_TODAY[h.key];
+        const div = document.createElement('div');
+        div.style.cssText = `display:flex;align-items:center;padding:10px 12px;background:var(--bg);border-radius:10px;margin-bottom:8px;border:1px solid ${done ? 'var(--green)' : 'var(--border)'};transition:all 0.2s`;
+        div.innerHTML = `
+            <div style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:${done ? 'var(--green)' : 'var(--card2)'};margin-right:10px;flex-shrink:0;font-size:16px">${done ? '✓' : h.icon}</div>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:${done ? '600' : '400'};color:${done ? '#fff' : 'var(--text)'}">${h.name}</div>
+                <div style="font-size:10px;color:var(--text-dim);margin-top:1px">${h.desc}</div>
+            </div>
+            <div style="width:20px;height:20px;border-radius:50%;border:2px solid ${done ? 'var(--green)' : 'var(--border)'};display:flex;align-items:center;justify-content:center">
+                ${done ? '<div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>' : ''}
+            </div>
+        `;
+        grid.appendChild(div);
+    });
+
+    const done = Object.values(DEMO_HABIT_TODAY).filter(Boolean).length;
+    const pct = DEMO_HABITS.length > 0 ? Math.round(done / DEMO_HABITS.length * 100) : 0;
+    document.getElementById('habitDone').textContent = done;
+    document.getElementById('habitDone2').textContent = done;
+    document.getElementById('habitTotal').textContent = DEMO_HABITS.length;
+    document.getElementById('habitPct').textContent = pct + '%';
+    document.getElementById('habitStreak').textContent = 7;
+
+    // 进度环
+    const ring = document.getElementById('habitRing');
+    if (ring) {
+        const max = 2 * Math.PI * 28;
+        ring.style.strokeDasharray = max;
+        ring.style.strokeDashoffset = max * (1 - pct / 100);
+    }
+
+    // 最近7天mini热力（假数据）
+    const heat = document.getElementById('habitMiniHeat');
+    if (heat) {
+        heat.innerHTML = '';
+        const fakeHeat = [true, true, false, true, true, true, true]; // 7天数据
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dayDone = fakeHeat[6 - i];
+            const dayPct = dayDone ? 0.75 : 0.25;
+            const alpha = 0.15 + dayPct * 0.85;
+            const isToday = i === 0;
+            const el = document.createElement('div');
+            el.style.cssText = `width:22px;height:22px;border-radius:6px;background:${isToday ? 'var(--green)' : `rgba(0,217,163,${alpha})`};display:flex;align-items:center;justify-content:center;font-size:9px;color:${dayPct >= 0.5 ? '#fff' : 'var(--text-mute)'};border:${isToday ? '2px solid var(--green)' : '1px solid var(--border)'}`;
+            el.textContent = ['日','一','二','三','四','五','六'][d.getDay()];
+            heat.appendChild(el);
+        }
+    }
+}
+
+// ========== 财务 ==========
+function renderFinance() {
+    // 收入列表
+    const il = document.getElementById('incomeList');
+    il.innerHTML = '';
+    DEMO_INCOMES.slice().reverse().forEach(i => {
+        const d = document.createElement('div');
+        d.className = 'fin-item';
+        d.innerHTML = `<span class="fin-source">${i.source}</span><span class="fin-amount in">+¥${i.amount}</span><span class="fin-time">${i.time}</span>`;
+        il.appendChild(d);
+    });
+    // 支出列表
+    const el = document.getElementById('expenseList');
+    el.innerHTML = '';
+    DEMO_EXPENSES.slice().reverse().forEach(e => {
+        const d = document.createElement('div');
+        d.className = 'fin-item';
+        d.innerHTML = `<span class="fin-source">${e.source}</span><span class="fin-amount out">-¥${e.amount}</span><span class="fin-time">${e.time}</span>`;
+        el.appendChild(d);
+    });
+    // 本月汇总
+    const mp = monthPrefix();
+    const mInc = DEMO_INCOMES.filter(i=>i.time.startsWith(mp)).reduce((s,i)=>s+i.amount,0);
+    const mExp = DEMO_EXPENSES.filter(e=>e.time.startsWith(mp)).reduce((s,e)=>s+e.amount,0);
+    const summary = document.getElementById('monthSummary');
+    summary.innerHTML = `
+        <div class="fin-item"><span class="fin-source">本月收入</span><span class="fin-amount in">+¥${mInc.toLocaleString()}</span></div>
+        <div class="fin-item"><span class="fin-source">本月支出</span><span class="fin-amount out">-¥${mExp.toLocaleString()}</span></div>
+        <div class="fin-item"><span class="fin-source">净利润</span><span class="fin-amount ${mInc-mExp>=0?'in':'out'}">${mInc-mExp>=0?'+':'-'}¥${Math.abs(mInc-mExp).toLocaleString()}</span></div>
+        <div class="fin-item"><span class="fin-source">累计总收入</span><span class="fin-amount in">¥${DEMO_INCOMES.reduce((s,i)=>s+i.amount,0).toLocaleString()}</span></div>
+    `;
+
+    // 资金分配器（展示示例）
+    const allocAmount = mInc;
+    const living = Math.round(allocAmount * 0.5);
+    const business = Math.round(allocAmount * 0.3);
+    const saving = Math.round(allocAmount * 0.2);
+    document.getElementById('allocResult').innerHTML = `
+        <div style="background:var(--bg);border-radius:12px;padding:16px">
+            <div style="text-align:center;margin-bottom:14px">
+                <div style="font-size:11px;color:var(--text-mute)">本月收入分配示例</div>
+                <div style="font-size:24px;font-weight:800;color:var(--orange)">¥${allocAmount.toLocaleString()}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card-hover);border-radius:8px">
+                    <div><span style="color:var(--orange)">●</span> 生活+还款 50%</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--orange)">¥${living}</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card-hover);border-radius:8px">
+                    <div><span style="color:var(--blue)">●</span> 业务周转 30%</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--blue)">¥${business}</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--card-hover);border-radius:8px">
+                    <div><span style="color:var(--green)">●</span> 强制储蓄 20%</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--green)">¥${saving}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ========== 订单看板 ==========
+function renderCrm() {
+    // 今日统计
+    const today = '2026.07.25';
+    const todayOrders = DEMO_CRM.filter(c => c.time && c.time.startsWith(today));
+    const todayRevenue = todayOrders.reduce((s,c) => s + (c.amount||0), 0);
+    const todayProfit = todayOrders.reduce((s,c) => s + ((c.amount||0) - (c.cost||0)), 0);
+    document.getElementById('todayOrderStats').innerHTML = `
+        <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:18px;font-weight:700;color:var(--orange)">${todayOrders.length}</div>
+            <div style="font-size:10px;color:var(--text-mute)">今日单数</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:18px;font-weight:700;color:var(--green)">¥${todayRevenue}</div>
+            <div style="font-size:10px;color:var(--text-mute)">今日收款</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:18px;font-weight:700;color:var(--blue)">¥${todayProfit}</div>
+            <div style="font-size:10px;color:var(--text-mute)">今日毛利</div>
+        </div>
+    `;
+
+    const list = document.getElementById('crmList');
+    list.innerHTML = '';
+
+    const statusMap = {
+        lead: { text: '线索', cls: 'lead' },
+        contact: { text: '沟通中', cls: 'contact' },
+        deal: { text: '已成交', cls: 'deal' },
+        fail: { text: '已流失', cls: 'fail' },
+    };
+
+    DEMO_CRM.slice().reverse().forEach(c => {
+        const profit = (c.amount || 0) - (c.cost || 0);
+        const st = statusMap[c.status] || statusMap.lead;
+
+        let deliveryInfo = '';
+        if (c.promiseDays && c.createdDate) {
+            const created = new Date(c.createdDate.replace(/\./g, '/'));
+            const deadline = new Date(created);
+            deadline.setDate(deadline.getDate() + parseInt(c.promiseDays));
+            const daysLeft = Math.ceil((deadline - new Date()) / 86400000);
+            const overdue = daysLeft < 0;
+            deliveryInfo = `<span style="font-size:10px;padding:2px 6px;border-radius:4px;background:${overdue?'rgba(255,71,87,0.15)':'rgba(255,217,61,0.15)'};color:${overdue?'var(--red)':'var(--yellow)'}">${overdue?'已超期'+Math.abs(daysLeft)+'天':'剩'+daysLeft+'天'}</span>`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'crm-item';
+        div.innerHTML = `
+            <div class="crm-top">
+                <div class="crm-name">${c.name} ${c.business ? '<span style="font-size:11px;color:var(--text-mute)">· '+c.business+'</span>' : ''}</div>
+                <div class="crm-amount">¥${c.amount||0} ${c.cost ? '<span style="font-size:10px;color:var(--text-mute)">(毛利¥'+profit+')</span>' : ''}</div>
+            </div>
+            <div class="crm-meta">
+                ${c.platform ? '<span class="crm-tag">'+c.platform+'</span>' : ''}
+                ${c.cost ? '<span class="crm-tag">成本¥'+c.cost+'</span>' : ''}
+                <span class="crm-tag">${c.time ? c.time.slice(5,10) : ''}</span>
+                ${deliveryInfo}
+                <span class="crm-status ${st.cls}">${st.text}</span>
+                ${c.nextFollow ? '<span class="crm-status" style="background:var(--card);color:var(--text-mute)">跟进'+c.nextFollow.slice(5)+'</span>' : ''}
+            </div>
+        `;
+        list.appendChild(div);
+    });
+    const active = DEMO_CRM.filter(c => c.status === 'lead' || c.status === 'contact').length;
+    document.getElementById('crmStats').textContent = active + '个进行中';
+}
+
+// ========== 智能报价引擎 ==========
+const quotePriceTable = {
+    '报白': { easy: [800, 1500], medium: [1500, 3000], hard: [3000, 6000] },
+    '解封': { easy: [300, 800], medium: [800, 2000], hard: [2000, 5000] },
+    '申诉': { easy: [800, 1500], medium: [1500, 3000], hard: [3000, 6000] },
+    '黄V': { easy: [500, 800], medium: [800, 1500], hard: [1500, 3000] },
+    '团购': { easy: [1000, 2000], medium: [2000, 3500], hard: [3500, 6000] },
+    'AI开发': { easy: [2000, 5000], medium: [5000, 15000], hard: [15000, 50000] },
+};
+
+function generateQuote() {
+    const service = document.getElementById('quoteService').value;
+    const platform = document.getElementById('quotePlatform').value;
+    const urgency = document.getElementById('quoteUrgency').value;
+    const difficulty = document.getElementById('quoteDifficulty').value;
+
+    const range = quotePriceTable[service][difficulty];
+    const [min, max] = range;
+
+    const urgencyMult = urgency === 'urgent' ? 1.3 : urgency === 'slow' ? 0.85 : 1;
+
+    const lowPrice = Math.round(min * urgencyMult * 0.8 / 50) * 50;
+    const midPrice = Math.round(((min + max) / 2) * urgencyMult / 50) * 50;
+    const highPrice = Math.round(max * urgencyMult * 1.1 / 50) * 50;
+
+    let advice = '';
+    let adviceColor = 'var(--green)';
+    if (urgency === 'urgent' && difficulty === 'hard') {
+        advice = '⚠️ 加急+复杂单，建议报高价。如果客户嫌贵，说明他不懂行情，可以放掉';
+        adviceColor = 'var(--red)';
+    } else if (service === 'AI开发' && difficulty === 'hard') {
+        advice = '💡 大单子！先收50%定金再动手，别白干';
+        adviceColor = 'var(--orange)';
+    } else if (lowPrice < 500) {
+        advice = '💰 小单快做，30分钟搞定，别花太多时间沟通';
+        adviceColor = 'var(--yellow)';
+    } else {
+        advice = '✅ 正常接单，中档报价成交率最高';
+        adviceColor = 'var(--green)';
+    }
+
+    const deliveryDays = urgency === 'urgent' ? '1-2天' : urgency === 'slow' ? '7-15天' : '3-7天';
+
+    const scripts = {
+        low: `${service}·${platform}\n报价：¥${lowPrice}\n交付：${deliveryDays}\n含1次免费售后\n\n需要的话直接转款排队，当天开始处理~`,
+        mid: `${service}·${platform}\n报价：¥${midPrice}\n交付：${deliveryDays}\n含1个月免费维护+进度每日更新\n\n这个价位性价比最高，大部分客户都选这个~`,
+        high: `${service}·${platform}（VIP服务）\n报价：¥${highPrice}\n交付：${deliveryDays}\n含3个月免费维护+专属顾问+加急处理+结果保障\n\n适合对结果要求高的客户，不成功全额退款`,
+    };
+
+    const el = document.getElementById('quoteResult');
+    el.innerHTML = `
+        <div style="padding:10px;background:var(--bg);border-radius:10px;margin-bottom:10px;border-left:3px solid ${adviceColor}">
+            <div style="font-size:12px;color:${adviceColor};font-weight:600;margin-bottom:4px">📋 接单建议</div>
+            <div style="font-size:12px;color:var(--text)">${advice}</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">预计交付：${deliveryDays}</div>
+        </div>
+        ${[
+            { level: 'low', label: '低价快速成交', price: lowPrice, color: 'var(--green)', desc: '适合预算紧/赶时间客户' },
+            { level: 'mid', label: '中价推荐档', price: midPrice, color: 'var(--orange)', desc: '成交率最高，性价比最优' },
+            { level: 'high', label: '高价筛选档', price: highPrice, color: 'var(--red)', desc: '筛选优质客户，高利润' },
+        ].map(q => `
+            <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px;border:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                    <div>
+                        <span style="font-size:11px;padding:2px 8px;border-radius:4px;background:${q.color}22;color:${q.color}">${q.label}</span>
+                        <div style="font-size:10px;color:var(--text-dim);margin-top:3px">${q.desc}</div>
+                    </div>
+                    <div style="font-size:18px;font-weight:700;color:${q.color}">¥${q.price.toLocaleString()}</div>
+                </div>
+                <div style="font-size:11px;color:var(--text-dim);background:var(--card-hover);padding:8px;border-radius:6px;margin-top:6px;white-space:pre-wrap;line-height:1.6">${scripts[q.level]}</div>
+            </div>
+        `).join('')}
+    `;
+}
+
+// ========== 交付追踪看板 ==========
+const deliveryStages = ['接单', '资料收集', '提交申请', '平台审核', '结果交付', '收款', '售后'];
+
+function renderDeliveryBoard() {
+    const deliveries = DEMO_CRM.filter(c => c.status === 'deal');
+
+    document.getElementById('deliveryStats').textContent = `${deliveries.length}个进行中`;
+
+    const el = document.getElementById('deliveryBoard');
+    if (deliveries.length === 0) {
+        el.innerHTML = '<div class="empty">暂无交付中订单</div>';
+        return;
+    }
+
+    el.innerHTML = deliveries.map(d => {
+        const stage = d.deliveryStage || 0;
+        const progress = Math.round((stage / (deliveryStages.length - 1)) * 100);
+
+        return `
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <div>
+                    <div style="font-size:13px;font-weight:600">${d.name} · ${d.business || '未填'}</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${d.platform || ''} · ¥${d.amount||0}</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:2px;margin-bottom:8px">
+                ${deliveryStages.map((s, idx) => `
+                    <div style="flex:1;text-align:center">
+                        <div style="height:6px;background:${idx <= stage ? 'var(--green)' : 'var(--border)'};border-radius:3px;margin-bottom:3px"></div>
+                        <div style="font-size:8px;color:${idx <= stage ? 'var(--green)' : 'var(--text-mute)'}">${s}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ========== 客户复购引擎 ==========
+function renderRepurchaseEngine() {
+    const dealCustomers = DEMO_CRM.filter(c => c.status === 'deal' && c.time);
+
+    const repurchaseChain = {
+        'AI工作台定制': ['知识付费', '产品售卖', '项目共创'],
+        '电商报白': ['解封', '黄V认证', '团购开通'],
+        '知识付费': ['AI开发', '产品售卖'],
+    };
+
+    const toReview = [];
+    dealCustomers.forEach(c => {
+        toReview.push({
+            customer: c,
+            daysSince: 8,
+            milestone: 7,
+            nextService: (repurchaseChain[c.business] || ['其他服务'])[0],
+            script: '上次服务用得怎么样？有新需求随时找我~'
+        });
+    });
+
+    document.getElementById('repurchaseCount').textContent = `${toReview.length}个待回访`;
+
+    const el = document.getElementById('repurchaseList');
+    if (toReview.length === 0) {
+        el.innerHTML = '<div class="empty">暂无待回访客户</div>';
+        return;
+    }
+
+    el.innerHTML = toReview.map(item => {
+        const c = item.customer;
+        return `
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px;border-left:3px solid var(--purple)">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+                <div>
+                    <div style="font-size:13px;font-weight:600">${c.name}</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${c.business||'服务'} · 成交${item.daysSince}天 · ¥${c.amount||0}</div>
+                </div>
+                <span style="font-size:10px;padding:2px 8px;background:rgba(168,85,247,0.2);color:var(--purple);border-radius:4px">${item.milestone}天回访</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">🎯 推荐下一步：<strong style="color:var(--purple)">${item.nextService}</strong></div>
+            <div style="font-size:11px;color:var(--text);background:var(--card-hover);padding:8px;border-radius:6px;margin-bottom:8px;line-height:1.6">${item.script}</div>
+        </div>`;
+    }).join('');
+}
+
+// ========== 搞钱作战室 ==========
+function renderWarRoom() {
+    const todayIncome = 2599;
+    const todayDeals = 3;
+    const isAchieved = todayIncome > 0 || todayDeals > 0;
+    const streak = 7;
+
+    document.getElementById('warRoomStreak').textContent = `连续达标 ${streak} 天`;
+
+    const now = new Date();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    monday.setHours(0,0,0,0);
+    const weekAchieved = 5;
+
+    const el = document.getElementById('warRoom');
+    el.innerHTML = `
+        <div style="padding:14px;background:${isAchieved ? 'linear-gradient(135deg,rgba(0,217,163,0.15),rgba(0,217,163,0.05))' : 'var(--bg)'};border-radius:12px;margin-bottom:12px;border:1px solid ${isAchieved ? 'var(--green)' : 'var(--border)'}">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <div style="font-size:13px;font-weight:600;color:${isAchieved ? 'var(--green)' : 'var(--text)'}">${isAchieved ? '✅ 今日已达标' : '⏳ 今日未达标'}</div>
+                    <div style="font-size:11px;color:var(--text-dim);margin-top:3px">达标 = 有收入或有成单</div>
+                </div>
+                <div style="text-align:right">
+                    <div style="font-size:20px;font-weight:700;color:${todayIncome > 0 ? 'var(--green)' : 'var(--text-mute)'}">${todayIncome > 0 ? '+¥' + todayIncome : '¥0'}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${todayDeals}单成交</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:12px">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">本周达标：${weekAchieved}/7天</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+                ${['一','二','三','四','五','六','日'].map((w, i) => {
+                    const checkDate = new Date(monday);
+                    checkDate.setDate(monday.getDate() + i);
+                    const achieved = i < weekAchieved;
+                    const isFuture = checkDate > now;
+                    const isToday = checkDate.toDateString() === now.toDateString();
+                    return `<div style="text-align:center;padding:6px 2px;border-radius:6px;background:${isFuture ? 'var(--card-hover)' : achieved ? 'rgba(0,217,163,0.15)' : 'var(--card-hover)'};border:${isToday ? '1px solid var(--orange)' : '1px solid transparent'}">
+                        <div style="font-size:9px;color:var(--text-mute)">${w}</div>
+                        <div style="font-size:13px;margin:2px 0">${checkDate.getDate()}</div>
+                        <div style="font-size:10px">${isFuture ? '' : achieved ? '✅' : '○'}</div>
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>
+
+        <div style="padding:12px;background:var(--bg);border-radius:10px">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">🎯 今日3大重点</div>
+            <div style="display:flex;align-items:center;padding:10px;background:var(--card-hover);border-radius:8px;margin-bottom:6px">
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0">1</div>
+                <div style="flex:1">
+                    <div style="font-size:12px;color:var(--text)">跟进陈总的设计外包单（¥2000）</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">⏰ 14:00</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;padding:10px;background:var(--card-hover);border-radius:8px;margin-bottom:6px">
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0">2</div>
+                <div style="flex:1">
+                    <div style="font-size:12px;color:var(--text)">AI漫剧第3集制作完成</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">⏰ 19:00</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;padding:10px;background:var(--card-hover);border-radius:8px;margin-bottom:6px">
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0">3</div>
+                <div style="flex:1">
+                    <div style="font-size:12px;color:var(--text)">回复闲鱼3条咨询</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">⏰ 16:00</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ========== 每日变现日报 ==========
+const dailyTaskTemplates = {
+    1: [
+        { text: '小红书发布1条AI工具推荐', time: '10:00' },
+        { text: '主动私信5个潜在客户', time: '16:00' },
+        { text: '跟进报白咨询客户', time: '17:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    2: [
+        { text: '抖音发布1条AI创业日记', time: '11:00' },
+        { text: '闲鱼上新+回复咨询', time: '14:00' },
+        { text: '知乎写1篇AI变现回答', time: '16:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    3: [
+        { text: '小红书发布1条AI副业教程', time: '10:00' },
+        { text: '报白客户项目推进', time: '14:00' },
+        { text: '闲鱼优化+跟进客户', time: '16:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    4: [
+        { text: '抖音发布AI漫剧新集', time: '11:00' },
+        { text: '主动获客：知乎/小红书/闲鱼', time: '14:00' },
+        { text: 'AI漫剧制作推进', time: '16:00' },
+        { text: '记录今日变现数据', time: '22:00' },
+    ],
+    5: [
+        { text: '小红书发布商业思考', time: '10:00' },
+        { text: '本周成单收尾+收款', time: '14:00' },
+        { text: '闲鱼周末备货', time: '16:00' },
+        { text: '本周复盘', time: '20:00' },
+    ],
+    6: [
+        { text: '周末轻量：闲鱼咨询回复', time: '11:00' },
+        { text: '学习1个新AI工具', time: '14:00' },
+        { text: '下周选题排期', time: '16:00' },
+        { text: 'AI漫剧制作', time: '19:00' },
+    ],
+    0: [
+        { text: '周日复盘+下周计划', time: '10:00' },
+        { text: '账号矩阵内容盘点', time: '14:00' },
+        { text: '客户关系维护', time: '16:00' },
+        { text: '休息+充电', time: '19:00' },
+    ],
+};
+
+const dailyQuotes = [
+    '不要等完美才行动，完成比完美更重要',
+    '今天不搞钱，明天没钱花',
+    '一个客户也是一个客户，积少成多',
+    '发内容比想内容重要100倍',
+    '先做再优化，别想太多',
+    '每天进步1%，一年37倍',
+    '客户不主动找你，你就主动找客户',
+    '记录数据的人，才能复制定量增长',
+    '小单也是单，大单从小单来',
+    'AI是工具，变现才是目的',
+];
+
+function renderDailyReport() {
+    const now = new Date();
+    const day = now.getDay();
+    const date = now.getDate();
+    const weekDays = ['周日','周一','周二','周三','周四','周五','周六'];
+    const monthDay = `${now.getMonth()+1}月${date}日`;
+
+    const todayTasks = dailyTaskTemplates[day] || dailyTaskTemplates[1];
+    const todayIncome = 2599;
+    const monthIncome = 2599;
+    const dayOfMonth = date;
+    const quote = dailyQuotes[(date - 1) % dailyQuotes.length];
+
+    document.getElementById('reportMeta').textContent = `${monthDay} ${weekDays[day]} · 本月第${dayOfMonth}天`;
+
+    const el = document.getElementById('dailyReport');
+    el.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px">
+            <div>
+                <div style="font-size:20px;font-weight:700;color:var(--green)">${monthDay}</div>
+                <div style="font-size:11px;color:var(--text-mute)">${weekDays[day]} · 本月第${dayOfMonth}天</div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:11px;color:var(--text-mute)">今日变现</div>
+                <div style="font-size:18px;font-weight:700;color:var(--green)">+¥${todayIncome}</div>
+            </div>
+        </div>
+
+        <div style="padding:10px 12px;background:rgba(255,107,26,0.08);border-left:3px solid var(--orange);border-radius:8px;margin-bottom:10px">
+            <div style="font-size:10px;color:var(--orange);margin-bottom:4px">💡 今日箴言</div>
+            <div style="font-size:13px;color:var(--text);font-weight:500">${quote}</div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            <div style="font-size:11px;color:var(--text-mute);margin-bottom:8px">🎯 今日变现任务</div>
+            ${todayTasks.map((t, i) => `
+                <div style="display:flex;align-items:center;padding:8px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px">
+                    <div style="width:16px;height:16px;border:2px solid var(--green);border-radius:4px;margin-right:10px;flex-shrink:0;${i < 2 ? 'background:var(--green)' : ''}"></div>
+                    <span style="flex:1;font-size:12px;${i < 2 ? 'text-decoration:line-through;color:var(--text-mute)' : ''}">${t.text}</span>
+                    <span style="font-size:10px;color:var(--text-mute)">${t.time}</span>
+                </div>
+            `).join('')}
+        </div>
+
+        <div style="padding:10px;background:var(--bg);border-radius:10px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-mute);margin-bottom:6px">
+                <span>本月累计变现</span>
+                <span>目标 ¥1000/天 × ${dayOfMonth}天 = ¥${(1000*dayOfMonth).toLocaleString()}</span>
+            </div>
+            <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:6px">¥${monthIncome.toLocaleString()}</div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:${Math.min(100, monthIncome/(1000*dayOfMonth)*100)}%;background:linear-gradient(90deg,var(--green),var(--orange));border-radius:3px;transition:width 0.5s"></div>
+            </div>
+        </div>
+    `;
+}
+
+// ========== 今日聚焦 ==========
+function renderTodayFocus() {
+    document.getElementById('focusDate').textContent = todayStr();
+
+    const focus = document.getElementById('todayFocus');
+    const focusItems = [
+        { icon: '💰', text: '今日已收入¥2599，保持节奏继续搞钱' },
+        { icon: '⚔️', text: '还有4个任务未完成：AI漫剧第3集制作' },
+        { icon: '📕', text: '今天还有2条内容待发布，先完成小红书主号' },
+    ];
+
+    focus.innerHTML = focusItems.map(f => `
+        <div style="display:flex;align-items:center;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:8px">
+            <span style="font-size:18px;margin-right:10px">${f.icon}</span>
+            <span style="font-size:13px;flex:1">${f.text}</span>
+        </div>
+    `).join('');
+}
+
+// ========== 学习 ==========
+function renderStudies() {
+    const list = document.getElementById('studyList');
+    list.innerHTML = '';
+    DEMO_STUDIES.slice().reverse().forEach(s => {
+        const d = document.createElement('div');
+        d.className = 'study-item';
+        d.innerHTML = `${s.text}<div class="study-time">${s.time}</div>`;
+        list.appendChild(d);
+    });
+    document.getElementById('studyCount').textContent = DEMO_STUDIES.length + '条';
+}
+
+// ========== 复盘 ==========
+function renderReviews() {
+    const list = document.getElementById('reviewHistory');
+    list.innerHTML = '';
+    DEMO_REVIEWS.slice().reverse().forEach(r => {
+        const d = document.createElement('div');
+        d.className = 'review-item';
+        d.innerHTML = `<div class="review-date">${r.time}</div><div>${r.text}</div>`;
+        list.appendChild(d);
+    });
+}
+
+// ========== 渠道数据 ==========
+let curChannel = 'xianyu';
+
+const channelConfig = {
+    xianyu: {
+        name: '闲鱼', icon: '📦',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.xianyu.products, lbl: '上架产品' },
+            { num: DEMO_CHANNEL_DATA.xianyu.consult, lbl: '咨询数' },
+            { num: DEMO_CHANNEL_DATA.xianyu.orders, lbl: '成单数' },
+        ],
+        actions: [
+            { label: '💬 查看咨询', type: 'view' },
+            { label: '✅ 查看成单', type: 'view' },
+            { label: '📦 查看产品', type: 'view' },
+        ]
+    },
+    zhihu: {
+        name: '知乎', icon: '📝',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.zhihu.posts, lbl: '已发文章' },
+            { num: DEMO_CHANNEL_DATA.zhihu.likes, lbl: '点赞数' },
+            { num: DEMO_CHANNEL_DATA.zhihu.followers, lbl: '关注数' },
+        ],
+        actions: [
+            { label: '📝 查看文章', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    xhs: {
+        name: '小红书', icon: '📕',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.xhs.posts, lbl: '已发笔记' },
+            { num: DEMO_CHANNEL_DATA.xhs.likes, lbl: '点赞数' },
+            { num: DEMO_CHANNEL_DATA.xhs.followers, lbl: '粉丝数' },
+        ],
+        actions: [
+            { label: '📕 查看笔记', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    douyin: {
+        name: '抖音', icon: '🎬',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.douyin.followers, lbl: '粉丝数' },
+            { num: DEMO_CHANNEL_DATA.douyin.posts, lbl: '已发视频' },
+            { num: DEMO_CHANNEL_DATA.douyin.views, lbl: '播放量' },
+        ],
+        actions: [
+            { label: '🎬 查看视频', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    kuaishou: {
+        name: '快手', icon: '⚡',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.kuaishou.followers, lbl: '粉丝数' },
+            { num: DEMO_CHANNEL_DATA.kuaishou.posts, lbl: '已发视频' },
+            { num: DEMO_CHANNEL_DATA.kuaishou.revenue, lbl: '漫剧收入' },
+        ],
+        actions: [
+            { label: '⚡ 查看视频', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    shipinhao: {
+        name: '视频号', icon: '📺',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.shipinhao.followers, lbl: '粉丝数' },
+            { num: DEMO_CHANNEL_DATA.shipinhao.posts, lbl: '已发视频' },
+            { num: DEMO_CHANNEL_DATA.shipinhao.likes, lbl: '点赞数' },
+        ],
+        actions: [
+            { label: '📺 查看视频', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    bilibili: {
+        name: 'B站', icon: '🎯',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.bilibili.followers, lbl: '粉丝数' },
+            { num: DEMO_CHANNEL_DATA.bilibili.posts, lbl: '已发视频' },
+            { num: DEMO_CHANNEL_DATA.bilibili.views, lbl: '播放量' },
+        ],
+        actions: [
+            { label: '🎯 查看视频', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    gongzhonghao: {
+        name: '公众号', icon: '📖',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.gongzhonghao.followers, lbl: '关注数' },
+            { num: DEMO_CHANNEL_DATA.gongzhonghao.posts, lbl: '已发文章' },
+            { num: DEMO_CHANNEL_DATA.gongzhonghao.reads, lbl: '阅读量' },
+        ],
+        actions: [
+            { label: '📖 查看文章', type: 'view' },
+            { label: '💬 查看咨询', type: 'view' },
+        ]
+    },
+    siyu: {
+        name: '私域', icon: '🔐',
+        stats: () => [
+            { num: DEMO_CHANNEL_DATA.siyu.contacts, lbl: '好友数' },
+            { num: DEMO_CHANNEL_DATA.siyu.groups, lbl: '社群数' },
+            { num: DEMO_CHANNEL_DATA.siyu.deals, lbl: '成单数' },
+        ],
+        actions: [
+            { label: '💬 查看咨询', type: 'view' },
+            { label: '✅ 查看成单', type: 'view' },
+        ]
+    },
+};
+
+function renderChannel() {
+    const cfg = channelConfig[curChannel];
+    const stats = document.getElementById('channelStats');
+    stats.innerHTML = cfg.stats().map(s =>
+        `<div class="ch-stat"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>`
+    ).join('');
+
+    const actions = document.getElementById('quickActions');
+    actions.innerHTML = cfg.actions.map(a =>
+        `<button class="qa-btn" onclick="toast('展示版不可操作')">${a.label}</button>`
+    ).join('');
+}
+
+function switchChannel(ch, el) {
+    curChannel = ch;
+    document.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderChannel();
+}
+
+// ========== 业务线规划 ==========
+const bizLineConfig = [
+    {
+        name: 'AI定制服务',
+        icon: '🛠',
+        color: '#FF6B1A',
+        desc: '工作台定制 · 客单199-1999',
+        monthGoal: 30000,
+        revenue: 599,
+        steps: [
+            '作品集整理（本展示页就是案例）',
+            '闲鱼+知乎上架AI定制服务',
+            '跑通第一单交付流程',
+            '稳定接单，目标5-10单/月',
+        ]
+    },
+    {
+        name: '内容变现',
+        icon: '📝',
+        color: '#4D9DFF',
+        desc: '小红书+抖音 · 广告+课程',
+        monthGoal: 20000,
+        revenue: 2000,
+        steps: [
+            '稳定更新，每周5条内容',
+            '小红书突破3000粉',
+            '接广告合作',
+            '推出知识付费课程',
+        ]
+    },
+    {
+        name: '闲鱼AI服务',
+        icon: '📦',
+        color: '#A66BFF',
+        desc: '5产品矩阵 · 客单50-500',
+        monthGoal: 5000,
+        revenue: 350,
+        steps: [
+            '5个产品上架运营',
+            '优化标题和首图',
+            '每天维护，回复咨询',
+            '积累好评提升排名',
+        ]
+    },
+    {
+        name: 'AI漫剧',
+        icon: '🎬',
+        color: '#00D9A3',
+        desc: '抖音/快手 · 涨粉变现',
+        monthGoal: 5000,
+        revenue: 680,
+        steps: [
+            '每周更新2-3条AI漫剧',
+            '建立原创IP系列',
+            '积累粉丝后接广告',
+            '私域引流变现',
+        ]
+    },
+];
+
+function renderBizLines() {
+    const container = document.getElementById('bizLines');
+    container.innerHTML = '';
+    bizLineConfig.forEach(line => {
+        const pct = Math.min(100, Math.round(line.revenue / line.monthGoal * 100));
+        const div = document.createElement('div');
+        div.style.cssText = 'background:var(--bg);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid ' + line.color;
+        div.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <div style="font-size:14px;font-weight:600">${line.icon} ${line.name}</div>
+                <div style="font-size:11px;color:var(--text-mute)">${line.desc}</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px">
+                <span>已收入 ¥${line.revenue.toLocaleString()}</span>
+                <span>月目标 ¥${line.monthGoal.toLocaleString()} · ${pct}%</span>
+            </div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px">
+                <div style="height:100%;width:${pct}%;background:${line.color};border-radius:3px;transition:width 0.5s"></div>
+            </div>
+            <div style="font-size:11px;color:var(--text-mute);line-height:1.6">
+                ${line.steps.map((s,i) => `<div style="margin-bottom:2px">${i+1}. ${s}</div>`).join('')}
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ========== 渠道目标矩阵 ==========
+function renderChannelGoals() {
+    const goals = [
+        { channel: '闲鱼', icon: '📦', goal: '5产品·30咨询·10单/月', revenue: '5千' },
+        { channel: '知乎', icon: '📝', goal: '15文章·1500关注·5咨询/月', revenue: '引流' },
+        { channel: '小红书', icon: '📕', goal: '20笔记·5000粉·3咨询/月', revenue: '2万' },
+        { channel: '抖音', icon: '🎬', goal: '周更3条·1万粉', revenue: '5千' },
+        { channel: 'AI定制', icon: '🛠', goal: '5-10单/月·客单199-1999', revenue: '3万' },
+    ];
+    const container = document.getElementById('channelGoals');
+    container.innerHTML = goals.map(g => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:18px">${g.icon}</span>
+                <div>
+                    <div style="font-size:13px;font-weight:600">${g.channel}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${g.goal}</div>
+                </div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:13px;color:var(--orange);font-weight:600">${g.revenue}</div>
+                <div style="font-size:10px;color:var(--text-mute)">月预期</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ========== 侧边栏 ==========
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ========== 页面切换 ==========
+function switchPage(page, el) {
+    document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
+    document.getElementById('page-' + page).classList.remove('hidden');
+    document.querySelectorAll('.sidebar-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    window.scrollTo(0, 0);
+    closeSidebar();
+}
+
+// ========== 首页业务线总览 ==========
+function renderBizOverview() {
+    const container = document.getElementById('bizOverview');
+    container.innerHTML = '';
+    bizLineConfig.forEach(line => {
+        const pct = Math.min(100, Math.round(line.revenue / line.monthGoal * 100));
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)';
+        div.innerHTML = `
+            <div style="font-size:16px;margin-right:8px">${line.icon}</div>
+            <div style="flex:1">
+                <div style="font-size:12px;font-weight:600">${line.name}</div>
+                <div style="height:4px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden">
+                    <div style="height:100%;width:${pct}%;background:${line.color};border-radius:2px"></div>
+                </div>
+            </div>
+            <div style="text-align:right;margin-left:10px">
+                <div style="font-size:11px;color:${line.color};font-weight:600">¥${line.revenue.toLocaleString()}</div>
+                <div style="font-size:9px;color:var(--text-mute)">/¥${line.monthGoal >= 10000 ? (line.monthGoal/10000)+'万' : line.monthGoal}</div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ========== 电商服务商服务清单 ==========
+const services = [
+    { name: '类目报白', icon: '📋', desc: '全平台·定向类目准入', price: '1500-3000', platform: '抖音/快手/小红书/视频号' },
+    { name: '账号解封', icon: '🔓', desc: '各平台账号违规解封', price: '500-2000', platform: '全平台' },
+    { name: '店铺申诉', icon: '⚖️', desc: '店铺违规/扣分申诉', price: '1000-3000', platform: '淘宝/拼多多/抖音/快手' },
+    { name: '店铺违规处理', icon: '⚠️', desc: '违规诊断+方案+代办', price: '800-2500', platform: '全平台' },
+    { name: '账号合规转让', icon: '🔄', desc: '账号安全过户转让', price: '1000-3000', platform: '全平台' },
+    { name: '黄V认证', icon: '✓', desc: '企业/个人黄V认证', price: '800-2000', platform: '抖音/快手/小红书' },
+    { name: '团购开通', icon: '🛒', desc: '本地生活团购开通', price: '1500-3000', platform: '抖音/快手/美团' },
+];
+
+function renderServices() {
+    const container = document.getElementById('serviceList');
+    container.innerHTML = services.map(s => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:18px">${s.icon}</span>
+                <div>
+                    <div style="font-size:13px;font-weight:600">${s.name}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${s.desc}</div>
+                    <div style="font-size:9px;color:var(--text-mute);margin-top:2px">${s.platform}</div>
+                </div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:13px;color:var(--yellow);font-weight:600">${s.price}</div>
+                <div style="font-size:9px;color:var(--text-mute)">客单价</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ========== AI定制服务 ==========
+const serviceTemplates = [
+    {
+        icon: '🎯', name: '个人IP/一人公司版', color: 'var(--orange)',
+        target: '博主、自媒体、一人公司、超级个体',
+        features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '搞钱作战室', '目标进度环'],
+        price: '599定制+99/月', badge: '🔥 热门',
+        desc: '你正在用的就是这版，经过实战验证'
+    },
+    {
+        icon: '📦', name: '电商卖家版', color: 'var(--blue)',
+        target: '淘宝/拼多多/抖音电商卖家',
+        features: ['订单管理看板', '客户CRM', '库存追踪', '利润自动计算', '退款追踪', '供应商管理'],
+        price: '599定制+99/月', badge: '',
+        desc: '订单+客户+库存+利润，一个页面全搞定'
+    },
+    {
+        icon: '💻', name: '自由职业者版', color: 'var(--purple)',
+        target: '设计师、程序员、文案、咨询顾问',
+        features: ['项目管理', '客户追踪', '时间记录', '报价生成器', '收入统计', '作品集展示'],
+        price: '599定制+99/月', badge: '',
+        desc: '接单+交付+收款，自由职业者的全套工具'
+    },
+    {
+        icon: '🏪', name: '餐饮/实体店版', color: 'var(--yellow)',
+        target: '餐饮老板、奶茶店、个体店',
+        features: ['营业统计', '员工排班', '供应商管理', '会员CRM', '每日盘点', '成本核算'],
+        price: '1999定制+199/月', badge: '💰 高客单',
+        desc: '实体店专属，营业+排班+会员+盘点'
+    },
+    {
+        icon: '📊', name: '通用职场版', color: 'var(--green)',
+        target: '职场人、职员、学生',
+        features: ['任务管理', '学习记录', '习惯打卡', '收支记录', '目标追踪', '周报生成'],
+        price: '199定制+99/月', badge: '入门款',
+        desc: '个人成长+效率管理，适合所有人'
+    },
+];
+
+const pricingPlans = [
+    {
+        name: '基础版', price: 199, monthly: 99, color: 'var(--green)',
+        features: ['选1个模板', '改配色/标题', '基础功能配置', '1次修改机会', '永久域名', '7天售后'],
+        target: '个人/职员/小商贩',
+        popular: false
+    },
+    {
+        name: '标准版', price: 599, monthly: 99, color: 'var(--orange)',
+        features: ['选1个模板', '定制功能模块', '3次修改机会', '1对1需求沟通', '永久域名', '30天售后', '数据导入'],
+        target: '一人公司/自由职业/电商',
+        popular: true
+    },
+    {
+        name: '旗舰版', price: 1999, monthly: 199, color: 'var(--red)',
+        features: ['深度定制', '专属功能开发', '不限修改次数', '1对1专属顾问', '永久域名', '90天售后', '数据导入+培训', '优先支持'],
+        target: '小微企业/团队/餐饮',
+        popular: false
+    },
+];
+
+const deliverySteps = [
+    { step: 1, title: '提交需求', desc: '填写表单，描述你的业务和需求', time: '1分钟' },
+    { step: 2, title: '微信沟通', desc: '我加你微信，确认细节和报价', time: '1小时内' },
+    { step: 3, title: '支付定金', desc: '确认后支付50%定金，开始制作', time: '当天' },
+    { step: 4, title: '定制开发', desc: '用AI快速开发，实时沟通进度', time: '1-3天' },
+    { step: 5, title: '交付验收', desc: '发你链接，手机打开就能用', time: '第3天' },
+    { step: 6, title: '付尾款', desc: '满意后付尾款，开始售后服务', time: '验收后' },
+];
+
+const faqList = [
+    { q: '做出来的是什么？APP吗？', a: '是一个网页版工作台，手机浏览器打开就能用，可以添加到手机桌面，像APP一样。永久域名，不会失效。' },
+    { q: '数据存在哪里？安全吗？', a: '数据存在你自己的浏览器本地，不会上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。' },
+    { q: '我不懂技术能用吗？', a: '完全不用懂技术。你只需要告诉我你的业务和需求，剩下的我全搞定。交付后打开链接就能用。' },
+    { q: '以后想加功能怎么办？', a: '每月维护费包含小功能调整。大功能开发另计费，按需报价。' },
+    { q: '不满意能退吗？', a: '交付前可以提修改意见。交付后3天内不满意全额退款（已产生的定制成本除外）。' },
+    { q: '和别人用同一个模板会一样吗？', a: '模板只是基础框架，我会根据你的业务定制配色、功能、布局，每个人做出来都不一样。' },
+];
+
+function renderServicePage() {
+    document.getElementById('templateList').innerHTML = serviceTemplates.map(t => `
+        <div style="padding:14px;background:var(--bg);border-radius:12px;margin-bottom:10px;border-left:3px solid ${t.color}">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <span style="font-size:24px">${t.icon}</span>
+                    <div>
+                        <div style="font-size:14px;font-weight:600">${t.name} ${t.badge ? `<span style="font-size:9px;padding:2px 6px;background:${t.color}22;color:${t.color};border-radius:4px;margin-left:4px">${t.badge}</span>` : ''}</div>
+                        <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${t.target}</div>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div style="font-size:13px;font-weight:700;color:${t.color}">${t.price}</div>
+                </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">${t.desc}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px">
+                ${t.features.map(f => `<span style="font-size:9px;padding:3px 6px;background:var(--card-hover);color:var(--text-mute);border-radius:4px">${f}</span>`).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('pricingList').innerHTML = pricingPlans.map(p => `
+        <div style="padding:14px;background:var(--bg);border-radius:12px;margin-bottom:10px;border:1px solid ${p.popular ? p.color : 'var(--border)'};${p.popular ? 'box-shadow:0 0 20px rgba(255,107,26,0.1)' : ''}">
+            ${p.popular ? '<div style="text-align:center;font-size:10px;color:var(--orange);margin-bottom:8px">⭐ 最多人选</div>' : ''}
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div style="font-size:15px;font-weight:700;color:${p.color}">${p.name}</div>
+                <div style="text-align:right">
+                    <div style="font-size:18px;font-weight:700;color:${p.color}">¥${p.price}</div>
+                    <div style="font-size:9px;color:var(--text-mute)">+¥${p.monthly}/月</div>
+                </div>
+            </div>
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">适合：${p.target}</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+                ${p.features.map(f => `<div style="font-size:11px;color:var(--text);display:flex;align-items:center"><span style="color:${p.color};margin-right:6px">✓</span>${f}</div>`).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('deliveryFlow').innerHTML = deliverySteps.map(s => `
+        <div style="display:flex;align-items:start;padding:10px 0;border-bottom:1px solid var(--border)">
+            <div style="width:28px;height:28px;border-radius:50%;background:${s.step <= 3 ? 'var(--green)' : 'var(--card-hover)'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-right:10px;flex-shrink:0">${s.step}</div>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:600">${s.title} <span style="font-size:10px;color:var(--text-mute);font-weight:400">· ${s.time}</span></div>
+                <div style="font-size:11px;color:var(--text-dim);margin-top:2px">${s.desc}</div>
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('faqList').innerHTML = faqList.map(f => `
+        <div style="padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)">Q: ${f.q}</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.6">A: ${f.a}</div>
+        </div>
+    `).join('');
+}
+
+// ========== 内容矩阵 ==========
+function renderAccounts() {
+    const list = document.getElementById('accountList');
+    if (!list) return;
+    document.getElementById('accountCount').textContent = DEMO_ACCOUNTS.length + '个账号';
+    list.innerHTML = '';
+
+    DEMO_ACCOUNTS.forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'account-card ' + (a.isMain ? 'main' : '');
+        div.innerHTML = `
+            <div class="account-top">
+                <div class="account-name">${a.isMain ? '🔥 ' : ''}${a.name}</div>
+                <div style="display:flex;gap:6px">
+                    <span class="account-platform">${a.platform}</span>
+                    <span class="account-platform" style="background:rgba(168,85,247,0.15);color:var(--purple)">${a.role || '普通号'}</span>
+                </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">${a.position || '暂无定位'}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
+                ${(a.tags || []).map(t => `<span style="font-size:9px;padding:2px 6px;background:var(--card-hover);color:var(--text-mute);border-radius:4px">${t}</span>`).join('')}
+            </div>
+            <div class="account-meta">
+                <span>ID: ${a.handle || '-'}</span>
+                <span>粉丝: <span style="color:var(--text)">${a.followers || 0}</span></span>
+                <span>已发: <span style="color:var(--text)">${a.posts || 0}</span></span>
+                <span>目标: <span style="color:var(--text)">${a.goal || 1000}</span></span>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+let postFilter = 'all';
+
+const contentTemplates = [
+    { title: 'AI应用分享', desc: '主号：分享一个AI应用场景', tag: '品牌IP号' },
+    { title: '产品实验记录', desc: '记录从想法到MVP的全过程', tag: '产品实验' },
+    { title: '商业思考/案例', desc: '分析一个AI变现案例', tag: '商业思考' },
+    { title: 'AI工具合集', desc: '3-5个同类AI工具横向对比', tag: '工具合集' },
+    { title: 'AI效率技巧', desc: '一个具体场景提效50%的SOP', tag: '效率技巧' },
+    { title: 'AI工具测评', desc: '30秒讲清楚一个工具值不值得用', tag: '工具测评' },
+    { title: 'AI创业日记', desc: '今日收入/客户/踩坑真实记录', tag: '创业日记' },
+    { title: 'AI漫剧剧情', desc: '新剧情/角色/系列更新', tag: '漫剧内容' },
+    { title: '一人公司账单', desc: '公开今日收入/支出/复盘', tag: '成长记录' },
+];
+
+function filterPosts(status, el) {
+    postFilter = status;
+    document.querySelectorAll('#page-content .ch-tab').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderPosts();
+}
+
+function renderPosts() {
+    const list = document.getElementById('postList');
+    if (!list) return;
+    list.innerHTML = '';
+    let filtered = DEMO_POSTS;
+    if (postFilter === 'pending') filtered = DEMO_POSTS.filter(p => p.status === 'pending');
+    if (postFilter === 'posted') filtered = DEMO_POSTS.filter(p => p.status === 'posted');
+    if (postFilter === 'idea') filtered = DEMO_POSTS.filter(p => p.status === 'idea');
+    if (filtered.length === 0) list.innerHTML = '<div class="empty">暂无内容</div>';
+
+    filtered.slice().reverse().forEach(p => {
+        const acct = DEMO_ACCOUNTS.find(a => a.id === p.accountId) || { name: '未知账号', platform: '-' };
+        const isToday = p.date === '2026.07.25';
+        const cls = p.status === 'posted' ? 'posted' : (p.status === 'idea' ? 'idea' : '');
+        const statusText = { pending: '待发布', posted: '已发布', idea: '选题' }[p.status];
+        const div = document.createElement('div');
+        div.className = 'post-item ' + cls;
+        div.innerHTML = `
+            <div class="post-header">
+                <div class="post-title">${p.title}</div>
+                <span class="post-status ${p.status}">${statusText}</span>
+            </div>
+            <div class="post-meta">
+                <span>${acct.platform} · ${acct.name}</span>
+                <span>${p.type}</span>
+                <span style="color:${p.status==='pending'&&isToday?'var(--orange)':'var(--text-mute)'}">${p.date}${isToday?' · 今天':''}</span>
+            </div>
+            ${p.notes ? `<div style="font-size:11px;color:var(--text-dim);margin-top:4px">${p.notes}</div>` : ''}
+        `;
+        list.appendChild(div);
+    });
+}
+
+function renderTodayPublish() {
+    const list = document.getElementById('todayPublishList');
+    if (!list) return;
+    const today = '2026.07.25';
+    const todayPosts = DEMO_POSTS.filter(p => p.date === today);
+    const done = todayPosts.filter(p => p.status === 'posted').length;
+    document.getElementById('todayPublishCount').textContent = `${done}/${Math.max(3, todayPosts.length)}`;
+
+    if (todayPosts.length === 0) {
+        list.innerHTML = '<div class="empty">今天没有排期</div>';
+        return;
+    }
+    list.innerHTML = todayPosts.map(p => {
+        const acct = DEMO_ACCOUNTS.find(a => a.id === p.accountId) || { name: '未知' };
+        const isDone = p.status === 'posted';
+        return `
+            <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:8px;margin-bottom:8px;border-left:3px solid ${isDone?'var(--green)':'var(--orange)'}">
+                <div style="font-size:20px">${isDone?'✅':'⏰'}</div>
+                <div style="flex:1">
+                    <div style="font-size:13px;font-weight:600;${isDone?'text-decoration:line-through;opacity:0.6':''}">${p.title}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${acct.platform} · ${p.type}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderHeatmap() {
+    const container = document.getElementById('publishHeatmap');
+    if (!container) return;
+    const today = new Date();
+    const labels = ['一','二','三','四','五','六','日'];
+    const dayOfWeek = today.getDay() || 7;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - dayOfWeek + 1);
+    container.innerHTML = '';
+    const fakeCounts = [2, 1, 3, 0, 2, 1, 0];
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        const isToday = d.toDateString() === today.toDateString();
+        const cell = document.createElement('div');
+        cell.className = 'heat-cell ' + (isToday ? 'today' : '');
+        cell.innerHTML = `<div class="heat-count">${fakeCounts[i]}</div><div style="font-size:9px;color:var(--text-mute);margin-top:2px">${labels[i]}</div>`;
+        container.appendChild(cell);
+    }
+}
+
+function renderTemplates() {
+    const container = document.getElementById('contentTemplates');
+    if (!container) return;
+    container.innerHTML = contentTemplates.map(t => `
+        <div class="template-card">
+            <div class="template-title">${t.title} <span style="font-size:9px;color:var(--orange);background:rgba(255,107,26,0.1);padding:1px 4px;border-radius:3px">${t.tag}</span></div>
+            <div class="template-desc">${t.desc}</div>
+        </div>
+    `).join('');
+}
+
+function renderContentBadge() {
+    const badge = document.getElementById('contentBadge');
+    if (badge) badge.textContent = '2';
+}
+
+function renderContentMatrix() {
+    renderAccounts();
+    renderPosts();
+    renderTodayPublish();
+    renderHeatmap();
+    renderTemplates();
+    renderContentBadge();
+    renderMonetizationMap();
+}
+
+// ========== 变现地图 ==========
+const monetizationMap = [
+    { icon: '🛠', name: 'AI定制开发', desc: '为企业/个人定制AI应用/系统/工具', price: '1w-20w+', color: '#FF6B1A' },
+    { icon: '📦', name: '产品售卖', desc: '自研AI工具/应用 · SaaS订阅/一次性买断', price: '199-999+/年', color: '#4D9DFF' },
+    { icon: '📚', name: '知识付费', desc: 'AI课程/训练营/资料 · 系统化知识产品', price: '99-999+', color: '#00D9A3' },
+    { icon: '🏪', name: '电商服务', desc: '报白/授权/入驻/代运营/违规处理', price: '2k-10w+', color: '#FFD93D' },
+    { icon: '📢', name: '广告合作', desc: '品牌广告/产品推广/工具课程活动推广', price: '1k-10w+', color: '#A66BFF' },
+    { icon: '🤝', name: '项目共创/投资', desc: '合伙做项目/产品 · 投资早期AI项目', price: '分成/股权', color: '#FF4757' },
+];
+
+function renderMonetizationMap() {
+    const container = document.getElementById('monetizationMap');
+    if (!container) return;
+    container.innerHTML = monetizationMap.map(m => `
+        <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:8px;border-left:3px solid ${m.color};display:flex;align-items:center;gap:10px">
+            <div style="font-size:24px;width:36px;text-align:center">${m.icon}</div>
+            <div style="flex:1">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+                    <div style="font-size:13px;font-weight:600">${m.name}</div>
+                    <div style="font-size:11px;color:${m.color};font-weight:600">${m.price}</div>
+                </div>
+                <div style="font-size:10px;color:var(--text-mute)">${m.desc}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ========== 报价计算器 ==========
+let quoteLevel = 'mid';
+function updateQuote() {
+    const sel = document.getElementById('quoteType').value;
+    const [type, min, max] = sel.split('|');
+    const minN = parseInt(min), maxN = parseInt(max);
+    let price;
+    if (quoteLevel === 'low') price = Math.round(minN + (maxN - minN) * 0.2);
+    else if (quoteLevel === 'mid') price = Math.round(minN + (maxN - minN) * 0.5);
+    else price = Math.round(minN + (maxN - minN) * 0.85);
+    document.getElementById('quotePrice').textContent = '¥' + price.toLocaleString();
+    document.getElementById('quoteRange').textContent = `区间: ¥${minN.toLocaleString()} - ¥${maxN.toLocaleString()}`;
+}
+function setQuoteLevel(level, el) {
+    quoteLevel = level;
+    document.querySelectorAll('.quote-btn').forEach(b => {
+        b.style.background = 'var(--bg)';
+        b.style.border = '1px solid var(--border)';
+        b.style.color = 'var(--text)';
+    });
+    el.style.background = 'var(--orange)';
+    el.style.border = '1px solid var(--orange)';
+    el.style.color = '#fff';
+    updateQuote();
+}
+
+// ========== 初始化 ==========
+renderRings();
+renderWeek();
+renderTasks();
+renderHabits();
+renderFinance();
+renderCrm();
+renderDeliveryBoard();
+renderRepurchaseEngine();
+renderStudies();
+renderReviews();
+renderChannel();
+renderBizLines();
+renderChannelGoals();
+renderBizOverview();
+renderServices();
+renderServicePage();
+renderTodayFocus();
+renderDailyReport();
+renderWarRoom();
+updateQuote();
+renderContentMatrix();
+</script>
+
+</body>
+</html>
