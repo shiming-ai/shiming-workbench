@@ -1450,6 +1450,12 @@ body {
 
 <script>
 // ========== 工具函数 ==========
+const DEFAULT_INCOMES = [
+    { amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' }
+];
+const DEFAULT_EXPENSES = [
+    { amount: 500, source: '报白教育类目成本', time: '2026.07.25 02:20' }
+];
 function load(k, d) { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }
 function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 function toast(msg) {
@@ -1510,8 +1516,8 @@ document.getElementById('dayCount').textContent = Math.max(1, dayDiff);
 
 // ========== 进度环 ==========
 function renderRings() {
-    const incomes = load('incomes', []);
-    const expenses = load('expenses', []);
+    const incomes = load('incomes', DEFAULT_INCOMES);
+    const expenses = load('expenses', DEFAULT_EXPENSES);
     const mp = monthPrefix();
     let mIncome = 0, mExpense = 0;
     incomes.forEach(i => { if (i.time.startsWith(mp)) mIncome += i.amount; });
@@ -1551,7 +1557,7 @@ function renderRings() {
 // ========== 周历 ==========
 function renderWeek() {
     const cal = document.getElementById('weekCalendar');
-    const incomes = load('incomes', []);
+    const incomes = load('incomes', DEFAULT_INCOMES);
     const today = new Date();
     const dayOfWeek = today.getDay() || 7; // 周日=7
     const monday = new Date(today);
@@ -1716,12 +1722,8 @@ function renderHabits() {
 
 // ========== 财务 ==========
 // 注意：默认数据作为新设备/清缓存时的恢复基准。localStorage已有数据时不覆盖。
-let incomes = load('incomes', [
-    { amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' }
-]);
-let expenses = load('expenses', [
-    { amount: 500, source: '报白教育类目成本', time: '2026.07.25 02:20' }
-]);
+let incomes = load('incomes', DEFAULT_INCOMES);
+let expenses = load('expenses', DEFAULT_EXPENSES);
 
 function renderFinance() {
     // 收入列表
@@ -2037,7 +2039,7 @@ async function addRefundPayment(i) {
     save('paidDebt', paidDebt);
 
     // 联动：记一笔支出
-    const expenses = load('expenses', []);
+    const expenses = load('expenses', DEFAULT_EXPENSES);
     expenses.push({ amount: amt, source: `退款还款·${refundList[i].name}`, time: nowStr() });
     save('expenses', expenses);
 
@@ -2112,7 +2114,7 @@ function cycleStatus(i) {
 
     // 成交时自动记收入到财务
     if (newStatus === 'deal' && oldStatus !== 'deal' && crmList[i].amount > 0) {
-        const incomes = load('incomes', []);
+        const incomes = load('incomes', DEFAULT_INCOMES);
         const source = `${crmList[i].business || '客户'}·${crmList[i].name}`;
         incomes.push({ amount: crmList[i].amount, source, time: nowStr() });
         save('incomes', incomes);
@@ -2378,7 +2380,7 @@ const bizLineConfig = [
         desc: '灵光/妙搭接单 · 客单2000-15000',
         monthGoal: 80000,
         getRevenue: () => {
-            const incomes = load('incomes', []);
+            const incomes = load('incomes', DEFAULT_INCOMES);
             return incomes.filter(i => {
                 const s = i.source || '';
                 return s.includes('AI开发') || s.includes('AI定制开发') || s.includes('开发');
@@ -2399,7 +2401,7 @@ const bizLineConfig = [
         desc: '5产品矩阵 · 客单50-500',
         monthGoal: 15000,
         getRevenue: () => {
-            const incomes = load('incomes', []);
+            const incomes = load('incomes', DEFAULT_INCOMES);
             return incomes.filter(i => {
                 const s = i.source || '';
                 return s.includes('闲鱼');
@@ -2420,7 +2422,7 @@ const bizLineConfig = [
         desc: '快手二创维持 · 探索原创',
         monthGoal: 5000,
         getRevenue: () => {
-            const incomes = load('incomes', []);
+            const incomes = load('incomes', DEFAULT_INCOMES);
             return incomes.filter(i => {
                 const s = i.source || '';
                 return s.includes('漫剧');
@@ -2441,7 +2443,7 @@ const bizLineConfig = [
         desc: '知乎+公众号 · 卖过程+陪跑',
         monthGoal: 100000,
         getRevenue: () => {
-            const incomes = load('incomes', []);
+            const incomes = load('incomes', DEFAULT_INCOMES);
             return incomes.filter(i => {
                 const s = i.source || '';
                 return s.includes('知识付费') || s.includes('广告合作') || s.includes('产品售卖');
@@ -2463,7 +2465,7 @@ const bizLineConfig = [
         desc: '全平台 · 报白/解封/申诉/转让/黄V/团购',
         monthGoal: 20000,
         getRevenue: () => {
-            const incomes = load('incomes', []);
+            const incomes = load('incomes', DEFAULT_INCOMES);
             return incomes.filter(i => {
                 const s = i.source || '';
                 return s.includes('报白') || s.includes('服务商');
@@ -2680,7 +2682,7 @@ function renderWeekPlan() {
     const plan = weekPlanTemplates[(weekNum - 1) % weekPlanTemplates.length];
 
     // 本周已实现收入
-    const incomes = load('incomes', []);
+    const incomes = load('incomes', DEFAULT_INCOMES);
     const now = new Date();
     const monday = new Date(now);
     monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
@@ -2832,10 +2834,7 @@ function renderDailyReport() {
     const todayTasks = dailyTaskTemplates[day] || dailyTaskTemplates[1];
 
     // 今日收入（从localStorage读，如果没有用预设默认值）
-    const defaultIncomes = [
-        { amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' }
-    ];
-    const incomes = load('incomes', defaultIncomes);
+    const incomes = load('incomes', DEFAULT_INCOMES);
     const today = todayStr();
     const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
 
@@ -2916,7 +2915,7 @@ function toggleReportTask(i) {
 function renderTodayFocus() {
     const tasks = load(getTodayKey(), []);
     const undone = tasks.filter(t => !t.done);
-    const incomes = load('incomes', []);
+    const incomes = load('incomes', DEFAULT_INCOMES);
     const today = todayStr();
     const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
     const channelData = load('channelData', {});
@@ -3040,14 +3039,14 @@ function restorePresetData() {
 
     // 恢复今日入账
     const today = todayStr();
-    const existingIncomes = load('incomes', []);
+    const existingIncomes = load('incomes', DEFAULT_INCOMES);
     const hasTodayIncome = existingIncomes.some(i => i.time.startsWith(today) && i.source.includes('报白'));
     if (!hasTodayIncome) {
         existingIncomes.push({ amount: 850, source: '抖音+视频号报白教育类目', time: '2026.07.25 02:20' });
         save('incomes', existingIncomes);
     }
 
-    const existingExpenses = load('expenses', []);
+    const existingExpenses = load('expenses', DEFAULT_EXPENSES);
     const hasTodayExpense = existingExpenses.some(e => e.time.startsWith(today) && e.source.includes('报白'));
     if (!hasTodayExpense) {
         existingExpenses.push({ amount: 500, source: '报白教育类目成本', time: '2026.07.25 02:20' });
@@ -3222,7 +3221,7 @@ function renderAccounts() {
     if (accounts.length === 0) list.innerHTML = '<div class="empty">还没有账号，先添加主账号</div>';
 
     const today = todayStr();
-    const allIncomes = load('incomes', []);
+    const allIncomes = load('incomes', DEFAULT_INCOMES);
 
     accounts.forEach((a, i) => {
         // 计算该账号今日变现（按账号名/角色匹配收入来源）
@@ -3290,7 +3289,7 @@ async function addAccountIncome(accountIdx) {
                    a.role === '实验记录号' ? `${a.name}·AI开发` :
                    `${a.name}·变现`;
 
-    const incomes = load('incomes', []);
+    const incomes = load('incomes', DEFAULT_INCOMES);
     incomes.push({ amount: parseFloat(amount), source, time: nowStr() });
     save('incomes', incomes);
     renderAccounts();
