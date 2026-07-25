@@ -350,7 +350,11 @@ body {
     gap: 6px;
     margin-bottom: 12px;
     overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
+.channel-tabs::-webkit-scrollbar { display: none; }
 .ch-tab {
     padding: 6px 14px;
     border-radius: 8px;
@@ -1219,11 +1223,16 @@ body {
         <div class="sec-header">
             <div class="sec-title"><span class="dot"></span>渠道数据</div>
         </div>
-        <div class="channel-tabs">
+        <div class="channel-tabs" style="overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap">
             <div class="ch-tab active" onclick="switchChannel('xianyu', this)">闲鱼</div>
             <div class="ch-tab" onclick="switchChannel('zhihu', this)">知乎</div>
             <div class="ch-tab" onclick="switchChannel('xhs', this)">小红书</div>
             <div class="ch-tab" onclick="switchChannel('douyin', this)">抖音</div>
+            <div class="ch-tab" onclick="switchChannel('kuaishou', this)">快手</div>
+            <div class="ch-tab" onclick="switchChannel('shipinhao', this)">视频号</div>
+            <div class="ch-tab" onclick="switchChannel('bilibili', this)">B站</div>
+            <div class="ch-tab" onclick="switchChannel('gongzhonghao', this)">公众号</div>
+            <div class="ch-tab" onclick="switchChannel('siyu', this)">私域</div>
         </div>
         <div class="channel-stats" id="channelStats"></div>
         <div class="quick-actions" id="quickActions"></div>
@@ -2189,6 +2198,14 @@ let channelData = load('channelData', {
     douyin: { posts: 0, followers: 19000, views: 0, consult: 0 },
     // 快手（漫剧主阵地）
     kuaishou: { posts: 0, followers: 11000, views: 0, revenue: 680 },
+    // 视频号
+    shipinhao: { posts: 0, followers: 0, likes: 0, consult: 0 },
+    // B站
+    bilibili: { posts: 0, followers: 0, views: 0, consult: 0 },
+    // 公众号
+    gongzhonghao: { posts: 0, followers: 0, reads: 0, consult: 0 },
+    // 私域（微信/社群）
+    siyu: { contacts: 0, groups: 0, consult: 0, deals: 0 },
 });
 let curChannel = 'xianyu';
 
@@ -2242,6 +2259,66 @@ const channelConfig = {
             { label: '💬 +1咨询', type: 'dy_consult' },
         ]
     },
+    kuaishou: {
+        name: '快手', icon: '⚡',
+        stats: () => [
+            { num: channelData.kuaishou.followers, lbl: '粉丝数' },
+            { num: channelData.kuaishou.posts, lbl: '已发视频' },
+            { num: channelData.kuaishou.revenue, lbl: '漫剧收入' },
+        ],
+        actions: [
+            { label: '⚡ +1视频', type: 'ks_post' },
+            { label: '💬 +1咨询', type: 'ks_consult' },
+        ]
+    },
+    shipinhao: {
+        name: '视频号', icon: '📺',
+        stats: () => [
+            { num: channelData.shipinhao.followers, lbl: '粉丝数' },
+            { num: channelData.shipinhao.posts, lbl: '已发视频' },
+            { num: channelData.shipinhao.likes, lbl: '点赞数' },
+        ],
+        actions: [
+            { label: '📺 +1视频', type: 'sph_post' },
+            { label: '💬 +1咨询', type: 'sph_consult' },
+        ]
+    },
+    bilibili: {
+        name: 'B站', icon: '🎯',
+        stats: () => [
+            { num: channelData.bilibili.followers, lbl: '粉丝数' },
+            { num: channelData.bilibili.posts, lbl: '已发视频' },
+            { num: channelData.bilibili.views, lbl: '播放量' },
+        ],
+        actions: [
+            { label: '🎯 +1视频', type: 'bili_post' },
+            { label: '💬 +1咨询', type: 'bili_consult' },
+        ]
+    },
+    gongzhonghao: {
+        name: '公众号', icon: '📖',
+        stats: () => [
+            { num: channelData.gongzhonghao.followers, lbl: '关注数' },
+            { num: channelData.gongzhonghao.posts, lbl: '已发文章' },
+            { num: channelData.gongzhonghao.reads, lbl: '阅读量' },
+        ],
+        actions: [
+            { label: '📖 +1文章', type: 'gzh_post' },
+            { label: '💬 +1咨询', type: 'gzh_consult' },
+        ]
+    },
+    siyu: {
+        name: '私域', icon: '🔐',
+        stats: () => [
+            { num: channelData.siyu.contacts, lbl: '好友数' },
+            { num: channelData.siyu.groups, lbl: '社群数' },
+            { num: channelData.siyu.deals, lbl: '成单数' },
+        ],
+        actions: [
+            { label: '💬 +1咨询', type: 'sy_consult' },
+            { label: '✅ +1成单', type: 'sy_deal' },
+        ]
+    },
 };
 
 function renderChannel() {
@@ -2276,6 +2353,16 @@ function quickAction(type) {
         case 'xhs_consult': d.xhs.consult++; toast('小红书咨询+1'); break;
         case 'dy_post': d.douyin.posts++; toast('抖音更新+1'); break;
         case 'dy_consult': d.douyin.consult++; toast('抖音咨询+1'); break;
+        case 'ks_post': d.kuaishou.posts++; toast('快手视频+1'); break;
+        case 'ks_consult': d.kuaishou.consult = (d.kuaishou.consult||0)+1; toast('快手咨询+1'); break;
+        case 'sph_post': d.shipinhao.posts++; toast('视频号更新+1'); break;
+        case 'sph_consult': d.shipinhao.consult++; toast('视频号咨询+1'); break;
+        case 'bili_post': d.bilibili.posts++; toast('B站视频+1'); break;
+        case 'bili_consult': d.bilibili.consult++; toast('B站咨询+1'); break;
+        case 'gzh_post': d.gongzhonghao.posts++; toast('公众号文章+1'); break;
+        case 'gzh_consult': d.gongzhonghao.consult++; toast('公众号咨询+1'); break;
+        case 'sy_consult': d.siyu.consult++; toast('私域咨询+1'); break;
+        case 'sy_deal': d.siyu.deals++; toast('私域成单+1 🎉'); break;
     }
     save('channelData', channelData);
     renderChannel();
