@@ -1697,6 +1697,47 @@ body {
 
 </div>
 
+<!-- ===== 页面: 企业官网 ===== -->
+<div id="page-website" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">🏢</span> 企业官网</div>
+            <div class="sec-more" onclick="window.open('https://shiming-ai.github.io/shiming-workbench/home.html','_blank')" style="cursor:pointer;color:var(--orange)">新窗口打开 ›</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
+            Crazy Friday 疯狂星期五 · AI一人公司母系统<br>
+            可直接发给客户、投资人或合作伙伴查看
+        </div>
+
+        <!-- 快捷链接 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+            <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" target="_blank" style="text-decoration:none;color:inherit">
+                <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+                    <div style="font-size:24px;margin-bottom:4px">🚀</div>
+                    <div style="font-size:12px;font-weight:600;color:var(--orange)">落地页</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">服务详情+定价</div>
+                </div>
+            </a>
+            <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" target="_blank" style="text-decoration:none;color:inherit">
+                <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+                    <div style="font-size:24px;margin-bottom:4px">📱</div>
+                    <div style="font-size:12px;font-weight:600;color:var(--green)">展示版</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">在线体验工作台</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- 内嵌官网 -->
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <iframe src="https://shiming-ai.github.io/shiming-workbench/home.html" style="width:100%;height:600px;border:none;display:block" loading="lazy" id="websiteFrame"></iframe>
+        </div>
+
+        <div style="margin-top:10px;font-size:10px;color:var(--text-mute);text-align:center">
+            点击右上角"新窗口打开"可获得更好浏览体验
+        </div>
+    </div>
+</div>
+
 <!-- ===== 页面6: 更多工具 ===== -->
 <div id="page-more" class="hidden">
 
@@ -1847,6 +1888,10 @@ body {
         <div class="sidebar-item" onclick="switchPage('service', this)" style="border-left:2px solid var(--green)">
             <span class="sidebar-item-icon">🚀</span> AI定制服务
             <span style="font-size:8px;padding:1px 5px;background:var(--green);color:#fff;border-radius:4px;margin-left:auto">赚钱</span>
+        </div>
+        <div class="sidebar-item" onclick="switchPage('website', this)" style="border-left:2px solid var(--orange)">
+            <span class="sidebar-item-icon">🏢</span> 企业官网
+            <span style="font-size:8px;padding:1px 5px;background:var(--orange);color:#fff;border-radius:4px;margin-left:auto">对外</span>
         </div>
         <div class="sidebar-item" onclick="switchPage('more', this)">
             <span class="sidebar-item-icon">⚙️</span> 更多工具
