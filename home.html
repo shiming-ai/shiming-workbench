@@ -1374,69 +1374,128 @@ a:active { color: var(--orange); }
     <div class="container">
         <div class="section-eyebrow">INCUBATOR</div>
         <div class="section-title">项目孵化中心</div>
-        <div class="section-sub">从0到1，把好想法变成好产品、好生意</div>
+        <div class="section-sub">两种方式，帮你把好想法变成好生意</div>
 
-        <div class="incubator-section">
-            <div class="incubator-badge">🔥 2026 招募中</div>
-            <div class="incubator-title">寻找下一个AI独角兽</div>
+        <!-- 模式一：项目投资 -->
+        <div class="incubator-section" style="border-color: rgba(0,217,163,0.3); background: linear-gradient(135deg, rgba(0,217,163,0.06), rgba(0,217,163,0.02));">
+            <div class="incubator-badge" style="background: linear-gradient(135deg, var(--green), #00F5B8);">💰 模式一</div>
+            <div class="incubator-title">项目投资 · 你来做，我出钱</div>
             <div class="incubator-desc">
-                为AI创业者提供从创意到落地的全链路孵化服务，整合AI工具、专业方法论、资源网络与资金支持，让每一个创新想法都有机会成功。孵化成功的新项目将成为Crazy Friday母系统的新业务线。
+                你有成熟的AI项目和团队，需要资金支持。我们出钱投资，占股7%-25%，不干预日常运营。你继续做你的老板，我们做你的股东。
             </div>
             <div class="incubator-invest">
                 <div class="invest-item">
-                    <div class="invest-num">1-200万</div>
-                    <div class="invest-lbl">项目共创资金</div>
+                    <div class="invest-num" style="color:var(--green)">10-200万</div>
+                    <div class="invest-lbl">投资金额</div>
                 </div>
                 <div class="invest-item">
-                    <div class="invest-num">7-25%</div>
+                    <div class="invest-num" style="color:var(--green)">7-25%</div>
                     <div class="invest-lbl">股权比例</div>
                 </div>
                 <div class="invest-item">
-                    <div class="invest-num">全程</div>
-                    <div class="invest-lbl">陪跑支持</div>
+                    <div class="invest-num" style="color:var(--green)">不干预</div>
+                    <div class="invest-lbl">日常运营</div>
                 </div>
             </div>
+            <div style="padding: 12px; background: var(--bg); border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--green); font-weight: 700; margin-bottom: 6px;">✓ 适合谁</div>
+                <div style="font-size: 12px; color: var(--text-dim); line-height: 1.7;">
+                    · 已有MVP或上线产品的AI项目<br>
+                    · 有完整团队或独立开发者<br>
+                    · 需要资金扩大规模<br>
+                    · 希望获得资源但保持独立运营
+                </div>
+            </div>
+            <a href="#contact" class="btn-secondary" style="border-color: var(--green); color: var(--green);">申请投资 →</a>
+        </div>
 
-            <div class="incubator-flow">
+        <!-- 模式二：项目共创 -->
+        <div class="incubator-section" style="border-color: rgba(168,107,255,0.3); background: linear-gradient(135deg, rgba(168,107,255,0.06), rgba(77,157,255,0.02));">
+            <div class="incubator-badge" style="background: linear-gradient(135deg, var(--purple), var(--blue));">🤝 模式二</div>
+            <div class="incubator-title">项目共创 · 一起干，共担共享</div>
+            <div class="incubator-desc">
+                你有好想法但缺资源缺方法，我们出钱+出工具+出方法论+出资源，从0到1一起干。风险共担，收益共享，项目成功后纳入Crazy Friday生态。
+            </div>
+            <div class="incubator-invest">
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--purple)">1-50万</div>
+                    <div class="invest-lbl">共创资金</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--purple)">出钱+出资源</div>
+                    <div class="invest-lbl">我们投入</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--purple)">共担共享</div>
+                    <div class="invest-lbl">合作模式</div>
+                </div>
+            </div>
+            <div style="padding: 12px; background: var(--bg); border-radius: 10px; margin-bottom: 12px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--purple); font-weight: 700; margin-bottom: 6px;">✓ 适合谁</div>
+                <div style="font-size: 12px; color: var(--text-dim); line-height: 1.7;">
+                    · 有AI创业想法但缺资金缺资源<br>
+                    · 有执行力但需要方法论指导<br>
+                    · 想借助Crazy Friday生态启动<br>
+                    · 愿意合作共赢，不追求单干
+                </div>
+            </div>
+            <div style="padding: 12px; background: var(--bg); border-radius: 10px; margin-bottom: 12px; border: 1px dashed rgba(168,107,255,0.3);">
+                <div style="font-size: 11px; color: var(--purple); font-weight: 700; margin-bottom: 8px;">我们提供的支持</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; color: var(--text-dim);">
+                    <div>💰 启动资金</div>
+                    <div>🛠 AI工具支持</div>
+                    <div>📋 OPC方法论</div>
+                    <div>🤝 资源对接</div>
+                    <div>👤 专家指导</div>
+                    <div>📊 流量导入</div>
+                </div>
+            </div>
+            <a href="#contact" class="btn-secondary" style="border-color: var(--purple); color: var(--purple);">申请共创 →</a>
+        </div>
+
+        <!-- 共创流程 -->
+        <div class="chain-section" style="margin-top: 16px;">
+            <div class="chain-title">共创流程</div>
+            <div class="chain-flow">
                 <div class="flow-item">
-                    <div class="flow-num">01</div>
-                    <div class="flow-name">项目征集</div>
-                    <div class="flow-sub">创意收集</div>
+                    <div class="flow-num" style="background: var(--purple);">01</div>
+                    <div class="flow-name">提交想法</div>
+                    <div class="flow-sub">项目简介</div>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-item">
-                    <div class="flow-num">02</div>
+                    <div class="flow-num" style="background: var(--purple);">02</div>
+                    <div class="flow-name">深度沟通</div>
+                    <div class="flow-sub">面谈评估</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <div class="flow-num" style="background: var(--purple);">03</div>
                     <div class="flow-name">MVP验证</div>
-                    <div class="flow-sub">用户调研</div>
+                    <div class="flow-sub">快速验证</div>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-item">
-                    <div class="flow-num">03</div>
-                    <div class="flow-name">Demo制作</div>
-                    <div class="flow-sub">产品原型</div>
+                    <div class="flow-num" style="background: var(--purple);">04</div>
+                    <div class="flow-name">签署协议</div>
+                    <div class="flow-sub">确认合作</div>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-item">
-                    <div class="flow-num">04</div>
-                    <div class="flow-name">产品测试</div>
-                    <div class="flow-sub">小范围测试</div>
+                    <div class="flow-num" style="background: var(--purple);">05</div>
+                    <div class="flow-name">共建运营</div>
+                    <div class="flow-sub">一起干</div>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-item">
-                    <div class="flow-num">05</div>
-                    <div class="flow-name">商业验证</div>
-                    <div class="flow-sub">市场验证</div>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-item">
-                    <div class="flow-num">06</div>
-                    <div class="flow-name">上线推广</div>
-                    <div class="flow-sub">增长推广</div>
+                    <div class="flow-num" style="background: var(--purple);">06</div>
+                    <div class="flow-name">纳入生态</div>
+                    <div class="flow-sub">持续放大</div>
                 </div>
             </div>
         </div>
 
-        <div class="section-title" style="font-size: 18px; margin-bottom: 14px;">重点孵化方向</div>
+        <div class="section-title" style="font-size: 18px; margin-bottom: 14px; margin-top: 20px;">重点孵化方向</div>
         <div class="direction-grid">
             <div class="direction-item">
                 <div class="direction-icon">🤖</div>
