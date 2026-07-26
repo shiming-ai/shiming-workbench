@@ -17,6 +17,7 @@
 :root {
     --bg: #0a0b0f;
     --card: #13151c;
+    --card2: #1a1d27;
     --card-hover: #1a1d27;
     --border: #1f2230;
     --text: #e4e6ed;
@@ -1215,6 +1216,15 @@ body {
         <div id="habitsGrid"></div>
     </div>
 
+    <!-- 变现地图 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">💰</span> 变现地图</div>
+            <div class="sec-more">6条收入路径</div>
+        </div>
+        <div id="monetizationMap"></div>
+    </div>
+
 </div>
 
 <!-- ===== 页面2: 财务 ===== -->
@@ -1530,8 +1540,7 @@ body {
 <div id="postModal" class="hidden" onclick="closePostModal(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center">
     <div onclick="event.stopPropagation()" style="background:var(--card);width:100%;max-width:420px;border-radius:20px 20px 0 0;padding:20px 16px 30px;border-top:1px solid var(--border)">
         <div style="text-align:center;font-size:14px;font-weight:600;margin-bottom:16px">📝 新建内容排期</div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-            <input type="text" id="postTitle" placeholder="标题/选题" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
+        <div style="display:flex;flex-direction:column;gap:10px">            <input type="text" id="postTitle" placeholder="标题/选题" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
             <select id="postAccount" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none"></select>
             <select id="postType" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
                 <option value="图文笔记">图文笔记</option>
@@ -1547,15 +1556,6 @@ body {
             <button onclick="closePostModal()" style="flex:1;padding:12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:10px;font-size:13px;cursor:pointer">取消</button>
         </div>
     </div>
-</div>
-
-<!-- 变现地图 -->
-<div class="section">
-    <div class="sec-header">
-        <div class="sec-title"><span class="emoji">💰</span> 变现地图</div>
-        <div class="sec-more">6条收入路径</div>
-    </div>
-    <div id="monetizationMap"></div>
 </div>
 
 <!-- ===== 页面5: 渠道+规划 ===== -->
@@ -1982,6 +1982,8 @@ function monthPrefix() {
 const START_DATE = new Date('2026-07-19');
 const dayDiff = Math.floor((new Date() - START_DATE) / 86400000) + 1;
 document.getElementById('dayCount').textContent = Math.max(1, dayDiff);
+document.getElementById('heroDay').textContent = Math.max(1, dayDiff);
+document.getElementById('navDayCount').textContent = 'Day ' + Math.max(1, dayDiff);
 
 // ========== 进度环 ==========
 function renderRings() {
@@ -3376,7 +3378,7 @@ function renderDeliveryBoard() {
         return daysPassed > totalStageDays + 2; // 超期2天
     });
 
-    document.getElementById('deliveryStats').textContent = `${deliveries.length}个进行中${overdue.length > 0 ? ' · 🔴${overdue.length}个超期' : ''}`;
+    document.getElementById('deliveryStats').textContent = `${deliveries.length}个进行中${overdue.length > 0 ? ` · 🔴${overdue.length}个超期` : ''}`;
 
     const el = document.getElementById('deliveryBoard');
     if (deliveries.length === 0) {
@@ -3415,7 +3417,7 @@ function renderDeliveryBoard() {
                     `<button onclick="advanceDelivery(${crmList.indexOf(d)})" style="flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">→ 进入「${deliveryStages[stage+1]}」</button>` :
                     '<div style="flex:1;text-align:center;padding:8px;color:var(--green);font-size:12px">✅ 已完成</div>'
                 }
-                <button onclick="window.location.hash='page-crm'" style="padding:8px 12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">详情</button>
+                <button onclick="switchPage('crm', document.querySelectorAll('.sidebar-item')[2])" style="padding:8px 12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">详情</button>
             </div>
         </div>`;
     }).join('');
@@ -4166,7 +4168,7 @@ function quickMenuAction(type) {
             setTimeout(() => document.getElementById('expenseAmount').focus(), 300);
             break;
         case 'inspiration':
-            switchPage('more', items[5]);
+            switchPage('more', items[8]);
             setTimeout(() => document.getElementById('inspirationInput').focus(), 300);
             break;
         case 'task':
@@ -4181,7 +4183,7 @@ function quickMenuAction(type) {
             toast('闲鱼咨询+1');
             break;
         case 'study':
-            switchPage('study', items[4]);
+            switchPage('study', items[5]);
             setTimeout(() => document.getElementById('studyInput').focus(), 300);
             break;
     }
