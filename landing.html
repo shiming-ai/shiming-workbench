@@ -1250,11 +1250,14 @@ function submitOrder() {
 需求：${needs || '待沟通'}
 ━━━━━━━━━━━━━
 
-请复制以上信息，加微信发送给我确认 ✅`;
+请复制以上信息，加微信发送给我确认 ✅
+
+微信①：Yshim16506
+微信②：R26184352Y`;
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(orderText).then(() => {
-            toast('✅ 订单已复制到剪贴板，请加微信发给我');
+            toast('✅ 订单已复制！微信号也在里面，加我即可');
             setTimeout(() => {
                 document.getElementById('oName').value = '';
                 document.getElementById('oContact').value = '';
