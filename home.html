@@ -902,29 +902,56 @@ a:active { color: var(--orange); }
     <div class="container">
         <div class="section-eyebrow">INCUBATOR</div>
         <div class="section-title">项目孵化中心</div>
-        <div class="section-sub">从0到1，把好想法变成好产品、好生意</div>
+        <div class="section-sub">两种合作模式，总有一种适合你</div>
 
-        <div class="incubator-section">
-            <div class="incubator-badge">🔥 2026 招募中</div>
-            <div class="incubator-title">寻找下一个AI独角兽</div>
+        <!-- 模式A：项目投资 -->
+        <div class="incubator-section" style="border-left: 3px solid var(--blue);">
+            <div class="incubator-badge" style="background:rgba(77,157,255,0.15);color:var(--blue)">💎 模式A</div>
+            <div class="incubator-title">项目投资 · 我们出钱，你来做</div>
             <div class="incubator-desc">
-                为AI创业者提供从创意到落地的全链路孵化服务，整合AI工具、专业方法论、资源网络与资金支持，让每一个创新想法都有机会成功。孵化成功的新项目将成为Crazy Friday母系统的新业务线。
+                你有好的项目和团队，我们出资金，不干预运营。纯财务投资，尊重创业者自主权，助力项目快速成长。
             </div>
             <div class="incubator-invest">
                 <div class="invest-item">
-                    <div class="invest-num">1-200万</div>
-                    <div class="invest-lbl">项目共创资金</div>
+                    <div class="invest-num" style="color:var(--blue)">1-200万</div>
+                    <div class="invest-lbl">投资额度</div>
                 </div>
                 <div class="invest-item">
-                    <div class="invest-num">7-25%</div>
+                    <div class="invest-num" style="color:var(--blue)">5-15%</div>
                     <div class="invest-lbl">股权比例</div>
                 </div>
                 <div class="invest-item">
-                    <div class="invest-num">全程</div>
+                    <div class="invest-num" style="color:var(--blue)">不干预</div>
+                    <div class="invest-lbl">运营自主</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模式B：项目共创 -->
+        <div class="incubator-section" style="border-left: 3px solid var(--orange); margin-top: 14px;">
+            <div class="incubator-badge">🔥 模式B</div>
+            <div class="incubator-title">项目共创 · 一起干</div>
+            <div class="incubator-desc">
+                <strong style="color:var(--orange)">方向1：</strong>你出想法，我们出钱+技术+资源，联合打造<br>
+                <strong style="color:var(--green)">方向2：</strong>我们出项目，你来执行，利润分成
+            </div>
+            <div class="incubator-invest">
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--orange)">1-200万</div>
+                    <div class="invest-lbl">共创资金</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--orange)">7-25%</div>
+                    <div class="invest-lbl">股权比例</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--orange)">全程</div>
                     <div class="invest-lbl">陪跑支持</div>
                 </div>
             </div>
+        </div>
 
+        <div class="section-title" style="font-size: 18px; margin: 28px 0 14px;">孵化全流程</div>
             <div class="incubator-flow">
                 <div class="flow-item">
                     <div class="flow-num">01</div>
@@ -962,9 +989,8 @@ a:active { color: var(--orange); }
                     <div class="flow-sub">增长推广</div>
                 </div>
             </div>
-        </div>
 
-        <div class="section-title" style="font-size: 18px; margin-bottom: 14px;">重点孵化方向</div>
+        <div class="section-title" style="font-size: 18px; margin: 28px 0 14px;">重点孵化方向</div>
         <div class="direction-grid">
             <div class="direction-item">
                 <div class="direction-icon">🤖</div>
@@ -1074,16 +1100,32 @@ a:active { color: var(--orange); }
         <div class="section-sub">整合全球领先AI工具与平台</div>
 
         <div class="eco-section">
-            <div class="eco-title">技术生态</div>
+            <div class="eco-title">AI模型</div>
             <div class="eco-grid">
                 <div class="eco-item"><div class="icon">🅾️</div>OpenAI</div>
-                <div class="eco-item"><div class="icon">Ⓜ️</div>Midjourney</div>
                 <div class="eco-item"><div class="icon">🅲️</div>Claude</div>
-                <div class="eco-item"><div class="icon">🅽️</div>Notion</div>
-                <div class="eco-item"><div class="icon">🅳️</div>Dify</div>
-                <div class="eco-item"><div class="icon">🅲️</div>Coze</div>
+                <div class="eco-item"><div class="icon">🅖</div>Gemini</div>
+                <div class="eco-item"><div class="icon">🅡</div>DeepSeek</div>
+            </div>
+        </div>
+
+        <div class="eco-section" style="margin-top: 14px;">
+            <div class="eco-title">AI创作</div>
+            <div class="eco-grid">
+                <div class="eco-item"><div class="icon">Ⓜ️</div>Midjourney</div>
                 <div class="eco-item"><div class="icon">🅁️</div>Runway</div>
+                <div class="eco-item"><div class="icon">🅓</div>Dify</div>
+                <div class="eco-item"><div class="icon">🅒</div>Coze</div>
+            </div>
+        </div>
+
+        <div class="eco-section" style="margin-top: 14px;">
+            <div class="eco-title">效率工具</div>
+            <div class="eco-grid">
+                <div class="eco-item"><div class="icon">🅽️</div>Notion</div>
                 <div class="eco-item"><div class="icon">🅵️</div>Figma</div>
+                <div class="eco-item"><div class="icon">📝</div>飞书</div>
+                <div class="eco-item"><div class="icon">💬</div>微信</div>
             </div>
         </div>
     </div>
@@ -1167,6 +1209,30 @@ a:active { color: var(--orange); }
     </div>
 </div>
 
+<!-- ========== 创始人说 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">FOUNDER</div>
+        <div class="section-title">创始人说</div>
+        <div class="section-sub">为什么我要做这件事</div>
+
+        <div class="value-card" style="border-left: 3px solid var(--orange);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🦞</div>
+                <div>
+                    <div style="font-size:16px;font-weight:800">时铭</div>
+                    <div style="font-size:11px;color:var(--text-dim)">Crazy Friday 创始人 · AI一人公司实践者</div>
+                </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-dim);line-height:1.8">
+                我做过电商、搞过内容、踩过无数坑。直到用AI把所有业务串起来，才发现一个人真的可以拥有一家公司的生产力。<br><br>
+                Crazy Friday不是课程，不是工具，是一套<strong style="color:var(--text)">真正在运营的AI商业系统</strong>。我自己每天都在用，每条业务线都在真实赚钱。<br><br>
+                如果你也在找一条<strong style="color:var(--orange)">一个人+AI就能跑通的创业路径</strong>，欢迎加入。
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ========== 未来愿景 ========== -->
 <div class="section" style="padding-top: 0;">
     <div class="container">
@@ -1241,6 +1307,15 @@ a:active { color: var(--orange); }
             </div>
             <div class="faq-item">
                 <div class="faq-q" onclick="toggleFaq(this)">
+                    AI漫剧怎么合作？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">AI漫剧是我们的自有内容业务线，支持剧本合作、角色授权、平台分发、广告植入等多种合作方式。无论你是内容创作者、品牌方还是平台方，都欢迎联系我们探讨合作模式。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
                     数据和隐私安全吗？
                     <span class="faq-icon">+</span>
                 </div>
@@ -1249,6 +1324,41 @@ a:active { color: var(--orange); }
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- ========== 快速入口 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">QUICK ACCESS</div>
+        <div class="section-title">快速入口</div>
+        <div class="section-sub">点击直接体验</div>
+
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:block;text-decoration:none;color:inherit">
+            <div class="value-card" style="margin-bottom:12px;cursor:pointer;border-left:3px solid var(--orange)">
+                <div style="display:flex;align-items:center;gap:14px">
+                    <div style="font-size:28px">🚀</div>
+                    <div style="flex:1">
+                        <div style="font-size:15px;font-weight:700">定制AI工作台</div>
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">查看服务详情、行业场景与定价方案</div>
+                    </div>
+                    <div style="font-size:18px;color:var(--text-mute)">›</div>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" style="display:block;text-decoration:none;color:inherit">
+            <div class="value-card" style="margin-bottom:12px;cursor:pointer;border-left:3px solid var(--green)">
+                <div style="display:flex;align-items:center;gap:14px">
+                    <div style="font-size:28px">📱</div>
+                    <div style="flex:1">
+                        <div style="font-size:15px;font-weight:700">工作台展示版</div>
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">在线体验AI一人公司工作台</div>
+                    </div>
+                    <div style="font-size:18px;color:var(--text-mute)">›</div>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 
@@ -1313,6 +1423,7 @@ a:active { color: var(--orange); }
 
 <!-- ========== Floating Bottom Nav ========== -->
 <nav class="float-nav" id="floatNav">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">首页</a>
     <a href="#workshop">工坊</a>
     <a href="#incubator">孵化</a>
     <a href="#about">关于</a>
