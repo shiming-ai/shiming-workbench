@@ -9,6 +9,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
 <title>AI工作台 · 展示体验版</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -1401,13 +1402,30 @@ body {
 <div class="toast" id="toast"></div>
 
 <!-- 展示版浮动横条 -->
-<div class="demo-bar">
-    <a href="landing.html#order">
-        这是展示版 · 想要一套自己的？点击定制 <span class="demo-arrow">→</span>
-    </a>
+<div class="demo-bar" style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+    <div style="text-align:left;flex:1">
+        <div style="font-size:12px;opacity:0.9">想要一套自己的？</div>
+        <div style="font-size:13px;font-weight:700">加微信定制 →</div>
+    </div>
+    <div style="display:flex;gap:6px">
+        <div onclick="copyDemoWx('Yshim16506')" style="background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">Yshim16506</div>
+        <div onclick="copyDemoWx('R26184352Y')" style="background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">R26184352Y</div>
+    </div>
 </div>
 
 <script>
+// ========== 展示版复制微信 ==========
+function copyDemoWx(id) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(() => toast('✅ 已复制：' + id));
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = id; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast('✅ 已复制：' + id); } catch(e) { toast('请手动复制'); }
+        document.body.removeChild(ta);
+    }
+}
+
 // ========== 硬编码假数据（不读写localStorage） ==========
 const DEMO_INCOMES = [
     { amount: 800, source: '小红书广告合作', time: '2026.07.25 10:00' },
