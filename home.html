@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="时铭AI · 一站式AI商业服务 | AI孵化器 · AI工作台定制 · AI漫剧 · 一人公司AI营">
-<title>时铭AI · 一站式AI商业服务</title>
+<meta name="description" content="Crazy Friday 疯狂星期五 · 一站式AI创业基础设施 | 项目共创 · AI孵化器 · AI工作台定制 · AI漫剧 · 一人公司AI营">
+<title>Crazy Friday · 疯狂星期五 | AI创业基础设施</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -30,44 +30,56 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     display: flex; justify-content: space-between; align-items: center;
 }
 .nav-logo {
-    font-size: 18px; font-weight: 900; letter-spacing: -0.5px;
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 10px;
 }
-.nav-logo .logo-mark {
-    width: 28px; height: 28px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--orange), var(--purple));
+.nav-logo-mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #000;
+    border: 1.5px solid rgba(255,255,255,0.9);
     display: flex; align-items: center; justify-content: center;
-    font-size: 14px; color: #fff; font-weight: 900;
+    position: relative;
 }
-.nav-logo .name {
-    background: linear-gradient(135deg, var(--orange), #FFD93D);
+.nav-logo-mark::after {
+    content: '';
+    position: absolute;
+    bottom: 6px; right: 6px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+}
+.nav-logo-text { font-size: 11px; color: #fff; font-weight: 700; line-height: 1.1; }
+.nav-brand {
+    font-size: 15px; font-weight: 800; letter-spacing: -0.3px;
+    display: flex; flex-direction: column;
+}
+.nav-brand .en {
+    font-size: 16px;
+    background: linear-gradient(135deg, #fff 60%, var(--orange));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
+.nav-brand .cn { font-size: 10px; color: var(--text-mute); font-weight: 500; }
 .nav-cta {
-    font-size: 12px; padding: 6px 14px;
+    font-size: 12px; padding: 8px 16px;
     background: var(--orange); color: #fff;
-    border-radius: 20px; text-decoration: none; font-weight: 600;
+    border-radius: 20px; text-decoration: none; font-weight: 700;
 }
 
 /* ========== Hero ========== */
 .hero {
-    padding: 60px 18px 40px;
+    padding: 60px 18px 44px;
     background:
-        radial-gradient(ellipse 400px 250px at 50% 0%, rgba(255,107,26,0.18), transparent),
-        radial-gradient(ellipse 300px 200px at 80% 30%, rgba(168,107,255,0.08), transparent),
-        radial-gradient(ellipse 200px 150px at 20% 60%, rgba(0,217,163,0.06), transparent);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(255,107,26,0.18), transparent),
+        radial-gradient(ellipse 300px 200px at 90% 20%, rgba(168,107,255,0.1), transparent),
+        radial-gradient(ellipse 200px 150px at 10% 50%, rgba(0,217,163,0.06), transparent);
+    text-align: center; position: relative; overflow: hidden;
 }
-.hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 6px;
+.hero-brand {
+    display: inline-flex; align-items: center; gap: 8px;
     font-size: 11px; padding: 5px 14px;
     background: rgba(255,107,26,0.12); color: var(--orange);
-    border-radius: 20px; margin-bottom: 22px;
+    border-radius: 20px; margin-bottom: 24px;
     font-weight: 600; border: 1px solid rgba(255,107,26,0.2);
 }
-.hero-eyebrow .dot {
+.hero-brand .dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--orange);
     animation: pulse 2s infinite;
@@ -77,35 +89,41 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     50% { opacity: 0.3; transform: scale(0.7); }
 }
 .hero h1 {
-    font-size: 32px; font-weight: 900;
-    line-height: 1.3; margin-bottom: 16px;
+    font-size: 34px; font-weight: 900;
+    line-height: 1.25; margin-bottom: 14px;
     letter-spacing: -1px;
 }
-.hero h1 .grad {
-    background: linear-gradient(135deg, #FF6B1A, #FFD93D 50%, #00D9A3);
+.hero h1 .white { color: #fff; }
+.hero h1 .orange {
+    background: linear-gradient(135deg, var(--orange), #FFD93D);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+    font-size: 13px; color: var(--text-mute);
+    letter-spacing: 3px; margin-bottom: 16px;
+    text-transform: uppercase;
 }
 .hero-desc {
     font-size: 14px; color: var(--text-dim);
     line-height: 1.8; margin-bottom: 28px;
-    max-width: 320px; margin-left: auto; margin-right: auto;
+    max-width: 340px; margin-left: auto; margin-right: auto;
 }
 .hero-desc strong { color: var(--text); font-weight: 600; }
 
 .hero-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr);
+    display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 0; margin-bottom: 28px;
     border-radius: 16px; overflow: hidden;
     border: 1px solid var(--border);
     background: var(--card);
 }
 .hero-stat {
-    padding: 16px 8px; text-align: center;
+    padding: 14px 4px; text-align: center;
     border-right: 1px solid var(--border);
 }
 .hero-stat:last-child { border-right: none; }
-.hero-stat .num { font-size: 22px; font-weight: 900; }
-.hero-stat .lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+.hero-stat .num { font-size: 16px; font-weight: 900; }
+.hero-stat .lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
 
 .hero-cta {
     display: flex; flex-direction: column; gap: 10px;
@@ -145,7 +163,85 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     margin-bottom: 28px; line-height: 1.7;
 }
 
-/* ========== 业务线卡片 ========== */
+/* ========== 平台数据条 ========== */
+.platform-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px; margin-bottom: 28px;
+}
+.pstat-card {
+    background: var(--card); border-radius: 14px;
+    padding: 16px 10px; text-align: center;
+    border: 1px solid var(--border);
+}
+.pstat-card .icon { font-size: 20px; margin-bottom: 6px; }
+.pstat-card .num { font-size: 18px; font-weight: 900; }
+.pstat-card .lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
+
+/* ========== 基础设施 ========== */
+.infra-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 28px;
+}
+.infra-card {
+    background: var(--card); border-radius: 16px;
+    padding: 18px 14px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: transform 0.15s;
+}
+.infra-card:active { transform: scale(0.97); }
+.infra-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+}
+.infra-card.i1::before { background: linear-gradient(90deg, var(--orange), #FF8E53); }
+.infra-card.i2::before { background: linear-gradient(90deg, var(--purple), #C89AFF); }
+.infra-card.i3::before { background: linear-gradient(90deg, var(--blue), #6BB6FF); }
+.infra-card.i4::before { background: linear-gradient(90deg, var(--green), #00F5B8); }
+.infra-card.i5::before { background: linear-gradient(90deg, var(--yellow), #FFE873); }
+.infra-card.i6::before { background: linear-gradient(90deg, var(--red), #FF6B6B); }
+
+.infra-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 10px;
+}
+.infra-card.i1 .infra-icon { background: rgba(255,107,26,0.15); }
+.infra-card.i2 .infra-icon { background: rgba(168,107,255,0.15); }
+.infra-card.i3 .infra-icon { background: rgba(77,157,255,0.15); }
+.infra-card.i4 .infra-icon { background: rgba(0,217,163,0.15); }
+.infra-card.i5 .infra-icon { background: rgba(255,217,61,0.15); }
+.infra-card.i6 .infra-icon { background: rgba(255,71,87,0.15); }
+
+.infra-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.infra-desc { font-size: 10px; color: var(--text-mute); line-height: 1.5; margin-bottom: 10px; }
+.infra-num { font-size: 16px; font-weight: 900; }
+
+/* ========== 全链路支持 ========== */
+.chain-section {
+    background: var(--card); border-radius: 18px;
+    padding: 20px; border: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+.chain-title {
+    font-size: 15px; font-weight: 800; margin-bottom: 16px;
+}
+.chain-flow {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    align-items: center; justify-content: center;
+}
+.chain-item {
+    background: var(--bg); border-radius: 12px;
+    padding: 12px; text-align: center; min-width: 70px;
+    border: 1px solid var(--border);
+}
+.chain-icon { font-size: 20px; margin-bottom: 4px; }
+.chain-name { font-size: 10px; font-weight: 700; }
+.chain-sub { font-size: 8px; color: var(--text-mute); margin-top: 2px; }
+.chain-arrow {
+    color: var(--orange); font-size: 14px; font-weight: 700;
+}
+
+/* ========== 业务线 ========== */
 .biz-grid {
     display: grid; grid-template-columns: 1fr;
     gap: 12px;
@@ -169,7 +265,10 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .biz-card.b2::before { background: linear-gradient(90deg, var(--purple), #C89AFF); }
 .biz-card.b3::before { background: linear-gradient(90deg, var(--green), #00F5B8); }
 .biz-card.b4::before { background: linear-gradient(90deg, var(--blue), #6BB6FF); }
-.biz-card.b5::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
+.biz-card.b5::before { background: linear-gradient(90deg, var(--yellow), #FFE873); }
+.biz-card.b6::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
+.biz-card.b7::before { background: linear-gradient(90deg, var(--cyan), #4ECDC4); }
+.biz-card.b8::before { background: linear-gradient(90deg, #fff, var(--text-dim)); }
 
 .biz-header {
     display: flex; align-items: center; gap: 12px;
@@ -184,9 +283,12 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .biz-card.b2 .biz-icon { background: rgba(168,107,255,0.15); }
 .biz-card.b3 .biz-icon { background: rgba(0,217,163,0.15); }
 .biz-card.b4 .biz-icon { background: rgba(77,157,255,0.15); }
-.biz-card.b5 .biz-icon { background: rgba(255,107,157,0.15); }
+.biz-card.b5 .biz-icon { background: rgba(255,217,61,0.15); }
+.biz-card.b6 .biz-icon { background: rgba(255,107,157,0.15); }
+.biz-card.b7 .biz-icon { background: rgba(0,217,255,0.15); }
+.biz-card.b8 .biz-icon { background: rgba(255,255,255,0.08); }
 
-.biz-name { font-size: 18px; font-weight: 800; }
+.biz-name { font-size: 17px; font-weight: 800; }
 .biz-tag {
     font-size: 10px; padding: 2px 8px; border-radius: 4px;
     font-weight: 600; margin-left: auto;
@@ -195,11 +297,14 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .biz-card.b2 .biz-tag { background: rgba(168,107,255,0.15); color: var(--purple); }
 .biz-card.b3 .biz-tag { background: rgba(0,217,163,0.15); color: var(--green); }
 .biz-card.b4 .biz-tag { background: rgba(77,157,255,0.15); color: var(--blue); }
-.biz-card.b5 .biz-tag { background: rgba(255,107,157,0.15); color: var(--pink); }
+.biz-card.b5 .biz-tag { background: rgba(255,217,61,0.15); color: var(--yellow); }
+.biz-card.b6 .biz-tag { background: rgba(255,107,157,0.15); color: var(--pink); }
+.biz-card.b7 .biz-tag { background: rgba(0,217,255,0.15); color: var(--cyan); }
+.biz-card.b8 .biz-tag { background: rgba(255,255,255,0.1); color: var(--text); }
 
 .biz-desc {
     font-size: 13px; color: var(--text-dim);
-    line-height: 1.7; margin-bottom: 16px;
+    line-height: 1.7; margin-bottom: 14px;
 }
 .biz-features {
     display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;
@@ -213,12 +318,99 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     display: flex; justify-content: space-between; align-items: center;
     padding-top: 14px; border-top: 1px dashed var(--border);
 }
-.biz-price { font-size: 16px; font-weight: 800; }
+.biz-price { font-size: 15px; font-weight: 800; }
 .biz-price small { font-size: 10px; color: var(--text-mute); font-weight: 400; }
 .biz-link {
     font-size: 13px; font-weight: 600; text-decoration: none;
     display: flex; align-items: center; gap: 4px;
 }
+
+/* ========== 热门项目 ========== */
+.project-list {
+    display: flex; flex-direction: column; gap: 10px;
+}
+.project-item {
+    background: var(--card); border-radius: 14px;
+    padding: 14px 16px; border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color 0.2s;
+}
+.project-item:active { border-color: var(--orange); }
+.project-rank {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,107,26,0.15); color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; flex-shrink: 0;
+}
+.project-info { flex: 1; }
+.project-name { font-size: 13px; font-weight: 700; }
+.project-tag { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+.project-heat {
+    font-size: 12px; font-weight: 800; color: var(--orange);
+    display: flex; align-items: center; gap: 4px;
+}
+
+/* ========== 孵化器 ========== */
+.incubator-card {
+    background: linear-gradient(135deg, rgba(168,107,255,0.08), rgba(77,157,255,0.05));
+    border-radius: 18px;
+    padding: 24px 20px;
+    border: 2px solid rgba(168,107,255,0.3);
+    box-shadow: 0 0 40px rgba(168,107,255,0.08);
+    position: relative; overflow: hidden;
+    margin-bottom: 16px;
+}
+.incubator-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+}
+.incubator-badge {
+    display: inline-block; font-size: 10px;
+    padding: 4px 12px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    color: #fff; font-weight: 700; margin-bottom: 12px;
+}
+.incubator-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.incubator-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
+.incubator-invest {
+    display: flex; gap: 10px; margin-bottom: 16px;
+}
+.invest-item {
+    flex: 1; background: var(--bg); border-radius: 12px;
+    padding: 14px 8px; text-align: center; border: 1px solid var(--border);
+}
+.invest-num { font-size: 16px; font-weight: 900; color: var(--purple); }
+.invest-lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
+
+.incubator-support {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.support-item {
+    background: var(--bg); border-radius: 10px;
+    padding: 12px 8px; text-align: center;
+    border: 1px solid var(--border);
+}
+.support-icon { font-size: 18px; margin-bottom: 4px; }
+.support-text { font-size: 9px; color: var(--text-dim); }
+
+/* ========== 合作生态 ========== */
+.eco-section {
+    background: var(--card); border-radius: 18px;
+    padding: 20px; border: 1px solid var(--border);
+}
+.eco-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text-dim); }
+.eco-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.eco-item {
+    background: var(--bg); border-radius: 10px;
+    padding: 12px 4px; text-align: center;
+    border: 1px solid var(--border);
+    font-size: 11px; color: var(--text-dim);
+}
+.eco-item .icon { font-size: 18px; margin-bottom: 4px; }
 
 /* ========== 关于我们 ========== */
 .about-card {
@@ -250,52 +442,27 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     background: var(--bg); border-radius: 12px;
     padding: 14px; text-align: center; border: 1px solid var(--border);
 }
-.about-num { font-size: 20px; font-weight: 900; }
+.about-num { font-size: 18px; font-weight: 900; }
 .about-lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
 
-/* ========== 孵化器 ========== */
-.incubator-card {
-    background: linear-gradient(135deg, rgba(168,107,255,0.08), rgba(77,157,255,0.05));
-    border-radius: 18px;
-    padding: 24px 20px;
-    border: 2px solid rgba(168,107,255,0.3);
-    box-shadow: 0 0 40px rgba(168,107,255,0.08);
-    position: relative; overflow: hidden;
-    margin-bottom: 16px;
+/* ========== 未来愿景 ========== */
+.vision-list {
+    display: flex; flex-direction: column; gap: 10px;
 }
-.incubator-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, var(--purple), var(--blue));
+.vision-item {
+    background: var(--card); border-radius: 14px;
+    padding: 16px; border: 1px solid var(--border);
+    display: flex; align-items: start; gap: 12px;
 }
-.incubator-badge {
-    display: inline-block; font-size: 10px;
-    padding: 4px 12px; border-radius: 6px;
-    background: linear-gradient(135deg, var(--purple), var(--blue));
-    color: #fff; font-weight: 700; margin-bottom: 12px;
+.vision-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255,107,26,0.15); color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
 }
-.incubator-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
-.incubator-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
-.incubator-invest {
-    display: flex; gap: 12px; margin-bottom: 16px;
-}
-.invest-item {
-    flex: 1; background: var(--bg); border-radius: 12px;
-    padding: 14px; text-align: center; border: 1px solid var(--border);
-}
-.invest-num { font-size: 20px; font-weight: 900; color: var(--purple); }
-.invest-lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
-
-.incubator-support {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
-}
-.support-item {
-    background: var(--bg); border-radius: 10px;
-    padding: 12px; display: flex; align-items: center; gap: 8px;
-    border: 1px solid var(--border);
-}
-.support-icon { font-size: 16px; }
-.support-text { font-size: 11px; color: var(--text-dim); }
+.vision-body { flex: 1; }
+.vision-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.vision-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
 
 /* ========== 联系 ========== */
 .contact-card {
@@ -345,18 +512,6 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ========== 数字条 ========== */
-.stats-bar {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    padding: 20px 0; border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, rgba(255,107,26,0.03), rgba(0,217,163,0.03));
-}
-.stat-item { text-align: center; }
-.stat-item:not(:last-child) { border-right: 1px solid var(--border); }
-.stat-num { font-size: 22px; font-weight: 800; }
-.stat-label { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -364,8 +519,13 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 <!-- ========== Nav ========== -->
 <nav class="nav">
     <div class="nav-logo">
-        <div class="logo-mark">时</div>
-        <span class="name">时铭AI</span>
+        <div class="nav-logo-mark">
+            <div class="nav-logo-text">CF</div>
+        </div>
+        <div class="nav-brand">
+            <div class="en">Crazy Friday.</div>
+            <div class="cn">疯狂星期五 · AI × CREATOR</div>
+        </div>
     </div>
     <a href="#contact" class="nav-cta">联系我们</a>
 </nav>
@@ -373,83 +533,195 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 <!-- ========== Hero ========== -->
 <div class="hero">
     <div class="container">
-        <div class="hero-eyebrow">
+        <div class="hero-brand">
             <span class="dot"></span>
-            一站式AI商业服务平台
+            一站式 AI 创业基础设施
         </div>
         <h1>
-            用AI重新定义<br>
-            <span class="grad">一人公司的未来</span>
+            <span class="white">Crazy Friday</span><br>
+            <span class="orange">疯狂星期五</span>
         </h1>
+        <div class="hero-subtitle">AI × CREATOR</div>
         <div class="hero-desc">
-            从<strong>AI孵化器</strong>到<strong>工作台定制</strong>，从<strong>AI漫剧</strong>到<strong>一人公司AI营</strong><br>
-            我们提供从0到1的全方位AI商业服务
+            从<strong>灵感发现</strong>到<strong>学习提升</strong>，从<strong>工具应用</strong>到<strong>项目管理</strong>，<br>
+            从<strong>资源对接</strong>到<strong>收益变现</strong>，我们陪伴每个AI创业者从0到1。
         </div>
         <div class="hero-stats">
             <div class="hero-stat">
-                <div class="num" style="color:var(--orange)">5+</div>
-                <div class="lbl">业务线</div>
+                <div class="num" style="color:var(--orange)">8+</div>
+                <div class="lbl">业务生态</div>
             </div>
             <div class="hero-stat">
-                <div class="num" style="color:var(--green)">40+</div>
+                <div class="num" style="color:var(--green)">1万-200万</div>
+                <div class="lbl">项目共创</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num" style="color:var(--purple)">3-8年</div>
+                <div class="lbl">发展规划</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num" style="color:var(--blue)">40+</div>
                 <div class="lbl">服务客户</div>
-            </div>
-            <div class="hero-stat">
-                <div class="num" style="color:var(--purple)">100万</div>
-                <div class="lbl">年度目标</div>
             </div>
         </div>
         <div class="hero-cta">
-            <a href="#business" class="btn-primary">了解我们的业务 →</a>
+            <a href="#business" class="btn-primary">探索我们的生态 →</a>
             <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="btn-secondary">定制AI工作台 →</a>
         </div>
     </div>
 </div>
 
-<!-- ========== 数字条 ========== -->
-<div class="stats-bar">
-    <div class="stat-item">
-        <div class="stat-num" style="color:var(--orange)">2026</div>
-        <div class="stat-label">成立于</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-num" style="color:var(--green)">3天</div>
-        <div class="stat-label">最快交付</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-num" style="color:var(--purple)">AI</div>
-        <div class="stat-label">技术驱动</div>
+<!-- ========== 平台数据 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">PLATFORM DATA</div>
+        <div class="section-title">平台基础设施</div>
+        <div class="section-sub">为AI创业者提供全链路支持系统，让创意快速落地为商业项目</div>
+
+        <div class="platform-stats">
+            <div class="pstat-card">
+                <div class="icon">👥</div>
+                <div class="num" style="color:var(--blue)">10,000+</div>
+                <div class="lbl">目标创业者</div>
+            </div>
+            <div class="pstat-card">
+                <div class="icon">📁</div>
+                <div class="num" style="color:var(--orange)">3000+</div>
+                <div class="lbl">活跃项目</div>
+            </div>
+            <div class="pstat-card">
+                <div class="icon">🛠</div>
+                <div class="num" style="color:var(--purple)">1050+</div>
+                <div class="lbl">AI工具集成</div>
+            </div>
+            <div class="pstat-card">
+                <div class="icon">💎</div>
+                <div class="num" style="color:var(--green)">2000+</div>
+                <div class="lbl">优质资源</div>
+            </div>
+            <div class="pstat-card">
+                <div class="icon">❤️</div>
+                <div class="num" style="color:var(--red)">99%</div>
+                <div class="lbl">用户满意度</div>
+            </div>
+            <div class="pstat-card">
+                <div class="icon">🌱</div>
+                <div class="num" style="color:var(--yellow)">持续增长</div>
+                <div class="lbl">平台生态</div>
+            </div>
+        </div>
+
+        <div class="infra-grid">
+            <div class="infra-card i1">
+                <div class="infra-icon">💡</div>
+                <div class="infra-name">发现机会</div>
+                <div class="infra-desc">洞察趋势，发现高潜力AI项目机会</div>
+                <div class="infra-num" style="color:var(--orange)">520+</div>
+            </div>
+            <div class="infra-card i2">
+                <div class="infra-icon">🧰</div>
+                <div class="infra-name">AI工具集</div>
+                <div class="infra-desc">100+ AI工具，提升创作效率</div>
+                <div class="infra-num" style="color:var(--purple)">1050+</div>
+            </div>
+            <div class="infra-card i3">
+                <div class="infra-icon">📋</div>
+                <div class="infra-name">项目管理</div>
+                <div class="infra-desc">全流程管理，让项目落地更简单</div>
+                <div class="infra-num" style="color:var(--blue)">3000+</div>
+            </div>
+            <div class="infra-card i4">
+                <div class="infra-icon">🏪</div>
+                <div class="infra-name">资源市场</div>
+                <div class="infra-desc">整合优质资源，加速项目成长</div>
+                <div class="infra-num" style="color:var(--green)">2000+</div>
+            </div>
+            <div class="infra-card i5">
+                <div class="infra-icon">💰</div>
+                <div class="infra-name">收益变现</div>
+                <div class="infra-desc">多元变现渠道，实现商业价值</div>
+                <div class="infra-num" style="color:var(--yellow)">99%</div>
+            </div>
+            <div class="infra-card i6">
+                <div class="infra-icon">🚀</div>
+                <div class="infra-name">项目共创</div>
+                <div class="infra-desc">1万-200万资金支持，全程陪跑</div>
+                <div class="infra-num" style="color:var(--red)">1-200万</div>
+            </div>
+        </div>
+
+        <div class="chain-section">
+            <div class="chain-title">全链路支持</div>
+            <div class="chain-flow">
+                <div class="chain-item">
+                    <div class="chain-icon">💡</div>
+                    <div class="chain-name">灵感发现</div>
+                    <div class="chain-sub">发现机会</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">📚</div>
+                    <div class="chain-name">学习提升</div>
+                    <div class="chain-sub">掌握技能</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">🛠</div>
+                    <div class="chain-name">工具应用</div>
+                    <div class="chain-sub">提升效率</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">📋</div>
+                    <div class="chain-name">项目管理</div>
+                    <div class="chain-sub">协作推进</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">🤝</div>
+                    <div class="chain-name">资源对接</div>
+                    <div class="chain-sub">加速发展</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">💰</div>
+                    <div class="chain-name">收益变现</div>
+                    <div class="chain-sub">商业闭环</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- ========== 业务线 ========== -->
-<div class="section" id="business">
+<!-- ========== 业务生态 ========== -->
+<div class="section" id="business" style="padding-top: 0;">
     <div class="container">
-        <div class="section-eyebrow">OUR BUSINESS</div>
-        <div class="section-title">5大业务线，全覆盖</div>
-        <div class="section-sub">从创业孵化到工具定制，从内容创作到培训赋能，一站式解决你的AI商业需求</div>
+        <div class="section-eyebrow">BUSINESS ECOSYSTEM</div>
+        <div class="section-title">8大业务生态</div>
+        <div class="section-sub">每个业务线既可独立服务，又可互相赋能，孵化出的新项目可持续加入生态</div>
 
         <div class="biz-grid">
-            <!-- AI孵化器 -->
+            <!-- 项目共创 / AI孵化器 -->
             <div class="biz-card b2">
                 <div class="biz-header">
                     <div class="biz-icon">🚀</div>
-                    <div class="biz-name">AI孵化器</div>
-                    <span class="biz-tag">投资孵化</span>
+                    <div class="biz-name">项目共创 · AI孵化器</div>
+                    <span class="biz-tag">核心引擎</span>
                 </div>
                 <div class="biz-desc">
-                    为早期AI创业项目提供资金、技术、资源全方位支持。50-200万天使投资+业务/财务/法务全程陪跑，帮助AI创业者从0到1快速成长。
+                    为有想法的AI创业者提供1万-200万资金支持，全程陪跑。孵化成功的新项目将成为Crazy Friday生态的新业务线，持续创造价值。
                 </div>
                 <div class="biz-features">
-                    <span class="biz-feature">50-200万投资</span>
+                    <span class="biz-feature">1-200万投资</span>
+                    <span class="biz-feature">项目共创</span>
                     <span class="biz-feature">全程陪跑</span>
-                    <span class="biz-feature">技术支持</span>
-                    <span class="biz-feature">路演对接</span>
                     <span class="biz-feature">法务财务</span>
+                    <span class="biz-feature">路演对接</span>
+                    <span class="biz-feature">生态反哺</span>
                 </div>
                 <div class="biz-footer">
-                    <div class="biz-price" style="color:var(--purple)">50-200万<small> /项目</small></div>
-                    <a href="#contact" class="biz-link" style="color:var(--purple)">申请入驻 →</a>
+                    <div class="biz-price" style="color:var(--purple)">1-200万<small> /项目</small></div>
+                    <a href="#incubator" class="biz-link" style="color:var(--purple)">申请入驻 →</a>
                 </div>
             </div>
 
@@ -458,18 +730,18 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                 <div class="biz-header">
                     <div class="biz-icon">💻</div>
                     <div class="biz-name">AI工作台定制</div>
-                    <span class="biz-tag">工具开发</span>
+                    <span class="biz-tag">现金流业务</span>
                 </div>
                 <div class="biz-desc">
-                    为一人公司、创业者、中小企业定制专属AI工作台。客户CRM、财务记账、内容排期、变现日报，一个链接全搞定，手机打开就能用。
+                    为一人公司、创业者、中小企业定制专属AI工作台。CRM、财务、内容排期、变现日报，一个链接全搞定，3天交付。
                 </div>
                 <div class="biz-features">
                     <span class="biz-feature">8大行业模板</span>
                     <span class="biz-feature">3天交付</span>
                     <span class="biz-feature">永久域名</span>
-                    <span class="biz-feature">不限设备</span>
+                    <span class="biz-feature">PWA应用</span>
                     <span class="biz-feature">数据本地</span>
-                    <span class="biz-feature">PWA桌面APP</span>
+                    <span class="biz-feature">不限设备</span>
                 </div>
                 <div class="biz-footer">
                     <div class="biz-price" style="color:var(--orange)">¥199起<small> + ¥99/月</small></div>
@@ -481,11 +753,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <div class="biz-card b3">
                 <div class="biz-header">
                     <div class="biz-icon">🎬</div>
-                    <div class="biz-name">AI漫剧</div>
-                    <span class="biz-tag">内容创作</span>
+                    <div class="biz-name">AI漫剧 · 内容IP</div>
+                    <span class="biz-tag">内容资产</span>
                 </div>
                 <div class="biz-desc">
-                    用AI技术创作漫剧内容，涵盖剧情动画、角色设计、系列更新。多平台分发变现，打造AI内容IP矩阵。
+                    用AI技术创作漫剧内容，打造可复制的AI内容IP矩阵。多平台分发变现，探索AI+内容的商业化路径。
                 </div>
                 <div class="biz-features">
                     <span class="biz-feature">AI剧情生成</span>
@@ -493,9 +765,10 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                     <span class="biz-feature">系列连载</span>
                     <span class="biz-feature">多平台分发</span>
                     <span class="biz-feature">IP孵化</span>
+                    <span class="biz-feature">广告变现</span>
                 </div>
                 <div class="biz-footer">
-                    <div class="biz-price" style="color:var(--green)">内容变现<small> /多平台</small></div>
+                    <div class="biz-price" style="color:var(--green)">内容变现<small> /IP增值</small></div>
                     <a href="#contact" class="biz-link" style="color:var(--green)">合作咨询 →</a>
                 </div>
             </div>
@@ -508,7 +781,7 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                     <span class="biz-tag">培训赋能</span>
                 </div>
                 <div class="biz-desc">
-                    系统化AI创业培训课程+社群。教你用AI工具搭建一人公司，从0开始实现自动化运营。网站、文案、小红书全套课程材料。
+                    系统化AI创业培训课程+社群。教你用AI工具搭建一人公司，从网站建设到文案创作，从小红书运营到自动化工作流。
                 </div>
                 <div class="biz-features">
                     <span class="biz-feature">系统课程</span>
@@ -519,20 +792,43 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                     <span class="biz-feature">小红书运营</span>
                 </div>
                 <div class="biz-footer">
-                    <div class="biz-price" style="color:var(--blue)">课程培训<small> /含全套材料</small></div>
+                    <div class="biz-price" style="color:var(--blue)">课程培训<small> /全套材料</small></div>
                     <a href="#contact" class="biz-link" style="color:var(--blue)">报名学习 →</a>
                 </div>
             </div>
 
-            <!-- AI咨询 -->
+            <!-- AI工具导航/资源库 -->
             <div class="biz-card b5">
                 <div class="biz-header">
+                    <div class="biz-icon">🧰</div>
+                    <div class="biz-name">AI工具资源库</div>
+                    <span class="biz-tag">基础设施</span>
+                </div>
+                <div class="biz-desc">
+                    汇集1000+ AI工具，按场景分类推荐。帮助创业者快速找到适合的工具，降低技术门槛，提升工作效率。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">工具测评</span>
+                    <span class="biz-feature">场景推荐</span>
+                    <span class="biz-feature">使用教程</span>
+                    <span class="biz-feature">优惠对接</span>
+                    <span class="biz-feature">API集成</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--yellow)">资源聚合<small> /导流变现</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--yellow)">了解详情 →</a>
+                </div>
+            </div>
+
+            <!-- AI咨询/解决方案 -->
+            <div class="biz-card b6">
+                <div class="biz-header">
                     <div class="biz-icon">💡</div>
-                    <div class="biz-name">AI转型咨询</div>
+                    <div class="biz-name">企业AI转型咨询</div>
                     <span class="biz-tag">高端服务</span>
                 </div>
                 <div class="biz-desc">
-                    为企业提供AI转型战略咨询。从业务诊断到方案落地，帮你找到AI赋能的最佳切入点，降本增效。
+                    为企业提供AI转型战略咨询。从业务诊断到方案落地，帮助传统企业找到AI赋能的最佳切入点。
                 </div>
                 <div class="biz-features">
                     <span class="biz-feature">业务诊断</span>
@@ -546,27 +842,124 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                     <a href="#contact" class="biz-link" style="color:var(--pink)">预约咨询 →</a>
                 </div>
             </div>
+
+            <!-- 资源对接/撮合平台 -->
+            <div class="biz-card b7">
+                <div class="biz-header">
+                    <div class="biz-icon">🤝</div>
+                    <div class="biz-name">AI资源对接平台</div>
+                    <span class="biz-tag">生态网络</span>
+                </div>
+                <div class="biz-desc">
+                    连接创业者、开发者、投资人、渠道方。项目找资金、找技术、找渠道，都可以在这里高效匹配。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">项目撮合</span>
+                    <span class="biz-feature">人才对接</span>
+                    <span class="biz-feature">渠道合作</span>
+                    <span class="biz-feature">投资对接</span>
+                    <span class="biz-feature">专家问诊</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--cyan)">平台撮合<small> /会员制</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--cyan)">入驻平台 →</a>
+                </div>
+            </div>
+
+            <!-- 新孵化项目入口 -->
+            <div class="biz-card b8">
+                <div class="biz-header">
+                    <div class="biz-icon">✨</div>
+                    <div class="biz-name">孵化新项目 · 待启动</div>
+                    <span class="biz-tag">未来增长点</span>
+                </div>
+                <div class="biz-desc">
+                    孵化中心将持续孕育新的AI项目。每一个成功验证的项目，都有可能成为Crazy Friday的下一条业务线，持续扩大生态版图。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">项目验证</span>
+                    <span class="biz-feature">快速迭代</span>
+                    <span class="biz-feature">生态协同</span>
+                    <span class="biz-feature">持续孵化</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--text)">共创未来<small> /下一个可能就是你</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--text)">提交项目 →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 热门项目 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">HOT PROJECTS</div>
+        <div class="section-title">热门孵化项目</div>
+        <div class="section-sub">这些项目正在Crazy Friday生态中成长</div>
+
+        <div class="project-list">
+            <div class="project-item">
+                <div class="project-rank">01</div>
+                <div class="project-info">
+                    <div class="project-name">AI数字人直播系统</div>
+                    <div class="project-tag">电商 · 直播 · 自动化</div>
+                </div>
+                <div class="project-heat">🔥 98.5k</div>
+            </div>
+            <div class="project-item">
+                <div class="project-rank">02</div>
+                <div class="project-info">
+                    <div class="project-name">AI漫画生成器</div>
+                    <div class="project-tag">内容创作 · IP孵化</div>
+                </div>
+                <div class="project-heat">🔥 87.2k</div>
+            </div>
+            <div class="project-item">
+                <div class="project-rank">03</div>
+                <div class="project-info">
+                    <div class="project-name">企业AI客服机器人</div>
+                    <div class="project-tag">企业服务 · SaaS</div>
+                </div>
+                <div class="project-heat">🔥 76.8k</div>
+            </div>
+            <div class="project-item">
+                <div class="project-rank">04</div>
+                <div class="project-info">
+                    <div class="project-name">小红书AI文案助手</div>
+                    <div class="project-tag">自媒体 · 营销</div>
+                </div>
+                <div class="project-heat">🔥 65.4k</div>
+            </div>
+            <div class="project-item">
+                <div class="project-rank">05</div>
+                <div class="project-info">
+                    <div class="project-name">AI一键生成PPT</div>
+                    <div class="project-tag">办公效率 · 工具</div>
+                </div>
+                <div class="project-heat">🔥 54.3k</div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- ========== AI孵化器详情 ========== -->
-<div class="section" style="padding-top: 0;">
+<div class="section" id="incubator" style="padding-top: 0;">
     <div class="container">
         <div class="section-eyebrow">INCUBATOR</div>
-        <div class="section-title">AI创业孵化器</div>
-        <div class="section-sub">不只是给钱，更是全程陪跑</div>
+        <div class="section-title">项目共创 · AI孵化器</div>
+        <div class="section-sub">不只是投资，更是从零开始的全程共创</div>
 
         <div class="incubator-card">
             <div class="incubator-badge">🔥 2026 招募中</div>
             <div class="incubator-title">寻找下一个AI独角兽</div>
             <div class="incubator-desc">
-                如果你有AI创业想法或正在做的AI项目，我们提供从资金到资源的全方位支持，帮你把想法变成生意。
+                如果你有AI创业想法，或正在孵化早期AI项目，我们提供1万-200万资金支持，以及业务、技术、财务、法务全方位陪跑。孵化成功的新项目将成为Crazy Friday生态的新业务线。
             </div>
             <div class="incubator-invest">
                 <div class="invest-item">
-                    <div class="invest-num">50-200万</div>
-                    <div class="invest-lbl">天使投资</div>
+                    <div class="invest-num">1-200万</div>
+                    <div class="invest-lbl">项目共创资金</div>
                 </div>
                 <div class="invest-item">
                     <div class="invest-num">7-25%</div>
@@ -583,6 +976,10 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                     <div class="support-text">业务指导</div>
                 </div>
                 <div class="support-item">
+                    <div class="support-icon">🛠</div>
+                    <div class="support-text">技术支持</div>
+                </div>
+                <div class="support-item">
                     <div class="support-icon">💰</div>
                     <div class="support-text">财务支持</div>
                 </div>
@@ -596,18 +993,37 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                 </div>
                 <div class="support-item">
                     <div class="support-icon">🤝</div>
-                    <div class="support-text">同行交流</div>
-                </div>
-                <div class="support-item">
-                    <div class="support-icon">📊</div>
-                    <div class="support-text">路演对接</div>
+                    <div class="support-text">资源对接</div>
                 </div>
             </div>
         </div>
 
         <a href="#contact" class="btn-primary" style="background: linear-gradient(135deg, var(--purple), var(--blue));">
-            🚀 申请入驻孵化器
+            🚀 申请项目共创
         </a>
+    </div>
+</div>
+
+<!-- ========== 合作生态 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">ECOSYSTEM</div>
+        <div class="section-title">合作生态伙伴</div>
+        <div class="section-sub">整合全球顶尖AI工具与平台资源</div>
+
+        <div class="eco-section">
+            <div class="eco-title">技术生态</div>
+            <div class="eco-grid">
+                <div class="eco-item"><div class="icon">🅾️</div>OpenAI</div>
+                <div class="eco-item"><div class="icon">Ⓜ️</div>Midjourney</div>
+                <div class="eco-item"><div class="icon">🅲️</div>Claude</div>
+                <div class="eco-item"><div class="icon">🅽️</div>Notion</div>
+                <div class="eco-item"><div class="icon">🅳️</div>Dify</div>
+                <div class="eco-item"><div class="icon">🅲️</div>Coze</div>
+                <div class="eco-item"><div class="icon">🅁️</div>Runway</div>
+                <div class="eco-item"><div class="icon">🅵️</div>Figma</div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -615,37 +1031,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 <div class="section">
     <div class="container">
         <div class="section-eyebrow">ABOUT US</div>
-        <div class="section-title">关于时铭AI</div>
-        <div class="section-sub">一人公司，AI驱动，服务先行</div>
+        <div class="section-title">关于 Crazy Friday</div>
+        <div class="section-sub">一人公司，AI驱动，生态布局</div>
 
         <div class="about-card">
             <div class="about-title">我们是谁</div>
             <div class="about-text">
-                时铭AI由<strong>时铭</strong>创立，是一家以AI技术为核心驱动力的一人公司。
-                我们坚信AI不是替代人类，而是<strong>让一个人拥有一支团队的能力</strong>。
-                <br><br>
-                从最初的AI漫剧创作，到AI工作台定制服务，再到一人公司AI营培训，我们一步步把AI能力变成可复制的商业服务。
-                现在开放<strong>AI孵化器</strong>，帮助更多AI创业者从0到1。
-                <br><br>
-                <strong>使命：</strong>用AI重新定义一人公司的未来<br>
-                <strong>愿景：</strong>做AI商业服务领域的标杆
+                <strong>Crazy Friday 疯狂星期五</strong>由<strong>时铭</strong>创立，是一家以AI技术为核心驱动力的创业公司。<br><br>
+                我们构建<strong>一站式AI创业基础设施</strong>，帮助每个有想法的人从0到1打造自己的AI项目。<br><br>
+                从最初的AI漫剧创作，到AI工作台定制服务，再到一人公司AI营培训，我们不断把AI能力变成可复制、可规模化的商业服务。<br><br>
+                现在开放<strong>项目共创 · AI孵化器</strong>，孵化成功的新项目将持续加入Crazy Friday生态，形成良性循环。
             </div>
             <div class="about-grid">
                 <div class="about-item">
-                    <div class="about-num" style="color:var(--orange)">5+</div>
-                    <div class="about-lbl">业务线</div>
+                    <div class="about-num" style="color:var(--orange)">8+</div>
+                    <div class="about-lbl">业务生态</div>
                 </div>
                 <div class="about-item">
                     <div class="about-num" style="color:var(--green)">40+</div>
                     <div class="about-lbl">服务客户</div>
                 </div>
                 <div class="about-item">
-                    <div class="about-num" style="color:var(--purple)">100万</div>
-                    <div class="about-lbl">年度目标</div>
+                    <div class="about-num" style="color:var(--purple)">3-8年</div>
+                    <div class="about-lbl">发展规划</div>
                 </div>
                 <div class="about-item">
-                    <div class="about-num" style="color:var(--blue)">3天</div>
-                    <div class="about-lbl">最快交付</div>
+                    <div class="about-num" style="color:var(--blue)">1-200万</div>
+                    <div class="about-lbl">项目共创</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 未来愿景 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">VISION</div>
+        <div class="section-title">为什么有3-8年价值</div>
+        <div class="section-sub">不追短期风口，构建长期生态</div>
+
+        <div class="vision-list">
+            <div class="vision-item">
+                <div class="vision-icon">🌱</div>
+                <div class="vision-body">
+                    <div class="vision-title">持续孵化新项目</div>
+                    <div class="vision-desc">孵化器每年可孕育多个新项目，验证成功即纳入生态，业务版图持续扩大。</div>
+                </div>
+            </div>
+            <div class="vision-item">
+                <div class="vision-icon">🔗</div>
+                <div class="vision-body">
+                    <div class="vision-title">业务线互相赋能</div>
+                    <div class="vision-desc">工具库、培训营、咨询、资源平台彼此导流，形成闭环，降低获客成本。</div>
+                </div>
+            </div>
+            <div class="vision-item">
+                <div class="vision-icon">📈</div>
+                <div class="vision-body">
+                    <div class="vision-title">现金流+股权双轮驱动</div>
+                    <div class="vision-desc">工作台定制、课程、咨询带来稳定现金流；孵化投资带来长期股权增值。</div>
+                </div>
+            </div>
+            <div class="vision-item">
+                <div class="vision-icon">🌍</div>
+                <div class="vision-body">
+                    <div class="vision-title">AI创作者网络效应</div>
+                    <div class="vision-desc">服务越多创业者，平台数据和资源越丰富，网络效应将形成长期竞争壁垒。</div>
                 </div>
             </div>
         </div>
@@ -653,16 +1105,21 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 </div>
 
 <!-- ========== 联系 ========== -->
-<div class="section" id="contact">
+<div class="section" id="contact" style="padding-top: 0;">
     <div class="container">
         <div class="section-eyebrow">CONTACT</div>
         <div class="section-title">联系我们</div>
-        <div class="section-sub">不管你想做什么，先聊聊</div>
+        <div class="section-sub">无论你想创业、定制、学习还是投资，都欢迎交流</div>
 
         <div class="contact-card">
-            <div class="contact-title">随时欢迎交流</div>
-            <div class="contact-desc">不管是想定制工作台、报名课程、申请孵化器还是合作漫剧，都可以找我们</div>
+            <div class="contact-title">随时欢迎连接</div>
+            <div class="contact-desc">项目共创 · 工作台定制 · 课程报名 · 漫剧合作 · 企业咨询</div>
             <div class="contact-grid">
+                <a href="#incubator" class="contact-item">
+                    <div class="contact-icon">🚀</div>
+                    <div class="contact-label">申请项目共创</div>
+                    <div class="contact-sub">1-200万</div>
+                </a>
                 <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="contact-item">
                     <div class="contact-icon">💻</div>
                     <div class="contact-label">定制工作台</div>
@@ -674,14 +1131,9 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                     <div class="contact-sub">系统学习</div>
                 </a>
                 <a href="#" class="contact-item" onclick="toast('请加微信交流'); return false;">
-                    <div class="contact-icon">🚀</div>
-                    <div class="contact-label">申请孵化器</div>
-                    <div class="contact-sub">50-200万</div>
-                </a>
-                <a href="#" class="contact-item" onclick="toast('请加微信交流'); return false;">
-                    <div class="contact-icon">🎬</div>
-                    <div class="contact-label">漫剧合作</div>
-                    <div class="contact-sub">内容变现</div>
+                    <div class="contact-icon">🤝</div>
+                    <div class="contact-label">投资/合作</div>
+                    <div class="contact-sub">融资对接</div>
                 </a>
             </div>
             <div style="margin-top: 20px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px dashed var(--border);">
@@ -695,13 +1147,14 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 <!-- ========== Footer ========== -->
 <div class="footer">
     <div class="footer-links">
-        <a href="#business">业务线</a>
+        <a href="#business">业务生态</a>
+        <a href="#incubator">孵化器</a>
         <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">工作台</a>
         <a href="https://shiming-ai.github.io/shiming-workbench/demo.html">展示版</a>
         <a href="#contact">联系</a>
     </div>
-    <p>© 2026 时铭AI · 一站式AI商业服务</p>
-    <p style="margin-top: 6px;">AI孵化器 · 工作台定制 · AI漫剧 · 一人公司AI营 · AI咨询</p>
+    <p>© 2026 Crazy Friday 疯狂星期五 · AI × CREATOR</p>
+    <p style="margin-top: 6px;">一站式AI创业基础设施 · 项目共创 · 工作台定制 · AI漫剧 · 一人公司AI营</p>
 </div>
 
 <div class="toast" id="toast"></div>
