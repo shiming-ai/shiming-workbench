@@ -33,7 +33,7 @@ body {
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding-bottom: 20px;
+    padding-bottom: 70px;
     overflow-x: hidden;
 }
 
@@ -1176,15 +1176,15 @@ body {
         <div id="contentTemplates"></div>
     </div>
 
-</div>
-
-<!-- 变现地图 -->
-<div class="section">
-    <div class="sec-header">
-        <div class="sec-title"><span class="dot"></span>💰 变现地图</div>
-        <div class="sec-more">6条收入路径</div>
+    <!-- 变现地图 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="dot"></span>💰 变现地图</div>
+            <div class="sec-more">6条收入路径</div>
+        </div>
+        <div id="monetizationMap"></div>
     </div>
-    <div id="monetizationMap"></div>
+
 </div>
 
 <!-- ===== 页面5: 渠道+规划 ===== -->
@@ -2303,7 +2303,7 @@ function renderChannel() {
 
 function switchChannel(ch, el) {
     curChannel = ch;
-    document.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
+    el.parentElement.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
     renderChannel();
 }
@@ -2504,21 +2504,21 @@ const serviceTemplates = [
         icon: '🎯', name: '个人IP/一人公司版', color: 'var(--orange)',
         target: '博主、自媒体、一人公司、超级个体',
         features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '搞钱作战室', '目标进度环'],
-        price: '599定制+99/月', badge: '🔥 热门',
+        price: '499定制+99/月', badge: '🔥 热门',
         desc: '你正在用的就是这版，经过实战验证'
     },
     {
         icon: '📦', name: '电商卖家版', color: 'var(--blue)',
         target: '淘宝/拼多多/抖音电商卖家',
         features: ['订单管理看板', '客户CRM', '库存追踪', '利润自动计算', '退款追踪', '供应商管理'],
-        price: '599定制+99/月', badge: '',
+        price: '499定制+99/月', badge: '',
         desc: '订单+客户+库存+利润，一个页面全搞定'
     },
     {
         icon: '💻', name: '自由职业者版', color: 'var(--purple)',
         target: '设计师、程序员、文案、咨询顾问',
         features: ['项目管理', '客户追踪', '时间记录', '报价生成器', '收入统计', '作品集展示'],
-        price: '599定制+99/月', badge: '',
+        price: '499定制+99/月', badge: '',
         desc: '接单+交付+收款，自由职业者的全套工具'
     },
     {
@@ -2545,13 +2545,13 @@ const pricingPlans = [
         popular: false
     },
     {
-        name: '标准版', price: 599, monthly: 99, color: 'var(--orange)',
+        name: '商业定制版', price: 499, monthly: 99, color: 'var(--orange)',
         features: ['选1个模板', '定制功能模块', '3次修改机会', '1对1需求沟通', '永久域名', '30天售后', '数据导入'],
         target: '一人公司/自由职业/电商',
         popular: true
     },
     {
-        name: '旗舰版', price: 1999, monthly: 199, color: 'var(--red)',
+        name: '深度定制版', price: 1999, monthly: 199, color: 'var(--red)',
         features: ['深度定制', '专属功能开发', '不限修改次数', '1对1专属顾问', '永久域名', '90天售后', '数据导入+培训', '优先支持'],
         target: '小微企业/团队/餐饮',
         popular: false
