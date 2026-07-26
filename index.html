@@ -1698,6 +1698,48 @@ body {
 
 </div>
 
+<!-- ===== 页面: AI变现机会 ===== -->
+<div id="page-opportunity" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">🔥</span> AI变现机会</div>
+            <div class="sec-more" id="oppCount">0条</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">
+            每天更新的AI变现机会 · 每条都附带变现路径分析<br>
+            <span style="color:var(--orange)">看到值得做的→收藏→测试→沉淀为项目</span>
+        </div>
+
+        <!-- 筛选标签 -->
+        <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+            <button class="opp-tab active" onclick="filterOpp('all',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--orange);background:var(--orange);color:#fff;cursor:pointer">全部</button>
+            <button class="opp-tab" onclick="filterOpp('hot',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">🔥热门</button>
+            <button class="opp-tab" onclick="filterOpp('low',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">低门槛</button>
+            <button class="opp-tab" onclick="filterOpp('high',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">高利润</button>
+        </div>
+
+        <!-- 机会列表 -->
+        <div id="oppList"></div>
+
+        <!-- 添加新机会 -->
+        <div class="section" style="padding:14px 0 0">
+            <div class="sec-header">
+                <div class="sec-title" style="font-size:14px"><span class="emoji">➕</span> 发现新机会？记下来</div>
+            </div>
+            <div class="task-add">
+                <input type="text" id="oppTitle" placeholder="AI玩法/工具/趋势..." style="flex:1">
+                <select id="oppTag" style="background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:0 8px;font-size:12px">
+                    <option value="hot">🔥热门</option>
+                    <option value="low">低门槛</option>
+                    <option value="high">高利润</option>
+                </select>
+                <button onclick="addOpp()" style="background:var(--orange);color:#fff;border:none;width:40px;border-radius:10px;font-size:18px;cursor:pointer">+</button>
+            </div>
+            <input type="text" id="oppPath" placeholder="变现路径：怎么用它赚钱？（选填）" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:12px;margin-top:6px;outline:none">
+        </div>
+    </div>
+</div>
+
 <!-- ===== 页面: 企业官网 ===== -->
 <div id="page-website" class="hidden">
     <div class="section">
@@ -1893,6 +1935,10 @@ body {
         <div class="sidebar-item" onclick="switchPage('website', this)" style="border-left:2px solid var(--orange)">
             <span class="sidebar-item-icon">🏢</span> 企业官网
             <span style="font-size:8px;padding:1px 5px;background:var(--orange);color:#fff;border-radius:4px;margin-left:auto">对外</span>
+        </div>
+        <div class="sidebar-item" onclick="switchPage('opportunity', this)" style="border-left:2px solid var(--red)">
+            <span class="sidebar-item-icon">🔥</span> AI变现机会
+            <span style="font-size:8px;padding:1px 5px;background:var(--red);color:#fff;border-radius:4px;margin-left:auto" id="oppBadge">NEW</span>
         </div>
         <div class="sidebar-item" onclick="switchPage('more', this)">
             <span class="sidebar-item-icon">⚙️</span> 更多工具
@@ -3030,6 +3076,150 @@ function switchPage(page, el) {
     if (el) el.classList.add('active');
     window.scrollTo(0, 0);
     closeSidebar();
+}
+
+// ========== AI变现机会 ==========
+const DEFAULT_OPPS = [
+    {
+        title: 'AI头像/写真小程序',
+        tag: 'low',
+        path: '用SD/ComfyUI搭AI写真工作流→包装成小程序→小红书引流→9.9-29.9/次',
+        hot: true,
+        date: '2026.07.27'
+    },
+    {
+        title: 'AI客服知识库定制',
+        tag: 'high',
+        path: '用Dify/Coze搭企业知识库→按行业打包→企业收费3000-15000/套→可月收维护费',
+        hot: true,
+        date: '2026.07.27'
+    },
+    {
+        title: 'AI漫剧系列连载',
+        tag: 'hot',
+        path: 'AI生成剧情+角色→系列连载→多平台分发→广告变现+IP授权',
+        hot: true,
+        date: '2026.07.27'
+    },
+    {
+        title: 'AI数字人直播',
+        tag: 'high',
+        path: '数字人替代真人直播→7x24小时→带货/知识付费→代运营收费5000+/月',
+        hot: false,
+        date: '2026.07.26'
+    },
+    {
+        title: 'AI简历优化工具',
+        tag: 'low',
+        path: 'AI分析简历+优化建议→求职季刚需→9.9-49/次→可做免费版引流+付费版',
+        hot: false,
+        date: '2026.07.26'
+    }
+];
+
+let oppFilter = 'all';
+
+function loadOpps() {
+    return load('aiOpps', DEFAULT_OPPS);
+}
+
+function saveOpps(arr) {
+    save('aiOpps', arr);
+}
+
+function renderOpps() {
+    const opps = loadOpps();
+    const list = document.getElementById('oppList');
+    const filtered = oppFilter === 'all' ? opps : opps.filter(o => o.tag === oppFilter);
+    
+    document.getElementById('oppCount').textContent = opps.length + '条';
+    
+    if (filtered.length === 0) {
+        list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-mute);font-size:12px">暂无机会，去发现新的AI玩法吧</div>';
+        return;
+    }
+    
+    const tagMap = {
+        hot: { label: '🔥热门', color: 'var(--orange)', bg: 'rgba(255,107,26,0.12)' },
+        low: { label: '低门槛', color: 'var(--green)', bg: 'rgba(0,217,163,0.12)' },
+        high: { label: '高利润', color: 'var(--purple)', bg: 'rgba(168,107,255,0.12)' }
+    };
+    
+    list.innerHTML = filtered.map((o, i) => {
+        const t = tagMap[o.tag] || tagMap.hot;
+        return `<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;border-left:3px solid ${t.color}">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:${t.bg};color:${t.color};font-weight:600">${t.label}</span>
+                ${o.hot ? '<span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,71,87,0.15);color:var(--red)">🔥HOT</span>' : ''}
+                <span style="font-size:10px;color:var(--text-mute);margin-left:auto">${o.date || ''}</span>
+            </div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">${o.title}</div>
+            ${o.path ? `<div style="font-size:12px;color:var(--text-dim);line-height:1.6;background:var(--bg);padding:8px 10px;border-radius:8px;margin-bottom:8px">💰 ${o.path}</div>` : ''}
+            <div style="display:flex;gap:6px">
+                <button onclick="testOpp(${i})" style="font-size:11px;padding:4px 10px;background:var(--green);color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:600">测试这个</button>
+                <button onclick="delOpp(${i})" style="font-size:11px;padding:4px 10px;background:var(--card2);color:var(--text-mute);border:1px solid var(--border);border-radius:6px;cursor:pointer">删除</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function filterOpp(tag, el) {
+    oppFilter = tag;
+    document.querySelectorAll('.opp-tab').forEach(t => {
+        t.style.background = 'var(--card2)';
+        t.style.color = 'var(--text-dim)';
+        t.style.border = '1px solid var(--border)';
+    });
+    el.style.background = 'var(--orange)';
+    el.style.color = '#fff';
+    el.style.border = '1px solid var(--orange)';
+    renderOpps();
+}
+
+function addOpp() {
+    const title = document.getElementById('oppTitle').value.trim();
+    const tag = document.getElementById('oppTag').value;
+    const path = document.getElementById('oppPath').value.trim();
+    if (!title) return toast('请输入机会标题');
+    
+    const opps = loadOpps();
+    opps.unshift({
+        title, tag, path,
+        hot: tag === 'hot',
+        date: todayStr()
+    });
+    saveOpps(opps);
+    document.getElementById('oppTitle').value = '';
+    document.getElementById('oppPath').value = '';
+    renderOpps();
+    toast('✅ 已添加');
+}
+
+function testOpp(i) {
+    const opps = loadOpps();
+    const allOpps = oppFilter === 'all' ? opps : opps.filter(o => o.tag === oppFilter);
+    const opp = allOpps[i];
+    // 跳转到任务页并预填
+    switchPage('today', document.querySelectorAll('.sidebar-item')[0]);
+    setTimeout(() => {
+        const input = document.getElementById('taskInput');
+        if (input) {
+            input.value = '测试：' + opp.title;
+            input.focus();
+        }
+        toast('已加入今日任务，开始测试吧');
+    }, 300);
+}
+
+function delOpp(i) {
+    const opps = loadOpps();
+    const allOpps = oppFilter === 'all' ? opps : opps.filter(o => o.tag === oppFilter);
+    const opp = allOpps[i];
+    const idx = opps.indexOf(opp);
+    if (idx > -1) opps.splice(idx, 1);
+    saveOpps(opps);
+    renderOpps();
+    toast('已删除');
 }
 
 // ========== 首页业务线总览 ==========
@@ -4610,6 +4800,7 @@ renderWeekPlan();
 renderInspirations();
 updateQuote();
 renderContentMatrix();
+renderOpps();
 
 // ========== 自动版本检测（打开工作台时静默检查更新）==========
 (function autoUpdateCheck() {
