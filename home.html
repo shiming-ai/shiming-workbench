@@ -426,6 +426,165 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ========== Grid Background ========== */
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none; z-index: 0;
+}
+body > * { position: relative; z-index: 1; }
+
+/* ========== Hero Glow Animation ========== */
+@keyframes heroGlowMove {
+    0%   { background-position: 50% 0%, 90% 20%, 10% 50%; }
+    33%  { background-position: 60% 10%, 80% 30%, 20% 40%; }
+    66%  { background-position: 40% 5%, 95% 15%, 5% 55%; }
+    100% { background-position: 50% 0%, 90% 20%, 10% 50%; }
+}
+.hero {
+    animation: heroGlowMove 18s ease-in-out infinite;
+}
+
+/* ========== Scroll Reveal ========== */
+.section, .biz-card, .workshop-card, .value-card, .about-card,
+.incubator-section, .contact-card, .chain-section, .eco-section,
+.testimonial-card, .faq-item, .direction-item, .about-item,
+.invest-item, .flow-item, .chain-item, .eco-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* ========== Micro-interactions ========== */
+.workshop-card, .value-card, .about-card, .contact-card,
+.incubator-section, .chain-section, .eco-section,
+.testimonial-card, .faq-item, .biz-card {
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.6s ease-out;
+}
+.workshop-card:active, .value-card:active, .about-card:active,
+.contact-card:active, .incubator-section:active, .chain-section:active,
+.eco-section:active, .testimonial-card:active, .faq-item:active,
+.invest-item:active, .flow-item:active, .direction-item:active,
+.about-item:active, .eco-item:active, .chain-item:active {
+    transform: scale(0.97);
+}
+.btn-primary:active { transform: scale(0.96); }
+.btn-secondary:active { transform: scale(0.97); }
+.nav-cta:active { transform: scale(0.94); opacity: 0.85; }
+a:active { color: var(--orange); }
+.footer-links a:active { color: var(--orange); }
+
+/* ========== Card Hover Glow ========== */
+.workshop-card:hover, .biz-card:hover {
+    box-shadow: 0 0 20px rgba(255,107,26,0.15);
+    border-color: rgba(255,107,26,0.3);
+}
+.workshop-card.w1:hover { box-shadow: 0 0 20px rgba(168,107,255,0.15); border-color: rgba(168,107,255,0.3); }
+.workshop-card.w2:hover { box-shadow: 0 0 20px rgba(77,157,255,0.15); border-color: rgba(77,157,255,0.3); }
+.workshop-card.w3:hover { box-shadow: 0 0 20px rgba(0,217,163,0.15); border-color: rgba(0,217,163,0.3); }
+.workshop-card.w4:hover { box-shadow: 0 0 20px rgba(255,107,26,0.15); border-color: rgba(255,107,26,0.3); }
+.workshop-card.w5:hover { box-shadow: 0 0 20px rgba(255,107,157,0.15); border-color: rgba(255,107,157,0.3); }
+.workshop-card.w6:hover { box-shadow: 0 0 20px rgba(255,217,61,0.15); border-color: rgba(255,217,61,0.3); }
+
+/* ========== Floating Bottom Nav ========== */
+.float-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 95;
+    background: rgba(10,11,15,0.8);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: center; gap: 0;
+    padding: 8px 12px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+.float-nav.show { transform: translateY(0); }
+.float-nav a {
+    flex: 1; text-align: center; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    padding: 8px 4px; border-radius: 10px;
+    transition: color 0.2s, background 0.2s;
+}
+.float-nav a:active { color: var(--orange); background: rgba(255,107,26,0.1); }
+
+/* ========== Back to Top ========== */
+.back-top {
+    position: fixed; bottom: 72px; right: 18px; z-index: 94;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    color: var(--text); font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; text-decoration: none;
+    opacity: 0; transform: translateY(20px) scale(0.8);
+    transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
+    pointer-events: none;
+}
+.back-top.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.back-top:active { transform: scale(0.9); border-color: var(--orange); color: var(--orange); }
+
+/* ========== Testimonials ========== */
+.testimonial-card {
+    background: var(--card); border-radius: 16px;
+    padding: 20px 18px; border: 1px solid var(--border);
+    margin-bottom: 12px; position: relative;
+}
+.testimonial-card::before {
+    content: '“'; position: absolute; top: 6px; left: 14px;
+    font-size: 40px; color: var(--purple); opacity: 0.2;
+    font-family: Georgia, serif; line-height: 1;
+}
+.testimonial-text {
+    font-size: 13px; color: var(--text); line-height: 1.8;
+    margin-bottom: 14px; position: relative; z-index: 1;
+}
+.testimonial-author {
+    display: flex; align-items: center; gap: 10px;
+}
+.testimonial-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+}
+.testimonial-info { flex: 1; }
+.testimonial-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.testimonial-role { font-size: 11px; color: var(--text-mute); margin-top: 1px; }
+
+/* ========== FAQ Accordion ========== */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); overflow: hidden;
+}
+.faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px; font-size: 14px; font-weight: 700;
+    color: var(--text); cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.faq-q:active { color: var(--orange); }
+.faq-icon {
+    font-size: 18px; color: var(--purple); flex-shrink: 0; margin-left: 12px;
+    transition: transform 0.3s ease;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+.faq-a-inner {
+    padding: 0 18px 16px;
+    font-size: 13px; color: var(--text-dim); line-height: 1.8;
+}
 </style>
 </head>
 <body>
@@ -464,19 +623,19 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         </div>
         <div class="hero-stats">
             <div class="hero-stat">
-                <div class="num" style="color:var(--orange)">6</div>
+                <div class="num" style="color:var(--orange)" data-count="6" data-suffix="">0</div>
                 <div class="lbl">核心工坊</div>
             </div>
             <div class="hero-stat">
-                <div class="num" style="color:var(--purple)">1-200万</div>
+                <div class="num" style="color:var(--purple)" data-count="" data-text="1-200万">1-200万</div>
                 <div class="lbl">项目共创</div>
             </div>
             <div class="hero-stat">
-                <div class="num" style="color:var(--green)">40+</div>
+                <div class="num" style="color:var(--green)" data-count="40" data-suffix="+">0</div>
                 <div class="lbl">服务客户</div>
             </div>
             <div class="hero-stat">
-                <div class="num" style="color:var(--blue)">3天</div>
+                <div class="num" style="color:var(--blue)" data-count="3" data-suffix="天">0</div>
                 <div class="lbl">最快交付</div>
             </div>
         </div>
@@ -829,8 +988,50 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     </div>
 </div>
 
+<!-- ========== 客户评价 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">TESTIMONIALS</div>
+        <div class="section-title">用户怎么说</div>
+        <div class="section-sub">来自真实用户的声音</div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Crazy Friday的工作台让我从Excel时代直接跳到了AI时代，一个月多接了4单</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: rgba(168,107,255,0.15);">🧑‍💻</div>
+                <div class="testimonial-info">
+                    <div class="testimonial-name">阿凯</div>
+                    <div class="testimonial-role">一人公司版博主</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">时铭帮我定制的CRM系统，3天就交付了，客户看了都说专业</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: rgba(0,217,163,0.15);">🎨</div>
+                <div class="testimonial-info">
+                    <div class="testimonial-name">小林</div>
+                    <div class="testimonial-role">自由职业设计师</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">AI营的课程体系非常系统，从工具到方法论到变现路径，全都有</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: rgba(255,107,26,0.15);">📚</div>
+                <div class="testimonial-info">
+                    <div class="testimonial-name">老张</div>
+                    <div class="testimonial-role">知识付费讲师</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ========== 关于我们 ========== -->
-<div class="section">
+<div class="section" id="about">
     <div class="container">
         <div class="section-eyebrow">ABOUT US</div>
         <div class="section-title">关于 Crazy Friday</div>
@@ -880,6 +1081,72 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
                 <li><strong>网络效应</strong>：服务越多创业者，平台数据和资源越丰富，壁垒越高</li>
                 <li><strong>AI能力沉淀</strong>：每个项目积累的方法论、SOP、工作流都可复用</li>
             </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ========== FAQ ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">FAQ</div>
+        <div class="section-title">常见问题</div>
+        <div class="section-sub">你想知道的，都在这里</div>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    Crazy Friday是什么？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">AI一人公司母系统，帮助每个人用AI建立商业闭环。从想法验证到项目开发，从需求对接到成交交付，让一个人就能拥有一家公司的AI生产力。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    项目共创怎么申请？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">联系我们，提交项目简介，面试沟通，签署协议。我们会全程陪跑，从MVP验证到上线推广提供全链路支持。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    AI工作台定制多久交付？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">最快3天，根据需求复杂度1-3天即可完成交付。从需求梳理到产品上线，高效交付是我们的核心能力之一。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    一人公司AI营适合什么人？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">想用AI创业但不知道从哪开始的人。无论你是自由职业者、内容创作者、还是职场转型者，AI营都能帮你找到适合自己的AI变现路径。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    可以投资你们吗？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">欢迎交流，我们也在寻找战略合作伙伴。如果你看好AI一人公司赛道，欢迎联系我们深入沟通合作与投资机会。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    数据和隐私安全吗？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">数据存在你自己的浏览器本地，不会上传服务器。我们高度重视用户隐私，所有敏感数据都在本地处理，确保你的信息安全。</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -942,6 +1209,18 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- ========== Floating Bottom Nav ========== -->
+<nav class="float-nav" id="floatNav">
+    <a href="#workshop">工坊</a>
+    <a href="#incubator">孵化</a>
+    <a href="#about">关于</a>
+    <a href="#contact">联系</a>
+</nav>
+
+<!-- ========== Back to Top ========== -->
+<a href="#" class="back-top" id="backTop" aria-label="返回顶部">↑</a>
+
 <script>
 function toast(msg) {
     const t = document.getElementById('toast');
@@ -969,6 +1248,173 @@ function copyWechat(id) {
         document.body.removeChild(textarea);
     }
 }
+
+/* ========== FAQ Accordion ========== */
+function toggleFaq(el) {
+    var item = el.parentElement;
+    var answer = item.querySelector('.faq-a');
+    var isOpen = item.classList.contains('open');
+    // Close all
+    var allItems = document.querySelectorAll('.faq-item');
+    for (var i = 0; i < allItems.length; i++) {
+        allItems[i].classList.remove('open');
+        allItems[i].querySelector('.faq-a').style.maxHeight = '0';
+    }
+    // Open clicked if it was closed
+    if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+}
+
+/* ========== Number Count-up Animation ========== */
+function animateNumber(el, target, duration) {
+    var start = 0;
+    var startTime = null;
+    var suffix = el.getAttribute('data-suffix') || '';
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Ease out
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(eased * target);
+        el.textContent = current + (progress >= 1 ? suffix : '');
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            el.textContent = target + suffix;
+        }
+    }
+    requestAnimationFrame(step);
+}
+
+function initNumberAnimations() {
+    var nums = document.querySelectorAll('.hero-stat .num[data-count]');
+    for (var i = 0; i < nums.length; i++) {
+        var el = nums[i];
+        var target = el.getAttribute('data-count');
+        var text = el.getAttribute('data-text');
+        if (text) {
+            // Non-numeric value: fade in
+            el.style.opacity = '0';
+            el.style.transition = 'opacity 0.8s ease-out';
+            setTimeout(function(e, t) {
+                return function() {
+                    e.textContent = t;
+                    e.style.opacity = '1';
+                };
+            }(el, text), 300);
+        } else if (target) {
+            el.textContent = '0';
+            setTimeout(function(e, t) {
+                return function() {
+                    animateNumber(e, parseInt(t, 10), 1500);
+                };
+            }(el, target), 300 + i * 150);
+        }
+    }
+}
+
+/* ========== Scroll Reveal (IntersectionObserver) ========== */
+function initScrollReveal() {
+    var elements = document.querySelectorAll(
+        '.section, .biz-card, .workshop-card, .value-card, .about-card, ' +
+        '.incubator-section, .contact-card, .chain-section, .eco-section, ' +
+        '.testimonial-card, .faq-item, .direction-item, .about-item, ' +
+        '.invest-item, .flow-item, .chain-item, .eco-item'
+    );
+    // Filter out the hero section (first .section or elements in hero)
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    entries[i].target.classList.add('animate-in');
+                    observer.unobserve(entries[i].target);
+                }
+            }
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+        for (var i = 0; i < elements.length; i++) {
+            observer.observe(elements[i]);
+        }
+    } else {
+        // Fallback: just show everything
+        for (var j = 0; j < elements.length; j++) {
+            elements[j].classList.add('animate-in');
+        }
+    }
+}
+
+/* ========== Floating Nav & Back-to-top ========== */
+function initScrollNav() {
+    var floatNav = document.getElementById('floatNav');
+    var backTop = document.getElementById('backTop');
+    var hero = document.querySelector('.hero');
+    var heroHeight = hero ? hero.offsetHeight : 400;
+
+    function onScroll() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        // Show float nav after hero
+        if (scrollY > heroHeight * 0.8) {
+            floatNav.classList.add('show');
+        } else {
+            floatNav.classList.remove('show');
+        }
+        // Show back-to-top after one screen
+        if (scrollY > window.innerHeight) {
+            backTop.classList.add('show');
+        } else {
+            backTop.classList.remove('show');
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Smooth scroll to top
+    backTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        var start = window.pageYOffset || document.documentElement.scrollTop;
+        var startTime = null;
+        var duration = 500;
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            window.scrollTo(0, start * (1 - eased));
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    });
+}
+
+/* ========== Smooth scroll for anchor links ========== */
+function initSmoothScroll() {
+    var links = document.querySelectorAll('a[href^="#"]');
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href === '#' || href.length < 2) return;
+            var target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                var offset = 70; // nav height
+                var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        });
+    }
+}
+
+/* ========== Init ========== */
+document.addEventListener('DOMContentLoaded', function() {
+    initNumberAnimations();
+    initScrollReveal();
+    initScrollNav();
+    initSmoothScroll();
+});
 </script>
 
 </body>
