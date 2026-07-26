@@ -453,7 +453,9 @@ body > * { position: relative; z-index: 1; }
 .section, .biz-card, .workshop-card, .value-card, .about-card,
 .incubator-section, .contact-card, .chain-section, .eco-section,
 .testimonial-card, .faq-item, .direction-item, .about-item,
-.invest-item, .flow-item, .chain-item, .eco-item {
+.invest-item, .flow-item, .chain-item, .eco-item,
+.opc-layer, .track-card, .compare-table, .roadmap-item,
+.founder-card, .bottom-cta, .opc-intro {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -467,14 +469,17 @@ body > * { position: relative; z-index: 1; }
 /* ========== Micro-interactions ========== */
 .workshop-card, .value-card, .about-card, .contact-card,
 .incubator-section, .chain-section, .eco-section,
-.testimonial-card, .faq-item, .biz-card {
+.testimonial-card, .faq-item, .biz-card,
+.opc-layer, .track-card, .roadmap-card, .founder-card, .bottom-cta {
     transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.6s ease-out;
 }
 .workshop-card:active, .value-card:active, .about-card:active,
 .contact-card:active, .incubator-section:active, .chain-section:active,
 .eco-section:active, .testimonial-card:active, .faq-item:active,
 .invest-item:active, .flow-item:active, .direction-item:active,
-.about-item:active, .eco-item:active, .chain-item:active {
+.about-item:active, .eco-item:active, .chain-item:active,
+.opc-layer:active, .track-card:active, .roadmap-card:active,
+.founder-card:active, .bottom-cta:active {
     transform: scale(0.97);
 }
 .btn-primary:active { transform: scale(0.96); }
@@ -565,6 +570,253 @@ a:active { color: var(--orange); }
     background: var(--card); border-radius: 14px;
     border: 1px solid var(--border); overflow: hidden;
 }
+
+/* ========== OPC Methodology ========== */
+.opc-intro {
+    text-align: center; margin-bottom: 20px;
+    padding: 16px 14px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(168,107,255,0.08), rgba(77,157,255,0.05));
+    border: 1px solid rgba(168,107,255,0.2);
+}
+.opc-formula {
+    font-size: 13px; color: var(--text); font-weight: 600;
+    line-height: 1.7;
+}
+.opc-formula .plus { color: var(--orange); font-weight: 800; }
+.opc-formula .eq { color: var(--green); font-weight: 800; }
+.opc-layers {
+    display: flex; flex-direction: column; gap: 12px;
+}
+.opc-layer {
+    background: var(--card); border-radius: 16px;
+    padding: 18px 16px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    display: flex; gap: 14px; align-items: flex-start;
+}
+.opc-layer::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+}
+.opc-layer.l1::before { background: linear-gradient(180deg, var(--purple), #C89AFF); }
+.opc-layer.l2::before { background: linear-gradient(180deg, var(--blue), #6BB6FF); }
+.opc-layer.l3::before { background: linear-gradient(180deg, var(--green), #00F5B8); }
+.opc-layer.l4::before { background: linear-gradient(180deg, var(--orange), #FF8E53); }
+.opc-layer.l5::before { background: linear-gradient(180deg, var(--pink), var(--red)); }
+.opc-layer-num {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; flex-shrink: 0;
+    color: #fff;
+}
+.opc-layer.l1 .opc-layer-num { background: rgba(168,107,255,0.2); color: var(--purple); }
+.opc-layer.l2 .opc-layer-num { background: rgba(77,157,255,0.2); color: var(--blue); }
+.opc-layer.l3 .opc-layer-num { background: rgba(0,217,163,0.2); color: var(--green); }
+.opc-layer.l4 .opc-layer-num { background: rgba(255,107,26,0.2); color: var(--orange); }
+.opc-layer.l5 .opc-layer-num { background: rgba(255,107,157,0.2); color: var(--pink); }
+.opc-layer-body { flex: 1; min-width: 0; }
+.opc-layer-title {
+    font-size: 14px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+}
+.opc-layer-title .icon { font-size: 16px; }
+.opc-layer-desc {
+    font-size: 12px; color: var(--text-dim); line-height: 1.6;
+}
+
+/* ========== Golden Tracks ========== */
+.track-list {
+    display: flex; flex-direction: column; gap: 10px;
+}
+.track-card {
+    background: var(--card); border-radius: 14px;
+    padding: 16px; border: 1px solid var(--border);
+    display: flex; gap: 14px; align-items: center;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.track-card:active { transform: scale(0.97); }
+.track-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+}
+.track-card.t1 .track-icon { background: rgba(168,107,255,0.15); }
+.track-card.t2 .track-icon { background: rgba(0,217,163,0.15); }
+.track-card.t3 .track-icon { background: rgba(77,157,255,0.15); }
+.track-card.t4 .track-icon { background: rgba(255,107,157,0.15); }
+.track-card.t5 .track-icon { background: rgba(255,217,61,0.15); }
+.track-body { flex: 1; min-width: 0; }
+.track-name { font-size: 14px; font-weight: 800; margin-bottom: 3px; }
+.track-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; margin-bottom: 4px; }
+.track-audience {
+    font-size: 10px; color: var(--orange); font-weight: 600;
+}
+
+/* ========== Comparison Table ========== */
+.compare-table {
+    background: var(--card); border-radius: 16px;
+    border: 1px solid var(--border); overflow: hidden;
+}
+.compare-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1.2fr;
+    border-bottom: 1px solid var(--border);
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row.header {
+    background: var(--card2);
+}
+.compare-cell {
+    padding: 12px 8px; font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; line-height: 1.4;
+    border-right: 1px solid var(--border);
+}
+.compare-cell:last-child { border-right: none; }
+.compare-row.header .compare-cell {
+    font-size: 11px; font-weight: 800; padding: 14px 8px;
+}
+.compare-cell.label {
+    font-weight: 700; color: var(--text);
+    background: rgba(255,255,255,0.02);
+}
+.compare-cell.trad { color: var(--text-mute); }
+.compare-cell.normal { color: var(--text-mute); }
+.compare-cell.cf {
+    color: var(--orange); font-weight: 600;
+    background: rgba(255,107,26,0.06);
+    position: relative;
+}
+.compare-row.header .compare-cell.cf {
+    color: #fff;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    text-shadow: 0 0 12px rgba(255,107,26,0.6);
+}
+.compare-cell.cf::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: inset 0 0 12px rgba(255,107,26,0.08);
+    pointer-events: none;
+}
+
+/* ========== Roadmap ========== */
+.roadmap {
+    position: relative; padding-left: 28px;
+}
+.roadmap::before {
+    content: ''; position: absolute;
+    left: 10px; top: 8px; bottom: 8px; width: 2px;
+    background: linear-gradient(180deg, var(--purple), var(--blue), var(--green), var(--orange), var(--pink));
+    border-radius: 1px;
+}
+.roadmap-item {
+    position: relative; margin-bottom: 20px;
+}
+.roadmap-item:last-child { margin-bottom: 0; }
+.roadmap-dot {
+    position: absolute; left: -24px; top: 2px;
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 3px solid var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; z-index: 1;
+}
+.roadmap-item.r1 .roadmap-dot { background: var(--purple); box-shadow: 0 0 10px rgba(168,107,255,0.5); }
+.roadmap-item.r2 .roadmap-dot { background: var(--blue); box-shadow: 0 0 10px rgba(77,157,255,0.5); }
+.roadmap-item.r3 .roadmap-dot { background: var(--green); box-shadow: 0 0 10px rgba(0,217,163,0.5); }
+.roadmap-item.r4 .roadmap-dot { background: var(--cyan); box-shadow: 0 0 10px rgba(0,217,255,0.5); }
+.roadmap-item.r5 .roadmap-dot { background: var(--yellow); box-shadow: 0 0 10px rgba(255,217,61,0.5); }
+.roadmap-item.r6 .roadmap-dot { background: var(--orange); box-shadow: 0 0 10px rgba(255,107,26,0.5); }
+.roadmap-item.r7 .roadmap-dot { background: var(--pink); box-shadow: 0 0 10px rgba(255,107,157,0.5); }
+.roadmap-card {
+    background: var(--card); border-radius: 12px;
+    padding: 14px 16px; border: 1px solid var(--border);
+}
+.roadmap-time {
+    font-size: 11px; font-weight: 800;
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+}
+.roadmap-item.r1 .roadmap-time { color: var(--purple); }
+.roadmap-item.r2 .roadmap-time { color: var(--blue); }
+.roadmap-item.r3 .roadmap-time { color: var(--green); }
+.roadmap-item.r4 .roadmap-time { color: var(--cyan); }
+.roadmap-item.r5 .roadmap-time { color: var(--yellow); }
+.roadmap-item.r6 .roadmap-time { color: var(--orange); }
+.roadmap-item.r7 .roadmap-time { color: var(--pink); }
+.roadmap-time .icon { font-size: 14px; }
+.roadmap-desc {
+    font-size: 12px; color: var(--text-dim); line-height: 1.6;
+}
+
+/* ========== Founder ========== */
+.founder-card {
+    background: var(--card); border-radius: 18px;
+    padding: 32px 24px; border: 1px solid var(--border);
+    text-align: center; position: relative; overflow: hidden;
+}
+.founder-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--purple), var(--blue));
+}
+.founder-card::after {
+    content: ''; position: absolute;
+    top: -40px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,26,0.08), transparent 70%);
+    pointer-events: none;
+}
+.founder-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; font-weight: 900; color: #fff;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 30px rgba(255,107,26,0.3);
+    position: relative; z-index: 1;
+}
+.founder-quote {
+    font-size: 14px; color: var(--text); line-height: 1.9;
+    margin-bottom: 20px; position: relative; z-index: 1;
+    text-align: left;
+}
+.founder-quote::before {
+    content: '"'; font-size: 48px; color: var(--orange);
+    opacity: 0.3; position: absolute; top: -16px; left: -8px;
+    font-family: Georgia, serif; line-height: 1;
+}
+.founder-sign {
+    font-size: 13px; font-weight: 700; color: var(--orange);
+    position: relative; z-index: 1;
+}
+.founder-sign .role {
+    font-size: 11px; color: var(--text-mute); font-weight: 500;
+    margin-top: 2px;
+}
+
+/* ========== Bottom CTA ========== */
+.bottom-cta {
+    background: linear-gradient(135deg, rgba(255,107,26,0.12), rgba(168,107,255,0.08));
+    border-radius: 18px;
+    padding: 32px 24px;
+    border: 2px solid rgba(255,107,26,0.25);
+    text-align: center;
+    position: relative; overflow: hidden;
+    box-shadow: 0 0 40px rgba(255,107,26,0.08);
+}
+.bottom-cta::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow), var(--orange));
+}
+.bottom-cta-title {
+    font-size: 22px; font-weight: 900;
+    line-height: 1.3; margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff, var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.bottom-cta-sub {
+    font-size: 13px; color: var(--text-dim);
+    margin-bottom: 24px;
+}
+.bottom-cta-sub strong { color: var(--orange); }
+.bottom-cta-buttons {
+    display: flex; flex-direction: column; gap: 10px;
+}
 .faq-q {
     display: flex; align-items: center; justify-content: space-between;
     padding: 16px 18px; font-size: 14px; font-weight: 700;
@@ -624,10 +876,10 @@ a:active { color: var(--orange); }
         <div class="hero-stats">
             <div class="hero-stat">
                 <div class="num" style="color:var(--orange)" data-count="6" data-suffix="">0</div>
-                <div class="lbl">核心工坊</div>
+                <div class="lbl">大工坊</div>
             </div>
             <div class="hero-stat">
-                <div class="num" style="color:var(--purple)" data-count="" data-text="1-200万">1-200万</div>
+                <div class="num" style="color:var(--purple)" data-count="" data-text="¥1-200万">¥1-200万</div>
                 <div class="lbl">项目共创</div>
             </div>
             <div class="hero-stat">
@@ -791,6 +1043,177 @@ a:active { color: var(--orange); }
                     <li>企业服务解决方案</li>
                 </ul>
                 <div class="workshop-foot">稳定现金流，支撑整个生态</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== OPC方法论专区 ========== -->
+<div class="section" id="opc" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">METHODOLOGY</div>
+        <div class="section-title">OPC方法论 · 我们定义AI一人公司</div>
+        <div class="section-sub">1名核心决策者 + N个AI Agent = 分布式智能生产架构</div>
+
+        <div class="opc-intro">
+            <div class="opc-formula">
+                1名核心决策者 <span class="plus">+</span> N个AI Agent <span class="eq">=</span> 分布式智能生产架构
+            </div>
+        </div>
+
+        <div class="opc-layers">
+            <div class="opc-layer l1">
+                <div class="opc-layer-num">01</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🎯</span>业务设计</div>
+                    <div class="opc-layer-desc">选择窄切口、高频率、可标准化的痛点</div>
+                </div>
+            </div>
+            <div class="opc-layer l2">
+                <div class="opc-layer-num">02</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">⚙️</span>工作流设计</div>
+                    <div class="opc-layer-desc">每个流程节点明确定义触发器、输入、输出、审核规则</div>
+                </div>
+            </div>
+            <div class="opc-layer l3">
+                <div class="opc-layer-num">03</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🤖</span>Agent设计</div>
+                    <div class="opc-layer-desc">小任务原则，每个Agent仅承载单一原子能力</div>
+                </div>
+            </div>
+            <div class="opc-layer l4">
+                <div class="opc-layer-num">04</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🛡️</span>人控节点</div>
+                    <div class="opc-layer-desc">划定AI不可逾越的红线：退款审批、法律纠纷、财务决策</div>
+                </div>
+            </div>
+            <div class="opc-layer l5">
+                <div class="opc-layer-num">05</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🔄</span>持续维护</div>
+                    <div class="opc-layer-desc">AI系统有天然退化属性，需要持续迭代</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 黄金赛道展示 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">GOLDEN TRACKS</div>
+        <div class="section-title">5大黄金赛道</div>
+        <div class="section-sub">OPC模式下最具爆发力的五个方向</div>
+
+        <div class="track-list">
+            <div class="track-card t1">
+                <div class="track-icon">🌍</div>
+                <div class="track-body">
+                    <div class="track-name">跨境电商全栈运营</div>
+                    <div class="track-desc">AI情报+投放+文案+客服</div>
+                    <div class="track-audience">适合：跨境卖家、外贸创业者</div>
+                </div>
+            </div>
+            <div class="track-card t2">
+                <div class="track-icon">🎬</div>
+                <div class="track-body">
+                    <div class="track-name">数字内容AIGC工业化</div>
+                    <div class="track-desc">选题→脚本→视觉→后期→分发</div>
+                    <div class="track-audience">适合：内容创作者、MCN机构</div>
+                </div>
+            </div>
+            <div class="track-card t3">
+                <div class="track-icon">📚</div>
+                <div class="track-body">
+                    <div class="track-name">教育SaaS与知识服务</div>
+                    <div class="track-desc">课程研发+教学设计+招生运营</div>
+                    <div class="track-audience">适合：知识付费从业者、教育机构</div>
+                </div>
+            </div>
+            <div class="track-card t4">
+                <div class="track-icon">🎨</div>
+                <div class="track-body">
+                    <div class="track-name">设计与创意服务</div>
+                    <div class="track-desc">AI出图+排版+配色+渲染</div>
+                    <div class="track-audience">适合：设计师、创意工作者</div>
+                </div>
+            </div>
+            <div class="track-card t5">
+                <div class="track-icon">💻</div>
+                <div class="track-body">
+                    <div class="track-name">技术服务与SaaS开发</div>
+                    <div class="track-desc">AI Agent代码实现+测试+部署</div>
+                    <div class="track-audience">适合：开发者、技术创业者</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 对比优势表 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">WHY US</div>
+        <div class="section-title">为什么选Crazy Friday</div>
+        <div class="section-sub">同维度对比，碾压传统服务商与普通AI工具</div>
+
+        <div class="compare-table">
+            <div class="compare-row header">
+                <div class="compare-cell label">对比项</div>
+                <div class="compare-cell trad">传统服务商</div>
+                <div class="compare-cell normal">普通AI工具</div>
+                <div class="compare-cell cf">Crazy Friday</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">服务模式</div>
+                <div class="compare-cell trad">单点服务</div>
+                <div class="compare-cell normal">自助使用</div>
+                <div class="compare-cell cf">母系统全链路</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">定制能力</div>
+                <div class="compare-cell trad">模板化</div>
+                <div class="compare-cell normal">无定制</div>
+                <div class="compare-cell cf">深度定制+持续迭代</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">方法论</div>
+                <div class="compare-cell trad">无</div>
+                <div class="compare-cell normal">无</div>
+                <div class="compare-cell cf">OPC五层架构</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">孵化支持</div>
+                <div class="compare-cell trad">无</div>
+                <div class="compare-cell normal">无</div>
+                <div class="compare-cell cf">1-200万项目共创</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">工具整合</div>
+                <div class="compare-cell trad">单一工具</div>
+                <div class="compare-cell normal">工具集合</div>
+                <div class="compare-cell cf">6大工坊协同</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">知识体系</div>
+                <div class="compare-cell trad">碎片化</div>
+                <div class="compare-cell normal">无</div>
+                <div class="compare-cell cf">AI营系统课程</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">社区生态</div>
+                <div class="compare-cell trad">无</div>
+                <div class="compare-cell normal">无</div>
+                <div class="compare-cell cf">创作者网络</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">数据安全</div>
+                <div class="compare-cell trad">云端存储</div>
+                <div class="compare-cell normal">不确定</div>
+                <div class="compare-cell cf">本地优先+可导出</div>
             </div>
         </div>
     </div>
@@ -1066,21 +1489,83 @@ a:active { color: var(--orange); }
     </div>
 </div>
 
-<!-- ========== 未来愿景 ========== -->
+<!-- ========== 创始人说 ========== -->
 <div class="section" style="padding-top: 0;">
     <div class="container">
-        <div class="section-eyebrow">VISION</div>
-        <div class="section-title">为什么有长期价值</div>
-        <div class="section-sub">母系统的价值在于持续产生新项目</div>
+        <div class="section-eyebrow">FOUNDER</div>
+        <div class="section-title">创始人说</div>
+        <div class="section-sub">来自时铭的分享</div>
 
-        <div class="value-card">
-            <ul class="value-list">
-                <li><strong>项目孵化机制</strong>：每年可孕育多个新项目，验证成功即纳入生态</li>
-                <li><strong>业务线互相赋能</strong>：工具库、课程、咨询、接单工坊彼此导流，形成闭环</li>
-                <li><strong>现金流+股权双轮驱动</strong>：服务带来稳定现金流，孵化投资带来长期增值</li>
-                <li><strong>网络效应</strong>：服务越多创业者，平台数据和资源越丰富，壁垒越高</li>
-                <li><strong>AI能力沉淀</strong>：每个项目积累的方法论、SOP、工作流都可复用</li>
-            </ul>
+        <div class="founder-card">
+            <div class="founder-avatar">时</div>
+            <div class="founder-quote">
+                2013年我开始做互联网，2026年我决定用AI重新定义一人公司。Crazy Friday不只是一个服务平台，而是一套完整的商业操作系统。我相信，未来最好的公司可能只有一个人，但这个人背后有100个AI员工。
+            </div>
+            <div class="founder-sign">
+                时铭
+                <div class="role">Crazy Friday创始人</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 发展路线图 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">ROADMAP</div>
+        <div class="section-title">发展路线图</div>
+        <div class="section-sub">从母系统1.0到行业标准制定者</div>
+
+        <div class="roadmap">
+            <div class="roadmap-item r1">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">🚀</span>2026 Q3</div>
+                    <div class="roadmap-desc">母系统1.0上线，6大工坊就位</div>
+                </div>
+            </div>
+            <div class="roadmap-item r2">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">📈</span>2026 Q4</div>
+                    <div class="roadmap-desc">服务100+客户，孵化5个项目</div>
+                </div>
+            </div>
+            <div class="roadmap-item r3">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">🤖</span>2027 Q1</div>
+                    <div class="roadmap-desc">AI Agent市场上线，超脑工坊开放</div>
+                </div>
+            </div>
+            <div class="roadmap-item r4">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">🌐</span>2027 Q2</div>
+                    <div class="roadmap-desc">社区1000+创作者</div>
+                </div>
+            </div>
+            <div class="roadmap-item r5">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">💎</span>2027 Q4</div>
+                    <div class="roadmap-desc">孵化项目首个估值过千万</div>
+                </div>
+            </div>
+            <div class="roadmap-item r6">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">🔄</span>2028</div>
+                    <div class="roadmap-desc">母系统2.0，AI工具生态闭环</div>
+                </div>
+            </div>
+            <div class="roadmap-item r7">
+                <div class="roadmap-dot"></div>
+                <div class="roadmap-card">
+                    <div class="roadmap-time"><span class="icon">👑</span>2030</div>
+                    <div class="roadmap-desc">成为AI一人公司领域标准制定者</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1146,6 +1631,20 @@ a:active { color: var(--orange); }
                 <div class="faq-a">
                     <div class="faq-a-inner">数据存在你自己的浏览器本地，不会上传服务器。我们高度重视用户隐私，所有敏感数据都在本地处理，确保你的信息安全。</div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 底部CTA ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="bottom-cta">
+            <div class="bottom-cta-title">成为AI一人公司的早期建设者</div>
+            <div class="bottom-cta-sub">前<strong>100名</strong>合作伙伴享受创始会员权益</div>
+            <div class="bottom-cta-buttons">
+                <a href="#incubator" class="btn-primary">申请项目共创 →</a>
+                <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="btn-secondary">定制AI工作台 →</a>
             </div>
         </div>
     </div>
@@ -1321,7 +1820,9 @@ function initScrollReveal() {
         '.section, .biz-card, .workshop-card, .value-card, .about-card, ' +
         '.incubator-section, .contact-card, .chain-section, .eco-section, ' +
         '.testimonial-card, .faq-item, .direction-item, .about-item, ' +
-        '.invest-item, .flow-item, .chain-item, .eco-item'
+        '.invest-item, .flow-item, .chain-item, .eco-item, ' +
+        '.opc-layer, .track-card, .compare-table, .roadmap-item, ' +
+        '.founder-card, .bottom-cta, .opc-intro'
     );
     // Filter out the hero section (first .section or elements in hero)
     if ('IntersectionObserver' in window) {
