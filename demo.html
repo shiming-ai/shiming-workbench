@@ -34,7 +34,7 @@ body {
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding-bottom: 70px;
+    padding-bottom: 20px;
     overflow-x: hidden;
 }
 
@@ -769,34 +769,47 @@ body {
 .template-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
 .template-desc { font-size: 10px; color: var(--text-mute); }
 
-/* 展示版浮动横条 */
-.demo-bar {
+/* 展示版浮动按钮 */
+.demo-fab {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(135deg, rgba(255,107,26,0.95), rgba(166,107,255,0.95));
-    color: #fff;
-    text-align: center;
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 600;
+    bottom: 20px;
+    right: 16px;
     z-index: 95;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
 }
-.demo-bar a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+.demo-fab-btn {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,107,26,0.4);
+    transition: transform 0.2s;
+    position: relative;
 }
-.demo-bar .demo-arrow {
-    font-size: 16px;
-    animation: bounce 1s infinite;
+.demo-fab-btn:active { transform: scale(0.92); }
+.demo-fab-btn::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 50%; border: 2px solid rgba(255,107,26,0.4);
+    animation: pulse 2s infinite;
 }
-@keyframes bounce {
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+.demo-fab-panel {
+    position: absolute; bottom: 60px; right: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 16px;
+    min-width: 200px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    display: none;
+}
+.demo-fab-panel.show { display: block; animation: fadeInUp 0.25s; }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
     0%, 100% { transform: translateX(0); }
     50% { transform: translateX(4px); }
 }
@@ -1401,16 +1414,15 @@ body {
 
 <div class="toast" id="toast"></div>
 
-<!-- 展示版浮动横条 -->
-<div class="demo-bar" style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-    <div style="text-align:left;flex:1">
-        <div style="font-size:12px;opacity:0.9">想要一套自己的？</div>
-        <div style="font-size:13px;font-weight:700">加微信定制 →</div>
+<!-- 展示版浮动按钮 -->
+<div class="demo-fab">
+    <div class="demo-fab-panel" id="fabPanel">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">想要一套自己的？</div>
+        <div onclick="copyDemoWx('Yshim16506')" style="background:var(--bg);padding:8px 12px;border-radius:8px;font-size:13px;color:var(--orange);cursor:pointer;margin-bottom:6px;font-weight:600;text-align:center">微信① Yshim16506</div>
+        <div onclick="copyDemoWx('R26184352Y')" style="background:var(--bg);padding:8px 12px;border-radius:8px;font-size:13px;color:var(--orange);cursor:pointer;font-weight:600;text-align:center">微信② R26184352Y</div>
+        <div style="font-size:10px;color:var(--text-mute);text-align:center;margin-top:8px">点击复制微信号</div>
     </div>
-    <div style="display:flex;gap:6px">
-        <div onclick="copyDemoWx('Yshim16506')" style="background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">Yshim16506</div>
-        <div onclick="copyDemoWx('R26184352Y')" style="background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">R26184352Y</div>
-    </div>
+    <div class="demo-fab-btn" onclick="document.getElementById('fabPanel').classList.toggle('show')">💬</div>
 </div>
 
 <script>
