@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
 <title>时铭 · AI工作台定制 | 一人公司的数字化武器</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -1257,17 +1258,57 @@ function submitOrder() {
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(orderText).then(() => {
-            toast('✅ 订单已复制！微信号也在里面，加我即可');
-            setTimeout(() => {
-                document.getElementById('oName').value = '';
-                document.getElementById('oContact').value = '';
-                document.getElementById('oNeeds').value = '';
-            }, 2500);
+            showContactPanel();
+            document.getElementById('oName').value = '';
+            document.getElementById('oContact').value = '';
+            document.getElementById('oNeeds').value = '';
         }).catch(() => {
             fallbackCopy(orderText);
+            showContactPanel();
         });
     } else {
         fallbackCopy(orderText);
+        showContactPanel();
+    }
+}
+
+function showContactPanel() {
+    var panel = document.getElementById('contactPanel');
+    if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'contactPanel';
+        panel.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px';
+        panel.innerHTML = `
+            <div onclick="event.stopPropagation()" style="background:var(--card);max-width:340px;width:100%;border-radius:20px;padding:28px 24px;text-align:center;border:1px solid var(--border)">
+                <div style="font-size:32px;margin-bottom:12px">🎉</div>
+                <div style="font-size:17px;font-weight:800;margin-bottom:8px">订单已复制到剪贴板！</div>
+                <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;line-height:1.6">
+                    打开微信，搜索以下微信号<br>粘贴订单信息发给我即可确认
+                </div>
+                <div style="background:var(--bg);border-radius:14px;padding:16px;margin-bottom:16px;border:1px dashed var(--border)">
+                    <div style="font-size:11px;color:var(--text-mute);margin-bottom:6px">📞 加微信确认订单</div>
+                    <div onclick="copyWx('Yshim16506')" style="font-size:16px;font-weight:700;color:var(--orange);cursor:pointer;margin-bottom:8px">微信①：Yshim16506</div>
+                    <div onclick="copyWx('R26184352Y')" style="font-size:16px;font-weight:700;color:var(--orange);cursor:pointer">微信②：R26184352Y</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:8px">点击微信号即可复制</div>
+                </div>
+                <button onclick="document.getElementById('contactPanel').remove()" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--orange),#FF8E53);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer">我知道了</button>
+            </div>
+        `;
+        panel.onclick = function() { panel.remove(); };
+        document.body.appendChild(panel);
+    }
+}
+
+function copyWx(id) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(() => toast('✅ 已复制：' + id));
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = id;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); toast('✅ 已复制：' + id); } catch(e) { toast('请手动复制：' + id); }
+        document.body.removeChild(ta);
     }
 }
 
