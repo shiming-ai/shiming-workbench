@@ -2,9 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0b0f">
 <meta name="description" content="Crazy Friday 疯狂星期五 · AI一人公司母系统 | 让一个人拥有一家公司的AI生产力">
 <title>Crazy Friday 疯狂星期五 · AI一人公司母系统</title>
 <style>
@@ -404,7 +405,7 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
 /* ========== Footer ========== */
 .footer {
-    text-align: center; padding: 40px 18px 50px;
+    text-align: center; padding: 40px 18px 80px;
     color: var(--text-mute); font-size: 11px;
     border-top: 1px solid var(--border);
 }
@@ -636,56 +637,8 @@ a:active { color: var(--orange); }
 .opc-layer-desc {
     font-size: 12px; color: var(--text-dim); line-height: 1.6;
 }
-/* ========== 可折叠板块 ========== */
-.collapsible-section {
-    margin-bottom: 14px;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
-    background: var(--card);
-}
-.collapsible-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 20px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.collapsible-header:active { background: var(--card2); }
-.collapsible-header-left {
-    display: flex; align-items: center; gap: 10px;
-}
-.collapsible-icon {
-    font-size: 20px;
-}
-.collapsible-title {
-    font-size: 15px; font-weight: 700;
-}
-.collapsible-tag {
-    font-size: 10px; padding: 2px 8px; border-radius: 4px;
-    font-weight: 600; margin-left: 8px;
-}
-.collapsible-arrow {
-    font-size: 14px; color: var(--text-mute);
-    transition: transform 0.3s;
-}
-.collapsible-section.open .collapsible-arrow {
-    transform: rotate(180deg);
-}
-.collapsible-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-}
-.collapsible-section.open .collapsible-body {
-    max-height: 5000px;
-    transition: max-height 0.6s ease-in;
-}
-.collapsible-inner {
-    padding: 0 18px 18px;
-}
 
+<noscript><style>.section, .workshop-card, .value-card, .about-card, .incubator-section, .contact-card, .chain-section, .eco-section, .testimonial-card, .faq-item, .direction-item, .about-item, .invest-item, .flow-item, .chain-item, .eco-item { opacity: 1 !important; transform: none !important; }</style></noscript>
 </style>
 </head>
 <body>
@@ -1284,7 +1237,7 @@ a:active { color: var(--orange); }
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a">
-                    <div class="faq-a-inner">最快3天，根据需求复杂度1-3天即可完成交付。从需求梳理到产品上线，高效交付是我们的核心能力之一。</div>
+                    <div class="faq-a-inner">根据需求复杂度1-3天即可完成交付，最快1天出demo。从需求梳理到产品上线，高效交付是我们的核心能力之一。</div>
                 </div>
             </div>
             <div class="faq-item">
@@ -1434,10 +1387,6 @@ a:active { color: var(--orange); }
 <a href="#" class="back-top" id="backTop" aria-label="返回顶部">↑</a>
 
 <script>
-function toggleCollapse(el) {
-    el.classList.toggle('open');
-}
-
 function toast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
