@@ -1412,7 +1412,7 @@ body {
 const DEMO_INCOMES = [
     { amount: 800, source: '小红书广告合作', time: '2026.07.25 10:00' },
     { amount: 1200, source: '知识付费课程销售', time: '2026.07.25 14:30' },
-    { amount: 599, source: 'AI工作台定制', time: '2026.07.25 16:00' },
+    { amount: 799, source: 'AI工作台定制', time: '2026.07.25 16:00' },
     { amount: 350, source: '闲鱼AI工具售卖', time: '2026.07.24 20:15' },
 ];
 
@@ -1422,7 +1422,7 @@ const DEMO_EXPENSES = [
 ];
 
 const DEMO_CRM = [
-    { name: '张总', business: 'AI工作台定制', amount: 599, cost: 0, platform: '微信', promiseDays: '3', time: '2026.07.25 16:00', createdDate: '2026.07.25', status: 'deal', nextFollow: null, deliveryStage: 2 },
+    { name: '张总', business: 'AI工作台定制', amount: 799, cost: 0, platform: '微信', promiseDays: '5', time: '2026.07.25 16:00', createdDate: '2026.07.25', status: 'deal', nextFollow: null, deliveryStage: 2 },
     { name: '李姐', business: '电商报白', amount: 1500, cost: 200, platform: '抖音', promiseDays: '5', time: '2026.07.24 11:00', createdDate: '2026.07.24', status: 'contact', nextFollow: '2026.07.28', deliveryStage: 1 },
     { name: '王哥', business: '知识付费', amount: 299, cost: 0, platform: '小红书', promiseDays: '1', time: '2026.07.24 09:30', createdDate: '2026.07.24', status: 'deal', nextFollow: null, deliveryStage: 4 },
     { name: '陈总', business: '设计外包', amount: 2000, cost: 0, platform: '私域', promiseDays: '7', time: '2026.07.23 14:00', createdDate: '2026.07.23', status: 'lead', nextFollow: null, deliveryStage: 0 },
@@ -2314,9 +2314,9 @@ const bizLineConfig = [
         name: 'AI定制服务',
         icon: '🛠',
         color: '#FF6B1A',
-        desc: '工作台定制 · 客单199-1999',
+        desc: '工作台定制 · 客单199-2999',
         monthGoal: 30000,
-        revenue: 599,
+        revenue: 799,
         steps: [
             '作品集整理（本展示页就是案例）',
             '闲鱼+知乎上架AI定制服务',
@@ -2402,7 +2402,7 @@ function renderChannelGoals() {
         { channel: '知乎', icon: '📝', goal: '15文章·1500关注·5咨询/月', revenue: '引流' },
         { channel: '小红书', icon: '📕', goal: '20笔记·5000粉·3咨询/月', revenue: '2万' },
         { channel: '抖音', icon: '🎬', goal: '周更3条·1万粉', revenue: '5千' },
-        { channel: 'AI定制', icon: '🛠', goal: '5-10单/月·客单199-1999', revenue: '3万' },
+        { channel: 'AI定制', icon: '🛠', goal: '5-10单/月·客单199-2999', revenue: '3万' },
     ];
     const container = document.getElementById('channelGoals');
     container.innerHTML = goals.map(g => `
@@ -2504,28 +2504,28 @@ const serviceTemplates = [
         icon: '🎯', name: '个人IP/一人公司版', color: 'var(--orange)',
         target: '博主、自媒体、一人公司、超级个体',
         features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '搞钱作战室', '目标进度环'],
-        price: '499定制+99/月', badge: '🔥 热门',
+        price: '799定制+99/月', badge: '🔥 热门',
         desc: '你正在用的就是这版，经过实战验证'
     },
     {
         icon: '📦', name: '电商卖家版', color: 'var(--blue)',
         target: '淘宝/拼多多/抖音电商卖家',
         features: ['订单管理看板', '客户CRM', '库存追踪', '利润自动计算', '退款追踪', '供应商管理'],
-        price: '499定制+99/月', badge: '',
+        price: '799定制+99/月', badge: '',
         desc: '订单+客户+库存+利润，一个页面全搞定'
     },
     {
         icon: '💻', name: '自由职业者版', color: 'var(--purple)',
         target: '设计师、程序员、文案、咨询顾问',
         features: ['项目管理', '客户追踪', '时间记录', '报价生成器', '收入统计', '作品集展示'],
-        price: '499定制+99/月', badge: '',
+        price: '799定制+99/月', badge: '',
         desc: '接单+交付+收款，自由职业者的全套工具'
     },
     {
         icon: '🏪', name: '餐饮/实体店版', color: 'var(--yellow)',
         target: '餐饮老板、奶茶店、个体店',
         features: ['营业统计', '员工排班', '供应商管理', '会员CRM', '每日盘点', '成本核算'],
-        price: '1999定制+199/月', badge: '💰 高客单',
+        price: '2999定制+199/月', badge: '💰 高客单',
         desc: '实体店专属，营业+排班+会员+盘点'
     },
     {
@@ -2545,13 +2545,13 @@ const pricingPlans = [
         popular: false
     },
     {
-        name: '商业定制版', price: 499, monthly: 99, color: 'var(--orange)',
+        name: '商业定制版', price: 799, monthly: 99, color: 'var(--orange)',
         features: ['选1个模板', '定制功能模块', '3次修改机会', '1对1需求沟通', '永久域名', '30天售后', '数据导入'],
         target: '一人公司/自由职业/电商',
         popular: true
     },
     {
-        name: '深度定制版', price: 1999, monthly: 199, color: 'var(--red)',
+        name: '深度定制版', price: 2999, monthly: 199, color: 'var(--red)',
         features: ['深度定制', '专属功能开发', '不限修改次数', '1对1专属顾问', '永久域名', '90天售后', '数据导入+培训', '优先支持'],
         target: '小微企业/团队/餐饮',
         popular: false
@@ -2562,7 +2562,7 @@ const deliverySteps = [
     { step: 1, title: '提交需求', desc: '填写表单，描述你的业务和需求', time: '1分钟' },
     { step: 2, title: '微信沟通', desc: '我加你微信，确认细节和报价', time: '1小时内' },
     { step: 3, title: '支付定金', desc: '确认后支付50%定金，开始制作', time: '当天' },
-    { step: 4, title: '定制开发', desc: '用AI快速开发，实时沟通进度', time: '1-3天' },
+    { step: 4, title: '定制开发', desc: '用AI快速开发，实时沟通进度', time: '1-5天' },
     { step: 5, title: '交付验收', desc: '发你链接，手机打开就能用', time: '第3天' },
     { step: 6, title: '付尾款', desc: '满意后付尾款，开始售后服务', time: '验收后' },
 ];
