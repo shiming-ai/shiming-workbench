@@ -585,6 +585,107 @@ a:active { color: var(--orange); }
     padding: 0 18px 16px;
     font-size: 13px; color: var(--text-dim); line-height: 1.8;
 }
+
+/* ========== OPC Methodology ========== */
+.opc-intro {
+    text-align: center; margin-bottom: 20px;
+    padding: 16px 14px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(168,107,255,0.08), rgba(77,157,255,0.05));
+    border: 1px solid rgba(168,107,255,0.2);
+}
+.opc-formula {
+    font-size: 13px; color: var(--text); font-weight: 600;
+    line-height: 1.7;
+}
+.opc-formula .plus { color: var(--orange); font-weight: 800; }
+.opc-formula .eq { color: var(--green); font-weight: 800; }
+.opc-layers {
+    display: flex; flex-direction: column; gap: 12px;
+}
+.opc-layer {
+    background: var(--card); border-radius: 16px;
+    padding: 18px 16px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    display: flex; gap: 14px; align-items: flex-start;
+}
+.opc-layer::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+}
+.opc-layer.l1::before { background: linear-gradient(180deg, var(--purple), #C89AFF); }
+.opc-layer.l2::before { background: linear-gradient(180deg, var(--blue), #6BB6FF); }
+.opc-layer.l3::before { background: linear-gradient(180deg, var(--green), #00F5B8); }
+.opc-layer.l4::before { background: linear-gradient(180deg, var(--orange), #FF8E53); }
+.opc-layer.l5::before { background: linear-gradient(180deg, var(--pink), var(--red)); }
+.opc-layer-num {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; flex-shrink: 0;
+    color: #fff;
+}
+.opc-layer.l1 .opc-layer-num { background: rgba(168,107,255,0.2); color: var(--purple); }
+.opc-layer.l2 .opc-layer-num { background: rgba(77,157,255,0.2); color: var(--blue); }
+.opc-layer.l3 .opc-layer-num { background: rgba(0,217,163,0.2); color: var(--green); }
+.opc-layer.l4 .opc-layer-num { background: rgba(255,107,26,0.2); color: var(--orange); }
+.opc-layer.l5 .opc-layer-num { background: rgba(255,107,157,0.2); color: var(--pink); }
+.opc-layer-body { flex: 1; min-width: 0; }
+.opc-layer-title {
+    font-size: 14px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+}
+.opc-layer-title .icon { font-size: 16px; }
+.opc-layer-desc {
+    font-size: 12px; color: var(--text-dim); line-height: 1.6;
+}
+/* ========== 可折叠板块 ========== */
+.collapsible-section {
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--card);
+}
+.collapsible-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.collapsible-header:active { background: var(--card2); }
+.collapsible-header-left {
+    display: flex; align-items: center; gap: 10px;
+}
+.collapsible-icon {
+    font-size: 20px;
+}
+.collapsible-title {
+    font-size: 15px; font-weight: 700;
+}
+.collapsible-tag {
+    font-size: 10px; padding: 2px 8px; border-radius: 4px;
+    font-weight: 600; margin-left: 8px;
+}
+.collapsible-arrow {
+    font-size: 14px; color: var(--text-mute);
+    transition: transform 0.3s;
+}
+.collapsible-section.open .collapsible-arrow {
+    transform: rotate(180deg);
+}
+.collapsible-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+.collapsible-section.open .collapsible-body {
+    max-height: 5000px;
+    transition: max-height 0.6s ease-in;
+}
+.collapsible-inner {
+    padding: 0 18px 18px;
+}
+
 </style>
 </head>
 <body>
@@ -1222,6 +1323,10 @@ a:active { color: var(--orange); }
 <a href="#" class="back-top" id="backTop" aria-label="返回顶部">↑</a>
 
 <script>
+function toggleCollapse(el) {
+    el.classList.toggle('open');
+}
+
 function toast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -1419,3 +1524,239 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+<!-- ========== 可折叠：商业矩阵 ========== -->
+<div class="collapsible-section" id="matrix" onclick="toggleCollapse(this)">
+    <div class="collapsible-header">
+        <div class="collapsible-header-left">
+            <span class="collapsible-icon">📊</span>
+            <span class="collapsible-title">自有商业矩阵</span>
+            <span class="collapsible-tag" style="background:rgba(0,217,163,0.15);color:var(--green)">6条业务线</span>
+        </div>
+        <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+        <div class="collapsible-inner">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px">不只是帮你做，我们自己也在用AI做生意。每条业务线都是真实运营的资产</div>
+            
+        <div class="section-eyebrow">BUSINESS MATRIX</div>
+        <div class="section-title">自有商业矩阵</div>
+        <div class="section-sub">不只是帮你做，我们自己也在用AI做生意。每条业务线都是真实运营的资产</div>
+
+        <div class="biz-grid">
+            <!-- AI漫剧 -->
+            <div class="biz-card b3">
+                <div class="biz-header">
+                    <div class="biz-icon">🎬</div>
+                    <div class="biz-name">AI漫剧工坊</div>
+                    <span class="biz-tag">内容资产</span>
+                </div>
+                <div class="biz-desc">
+                    用AI技术创作漫剧内容，从剧本到角色全流程AI化。打造可复制的AI内容IP矩阵，多平台分发变现。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">AI剧本生成</span>
+                    <span class="biz-feature">角色设计</span>
+                    <span class="biz-feature">系列连载</span>
+                    <span class="biz-feature">多平台分发</span>
+                    <span class="biz-feature">IP孵化</span>
+                    <span class="biz-feature">广告变现</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--green)">内容变现<small> /IP增值</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--green)">合作咨询 →</a>
+                </div>
+            </div>
+
+            <!-- AI广告 -->
+            <div class="biz-card b1">
+                <div class="biz-header">
+                    <div class="biz-icon">📣</div>
+                    <div class="biz-name">AI广告引擎</div>
+                    <span class="biz-tag">流量变现</span>
+                </div>
+                <div class="biz-desc">
+                    AI生成广告素材+智能投放优化。用AI替代广告优化师，实现素材批量生产、A/B测试、效果自动优化。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">素材批量生成</span>
+                    <span class="biz-feature">智能投放</span>
+                    <span class="biz-feature">A/B测试</span>
+                    <span class="biz-feature">效果优化</span>
+                    <span class="biz-feature">ROI追踪</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--orange)">流量变现<small> /代投服务</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--orange)">合作咨询 →</a>
+                </div>
+            </div>
+
+            <!-- AI出海 -->
+            <div class="biz-card b2">
+                <div class="biz-header">
+                    <div class="biz-icon">🌍</div>
+                    <div class="biz-name">AI出海工坊</div>
+                    <span class="biz-tag">跨境业务</span>
+                </div>
+                <div class="biz-desc">
+                    AI驱动的跨境电商+多语言内容出海。从选品到多语言文案，从海外流量到跨境支付，全链路AI化。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">AI选品</span>
+                    <span class="biz-feature">多语言文案</span>
+                    <span class="biz-feature">海外流量</span>
+                    <span class="biz-feature">跨境支付</span>
+                    <span class="biz-feature">本地化运营</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--purple)">跨境变现<small> /利润分成</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--purple)">合作咨询 →</a>
+                </div>
+            </div>
+
+            <!-- AI数字人 -->
+            <div class="biz-card b4">
+                <div class="biz-header">
+                    <div class="biz-icon">🧑‍💻</div>
+                    <div class="biz-name">AI数字人</div>
+                    <span class="biz-tag">技术资产</span>
+                </div>
+                <div class="biz-desc">
+                    数字人直播、数字人客服、数字人IP。用AI数字人替代真人出镜，7×24小时不间断运营。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">数字人直播</span>
+                    <span class="biz-feature">数字人客服</span>
+                    <span class="biz-feature">数字人IP</span>
+                    <span class="biz-feature">语音克隆</span>
+                    <span class="biz-feature">形象定制</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--blue)">技术授权<small> /运营分成</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--blue)">合作咨询 →</a>
+                </div>
+            </div>
+
+            <!-- AI内容矩阵 -->
+            <div class="biz-card b5">
+                <div class="biz-header">
+                    <div class="biz-icon">📱</div>
+                    <div class="biz-name">AI内容矩阵</div>
+                    <span class="biz-tag">流量资产</span>
+                </div>
+                <div class="biz-desc">
+                    多平台AI内容批量生产分发。小红书、抖音、知乎、视频号、B站，一个选题AI生成多平台内容。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">一键多平台</span>
+                    <span class="biz-feature">AI文案</span>
+                    <span class="biz-feature">AI图文</span>
+                    <span class="biz-feature">AI视频</span>
+                    <span class="biz-feature">数据追踪</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--yellow)">流量变现<small> /矩阵代运营</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--yellow)">合作咨询 →</a>
+                </div>
+            </div>
+
+            <!-- AI工具开发 -->
+            <div class="biz-card b6">
+                <div class="biz-header">
+                    <div class="biz-icon">🔧</div>
+                    <div class="biz-name">AI工具开发</div>
+                    <span class="biz-tag">产品资产</span>
+                </div>
+                <div class="biz-desc">
+                    自主开发AI工具产品，从需求验证到上线运营。优秀工具可纳入AI应用市场，持续产生收益。
+                </div>
+                <div class="biz-features">
+                    <span class="biz-feature">需求验证</span>
+                    <span class="biz-feature">MVP开发</span>
+                    <span class="biz-feature">产品上线</span>
+                    <span class="biz-feature">持续迭代</span>
+                    <span class="biz-feature">收益分成</span>
+                </div>
+                <div class="biz-footer">
+                    <div class="biz-price" style="color:var(--pink)">产品收入<small> /工具授权</small></div>
+                    <a href="#contact" class="biz-link" style="color:var(--pink)">合作咨询 →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- ========== 可折叠：OPC方法论 ========== -->
+<div class="collapsible-section" id="opc" onclick="toggleCollapse(this)">
+    <div class="collapsible-header">
+        <div class="collapsible-header-left">
+            <span class="collapsible-icon">🧠</span>
+            <span class="collapsible-title">OPC方法论</span>
+            <span class="collapsible-tag" style="background:rgba(168,107,255,0.15);color:var(--purple)">标准制定者</span>
+        </div>
+        <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+        <div class="collapsible-inner">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px">1名核心决策者 + N个AI Agent = 分布式智能生产架构</div>
+            
+        <div class="section-eyebrow">METHODOLOGY</div>
+        <div class="section-title">OPC方法论 · 我们定义AI一人公司</div>
+        <div class="section-sub">1名核心决策者 + N个AI Agent = 分布式智能生产架构</div>
+
+        <div class="opc-intro">
+            <div class="opc-formula">
+                1名核心决策者 <span class="plus">+</span> N个AI Agent <span class="eq">=</span> 分布式智能生产架构
+            </div>
+        </div>
+
+        <div class="opc-layers">
+            <div class="opc-layer l1">
+                <div class="opc-layer-num">01</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🎯</span>业务设计</div>
+                    <div class="opc-layer-desc">选择窄切口、高频率、可标准化的痛点</div>
+                </div>
+            </div>
+            <div class="opc-layer l2">
+                <div class="opc-layer-num">02</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">⚙️</span>工作流设计</div>
+                    <div class="opc-layer-desc">每个流程节点明确定义触发器、输入、输出、审核规则</div>
+                </div>
+            </div>
+            <div class="opc-layer l3">
+                <div class="opc-layer-num">03</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🤖</span>Agent设计</div>
+                    <div class="opc-layer-desc">小任务原则，每个Agent仅承载单一原子能力</div>
+                </div>
+            </div>
+            <div class="opc-layer l4">
+                <div class="opc-layer-num">04</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🛡️</span>人控节点</div>
+                    <div class="opc-layer-desc">划定AI不可逾越的红线：退款审批、法律纠纷、财务决策</div>
+                </div>
+            </div>
+            <div class="opc-layer l5">
+                <div class="opc-layer-num">05</div>
+                <div class="opc-layer-body">
+                    <div class="opc-layer-title"><span class="icon">🔄</span>持续维护</div>
+                    <div class="opc-layer-desc">AI系统有天然退化属性，需要持续迭代</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+</div>
+
+
