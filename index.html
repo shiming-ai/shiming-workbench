@@ -1670,8 +1670,8 @@ body {
             </select>
             <select id="orderLevel" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;margin-bottom:8px">
                 <option value="基础版199">基础版 199元定制+99/月</option>
-                <option value="标准版599">标准版 599元定制+99/月</option>
-                <option value="旗舰版1999">旗舰版 1999元定制+199/月</option>
+                <option value="商业定制版799">商业定制版 799元定制+99/月</option>
+                <option value="深度定制版2999">深度定制版 2999元定制+199/月</option>
             </select>
             <textarea id="orderNeeds" placeholder="简单描述你的需求：做什么业务？需要哪些功能？" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;outline:none;min-height:80px;resize:vertical;font-family:inherit;margin-bottom:10px"></textarea>
             <button onclick="submitOrder()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--orange),var(--green));color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer">🚀 提交定制需求</button>
@@ -3101,21 +3101,21 @@ const serviceTemplates = [
         icon: '📦', name: '电商卖家版', color: 'var(--blue)',
         target: '淘宝/拼多多/抖音电商卖家',
         features: ['订单管理看板', '客户CRM', '库存追踪', '利润自动计算', '退款追踪', '供应商管理'],
-        price: '599定制+99/月', badge: '',
+        price: '799定制+99/月', badge: '',
         desc: '订单+客户+库存+利润，一个页面全搞定'
     },
     {
         icon: '💻', name: '自由职业者版', color: 'var(--purple)',
         target: '设计师、程序员、文案、咨询顾问',
         features: ['项目管理', '客户追踪', '时间记录', '报价生成器', '收入统计', '作品集展示'],
-        price: '599定制+99/月', badge: '',
+        price: '799定制+99/月', badge: '',
         desc: '接单+交付+收款，自由职业者的全套工具'
     },
     {
         icon: '🏪', name: '餐饮/实体店版', color: 'var(--yellow)',
         target: '餐饮老板、奶茶店、个体店',
         features: ['营业统计', '员工排班', '供应商管理', '会员CRM', '每日盘点', '成本核算'],
-        price: '1999定制+199/月', badge: '💰 高客单',
+        price: '2999定制+199/月', badge: '💰 高客单',
         desc: '实体店专属，营业+排班+会员+盘点'
     },
     {
@@ -3135,13 +3135,13 @@ const pricingPlans = [
         popular: false
     },
     {
-        name: '标准版', price: 599, monthly: 99, color: 'var(--orange)',
+        name: '商业定制版', price: 799, monthly: 99, color: 'var(--orange)',
         features: ['选1个模板', '定制功能模块', '3次修改机会', '1对1需求沟通', '永久域名', '30天售后', '数据导入'],
         target: '一人公司/自由职业/电商',
         popular: true
     },
     {
-        name: '旗舰版', price: 1999, monthly: 199, color: 'var(--red)',
+        name: '深度定制版', price: 2999, monthly: 199, color: 'var(--red)',
         features: ['深度定制', '专属功能开发', '不限修改次数', '1对1专属顾问', '永久域名', '90天售后', '数据导入+培训', '优先支持'],
         target: '小微企业/团队/餐饮',
         popular: false
@@ -3152,7 +3152,7 @@ const deliverySteps = [
     { step: 1, title: '提交需求', desc: '填写表单，描述你的业务和需求', time: '1分钟' },
     { step: 2, title: '微信沟通', desc: '我加你微信，确认细节和报价', time: '1小时内' },
     { step: 3, title: '支付定金', desc: '确认后支付50%定金，开始制作', time: '当天' },
-    { step: 4, title: '定制开发', desc: '用AI快速开发，实时沟通进度', time: '1-3天' },
+    { step: 4, title: '定制开发', desc: '用AI快速开发，实时沟通进度', time: '1-5天' },
     { step: 5, title: '交付验收', desc: '发你链接，手机打开就能用', time: '第3天' },
     { step: 6, title: '付尾款', desc: '满意后付尾款，开始售后服务', time: '验收后' },
 ];
