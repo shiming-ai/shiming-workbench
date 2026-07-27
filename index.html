@@ -3671,7 +3671,7 @@ function renderControl() {
     document.getElementById('track1Earned').textContent = '¥' + track1Earned.toLocaleString();
     document.getElementById('track1Bar').style.width = Math.min(100, track1Earned/track1Goal*100) + '%';
     document.getElementById('track1Orders').textContent = incomes.filter(i => { const s=(i.source||'').toLowerCase(); return s.includes('定制')||s.includes('工作台')||s.includes('接单'); }).length;
-    document.getElementById('track1Avg').textContent = track1Earned > 0 ? Math.round(track1Earned / Math.max(1, parseInt(document.getElementById('track1Orders').textContent))) : 0;
+    document.getElementById('track1Avg').textContent = track1Earned > 0 ? Math.round(track1Earned / Math.max(1, parseInt(document.getElementById('track1Orders').textContent) || 1)) : 0;
 
     document.getElementById('track2Earned').textContent = '¥' + track2Earned.toLocaleString();
     document.getElementById('track2Bar').style.width = Math.min(100, track2Earned/track2Goal*100) + '%';
@@ -5392,7 +5392,7 @@ function copyQuote() {
     const price = document.getElementById('quotePrice').textContent;
     const sel = document.getElementById('quoteType');
     const serviceName = sel.options[sel.selectedIndex].text;
-    const text = `【${serviceName}】\n报价：${price}\n交付周期：3-7个工作日\n含1个月免费维护\n\n需要的话随时找我~`;
+    const text = `【${serviceName}】\n报价：${price}\n交付周期：1-5天\n含1个月免费维护\n\n需要的话随时找我~`;
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => toast('报价文案已复制'));
     } else {
