@@ -1275,16 +1275,25 @@ body {
         </div>
         <div class="fin-input">
             <input type="number" id="incomeAmount" placeholder="金额">
-            <select id="incomeSource">
-                <option value="报白服务">报白服务</option>
-                <option value="AI开发">AI定制开发</option>
-                <option value="漫剧">AI漫剧</option>
-                <option value="知识付费">知识付费</option>
-                <option value="闲鱼">闲鱼售卖</option>
-                <option value="广告合作">广告合作</option>
-                <option value="产品售卖">产品售卖</option>
-                <option value="其他">其他</option>
-            </select>
+            <input type="text" id="incomeSource" placeholder="来源（可输入）" list="incomeSourceList" style="flex:0.8">
+            <datalist id="incomeSourceList">
+                <option value="报白服务">
+                <option value="AI定制开发">
+                <option value="AI漫剧">
+                <option value="知识付费">
+                <option value="闲鱼售卖">
+                <option value="广告合作">
+                <option value="产品售卖">
+                <option value="视频号变更主体">
+                <option value="电商代运营">
+                <option value="申诉服务">
+                <option value="黄V认证">
+                <option value="团购开通">
+                <option value="课程售卖">
+                <option value="咨询费">
+                <option value="退款回收">
+                <option value="其他">
+            </datalist>
             <button onclick="addIncome()">+</button>
         </div>
         <div class="fin-list" id="incomeList"></div>
@@ -1296,12 +1305,19 @@ body {
         </div>
         <div class="fin-input">
             <input type="number" id="expenseAmount" placeholder="金额">
-            <select id="expenseSource">
-                <option value="生活费">生活费</option>
-                <option value="还款">还款</option>
-                <option value="业务">业务</option>
-                <option value="其他">其他</option>
-            </select>
+            <input type="text" id="expenseSource" placeholder="用途（可输入）" list="expenseSourceList" style="flex:0.8">
+            <datalist id="expenseSourceList">
+                <option value="生活费">
+                <option value="还款">
+                <option value="业务成本">
+                <option value="工具订阅">
+                <option value="广告投放">
+                <option value="采购">
+                <option value="外包">
+                <option value="交通">
+                <option value="餐饮">
+                <option value="其他">
+            </datalist>
             <button onclick="addExpense()">+</button>
         </div>
         <div class="fin-list" id="expenseList"></div>
@@ -1573,6 +1589,49 @@ body {
         <div id="contentTemplates"></div>
     </div>
 
+    <!-- AI文案生成器 -->
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">✍️</span> AI文案生成器</div>
+            <div class="sec-more" style="font-size:10px;color:var(--text-mute)">小红书/抖音/知乎</div>
+        </div>
+
+        <!-- 类型选择 -->
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap" id="copyTypeTabs">
+            <button onclick="setCopyType('xhs',this)" class="ct-tab active" style="padding:6px 12px;border-radius:8px;font-size:11px;border:1px solid var(--orange);background:var(--orange);color:#fff;cursor:pointer">📕 小红书</button>
+            <button onclick="setCopyType('douyin',this)" class="ct-tab" style="padding:6px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">🎵 抖音</button>
+            <button onclick="setCopyType('zhihu',this)" class="ct-tab" style="padding:6px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">📖 知乎</button>
+            <button onclick="setCopyType('rewrite',this)" class="ct-tab" style="padding:6px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">🔄 去重改写</button>
+        </div>
+
+        <!-- 输入区 -->
+        <div style="margin-bottom:10px">
+            <input type="text" id="copyTopic" placeholder="输入主题/关键词（如：AI一人公司、AI工作台定制）" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none;margin-bottom:8px">
+            <textarea id="copyRef" placeholder="粘贴参考文案（选填，去重改写时必填）" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none;min-height:60px;resize:vertical;font-family:inherit"></textarea>
+        </div>
+
+        <!-- 生成按钮 -->
+        <button onclick="generateCopy()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--orange),var(--purple));color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:12px">✨ 一键生成文案</button>
+
+        <!-- 结果区 -->
+        <div id="copyResult" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div style="font-size:12px;font-weight:600;color:var(--orange)">生成结果</div>
+                <div style="display:flex;gap:6px">
+                    <button onclick="copyResult()" style="font-size:10px;padding:4px 10px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer">📋 复制</button>
+                    <button onclick="saveCopyToPost()" style="font-size:10px;padding:4px 10px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer">→ 存入排期</button>
+                </div>
+            </div>
+            <div id="copyResultText" style="font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap"></div>
+        </div>
+
+        <!-- 历史文案 -->
+        <div style="margin-top:14px">
+            <div style="font-size:12px;color:var(--text-mute);margin-bottom:8px">📜 历史文案</div>
+            <div id="copyHistory"></div>
+        </div>
+    </div>
+
 </div>
 
 <!-- 发布排期弹窗 -->
@@ -1589,6 +1648,13 @@ body {
             </select>
             <input type="date" id="postDate" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none">
             <textarea id="postNotes" placeholder="备注：文案方向、关键词、参考链接..." style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;outline:none;min-height:80px;resize:vertical;font-family:inherit"></textarea>
+            <!-- 图片上传 -->
+            <div style="margin-top:8px">
+                <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:6px">📷 添加图片（素材/参考图/截图）</label>
+                <input type="file" id="postImages" accept="image/*" multiple style="display:none" onchange="handlePostImages(this)">
+                <button onclick="document.getElementById('postImages').click()" style="width:100%;padding:10px;background:var(--card2);border:1px dashed var(--border);border-radius:8px;color:var(--text-dim);font-size:12px;cursor:pointer">+ 点击上传图片</button>
+                <div id="postImagePreview" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div>
+            </div>
         </div>
         <div style="display:flex;gap:10px;margin-top:14px">
             <button onclick="savePost()" style="flex:1;padding:12px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-size:13px;cursor:pointer">保存</button>
@@ -5677,13 +5743,50 @@ function savePost() {
     if (!title) return toast('请输入标题');
     if (!accountId) return toast('请先添加账号');
     const date = dateVal ? dateVal.replace(/-/g, '.') : todayStr();
-    posts.push({ id: Date.now().toString(), title, accountId, type, date, notes, status: 'pending', time: nowStr() });
+    posts.push({ id: Date.now().toString(), title, accountId, type, date, notes, status: 'pending', time: nowStr(), images: tempPostImages || [] });
     savePosts();
     document.getElementById('postTitle').value = '';
     document.getElementById('postNotes').value = '';
+    tempPostImages = [];
+    document.getElementById('postImagePreview').innerHTML = '';
     closePostModal();
     renderContentMatrix();
     toast('排期已保存');
+}
+
+// ========== 图片上传 ==========
+let tempPostImages = [];
+
+function handlePostImages(input) {
+    const files = Array.from(input.files);
+    files.forEach(file => {
+        if (file.size > 2 * 1024 * 1024) {
+            toast(`${file.name} 超过2MB，已跳过`);
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            tempPostImages.push({ name: file.name, data: e.target.result });
+            renderPostImagePreview();
+        };
+        reader.readAsDataURL(file);
+    });
+    input.value = '';
+}
+
+function renderPostImagePreview() {
+    const el = document.getElementById('postImagePreview');
+    el.innerHTML = tempPostImages.map((img, i) => `
+        <div style="position:relative;width:60px;height:60px;border-radius:8px;overflow:hidden;border:1px solid var(--border)">
+            <img src="${img.data}" style="width:100%;height:100%;object-fit:cover">
+            <div onclick="removePostImage(${i})" style="position:absolute;top:0;right:0;width:18px;height:18px;background:rgba(0,0,0,0.7);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer">×</div>
+        </div>
+    `).join('');
+}
+
+function removePostImage(i) {
+    tempPostImages.splice(i, 1);
+    renderPostImagePreview();
 }
 
 function filterPosts(status, el) {
@@ -5723,6 +5826,7 @@ function renderPosts() {
                 <span style="color:${isOverdue?'var(--red)':(isToday?'var(--orange)':'var(--text-mute)')}">${p.date}${isToday?' · 今天':''}${isOverdue?' · 已超期':''}</span>
             </div>
             ${p.notes ? `<div style="font-size:11px;color:var(--text-dim);margin-top:4px">${p.notes}</div>` : ''}
+            ${p.images && p.images.length > 0 ? `<div style="display:flex;gap:4px;margin-top:6px">${p.images.map(img => `<img src="${img.data}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;border:1px solid var(--border)">`).join('')}</div>` : ''}
             <div class="post-actions">
                 ${p.status !== 'posted' ? `<button onclick="markPostPosted(${realIdx})" style="background:var(--green);color:#fff">✓ 已发</button>` : `<button onclick="markPostPending(${realIdx})" style="background:var(--card);color:var(--text);border:1px solid var(--border)">撤销</button>`}
                 <button onclick="setPostIdea(${realIdx})" style="background:var(--purple);color:#fff">选题</button>
@@ -5841,6 +5945,237 @@ function renderContentMatrix() {
     renderTemplates();
     renderContentBadge();
     renderMonetizationMap();
+    renderCopyHistory();
+}
+
+// ========== AI文案生成器 ==========
+let currentCopyType = 'xhs';
+
+function setCopyType(type, el) {
+    currentCopyType = type;
+    document.querySelectorAll('#copyTypeTabs .ct-tab').forEach(b => {
+        b.style.cssText = 'padding:6px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer';
+    });
+    el.style.cssText = 'padding:6px 12px;border-radius:8px;font-size:11px;border:1px solid var(--orange);background:var(--orange);color:#fff;cursor:pointer';
+    // 更新placeholder
+    const topic = document.getElementById('copyTopic');
+    const ref = document.getElementById('copyRef');
+    if (type === 'rewrite') {
+        topic.placeholder = '输入改写方向（如：更口语化、换角度）';
+        ref.placeholder = '粘贴原文案（必填）';
+    } else if (type === 'xhs') {
+        topic.placeholder = '输入主题/关键词（如：AI一人公司、AI工作台定制）';
+        ref.placeholder = '粘贴参考文案（选填）';
+    } else {
+        topic.placeholder = '输入主题/关键词';
+        ref.placeholder = '粘贴参考文案（选填）';
+    }
+}
+
+function generateCopy() {
+    const topic = document.getElementById('copyTopic').value.trim();
+    const ref = document.getElementById('copyRef').value.trim();
+    if (!topic && currentCopyType !== 'rewrite') return toast('请输入主题');
+    if (currentCopyType === 'rewrite' && !ref) return toast('去重改写需要粘贴原文案');
+
+    let result = '';
+    if (currentCopyType === 'xhs') {
+        result = generateXhsCopy(topic, ref);
+    } else if (currentCopyType === 'douyin') {
+        result = generateDouyinCopy(topic, ref);
+    } else if (currentCopyType === 'zhihu') {
+        result = generateZhihuCopy(topic, ref);
+    } else if (currentCopyType === 'rewrite') {
+        result = rewriteCopy(ref, topic);
+    }
+
+    document.getElementById('copyResult').style.display = 'block';
+    document.getElementById('copyResultText').textContent = result;
+
+    // 存历史
+    const history = load('copyHistory', []);
+    history.unshift({ type: currentCopyType, topic: topic || '改写', content: result, time: nowStr() });
+    if (history.length > 20) history.pop();
+    save('copyHistory', history);
+    renderCopyHistory();
+    toast('✅ 文案已生成');
+}
+
+function generateXhsCopy(topic, ref) {
+    const hooks = [
+        `我花2天用AI做了个公司管理系统`,
+        `一个人+AI=一家公司，不是开玩笑`,
+        `用AI接单月入过万，我的方法论全公开`,
+        `这个AI工具让我一个人干了5个人的活`,
+    ];
+    const bodies = [
+        `说真的，${topic}这件事，很多人觉得难，其实用对方法很简单。
+
+我自己的实操路径：
+1️⃣ 先梳理业务流程
+2️⃣ 用AI工具替代重复工作
+3️⃣ 搭一套系统管所有数据
+4️⃣ 持续优化迭代
+
+关键不是工具多牛，是你得知道怎么串起来。
+我踩过的坑，你可以不用踩。
+
+👇评论区告诉我你的业务，帮你分析怎么做AI化`,
+        `关于${topic}，分享3个核心认知：
+
+第一，别等完美了再开始，先跑起来
+第二，用AI不是炫技，是解决实际问题
+第三，系统化思维比单个工具更重要
+
+我把自己踩过的路整理成了一套方法论，
+不是理论，是每天在用的实战经验。
+
+觉得有用的，点赞收藏，后面持续分享✨`,
+    ];
+    let copy = `${hooks[Math.floor(Math.random()*hooks.length)]}\n\n${bodies[Math.floor(Math.random()*bodies.length)]}\n\n#${topic} #AI创业 #一人公司 #AI工具 #效率提升`;
+    if (ref) copy = `基于参考文案优化：\n\n${copy}`;
+    return copy;
+}
+
+function generateDouyinCopy(topic, ref) {
+    return `【${topic}】30秒说清楚
+
+开头：你敢信？一个人用AI就能干一家公司的事
+
+核心：
+- AI帮你写文案、做设计、管客户
+- 一套系统搞定全部流程
+- 关键是：不需要技术背景
+
+结尾：关注我，教你用AI搭建自己的商业系统
+
+#${topic} #AI创业 #一人公司`;
+}
+
+function generateZhihuCopy(topic, ref) {
+    return `关于${topic}这个问题，我用自己的真实经历回答一下。
+
+先说结论：一个人+AI，确实可以等于一家公司。但前提是你得有系统化思维。
+
+我从去年开始实践，总结了几点经验：
+
+**1. 先想清楚商业模式，再选工具**
+很多人一上来就研究各种AI工具，这是本末倒置。你得先想清楚：你要做什么业务？客户是谁？怎么收钱？
+
+**2. 用AI替代重复性工作**
+文案生成、客户跟进、数据整理这些，AI都能做。把时间省下来做核心决策。
+
+**3. 搭一套管理系统**
+零散的工具不如一套整合的系统。我自己用一个AI工作台管所有业务，效率提升非常明显。
+
+**4. 持续迭代**
+AI工具更新很快，但底层方法论是稳定的。把方法沉淀下来，工具随时可以换。
+
+如果觉得有用，欢迎点赞。有问题可以评论区交流。`;
+}
+
+function rewriteCopy(original, direction) {
+    // 简单去重：同义词替换+语序调整
+    let result = original
+        .replace(/真的/g, '确实')
+        .replace(/非常/g, '极其')
+        .replace(/很多人/g, '大部分人')
+        .replace(/其实/g, '说到底')
+        .replace(/简单/g, '容易')
+        .replace(/觉得/g, '认为')
+        .replace(/可以/g, '能够')
+        .replace(/应该/g, '建议')
+        .replace(/大家/g, '各位')
+        .replace(/我们/g, '咱们')
+        .replace(/就是/g, '本质上')
+        .replace(/什么/g, '啥')
+        .replace(/怎么/g, '如何')
+        .replace(/为什么/g, '为何')
+        .replace(/特别/g, '尤其')
+        .replace(/一直/g, '始终')
+        .replace(/开始/g, '起步')
+        .replace(/问题/g, '痛点')
+        .replace(/方法/g, '思路')
+        .replace(/做/g, '搞')
+        .replace(/用/g, '借助')
+        .replace(/说/g, '讲');
+
+    // 加一个开头
+    const intros = ['分享一个思路：\n\n', '聊点实在的：\n\n', '说个观点：\n\n', '直说吧：\n\n'];
+    result = intros[Math.floor(Math.random()*intros.length)] + result;
+
+    if (direction) {
+        result = `（${direction}）\n\n${result}`;
+    }
+
+    return result + '\n\n——以上为AI去重改写，请检查通顺度后使用';
+}
+
+function copyResult() {
+    const text = document.getElementById('copyResultText').textContent;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => toast('✅ 已复制到剪贴板'));
+    } else {
+        toast('请手动复制');
+    }
+}
+
+function saveCopyToPost() {
+    const text = document.getElementById('copyResultText').textContent;
+    const topic = document.getElementById('copyTopic').value.trim() || 'AI生成文案';
+    const posts = load('posts', []);
+    posts.unshift({
+        title: topic,
+        account: '小红书',
+        type: '图文笔记',
+        date: todayStr(),
+        status: 'idea',
+        notes: text.substring(0, 200)
+    });
+    save('posts', posts);
+    renderPosts();
+    renderContentBadge();
+    toast('✅ 已存入内容排期-选题库');
+}
+
+function renderCopyHistory() {
+    const history = load('copyHistory', []);
+    const el = document.getElementById('copyHistory');
+    if (!el) return;
+    if (history.length === 0) {
+        el.innerHTML = '<div style="font-size:11px;color:var(--text-mute);text-align:center;padding:8px">暂无历史文案</div>';
+        return;
+    }
+    const typeLabels = { xhs: '📕', douyin: '🎵', zhihu: '📖', rewrite: '🔄' };
+    el.innerHTML = history.slice(0, 5).map((h, i) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 0;${i < 4 ? 'border-bottom:1px solid var(--border)' : ''}">
+            <span style="font-size:14px">${typeLabels[h.type] || '📝'}</span>
+            <div style="flex:1;min-width:0">
+                <div style="font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.topic}</div>
+                <div style="font-size:9px;color:var(--text-mute)">${h.time}</div>
+            </div>
+            <span onclick="useHistoryCopy(${i})" style="font-size:10px;color:var(--orange);cursor:pointer;padding:4px 8px;background:rgba(255,107,26,0.1);border-radius:6px">使用</span>
+            <span onclick="delHistoryCopy(${i})" style="font-size:14px;color:var(--text-mute);cursor:pointer;padding:4px">×</span>
+        </div>
+    `).join('');
+}
+
+function useHistoryCopy(i) {
+    const history = load('copyHistory', []);
+    const item = history[i];
+    if (!item) return;
+    document.getElementById('copyResult').style.display = 'block';
+    document.getElementById('copyResultText').textContent = item.content;
+    document.getElementById('copyTopic').value = item.topic;
+    toast('已载入，可编辑后使用');
+    window.scrollTo({ top: document.getElementById('copyResult').offsetTop - 100, behavior: 'smooth' });
+}
+
+function delHistoryCopy(i) {
+    const history = load('copyHistory', []);
+    history.splice(i, 1);
+    save('copyHistory', history);
+    renderCopyHistory();
 }
 
 // ========== 变现地图 ==========
