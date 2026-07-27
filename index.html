@@ -1894,12 +1894,12 @@ body {
                 <div style="font-size:13px;font-weight:700">接单工坊</div>
                 <div style="font-size:10px;color:var(--text-mute);margin-top:2px">AI变现业务·订单池</div>
             </div>
-            <div onclick="switchPage('aiknowledge',document.querySelectorAll('.sidebar-item')[10])" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer">
+            <div onclick="switchPage('aiknowledge',document.querySelectorAll('.sidebar-item')[11])" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer">
                 <div style="font-size:24px;margin-bottom:6px">🎓</div>
                 <div style="font-size:13px;font-weight:700">AI营知识库</div>
                 <div style="font-size:10px;color:var(--text-mute);margin-top:2px">课程包·学员管理</div>
             </div>
-            <div onclick="switchPage('ecom',document.querySelectorAll('.sidebar-item')[11])" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer">
+            <div onclick="switchPage('ecom',document.querySelectorAll('.sidebar-item')[12])" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer">
                 <div style="font-size:24px;margin-bottom:6px">🏪</div>
                 <div style="font-size:13px;font-weight:700">电商服务后台</div>
                 <div style="font-size:10px;color:var(--text-mute);margin-top:2px">报白·申诉·跨境</div>
@@ -1930,9 +1930,110 @@ body {
     <!-- AI员工状态 -->
     <div class="section" style="padding-top:0">
         <div class="sec-header">
-            <div class="sec-title"><span class="emoji">🤖</span> AI员工状态</div>
+            <div class="sec-title"><span class="emoji">🤖</span> AI员工军团</div>
+            <div class="sec-more" id="staffCount">0人</div>
         </div>
-        <div id="aiStaff" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px"></div>
+        <div id="aiStaff" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px"></div>
+        <div class="task-add" style="margin-bottom:8px">
+            <input type="text" id="staffName" placeholder="员工名称（如：AI文案师）" style="flex:1">
+            <select id="staffRole" style="background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:0 8px;font-size:12px">
+                <option value="技术">技术</option>
+                <option value="产品">产品</option>
+                <option value="内容">内容</option>
+                <option value="运营">运营</option>
+                <option value="商务">商务</option>
+                <option value="电商">电商</option>
+                <option value="职能">职能</option>
+            </select>
+            <button onclick="addStaff()" style="background:var(--blue);color:#fff;border:none;width:40px;border-radius:10px;font-size:18px;cursor:pointer">+</button>
+        </div>
+    </div>
+
+    <!-- 变现目标完成度 -->
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">🎯</span> 变现目标</div>
+            <div class="sec-more" onclick="editGoals()" style="cursor:pointer;color:var(--orange);font-size:11px">编辑目标 ›</div>
+        </div>
+        <div id="goalsPanel" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"></div>
+    </div>
+
+    <!-- AI洞察面板 -->
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">💡</span> AI洞察</div>
+        </div>
+        <div id="insightsPanel" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+    </div>
+
+    <!-- 18种AI变现业务 -->
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">💼</span> AI变现业务矩阵</div>
+            <div class="sec-more" style="font-size:10px;color:var(--text-dim)">18种业务类型</div>
+        </div>
+        <div id="bizTypeGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div>
+    </div>
+
+    <!-- 全平台运营看板 -->
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">📊</span> 全平台运营</div>
+            <div class="sec-more" onclick="switchPage('channel',document.querySelectorAll('.sidebar-item')[3])" style="cursor:pointer;color:var(--orange);font-size:11px">详情 ›</div>
+        </div>
+        <div id="platformPanel" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+    </div>
+</div>
+
+<!-- ===== 页面: 项目孵化中心 ===== -->
+<div id="page-incubation" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">🥚</span> 项目孵化中心</div>
+            <div class="sec-more" id="incubationCount">0个项目</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">
+            新项目验证 · 测试→验证→上线全流程追踪
+        </div>
+
+        <!-- 状态统计卡片 -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px" id="incubationStats"></div>
+
+        <!-- 筛选 -->
+        <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap" id="incubationFilter">
+            <button class="inc-tab active" onclick="filterIncubation('all',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--purple);background:var(--purple);color:#fff;cursor:pointer">全部</button>
+            <button class="inc-tab" onclick="filterIncubation('testing',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">🧪 测试中</button>
+            <button class="inc-tab" onclick="filterIncubation('verified',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">✅ 已验证</button>
+            <button class="inc-tab" onclick="filterIncubation('live',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">🚀 已上线</button>
+            <button class="inc-tab" onclick="filterIncubation('abandoned',this)" style="padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer">❌ 已放弃</button>
+        </div>
+
+        <!-- 项目列表 -->
+        <div id="incubationList"></div>
+
+        <!-- 添加项目 -->
+        <div class="section" style="padding:14px 0 0">
+            <div class="sec-header">
+                <div class="sec-title" style="font-size:14px"><span class="emoji">➕</span> 新建孵化项目</div>
+            </div>
+            <div class="task-add" style="margin-bottom:6px">
+                <input type="text" id="incName" placeholder="项目名称（如：AI写真小程序）" style="flex:1">
+                <select id="incType" style="background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:0 8px;font-size:12px">
+                    <option value="内容变现">内容变现</option>
+                    <option value="电商带货">电商带货</option>
+                    <option value="知识付费">知识付费</option>
+                    <option value="工具产品">工具产品</option>
+                    <option value="流量变现">流量变现</option>
+                    <option value="服务外包">服务外包</option>
+                    <option value="其他">其他</option>
+                </select>
+                <button onclick="addIncubation()" style="background:var(--purple);color:#fff;border:none;width:40px;border-radius:10px;font-size:18px;cursor:pointer">+</button>
+            </div>
+            <div class="task-add">
+                <input type="number" id="incExpected" placeholder="预期月收益（元）" style="flex:1">
+                <input type="text" id="incOwner" placeholder="负责AI员工（选填）" style="flex:1">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -2266,6 +2367,9 @@ body {
         <div class="sidebar-item" onclick="switchPage('control', this)" style="border-left:2px solid var(--purple)">
             <span class="sidebar-item-icon">🎯</span> 母系统管控台
             <span style="font-size:8px;padding:1px 5px;background:var(--purple);color:#fff;border-radius:4px;margin-left:auto">核心</span>
+        </div>
+        <div class="sidebar-item" onclick="switchPage('incubation', this)" style="border-left:2px solid var(--green)">
+            <span class="sidebar-item-icon">🥚</span> 项目孵化中心
         </div>
         <div class="sidebar-item" onclick="switchPage('aiknowledge', this)" style="border-left:2px solid var(--blue)">
             <span class="sidebar-item-icon">🎓</span> AI营知识库
@@ -3570,25 +3674,64 @@ function renderOrderSource() {
 }
 
 function renderAIStaff() {
-    const staff = [
-        { name: 'AI客服', status: 'active', task: '自动回复咨询', icon: '💬' },
-        { name: 'AI文案', status: 'active', task: '生成小红书内容', icon: '✍️' },
-        { name: 'AI开发', status: 'active', task: '工作台定制开发', icon: '🛠' },
-        { name: 'AI运营', status: 'standby', task: '多平台分发', icon: '📊' },
+    const defaultStaff = [
+        { name: 'AI客服', role: '运营', status: 'active', task: '自动回复咨询', icon: '💬' },
+        { name: 'AI文案', role: '内容', status: 'active', task: '生成小红书内容', icon: '✍️' },
+        { name: 'AI开发', role: '技术', status: 'active', task: '工作台定制开发', icon: '🛠' },
+        { name: 'AI运营', role: '运营', status: 'standby', task: '多平台分发', icon: '📊' },
     ];
-    document.getElementById('aiStaff').innerHTML = staff.map(s => `
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
-            <div style="font-size:20px">${s.icon}</div>
-            <div style="flex:1">
+    const staff = load('aiStaff', defaultStaff);
+    const roleIcons = { '技术': '⚙️', '产品': '📋', '内容': '✍️', '运营': '📊', '商务': '🤝', '电商': '🏪', '职能': '🔧' };
+    const statusColors = { active: 'var(--green)', busy: 'var(--orange)', standby: 'var(--text-mute)', offline: 'var(--text-mute)' };
+    const statusLabels = { active: '执行中', busy: '忙碌', standby: '待命', offline: '离线' };
+
+    document.getElementById('staffCount').textContent = staff.length + '人';
+    document.getElementById('aiStaff').innerHTML = staff.length === 0 ? '<div class="empty">暂无AI员工，添加一个吧</div>' : staff.map((s, i) => {
+        const icon = s.icon || roleIcons[s.role] || '🤖';
+        return `
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;${i < staff.length - 1 ? 'border-bottom:1px solid var(--border)' : ''}">
+            <div style="width:32px;height:32px;border-radius:8px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${icon}</div>
+            <div style="flex:1;min-width:0">
                 <div style="font-size:12px;font-weight:600">${s.name}</div>
-                <div style="font-size:10px;color:var(--text-mute)">${s.task}</div>
+                <div style="font-size:10px;color:var(--text-mute)">${s.role} · ${s.task || ''}</div>
             </div>
-            <div style="display:flex;align-items:center;gap:4px">
-                <div style="width:6px;height:6px;border-radius:50%;background:${s.status === 'active' ? 'var(--green)' : 'var(--text-mute)'};animation:${s.status === 'active' ? 'pulse 2s infinite' : 'none'}"></div>
-                <span style="font-size:10px;color:${s.status === 'active' ? 'var(--green)' : 'var(--text-mute)'}">${s.status === 'active' ? '执行中' : '待命'}</span>
+            <div style="display:flex;align-items:center;gap:4px;cursor:pointer" onclick="toggleStaffStatus(${i})">
+                <div style="width:6px;height:6px;border-radius:50%;background:${statusColors[s.status] || 'var(--text-mute)'};animation:${s.status === 'active' || s.status === 'busy' ? 'pulse 2s infinite' : 'none'}"></div>
+                <span style="font-size:10px;color:${statusColors[s.status] || 'var(--text-mute)'}">${statusLabels[s.status] || '待命'}</span>
             </div>
+            <span onclick="delStaff(${i})" style="font-size:14px;color:var(--text-mute);cursor:pointer;padding:4px">×</span>
         </div>
-    `).join('');
+        `;
+    }).join('');
+}
+
+function addStaff() {
+    const name = document.getElementById('staffName').value.trim();
+    const role = document.getElementById('staffRole').value;
+    if (!name) return toast('请输入员工名称');
+    const staff = load('aiStaff', []);
+    const roleIcons = { '技术': '⚙️', '产品': '📋', '内容': '✍️', '运营': '📊', '商务': '🤝', '电商': '🏪', '职能': '🔧' };
+    staff.push({ name, role, status: 'active', task: '', icon: roleIcons[role] || '🤖' });
+    save('aiStaff', staff);
+    document.getElementById('staffName').value = '';
+    renderAIStaff();
+    toast('AI员工已加入');
+}
+
+function delStaff(i) {
+    const staff = load('aiStaff', []);
+    staff.splice(i, 1);
+    save('aiStaff', staff);
+    renderAIStaff();
+}
+
+function toggleStaffStatus(i) {
+    const staff = load('aiStaff', []);
+    const cycle = ['active', 'busy', 'standby', 'offline'];
+    const idx = cycle.indexOf(staff[i].status);
+    staff[i].status = cycle[(idx + 1) % cycle.length];
+    save('aiStaff', staff);
+    renderAIStaff();
 }
 
 // ========== AI营知识库 ==========
@@ -3754,6 +3897,270 @@ function delEcom(i) {
     orders.splice(i, 1);
     save('ecomOrders', orders);
     renderEcom();
+}
+
+// ========== 变现目标 ==========
+function renderGoals() {
+    const goals = load('goals', [
+        { name: '月收入目标', current: 0, target: 30000, unit: '¥', color: 'var(--orange)' },
+        { name: '年收入目标', current: 0, target: 500000, unit: '¥', color: 'var(--green)' },
+        { name: '学员目标', current: 0, target: 100, unit: '人', color: 'var(--purple)' },
+    ]);
+    // 从实际数据更新当前值
+    const incomes = load('incomes', []);
+    const now = new Date();
+    const monthStr = now.getFullYear() + '.' + String(now.getMonth() + 1).padStart(2, '0');
+    const monthIncome = incomes.filter(inc => inc.time && inc.time.startsWith(monthStr)).reduce((s, inc) => s + inc.amount, 0);
+    const yearStr = String(now.getFullYear());
+    const yearIncome = incomes.filter(inc => inc.time && inc.time.startsWith(yearStr)).reduce((s, inc) => s + inc.amount, 0);
+    const students = load('students', []);
+    goals[0].current = monthIncome;
+    goals[1].current = yearIncome;
+    goals[2].current = students.length;
+    save('goals', goals);
+
+    document.getElementById('goalsPanel').innerHTML = goals.map((g, i) => {
+        const pct = g.target > 0 ? Math.min(100, Math.round(g.current / g.target * 100)) : 0;
+        return `
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+            <div style="font-size:10px;color:var(--text-mute);margin-bottom:4px">${g.name}</div>
+            <div style="font-size:18px;font-weight:900;color:${g.color}">${g.unit}${g.current >= 10000 ? (g.current / 10000).toFixed(1) + 'w' : g.current}</div>
+            <div style="font-size:9px;color:var(--text-dim);margin-bottom:6px">/ ${g.unit}${g.target >= 10000 ? (g.target / 10000).toFixed(0) + 'w' : g.target}</div>
+            <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px">
+                <div style="height:100%;width:${pct}%;background:${g.color};border-radius:2px;transition:width 0.6s"></div>
+            </div>
+            <div style="font-size:10px;font-weight:600;color:${g.color}">${pct}%</div>
+        </div>
+        `;
+    }).join('');
+}
+
+function editGoals() {
+    const goals = load('goals', []);
+    const names = goals.map(g => g.name).join(' / ');
+    const input = prompt('编辑目标金额（用逗号分隔：月收入,年收入,学员数）', goals.map(g => g.target).join(','));
+    if (input === null) return;
+    const vals = input.split(',').map(v => parseInt(v.trim()) || 0);
+    goals.forEach((g, i) => { if (vals[i]) g.target = vals[i]; });
+    save('goals', goals);
+    renderGoals();
+    toast('目标已更新');
+}
+
+// ========== AI洞察 ==========
+function renderInsights() {
+    const incomes = load('incomes', []);
+    const orders = load('orders', []);
+    const students = load('students', []);
+    const courses = load('courses', []);
+    const now = new Date();
+    const monthStr = now.getFullYear() + '.' + String(now.getMonth() + 1).padStart(2, '0');
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const lastMonthStr = lastMonth.getFullYear() + '.' + String(lastMonth.getMonth() + 1).padStart(2, '0');
+
+    const monthIncome = incomes.filter(inc => inc.time && inc.time.startsWith(monthStr)).reduce((s, inc) => s + inc.amount, 0);
+    const lastMonthIncome = incomes.filter(inc => inc.time && inc.time.startsWith(lastMonthStr)).reduce((s, inc) => s + inc.amount, 0);
+    const growth = lastMonthIncome > 0 ? Math.round((monthIncome - lastMonthIncome) / lastMonthIncome * 100) : 0;
+
+    const pendingOrders = orders.filter(o => o.status === '进行中' || o.status === '待付款').length;
+    const avgCourseStudents = courses.length > 0 ? Math.round(students.length / courses.length) : 0;
+
+    const insights = [
+        { type: '趋势', icon: '📈', color: 'var(--green)', text: growth >= 0 ? `本月收入${monthIncome}元，较上月${growth >= 0 ? '增长' : '下降'}${Math.abs(growth)}%` : `本月暂无收入数据，加油！` },
+        { type: '预测', icon: '🔮', color: 'var(--blue)', text: monthIncome > 0 ? `按当前节奏，月预计收入${Math.round(monthIncome / now.getDate() * 31)}元` : '开始记录收入以获取预测' },
+        { type: '风险', icon: '⚠️', color: 'var(--red)', text: pendingOrders > 0 ? `${pendingOrders}个订单待处理，注意交付时效` : '暂无风险项' },
+        { type: '机会', icon: '💡', color: 'var(--orange)', text: avgCourseStudents < 5 && courses.length > 0 ? '课程学员偏少，建议加大小红书引流' : '可考虑新增课程包扩大变现' },
+    ];
+
+    document.getElementById('insightsPanel').innerHTML = insights.map(ins => `
+        <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid ${ins.color};border-radius:10px;padding:12px">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+                <span style="font-size:14px">${ins.icon}</span>
+                <span style="font-size:11px;font-weight:700;color:${ins.color}">${ins.type}</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-mute);line-height:1.5">${ins.text}</div>
+        </div>
+    `).join('');
+}
+
+// ========== 18种AI变现业务 ==========
+function renderBizTypes() {
+    const bizTypes = [
+        { name: 'AI工具代开发', icon: '🔧', hot: true },
+        { name: 'AI数字人定制', icon: '🤖', hot: true },
+        { name: 'AI绘画设计', icon: '🎨' },
+        { name: 'AI视频制作', icon: '🎬' },
+        { name: 'AI文案代写', icon: '✍️', hot: true },
+        { name: 'AI客服搭建', icon: '💬' },
+        { name: 'AI网站开发', icon: '🌐' },
+        { name: 'AI小程序开发', icon: '📱' },
+        { name: 'AI知识库搭建', icon: '📚' },
+        { name: 'AI数据分析', icon: '📊' },
+        { name: 'AI工作流设计', icon: '⚡' },
+        { name: 'AI内容代运营', icon: '📝', hot: true },
+        { name: 'AI模型微调', icon: '🧠' },
+        { name: 'AI培训课程', icon: '🎓' },
+        { name: 'AI咨询顾问', icon: '🤝' },
+        { name: 'AI电商运营', icon: '🏪' },
+        { name: 'AI营销推广', icon: '📢' },
+        { name: 'AI技术支持', icon: '🛠' },
+    ];
+    document.getElementById('bizTypeGrid').innerHTML = bizTypes.map(b => `
+        <div onclick="switchPage('service',document.querySelectorAll('.sidebar-item')[6])" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;position:relative;transition:all 0.2s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'">
+            ${b.hot ? '<div style="position:absolute;top:4px;right:4px;font-size:8px;background:var(--red);color:#fff;padding:1px 4px;border-radius:3px">HOT</div>' : ''}
+            <div style="font-size:20px;margin-bottom:4px">${b.icon}</div>
+            <div style="font-size:10px;color:var(--text);line-height:1.3">${b.name}</div>
+        </div>
+    `).join('');
+}
+
+// ========== 全平台运营看板 ==========
+function renderPlatforms() {
+    const cd = load('channelData', {});
+    const platformList = [
+        { key: 'douyin', name: '抖音', icon: '🎵', color: 'var(--red)' },
+        { key: 'xiaohongshu', name: '小红书', icon: '📕', color: 'var(--orange)' },
+        { key: 'kuaishou', name: '快手', icon: '⚡', color: 'var(--orange)' },
+        { key: 'bilibili', name: 'B站', icon: '📺', color: 'var(--blue)' },
+        { key: 'weibo', name: '微博', icon: '🌐', color: 'var(--red)' },
+        { key: 'wechat', name: '微信', icon: '💬', color: 'var(--green)' },
+        { key: 'zhihu', name: '知乎', icon: '📖', color: 'var(--blue)' },
+        { key: 'xianyu', name: '闲鱼', icon: '🐟', color: 'var(--green)' },
+    ];
+
+    document.getElementById('platformPanel').innerHTML = platformList.map(p => {
+        const data = cd[p.key] || { followers: 0, revenue: 0, posts: 0 };
+        return `
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;display:flex;align-items:center;gap:8px">
+            <div style="width:28px;height:28px;border-radius:8px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${p.icon}</div>
+            <div style="flex:1;min-width:0">
+                <div style="font-size:11px;font-weight:600">${p.name}</div>
+                <div style="font-size:9px;color:var(--text-mute)">${(data.followers || 0).toLocaleString()}粉 · ${data.posts || 0}篇</div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:12px;font-weight:700;color:${p.color}">¥${data.revenue || 0}</div>
+                <div style="font-size:8px;color:var(--text-dim)">月收益</div>
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+// ========== 项目孵化中心 ==========
+let incFilter = 'all';
+
+function renderIncubation() {
+    const projects = load('incubations', [
+        { name: 'AI写真小程序', type: '工具产品', status: 'testing', progress: 30, expected: 5000, actual: 0, owner: 'AI开发', date: '2026.07.27' },
+        { name: 'AI漫剧系列连载', type: '内容变现', status: 'live', progress: 100, expected: 8000, actual: 3200, owner: 'AI文案', date: '2026.07.20' },
+    ]);
+    document.getElementById('incubationCount').textContent = projects.length + '个项目';
+
+    // 状态统计
+    const stats = {
+        testing: projects.filter(p => p.status === 'testing').length,
+        verified: projects.filter(p => p.status === 'verified').length,
+        live: projects.filter(p => p.status === 'live').length,
+        abandoned: projects.filter(p => p.status === 'abandoned').length,
+    };
+    const statColors = { testing: 'var(--orange)', verified: 'var(--blue)', live: 'var(--green)', abandoned: 'var(--text-mute)' };
+    const statLabels = { testing: '🧪 测试中', verified: '✅ 已验证', live: '🚀 已上线', abandoned: '❌ 已放弃' };
+
+    document.getElementById('incubationStats').innerHTML = Object.entries(stats).map(([key, count]) => `
+        <div onclick="filterIncubation('${key}',document.querySelector('#incubationFilter .inc-tab[data-key=${key}]'))" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer">
+            <div style="font-size:18px;font-weight:900;color:${statColors[key]}">${count}</div>
+            <div style="font-size:9px;color:var(--text-mute);margin-top:2px">${statLabels[key]}</div>
+        </div>
+    `).join('');
+
+    // 筛选
+    const filtered = incFilter === 'all' ? projects : projects.filter(p => p.status === incFilter);
+    const typeColors = { '内容变现': 'var(--orange)', '电商带货': 'var(--red)', '知识付费': 'var(--purple)', '工具产品': 'var(--blue)', '流量变现': 'var(--green)', '服务外包': 'var(--yellow)', '其他': 'var(--text-mute)' };
+    const statusBadge = { testing: { label: '🧪 测试中', color: 'var(--orange)' }, verified: { label: '✅ 已验证', color: 'var(--blue)' }, live: { label: '🚀 已上线', color: 'var(--green)' }, abandoned: { label: '❌ 已放弃', color: 'var(--text-mute)' } };
+
+    document.getElementById('incubationList').innerHTML = filtered.length === 0 ? '<div class="empty">暂无项目，添加一个新项目开始孵化</div>' : filtered.map(p => `
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;border-left:3px solid ${typeColors[p.type] || 'var(--border)'}">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <div style="flex:1">
+                    <div style="font-size:13px;font-weight:700">${p.name}</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${p.owner ? '👤 ' + p.owner + ' · ' : ''}📅 ${p.date}</div>
+                </div>
+                <span style="font-size:9px;padding:2px 8px;border-radius:4px;background:rgba(168,107,255,0.15);color:${typeColors[p.type] || 'var(--text-mute)'}">${p.type}</span>
+                <span style="font-size:9px;padding:2px 8px;border-radius:4px;background:rgba(255,255,255,0.05);color:${statusBadge[p.status].color}">${statusBadge[p.status].label}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <div style="display:flex;gap:12px;font-size:11px;color:var(--text-mute)">
+                    <span>预期 ¥${p.expected}</span>
+                    <span style="color:var(--green)">实际 ¥${p.actual}</span>
+                </div>
+                <span style="font-size:11px;font-weight:600;color:${statColors[p.status] || 'var(--text-mute)'}">${p.progress}%</span>
+            </div>
+            <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px">
+                <div style="height:100%;width:${p.progress}%;background:${statColors[p.status] || 'var(--text-mute)'};border-radius:3px;transition:width 0.4s"></div>
+            </div>
+            <div style="display:flex;gap:6px">
+                ${p.status === 'testing' ? `<button onclick="advanceIncubation(${projects.indexOf(p)})" style="flex:1;font-size:10px;padding:5px;border:1px solid var(--blue);color:var(--blue);border-radius:6px;background:transparent;cursor:pointer">→ 验证通过</button>` : ''}
+                ${p.status === 'verified' ? `<button onclick="advanceIncubation(${projects.indexOf(p)})" style="flex:1;font-size:10px;padding:5px;border:1px solid var(--green);color:var(--green);border-radius:6px;background:transparent;cursor:pointer">→ 正式上线</button>` : ''}
+                ${p.status !== 'abandoned' && p.status !== 'live' ? `<button onclick="abandonIncubation(${projects.indexOf(p)})" style="flex:1;font-size:10px;padding:5px;border:1px solid var(--red);color:var(--red);border-radius:6px;background:transparent;cursor:pointer">放弃</button>` : ''}
+                <button onclick="delIncubation(${projects.indexOf(p)})" style="font-size:10px;padding:5px 8px;border:1px solid var(--border);color:var(--text-mute);border-radius:6px;background:transparent;cursor:pointer">删除</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterIncubation(status, el) {
+    incFilter = status;
+    document.querySelectorAll('#incubationFilter .inc-tab').forEach(b => {
+        b.style.cssText = 'padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--border);background:var(--card2);color:var(--text-dim);cursor:pointer';
+    });
+    if (el) el.style.cssText = 'padding:5px 12px;border-radius:8px;font-size:11px;border:1px solid var(--purple);background:var(--purple);color:#fff;cursor:pointer';
+    renderIncubation();
+}
+
+function addIncubation() {
+    const name = document.getElementById('incName').value.trim();
+    const type = document.getElementById('incType').value;
+    const expected = parseInt(document.getElementById('incExpected').value) || 0;
+    const owner = document.getElementById('incOwner').value.trim();
+    if (!name) return toast('请输入项目名称');
+    const projects = load('incubations', []);
+    projects.unshift({ name, type, status: 'testing', progress: 10, expected, actual: 0, owner, date: todayStr() });
+    save('incubations', projects);
+    document.getElementById('incName').value = '';
+    document.getElementById('incExpected').value = '';
+    document.getElementById('incOwner').value = '';
+    renderIncubation();
+    toast('🥚 项目已开始孵化');
+}
+
+function advanceIncubation(i) {
+    const projects = load('incubations', []);
+    if (projects[i].status === 'testing') {
+        projects[i].status = 'verified';
+        projects[i].progress = 60;
+    } else if (projects[i].status === 'verified') {
+        projects[i].status = 'live';
+        projects[i].progress = 100;
+    }
+    save('incubations', projects);
+    renderIncubation();
+    toast('✅ 状态已更新');
+}
+
+function abandonIncubation(i) {
+    const projects = load('incubations', []);
+    projects[i].status = 'abandoned';
+    projects[i].progress = projects[i].progress;
+    save('incubations', projects);
+    renderIncubation();
+    toast('项目已标记为放弃');
+}
+
+function delIncubation(i) {
+    const projects = load('incubations', []);
+    projects.splice(i, 1);
+    save('incubations', projects);
+    renderIncubation();
 }
 
 function renderOpps() {
@@ -4988,7 +5395,7 @@ function quickMenuAction(type) {
             setTimeout(() => document.getElementById('expenseAmount').focus(), 300);
             break;
         case 'inspiration':
-            switchPage('more', items[12]);
+            switchPage('more', items[13]);
             setTimeout(() => document.getElementById('inspirationInput').focus(), 300);
             break;
         case 'task':
@@ -5435,6 +5842,11 @@ renderCourses();
 renderStudents();
 renderMaterials();
 renderEcom();
+renderGoals();
+renderInsights();
+renderBizTypes();
+renderPlatforms();
+renderIncubation();
 
 // ========== 自动版本检测（打开工作台时静默检查更新）==========
 (function autoUpdateCheck() {
