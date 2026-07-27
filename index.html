@@ -1726,6 +1726,23 @@ body {
         <div id="deliveryFlow"></div>
     </div>
 
+    <!-- 案例沉淀 -->
+    <div class="section" style="border:1px solid rgba(0,217,163,0.3)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">🏆</span> 定制案例库</div>
+            <div class="sec-more" id="caseCount">0个案例</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:12px">
+            每个交付的定制项目都会沉淀在这里，既是你的作品集，也是平台可复用的模板资产。
+        </div>
+        <div id="caseList"></div>
+        <div class="task-add" style="margin-top:10px">
+            <input type="text" id="caseClient" placeholder="客户名称/项目名" style="flex:1">
+            <input type="text" id="caseType" placeholder="类型（如：电商版）" style="flex:1">
+            <button onclick="addCase()" style="background:var(--green);color:#000;border:none;width:40px;border-radius:10px;font-size:18px;cursor:pointer">+</button>
+        </div>
+    </div>
+
     <!-- FAQ -->
     <div class="section">
         <div class="sec-header">
@@ -2169,7 +2186,7 @@ body {
     <div class="section">
         <div class="sec-header">
             <div class="sec-title"><span class="emoji">🏢</span> 企业官网</div>
-            <div class="sec-more" onclick="window.open('https://shiming-ai.github.io/shiming-workbench/home.html','_blank')" style="cursor:pointer;color:var(--orange)">新窗口打开 ›</div>
+            <div class="sec-more" onclick="window.open('https://shiming-ai.github.io/shiming-workbench/','_blank')" style="cursor:pointer;color:var(--orange)">新窗口打开 ›</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
             Crazy Friday 疯狂星期五 · AI一人公司母系统<br>
@@ -2196,7 +2213,7 @@ body {
 
         <!-- 内嵌官网 -->
         <div style="background:var(--card2);border:1px solid var(--border);border-radius:14px;overflow:hidden">
-            <iframe src="https://shiming-ai.github.io/shiming-workbench/home.html" style="width:100%;height:600px;border:none;display:block" loading="lazy" id="websiteFrame"></iframe>
+            <iframe src="https://shiming-ai.github.io/shiming-workbench/" style="width:100%;height:600px;border:none;display:block" loading="lazy" id="websiteFrame"></iframe>
         </div>
 
         <div style="margin-top:10px;font-size:10px;color:var(--text-mute);text-align:center">
@@ -4452,6 +4469,9 @@ function renderServicePage() {
             <div style="font-size:12px;color:var(--text-dim);line-height:1.6">A: ${f.a}</div>
         </div>
     `).join('');
+
+    // 案例库
+    renderCaseList();
 }
 
 function submitOrder() {
@@ -4493,6 +4513,45 @@ function submitOrder() {
     document.getElementById('orderName').value = '';
     document.getElementById('orderWechat').value = '';
     document.getElementById('orderNeeds').value = '';
+}
+
+// ========== 定制案例库 ==========
+function renderCaseList() {
+    const cases = load('serviceCases', [
+        { client: '小龙虾', type: '一人公司母系统', desc: '自用实战版，完整商业闭环', date: '2026.07.20' },
+    ]);
+    document.getElementById('caseCount').textContent = cases.length + '个案例';
+    document.getElementById('caseList').innerHTML = cases.length === 0 ? '<div class="empty">暂无案例，交付后记得添加</div>' : cases.map((c, i) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 0;${i < cases.length - 1 ? 'border-bottom:1px solid var(--border)' : ''}">
+            <span style="font-size:18px">🏆</span>
+            <div style="flex:1">
+                <div style="font-size:12px;font-weight:600">${c.client}</div>
+                <div style="font-size:10px;color:var(--text-mute)">${c.type}${c.desc ? ' · ' + c.desc : ''}</div>
+            </div>
+            <span style="font-size:9px;color:var(--text-dim)">${c.date}</span>
+            <span onclick="delCase(${i})" style="font-size:14px;color:var(--text-mute);cursor:pointer;padding:4px">×</span>
+        </div>
+    `).join('');
+}
+
+function addCase() {
+    const client = document.getElementById('caseClient').value.trim();
+    const type = document.getElementById('caseType').value.trim();
+    if (!client) return toast('请输入客户/项目名');
+    const cases = load('serviceCases', []);
+    cases.unshift({ client, type: type || '定制版', desc: '', date: todayStr() });
+    save('serviceCases', cases);
+    document.getElementById('caseClient').value = '';
+    document.getElementById('caseType').value = '';
+    renderCaseList();
+    toast('案例已沉淀');
+}
+
+function delCase(i) {
+    const cases = load('serviceCases', []);
+    cases.splice(i, 1);
+    save('serviceCases', cases);
+    renderCaseList();
 }
 
 // ========== 智能报价引擎 ==========
