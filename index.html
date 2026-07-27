@@ -1104,6 +1104,44 @@ body {
         <div id="warRoom"></div>
     </div>
 
+    <!-- 未来作战路线 -->
+    <div class="section" style="background:linear-gradient(135deg,rgba(255,107,26,0.08),rgba(168,107,255,0.08));border:1px solid rgba(255,107,26,0.2)">
+        <div class="sec-header">
+            <div class="sec-title"><span class="emoji">🚀</span>未来作战路线</div>
+            <div class="sec-more">2026-2027</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
+            别什么都做，先打透这3个阶段
+        </div>
+
+        <div style="background:var(--card);border-radius:12px;padding:12px;margin-bottom:10px;border-left:3px solid var(--orange)">
+            <div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:6px">阶段1 · 2026年Q3：现金流打透</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                ① 每周发5条小红书引流<br>
+                ② 完成20单AI工作台定制<br>
+                ③ 收集10个真实客户案例
+            </div>
+        </div>
+
+        <div style="background:var(--card);border-radius:12px;padding:12px;margin-bottom:10px;border-left:3px solid var(--purple)">
+            <div style="font-size:13px;font-weight:700;color:var(--purple);margin-bottom:6px">阶段2 · 2026年Q4：产品化</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                ① 上线一门AI一人公司课程（199-999元）<br>
+                ② 跑通小红书→落地页→付款闭环<br>
+                ③ 建立100人社群
+            </div>
+        </div>
+
+        <div style="background:var(--card);border-radius:12px;padding:12px;border-left:3px solid var(--green)">
+            <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:6px">阶段3 · 2027年：生态化</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                ① AI应用市场开放<br>
+                ② 孵化第一个联合项目<br>
+                ③ 月营收破10万
+            </div>
+        </div>
+    </div>
+
     <!-- 业务线总览（首页快捷视图） -->
     <div class="section card-blue">
         <div class="sec-header">
@@ -2104,12 +2142,11 @@ function renderWeek() {
 // ========== 今日任务 ==========
 function getTodayKey() { return 'tasks_' + todayStr(); }
 let tasks = load(getTodayKey(), [
-    { text: '闲鱼上架剩余3个产品（补齐5个）', time: '14:00', done: false },
-    { text: '知乎发布重启文章', time: '15:00', done: false },
-    { text: '主动获取至少1个新咨询（闲鱼/知乎）', time: '16:00', done: false },
-    { text: '跟进昨日咨询，推进成单', time: '17:00', done: false },
+    { text: '发1条小红书（AI工作台/一人公司主题）', time: '10:00', done: false },
+    { text: '跟进至少1个AI工作台定制咨询', time: '14:00', done: false },
     { text: '记录今日收入/支出', time: '22:00', done: false },
-    { text: '学习1个AI工具技巧', time: '21:00', done: false },
+    { text: '学习1个新AI工具并记录变现机会', time: '21:00', done: false },
+    { text: '睡前复盘：今天哪件事离10万月营收最近', time: '23:00', done: false },
 ]);
 
 function renderTasks() {
