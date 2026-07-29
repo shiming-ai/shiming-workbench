@@ -256,17 +256,32 @@ body::before {
     display: flex; align-items: center; gap: 16px;
     background: var(--card); border-radius: 16px;
     padding: 18px; border: 1px solid var(--border);
+    text-decoration: none; color: inherit;
     transition: all 0.2s;
+    position: relative; overflow: hidden;
 }
+.biz-row::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, var(--orange), var(--yellow));
+    opacity: 0; transition: opacity 0.2s;
+}
+.biz-row:nth-child(2)::before { background: linear-gradient(180deg, var(--green), var(--cyan)); }
+.biz-row:nth-child(3)::before { background: linear-gradient(180deg, var(--purple), var(--pink)); }
+.biz-row:nth-child(4)::before { background: linear-gradient(180deg, var(--blue), var(--cyan)); }
+.biz-row:nth-child(5)::before { background: linear-gradient(180deg, var(--yellow), var(--orange)); }
+.biz-row:nth-child(6)::before { background: linear-gradient(180deg, var(--pink), var(--red)); }
+.biz-row:hover { border-color: var(--border); }
 .biz-row:active { transform: scale(0.98); border-color: var(--orange); }
+.biz-row:active::before { opacity: 1; }
 .biz-icon {
-    width: 48px; height: 48px; border-radius: 12px;
+    width: 48px; height: 48px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     font-size: 24px; flex-shrink: 0; background: var(--card2);
+    border: 1px solid var(--border);
 }
-.biz-info { flex: 1; }
-.biz-name { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
-.biz-desc { font-size: 11px; color: var(--text-dim); }
+.biz-info { flex: 1; min-width: 0; }
+.biz-name { font-size: 15px; font-weight: 800; margin-bottom: 3px; color: #fff; }
+.biz-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 .biz-status {
     font-size: 9px; padding: 3px 8px; border-radius: 10px;
     font-weight: 700; white-space: nowrap;
@@ -595,7 +610,7 @@ body::before {
             <span class="white">6条业务线</span><br>
             <span class="gradient">都在跑</span>
         </h2>
-        <p class="h-desc fade-in">每条线都在真实运营、真实变现。点进去可以看详情：</p>
+        <p class="h-desc fade-in">对外展示6条业务线，真实工作台不对外开放。</p>
 
         <div class="biz-grid">
             <a href="index.html" class="biz-row fade-in">
