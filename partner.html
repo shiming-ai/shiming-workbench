@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="疯狂星期五·共创伙伴计划 · 6条AI业务线全开放，找对的人一起搞AI生意">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
+<title>共创伙伴计划 · Crazy Friday Co-Creator</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+    --pink: #FF6B9D; --cyan: #00D9FF;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.container { max-width: 480px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
+
+/* ========== Nav ========== */
+.nav {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: #000; border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15);
+}
+.nav-logo-mark::after {
+    content: ''; position: absolute;
+    bottom: 5px; right: 5px; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--orange);
+    border: 1.5px solid #000;
+}
+.nav-logo-inner { text-align: center; line-height: 0.9; }
+.nav-logo-cf { font-size: 13px; color: #fff; font-weight: 900; letter-spacing: -0.5px; }
+.nav-logo-cf .dot { color: var(--orange); font-size: 14px; }
+.nav-logo-tag { font-size: 5px; color: var(--text-mute); letter-spacing: 0.5px; margin-top: 1px; }
+.nav-brand { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; display: flex; flex-direction: column; }
+.nav-brand .en {
+    font-size: 15px;
+    background: linear-gradient(135deg, #fff 60%, var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-brand .cn { font-size: 10px; color: var(--text-mute); font-weight: 500; }
+.nav-cta {
+    font-size: 12px; padding: 8px 16px;
+    background: var(--orange); color: #fff;
+    border-radius: 20px; text-decoration: none; font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ========== Hero ========== */
+.hero {
+    padding: 64px 18px 48px;
+    background:
+        radial-gradient(ellipse 600px 400px at 50% 0%, rgba(255,107,26,0.18), transparent),
+        radial-gradient(ellipse 400px 300px at 80% 30%, rgba(168,107,255,0.12), transparent),
+        radial-gradient(ellipse 300px 200px at 10% 60%, rgba(0,217,163,0.06), transparent);
+    text-align: center; position: relative; overflow: hidden;
+}
+.hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 16px;
+    background: rgba(255,107,26,0.12); color: var(--orange);
+    border-radius: 20px; margin-bottom: 28px;
+    font-weight: 600; border: 1px solid rgba(255,107,26,0.25);
+    animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,26,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(255,107,26,0); }
+}
+.hero h1 {
+    font-size: 38px; font-weight: 900;
+    line-height: 1.2; margin-bottom: 16px;
+    letter-spacing: -1.5px;
+}
+.hero h1 .white { color: #fff; }
+.hero h1 .gradient {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    margin-bottom: 14px; line-height: 1.5;
+}
+.hero-desc {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.8; margin-bottom: 32px;
+    max-width: 340px; margin-left: auto; margin-right: auto;
+}
+.hero-desc strong { color: var(--text); font-weight: 600; }
+
+.hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-bottom: 32px;
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--card);
+}
+.hero-stat {
+    padding: 16px 4px; text-align: center;
+    border-right: 1px solid var(--border);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .num {
+    font-size: 18px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-stat .lbl { font-size: 8px; color: var(--text-mute); margin-top: 4px; }
+
+.hero-cta { display: flex; flex-direction: column; gap: 10px; }
+.btn-primary {
+    display: block; width: 100%; padding: 17px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border: none; cursor: pointer;
+    border-radius: 14px; font-size: 16px; font-weight: 700; text-align: center;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    transition: transform 0.15s;
+}
+.btn-primary:active { transform: scale(0.97); }
+.btn-secondary {
+    display: block; width: 100%; padding: 15px;
+    background: transparent; color: var(--text-dim);
+    text-decoration: none; border-radius: 14px;
+    font-size: 14px; font-weight: 600; text-align: center;
+    border: 1px solid var(--border); transition: all 0.15s;
+}
+.btn-secondary:active { border-color: var(--orange); color: var(--orange); }
+
+/* ========== Section通用 ========== */
+.section { padding: 50px 0; }
+.section-eyebrow {
+    font-size: 11px; color: var(--orange); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+.section-title {
+    font-size: 26px; font-weight: 900;
+    line-height: 1.3; margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+.section-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.section-sub {
+    font-size: 13px; color: var(--text-dim);
+    margin-bottom: 28px; line-height: 1.7;
+}
+
+/* ========== 优势卡片 ========== */
+.advantage-card {
+    background: var(--card); border-radius: 18px;
+    padding: 24px 20px; border: 1px solid var(--border);
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+    transition: all 0.2s;
+}
+.advantage-card:active { transform: scale(0.98); border-color: var(--orange); }
+.advantage-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.advantage-card:nth-child(1)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.advantage-card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.advantage-card:nth-child(3)::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+.advantage-icon { font-size: 32px; margin-bottom: 12px; }
+.advantage-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.advantage-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+.advantage-desc strong { color: var(--text); font-weight: 600; }
+
+/* ========== 角色卡片 ========== */
+.role-card {
+    background: var(--card); border-radius: 20px;
+    padding: 28px 22px; border: 1px solid var(--border);
+    margin-bottom: 20px;
+    position: relative; overflow: hidden;
+    transition: all 0.2s;
+}
+.role-card:active { transform: scale(0.98); }
+.role-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+}
+.role-card[data-color="orange"]::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.role-card[data-color="green"]::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.role-card[data-color="purple"]::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+.role-card[data-color="orange"] { box-shadow: 0 0 30px rgba(255,107,26,0.08); }
+.role-card[data-color="green"] { box-shadow: 0 0 30px rgba(0,217,163,0.08); }
+.role-card[data-color="purple"] { box-shadow: 0 0 30px rgba(168,107,255,0.08); }
+
+.role-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.role-emoji {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+}
+.role-card[data-color="orange"] .role-emoji { background: rgba(255,107,26,0.12); }
+.role-card[data-color="green"] .role-emoji { background: rgba(0,217,163,0.12); }
+.role-card[data-color="purple"] .role-emoji { background: rgba(168,107,255,0.12); }
+.role-name { font-size: 18px; font-weight: 900; margin-bottom: 2px; }
+.role-tag {
+    font-size: 10px; padding: 3px 10px;
+    border-radius: 12px; font-weight: 600;
+    display: inline-block;
+}
+.role-card[data-color="orange"] .role-tag { background: rgba(255,107,26,0.12); color: var(--orange); }
+.role-card[data-color="green"] .role-tag { background: rgba(0,217,163,0.12); color: var(--green); }
+.role-card[data-color="purple"] .role-tag { background: rgba(168,107,255,0.12); color: var(--purple); }
+
+.role-scene {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.7; margin-bottom: 16px;
+    padding: 12px 14px; background: var(--card2);
+    border-radius: 12px; border-left: 3px solid var(--border);
+}
+.role-scene strong { color: var(--text); }
+.role-benefits { list-style: none; margin-bottom: 16px; }
+.role-benefits li {
+    display: flex; align-items: start; gap: 8px;
+    font-size: 12px; color: var(--text-dim);
+    margin-bottom: 8px; line-height: 1.6;
+}
+.role-benefits li::before {
+    content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; font-size: 13px;
+}
+.role-fit {
+    font-size: 11px; color: var(--text-mute);
+    padding-top: 14px; border-top: 1px solid var(--border);
+}
+.role-fit strong { color: var(--text-dim); }
+
+/* ========== 分成模式 ========== */
+.profit-card {
+    background: var(--card); border-radius: 16px;
+    padding: 20px 16px; border: 1px solid var(--border);
+    margin-bottom: 14px; text-align: center;
+    position: relative; overflow: hidden;
+    transition: all 0.2s;
+}
+.profit-card:active { transform: scale(0.98); }
+.profit-card.featured {
+    border-color: var(--orange);
+    box-shadow: 0 0 30px rgba(255,107,26,0.12);
+}
+.profit-card.featured::after {
+    content: '推荐'; position: absolute; top: 10px; right: 10px;
+    font-size: 9px; padding: 3px 8px;
+    background: var(--orange); color: #fff;
+    border-radius: 10px; font-weight: 700;
+}
+.profit-name { font-size: 13px; font-weight: 700; color: var(--text-dim); margin-bottom: 10px; }
+.profit-num {
+    font-size: 36px; font-weight: 900;
+    line-height: 1; margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.profit-unit { font-size: 14px; font-weight: 700; }
+.profit-desc { font-size: 11px; color: var(--text-mute); line-height: 1.5; }
+
+.profit-calc {
+    background: linear-gradient(135deg, var(--card2), var(--card));
+    border-radius: 16px; padding: 20px;
+    border: 1px solid var(--border);
+    margin-top: 20px;
+}
+.profit-calc-title {
+    font-size: 12px; font-weight: 700; color: var(--text-dim);
+    margin-bottom: 12px; text-align: center;
+}
+.profit-calc-formula {
+    font-size: 13px; color: var(--text);
+    text-align: center; line-height: 1.8;
+}
+.profit-calc-formula .num {
+    color: var(--orange); font-weight: 800; font-size: 15px;
+}
+.profit-calc-result {
+    font-size: 20px; font-weight: 900; text-align: center;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--border);
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* ========== 流程 ========== */
+.chain-section {
+    background: var(--card); border-radius: 18px;
+    padding: 24px 20px; border: 1px solid var(--border);
+}
+.chain-item {
+    display: flex; gap: 16px; margin-bottom: 20px;
+    position: relative;
+}
+.chain-item:last-child { margin-bottom: 0; }
+.chain-item:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 17px; top: 40px; bottom: -12px;
+    width: 2px; background: var(--border);
+}
+.chain-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; font-size: 14px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; box-shadow: 0 4px 12px rgba(255,107,26,0.3);
+}
+.chain-content { flex: 1; padding-top: 4px; }
+.chain-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.chain-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* ========== 赋能网格 ========== */
+.perk-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.perk-card {
+    background: var(--card); border-radius: 14px;
+    padding: 18px 14px; border: 1px solid var(--border);
+    text-align: center;
+    transition: all 0.2s;
+}
+.perk-card:active { transform: scale(0.97); border-color: var(--orange); }
+.perk-icon { font-size: 28px; margin-bottom: 8px; }
+.perk-title { font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+.perk-desc { font-size: 10px; color: var(--text-mute); line-height: 1.5; }
+
+/* ========== 申请区 ========== */
+.apply-section {
+    background:
+        radial-gradient(ellipse 400px 300px at 50% 50%, rgba(255,107,26,0.1), transparent),
+        var(--card);
+    border-radius: 20px; padding: 36px 22px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.apply-title {
+    font-size: 22px; font-weight: 900; margin-bottom: 10px;
+    line-height: 1.3;
+}
+.apply-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.apply-desc {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.7; margin-bottom: 24px;
+}
+
+.contact-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px; margin-top: 20px;
+}
+.contact-item {
+    background: var(--card2); border-radius: 14px;
+    padding: 16px 8px; border: 1px solid var(--border);
+    text-align: center; text-decoration: none;
+    transition: all 0.15s;
+}
+.contact-item:active { border-color: var(--orange); transform: scale(0.97); }
+.contact-icon { font-size: 24px; margin-bottom: 6px; }
+.contact-label { font-size: 11px; font-weight: 600; color: var(--text); }
+.contact-sub { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
+.trust-line {
+    font-size: 12px; color: var(--text-mute);
+    margin-top: 28px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    line-height: 1.7;
+}
+.trust-line strong { color: var(--orange); font-weight: 600; }
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center; padding: 40px 18px 80px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+}
+.footer-links {
+    display: flex; justify-content: center; gap: 16px;
+    margin-bottom: 12px;
+}
+.footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; }
+.footer-links a:active { color: var(--orange); }
+
+/* ========== 浮动按钮 ========== */
+.float-apply {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 80;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none;
+    border-radius: 30px; font-size: 14px; font-weight: 700;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.4);
+    opacity: 0; pointer-events: none;
+    transition: all 0.3s;
+}
+.float-apply.show { opacity: 1; pointer-events: auto; }
+.float-apply:active { transform: translateX(-50%) scale(0.95); }
+
+/* ========== 滚动渐入 ========== */
+.fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; transition: none; }
+    .hero-eyebrow { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Nav ========== -->
+<nav class="nav">
+    <a href="home.html" class="nav-logo">
+        <div class="nav-logo-mark">
+            <div class="nav-logo-inner">
+                <div class="nav-logo-cf">CF<span class="dot">.</span></div>
+                <div class="nav-logo-tag">CRAZY FRIDAY</div>
+            </div>
+        </div>
+        <div class="nav-brand">
+            <span class="en">Crazy Friday</span>
+            <span class="cn">疯狂星期五</span>
+        </div>
+    </a>
+    <a href="#apply" class="nav-cta">申请加入</a>
+</nav>
+
+<!-- ========== Hero ========== -->
+<section class="hero">
+    <div class="hero-eyebrow">🚀 2026 共创伙伴招募中</div>
+    <h1>
+        <span class="white">别再观望AI</span><br>
+        <span class="gradient">成为AI生意的合伙人</span>
+    </h1>
+    <p class="hero-subtitle">Crazy Friday 已跑通6条AI业务线</p>
+    <p class="hero-desc">
+        我们不是卖课、不是招商加盟。<br>
+        是一套<strong>真正在运营的AI商业系统</strong>，现在开放生态，<br>
+        找对的人一起搞事。
+    </p>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="num">6</div>
+            <div class="lbl">业务线</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">18+</div>
+            <div class="lbl">AI服务</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">8</div>
+            <div class="lbl">平台覆盖</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">1-5</div>
+            <div class="lbl">天交付</div>
+        </div>
+    </div>
+    <div class="hero-cta">
+        <a href="#apply" class="btn-primary">申请成为共创伙伴</a>
+        <a href="#profit" class="btn-secondary">了解分成模式 →</a>
+    </div>
+</section>
+
+<!-- ========== 优势 ========== -->
+<section class="section" id="why">
+    <div class="container">
+        <div class="section-eyebrow fade-in">WHY US</div>
+        <h2 class="section-title fade-in">为什么选择<span class="accent">跟我们干</span></h2>
+        <p class="section-sub fade-in">不是PPT项目，是每天在运营、在赚钱的真实业务</p>
+
+        <div class="advantage-card fade-in">
+            <div class="advantage-icon">🎯</div>
+            <div class="advantage-title">真实跑通的业务</div>
+            <div class="advantage-desc">
+                AI工作台、AI营课程、AI漫剧、AI定制开发、内容矩阵、项目孵化——<strong>6条业务线全部在真实运营</strong>，不是Demo，不是概念。你自己可以先验证，再决定要不要一起干。
+            </div>
+        </div>
+
+        <div class="advantage-card fade-in">
+            <div class="advantage-icon">🔧</div>
+            <div class="advantage-title">全套系统已就绪</div>
+            <div class="advantage-desc">
+                工作台、官网、课程、交付流程、素材库<strong>全部搭好了</strong>。你不需要从零开始，只管接单和引流，系统帮你交付。省掉你3-6个月的搭建期。
+            </div>
+        </div>
+
+        <div class="advantage-card fade-in">
+            <div class="advantage-icon">🌐</div>
+            <div class="advantage-title">8大平台流量池</div>
+            <div class="advantage-desc">
+                小红书、抖音、知乎、视频号、B站、公众号、即刻、微信——<strong>内容矩阵自动分发</strong>，一个选题多平台曝光。你带来的流量，我们帮你承接转化。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 合伙人类型 ========== -->
+<section class="section" id="roles">
+    <div class="container">
+        <div class="section-eyebrow fade-in">PARTNER ROLES</div>
+        <h2 class="section-title fade-in">三种角色<span class="accent">总有一种适合你</span></h2>
+        <p class="section-sub fade-in">不管你擅长引流、交付还是做本地市场，都有对应的位置</p>
+
+        <!-- 渠道合伙人 -->
+        <div class="role-card fade-in" data-color="orange">
+            <div class="role-header">
+                <div class="role-emoji">🤝</div>
+                <div>
+                    <div class="role-name">渠道合伙人</div>
+                    <span class="role-tag">引流获客</span>
+                </div>
+            </div>
+            <div class="role-scene">
+                <strong>场景：</strong>你有流量、有人脉、有社群。你负责把客户带过来，我们负责交付和服务。成交后你拿分成，不用碰交付。
+            </div>
+            <ul class="role-benefits">
+                <li>推荐客户成交，拿 20-30% 分成</li>
+                <li>专属推广链接 + 素材包，一键分发</li>
+                <li>客户跟进状态实时可见，不担心飞单</li>
+                <li>无业绩门槛，按单结算，T+3到账</li>
+            </ul>
+            <div class="role-fit">
+                <strong>适合：</strong>博主、社群主、有行业人脉的人、想做副业的职场人
+            </div>
+        </div>
+
+        <!-- 交付合伙人 -->
+        <div class="role-card fade-in" data-color="green">
+            <div class="role-header">
+                <div class="role-emoji">🛠️</div>
+                <div>
+                    <div class="role-name">交付合伙人</div>
+                    <span class="role-tag">技术交付</span>
+                </div>
+            </div>
+            <div class="role-scene">
+                <strong>场景：</strong>你懂AI、会编程、能做交付。我们负责接单和客户管理，你专注把项目做出来。按项目结算，多劳多得。
+            </div>
+            <ul class="role-benefits">
+                <li>项目交付费的 60-70% 归你</li>
+                <li>我们负责客户沟通、需求确认、验收回款</li>
+                <li>共享技术栈模板，交付效率翻倍</li>
+                <li>大项目联合交付，创始人亲自带</li>
+            </ul>
+            <div class="role-fit">
+                <strong>适合：</strong>有AI/编程基础的创作者、独立开发者、想做AI服务的技术人
+            </div>
+        </div>
+
+        <!-- 城市合伙人 -->
+        <div class="role-card fade-in" data-color="purple">
+            <div class="role-header">
+                <div class="role-emoji">🏢</div>
+                <div>
+                    <div class="role-name">城市合伙人</div>
+                    <span class="role-tag">区域独占</span>
+                </div>
+            </div>
+            <div class="role-scene">
+                <strong>场景：</strong>你想在本地/某个行业做AI服务生意。我们开放全业务线，给你区域独占保护。你是那个城市的总负责人。
+            </div>
+            <ul class="role-benefits">
+                <li>全业务线 35-45% 分成，比例最高</li>
+                <li>区域/行业独占保护，不设第二家</li>
+                <li>可发展下级渠道，享受二级分润</li>
+                <li>品牌授权 + 本地化运营支持</li>
+            </ul>
+            <div class="role-fit">
+                <strong>适合：</strong>想做本地AI服务的创业者、有行业资源的团队、想做区域代理的人
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 分成模式 ========== -->
+<section class="section" id="profit">
+    <div class="container">
+        <div class="section-eyebrow fade-in">PROFIT MODEL</div>
+        <h2 class="section-title fade-in">分成模式<span class="accent">透明不玩虚的</span></h2>
+        <p class="section-sub fade-in">直接写明比例，算得清清楚楚，每单实时可见</p>
+
+        <div class="profit-card fade-in">
+            <div class="profit-name">渠道合伙人</div>
+            <div class="profit-num">20-30<span class="profit-unit">%</span></div>
+            <div class="profit-desc">推荐成交额分成<br>无门槛，按单结算</div>
+        </div>
+
+        <div class="profit-card featured fade-in">
+            <div class="profit-name">交付合伙人</div>
+            <div class="profit-num">60-70<span class="profit-unit">%</span></div>
+            <div class="profit-desc">项目交付费结算<br>多劳多得，技术变现</div>
+        </div>
+
+        <div class="profit-card fade-in">
+            <div class="profit-name">城市合伙人</div>
+            <div class="profit-num">35-45<span class="profit-unit">%</span></div>
+            <div class="profit-desc">全业务线分成<br>区域独占 + 二级分润</div>
+        </div>
+
+        <!-- 收益测算 -->
+        <div class="profit-calc fade-in">
+            <div class="profit-calc-title">💡 收益测算示例（渠道合伙人）</div>
+            <div class="profit-calc-formula">
+                月推荐 <span class="num">5单</span> AI定制 ×<br>
+                均价 <span class="num">3000元</span> ×<br>
+                分成 <span class="num">25%</span>
+            </div>
+            <div class="profit-calc-result">月入 3,750 元</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 加入流程 ========== -->
+<section class="section" id="process">
+    <div class="container">
+        <div class="section-eyebrow fade-in">HOW TO JOIN</div>
+        <h2 class="section-title fade-in">四步搞定<span class="accent">开始搞钱</span></h2>
+        <p class="section-sub fade-in">从申请到第一单，最快一周内搞定</p>
+
+        <div class="chain-section fade-in">
+            <div class="chain-item">
+                <div class="chain-num">1</div>
+                <div class="chain-content">
+                    <div class="chain-name">提交申请</div>
+                    <div class="chain-desc">填写申请表，简单说明你的优势、资源和想做的方向。不用写简历，说人话就行。</div>
+                </div>
+            </div>
+            <div class="chain-item">
+                <div class="chain-num">2</div>
+                <div class="chain-content">
+                    <div class="chain-name">1v1沟通</div>
+                    <div class="chain-desc">创始人直接跟你聊，确认合作方向和角色类型。合适就继续，不合适当交个朋友。</div>
+                </div>
+            </div>
+            <div class="chain-item">
+                <div class="chain-num">3</div>
+                <div class="chain-content">
+                    <div class="chain-name">开通权限</div>
+                    <div class="chain-desc">获得工作台子账号、推广素材包、专属报价体系。全套工具当天就能用上。</div>
+                </div>
+            </div>
+            <div class="chain-item">
+                <div class="chain-num">4</div>
+                <div class="chain-content">
+                    <div class="chain-name">开始搞钱</div>
+                    <div class="chain-desc">接单、引流、交付——系统自动记录和结算。每单收益实时可见，T+3到账。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 赋能体系 ========== -->
+<section class="section" id="perks">
+    <div class="container">
+        <div class="section-eyebrow fade-in">EMPOWERMENT</div>
+        <h2 class="section-title fade-in">你将获得<span class="accent">全套赋能</span></h2>
+        <p class="section-sub fade-in">不是丢个授权就完事，是真的帮你做成</p>
+
+        <div class="perk-grid">
+            <div class="perk-card fade-in">
+                <div class="perk-icon">🖥️</div>
+                <div class="perk-title">工作台子账号</div>
+                <div class="perk-desc">客户管理、订单追踪、收益看板</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">📦</div>
+                <div class="perk-title">推广素材包</div>
+                <div class="perk-desc">海报、文案、落地页、案例库</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">💰</div>
+                <div class="perk-title">透明结算</div>
+                <div class="perk-desc">每单实时可见，T+3到账</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">📚</div>
+                <div class="perk-title">AI营课程</div>
+                <div class="perk-desc">全员解锁，持续学AI变现</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">🎫</div>
+                <div class="perk-title">专属底价</div>
+                <div class="perk-desc">合伙人专属报价，保证利润</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">🤝</div>
+                <div class="perk-title">创始人支持</div>
+                <div class="perk-desc">大客户联合跟进，不单打独斗</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 申请区 ========== -->
+<section class="section" id="apply">
+    <div class="container">
+        <div class="apply-section fade-in">
+            <h2 class="apply-title">不是招商加盟<br><span class="accent">是找对的人一起搞事</span></h2>
+            <p class="apply-desc">
+                我们不要1000个代理商，只要10个真正想做AI的人。<br>
+                如果你认真想干，扫码加创始人好友，直接聊。
+            </p>
+            <a href="#contact" class="btn-primary">立即申请共创伙伴</a>
+
+            <div class="contact-grid" id="contact">
+                <a href="#contact" class="contact-item" onclick="showToast('加微信请扫码或搜索：时铭的AI实验室'); return false;">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-label">微信</div>
+                    <div class="contact-sub">加创始人好友</div>
+                </a>
+                <a href="#contact" class="contact-item" onclick="showToast('抖音搜索：时铭的AI实验室'); return false;">
+                    <div class="contact-icon">🎵</div>
+                    <div class="contact-label">抖音</div>
+                    <div class="contact-sub">@时铭AI实验室</div>
+                </a>
+                <a href="home.html" class="contact-item">
+                    <div class="contact-icon">🌐</div>
+                    <div class="contact-label">官网</div>
+                    <div class="contact-sub">了解业务全貌</div>
+                </a>
+            </div>
+
+            <div class="trust-line">
+                <strong>不收加盟费、不收保证金。</strong><br>
+                合适就一起干，不合适当交个朋友。<br>
+                2026年，AI的窗口期就这么几年，别错过了。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== Footer ========== -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="home.html">官网</a>
+        <a href="home.html#contact">联系我们</a>
+        <a href="home.html">工作台</a>
+    </div>
+    <div>© 2026 Crazy Friday 疯狂星期五 · AI × CREATOR</div>
+</footer>
+
+<!-- ========== 浮动申请按钮 ========== -->
+<a href="#apply" class="float-apply" id="floatApply">申请加入</a>
+
+<!-- ========== Toast ========== -->
+<div id="toast" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);color:var(--text);padding:14px 24px;border-radius:12px;border:1px solid var(--border);font-size:13px;z-index:100;opacity:0;transition:all 0.3s;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,0.4);"></div>
+
+<script>
+// 滚动渐入
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// 浮动申请按钮
+const floatApply = document.getElementById('floatApply');
+const heroEl = document.querySelector('.hero');
+window.addEventListener('scroll', () => {
+    const heroBottom = heroEl ? heroEl.offsetTop + heroEl.offsetHeight : 400;
+    if (window.scrollY > heroBottom) {
+        floatApply.classList.add('show');
+    } else {
+        floatApply.classList.remove('show');
+    }
+});
+
+// 平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Toast
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+    }, 2500);
+}
+</script>
+
+</body>
+</html>
