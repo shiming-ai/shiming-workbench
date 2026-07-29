@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0b0f">
-<meta name="description" content="Crazy Friday · 一个人+AI=一家公司 · 真实在运营的AI商业系统">
+<meta name="description" content="时铭 · Crazy Friday · 用AI帮人和企业降本增效。AI工作台、AI定制开发、AI漫剧、AI营课程">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
-<title>Crazy Friday · 一个人+AI=一家公司</title>
+<title>时铭 · 用AI帮人赚钱</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -23,842 +22,463 @@ body {
     background: var(--bg); color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
 }
 body::before {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
     background-size: 40px 40px;
 }
 
+.wrap { max-width: 460px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
 /* ========== Nav ========== */
 .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(10,11,15,0.7);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid transparent;
-    padding: 12px 18px;
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.8);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
     display: flex; justify-content: space-between; align-items: center;
-    transition: all 0.3s;
-}
-.nav.scrolled {
-    background: rgba(10,11,15,0.92);
-    border-bottom-color: var(--border);
 }
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo-mark {
-    width: 34px; height: 34px; border-radius: 50%;
+.nav-mark {
+    width: 36px; height: 36px; border-radius: 50%;
     background: #000; border: 1.5px solid rgba(255,255,255,0.9);
     display: flex; align-items: center; justify-content: center;
     position: relative; flex-shrink: 0;
 }
-.nav-logo-mark::after {
-    content: ''; position: absolute;
-    bottom: 4px; right: 4px; width: 6px; height: 6px;
-    border-radius: 50%; background: var(--orange); border: 1px solid #000;
+.nav-mark::after {
+    content: ''; position: absolute; bottom: 4px; right: 4px;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--orange); border: 1px solid #000;
 }
-.nav-logo-cf { font-size: 12px; color: #fff; font-weight: 900; }
-.nav-logo-cf .dot { color: var(--orange); }
-.nav-brand { font-size: 14px; font-weight: 800; display: flex; flex-direction: column; line-height: 1; }
+.nav-cf { font-size: 13px; color: #fff; font-weight: 900; }
+.nav-cf .dot { color: var(--orange); }
+.nav-brand { font-size: 14px; font-weight: 800; line-height: 1; }
 .nav-brand .en {
     background: linear-gradient(135deg, #fff 60%, var(--orange));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .nav-brand .cn { font-size: 9px; color: var(--text-mute); font-weight: 500; margin-top: 2px; }
-.nav-links { display: flex; gap: 10px; align-items: center; }
-.nav-link {
-    font-size: 12px; color: var(--text-dim); text-decoration: none;
-    font-weight: 600; transition: color 0.2s;
-}
-.nav-link:active { color: var(--orange); }
-.nav-cta {
-    font-size: 12px; padding: 8px 18px;
+.nav-btn {
+    font-size: 12px; padding: 8px 16px;
     background: linear-gradient(135deg, var(--orange), #FF8E53);
     color: #fff; text-decoration: none;
-    border-radius: 22px; font-weight: 700;
-    box-shadow: 0 4px 16px rgba(255,107,26,0.3);
+    border-radius: 20px; font-weight: 700;
 }
 
-/* ========== 通用 ========== */
-.scene {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 80px 18px; position: relative;
-    max-width: 480px; margin: 0 auto;
+/* ========== Hero ========== */
+.hero {
+    padding: 48px 0 36px;
+    background:
+        radial-gradient(ellipse 500px 350px at 50% 0%, rgba(255,107,26,0.18), transparent 70%),
+        radial-gradient(ellipse 400px 250px at 90% 30%, rgba(168,107,255,0.08), transparent);
+    text-align: center;
 }
-.eyebrow {
+.hero-tag {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; padding: 6px 14px;
-    border-radius: 20px; margin-bottom: 20px;
-    font-weight: 600;
+    font-size: 11px; padding: 5px 14px;
+    background: rgba(0,217,163,0.1); color: var(--green);
+    border-radius: 20px; margin-bottom: 24px;
+    font-weight: 600; border: 1px solid rgba(0,217,163,0.2);
 }
-.eyebrow.orange { background: rgba(255,107,26,0.12); color: var(--orange); border: 1px solid rgba(255,107,26,0.2); }
-.eyebrow.purple { background: rgba(168,107,255,0.12); color: var(--purple); border: 1px solid rgba(168,107,255,0.2); }
-.eyebrow.green { background: rgba(0,217,163,0.12); color: var(--green); border: 1px solid rgba(0,217,163,0.2); }
-
-.h-display {
-    font-size: 36px; font-weight: 900;
-    line-height: 1.15; letter-spacing: -1.5px;
-    margin-bottom: 16px;
+.hero-tag .dot {
+    width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+    animation: blink 1.5s infinite;
 }
-.h-display .gradient {
+@keyframes blink { 50% { opacity: 0.3; } }
+.hero h1 {
+    font-size: 30px; font-weight: 900;
+    line-height: 1.2; letter-spacing: -1px;
+    margin-bottom: 14px;
+}
+.hero h1 .gradient {
     background: linear-gradient(135deg, var(--orange), var(--yellow));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.h-display .white { color: #fff; }
-.h-sub {
+.hero-sub {
     font-size: 15px; color: var(--text); font-weight: 600;
-    line-height: 1.5; margin-bottom: 14px;
+    margin-bottom: 8px;
 }
-.h-desc {
+.hero-desc {
     font-size: 13px; color: var(--text-dim);
-    line-height: 1.8; margin-bottom: 28px;
+    line-height: 1.7; margin-bottom: 0;
 }
-.h-desc strong { color: var(--text); font-weight: 600; }
+.hero-desc strong { color: var(--text); }
 
-.btn-primary {
-    display: inline-block; padding: 16px 36px;
+/* ========== 一句话解释 ========== */
+.pitch {
+    padding: 32px 0;
+    text-align: center;
+}
+.pitch-card {
+    background: linear-gradient(135deg, var(--card), var(--card2));
+    border-radius: 20px; padding: 28px 22px;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+}
+.pitch-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow), var(--orange));
+}
+.pitch-label {
+    font-size: 11px; color: var(--orange); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
+}
+.pitch-text {
+    font-size: 17px; font-weight: 700; line-height: 1.6;
+    margin-bottom: 16px;
+}
+.pitch-text .hl {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.pitch-sub {
+    font-size: 13px; color: var(--text-dim); line-height: 1.7;
+    padding-top: 16px; border-top: 1px dashed var(--border);
+}
+.pitch-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    margin-top: 16px;
+}
+.pitch-tag {
+    font-size: 11px; padding: 5px 12px;
+    background: var(--card2); border-radius: 20px;
+    border: 1px solid var(--border); color: var(--text-dim);
+}
+
+/* ========== 我做什么 ========== */
+.section { padding: 28px 0; }
+.section-head {
+    margin-bottom: 20px;
+}
+.section-eyebrow {
+    font-size: 11px; color: var(--orange); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;
+}
+.section-title {
+    font-size: 22px; font-weight: 900; letter-spacing: -0.5px;
+}
+.section-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* ========== 服务卡片 ========== */
+.svc-list { display: flex; flex-direction: column; gap: 12px; }
+.svc-card {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border-radius: 16px;
+    padding: 16px; border: 1px solid var(--border);
+    text-decoration: none; color: inherit;
+    transition: all 0.15s;
+    position: relative; overflow: hidden;
+}
+.svc-card:active { transform: scale(0.98); }
+.svc-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    opacity: 0.6;
+}
+.svc-card:nth-child(1)::before { background: var(--orange); }
+.svc-card:nth-child(2)::before { background: var(--green); }
+.svc-card:nth-child(3)::before { background: var(--purple); }
+.svc-card:nth-child(4)::before { background: var(--blue); }
+.svc-card:nth-child(5)::before { background: var(--pink); }
+.svc-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0; background: var(--card2);
+    border: 1px solid var(--border);
+}
+.svc-info { flex: 1; min-width: 0; }
+.svc-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.svc-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+.svc-arrow { font-size: 14px; color: var(--text-mute); flex-shrink: 0; }
+
+/* ========== 数据条 ========== */
+.stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card);
+    margin-bottom: 20px;
+}
+.stat {
+    padding: 14px 4px; text-align: center;
+    border-right: 1px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+    font-size: 18px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-lbl { font-size: 9px; color: var(--text-mute); margin-top: 3px; }
+
+/* ========== 共创入口 ========== */
+.partner-box {
+    background:
+        radial-gradient(ellipse 400px 200px at 50% 100%, rgba(255,107,26,0.1), transparent),
+        var(--card);
+    border-radius: 20px; padding: 24px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.partner-badge {
+    display: inline-block; font-size: 10px;
+    padding: 4px 12px; background: rgba(255,107,26,0.12);
+    color: var(--orange); border-radius: 12px;
+    font-weight: 700; margin-bottom: 12px;
+    border: 1px solid rgba(255,107,26,0.2);
+}
+.partner-title {
+    font-size: 17px; font-weight: 900; margin-bottom: 8px; line-height: 1.4;
+}
+.partner-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.partner-desc {
+    font-size: 12px; color: var(--text-dim); line-height: 1.7;
+    margin-bottom: 16px;
+}
+.partner-roles {
+    display: flex; gap: 8px; justify-content: center; margin-bottom: 16px;
+}
+.partner-role {
+    font-size: 11px; padding: 6px 12px;
+    background: var(--card2); border-radius: 10px;
+    border: 1px solid var(--border); color: var(--text-dim);
+}
+
+/* ========== 联系 ========== */
+.contact-box {
+    background: var(--card); border-radius: 20px;
+    padding: 28px 22px; border: 1px solid var(--border);
+    text-align: center; margin-bottom: 20px;
+}
+.contact-title {
+    font-size: 18px; font-weight: 900; margin-bottom: 8px;
+}
+.contact-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.contact-desc {
+    font-size: 13px; color: var(--text-dim); line-height: 1.7;
+    margin-bottom: 20px;
+}
+.btn-wx {
+    display: block; width: 100%; padding: 16px;
     background: linear-gradient(135deg, var(--orange), #FF8E53);
     color: #fff; text-decoration: none; border: none; cursor: pointer;
     border-radius: 14px; font-size: 15px; font-weight: 700; text-align: center;
-    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    box-shadow: 0 8px 30px rgba(255,107,26,0.3);
+    margin-bottom: 12px;
     transition: transform 0.15s;
 }
-.btn-primary:active { transform: scale(0.97); }
-.btn-ghost {
-    display: inline-block; padding: 14px 28px;
-    background: transparent; color: var(--text-dim);
-    text-decoration: none; border-radius: 14px;
-    font-size: 14px; font-weight: 600; text-align: center;
-    border: 1px solid var(--border); transition: all 0.15s;
-}
-.btn-ghost:active { border-color: var(--orange); color: var(--orange); }
-
-/* ========== Scene 1: Hero ========== */
-#scene-hero {
-    min-height: 100vh; padding: 100px 18px 60px;
-    background:
-        radial-gradient(ellipse 800px 600px at 50% 0%, rgba(255,107,26,0.2), transparent 60%),
-        radial-gradient(ellipse 500px 400px at 80% 40%, rgba(168,107,255,0.1), transparent);
-    text-align: center;
-    flex-direction: column; justify-content: center;
-}
-.hero-badge {
-    font-size: 11px; color: var(--text-mute);
-    margin-bottom: 24px; letter-spacing: 2px;
-}
-.hero-badge .live {
-    display: inline-block; width: 6px; height: 6px;
-    background: var(--green); border-radius: 50%;
-    margin-right: 6px;
-    animation: blink 1.5s ease-in-out infinite;
-}
-@keyframes blink { 50% { opacity: 0.3; } }
-#scene-hero h1 {
-    font-size: 44px; font-weight: 900;
-    line-height: 1.1; letter-spacing: -2px;
-    margin-bottom: 20px;
-}
-#scene-hero h1 .line2 {
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.hero-tagline {
-    font-size: 17px; color: var(--text); font-weight: 600;
-    margin-bottom: 8px;
-}
-.hero-mini {
-    font-size: 13px; color: var(--text-dim);
-    margin-bottom: 36px; line-height: 1.7;
-}
-.hero-scroll {
-    position: absolute; bottom: 30px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px; color: var(--text-mute);
-    animation: bounce 2s ease-in-out infinite;
-}
-@keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
-}
-
-/* ========== Scene 2: 问题 ========== */
-#scene-problem {
-    border-top: 1px solid var(--border);
-}
-.problem-card {
-    background: var(--card); border-radius: 20px;
-    padding: 28px 22px; border: 1px solid var(--border);
-    margin-bottom: 16px;
-    position: relative; overflow: hidden;
-}
-.problem-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-}
-.problem-card:nth-child(1)::before { background: linear-gradient(90deg, var(--red), var(--orange)); }
-.problem-card:nth-child(2)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
-.problem-card:nth-child(3)::before { background: linear-gradient(90deg, var(--yellow), var(--green)); }
-.problem-num { font-size: 32px; font-weight: 900; color: var(--text-mute); margin-bottom: 8px; opacity: 0.5; }
-.problem-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-.problem-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
-
-/* ========== Scene 3: 解法 ========== */
-#scene-solution {
-    background:
-        radial-gradient(ellipse 600px 400px at 50% 50%, rgba(0,217,163,0.06), transparent);
-    text-align: center;
-}
-.solution-equation {
-    display: flex; align-items: center; justify-content: center;
-    gap: 12px; margin: 32px 0;
-    font-size: 28px; font-weight: 900;
-}
-.eq-item {
-    padding: 16px 20px; border-radius: 16px;
-    border: 1px solid var(--border); background: var(--card);
-}
-.eq-item.person { color: var(--text); }
-.eq-item.ai {
-    background: linear-gradient(135deg, rgba(255,107,26,0.15), rgba(255,217,61,0.05));
-    border-color: rgba(255,107,26,0.3);
-    color: var(--orange);
-}
-.eq-item.result {
-    background: linear-gradient(135deg, rgba(0,217,163,0.15), rgba(0,217,255,0.05));
-    border-color: rgba(0,217,163,0.3);
-    color: var(--green);
-}
-.eq-op { color: var(--text-mute); font-size: 24px; }
-.solution-list {
-    text-align: left; margin-top: 24px;
-    list-style: none;
-}
-.solution-list li {
-    display: flex; align-items: start; gap: 10px;
-    font-size: 13px; color: var(--text-dim);
-    margin-bottom: 12px; line-height: 1.6;
-    padding: 14px; background: var(--card);
-    border-radius: 12px; border: 1px solid var(--border);
-}
-.solution-list li::before {
-    content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0;
-}
-.solution-list li strong { color: var(--text); font-weight: 600; }
-
-/* ========== Scene 4: 业务线 ========== */
-#scene-business { border-top: 1px solid var(--border); }
-.biz-grid {
-    display: flex; flex-direction: column; gap: 12px;
-    margin-top: 24px;
-}
-.biz-row {
-    display: flex; align-items: center; gap: 16px;
-    background: var(--card); border-radius: 16px;
-    padding: 18px; border: 1px solid var(--border);
-    text-decoration: none; color: inherit;
-    transition: all 0.2s;
-    position: relative; overflow: hidden;
-}
-.biz-row::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-    background: linear-gradient(180deg, var(--orange), var(--yellow));
-    opacity: 0; transition: opacity 0.2s;
-}
-.biz-row:nth-child(2)::before { background: linear-gradient(180deg, var(--green), var(--cyan)); }
-.biz-row:nth-child(3)::before { background: linear-gradient(180deg, var(--purple), var(--pink)); }
-.biz-row:nth-child(4)::before { background: linear-gradient(180deg, var(--blue), var(--cyan)); }
-.biz-row:nth-child(5)::before { background: linear-gradient(180deg, var(--yellow), var(--orange)); }
-.biz-row:nth-child(6)::before { background: linear-gradient(180deg, var(--pink), var(--red)); }
-.biz-row:hover { border-color: var(--border); }
-.biz-row:active { transform: scale(0.98); border-color: var(--orange); }
-.biz-row:active::before { opacity: 1; }
-.biz-icon {
-    width: 48px; height: 48px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; flex-shrink: 0; background: var(--card2);
-    border: 1px solid var(--border);
-}
-.biz-info { flex: 1; min-width: 0; }
-.biz-name { font-size: 15px; font-weight: 800; margin-bottom: 3px; color: #fff; }
-.biz-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-.biz-status {
-    font-size: 9px; padding: 3px 8px; border-radius: 10px;
-    font-weight: 700; white-space: nowrap;
-}
-.biz-status.live { background: rgba(0,217,163,0.12); color: var(--green); }
-.biz-status.grow { background: rgba(168,107,255,0.12); color: var(--purple); }
-
-/* ========== Scene 5: 数据 ========== */
-#scene-data {
-    background:
-        radial-gradient(ellipse 500px 400px at 50% 30%, rgba(168,107,255,0.1), transparent);
-    text-align: center;
-}
-.data-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 12px; margin: 28px 0;
-}
-.data-card {
-    background: var(--card); border-radius: 16px;
-    padding: 24px 12px; border: 1px solid var(--border);
-    position: relative; overflow: hidden;
-}
-.data-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-}
-.data-card:nth-child(1)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
-.data-card:nth-child(2)::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
-.data-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
-.data-card:nth-child(4)::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
-.data-num {
-    font-size: 32px; font-weight: 900;
-    background: linear-gradient(135deg, #fff, var(--orange));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.data-lbl { font-size: 11px; color: var(--text-mute); margin-top: 6px; }
-.data-note {
+.btn-wx:active { transform: scale(0.97); }
+.contact-alt {
+    display: flex; justify-content: center; gap: 20px;
     font-size: 12px; color: var(--text-mute);
-    margin-top: 16px; line-height: 1.6;
 }
-
-/* ========== Scene 6: 共创 ========== */
-#scene-partner {
-    border-top: 1px solid var(--border);
-    background:
-        radial-gradient(ellipse 600px 400px at 50% 100%, rgba(255,107,26,0.1), transparent);
-}
-.partner-intro {
-    background: var(--card); border-radius: 20px;
-    padding: 24px; border: 1px solid var(--border);
-    margin-bottom: 20px;
-    position: relative; overflow: hidden;
-}
-.partner-intro::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, var(--orange), var(--yellow));
-}
-.partner-intro p {
-    font-size: 14px; color: var(--text); line-height: 1.8;
-}
-.partner-intro p strong { color: var(--orange); }
-
-.role-list { display: flex; flex-direction: column; gap: 14px; }
-.role-card {
-    background: var(--card); border-radius: 18px;
-    padding: 22px; border: 1px solid var(--border);
-    position: relative; overflow: hidden;
-    transition: all 0.2s;
-}
-.role-card:active { transform: scale(0.98); }
-.role-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-}
-.role-card[data-c="o"]::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
-.role-card[data-c="g"]::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
-.role-card[data-c="p"]::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
-.role-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.role-emoji {
-    width: 44px; height: 44px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-}
-.role-card[data-c="o"] .role-emoji { background: rgba(255,107,26,0.12); }
-.role-card[data-c="g"] .role-emoji { background: rgba(0,217,163,0.12); }
-.role-card[data-c="p"] .role-emoji { background: rgba(168,107,255,0.12); }
-.role-name { font-size: 16px; font-weight: 900; }
-.role-tag {
-    font-size: 10px; padding: 3px 10px; border-radius: 10px;
-    font-weight: 600; display: inline-block; margin-top: 2px;
-}
-.role-card[data-c="o"] .role-tag { background: rgba(255,107,26,0.12); color: var(--orange); }
-.role-card[data-c="g"] .role-tag { background: rgba(0,217,163,0.12); color: var(--green); }
-.role-card[data-c="p"] .role-tag { background: rgba(168,107,255,0.12); color: var(--purple); }
-.role-detail { font-size: 12px; color: var(--text-dim); line-height: 1.7; margin-bottom: 14px; }
-.role-detail strong { color: var(--text); }
-.role-bottom {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 14px; border-top: 1px solid var(--border);
-}
-.role-fee { font-size: 11px; color: var(--text-mute); }
-.role-fee strong { color: var(--orange); font-size: 14px; font-weight: 800; }
-.role-share { font-size: 11px; color: var(--green); font-weight: 600; }
-
-/* ========== Scene 7: 收费 ========== */
-#scene-fee {
-    text-align: center;
-    background:
-        radial-gradient(ellipse 500px 300px at 50% 50%, rgba(255,107,26,0.08), transparent);
-}
-.fee-card {
-    background: linear-gradient(135deg, var(--card), var(--card2));
-    border-radius: 20px; padding: 32px 24px;
-    border: 1px solid var(--border);
-    margin: 24px 0;
-    position: relative; overflow: hidden;
-}
-.fee-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-    background: linear-gradient(90deg, var(--orange), var(--yellow), var(--orange));
-}
-.fee-step {
-    display: flex; gap: 14px; margin-bottom: 20px;
-    text-align: left;
-}
-.fee-step:last-child { margin-bottom: 0; }
-.fee-num {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--orange), #FF8E53);
-    color: #fff; font-size: 13px; font-weight: 900;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-}
-.fee-content { flex: 1; }
-.fee-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
-.fee-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
-.fee-desc strong { color: var(--orange); }
-.fee-bottom {
-    margin-top: 20px; padding-top: 20px;
-    border-top: 1px dashed var(--border);
-    font-size: 12px; color: var(--text-mute); line-height: 1.7;
-}
-.fee-bottom strong { color: var(--green); }
-
-/* ========== Scene 8: CTA ========== */
-#scene-cta {
-    background:
-        radial-gradient(ellipse 600px 500px at 50% 30%, rgba(255,107,26,0.15), transparent);
-    text-align: center;
-}
-.cta-card {
-    background: var(--card); border-radius: 24px;
-    padding: 36px 24px; border: 1px solid var(--border);
-    margin-top: 24px;
-}
-.cta-title {
-    font-size: 22px; font-weight: 900; line-height: 1.4;
-    margin-bottom: 12px;
-}
-.cta-title .accent {
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.cta-desc {
-    font-size: 13px; color: var(--text-dim);
-    line-height: 1.7; margin-bottom: 24px;
-}
-.cta-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-.cta-contact {
-    display: flex; justify-content: center; gap: 12px;
-    margin-top: 20px; padding-top: 20px;
-    border-top: 1px solid var(--border);
-}
-.cta-contact-item {
-    background: var(--card2); border-radius: 12px;
-    padding: 12px 16px; border: 1px solid var(--border);
-    text-decoration: none; text-align: center;
-    transition: all 0.15s;
-}
-.cta-contact-item:active { border-color: var(--orange); transform: scale(0.96); }
-.cta-contact-icon { font-size: 20px; }
-.cta-contact-label { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+.contact-alt a { color: var(--text-dim); text-decoration: none; }
+.contact-alt a:active { color: var(--orange); }
 
 /* ========== Footer ========== */
 .footer {
-    text-align: center; padding: 40px 18px 100px;
+    text-align: center; padding: 30px 20px 80px;
     color: var(--text-mute); font-size: 11px;
     border-top: 1px solid var(--border);
 }
 .footer-links {
-    display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;
-    margin-bottom: 12px;
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 14px;
+    margin-bottom: 10px;
 }
 .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; }
-.footer-links a:active { color: var(--orange); }
 
 /* ========== 浮动CTA ========== */
-.float-cta {
+.float-wx {
     position: fixed; bottom: 20px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 80;
-    padding: 14px 32px;
+    transform: translateX(-50%); z-index: 80;
+    padding: 13px 28px;
     background: linear-gradient(135deg, var(--orange), #FF8E53);
     color: #fff; text-decoration: none;
-    border-radius: 30px; font-size: 14px; font-weight: 700;
+    border-radius: 26px; font-size: 13px; font-weight: 700;
     box-shadow: 0 8px 30px rgba(255,107,26,0.4);
-    opacity: 0; pointer-events: none;
-    transition: all 0.3s;
+    opacity: 0; pointer-events: none; transition: all 0.3s;
     white-space: nowrap;
 }
-.float-cta.show { opacity: 1; pointer-events: auto; }
-.float-cta:active { transform: translateX(-50%) scale(0.95); }
+.float-wx.show { opacity: 1; pointer-events: auto; }
+.float-wx:active { transform: translateX(-50%) scale(0.95); }
 
-/* ========== 滚动渐入 ========== */
-.fade-in {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+/* ========== Toast ========== */
+#toast {
+    position: fixed; bottom: 80px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--card2); color: var(--text);
+    padding: 12px 22px; border-radius: 12px;
+    border: 1px solid var(--border); font-size: 13px;
+    z-index: 100; opacity: 0; transition: all 0.3s; pointer-events: none;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
 
 @media (prefers-reduced-motion: reduce) {
-    .fade-in { opacity: 1; transform: none; transition: none; }
-    .hero-scroll, .hero-badge .live { animation: none; }
+    .hero-tag .dot { animation: none; }
 }
 </style>
 </head>
 <body>
 
 <!-- ========== Nav ========== -->
-<nav class="nav" id="nav">
-    <a href="#scene-hero" class="nav-logo">
-        <div class="nav-logo-mark">
-            <div class="nav-logo-cf">CF<span class="dot">.</span></div>
-        </div>
+<nav class="nav">
+    <div class="nav-logo">
+        <div class="nav-mark"><div class="nav-cf">CF<span class="dot">.</span></div></div>
         <div class="nav-brand">
-            <span class="en">Crazy Friday</span>
-            <span class="cn">疯狂星期五</span>
+            <div class="en">Crazy Friday</div>
+            <div class="cn">疯狂星期五 · 时铭</div>
         </div>
-    </a>
-    <div class="nav-links">
-        <a href="index.html" class="nav-link">官网</a>
-        <a href="partner.html" class="nav-link">共创</a>
-        <a href="#scene-cta" class="nav-cta">加微信</a>
     </div>
+    <a href="#contact" class="nav-btn">加微信</a>
 </nav>
 
-<!-- ========== Scene 1: Hero ========== -->
-<section class="scene" id="scene-hero">
-    <div class="hero-badge"><span class="live"></span>真实运营中 · 2026</div>
-    <h1>
-        一个人 + AI<br>
-        <span class="line2">= 一家公司</span>
-    </h1>
-    <p class="hero-tagline">不是课程，不是工具</p>
-    <p class="hero-mini">
-        是一套<strong style="color:var(--text)">真实在运营的 AI 商业系统</strong><br>
-        6条业务线 · 18种AI服务 · 8大平台
-    </p>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <a href="#scene-problem" class="btn-primary">往下看</a>
-        <a href="partner.html" class="btn-ghost">成为共创伙伴</a>
-    </div>
-    <div class="hero-scroll">向下滑动 ↓</div>
-</section>
-
-<!-- ========== Scene 2: 问题 ========== -->
-<section class="scene" id="scene-problem">
-    <div>
-        <div class="eyebrow orange fade-in">THE PROBLEM</div>
-        <h2 class="h-display fade-in">
-            <span class="white">2026年</span><br>
-            <span class="gradient">AI不是选择题</span>
-        </h2>
-        <p class="h-desc fade-in">
-            所有人都在谈AI，但99%的人<strong>卡在同一个地方</strong>——
+<!-- ========== Hero ========== -->
+<section class="hero">
+    <div class="wrap">
+        <div class="hero-tag"><span class="dot"></span>真实运营中</div>
+        <h1>时铭 · <span class="gradient">用AI帮人赚钱</span></h1>
+        <p class="hero-sub">一个人 + AI = 一家公司</p>
+        <p class="hero-desc">
+            我用AI跑通了<strong>6条业务线</strong>，现在帮你和企业<br>
+            用AI<strong>降本增效、自动获客、批量变现</strong>
         </p>
+    </div>
+</section>
 
-        <div class="problem-card fade-in">
-            <div class="problem-num">01</div>
-            <div class="problem-title">学了工具，但不知道怎么赚钱</div>
-            <div class="problem-desc">ChatGPT、Midjourney都会用了，但变现路径在哪？没有人带你跑通完整闭环。</div>
-        </div>
-        <div class="problem-card fade-in">
-            <div class="problem-num">02</div>
-            <div class="problem-title">有想法，但没有系统支撑</div>
-            <div class="problem-desc">知道AI能做事，但从0搭一套系统太难了。工作台、获客、交付、结算……每一步都是坑。</div>
-        </div>
-        <div class="problem-card fade-in">
-            <div class="problem-num">03</div>
-            <div class="problem-title">一个人干，太慢了</div>
-            <div class="problem-desc">单打独斗效率低，想找靠谱的人一起，但要么不靠谱，要么要价太高。</div>
+<!-- ========== 一句话解释 ========== -->
+<section class="pitch">
+    <div class="wrap">
+        <div class="pitch-card">
+            <div class="pitch-label">简单说，我做什么</div>
+            <div class="pitch-text">
+                帮你用<span class="hl">AI工具+自动化系统</span><br>
+                把生意搬到AI上，<span class="hl">降本、获客、变现</span>
+            </div>
+            <div class="pitch-sub">
+                不管你是个人想搞副业、企业想降本增效、还是想做AI生意——<br>
+                我有现成的系统、工具和经验，直接帮你落地。
+            </div>
+            <div class="pitch-tags">
+                <span class="pitch-tag">AI工作台</span>
+                <span class="pitch-tag">AI定制开发</span>
+                <span class="pitch-tag">AI漫剧</span>
+                <span class="pitch-tag">AI营课程</span>
+                <span class="pitch-tag">内容矩阵</span>
+                <span class="pitch-tag">项目孵化</span>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- ========== Scene 3: 解法 ========== -->
-<section class="scene" id="scene-solution">
-    <div>
-        <div class="eyebrow green fade-in">THE SOLUTION</div>
-        <h2 class="h-display fade-in">
-            <span class="white">我们把整条链路</span><br>
-            <span class="gradient">跑通了</span>
-        </h2>
-        <p class="h-sub fade-in">一个人 + AI = 一家公司</p>
-
-        <div class="solution-equation fade-in">
-            <div class="eq-item person">🧑</div>
-            <div class="eq-op">+</div>
-            <div class="eq-item ai">🤖</div>
-            <div class="eq-op">=</div>
-            <div class="eq-item result">🏢</div>
+<!-- ========== 数据 ========== -->
+<section class="section" style="padding-top:0;">
+    <div class="wrap">
+        <div class="stats">
+            <div class="stat"><div class="stat-num">6+</div><div class="stat-lbl">业务线</div></div>
+            <div class="stat"><div class="stat-num">18+</div><div class="stat-lbl">AI服务</div></div>
+            <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">平台覆盖</div></div>
+            <div class="stat"><div class="stat-num">1-5天</div><div class="stat-lbl">交付周期</div></div>
         </div>
-
-        <ul class="solution-list fade-in">
-            <li><strong>6条业务线</strong>全部真实运营中，不是Demo</li>
-            <li><strong>工作台 + 官网 + 课程 + 交付流程</strong>全套搭好了</li>
-            <li><strong>8大平台</strong>内容矩阵自动分发，流量自动来</li>
-            <li>你只需要<strong>选一个方向加入</strong>，剩下的系统帮你搞定</li>
-        </ul>
     </div>
 </section>
 
-<!-- ========== Scene 4: 业务线 ========== -->
-<section class="scene" id="scene-business">
-    <div style="width:100%">
-        <div class="eyebrow orange fade-in">BUSINESS LINES</div>
-        <h2 class="h-display fade-in">
-            <span class="white">6条业务线</span><br>
-            <span class="gradient">都在跑</span>
-        </h2>
-        <p class="h-desc fade-in">对外展示6条业务线，真实工作台不对外开放。</p>
+<!-- ========== 服务 ========== -->
+<section class="section" style="padding-top:0;">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">SERVICES</div>
+            <div class="section-title">我做的<span class="accent">5件事</span></div>
+        </div>
 
-        <div class="biz-grid">
-            <a href="index.html" class="biz-row fade-in">
-                <div class="biz-icon">🏠</div>
-                <div class="biz-info">
-                    <div class="biz-name">品牌官网</div>
-                    <div class="biz-desc">AI一人公司母系统全景</div>
+        <div class="svc-list">
+            <a href="landing.html" class="svc-card">
+                <div class="svc-icon">🛠️</div>
+                <div class="svc-info">
+                    <div class="svc-name">AI工作台定制</div>
+                    <div class="svc-desc">把你的业务装进一个手机页面，CRM+财务+内容一站管理</div>
                 </div>
-                <div class="biz-status live">运营中</div>
+                <div class="svc-arrow">→</div>
             </a>
-            <a href="demo.html" class="biz-row fade-in">
-                <div class="biz-icon">🖥️</div>
-                <div class="biz-info">
-                    <div class="biz-name">AI工作台</div>
-                    <div class="biz-desc">运营管理+CRM+财务+内容矩阵</div>
+            <a href="demo.html" class="svc-card">
+                <div class="svc-icon">🖥️</div>
+                <div class="svc-info">
+                    <div class="svc-name">体验展示版</div>
+                    <div class="svc-desc">看看AI工作台长什么样，可交互体验</div>
                 </div>
-                <div class="biz-status live">运营中</div>
+                <div class="svc-arrow">→</div>
             </a>
-            <a href="landing.html" class="biz-row fade-in">
-                <div class="biz-icon">🛠️</div>
-                <div class="biz-info">
-                    <div class="biz-name">AI定制开发</div>
-                    <div class="biz-desc">为客户定制专属AI工作台</div>
+            <a href="index.html" class="svc-card">
+                <div class="svc-icon">🎬</div>
+                <div class="svc-info">
+                    <div class="svc-name">AI漫剧 & 内容矩阵</div>
+                    <div class="svc-desc">用AI批量生产内容，多平台分发引流</div>
                 </div>
-                <div class="biz-status live">接单中</div>
+                <div class="svc-arrow">→</div>
             </a>
-            <div class="biz-row fade-in">
-                <div class="biz-icon">🎬</div>
-                <div class="biz-info">
-                    <div class="biz-name">AI漫剧</div>
-                    <div class="biz-desc">AI生成漫画短剧内容</div>
+            <a href="index.html" class="svc-card">
+                <div class="svc-icon">🎓</div>
+                <div class="svc-info">
+                    <div class="svc-name">AI营课程</div>
+                    <div class="svc-desc">系统学AI变现，从工具到方法到落地</div>
                 </div>
-                <div class="biz-status live">制作中</div>
-            </div>
-            <div class="biz-row fade-in">
-                <div class="biz-icon">🎓</div>
-                <div class="biz-info">
-                    <div class="biz-name">AI营课程</div>
-                    <div class="biz-desc">系统化AI变现教学</div>
+                <div class="svc-arrow">→</div>
+            </a>
+            <a href="workbench/roadmap.html" class="svc-card">
+                <div class="svc-icon">🏭</div>
+                <div class="svc-info">
+                    <div class="svc-name">项目孵化 & 投资</div>
+                    <div class="svc-desc">AI项目验证→产品化→开放合作投资</div>
                 </div>
-                <div class="biz-status grow">升级中</div>
-            </div>
-            <a href="workbench/roadmap.html" class="biz-row fade-in">
-                <div class="biz-icon">🏭</div>
-                <div class="biz-info">
-                    <div class="biz-name">项目孵化</div>
-                    <div class="biz-desc">AI项目验证→产品化→投资</div>
-                </div>
-                <div class="biz-status grow">规划中</div>
+                <div class="svc-arrow">→</div>
             </a>
         </div>
     </div>
 </section>
 
-<!-- ========== Scene 5: 数据 ========== -->
-<section class="scene" id="scene-data">
-    <div>
-        <div class="eyebrow purple fade-in">REAL DATA</div>
-        <h2 class="h-display fade-in">
-            <span class="white">不是PPT</span><br>
-            <span class="gradient">是真实数据</span>
-        </h2>
-        <p class="h-desc fade-in">这些数字来自日常运营，不是编的：</p>
-
-        <div class="data-grid fade-in">
-            <div class="data-card">
-                <div class="data-num">6+</div>
-                <div class="data-lbl">业务线</div>
+<!-- ========== 共创 ========== -->
+<section class="section" style="padding-top:0;">
+    <div class="wrap">
+        <div class="partner-box">
+            <div class="partner-badge">🔥 2026 招募中</div>
+            <div class="partner-title">想做AI生意？<span class="accent">一起搞</span></div>
+            <div class="partner-desc">
+                6条业务线全开放，3种角色可选：<br>
+                渠道引流 · 技术交付 · 城市独占
             </div>
-            <div class="data-card">
-                <div class="data-num">18+</div>
-                <div class="data-lbl">AI服务类型</div>
+            <div class="partner-roles">
+                <span class="partner-role">🤝 渠道 20-30%</span>
+                <span class="partner-role">🛠️ 交付 60-70%</span>
+                <span class="partner-role">🏢 城市 35-45%</span>
             </div>
-            <div class="data-card">
-                <div class="data-num">8</div>
-                <div class="data-lbl">内容平台</div>
-            </div>
-            <div class="data-card">
-                <div class="data-num">1-5天</div>
-                <div class="data-lbl">交付周期</div>
-            </div>
-        </div>
-
-        <p class="data-note fade-in">
-            真实工作台含运营数据，<strong style="color:var(--text)">不对公开放</strong>。<br>
-            想看展示版？<a href="demo.html" style="color:var(--orange);text-decoration:underline;">点这里体验 →</a>
-        </p>
-    </div>
-</section>
-
-<!-- ========== Scene 6: 共创 ========== -->
-<section class="scene" id="scene-partner">
-    <div style="width:100%">
-        <div class="eyebrow orange fade-in">CO-CREATOR</div>
-        <h2 class="h-display fade-in">
-            <span class="white">现在开放</span><br>
-            <span class="gradient">找对的人一起干</span>
-        </h2>
-
-        <div class="partner-intro fade-in">
-            <p>
-                我一个人+AI跑通了整条链路。<br>
-                但<strong>一个人能做的有限</strong>。<br><br>
-                现在开放3种角色，找真正想做AI的人。<br>
-                <strong>不是招商加盟，是找战友。</strong>
-            </p>
-        </div>
-
-        <div class="role-list">
-            <div class="role-card fade-in" data-c="o">
-                <div class="role-head">
-                    <div class="role-emoji">🤝</div>
-                    <div>
-                        <div class="role-name">渠道合伙人</div>
-                        <span class="role-tag">引流获客</span>
-                    </div>
-                </div>
-                <div class="role-detail">
-                    你有流量、有人脉。负责引流推荐客户，我们负责交付。<br>
-                    <strong>分成 20-30%</strong>，按单结算。
-                </div>
-                <div class="role-bottom">
-                    <div class="role-fee">入驻费 <strong>¥990</strong></div>
-                    <div class="role-share">可抵扣首批分成</div>
-                </div>
-            </div>
-
-            <div class="role-card fade-in" data-c="g">
-                <div class="role-head">
-                    <div class="role-emoji">🛠️</div>
-                    <div>
-                        <div class="role-name">交付合伙人</div>
-                        <span class="role-tag">技术交付</span>
-                    </div>
-                </div>
-                <div class="role-detail">
-                    你懂AI、能交付。我们接单你做项目。<br>
-                    <strong>结算 60-70%</strong>，多劳多得。
-                </div>
-                <div class="role-bottom">
-                    <div class="role-fee">入驻费 <strong>¥2900</strong></div>
-                    <div class="role-share">含技术模板库</div>
-                </div>
-            </div>
-
-            <div class="role-card fade-in" data-c="p">
-                <div class="role-head">
-                    <div class="role-emoji">🏢</div>
-                    <div>
-                        <div class="role-name">城市合伙人</div>
-                        <span class="role-tag">区域独占</span>
-                    </div>
-                </div>
-                <div class="role-detail">
-                    你想做本地AI服务。全业务线开放+区域独占保护。<br>
-                    <strong>分成 35-45%</strong>，可发展下级。
-                </div>
-                <div class="role-bottom">
-                    <div class="role-fee">入驻费 <strong>¥6900</strong></div>
-                    <div class="role-share">区域独占+品牌授权</div>
-                </div>
-            </div>
-        </div>
-
-        <p class="h-desc fade-in" style="text-align:center;margin-top:20px;">
-            想了解更多？<a href="partner.html" style="color:var(--orange);font-weight:700;">查看共创伙伴详情 →</a>
-        </p>
-    </div>
-</section>
-
-<!-- ========== Scene 7: 收费说明 ========== -->
-<section class="scene" id="scene-fee">
-    <div>
-        <div class="eyebrow green fade-in">WHY FEE</div>
-        <h2 class="h-display fade-in">
-            <span class="white">为什么收费</span><br>
-            <span class="gradient">不是门槛，是筛选</span>
-        </h2>
-        <p class="h-desc fade-in">
-            免费的东西没人珍惜。<br>
-            收费是为了<strong>过滤掉白嫖的人</strong>，留下真正想做事的。
-        </p>
-
-        <div class="fee-card fade-in">
-            <div class="fee-step">
-                <div class="fee-num">1</div>
-                <div class="fee-content">
-                    <div class="fee-title">报名审核 · ¥299</div>
-                    <div class="fee-desc">先交299报名费，填写你的优势资源。创始人在3天内1v1沟通，确认方向。</div>
-                </div>
-            </div>
-            <div class="fee-step">
-                <div class="fee-num">2</div>
-                <div class="fee-content">
-                    <div class="fee-title">转正补差价</div>
-                    <div class="fee-desc">沟通后决定做哪种角色，299可抵扣。<br>渠道补<strong>¥691</strong> / 交付补<strong>¥2601</strong> / 城市补<strong>¥6601</strong>。</div>
-                </div>
-            </div>
-            <div class="fee-step">
-                <div class="fee-num">3</div>
-                <div class="fee-content">
-                    <div class="fee-title">不合适全额退</div>
-                    <div class="fee-desc">1v1沟通后如果觉得不合适，<strong>299全额退还</strong>，当交个朋友。</div>
-                </div>
-            </div>
-            <div class="fee-bottom">
-                <strong>入驻费可抵扣：</strong>渠道的990可抵扣前4单分成；交付的2900含全套技术模板；城市的6900含品牌授权+区域保护。<br><br>
-                说白了：不是花钱加入，是<strong style="color:var(--orange)">预付合作金</strong>。
-            </div>
+            <a href="partner.html" class="btn-wx" style="margin-bottom:0;">查看共创伙伴详情 →</a>
         </div>
     </div>
 </section>
 
-<!-- ========== Scene 8: CTA ========== -->
-<section class="scene" id="scene-cta">
-    <div style="width:100%">
-        <div class="eyebrow orange fade-in">JOIN US</div>
-        <h2 class="h-display fade-in">
-            <span class="white">2026年</span><br>
-            <span class="gradient">AI窗口就这么几年</span>
-        </h2>
-
-        <div class="cta-card fade-in">
-            <div class="cta-title">
-                别再观望了<br>
-                <span class="accent">加微信，直接聊</span>
+<!-- ========== 联系 ========== -->
+<section class="section" id="contact" style="padding-top:0;">
+    <div class="wrap">
+        <div class="contact-box">
+            <div class="contact-title">加微信<span class="accent">直接聊</span></div>
+            <div class="contact-desc">
+                不管你想了解、想体验、还是想合作，<br>
+                扫码加好友，说人话就行。
             </div>
-            <p class="cta-desc">
-                不管你是想了解、想体验、还是想一起搞钱，<br>
-                扫码加创始人好友，说人话就行。
-            </p>
-            <div class="cta-actions">
-                <a href="#" class="btn-primary" onclick="copyWechat('Yshim16506'); return false;">复制微信：Yshim16506</a>
-                <a href="partner.html" class="btn-ghost">查看共创伙伴详情</a>
-            </div>
-            <div class="cta-contact">
-                <a href="#" class="cta-contact-item" onclick="copyWechat('Yshim16506'); return false;">
-                    <div class="cta-contact-icon">💬</div>
-                    <div class="cta-contact-label">微信①</div>
-                </a>
-                <a href="#" class="cta-contact-item" onclick="copyWechat('R26184352Y'); return false;">
-                    <div class="cta-contact-icon">💬</div>
-                    <div class="cta-contact-label">微信②</div>
-                </a>
-                <a href="index.html" class="cta-contact-item">
-                    <div class="cta-contact-icon">🌐</div>
-                    <div class="cta-contact-label">看官网</div>
-                </a>
+            <button class="btn-wx" onclick="copyWechat('Yshim16506')">复制微信：Yshim16506</button>
+            <div class="contact-alt">
+                <a href="#" onclick="copyWechat('R26184352Y'); return false;">微信②：R26184352Y</a>
+                <a href="index.html">看官网</a>
             </div>
         </div>
     </div>
@@ -866,61 +486,46 @@ body::before {
 
 <!-- ========== Footer ========== -->
 <footer class="footer">
-    <div class="footer-links">
-        <a href="index.html">官网</a>
-        <a href="partner.html">共创伙伴</a>
-        <a href="landing.html">定制服务</a>
-        <a href="demo.html">展示版</a>
-        <a href="workbench/roadmap.html">路线图</a>
+    <div class="wrap">
+        <div class="footer-links">
+            <a href="index.html">官网</a>
+            <a href="partner.html">共创伙伴</a>
+            <a href="landing.html">定制服务</a>
+            <a href="demo.html">展示版</a>
+        </div>
+        <div>© 2026 Crazy Friday 疯狂星期五 · 时铭 · AI × CREATOR</div>
     </div>
-    <div>© 2026 Crazy Friday 疯狂星期五 · AI × CREATOR</div>
 </footer>
 
 <!-- ========== 浮动CTA ========== -->
-<a href="#scene-cta" class="float-cta" id="floatCta">加微信聊</a>
+<a href="#contact" class="float-wx" id="floatWx">加微信聊</a>
 
 <!-- ========== Toast ========== -->
-<div id="toast" style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);color:var(--text);padding:14px 24px;border-radius:12px;border:1px solid var(--border);font-size:13px;z-index:100;opacity:0;transition:all 0.3s;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,0.4);"></div>
+<div id="toast"></div>
 
 <script>
-// 滚动渐入
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// Nav滚动效果
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-    } else {
-        nav.classList.remove('scrolled');
-    }
-});
-
 // 浮动CTA
-const floatCta = document.getElementById('floatCta');
+const floatWx = document.getElementById('floatWx');
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-        floatCta.classList.add('show');
+    if (window.scrollY > 300) {
+        floatWx.classList.add('show');
     } else {
-        floatCta.classList.remove('show');
+        floatWx.classList.remove('show');
     }
-});
+}, { passive: true });
 
 // 复制微信
 function copyWechat(id) {
-    navigator.clipboard.writeText(id).then(() => {
-        showToast('已复制微信号：' + id);
-    }).catch(() => {
+    const toast = document.getElementById('toast');
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(id).then(() => {
+            showToast('已复制微信号：' + id);
+        }).catch(() => {
+            showToast('微信号：' + id);
+        });
+    } else {
         showToast('微信号：' + id);
-    });
+    }
 }
 
 function showToast(msg) {
