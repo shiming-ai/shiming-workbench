@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0a0b0f">
-<meta name="description" content="Crazy Friday · AI时代的一人公司生态 · 让一个人拥有一家公司的能力 · 7条业务线真实运营中">
+<meta name="description" content="Crazy Friday · AI时代的一人公司生态 · 让一个人拥有一家公司的能力 · 7条业务线真实运营中 · 生态蓝图已规划">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
 <title>Crazy Friday · AI时代的一人公司生态</title>
 <style>
@@ -157,15 +157,10 @@ body::before {
 .hero-stat .lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
 
 /* ========== Section 通用 ========== */
-.section {
-    padding: 60px 0;
-    position: relative;
-    max-width: 480px; margin: 0 auto;
-}
+.section { padding: 56px 0; position: relative; max-width: 480px; margin: 0 auto; }
 .section-eyebrow {
     font-size: 11px; color: var(--orange); font-weight: 700;
-    text-transform: uppercase; letter-spacing: 2px;
-    margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;
 }
 .section-eyebrow.purple { color: var(--purple); }
 .section-eyebrow.green { color: var(--green); }
@@ -178,13 +173,16 @@ body::before {
     background: linear-gradient(135deg, var(--orange), var(--yellow));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
+.section-h .blue-gradient {
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
 .section-h .purple-gradient {
     background: linear-gradient(135deg, var(--purple), var(--blue));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .section-sub {
-    font-size: 14px; color: var(--text-dim); line-height: 1.8;
-    margin-bottom: 28px;
+    font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 26px;
 }
 .section-sub strong { color: var(--text); font-weight: 600; }
 
@@ -194,10 +192,10 @@ body::before {
     background: var(--card); border-radius: 18px;
     padding: 24px 20px; border: 1px solid var(--border);
     position: relative; overflow: hidden;
+    transition: all 0.2s;
 }
-.identity-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-}
+.identity-card:active { transform: scale(0.98); }
+.identity-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
 .identity-card:nth-child(1)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
 .identity-card:nth-child(2)::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
 .identity-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
@@ -212,10 +210,10 @@ body::before {
     padding: 18px 16px; border: 1px solid var(--border);
     display: flex; align-items: center; gap: 14px;
     position: relative; overflow: hidden;
+    transition: all 0.2s;
 }
-.biz-card::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-}
+.biz-card:active { transform: scale(0.98); border-color: var(--orange); }
+.biz-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
 .biz-card:nth-child(1)::before { background: linear-gradient(180deg, var(--orange), var(--yellow)); }
 .biz-card:nth-child(2)::before { background: linear-gradient(180deg, var(--green), var(--cyan)); }
 .biz-card:nth-child(3)::before { background: linear-gradient(180deg, var(--purple), var(--blue)); }
@@ -243,6 +241,41 @@ body::before {
     margin-top: 20px; line-height: 1.7;
 }
 .biz-foot a { color: var(--orange); font-weight: 700; text-decoration: none; }
+
+/* ========== 生态蓝图（8宫格） ========== */
+.blueprint-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.blueprint-card {
+    background: var(--card); border-radius: 16px;
+    padding: 18px 14px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: all 0.2s;
+}
+.blueprint-card:active { transform: scale(0.97); border-color: var(--blue); }
+.blueprint-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; opacity: 0.8; }
+.blueprint-card:nth-child(1)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.blueprint-card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.blueprint-card:nth-child(3)::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.blueprint-card:nth-child(4)::before { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.blueprint-card:nth-child(5)::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
+.blueprint-card:nth-child(6)::before { background: linear-gradient(90deg, var(--yellow), var(--orange)); }
+.blueprint-card:nth-child(7)::before { background: linear-gradient(90deg, var(--cyan), var(--green)); }
+.blueprint-card:nth-child(8)::before { background: linear-gradient(90deg, var(--red), var(--purple)); }
+.blueprint-icon { font-size: 26px; margin-bottom: 10px; }
+.blueprint-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.blueprint-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; margin-bottom: 10px; }
+.blueprint-tag {
+    display: inline-block; font-size: 9px; padding: 3px 8px;
+    border-radius: 10px; font-weight: 700;
+}
+.blueprint-tag.plan { background: rgba(168,107,255,0.12); color: var(--purple); }
+.blueprint-tag.grow { background: rgba(0,217,163,0.12); color: var(--green); }
+.blueprint-note {
+    font-size: 12px; color: var(--text-mute); text-align: center;
+    margin-top: 20px; line-height: 1.8;
+}
+.blueprint-note strong { color: var(--blue); font-weight: 700; }
 
 /* ========== 合伙人 ========== */
 .partner-intro {
@@ -282,60 +315,6 @@ body::before {
 .partner-share.c2 { color: var(--green); }
 .partner-share.c3 { color: var(--purple); }
 .partner-share.c4 { color: var(--pink); }
-
-/* ========== AI能力市场（新模块） ========== */
-.market-banner {
-    background:
-        radial-gradient(ellipse 400px 250px at 50% 0%, rgba(77,157,255,0.1), transparent),
-        var(--card);
-    border-radius: 20px; padding: 28px 22px;
-    border: 1px solid var(--border);
-    margin-bottom: 18px; position: relative; overflow: hidden;
-}
-.market-banner::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, var(--blue), var(--cyan));
-}
-.market-title {
-    font-size: 18px; font-weight: 900; margin-bottom: 8px;
-    text-align: center;
-}
-.market-title .accent {
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.market-desc {
-    font-size: 13px; color: var(--text-dim); line-height: 1.7;
-    text-align: center; margin-bottom: 20px;
-}
-.market-items { display: flex; flex-direction: column; gap: 10px; }
-.market-item {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--card2); border-radius: 12px;
-    padding: 12px 14px; border: 1px solid var(--border);
-}
-.market-item-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; background: var(--card); flex-shrink: 0;
-}
-.market-item-info { flex: 1; }
-.market-item-name { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 2px; }
-.market-item-desc { font-size: 11px; color: var(--text-dim); }
-.market-item-tag {
-    font-size: 10px; padding: 3px 8px; border-radius: 10px;
-    font-weight: 700; flex-shrink: 0;
-}
-.market-item-tag.c1 { background: rgba(255,107,26,0.12); color: var(--orange); }
-.market-item-tag.c2 { background: rgba(0,217,163,0.12); color: var(--green); }
-.market-item-tag.c3 { background: rgba(168,107,255,0.12); color: var(--purple); }
-.market-item-tag.c4 { background: rgba(77,157,255,0.12); color: var(--blue); }
-
-.market-foot {
-    font-size: 12px; color: var(--text-mute); text-align: center;
-    margin-top: 16px; line-height: 1.7;
-}
-.market-foot strong { color: var(--blue); }
 
 /* ========== 未来 ========== */
 .future-card {
@@ -473,8 +452,8 @@ body::before {
         <div class="hero-stats fade-in">
             <div class="hero-stat"><div class="num">7</div><div class="lbl">业务线</div></div>
             <div class="hero-stat"><div class="num">18+</div><div class="lbl">AI能力</div></div>
-            <div class="hero-stat"><div class="num">4</div><div class="lbl">共创角色</div></div>
-            <div class="hero-stat"><div class="num">3年</div><div class="lbl">生态规划</div></div>
+            <div class="hero-stat"><div class="num">8</div><div class="lbl">生态蓝图</div></div>
+            <div class="hero-stat"><div class="num">3年</div><div class="lbl">路线规划</div></div>
         </div>
     </div>
 </section>
@@ -506,7 +485,7 @@ body::before {
             <div class="identity-card fade-in">
                 <div class="identity-title">🤝 有生态</div>
                 <div class="identity-desc">
-                    正在生长的<strong>共创体系</strong>——流量、技术、区域、服务商，每个人都能找到自己的位置，分到蛋糕。
+                    正在生长的<strong>共创体系与能力市场</strong>——流量、技术、区域、服务商，每个人都有自己的位置，分到蛋糕。
                 </div>
             </div>
         </div>
@@ -584,58 +563,72 @@ body::before {
     </div>
 </section>
 
-<!-- ========== AI能力市场（新模块，借鉴扣子插件市场） ========== -->
-<section class="section" id="market">
+<!-- ========== 生态蓝图 ========== -->
+<section class="section" id="blueprint">
     <div class="wrap">
-        <div class="section-eyebrow blue fade-in">AI CAPABILITY MARKET</div>
-        <h2 class="section-h fade-in"><span style="color:#fff">AI能力市场</span><br><span class="purple-gradient">2026规划中</span></h2>
+        <div class="section-eyebrow blue fade-in">ECOSYSTEM BLUEPRINT</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">生态蓝图</span><br><span class="blue-gradient">8大平台级模块</span></h2>
         <p class="section-sub fade-in">
-            共创伙伴可以上架自己的AI能力，<br>
-            平台分发、自动结算、长期分成。<br>
-            <strong style="color:var(--text)">这是生态的飞轮——越多人贡献，平台越值钱。</strong>
+            对标扣子/WorkBuddy等AI平台的商业模式，<br>
+            以下模块已列入<strong style="color:var(--text)">2026-2028路线图</strong>，<br>
+            按节奏逐步落地，跑通一个开放一个。
         </p>
 
-        <div class="market-banner fade-in">
-            <div class="market-title">首批规划上线的<span class="accent">4类AI能力</span></div>
-            <div class="market-desc">已通过需求验证，跑通模型即可上架分发</div>
-            <div class="market-items">
-                <div class="market-item">
-                    <div class="market-item-icon">🤖</div>
-                    <div class="market-item-info">
-                        <div class="market-item-name">AI数字员工</div>
-                        <div class="market-item-desc">AI客服 / AI销售 / AI运营，按月订阅</div>
-                    </div>
-                    <div class="market-item-tag c1">高需求</div>
-                </div>
-                <div class="market-item">
-                    <div class="market-item-icon">🧩</div>
-                    <div class="market-item-info">
-                        <div class="market-item-name">行业AI能力包</div>
-                        <div class="market-item-desc">餐饮/教培/电商等垂直场景解决方案</div>
-                    </div>
-                    <div class="market-item-tag c2">高客单</div>
-                </div>
-                <div class="market-item">
-                    <div class="market-item-icon">⚙️</div>
-                    <div class="market-item-info">
-                        <div class="market-item-name">AI自动化工作流</div>
-                        <div class="market-item-desc">RPA / 流程自动化 / 数据抓取处理</div>
-                    </div>
-                    <div class="market-item-tag c3">长尾</div>
-                </div>
-                <div class="market-item">
-                    <div class="market-item-icon">📚</div>
-                    <div class="market-item-info">
-                        <div class="market-item-name">AI提示词与课程</div>
-                        <div class="market-item-desc">垂直领域Prompt / 行业课程 / 模板库</div>
-                    </div>
-                    <div class="market-item-tag c4">高频</div>
-                </div>
+        <div class="blueprint-grid">
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">📱</div>
+                <div class="blueprint-name">AI应用市场</div>
+                <div class="blueprint-desc">AI SaaS · 行业应用 · 企业应用，上架分发</div>
+                <span class="blueprint-tag plan">规划中</span>
             </div>
-            <div class="market-foot">
-                <strong>平台分成模式</strong>：伙伴上架，平台分发，自动结算<br>
-                月入可观，长期分成，越积累越值钱
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">🧩</div>
+                <div class="blueprint-name">AI Skill 商店</div>
+                <div class="blueprint-desc">AI能力包 · 行业技能 · 模板，开发者上传</div>
+                <span class="blueprint-tag plan">规划中</span>
             </div>
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">🤖</div>
+                <div class="blueprint-name">AI Agent 商店</div>
+                <div class="blueprint-desc">AI数字员工 · 智能体，按月订阅</div>
+                <span class="blueprint-tag grow">孵化中</span>
+            </div>
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">⚙️</div>
+                <div class="blueprint-name">AI工作流市场</div>
+                <div class="blueprint-desc">Workflow · 自动化 · RPA · 流程模板</div>
+                <span class="blueprint-tag plan">规划中</span>
+            </div>
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">📚</div>
+                <div class="blueprint-name">AI知识中心</div>
+                <div class="blueprint-desc">Prompt库 · 知识库 · 案例库 · 模板库</div>
+                <span class="blueprint-tag grow">孵化中</span>
+            </div>
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">💼</div>
+                <div class="blueprint-name">商单大厅</div>
+                <div class="blueprint-desc">AI需求撮合 · 接单 · 交付 · 平台担保</div>
+                <span class="blueprint-tag plan">规划中</span>
+            </div>
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">📊</div>
+                <div class="blueprint-name">AI数据中心</div>
+                <div class="blueprint-desc">排行榜 · 行业数据 · 创业指数</div>
+                <span class="blueprint-tag plan">规划中</span>
+            </div>
+            <div class="blueprint-card fade-in">
+                <div class="blueprint-icon">🔌</div>
+                <div class="blueprint-name">开发者生态</div>
+                <div class="blueprint-desc">API · SDK · 开放平台，生态共建</div>
+                <span class="blueprint-tag plan">规划中</span>
+            </div>
+        </div>
+
+        <div class="blueprint-note fade-in">
+            这8个模块 = 一个<strong>完整的AI商业操作系统</strong><br>
+            现有7条业务线是地基，蓝图是天花板<br>
+            给投资人看的，是<strong>可以持续长大的平台</strong>
         </div>
     </div>
 </section>
