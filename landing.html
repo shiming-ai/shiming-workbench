@@ -75,7 +75,7 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .dual-showcase {
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: center;
     gap: 8px;
     margin-bottom: 24px;
     perspective: 800px;
@@ -305,6 +305,10 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     position: relative;
     overflow: hidden;
     transition: transform 0.15s, border-color 0.2s;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .scene-card:active { transform: scale(0.97); border-color: var(--orange); }
 .scene-card::before {
