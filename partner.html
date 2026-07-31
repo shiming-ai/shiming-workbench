@@ -69,9 +69,10 @@ body::before {
 .nav-brand .cn { font-size: 10px; color: var(--text-mute); font-weight: 500; }
 .nav-cta {
     font-size: 12px; padding: 8px 16px;
-    background: var(--orange); color: #fff;
+    background: linear-gradient(135deg, var(--orange), #FF8E53); color: #fff;
     border-radius: 20px; text-decoration: none; font-weight: 700;
     white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(255,107,26,0.25);
 }
 
 /* ========== Hero ========== */
@@ -96,9 +97,9 @@ body::before {
     50% { box-shadow: 0 0 0 8px rgba(255,107,26,0); }
 }
 .hero h1 {
-    font-size: 38px; font-weight: 900;
+    font-size: 34px; font-weight: 900;
     line-height: 1.2; margin-bottom: 16px;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
 }
 .hero h1 .white { color: #fff; }
 .hero h1 .gradient {
@@ -789,7 +790,7 @@ body::before {
                 我们不要1000个代理商，只要10个真正想做AI的人。<br>
                 如果你认真想干，扫码加创始人好友，直接聊。
             </p>
-            <button class="btn-primary" onclick="copyWechat('Yshim16506')" style="border:none;width:100%;cursor:pointer;">立即申请共创伙伴</button>
+            <button class="btn-primary" onclick="copyWechat('Yshim16506')" style="border:none;width:100%;cursor:pointer;">复制微信号，加好友申请</button>
 
             <div class="contact-grid" id="contact">
                 <a href="#contact" class="contact-item" onclick="copyWechat('Yshim16506'); return false;">
