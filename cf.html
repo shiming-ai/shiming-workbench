@@ -156,41 +156,44 @@ body::before {
 }
 .hero-stat .lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
 
-/* ========== Scene 通用 ========== */
-.scene {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 90px 18px; position: relative;
+/* ========== Section 通用 ========== */
+.section {
+    padding: 60px 0;
+    position: relative;
     max-width: 480px; margin: 0 auto;
 }
-.scene-eyebrow {
+.section-eyebrow {
     font-size: 11px; color: var(--orange); font-weight: 700;
     text-transform: uppercase; letter-spacing: 2px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
-.scene-eyebrow.purple { color: var(--purple); }
-.scene-eyebrow.green { color: var(--green); }
-.scene-h {
-    font-size: 32px; font-weight: 900; line-height: 1.2;
-    letter-spacing: -1.5px; margin-bottom: 16px;
+.section-eyebrow.purple { color: var(--purple); }
+.section-eyebrow.green { color: var(--green); }
+.section-eyebrow.blue { color: var(--blue); }
+.section-h {
+    font-size: 28px; font-weight: 900; line-height: 1.25;
+    letter-spacing: -1px; margin-bottom: 14px;
 }
-.scene-h .gradient {
+.section-h .gradient {
     background: linear-gradient(135deg, var(--orange), var(--yellow));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.scene-h .white { color: #fff; }
-.scene-sub {
+.section-h .purple-gradient {
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.section-sub {
     font-size: 14px; color: var(--text-dim); line-height: 1.8;
     margin-bottom: 28px;
 }
-.scene-sub strong { color: var(--text); }
+.section-sub strong { color: var(--text); font-weight: 600; }
 
 /* ========== 是什么 ========== */
-#identity { text-align: center; }
-.identity-cards { text-align: left; }
+.identity-cards { display: flex; flex-direction: column; gap: 14px; }
 .identity-card {
     background: var(--card); border-radius: 18px;
     padding: 24px 20px; border: 1px solid var(--border);
-    margin-bottom: 14px; position: relative; overflow: hidden;
+    position: relative; overflow: hidden;
 }
 .identity-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -198,22 +201,18 @@ body::before {
 .identity-card:nth-child(1)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
 .identity-card:nth-child(2)::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
 .identity-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
-.identity-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.identity-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
 .identity-desc { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
 .identity-desc strong { color: var(--text); font-weight: 600; }
 
 /* ========== 业务线 ========== */
-#bizlines { }
 .biz-list { display: flex; flex-direction: column; gap: 12px; }
 .biz-card {
     background: var(--card); border-radius: 16px;
     padding: 18px 16px; border: 1px solid var(--border);
     display: flex; align-items: center; gap: 14px;
     position: relative; overflow: hidden;
-    text-decoration: none; color: inherit;
-    transition: all 0.15s;
 }
-.biz-card:active { transform: scale(0.98); border-color: var(--orange); }
 .biz-card::before {
     content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
 }
@@ -245,15 +244,11 @@ body::before {
 }
 .biz-foot a { color: var(--orange); font-weight: 700; text-decoration: none; }
 
-/* ========== 共创 ========== */
-#partner {
-    background:
-        radial-gradient(ellipse 500px 400px at 50% 50%, rgba(255,107,26,0.06), transparent);
-}
+/* ========== 合伙人 ========== */
 .partner-intro {
     background: var(--card); border-radius: 20px;
     padding: 24px; border: 1px solid var(--border);
-    margin-bottom: 16px; position: relative; overflow: hidden;
+    margin-bottom: 18px; position: relative; overflow: hidden;
 }
 .partner-intro::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
@@ -261,36 +256,88 @@ body::before {
 }
 .partner-intro p { font-size: 14px; color: var(--text); line-height: 1.8; }
 .partner-intro p strong { color: var(--orange); }
-.partner-grid { display: flex; flex-direction: column; gap: 12px; }
+.partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .partner-card {
     background: var(--card); border-radius: 16px;
     padding: 18px 16px; border: 1px solid var(--border);
-    display: flex; align-items: center; gap: 14px;
     position: relative; overflow: hidden;
-    text-decoration: none; color: inherit;
     transition: all 0.15s;
 }
 .partner-card:active { transform: scale(0.98); }
 .partner-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.partner-card:nth-child(1)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
-.partner-card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
-.partner-card:nth-child(3)::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.partner-card.c1::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.partner-card.c2::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.partner-card.c3::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.partner-card.c4::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
 .partner-icon {
-    width: 44px; height: 44px; border-radius: 12px;
+    width: 40px; height: 40px; border-radius: 11px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0; background: var(--card2);
-    border: 1px solid var(--border);
+    font-size: 20px; flex-shrink: 0; background: var(--card2);
+    border: 1px solid var(--border); margin-bottom: 10px;
 }
-.partner-info { flex: 1; }
-.partner-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 2px; }
-.partner-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-.partner-share { font-size: 11px; font-weight: 700; flex-shrink: 0; }
-.partner-share.o { color: var(--orange); }
-.partner-share.g { color: var(--green); }
-.partner-share.p { color: var(--purple); }
+.partner-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.partner-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; margin-bottom: 8px; }
+.partner-share { font-size: 11px; font-weight: 700; }
+.partner-share.c1 { color: var(--orange); }
+.partner-share.c2 { color: var(--green); }
+.partner-share.c3 { color: var(--purple); }
+.partner-share.c4 { color: var(--pink); }
+
+/* ========== AI能力市场（新模块） ========== */
+.market-banner {
+    background:
+        radial-gradient(ellipse 400px 250px at 50% 0%, rgba(77,157,255,0.1), transparent),
+        var(--card);
+    border-radius: 20px; padding: 28px 22px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px; position: relative; overflow: hidden;
+}
+.market-banner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+}
+.market-title {
+    font-size: 18px; font-weight: 900; margin-bottom: 8px;
+    text-align: center;
+}
+.market-title .accent {
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.market-desc {
+    font-size: 13px; color: var(--text-dim); line-height: 1.7;
+    text-align: center; margin-bottom: 20px;
+}
+.market-items { display: flex; flex-direction: column; gap: 10px; }
+.market-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card2); border-radius: 12px;
+    padding: 12px 14px; border: 1px solid var(--border);
+}
+.market-item-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; background: var(--card); flex-shrink: 0;
+}
+.market-item-info { flex: 1; }
+.market-item-name { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.market-item-desc { font-size: 11px; color: var(--text-dim); }
+.market-item-tag {
+    font-size: 10px; padding: 3px 8px; border-radius: 10px;
+    font-weight: 700; flex-shrink: 0;
+}
+.market-item-tag.c1 { background: rgba(255,107,26,0.12); color: var(--orange); }
+.market-item-tag.c2 { background: rgba(0,217,163,0.12); color: var(--green); }
+.market-item-tag.c3 { background: rgba(168,107,255,0.12); color: var(--purple); }
+.market-item-tag.c4 { background: rgba(77,157,255,0.12); color: var(--blue); }
+
+.market-foot {
+    font-size: 12px; color: var(--text-mute); text-align: center;
+    margin-top: 16px; line-height: 1.7;
+}
+.market-foot strong { color: var(--blue); }
 
 /* ========== 未来 ========== */
-#future { }
 .future-card {
     background: var(--card); border-radius: 18px;
     padding: 22px; border: 1px solid var(--border);
@@ -313,15 +360,14 @@ body::before {
 .future-foot strong { color: var(--orange); }
 
 /* ========== CTA ========== */
-#cta { text-align: center; }
 .cta-card {
     background: var(--card); border-radius: 24px;
     padding: 36px 24px; border: 1px solid var(--border);
-    margin-top: 24px;
+    margin-top: 28px;
 }
 .cta-h {
     font-size: 24px; font-weight: 900; line-height: 1.4;
-    margin-bottom: 14px;
+    margin-bottom: 14px; text-align: center;
 }
 .cta-h .accent {
     background: linear-gradient(135deg, var(--orange), var(--yellow));
@@ -329,7 +375,7 @@ body::before {
 }
 .cta-desc {
     font-size: 13px; color: var(--text-dim);
-    line-height: 1.7; margin-bottom: 24px;
+    line-height: 1.7; margin-bottom: 24px; text-align: center;
 }
 .cta-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
 .cta-contact {
@@ -377,8 +423,8 @@ body::before {
 
 /* ========== 滚动渐入 ========== */
 .fade-in {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
@@ -401,7 +447,7 @@ body::before {
     </a>
     <div class="nav-links">
         <a href="hub.html" class="nav-link">入口</a>
-        <a href="partner.html" class="nav-link">共创</a>
+        <a href="#partner" class="nav-link">共创</a>
         <a href="#cta" class="nav-cta">聊聊合作</a>
     </div>
 </nav>
@@ -418,31 +464,31 @@ body::before {
         <p class="hero-desc">
             一套<strong>真实运营中的AI商业生态</strong>，<br>
             把工具、方法、内容、合作网络连成一体，<br>
-            让每个普通人都能借助AI，<strong>一个人撑起一家公司</strong>。
+            让每个普通人都能借助AI，<strong>独立成事</strong>。
         </p>
         <div class="hero-cta">
             <a href="#identity" class="btn-primary">了解这个生态 ↓</a>
-            <a href="partner.html" class="btn-ghost">开放共创 · 一起干</a>
+            <a href="#partner" class="btn-ghost">看看谁能一起</a>
         </div>
         <div class="hero-stats fade-in">
             <div class="hero-stat"><div class="num">7</div><div class="lbl">业务线</div></div>
             <div class="hero-stat"><div class="num">18+</div><div class="lbl">AI能力</div></div>
-            <div class="hero-stat"><div class="num">8</div><div class="lbl">平台矩阵</div></div>
+            <div class="hero-stat"><div class="num">4</div><div class="lbl">共创角色</div></div>
             <div class="hero-stat"><div class="num">3年</div><div class="lbl">生态规划</div></div>
         </div>
     </div>
 </section>
 
 <!-- ========== 是什么 ========== -->
-<section class="scene" id="identity">
-    <div style="width:100%">
-        <div class="scene-eyebrow green fade-in">WHAT IS CRAZY FRIDAY</div>
-        <div class="scene-h fade-in"><span class="white">不是一家公司</span><br><span class="gradient">是一个生态</span></div>
-        <div class="scene-sub fade-in">
-            我们不是软件公司，不是外包团队，<br>
-            是一群相信<strong style="color:var(--text)">"一个人也能成事"</strong>的人，<br>
+<section class="section" id="identity">
+    <div class="wrap">
+        <div class="section-eyebrow green fade-in">WHAT IS CRAZY FRIDAY</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">不是一家公司</span><br><span class="gradient">是一个生态</span></h2>
+        <p class="section-sub fade-in">
+            我们不是软件公司，不是外包团队。<br>
+            是一群相信<strong>「一个人也能成事」</strong>的人，<br>
             正在把这件事变成可复制、可规模化的生态。
-        </div>
+        </p>
 
         <div class="identity-cards">
             <div class="identity-card fade-in">
@@ -458,9 +504,9 @@ body::before {
                 </div>
             </div>
             <div class="identity-card fade-in">
-                <div class="identity-title">🤝 有伙伴</div>
+                <div class="identity-title">🤝 有生态</div>
                 <div class="identity-desc">
-                    正在生长的<strong>共创网络</strong>——渠道、交付、城市、品牌、投资，让每个参与的人都能分到蛋糕。
+                    正在生长的<strong>共创体系</strong>——流量、技术、区域、服务商，每个人都能找到自己的位置，分到蛋糕。
                 </div>
             </div>
         </div>
@@ -468,11 +514,11 @@ body::before {
 </section>
 
 <!-- ========== 业务线 ========== -->
-<section class="scene" id="bizlines">
-    <div style="width:100%">
-        <div class="scene-eyebrow fade-in">LIVE & GROWING</div>
-        <div class="scene-h fade-in"><span class="white">现在在做</span><br><span class="gradient">7条业务线</span></div>
-        <div class="scene-sub fade-in">每一条都在真实运营，不是规划图</div>
+<section class="section" id="bizlines">
+    <div class="wrap">
+        <div class="section-eyebrow fade-in">LIVE & GROWING</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">现在在做</span><br><span class="gradient">7条业务线</span></h2>
+        <p class="section-sub fade-in">每一条都在真实运营，不是规划图</p>
 
         <div class="biz-list">
             <div class="biz-card fade-in">
@@ -538,76 +584,132 @@ body::before {
     </div>
 </section>
 
-<!-- ========== 共创 ========== -->
-<section class="scene" id="partner">
-    <div style="width:100%">
-        <div class="scene-eyebrow orange fade-in">OPEN ECOLOGY</div>
-        <div class="scene-h fade-in"><span class="white">开放生态</span><br><span class="gradient">找对的人一起干</span></div>
+<!-- ========== AI能力市场（新模块，借鉴扣子插件市场） ========== -->
+<section class="section" id="market">
+    <div class="wrap">
+        <div class="section-eyebrow blue fade-in">AI CAPABILITY MARKET</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">AI能力市场</span><br><span class="purple-gradient">2026规划中</span></h2>
+        <p class="section-sub fade-in">
+            共创伙伴可以上架自己的AI能力，<br>
+            平台分发、自动结算、长期分成。<br>
+            <strong style="color:var(--text)">这是生态的飞轮——越多人贡献，平台越值钱。</strong>
+        </p>
+
+        <div class="market-banner fade-in">
+            <div class="market-title">首批规划上线的<span class="accent">4类AI能力</span></div>
+            <div class="market-desc">已通过需求验证，跑通模型即可上架分发</div>
+            <div class="market-items">
+                <div class="market-item">
+                    <div class="market-item-icon">🤖</div>
+                    <div class="market-item-info">
+                        <div class="market-item-name">AI数字员工</div>
+                        <div class="market-item-desc">AI客服 / AI销售 / AI运营，按月订阅</div>
+                    </div>
+                    <div class="market-item-tag c1">高需求</div>
+                </div>
+                <div class="market-item">
+                    <div class="market-item-icon">🧩</div>
+                    <div class="market-item-info">
+                        <div class="market-item-name">行业AI能力包</div>
+                        <div class="market-item-desc">餐饮/教培/电商等垂直场景解决方案</div>
+                    </div>
+                    <div class="market-item-tag c2">高客单</div>
+                </div>
+                <div class="market-item">
+                    <div class="market-item-icon">⚙️</div>
+                    <div class="market-item-info">
+                        <div class="market-item-name">AI自动化工作流</div>
+                        <div class="market-item-desc">RPA / 流程自动化 / 数据抓取处理</div>
+                    </div>
+                    <div class="market-item-tag c3">长尾</div>
+                </div>
+                <div class="market-item">
+                    <div class="market-item-icon">📚</div>
+                    <div class="market-item-info">
+                        <div class="market-item-name">AI提示词与课程</div>
+                        <div class="market-item-desc">垂直领域Prompt / 行业课程 / 模板库</div>
+                    </div>
+                    <div class="market-item-tag c4">高频</div>
+                </div>
+            </div>
+            <div class="market-foot">
+                <strong>平台分成模式</strong>：伙伴上架，平台分发，自动结算<br>
+                月入可观，长期分成，越积累越值钱
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 合伙人 ========== -->
+<section class="section" id="partner">
+    <div class="wrap">
+        <div class="section-eyebrow orange fade-in">OPEN ECOLOGY</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">四种角色</span><br><span class="gradient">总有一种适合你</span></h2>
 
         <div class="partner-intro fade-in">
             <p>
                 7条业务线已跑通，一个人能做的有限。<br>
-                现在<strong>开放共创</strong>，三种角色，<br>
-                找到对的人，一起把生态做大。
+                现在<strong>开放共创</strong>，<strong>四种角色</strong>，<br>
+                找到对的人，分工协作，长期共建。
             </p>
         </div>
 
         <div class="partner-grid">
-            <a href="partner.html" class="partner-card fade-in">
+            <div class="partner-card c1 fade-in">
                 <div class="partner-icon">🤝</div>
-                <div class="partner-info">
-                    <div class="partner-name">渠道共创</div>
-                    <div class="partner-desc">有流量有人脉，推荐客户成交分润</div>
-                </div>
-                <div class="partner-share o">20-30%</div>
-            </a>
-            <a href="partner.html" class="partner-card fade-in">
+                <div class="partner-name">流量合伙人</div>
+                <div class="partner-desc">有流量有人脉，引荐客户成交分润</div>
+                <div class="partner-share c1">20-30% 分成</div>
+            </div>
+            <div class="partner-card c2 fade-in">
                 <div class="partner-icon">🛠️</div>
-                <div class="partner-info">
-                    <div class="partner-name">技术共创</div>
-                    <div class="partner-desc">有AI技术基础，一起做交付做产品</div>
-                </div>
-                <div class="partner-share g">60-70%</div>
-            </a>
-            <a href="partner.html" class="partner-card fade-in">
+                <div class="partner-name">技术合伙人</div>
+                <div class="partner-desc">有AI技术，做项目交付、共创产品</div>
+                <div class="partner-share c2">60-70% 结算</div>
+            </div>
+            <div class="partner-card c3 fade-in">
                 <div class="partner-icon">🏢</div>
-                <div class="partner-info">
-                    <div class="partner-name">城市共创</div>
-                    <div class="partner-desc">本地化运营，区域独占保护</div>
-                </div>
-                <div class="partner-share p">35-45%</div>
-            </a>
+                <div class="partner-name">区域合伙人</div>
+                <div class="partner-desc">本地化运营，区域保护，全业务线分润</div>
+                <div class="partner-share c3">35-45% 分成</div>
+            </div>
+            <div class="partner-card c4 fade-in">
+                <div class="partner-icon">📜</div>
+                <div class="partner-name">授权服务商</div>
+                <div class="partner-desc">获得品牌与系统授权，直接售卖CF服务</div>
+                <div class="partner-share c4">授权底价 + 分润</div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- ========== 未来 ========== -->
-<section class="scene" id="future">
-    <div style="width:100%">
-        <div class="scene-eyebrow purple fade-in">WHAT'S NEXT</div>
-        <div class="scene-h fade-in"><span class="white">不只是现在</span><br><span class="gradient">还有下一站</span></div>
-        <div class="scene-sub fade-in">持续孵化的方向，跑通了就开放</div>
+<section class="section" id="future">
+    <div class="wrap">
+        <div class="section-eyebrow purple fade-in">WHAT'S NEXT</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">不只是现在</span><br><span class="purple-gradient">还有下一站</span></h2>
+        <p class="section-sub fade-in">持续孵化的方向，跑通了就开放给生态</p>
 
         <div class="future-card fade-in">
             <div class="future-head">
-                <span class="future-icon">🚀</span>
-                <span class="future-name">AI应用市场</span>
+                <span class="future-icon">🛒</span>
+                <span class="future-name">AI应用与能力商店</span>
             </div>
-            <div class="future-desc">把验证过的AI能力产品化，共创伙伴直接分发获利</div>
+            <div class="future-desc">共创伙伴上架AI数字员工、能力包、工作流，平台分发自动结算</div>
         </div>
         <div class="future-card fade-in">
             <div class="future-head">
-                <span class="future-icon">🧩</span>
-                <span class="future-name">AI能力商店</span>
+                <span class="future-icon">🌐</span>
+                <span class="future-name">创作者联盟</span>
             </div>
-            <div class="future-desc">AI数字员工、行业能力包，订阅制持续收入</div>
+            <div class="future-desc">连接1000个AI创作者，共享客户、技术、流量资源池</div>
         </div>
         <div class="future-card fade-in">
             <div class="future-head">
                 <span class="future-icon">💰</span>
                 <span class="future-name">项目孵化与投资</span>
             </div>
-            <div class="future-desc">孵化跑通的AI项目，开放给伙伴与投资人</div>
+            <div class="future-desc">孵化跑通的AI项目，开放给伙伴与投资人共享收益</div>
         </div>
 
         <div class="future-foot fade-in">
@@ -618,21 +720,17 @@ body::before {
 </section>
 
 <!-- ========== CTA ========== -->
-<section class="scene" id="cta">
-    <div style="width:100%">
-        <div class="scene-eyebrow fade-in">TALK TO US</div>
-        <div class="scene-h fade-in"><span class="white">2026年</span><br><span class="gradient">AI窗口就这么几年</span></div>
-        <div class="scene-sub fade-in">创业者 · 投资人 · 想用AI的人，都欢迎聊聊</div>
-
+<section class="section" id="cta">
+    <div class="wrap">
         <div class="cta-card fade-in">
             <div class="cta-h">一起把<br><span class="accent">一人公司变成现实</span></div>
             <div class="cta-desc">
-                想了解、想加入、想投资、想定制，<br>
-                加微信，说清楚你的情况就行。
+                创业者 · 投资人 · 想用AI的人<br>
+                加微信，说清楚你的情况就行
             </div>
             <div class="cta-actions">
                 <a href="#" class="btn-primary" onclick="copyWechat('Yshim16506'); return false;">复制微信：Yshim16506</a>
-                <a href="partner.html" class="btn-ghost">查看共创伙伴计划</a>
+                <a href="partner.html" class="btn-ghost">查看共创伙伴详情</a>
             </div>
             <div class="cta-contact">
                 <a href="#" class="cta-contact-item" onclick="copyWechat('Yshim16506'); return false;">
