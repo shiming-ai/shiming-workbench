@@ -72,8 +72,9 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .nav-brand .cn { font-size: 10px; color: var(--text-mute); font-weight: 500; }
 .nav-cta {
     font-size: 12px; padding: 8px 16px;
-    background: var(--orange); color: #fff;
+    background: linear-gradient(135deg, var(--orange), #FF8E53); color: #fff;
     border-radius: 20px; text-decoration: none; font-weight: 700;
+    box-shadow: 0 4px 12px rgba(255,107,26,0.25);
 }
 
 /* ========== Hero ========== */
@@ -659,11 +660,10 @@ a:active { color: var(--orange); }
             <div class="cn">疯狂星期五</div>
         </div>
     </div>
-    <div style="display:flex;gap:12px;align-items:center;">
+    <div style="display:flex;gap:10px;align-items:center;">
         <a href="hub.html" style="font-size:12px;padding:8px 14px;background:rgba(255,107,26,0.1);border-radius:20px;text-decoration:none;font-weight:700;border:1px solid rgba(255,107,26,0.4);white-space:nowrap;">
             <span style="background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✨ 入口</span>
         </a>
-        <a href="partner.html" style="font-size:12px;padding:8px 14px;background:transparent;border-radius:20px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--text-dim);white-space:nowrap;">共创伙伴</a>
         <a href="#contact" class="nav-cta">联系我们</a>
     </div>
 </nav>
@@ -1707,16 +1707,26 @@ a:active { color: var(--orange); }
         <div class="contact-card">
             <div class="contact-title">开启你的AI创业之旅</div>
             <div class="contact-desc">项目共创 · 工作台定制 · 课程学习 · 漫剧合作 · 企业咨询</div>
-            <div class="contact-grid">
-                <a href="#incubator" class="contact-item">
-                    <div class="contact-icon">🚀</div>
-                    <div class="contact-label">申请项目共创</div>
-                    <div class="contact-sub">1-200万</div>
-                </a>
-                <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="contact-item">
+            <div class="contact-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <a href="landing.html" class="contact-item">
                     <div class="contact-icon">💻</div>
                     <div class="contact-label">定制AI工作台</div>
                     <div class="contact-sub">1-5天交付</div>
+                </a>
+                <a href="demo.html" class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-label">体验展示版</div>
+                    <div class="contact-sub">在线体验</div>
+                </a>
+                <a href="partner.html" class="contact-item" style="border-color: var(--orange); background: rgba(255,107,26,0.06);">
+                    <div class="contact-icon">🤝</div>
+                    <div class="contact-label" style="color: var(--orange);">共创伙伴</div>
+                    <div class="contact-sub">加入合伙人</div>
+                </a>
+                <a href="#incubator" class="contact-item">
+                    <div class="contact-icon">🚀</div>
+                    <div class="contact-label">项目共创</div>
+                    <div class="contact-sub">1-200万</div>
                 </a>
                 <a href="#" class="contact-item" onclick="toast('请加微信交流'); return false;">
                     <div class="contact-icon">📚</div>
@@ -1727,11 +1737,6 @@ a:active { color: var(--orange); }
                     <div class="contact-icon">💼</div>
                     <div class="contact-label">投资/合作</div>
                     <div class="contact-sub">融资对接</div>
-                </a>
-                <a href="partner.html" class="contact-item" style="border-color: var(--orange); background: rgba(255,107,26,0.06);">
-                    <div class="contact-icon">🤝</div>
-                    <div class="contact-label" style="color: var(--orange);">共创伙伴</div>
-                    <div class="contact-sub">加入合伙人</div>
                 </a>
             </div>
             <div style="margin-top: 20px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px dashed var(--border);">
