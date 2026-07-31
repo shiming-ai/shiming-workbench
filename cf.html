@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday · AI时代的一人公司生态 · 用AI帮人和企业降本增效、自动获客、批量变现 · 6条业务线真实运营中">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
+<title>Crazy Friday · AI时代的一人公司生态</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+    --pink: #FF6B9D; --cyan: #00D9FF;
+}
+html { scroll-behavior: smooth; }
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
+
+/* ========== Nav ========== */
+.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,11,15,0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid transparent;
+    padding: 12px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.3s;
+}
+.nav.scrolled {
+    background: rgba(10,11,15,0.92);
+    border-bottom-color: var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+.nav-mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #000; border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+}
+.nav-mark::after {
+    content: ''; position: absolute; bottom: 4px; right: 4px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange); border: 1px solid #000;
+}
+.nav-cf { font-size: 12px; color: #fff; font-weight: 900; }
+.nav-cf .dot { color: var(--orange); }
+.nav-brand { font-size: 14px; font-weight: 800; line-height: 1; }
+.nav-brand .en {
+    background: linear-gradient(135deg, #fff 60%, var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-brand .cn { font-size: 9px; color: var(--text-mute); font-weight: 500; margin-top: 2px; }
+.nav-links { display: flex; gap: 10px; align-items: center; }
+.nav-link { font-size: 12px; color: var(--text-dim); text-decoration: none; font-weight: 600; }
+.nav-link:active { color: var(--orange); }
+.nav-cta {
+    font-size: 12px; padding: 8px 18px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border-radius: 22px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(255,107,26,0.3);
+}
+
+/* ========== Hero ========== */
+.hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 100px 18px 60px;
+    background:
+        radial-gradient(ellipse 800px 600px at 50% 0%, rgba(255,107,26,0.2), transparent 60%),
+        radial-gradient(ellipse 500px 400px at 80% 40%, rgba(168,107,255,0.1), transparent),
+        radial-gradient(ellipse 400px 300px at 10% 70%, rgba(0,217,163,0.06), transparent);
+    text-align: center;
+}
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; color: var(--text-mute); letter-spacing: 2px;
+    margin-bottom: 30px;
+    padding: 6px 16px; border-radius: 20px;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+}
+.hero-badge .live {
+    width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+@keyframes blink { 50% { opacity: 0.3; } }
+.hero h1 {
+    font-size: 42px; font-weight: 900;
+    line-height: 1.12; letter-spacing: -2px;
+    margin-bottom: 24px;
+}
+.hero h1 .line1 { color: #fff; }
+.hero h1 .line2 {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+    font-size: 17px; font-weight: 600; color: var(--text);
+    margin-bottom: 14px;
+}
+.hero-desc {
+    font-size: 14px; color: var(--text-dim); line-height: 1.8;
+    margin-bottom: 40px; max-width: 340px; margin-left: auto; margin-right: auto;
+}
+.hero-desc strong { color: var(--text); font-weight: 600; }
+.hero-cta { display: flex; gap: 12px; justify-content: center; margin-bottom: 48px; flex-wrap: wrap; }
+.btn-primary {
+    display: inline-block; padding: 16px 36px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border: none; cursor: pointer;
+    border-radius: 14px; font-size: 15px; font-weight: 700; text-align: center;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    transition: transform 0.15s;
+}
+.btn-primary:active { transform: scale(0.97); }
+.btn-ghost {
+    display: inline-block; padding: 14px 28px;
+    background: transparent; color: var(--text-dim);
+    text-decoration: none; border-radius: 14px;
+    font-size: 14px; font-weight: 600; text-align: center;
+    border: 1px solid var(--border); transition: all 0.15s;
+}
+.btn-ghost:active { border-color: var(--orange); color: var(--orange); }
+
+/* Hero 数据条 */
+.hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card);
+}
+.hero-stat {
+    padding: 18px 4px; text-align: center;
+    border-right: 1px solid var(--border);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .num {
+    font-size: 20px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-stat .lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
+
+/* ========== Scene 通用 ========== */
+.scene {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 90px 18px; position: relative;
+    max-width: 480px; margin: 0 auto;
+}
+.scene-eyebrow {
+    font-size: 11px; color: var(--orange); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+.scene-eyebrow.purple { color: var(--purple); }
+.scene-eyebrow.green { color: var(--green); }
+.scene-h {
+    font-size: 32px; font-weight: 900; line-height: 1.2;
+    letter-spacing: -1.5px; margin-bottom: 16px;
+}
+.scene-h .gradient {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.scene-h .white { color: #fff; }
+.scene-sub {
+    font-size: 14px; color: var(--text-dim); line-height: 1.8;
+    margin-bottom: 28px;
+}
+.scene-sub strong { color: var(--text); }
+
+/* ========== 市场机会 ========== */
+#market { text-align: center; }
+.market-num {
+    font-size: 48px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.2; margin-bottom: 8px;
+}
+.market-unit { font-size: 20px; font-weight: 700; }
+.market-desc {
+    font-size: 14px; color: var(--text-dim); line-height: 1.8;
+    margin: 24px 0;
+}
+.market-card {
+    background: var(--card); border-radius: 18px;
+    padding: 24px 20px; border: 1px solid var(--border);
+    margin-bottom: 12px; text-align: left;
+    position: relative; overflow: hidden;
+}
+.market-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow));
+}
+.market-card:nth-child(2)::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.market-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.market-card .mc-num { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+.market-card .mc-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+/* ========== 叙事 ========== */
+#story { text-align: center; }
+.story-eq {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; margin: 36px 0;
+    font-size: 28px; font-weight: 900;
+}
+.eq-item {
+    padding: 18px 20px; border-radius: 16px;
+    border: 1px solid var(--border); background: var(--card);
+}
+.eq-item.person { color: var(--text); }
+.eq-item.ai {
+    background: linear-gradient(135deg, rgba(255,107,26,0.15), rgba(255,217,61,0.05));
+    border-color: rgba(255,107,26,0.3); color: var(--orange);
+}
+.eq-item.result {
+    background: linear-gradient(135deg, rgba(0,217,163,0.15), rgba(0,217,255,0.05));
+    border-color: rgba(0,217,163,0.3); color: var(--green);
+}
+.eq-op { color: var(--text-mute); font-size: 24px; }
+.story-points { text-align: left; }
+.story-point {
+    display: flex; gap: 14px; margin-bottom: 20px;
+}
+.story-point-icon {
+    width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    background: var(--card2); border: 1px solid var(--border);
+}
+.story-point-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.story-point-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+/* ========== 生态架构 ========== */
+#ecosystem { }
+.eco-card {
+    background: var(--card); border-radius: 18px;
+    padding: 22px; border: 1px solid var(--border);
+    margin-bottom: 14px;
+    position: relative; overflow: hidden;
+}
+.eco-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.eco-card.o::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.eco-card.g::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.eco-card.p::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.eco-card.b::before { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.eco-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.eco-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0; background: var(--card2);
+    border: 1px solid var(--border);
+}
+.eco-name { font-size: 16px; font-weight: 900; }
+.eco-tag {
+    font-size: 10px; padding: 3px 10px; border-radius: 10px;
+    font-weight: 600; display: inline-block; margin-top: 2px;
+}
+.eco-card.o .eco-tag { background: rgba(255,107,26,0.12); color: var(--orange); }
+.eco-card.g .eco-tag { background: rgba(0,217,163,0.12); color: var(--green); }
+.eco-card.p .eco-tag { background: rgba(168,107,255,0.12); color: var(--purple); }
+.eco-card.b .eco-tag { background: rgba(77,157,255,0.12); color: var(--blue); }
+.eco-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+.eco-desc strong { color: var(--text); }
+
+/* ========== 商业模式 ========== */
+#business { text-align: center; }
+.biz-flow {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; margin: 28px 0;
+}
+.biz-step {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 24px;
+    font-size: 14px; font-weight: 700; color: var(--text);
+    min-width: 180px;
+}
+.biz-step::after {
+    content: '↓'; display: block; color: var(--orange);
+    margin-top: 4px; font-size: 16px;
+}
+.biz-step:last-child::after { display: none; }
+.biz-step.money {
+    background: linear-gradient(135deg, rgba(255,107,26,0.12), rgba(255,217,61,0.04));
+    border-color: rgba(255,107,26,0.3);
+    color: var(--orange);
+}
+.biz-note {
+    font-size: 12px; color: var(--text-mute);
+    margin-top: 24px; line-height: 1.7;
+}
+
+/* ========== 路线图 ========== */
+#roadmap {}
+.road-item {
+    display: flex; gap: 16px; margin-bottom: 24px;
+    position: relative;
+}
+.road-item:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 17px; top: 42px; bottom: -12px;
+    width: 2px; background: var(--border);
+}
+.road-year {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900; color: #fff; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.road-item.y2026 .road-year { background: linear-gradient(135deg, var(--orange), #FF8E53); }
+.road-item.y2027 .road-year { background: linear-gradient(135deg, var(--purple), var(--blue)); }
+.road-item.y2028 .road-year { background: linear-gradient(135deg, var(--green), var(--cyan)); }
+.road-content { flex: 1; padding-top: 2px; }
+.road-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.road-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* ========== 投资价值 ========== */
+#invest {
+    background:
+        radial-gradient(ellipse 500px 400px at 50% 50%, rgba(168,107,255,0.08), transparent);
+    text-align: center;
+}
+.invest-card {
+    background: var(--card); border-radius: 20px;
+    padding: 28px 22px; border: 1px solid var(--border);
+    margin-top: 24px; text-align: left;
+    position: relative; overflow: hidden;
+}
+.invest-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+}
+.invest-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+.invest-item:last-child { border-bottom: none; }
+.invest-label { color: var(--text-dim); }
+.invest-value { font-weight: 800; color: var(--text); }
+.invest-value.accent { color: var(--purple); }
+.invest-ask {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    font-size: 13px; color: var(--text-dim); line-height: 1.7;
+}
+.invest-ask strong { color: var(--purple); font-size: 15px; }
+
+/* ========== CTA ========== */
+#cta { text-align: center; }
+.cta-card {
+    background: var(--card); border-radius: 24px;
+    padding: 36px 24px; border: 1px solid var(--border);
+    margin-top: 24px;
+}
+.cta-h {
+    font-size: 24px; font-weight: 900; line-height: 1.4;
+    margin-bottom: 14px;
+}
+.cta-h .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cta-desc {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.7; margin-bottom: 24px;
+}
+.cta-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.cta-contact {
+    display: flex; justify-content: center; gap: 10px;
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+.cta-contact-item {
+    background: var(--card2); border-radius: 12px;
+    padding: 12px 16px; border: 1px solid var(--border);
+    text-decoration: none; text-align: center;
+    transition: all 0.15s;
+}
+.cta-contact-item:active { border-color: var(--orange); transform: scale(0.96); }
+.cta-contact-icon { font-size: 20px; }
+.cta-contact-label { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center; padding: 40px 18px 100px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border);
+}
+.footer-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;
+    margin-bottom: 12px;
+}
+.footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; }
+.footer-links a:active { color: var(--orange); }
+
+/* ========== 浮动CTA ========== */
+.float-cta {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%); z-index: 80;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none;
+    border-radius: 30px; font-size: 14px; font-weight: 700;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.4);
+    opacity: 0; pointer-events: none; transition: all 0.3s;
+    white-space: nowrap;
+}
+.float-cta.show { opacity: 1; pointer-events: auto; }
+.float-cta:active { transform: translateX(-50%) scale(0.95); }
+
+/* ========== 滚动渐入 ========== */
+.fade-in {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; transition: none; }
+    .hero-badge .live { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Nav ========== -->
+<nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">
+        <div class="nav-mark"><div class="nav-cf">CF<span class="dot">.</span></div></div>
+        <div class="nav-brand">
+            <span class="en">Crazy Friday</span>
+            <span class="cn">疯狂星期五</span>
+        </div>
+    </a>
+    <div class="nav-links">
+        <a href="hub.html" class="nav-link">入口</a>
+        <a href="partner.html" class="nav-link">共创</a>
+        <a href="#cta" class="nav-cta">合作洽谈</a>
+    </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<section class="hero" id="hero">
+    <div style="width:100%">
+        <div class="hero-badge"><span class="live"></span> 2026 · 真实运营中</div>
+        <h1>
+            <span class="line1">一个人 + AI</span><br>
+            <span class="line2">= 一家公司</span>
+        </h1>
+        <p class="hero-sub">Crazy Friday · AI时代的一人公司生态</p>
+        <p class="hero-desc">
+            不是课程，不是工具。<br>
+            是一套<strong>真实在运营的 AI 商业系统</strong>，<br>
+            正在把一个人变成一家公司的愿景变成现实。
+        </p>
+        <div class="hero-cta">
+            <a href="#story" class="btn-primary">了解我们 ↓</a>
+            <a href="partner.html" class="btn-ghost">共创伙伴计划</a>
+        </div>
+        <div class="hero-stats fade-in">
+            <div class="hero-stat"><div class="num">7+</div><div class="lbl">业务线</div></div>
+            <div class="hero-stat"><div class="num">18+</div><div class="lbl">AI服务</div></div>
+            <div class="hero-stat"><div class="num">8</div><div class="lbl">平台覆盖</div></div>
+            <div class="hero-stat"><div class="num">1-5天</div><div class="lbl">交付周期</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 市场机会 ========== -->
+<section class="scene" id="market">
+    <div style="width:100%">
+        <div class="scene-eyebrow purple fade-in">THE MARKET</div>
+        <div class="scene-h fade-in"><span class="white">AI正在</span><br><span class="gradient">重写商业规则</span></div>
+        <div class="market-num fade-in">万亿<span class="market-unit">级</span></div>
+        <div class="market-desc fade-in">
+            AI 不再只是大公司的游戏。<br>
+            每个普通人都能用 AI 完成过去需要一个团队才能做的事。<br>
+            <strong style="color:var(--text)">这就是"一人公司"的时代</strong>——也是 Crazy Friday 的机会。
+        </div>
+        <div class="market-card fade-in">
+            <div class="mc-num" style="color:var(--orange)">2.4亿</div>
+            <div class="mc-desc">中国灵活就业者，大量人需要"用AI提升个人生产力"的方法和工具</div>
+        </div>
+        <div class="market-card fade-in">
+            <div class="mc-num" style="color:var(--purple)">5.6亿</div>
+            <div class="mc-desc">中国中小微企业主，都在寻找降本增效的AI解决方案</div>
+        </div>
+        <div class="market-card fade-in">
+            <div class="mc-num" style="color:var(--green)">95%</div>
+            <div class="mc-desc">中小企业尚未真正落地AI——他们需要的是"能直接用"的解决方案，不是技术</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 叙事 ========== -->
+<section class="scene" id="story">
+    <div style="width:100%">
+        <div class="scene-eyebrow green fade-in">THE STORY</div>
+        <div class="scene-h fade-in"><span class="white">我们不是</span><br><span class="gradient">在做产品，是在做生态</span></div>
+        <div class="scene-sub fade-in">
+            大多数AI公司想的是"造一个工具卖给所有人"。<br>
+            我们想的是：<strong style="color:var(--text)">让每个人都能成为一家公司</strong>。
+        </div>
+        <div class="story-eq fade-in">
+            <div class="eq-item person">🧑</div>
+            <div class="eq-op">+</div>
+            <div class="eq-item ai">🤖</div>
+            <div class="eq-op">=</div>
+            <div class="eq-item result">🏢</div>
+        </div>
+        <div class="story-points">
+            <div class="story-point fade-in">
+                <div class="story-point-icon">🛠️</div>
+                <div>
+                    <div class="story-point-title">基础设施</div>
+                    <div class="story-point-desc">AI工作台、自动化工具、内容矩阵——一个人运营一家公司需要的全套武器</div>
+                </div>
+            </div>
+            <div class="story-point fade-in">
+                <div class="story-point-icon">🎓</div>
+                <div>
+                    <div class="story-point-title">方法论</div>
+                    <div class="story-point-desc">6条业务线真实跑通的变现路径，全部沉淀成课程和实战营</div>
+                </div>
+            </div>
+            <div class="story-point fade-in">
+                <div class="story-point-icon">🌐</div>
+                <div>
+                    <div class="story-point-title">生态网络</div>
+                    <div class="story-point-desc">渠道、交付、城市、品牌、投资——让每个参与的人都分到蛋糕</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 生态架构 ========== -->
+<section class="scene" id="ecosystem">
+    <div style="width:100%">
+        <div class="scene-eyebrow fade-in">ECOSYSTEM</div>
+        <div class="scene-h fade-in"><span class="white">三层架构</span><br><span class="gradient">AI一人公司生态</span></div>
+        <div class="scene-sub fade-in">从个人到生态，从工具到网络</div>
+
+        <div class="eco-card o fade-in">
+            <div class="eco-head">
+                <div class="eco-icon">🏗️</div>
+                <div>
+                    <div class="eco-name">AI创业基础设施</div>
+                    <span class="eco-tag">底层能力</span>
+                </div>
+            </div>
+            <div class="eco-desc">
+                AI工具中心 · AI知识库 · AI工作台<br>
+                <strong>AI内容矩阵</strong> · 多平台分发系统
+            </div>
+        </div>
+
+        <div class="eco-card g fade-in">
+            <div class="eco-head">
+                <div class="eco-icon">💼</div>
+                <div>
+                    <div class="eco-name">商业交付体系</div>
+                    <span class="eco-tag">变现层</span>
+                </div>
+            </div>
+            <div class="eco-desc">
+                个人AI方案 · 企业AI方案 · <strong>AI定制开发</strong><br>
+                AI工作台 · AI自动化部署 · 商单撮合
+            </div>
+        </div>
+
+        <div class="eco-card p fade-in">
+            <div class="eco-head">
+                <div class="eco-icon">🌐</div>
+                <div>
+                    <div class="eco-name">共创网络</div>
+                    <span class="eco-tag">增长层</span>
+                </div>
+            </div>
+            <div class="eco-desc">
+                渠道伙伴 · 交付伙伴 · 城市伙伴<br>
+                <strong>品牌伙伴 · 投资伙伴</strong> · 服务商网络
+            </div>
+        </div>
+
+        <div class="eco-card b fade-in">
+            <div class="eco-head">
+                <div class="eco-icon">🚀</div>
+                <div>
+                    <div class="eco-name">项目孵化中心</div>
+                    <span class="eco-tag">未来层</span>
+                </div>
+            </div>
+            <div class="eco-desc">
+                MVP验证 → 产品打磨 → 品牌包装 → 融资辅导<br>
+                <strong>每年孵化3-5个AI项目</strong>，成功后开放投资
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 商业模式 ========== -->
+<section class="scene" id="business">
+    <div style="width:100%">
+        <div class="scene-eyebrow purple fade-in">BUSINESS MODEL</div>
+        <div class="scene-h fade-in"><span class="white">从免费</span><br><span class="gradient">到生态级收入</span></div>
+        <div class="scene-sub fade-in">完整的变现阶梯，每一层都在赚钱</div>
+
+        <div class="biz-flow fade-in">
+            <div class="biz-step">免费内容 · 引流获客</div>
+            <div class="biz-step">AI工作台定制 · 一单1000-3000</div>
+            <div class="biz-step">AI营课程 · 会员订阅</div>
+            <div class="biz-step">企业AI方案 · 一单5000-20000</div>
+            <div class="biz-step">共创体系 · 入驻费+分成</div>
+            <div class="biz-step money">项目孵化 · 投资收益</div>
+        </div>
+
+        <div class="biz-note fade-in">
+            不是单一收入，而是<strong style="color:var(--orange)">6层叠加的收入结构</strong>。<br>
+            每一层都为下一层导流，形成飞轮。
+        </div>
+    </div>
+</section>
+
+<!-- ========== 路线图 ========== -->
+<section class="scene" id="roadmap">
+    <div style="width:100%">
+        <div class="scene-eyebrow fade-in">ROADMAP</div>
+        <div class="scene-h fade-in"><span class="white">三年路线</span><br><span class="gradient">每一步都算数</span></div>
+        <div class="scene-sub fade-in">不画大饼，只做能落地的</div>
+
+        <div class="road-item y2026 fade-in">
+            <div class="road-year">26</div>
+            <div class="road-content">
+                <div class="road-title">打基础 · 跑闭环</div>
+                <div class="road-desc">跑通7条业务线，稳定月收入3-5万，招满10个共创伙伴，验证"一人公司"模型可复制</div>
+            </div>
+        </div>
+        <div class="road-item y2027 fade-in">
+            <div class="road-year">27</div>
+            <div class="road-content">
+                <div class="road-title">建网络 · 做平台</div>
+                <div class="road-desc">共创网络扩至100人，AI应用市场上线，孵化3个AI项目，建立行业解决方案</div>
+            </div>
+        </div>
+        <div class="road-item y2028 fade-in">
+            <div class="road-year">28</div>
+            <div class="road-content">
+                <div class="road-title">成生态 · 树品牌</div>
+                <div class="road-desc">千人创作者联盟，AI生态平台成型，项目投资产生回报，成为AI一人公司第一品牌</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 投资价值 ========== -->
+<section class="scene" id="invest">
+    <div style="width:100%">
+        <div class="scene-eyebrow purple fade-in">INVESTMENT</div>
+        <div class="scene-h fade-in"><span class="white">为什么</span><br><span class="gradient">值得一起做</span></div>
+        <div class="scene-sub fade-in">我们正在找认同这个方向的投资人</div>
+
+        <div class="invest-card fade-in">
+            <div class="invest-item">
+                <span class="invest-label">融资阶段</span>
+                <span class="invest-value">天使轮</span>
+            </div>
+            <div class="invest-item">
+                <span class="invest-label">融资规模</span>
+                <span class="invest-value accent">30-80万</span>
+            </div>
+            <div class="invest-item">
+                <span class="invest-label">出让股份</span>
+                <span class="invest-value accent">10-20%</span>
+            </div>
+            <div class="invest-item">
+                <span class="invest-label">资金用途</span>
+                <span class="invest-value">共创体系+内容放大+产品化</span>
+            </div>
+            <div class="invest-ask">
+                我们需要的不是钱，是<strong>资源和信任</strong>。<br>
+                如果你认同"一人公司"是AI时代的大机会，欢迎聊聊。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="scene" id="cta">
+    <div style="width:100%">
+        <div class="scene-eyebrow orange fade-in">JOIN US</div>
+        <div class="scene-h fade-in"><span class="white">2026年</span><br><span class="gradient">AI窗口就这么几年</span></div>
+        <div class="scene-sub fade-in">不管你想投资、合作、还是定制服务，直接聊</div>
+
+        <div class="cta-card fade-in">
+            <div class="cta-h">一起把<br><span class="accent">一人公司变成现实</span></div>
+            <div class="cta-desc">
+                创业者 · 投资人 · 企业主<br>
+                欢迎来谈合作
+            </div>
+            <div class="cta-actions">
+                <a href="#" class="btn-primary" onclick="copyWechat('Yshim16506'); return false;">复制微信：Yshim16506</a>
+                <a href="partner.html" class="btn-ghost">查看共创伙伴计划</a>
+                <a href="hub.html" class="btn-ghost">看看我们在做什么</a>
+            </div>
+            <div class="cta-contact">
+                <a href="#" class="cta-contact-item" onclick="copyWechat('Yshim16506'); return false;">
+                    <div class="cta-contact-icon">💬</div>
+                    <div class="cta-contact-label">微信①</div>
+                </a>
+                <a href="#" class="cta-contact-item" onclick="copyWechat('R26184352Y'); return false;">
+                    <div class="cta-contact-icon">💬</div>
+                    <div class="cta-contact-label">微信②</div>
+                </a>
+                <a href="landing.html" class="cta-contact-item">
+                    <div class="cta-contact-icon">🛠️</div>
+                    <div class="cta-contact-label">定制服务</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== Footer ========== -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="hub.html">入口页</a>
+        <a href="index.html">官网</a>
+        <a href="partner.html">共创伙伴</a>
+        <a href="landing.html">定制服务</a>
+        <a href="demo.html">展示版</a>
+        <a href="agreement.html">协议</a>
+    </div>
+    <div>© 2026 Crazy Friday 疯狂星期五 · AI × CREATOR</div>
+</footer>
+
+<!-- ========== 浮动CTA ========== -->
+<a href="#cta" class="float-cta" id="floatCta">洽谈合作</a>
+
+<!-- ========== Toast ========== -->
+<div id="toast" style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);color:var(--text);padding:14px 24px;border-radius:12px;border:1px solid var(--border);font-size:13px;z-index:100;opacity:0;transition:all 0.3s;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,0.4);"></div>
+
+<script>
+// 滚动渐入
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Nav滚动效果
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+    if (window.scrollY > 400) floatCta.classList.add('show');
+    else floatCta.classList.remove('show');
+}, { passive: true });
+
+const floatCta = document.getElementById('floatCta');
+
+// 平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+});
+
+// 复制微信
+function copyWechat(id) {
+    const toast = document.getElementById('toast');
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(id).then(() => {
+            toast.textContent = '✓ 已复制：' + id;
+        }).catch(() => {
+            toast.textContent = '微信号：' + id;
+        });
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = id; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast.textContent = '✓ 已复制：' + id; }
+        catch(e) { toast.textContent = '微信号：' + id; }
+        document.body.removeChild(ta);
+    }
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+    }, 2500);
+}
+</script>
+
+</body>
+</html>
