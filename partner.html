@@ -808,6 +808,11 @@ body::before {
                     <div class="contact-label">官网</div>
                     <div class="contact-sub">了解业务全貌</div>
                 </a>
+                <a href="landing.html" class="contact-item">
+                    <div class="contact-icon">🛠️</div>
+                    <div class="contact-label">定制服务</div>
+                    <div class="contact-sub">AI工作台定制</div>
+                </a>
             </div>
 
             <div class="trust-line">
@@ -870,6 +875,35 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// 复制微信号
+function copyWechat(id) {
+    const toast = document.getElementById('toast');
+    const text = '微信号：' + id + '（长按复制或去微信添加）';
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(id).then(() => {
+            toast.textContent = '✓ 已复制：' + id;
+        }).catch(() => {
+            toast.textContent = text;
+        });
+    } else {
+        // fallback: 用临时textarea复制
+        const ta = document.createElement('textarea');
+        ta.value = id;
+        ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); toast.textContent = '✓ 已复制：' + id; }
+        catch(e) { toast.textContent = text; }
+        document.body.removeChild(ta);
+    }
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+    }, 2500);
+}
 
 // Toast
 function showToast(msg) {
