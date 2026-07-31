@@ -352,7 +352,7 @@ body::before {
     font-size: 13px; color: var(--text-dim); line-height: 1.7;
     margin-bottom: 20px;
 }
-.future-list { display: flex; flex-direction: column; gap: 10px; }
+.future-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .future-item {
     display: flex; align-items: start; gap: 12px;
     padding: 14px; background: var(--card2);
@@ -390,13 +390,13 @@ body::before {
 
 <!-- ========== Nav ========== -->
 <nav class="nav">
-    <div class="nav-logo">
+    <a href="index.html" class="nav-logo" style="text-decoration:none;color:inherit;">
         <div class="nav-mark"><div class="nav-cf">CF<span class="dot">.</span></div></div>
         <div class="nav-brand">
             <div class="en">Crazy Friday</div>
             <div class="cn">疯狂星期五 · 时铭</div>
         </div>
-    </div>
+    </a>
     <a href="#contact" class="nav-btn">加微信</a>
 </nav>
 
