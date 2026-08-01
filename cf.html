@@ -465,7 +465,7 @@ body::before {
 
 /* ========== Footer ========== */
 .footer {
-    text-align: center; padding: 40px 18px 100px;
+    text-align: center; padding: 40px 18px 110px;
     color: var(--text-mute); font-size: 11px;
     border-top: 1px solid var(--border);
 }
@@ -968,17 +968,17 @@ body::before {
                 加微信，说清楚你的情况就行
             </div>
             <div class="cta-actions">
-                <a href="#" class="btn-primary" onclick="copyWechat('Yshim16506'); return false;">复制微信：Yshim16506</a>
-                <a href="partner.html" class="btn-ghost">查看共创伙伴详情</a>
+                <a href="#" class="btn-primary" onclick="copyWechat('Yshim16506'); return false;">📋 复制微信号：Yshim16506</a>
+                <a href="partner.html" class="btn-ghost">了解共创计划 →</a>
             </div>
             <div class="cta-contact">
                 <a href="#" class="cta-contact-item" onclick="copyWechat('Yshim16506'); return false;">
                     <div class="cta-contact-icon">💬</div>
-                    <div class="cta-contact-label">微信①</div>
+                    <div class="cta-contact-label">Yshim16506</div>
                 </a>
                 <a href="#" class="cta-contact-item" onclick="copyWechat('R26184352Y'); return false;">
                     <div class="cta-contact-icon">💬</div>
-                    <div class="cta-contact-label">微信②</div>
+                    <div class="cta-contact-label">R26184352Y</div>
                 </a>
                 <a href="landing.html" class="cta-contact-item">
                     <div class="cta-contact-icon">🛠️</div>
@@ -1022,7 +1022,12 @@ const floatCta = document.getElementById('floatCta');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
-    if (window.scrollY > 400) floatCta.classList.add('show');
+    const docHeight = document.documentElement.scrollHeight;
+    const viewHeight = window.innerHeight;
+    const scrollY = window.scrollY;
+    const distToBottom = docHeight - scrollY - viewHeight;
+    // 滚到 CTA 区域或更下方时隐藏（避免遮挡 footer）
+    if (scrollY > 400 && distToBottom > 200) floatCta.classList.add('show');
     else floatCta.classList.remove('show');
 }, { passive: true });
 
