@@ -191,6 +191,27 @@ body::before {
     border-top: 1px solid var(--border); margin-top: 20px;
 }
 .footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+
+.hero-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 14px;
+    background: rgba(0,217,163,0.1); color: var(--green);
+    border-radius: 20px; margin-bottom: 14px;
+    font-weight: 700; border: 1px solid rgba(0,217,163,0.25);
+}
+.hero-status::before {
+    content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+    animation: heroBlink 1.5s infinite;
+}
+@keyframes heroBlink { 50% { opacity: 0.3; } }
+.hero-trend {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--green);
+    margin-top: 8px; padding: 3px 10px;
+    background: rgba(0,217,163,0.1); border-radius: 12px;
+    font-weight: 700;
+}
+
 </style>
 </head>
 <body>
@@ -225,6 +246,7 @@ body::before {
 <div class="hero">
     <div style="font-size:36px">🛒</div>
     <div class="hero-gmv">¥128,600<small> /月</small></div>
+    <div class="hero-status">实时数据 · 本月</div>
     <div class="hero-text">本月GMV · 9平台全网店铺</div>
     <div class="hero-sub">转化率 4.2% · 客单价 ¥186 · 复购率 32%</div>
     <div class="hero-badges">
