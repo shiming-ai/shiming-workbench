@@ -65,7 +65,7 @@ body::before {
 }
 
 .hero {
-    padding: 50px 18px 36px;
+    padding: 48px 18px 32px;
     background:
         radial-gradient(ellipse 600px 400px at 50% 0%, rgba(255,107,26,0.18), transparent 60%),
         radial-gradient(ellipse 400px 300px at 85% 40%, rgba(166,107,255,0.1), transparent);
@@ -100,15 +100,18 @@ body::before {
 }
 .hero-count-item strong { color: var(--orange); font-size: 14px; }
 
-/* 场景网格 */
-.scene-grid { padding: 30px 0 10px; }
-.scene-grid .sec-label {
+/* 场景网格 - 全部2×N整齐 */
+.scene-section { padding: 26px 0; }
+.sec-label {
     font-size: 11px; color: var(--text-mute); letter-spacing: 1.5px;
     margin-bottom: 14px; text-transform: uppercase;
+    font-weight: 700;
 }
-.grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+.sec-label::before {
+    content: ''; display: inline-block; width: 14px; height: 2px;
+    background: var(--orange); margin-right: 8px; vertical-align: middle;
 }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .scene-card {
     display: block; text-decoration: none; color: inherit;
     background: var(--card); border-radius: 16px;
@@ -116,7 +119,7 @@ body::before {
     position: relative; overflow: hidden;
     transition: all 0.2s;
 }
-.scene-card:active { transform: scale(0.97); }
+.scene-card:active { transform: scale(0.97); border-color: var(--orange); }
 .scene-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
 .scene-card.c1::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
 .scene-card.c2::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
@@ -126,8 +129,8 @@ body::before {
 .scene-card.c6::before { background: linear-gradient(90deg, var(--yellow), var(--orange)); }
 .scene-card.c7::before { background: linear-gradient(90deg, var(--red), var(--pink)); }
 .scene-card.c8::before { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
-.scene-card.c9::before { background: linear-gradient(90deg, var(--yellow), var(--green)); }
-.scene-icon { font-size: 30px; margin-bottom: 8px; }
+.scene-card.c9::before { background: linear-gradient(90deg, var(--green), var(--sub, #00D9FF)); }
+.scene-emoji { font-size: 30px; margin-bottom: 8px; }
 .scene-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 3px; }
 .scene-desc { font-size: 10px; color: var(--text-dim); line-height: 1.5; }
 .scene-arrow {
@@ -202,74 +205,103 @@ body::before {
 </div>
 
 <div class="wrap">
-<div class="scene-grid">
-    <div class="sec-label">🔥 商务场景</div>
-    <div class="grid">
+
+<!-- 商务场景 · 4个2×2 -->
+<div class="scene-section">
+    <div class="sec-label">💼 商务经营</div>
+    <div class="grid-2">
         <a href="demo.html" class="scene-card c1">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">🧑‍💼</div>
+            <div class="scene-emoji">🧑‍💼</div>
             <div class="scene-name">一人公司</div>
             <div class="scene-desc">内容/客户/财务/交付一站管理</div>
         </a>
-        <a href="demo-solo.html" class="scene-card c8">
+        <a href="demo-solo.html" class="scene-card c3">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">🦸</div>
+            <div class="scene-emoji">🦸</div>
             <div class="scene-name">超级个体</div>
-            <div class="scene-desc">多业务线并行，一人撑起一家公司</div>
+            <div class="scene-desc">多业务线并行，一人撑起公司</div>
         </a>
-        <a href="demo-media.html" class="scene-card c7">
+        <a href="demo-creator.html" class="scene-card c7">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">🎬</div>
-            <div class="scene-name">自媒体运营</div>
-            <div class="scene-desc">多平台矩阵/粉丝增长/内容排期</div>
+            <div class="scene-emoji">🎬</div>
+            <div class="scene-name">创作者工作台</div>
+            <div class="scene-desc">选题/脚本/账号矩阵/收益</div>
         </a>
-        <a href="demo-ecom.html" class="scene-card c9">
+        <a href="demo-ecom.html" class="scene-card c6">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">🛒</div>
-            <div class="scene-name">电商卖家</div>
-            <div class="scene-desc">店铺数据/订单/库存/售后</div>
+            <div class="scene-emoji">🛒</div>
+            <div class="scene-name">电商运营</div>
+            <div class="scene-desc">9大平台店铺/订单/库存/营销</div>
         </a>
     </div>
 </div>
 
-<div class="scene-grid">
-    <div class="sec-label">💡 学习成长场景</div>
-    <div class="grid">
-        <a href="demo-study.html" class="scene-card c3">
+<!-- 实体经营 · 2个1×2 -->
+<div class="scene-section">
+    <div class="sec-label">🍱 实体门店</div>
+    <div class="grid-2">
+        <a href="demo-food.html" class="scene-card c1">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">📚</div>
+            <div class="scene-emoji">🍱</div>
+            <div class="scene-name">餐饮店</div>
+            <div class="scene-desc">营业额/外卖/排班/库存</div>
+        </a>
+        <a href="demo-pet.html" class="scene-card c2">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🐶</div>
+            <div class="scene-name">宠物管理</div>
+            <div class="scene-desc">喂养/健康/相册/用品</div>
+        </a>
+    </div>
+</div>
+
+<!-- 学习场景 · 2个1×2 -->
+<div class="scene-section">
+    <div class="sec-label">📚 学习成长</div>
+    <div class="grid-2">
+        <a href="demo-study.html" class="scene-card c8">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">📚</div>
             <div class="scene-name">考研学习</div>
-            <div class="scene-desc">倒计时/科目进度/错题本/打卡</div>
+            <div class="scene-desc">倒计时/科目进度/错题本</div>
         </a>
         <a href="demo-english.html" class="scene-card c6">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">🌐</div>
+            <div class="scene-emoji">🌐</div>
             <div class="scene-name">英语学习</div>
-            <div class="scene-desc">单词/听力/口语/雅思目标拆解</div>
+            <div class="scene-desc">单词/听力/口语/雅思</div>
         </a>
     </div>
 </div>
 
-<div class="scene-grid">
-    <div class="sec-label">💕 生活方式场景</div>
-    <div class="grid">
+<!-- 生活方式 · 4个2×2 -->
+<div class="scene-section">
+    <div class="sec-label">💕 生活方式</div>
+    <div class="grid-2">
         <a href="demo-love.html" class="scene-card c2">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">💕</div>
+            <div class="scene-emoji">💕</div>
             <div class="scene-name">恋爱记录</div>
-            <div class="scene-desc">纪念日/约会/礼物/感情温度计</div>
+            <div class="scene-desc">纪念日/约会/礼物/感情温度</div>
         </a>
         <a href="demo-fitness.html" class="scene-card c4">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">💪</div>
+            <div class="scene-emoji">💪</div>
             <div class="scene-name">健身减脂</div>
-            <div class="scene-desc">体重曲线/训练计划/饮食打卡</div>
+            <div class="scene-desc">体重曲线/训练/饮食</div>
         </a>
         <a href="demo-photo.html" class="scene-card c5">
             <div class="scene-arrow">›</div>
-            <div class="scene-icon">📷</div>
+            <div class="scene-emoji">📷</div>
             <div class="scene-name">摄影作品</div>
-            <div class="scene-desc">作品集/修图进度/约拍档期</div>
+            <div class="scene-desc">作品集/修图/约拍档期</div>
+        </a>
+        <a href="demo-travel.html" class="scene-card c8">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">✈️</div>
+            <div class="scene-name">旅行规划</div>
+            <div class="scene-desc">行程/预订/装备/预算</div>
         </a>
     </div>
 </div>
