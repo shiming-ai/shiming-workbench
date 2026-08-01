@@ -549,6 +549,35 @@ body {
     color: var(--text-mute);
 }
 
+/* ========== 场景切换器 ========== */
+.scenario-bar {
+    position: sticky; top: 50px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.scenario-bar::-webkit-scrollbar { display: none; }
+.scenario-tabs { display: flex; gap: 8px; white-space: nowrap; }
+.scenario-tab {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim); cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+}
+.scenario-tab.active {
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; border-color: var(--orange);
+    box-shadow: 0 4px 12px rgba(255,107,26,0.3);
+}
+.scenario-tab:active { transform: scale(0.96); }
+
 /* 侧边栏 */
 .sidebar-overlay {
     position: fixed;
@@ -1360,10 +1389,34 @@ body {
 <!-- 顶部导航栏 -->
 <div class="top-nav">
     <div class="menu-btn" onclick="toggleSidebar()">≡</div>
-    <div class="top-nav-title"><span>AI</span> · 工作台展示版</div>
+    <div class="top-nav-title"><span>AI</span> · <span id="navTitle">一人公司</span>工作台</div>
     <div class="top-nav-right" style="display:flex;gap:8px;align-items:center;">
         <a href="../index.html" style="font-size:11px;color:var(--text-dim);text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:16px;">← 官网</a>
         <span id="navDayCount">Demo</span>
+    </div>
+</div>
+
+<!-- 场景切换器 -->
+<div class="scenario-bar">
+    <div class="scenario-tabs" id="scenarioTabs">
+        <div class="scenario-tab active" data-scenario="onePerson" onclick="switchScenario('onePerson')">
+            <span>🧑‍💼</span><span>一人公司</span>
+        </div>
+        <div class="scenario-tab" data-scenario="love" onclick="switchScenario('love')">
+            <span>💕</span><span>恋爱记录</span>
+        </div>
+        <div class="scenario-tab" data-scenario="fitness" onclick="switchScenario('fitness')">
+            <span>💪</span><span>健身减脂</span>
+        </div>
+        <div class="scenario-tab" data-scenario="photo" onclick="switchScenario('photo')">
+            <span>📷</span><span>摄影作品</span>
+        </div>
+        <div class="scenario-tab" data-scenario="study" onclick="switchScenario('study')">
+            <span>📚</span><span>考研学习</span>
+        </div>
+        <div class="scenario-tab" data-scenario="english" onclick="switchScenario('english')">
+            <span>🌐</span><span>英语学习</span>
+        </div>
     </div>
 </div>
 
@@ -2160,6 +2213,178 @@ function renderDailyReport() {
 }
 
 // ========== 今日聚焦 ==========
+// ========== 场景切换 ==========
+let currentScenario = 'onePerson';
+
+const SCENARIOS = {
+    onePerson: {
+        name: '一人公司', emoji: '🧑‍💼',
+        focus: [
+            { icon: '💰', text: '今日已收入¥2599，保持节奏继续搞钱' },
+            { icon: '⚔️', text: '还有4个任务未完成：AI漫剧第3集制作' },
+            { icon: '📕', text: '今天还有2条内容待发布，先完成小红书主号' },
+        ],
+        warIncome: 2599, warDeals: 3, warStreak: 7,
+        goal: '月入3万',
+    },
+    love: {
+        name: '恋爱记录', emoji: '💕',
+        focus: [
+            { icon: '💝', text: '今天是恋爱第520天，别忘了准备惊喜' },
+            { icon: '📅', text: '纪念日倒计时5天，礼物还没买' },
+            { icon: '🍽️', text: '本周约会计划：周六看展 + 周日做饭' },
+        ],
+        warIncome: 0, warDeals: 0, warStreak: 3,
+        goal: '在一起1000天',
+    },
+    fitness: {
+        name: '健身减脂', emoji: '💪',
+        focus: [
+            { icon: '⚖️', text: '今日体重68.5kg，较上周↓0.8kg' },
+            { icon: '🏋️', text: '今天是练腿日，完成3组深蹲' },
+            { icon: '🥗', text: '晚餐计划：鸡胸肉+西兰花，控制碳水' },
+        ],
+        warIncome: 0, warDeals: 0, warStreak: 12,
+        goal: '减脂10kg',
+    },
+    photo: {
+        name: '摄影作品', emoji: '📷',
+        focus: [
+            { icon: '📸', text: '今日拍摄：城市夜景，拍了36张' },
+            { icon: '🎨', text: '修图进度：上周作品还剩8张待精修' },
+            { icon: '📤', text: '小红书本周发布3组作品，还差1组' },
+        ],
+        warIncome: 1280, warDeals: 2, warStreak: 5,
+        goal: '粉丝破1万',
+    },
+    study: {
+        name: '考研学习', emoji: '📚',
+        focus: [
+            { icon: '📖', text: '今日学习时长：6.5小时，目标8小时' },
+            { icon: '🧮', text: '数学强化第3章完成，错题12道待复习' },
+            { icon: '🗓️', text: '距考研还剩176天，英语真题本周完成2018年' },
+        ],
+        warIncome: 0, warDeals: 0, warStreak: 21,
+        goal: '上岸！',
+    },
+    english: {
+        name: '英语学习', emoji: '🌐',
+        focus: [
+            { icon: '📱', text: '今日单词：新学50个，复习120个' },
+            { icon: '🎧', text: '听力打卡第15天，VOA常速1篇' },
+            { icon: '🗣️', text: '口语练习：跟读20分钟，发音笔记5条' },
+        ],
+        warIncome: 0, warDeals: 0, warStreak: 15,
+        goal: '雅思7.0',
+    },
+};
+
+function switchScenario(scenario) {
+    currentScenario = scenario;
+    const data = SCENARIOS[scenario];
+
+    // 更新导航标题
+    document.getElementById('navTitle').textContent = data.name;
+
+    // 更新tab高亮
+    document.querySelectorAll('.scenario-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.scenario === scenario);
+    });
+
+    // 更新今日聚焦
+    const focus = document.getElementById('todayFocus');
+    focus.innerHTML = data.focus.map(f => `
+        <div style="display:flex;align-items:center;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:8px">
+            <span style="font-size:18px;margin-right:10px">${f.icon}</span>
+            <span style="font-size:13px;flex:1">${f.text}</span>
+        </div>
+    `).join('');
+
+    // 更新目标
+    const goalEl = document.getElementById('goalSummary');
+    if (goalEl) goalEl.textContent = '目标: ' + data.goal;
+
+    // 更新作战室
+    updateWarRoom(data);
+
+    // 更新日报
+    updateDailyReport(data);
+
+    // 更新业务线
+    updateBizOverview(data);
+
+    // 滚动到顶部内容
+    document.querySelector('.content')?.scrollTo?.({ top: 0, behavior: 'smooth' });
+}
+
+function updateWarRoom(data) {
+    const streakEl = document.getElementById('warRoomStreak');
+    if (streakEl) streakEl.textContent = `连续达标 ${data.warStreak} 天`;
+
+    const el = document.getElementById('warRoom');
+    if (!el) return;
+    const hasMoney = data.warIncome > 0;
+    el.innerHTML = `
+        <div style="padding:14px;background:${hasMoney ? 'linear-gradient(135deg,rgba(0,217,163,0.15),rgba(0,217,163,0.05))' : 'var(--bg)'};border-radius:12px;margin-bottom:12px;border:1px solid ${hasMoney ? 'var(--green)' : 'var(--border)'}">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <div style="font-size:13px;font-weight:600;color:${hasMoney ? 'var(--green)' : 'var(--text)'}">${hasMoney ? '✅ 今日已达标' : '📅 今日打卡完成'}</div>
+                    <div style="font-size:11px;color:var(--text-dim);margin-top:3px">${data.name}模式 · 每天进步一点点</div>
+                </div>
+                <div style="text-align:right">
+                    <div style="font-size:20px;font-weight:700;color:${hasMoney ? 'var(--green)' : 'var(--orange)'}">${hasMoney ? '+¥' + data.warIncome : '✅'}</div>
+                    <div style="font-size:10px;color:var(--text-mute)">${data.warDeals > 0 ? data.warDeals + '单成交' : '连续打卡'}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function updateDailyReport(data) {
+    const el = document.getElementById('dailyReport');
+    if (!el) return;
+    const isMoney = data.name === '一人公司' || data.name === '摄影作品';
+    el.innerHTML = `
+        <div style="display:flex;justify-content:space-around;padding:14px;background:var(--bg);border-radius:12px;border:1px solid var(--border)">
+            <div style="text-align:center">
+                <div style="font-size:18px;font-weight:800;color:${isMoney ? 'var(--green)' : 'var(--orange)'}">${isMoney ? '¥' + (data.warIncome * 30) : data.warStreak * 7}</div>
+                <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${isMoney ? '本月累计' : '连续天数'}</div>
+            </div>
+            <div style="width:1px;background:var(--border)"></div>
+            <div style="text-align:center">
+                <div style="font-size:18px;font-weight:800;color:var(--text)">${data.warDeals + 2}</div>
+                <div style="font-size:10px;color:var(--text-mute);margin-top:2px">${isMoney ? '本月订单' : '本周计划'}</div>
+            </div>
+            <div style="width:1px;background:var(--border)"></div>
+            <div style="text-align:center">
+                <div style="font-size:18px;font-weight:800;color:var(--purple)">${data.warStreak * 10}%</div>
+                <div style="font-size:10px;color:var(--text-mute);margin-top:2px">目标进度</div>
+            </div>
+        </div>
+    `;
+}
+
+function updateBizOverview(data) {
+    const el = document.getElementById('bizOverview');
+    if (!el) return;
+    const items = {
+        onePerson: [['🎬','AI漫剧','运营中'],['🛠️','AI定制','接单中'],['📚','AI营','招生中'],['📣','内容矩阵','运营中']],
+        love: [['💝','纪念日','已记录'],['📅','约会计划','已安排'],['🎁','礼物清单','3件待买'],['📸','照片墙','120张']],
+        fitness: [['🏋️','力量训练','每周4练'],['🏃','有氧','每周3跑'],['🥗','饮食','打卡中'],['⚖️','体重','↓0.8kg']],
+        photo: [['📸','城市夜景','已完成'],['🎨','人像系列','修图中'],['🌄','风光大片','筹备中'],['📤','小红书','3组/周']],
+        study: [['📖','数学强化','第3章'],['🧮','英语真题','2018年'],['📚','专业课','第2轮'],['🗓️','倒计时','176天']],
+        english: [['📱','背单词','50/天'],['🎧','听力','15天'],['🗣️','口语','20分钟'],['✍️','写作','每周2篇']],
+    };
+    const list = items[data.name === '一人公司' ? 'onePerson' : data.name === '恋爱记录' ? 'love' : data.name === '健身减脂' ? 'fitness' : data.name === '摄影作品' ? 'photo' : data.name === '考研学习' ? 'study' : 'english'];
+    el.innerHTML = list.map(i => `
+        <div style="display:flex;align-items:center;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:8px">
+            <span style="font-size:16px;margin-right:10px">${i[0]}</span>
+            <span style="font-size:13px;flex:1;font-weight:600">${i[1]}</span>
+            <span style="font-size:10px;color:var(--green)">${i[2]}</span>
+        </div>
+    `).join('');
+}
+
 function renderTodayFocus() {
     document.getElementById('focusDate').textContent = todayStr();
 
