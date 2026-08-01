@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 超级个体版 · 多业务线/客户管理/交付追踪">
+<title>超级个体工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #00D9FF; --sub: #A66BFF; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 8px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 7px 13px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(0,217,255,0.3);
+}
+.hero {
+    padding: 30px 0 24px;
+    background:
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(0,217,255,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(166,107,255,0.08), transparent);
+    text-align: center;
+}
+.hero-income {
+    font-size: 44px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-income small { font-size: 18px; font-weight: 700; }
+.hero-text { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 8px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.hero-badge {
+    font-size: 11px; padding: 5px 12px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 20px; color: var(--text-dim);
+}
+.section { padding: 18px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sec-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.sec-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--main); box-shadow: 0 0 8px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px; text-align: center;
+}
+.stat-card .num {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 业务线 */
+.biz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.biz-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px;
+    position: relative; overflow: hidden;
+}
+.biz-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.biz-card.b1::before { background: linear-gradient(90deg, var(--main), var(--sub)); }
+.biz-card.b2::before { background: linear-gradient(90deg, var(--green), var(--main)); }
+.biz-card.b3::before { background: linear-gradient(90deg, var(--sub), var(--green)); }
+.biz-card.b4::before { background: linear-gradient(90deg, var(--yellow, #FFD93D), var(--main)); }
+.biz-icon { font-size: 22px; margin-bottom: 6px; }
+.biz-name { font-size: 13px; font-weight: 800; color: #fff; }
+.biz-desc { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.biz-status {
+    display: inline-block; font-size: 9px; padding: 2px 8px;
+    border-radius: 10px; font-weight: 700; margin-top: 6px;
+}
+.biz-status.s1 { background: rgba(0,217,163,0.12); color: var(--green); }
+.biz-status.s2 { background: rgba(0,217,255,0.12); color: var(--main); }
+
+/* 客户 */
+.client-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px 14px;
+    margin-bottom: 8px;
+}
+.client-avatar {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    background: var(--card2); display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+}
+.client-info { flex: 1; }
+.client-name { font-size: 13px; font-weight: 700; color: #fff; }
+.client-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.client-stage { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.client-stage.c1 { color: var(--main); }
+.client-stage.c2 { color: var(--green); }
+.client-stage.c3 { color: var(--sub); }
+
+/* 交付 */
+.delivery-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.delivery-item:last-child { border-bottom: none; }
+.delivery-icon { font-size: 20px; flex-shrink: 0; }
+.delivery-info { flex: 1; }
+.delivery-name { font-size: 13px; font-weight: 700; color: #fff; }
+.delivery-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.delivery-date { font-size: 11px; color: var(--main); font-weight: 700; flex-shrink: 0; }
+
+.footer {
+    text-align: center; padding: 30px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="mark">AI</div>
+        <span>超级个体工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link" style="margin-right:6px">🎨 全部场景</a><a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="topbar-link">定制同款 →</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱记录</a>
+        <a href="demo-study.html" class="scene-tab">📚 考研学习</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身减脂</a>
+        <a href="demo-photo.html" class="scene-tab">📷 摄影作品</a>
+        <a href="demo-english.html" class="scene-tab">🌐 英语学习</a>
+        <a href="demo-media.html" class="scene-tab">🎬 自媒体</a>
+        <a href="demo-solo.html" class="scene-tab active">🦸 超级个体</a>
+        <a href="demo-ecom.html" class="scene-tab">🛒 电商</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:40px">🦸</div>
+    <div class="hero-income">¥18,600<small> /月</small></div>
+    <div class="hero-text">月收入 · 5条业务线并行</div>
+    <div class="hero-sub">咨询+课程+定制+分销+内容 · 一个人撑起一家公司</div>
+    <div class="hero-badges">
+        <span class="hero-badge">👥 客户 42位</span>
+        <span class="hero-badge">📦 交付 8单</span>
+    </div>
+</div>
+
+<!-- 数据 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 本月数据</div>
+        <div class="sec-more">近30天</div>
+    </div>
+    <div class="stats-row">
+        <div class="stat-card"><div class="num">¥18.6k</div><div class="lbl">总收入</div></div>
+        <div class="stat-card"><div class="num">8</div><div class="lbl">交付单</div></div>
+        <div class="stat-card"><div class="num">42</div><div class="lbl">服务客户</div></div>
+    </div>
+</div>
+
+<!-- 业务线 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🧰 业务线</div>
+        <div class="sec-more">5条并行</div>
+    </div>
+    <div class="biz-grid">
+        <div class="biz-card b1"><div class="biz-icon">💬</div><div class="biz-name">1v1咨询</div><div class="biz-desc">客单 ¥800-1500</div><div class="biz-status s1">运营中</div></div>
+        <div class="biz-card b2"><div class="biz-icon">📚</div><div class="biz-name">小班课程</div><div class="biz-desc">客单 ¥1999</div><div class="biz-status s1">招生中</div></div>
+        <div class="biz-card b3"><div class="biz-icon">🛠️</div><div class="biz-name">AI定制</div><div class="biz-desc">客单 ¥2999</div><div class="biz-status s1">接单中</div></div>
+        <div class="biz-card b4"><div class="biz-icon">🤝</div><div class="biz-name">产品分销</div><div class="biz-desc">月度分成</div><div class="biz-status s2">增长中</div></div>
+    </div>
+</div>
+
+<!-- 客户管理 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>👥 客户跟进</div>
+        <div class="sec-more">本周跟进 12人</div>
+    </div>
+    <div class="client-item">
+        <div class="client-avatar">🧑</div>
+        <div class="client-info"><div class="client-name">王哥 · 餐饮老板</div><div class="client-desc">咨询 AI点餐系统 · 7天前</div></div>
+        <div class="client-stage c1">报价中</div>
+    </div>
+    <div class="client-item">
+        <div class="client-avatar">👩</div>
+        <div class="client-info"><div class="client-name">Lisa · 博主</div><div class="client-desc">定制内容矩阵工作台 · 已付定金</div></div>
+        <div class="client-stage c2">开发中</div>
+    </div>
+    <div class="client-item">
+        <div class="client-avatar">🧑‍💻</div>
+        <div class="client-info"><div class="client-name">阿豪 · 独立开发者</div><div class="client-desc">AI工作流咨询 · 今天</div></div>
+        <div class="client-stage c3">新线索</div>
+    </div>
+</div>
+
+<!-- 交付追踪 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📦 交付进度</div>
+        <div class="sec-more">2个进行中</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="delivery-item">
+            <div class="delivery-icon">🛠️</div>
+            <div class="delivery-info"><div class="delivery-name">Lisa · 内容矩阵工作台</div><div class="delivery-desc">进度 60% · CRM+排期模块</div></div>
+            <div class="delivery-date">2天后</div>
+        </div>
+        <div class="delivery-item">
+            <div class="delivery-icon">🤖</div>
+            <div class="delivery-info"><div class="delivery-name">陈总 · AI客服系统</div><div class="delivery-desc">进度 30% · 话术训练中</div></div>
+            <div class="delivery-date">4天后</div>
+        </div>
+        <div class="delivery-item">
+            <div class="delivery-icon">🎬</div>
+            <div class="delivery-info"><div class="delivery-name">Momo · 漫剧宣传片</div><div class="delivery-desc">已完成 · 已交付</div></div>
+            <div class="delivery-date">✓</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    超级个体工作台 · AI工作台定制场景之一<br>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
+    <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
+</div>
+
+</body>
+</html>
