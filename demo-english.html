@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 英语学习版 · 单词/听力/口语/雅思目标追踪">
+<title>英语学习工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #FFD93D; --sub: #FF6B1A; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #000; font-weight: 900;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 8px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 7px 13px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #000; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(255,217,61,0.3);
+}
+
+.hero {
+    padding: 30px 0 24px;
+    background:
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(255,217,61,0.15), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(255,107,26,0.08), transparent);
+    text-align: center;
+}
+.hero-streak {
+    font-size: 44px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-streak small { font-size: 18px; font-weight: 700; }
+.hero-text { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 8px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.hero-badge {
+    font-size: 11px; padding: 5px 12px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 20px; color: var(--text-dim);
+}
+
+.section { padding: 18px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sec-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.sec-title .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--main);
+    box-shadow: 0 0 8px var(--main);
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px; text-align: center;
+}
+.stat-card .num {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 今日任务 */
+.task-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.task-item:last-child { border-bottom: none; }
+.task-check {
+    width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+    border: 2px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: transparent;
+}
+.task-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+.task-icon { font-size: 18px; flex-shrink: 0; }
+.task-info { flex: 1; }
+.task-name { font-size: 13px; font-weight: 700; color: #fff; }
+.task-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.task-status { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.task-status.done { color: var(--green); }
+.task-status.todo { color: var(--main); }
+
+/* 单词量 */
+.word-progress { text-align: center; }
+.word-big {
+    font-size: 40px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.word-sub { font-size: 12px; color: var(--text-dim); margin: 6px 0 14px; }
+.progress-bar { height: 10px; background: var(--card2); border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--main), var(--sub)); }
+
+/* 打卡 */
+.punch-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.punch-day {
+    aspect-ratio: 1; border-radius: 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--text-dim);
+}
+.punch-day.done { background: linear-gradient(135deg, rgba(255,217,61,0.15), rgba(255,107,26,0.1)); border-color: var(--main); color: var(--main); }
+.punch-day.today { border-color: var(--sub); color: var(--sub); }
+
+/* 目标 */
+.goal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.goal-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px; text-align: center;
+}
+.goal-card .g-name { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+.goal-card .g-val { font-size: 22px; font-weight: 900; color: var(--text); }
+.goal-card .g-val .accent { color: var(--main); }
+
+.footer {
+    text-align: center; padding: 30px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="mark">EN</div>
+        <span>英语学习工作台</span>
+    </div>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="topbar-link">定制同款 →</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱记录</a>
+        <a href="demo-study.html" class="scene-tab">📚 考研学习</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身减脂</a>
+        <a href="demo-photo.html" class="scene-tab">📷 摄影作品</a>
+        <a href="demo-english.html" class="scene-tab active">🌐 英语学习</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:40px">🌐</div>
+    <div class="hero-streak">15<small> 天</small></div>
+    <div class="hero-text">连续学习打卡</div>
+    <div class="hero-sub">目标：雅思 7.0 · 已坚持 4 个月 · 冲刺阶段</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📚 词汇 8,420</span>
+        <span class="hero-badge">🎧 听力 4.5h/周</span>
+    </div>
+</div>
+
+<!-- 数据 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 本周数据</div>
+        <div class="sec-more">近7天</div>
+    </div>
+    <div class="stats-row">
+        <div class="stat-card"><div class="num">6.5h</div><div class="lbl">学习时长</div></div>
+        <div class="stat-card"><div class="num">350</div><div class="lbl">新学单词</div></div>
+        <div class="stat-card"><div class="num">5</div><div class="lbl">打卡天数</div></div>
+    </div>
+</div>
+
+<!-- 今日任务 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📋 今日任务</div>
+        <div class="sec-more">2/4 完成</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-icon">📱</div><div class="task-info"><div class="task-name">背单词 50个</div><div class="task-desc">新学 + 复习 120 个</div></div><div class="task-status done">已完成</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-icon">🎧</div><div class="task-info"><div class="task-name">听力精听 1篇</div><div class="task-desc">VOA常速 · 影子跟读</div></div><div class="task-status done">已完成</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-icon">🗣️</div><div class="task-info"><div class="task-name">口语跟读 20分钟</div><div class="task-desc">TED演讲 · 跟读模仿</div></div><div class="task-status todo">待完成</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-icon">✍️</div><div class="task-info"><div class="task-name">写作 Task2 1篇</div><div class="task-desc">教育类话题 · 计时40min</div></div><div class="task-status todo">待完成</div></div>
+    </div>
+</div>
+
+<!-- 词汇量 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📚 词汇进度</div>
+        <div class="sec-more">目标 10,000</div>
+    </div>
+    <div class="card">
+        <div class="word-progress">
+            <div class="word-big">8,420</div>
+            <div class="word-sub">已掌握词汇 · 完成 84%</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:84%"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 打卡 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🔥 本周打卡</div>
+        <div class="sec-more">连续 15 天</div>
+    </div>
+    <div class="card">
+        <div class="punch-grid">
+            <div class="punch-day done">一</div>
+            <div class="punch-day done">二</div>
+            <div class="punch-day done">三</div>
+            <div class="punch-day done">四</div>
+            <div class="punch-day done">五</div>
+            <div class="punch-day today">六</div>
+            <div class="punch-day">日</div>
+        </div>
+    </div>
+</div>
+
+<!-- 雅思目标 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🎯 雅思目标拆解</div>
+        <div class="sec-more">目标 7.0</div>
+    </div>
+    <div class="goal-grid">
+        <div class="goal-card"><div class="g-name">听力 Listening</div><div class="g-val"><span class="accent">7.5</span> / 8.0</div></div>
+        <div class="goal-card"><div class="g-name">阅读 Reading</div><div class="g-val"><span class="accent">7.0</span> / 7.5</div></div>
+        <div class="goal-card"><div class="g-name">写作 Writing</div><div class="g-val"><span class="accent">6.0</span> / 6.5</div></div>
+        <div class="goal-card"><div class="g-name">口语 Speaking</div><div class="g-val"><span class="accent">6.5</span> / 7.0</div></div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    英语学习工作台 · AI工作台定制场景之一<br>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
+    <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
+</div>
+
+</body>
+</html>
