@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 创作者工作台 · 选题/脚本/账号矩阵/收益/合作">
+<title>创作者工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #FF4757; --sub: #FF6B1A; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 6px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 6px 11px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; font-size: 11px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(255,71,87,0.3);
+}
+
+.hero {
+    padding: 28px 0 22px;
+    background:
+        radial-gradient(ellipse 500px 280px at 50% 0%, rgba(255,71,87,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(255,107,26,0.08), transparent);
+    text-align: center;
+}
+.hero-fans {
+    font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-fans small { font-size: 17px; font-weight: 700; }
+.hero-text { font-size: 13px; color: var(--text); font-weight: 600; margin-top: 6px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.hero-badge {
+    font-size: 11px; padding: 4px 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 16px; color: var(--text-dim);
+}
+
+.section { padding: 16px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.sec-title { font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.sec-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--main); box-shadow: 0 0 6px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); padding: 14px; margin-bottom: 10px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat-card {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px; text-align: center;
+}
+.stat-card .num {
+    font-size: 18px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 9px; color: var(--text-mute); margin-top: 3px; }
+
+/* 选题库 */
+.topic-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.topic-item:last-child { border-bottom: none; }
+.topic-heat {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900;
+}
+.topic-heat.h1 { background: linear-gradient(135deg, var(--main), var(--sub)); color: #fff; }
+.topic-heat.h2 { background: rgba(255,107,26,0.15); color: var(--sub); }
+.topic-heat.h3 { background: rgba(0,217,163,0.15); color: var(--green); }
+.topic-info { flex: 1; min-width: 0; }
+.topic-name { font-size: 12px; font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.topic-meta { font-size: 10px; color: var(--text-mute); margin-top: 1px; }
+.topic-tag { font-size: 9px; padding: 2px 6px; border-radius: 8px; font-weight: 700; flex-shrink: 0; }
+.topic-tag.t1 { background: rgba(255,71,87,0.15); color: var(--main); }
+.topic-tag.t2 { background: rgba(0,217,163,0.15); color: var(--green); }
+
+/* 账号矩阵 */
+.account-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.account-cell {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 10px 6px; text-align: center;
+}
+.account-cell.active { border-color: var(--main); background: linear-gradient(135deg, rgba(255,71,87,0.08), transparent); }
+.account-ico { font-size: 22px; margin-bottom: 4px; }
+.account-name { font-size: 11px; font-weight: 700; color: #fff; }
+.account-fans { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+.account-fans .hl { color: var(--main); font-weight: 800; }
+
+/* 内容排期 */
+.content-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--border); padding: 10px 12px;
+    margin-bottom: 6px;
+}
+.content-date { width: 40px; flex-shrink: 0; text-align: center; }
+.content-date .d { font-size: 16px; font-weight: 900; color: var(--main); }
+.content-date .m { font-size: 8px; color: var(--text-mute); }
+.content-info { flex: 1; min-width: 0; }
+.content-name { font-size: 12px; font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.content-meta { font-size: 10px; color: var(--text-mute); margin-top: 1px; }
+.content-status { font-size: 9px; font-weight: 700; flex-shrink: 0; padding: 3px 7px; border-radius: 10px; }
+.c-draft { background: rgba(139,143,158,0.15); color: var(--text-dim); }
+.c-review { background: rgba(255,107,26,0.15); color: var(--sub); }
+.c-pub { background: rgba(0,217,163,0.15); color: var(--green); }
+
+/* 收益 */
+.income-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.income-cell {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px;
+}
+.income-cell .src { font-size: 10px; color: var(--text-dim); }
+.income-cell .amt {
+    font-size: 18px; font-weight: 900; color: var(--green);
+    margin-top: 4px;
+}
+.income-cell .pct { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+
+/* 合作 */
+.collab-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.collab-item:last-child { border-bottom: none; }
+.collab-ico { font-size: 18px; flex-shrink: 0; }
+.collab-info { flex: 1; }
+.collab-name { font-size: 12px; font-weight: 700; color: #fff; }
+.collab-desc { font-size: 10px; color: var(--text-mute); margin-top: 1px; }
+.collab-amt { font-size: 13px; font-weight: 800; color: var(--main); flex-shrink: 0; }
+.collab-status { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.collab-status.s1 { color: var(--sub); }
+.collab-status.s2 { color: var(--green); }
+
+.footer {
+    text-align: center; padding: 28px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="mark">AI</div>
+        <span>创作者工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link">🎨 全部场景</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-solo.html" class="scene-tab">🦸 超级个体</a>
+        <a href="demo-creator.html" class="scene-tab active">🎬 创作者</a>
+        <a href="demo-ecom.html" class="scene-tab">🛒 电商</a>
+        <a href="demo-study.html" class="scene-tab">📚 考研</a>
+        <a href="demo-english.html" class="scene-tab">🌐 英语</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身</a>
+        <a href="demo-photo.html" class="scene-tab">📷 摄影</a>
+        <a href="demo-food.html" class="scene-tab">🍱 餐饮</a>
+        <a href="demo-pet.html" class="scene-tab">🐶 宠物</a>
+        <a href="demo-travel.html" class="scene-tab">✈️ 旅行</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:36px">🎬</div>
+    <div class="hero-fans">125.6万<small> 粉丝</small></div>
+    <div class="hero-text">全网粉丝 · 5个账号矩阵</div>
+    <div class="hero-sub">本月涨粉 8.2万 · 单月收益 ¥38,600 · 持续6个月</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📹 视频 860条</span>
+        <span class="hero-badge">🎬 完播率 68%</span>
+        <span class="hero-badge">📈 互动率 5.4%</span>
+    </div>
+</div>
+
+<!-- 本月数据 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 本月数据</div>
+        <div class="sec-more">近30天</div>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="num">+8.2万</div><div class="lbl">涨粉</div></div>
+        <div class="stat-card"><div class="num">286万</div><div class="lbl">总播放</div></div>
+        <div class="stat-card"><div class="num">¥38.6k</div><div class="lbl">总收益</div></div>
+    </div>
+</div>
+
+<!-- 选题库 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🔥 选题库 · 7日热搜</div>
+        <div class="sec-more">更新 2h前</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="topic-item">
+            <div class="topic-heat h1">🔥1</div>
+            <div class="topic-info"><div class="topic-name">AI工具测评合集·新手必看</div><div class="topic-meta">热度 9.8 · 抖音/小红书 双爆</div></div>
+            <div class="topic-tag t1">必拍</div>
+        </div>
+        <div class="topic-item">
+            <div class="topic-heat h2">2</div>
+            <div class="topic-info"><div class="topic-name">GPT-5发布预测·科技解读</div><div class="topic-meta">热度 8.6 · 知乎/视频号</div></div>
+            <div class="topic-tag t1">必拍</div>
+        </div>
+        <div class="topic-item">
+            <div class="topic-heat h3">3</div>
+            <div class="topic-info"><div class="topic-name">副业月入5万真实经验</div><div class="topic-meta">热度 8.2 · 小红书爆款</div></div>
+            <div class="topic-tag t2">已选题</div>
+        </div>
+        <div class="topic-item">
+            <div class="topic-heat h3">4</div>
+            <div class="topic-info"><div class="topic-name">打工人一天Vlog·治愈系</div><div class="topic-meta">热度 7.5 · B站/小红书</div></div>
+            <div class="topic-tag t2">已选题</div>
+        </div>
+        <div class="topic-item">
+            <div class="topic-heat h3">5</div>
+            <div class="topic-info"><div class="topic-name">一人公司方法论·系列课</div><div class="topic-meta">热度 7.1 · 全平台</div></div>
+            <div class="topic-tag t2">已选题</div>
+        </div>
+    </div>
+</div>
+
+<!-- 账号矩阵 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📱 账号矩阵 · 5个平台</div>
+        <div class="sec-more">月涨粉 8.2万</div>
+    </div>
+    <div class="account-grid">
+        <div class="account-cell active">
+            <div class="account-ico">🎵</div>
+            <div class="account-name">抖音·主号</div>
+            <div class="account-fans"><span class="hl">52.8万</span></div>
+        </div>
+        <div class="account-cell active">
+            <div class="account-ico">📕</div>
+            <div class="account-name">小红书</div>
+            <div class="account-fans"><span class="hl">32.6万</span></div>
+        </div>
+        <div class="account-cell active">
+            <div class="account-ico">▶️</div>
+            <div class="account-name">视频号</div>
+            <div class="account-fans"><span class="hl">18.4万</span></div>
+        </div>
+        <div class="account-cell active">
+            <div class="account-ico">💬</div>
+            <div class="account-name">公众号</div>
+            <div class="account-fans"><span class="hl">12.8万</span></div>
+        </div>
+        <div class="account-cell active">
+            <div class="account-ico">🅱️</div>
+            <div class="account-name">B站</div>
+            <div class="account-fans"><span class="hl">9.0万</span></div>
+        </div>
+        <div class="account-cell">
+            <div class="account-ico">⚡</div>
+            <div class="account-name">知乎</div>
+            <div class="account-fans">新号</div>
+        </div>
+    </div>
+</div>
+
+<!-- 内容排期 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📅 内容排期 · 本周12条</div>
+        <div class="sec-more">已发布 7 条</div>
+    </div>
+    <div class="content-item">
+        <div class="content-date"><div class="d">28</div><div class="m">周六</div></div>
+        <div class="content-info"><div class="content-name">GPT-5·深度解读</div><div class="content-meta">视频号 · 10分钟长视频</div></div>
+        <div class="content-status c-draft">草稿</div>
+    </div>
+    <div class="content-item">
+        <div class="content-date"><div class="d">29</div><div class="m">周日</div></div>
+        <div class="content-info"><div class="content-name">AI工具合集·周末爆款</div><div class="content-meta">抖音 · 1-2分钟视频</div></div>
+        <div class="content-status c-review">审核中</div>
+    </div>
+    <div class="content-item">
+        <div class="content-date"><div class="d">30</div><div class="m">周一</div></div>
+        <div class="content-info"><div class="content-name">副业方法论·第3期</div><div class="content-meta">小红书图文 · 9图</div></div>
+        <div class="content-status c-draft">草稿</div>
+    </div>
+    <div class="content-item">
+        <div class="content-date"><div class="d">26</div><div class="m">周四</div></div>
+        <div class="content-info"><div class="content-name">AI新工具·上线即爆</div><div class="content-meta">全平台 · 播放 38万</div></div>
+        <div class="content-status c-pub">已发布</div>
+    </div>
+    <div class="content-item">
+        <div class="content-date"><div class="d">25</div><div class="m">周三</div></div>
+        <div class="content-info"><div class="content-name">一人公司第8期</div><div class="content-meta">公众号 · 深度长文</div></div>
+        <div class="content-status c-pub">已发布</div>
+    </div>
+</div>
+
+<!-- 收益构成 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>💰 收益构成 · 5个渠道</div>
+        <div class="sec-more">合计 ¥38,600</div>
+    </div>
+    <div class="income-grid">
+        <div class="income-cell"><div class="src">平台分成</div><div class="amt">¥12,800</div><div class="pct">占33% · 5平台</div></div>
+        <div class="income-cell"><div class="src">商单合作</div><div class="amt">¥9,200</div><div class="pct">占24% · 4单</div></div>
+        <div class="income-cell"><div class="src">课程分销</div><div class="amt">¥7,500</div><div class="pct">占19% · 3门</div></div>
+        <div class="income-cell"><div class="src">付费社群</div><div class="amt">¥5,400</div><div class="pct">占14% · 280人</div></div>
+        <div class="income-cell"><div class="src">直播打赏</div><div class="amt">¥2,500</div><div class="pct">占7% · 月6场</div></div>
+        <div class="income-cell"><div class="src">周边产品</div><div class="amt">¥1,200</div><div class="pct">占3% · 待开发</div></div>
+    </div>
+</div>
+
+<!-- 商单合作 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🤝 商单合作</div>
+        <div class="sec-more">3个进行中</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="collab-item">
+            <div class="collab-ico">🎯</div>
+            <div class="collab-info"><div class="collab-name">AI工具品牌·抖音植入</div><div class="collab-desc">3条视频 · 已交付 1 条 · 8月底截</div></div>
+            <div class="collab-amt">¥3,500</div>
+        </div>
+        <div class="collab-item">
+            <div class="collab-ico">📚</div>
+            <div class="collab-info"><div class="collab-name">知识付费平台·课程分销</div><div class="collab-desc">长期合作 · 月结</div></div>
+            <div class="collab-amt">¥2,500</div>
+        </div>
+        <div class="collab-item">
+            <div class="collab-ico">🎁</div>
+            <div class="collab-info"><div class="collab-name">品牌方·小红书种草</div><div class="collab-desc">已确认 · 待执行</div></div>
+            <div class="collab-status s1">待执行</div>
+        </div>
+        <div class="collab-item">
+            <div class="collab-ico">💬</div>
+            <div class="collab-info"><div class="collab-name">公众号互推·已收</div><div class="collab-desc">月固定合作</div></div>
+            <div class="collab-status s2">已完成</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    创作者工作台 · AI工作台定制场景之一<br>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
+    <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
+</div>
+
+</body>
+</html>
