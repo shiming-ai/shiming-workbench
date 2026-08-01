@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 宠物工作台 · 喂养/健康/相册/用品库存">
+<title>宠物工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #FF6B9D; --sub: #A66BFF; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 6px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 6px 11px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; font-size: 11px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
+}
+
+.hero {
+    padding: 28px 0 22px;
+    background:
+        radial-gradient(ellipse 500px 280px at 50% 0%, rgba(255,107,157,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(166,107,255,0.08), transparent);
+    text-align: center;
+}
+.hero-pets {
+    font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-pets small { font-size: 17px; font-weight: 700; }
+.hero-text { font-size: 13px; color: var(--text); font-weight: 600; margin-top: 6px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.hero-badge {
+    font-size: 11px; padding: 4px 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 16px; color: var(--text-dim);
+}
+
+.section { padding: 16px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.sec-title { font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.sec-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--main); box-shadow: 0 0 6px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); padding: 14px; margin-bottom: 10px; }
+
+/* 宠物列表 */
+.pet-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+}
+.pet-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--card2); display: flex; align-items: center; justify-content: center;
+    font-size: 28px; flex-shrink: 0;
+    border: 2px solid var(--main);
+}
+.pet-info { flex: 1; }
+.pet-name { font-size: 15px; font-weight: 800; color: #fff; }
+.pet-meta { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.pet-tag { font-size: 9px; padding: 3px 8px; border-radius: 10px; font-weight: 700; }
+.pet-tag.t1 { background: rgba(255,107,157,0.12); color: var(--main); }
+.pet-tag.t2 { background: rgba(166,107,255,0.12); color: var(--sub); }
+.pet-status { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.pet-status.s1 { color: var(--green); }
+.pet-status.s2 { color: var(--main); }
+
+/* 今日任务 */
+.task-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.task-item:last-child { border-bottom: none; }
+.task-check {
+    width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: transparent;
+}
+.task-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+.task-ico { font-size: 16px; flex-shrink: 0; }
+.task-text { font-size: 12px; flex: 1; }
+.task-text.done { color: var(--text-mute); text-decoration: line-through; }
+.task-time { font-size: 10px; color: var(--text-mute); flex-shrink: 0; }
+
+/* 健康记录 */
+.health-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.health-item:last-child { border-bottom: none; }
+.health-ico { font-size: 18px; flex-shrink: 0; }
+.health-info { flex: 1; }
+.health-name { font-size: 12px; font-weight: 700; color: #fff; }
+.health-meta { font-size: 10px; color: var(--text-mute); margin-top: 1px; }
+.health-val { font-size: 12px; font-weight: 800; color: var(--green); flex-shrink: 0; }
+
+/* 相册 */
+.album-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.album-cell {
+    aspect-ratio: 1; border-radius: 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+}
+.album-cell.more {
+    background: linear-gradient(135deg, rgba(255,107,157,0.12), transparent);
+    border-color: var(--main); color: var(--main); font-size: 12px; font-weight: 700;
+}
+
+/* 用品库存 */
+.stock-item { margin-bottom: 10px; }
+.stock-item:last-child { margin-bottom: 0; }
+.stock-head { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+.stock-name { font-weight: 700; color: #fff; }
+.stock-num { color: var(--text-dim); font-size: 10px; }
+.stock-num .low { color: var(--main); font-weight: 700; }
+.progress-bar { height: 6px; background: var(--card2); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--main), var(--sub)); }
+
+.footer {
+    text-align: center; padding: 28px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="mark">🐶</div>
+        <span>宠物工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link">🎨 全部场景</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-solo.html" class="scene-tab">🦸 超级个体</a>
+        <a href="demo-creator.html" class="scene-tab">🎬 创作者</a>
+        <a href="demo-ecom.html" class="scene-tab">🛒 电商</a>
+        <a href="demo-food.html" class="scene-tab">🍱 餐饮</a>
+        <a href="demo-pet.html" class="scene-tab active">🐶 宠物</a>
+        <a href="demo-travel.html" class="scene-tab">✈️ 旅行</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:36px">🐶</div>
+    <div class="hero-pets">3<small> 只毛孩子</small></div>
+    <div class="hero-text">陪伴 1,068 天</div>
+    <div class="hero-sub">可可·柯基 · 牛奶·英短 · 团子·金渐层</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📸 相册 1,240张</span>
+        <span class="hero-badge">💉 疫苗齐全</span>
+        <span class="hero-badge">🐾 一切健康</span>
+    </div>
+</div>
+
+<!-- 我的宠物 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🐾 我的毛孩子</div>
+        <div class="sec-more">3只</div>
+    </div>
+    <div class="pet-card">
+        <div class="pet-avatar">🐶</div>
+        <div class="pet-info">
+            <div class="pet-name">可可 · 柯基</div>
+            <div class="pet-meta">3岁 · 12.5kg · 公</div>
+        </div>
+        <div class="pet-tag t1">健康</div>
+    </div>
+    <div class="pet-card">
+        <div class="pet-avatar">🐱</div>
+        <div class="pet-info">
+            <div class="pet-name">牛奶 · 英短</div>
+            <div class="pet-meta">2岁 · 4.2kg · 母</div>
+        </div>
+        <div class="pet-tag t2">驱虫</div>
+    </div>
+    <div class="pet-card">
+        <div class="pet-avatar">🐱</div>
+        <div class="pet-info">
+            <div class="pet-name">团子 · 金渐层</div>
+            <div class="pet-meta">8个月 · 2.8kg · 母</div>
+        </div>
+        <div class="pet-tag t1">健康</div>
+    </div>
+</div>
+
+<!-- 今日喂养 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🍽️ 今日任务</div>
+        <div class="sec-more">3/6 完成</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-ico">🐶</div><div class="task-text done">早上·可可·狗粮 80g</div><div class="task-time">07:30</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-ico">🐱</div><div class="task-text done">早上·牛奶·猫粮 30g</div><div class="task-time">07:35</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-ico">🐱</div><div class="task-text done">早上·团子·猫粮 25g</div><div class="task-time">07:40</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-ico">🚶</div><div class="task-text">下午·可可·散步 30min</div><div class="task-time">16:00</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-ico">🍽️</div><div class="task-text">晚上·3只·晚饭</div><div class="task-time">18:30</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-ico">💊</div><div class="task-text">睡前·牛奶·化毛膏</div><div class="task-time">22:00</div></div>
+    </div>
+</div>
+
+<!-- 健康记录 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>💉 健康记录</div>
+        <div class="sec-more">下次体检 25天后</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="health-item">
+            <div class="health-ico">💉</div>
+            <div class="health-info"><div class="health-name">可可·狂犬疫苗</div><div class="health-meta">上次 2025.09.15 · 下次 2026.09.15</div></div>
+            <div class="health-val">已接种</div>
+        </div>
+        <div class="health-item">
+            <div class="health-ico">🐛</div>
+            <div class="health-info"><div class="health-name">牛奶·体内驱虫</div><div class="health-meta">上次 2026.04.20 · 下次 2026.07.20</div></div>
+            <div class="health-val" style="color:var(--main)">本周到期</div>
+        </div>
+        <div class="health-item">
+            <div class="health-ico">🦷</div>
+            <div class="health-info"><div class="health-name">可可·洁牙</div><div class="health-meta">上次 2026.03.10 · 下次 2026.09.10</div></div>
+            <div class="health-val">已完成</div>
+        </div>
+    </div>
+</div>
+
+<!-- 相册 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📸 回忆相册</div>
+        <div class="sec-more">共1,240张</div>
+    </div>
+    <div class="album-grid">
+        <div class="album-cell">🐶</div>
+        <div class="album-cell">🐱</div>
+        <div class="album-cell">🐱</div>
+        <div class="album-cell">🌳</div>
+        <div class="album-cell">🏖️</div>
+        <div class="album-cell">🎂</div>
+        <div class="album-cell">🐾</div>
+        <div class="album-cell">❄️</div>
+        <div class="album-cell more">+1k</div>
+    </div>
+</div>
+
+<!-- 用品库存 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📦 用品库存</div>
+        <div class="sec-more">2款待补</div>
+    </div>
+    <div class="card">
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🐶 可可狗粮·成犬</span><span class="stock-num">剩 2.5kg / 10kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🐱 猫粮·成猫</span><span class="stock-num">剩 1.8kg / 8kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:22%"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🌿 猫砂</span><span class="stock-num">剩 12kg / 20kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🦴 零食·磨牙棒</span><span class="stock-num">剩 30根</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    宠物工作台 · AI工作台定制场景之一<br>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
+    <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
+</div>
+
+</body>
+</html>
