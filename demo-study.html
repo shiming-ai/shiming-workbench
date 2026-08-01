@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 考研学习版 · 倒计时/科目进度/错题本/每日打卡">
+<title>考研学习工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #4D9DFF; --sub: #A66BFF; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 8px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 7px 13px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(77,157,255,0.3);
+}
+
+.hero {
+    padding: 30px 0 24px;
+    background:
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(77,157,255,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(166,107,255,0.08), transparent);
+    text-align: center;
+}
+.hero-countdown {
+    font-size: 44px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-countdown small { font-size: 18px; font-weight: 700; }
+.hero-text { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 8px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.hero-badge {
+    font-size: 11px; padding: 5px 12px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 20px; color: var(--text-dim);
+}
+
+.section { padding: 18px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sec-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.sec-title .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--main);
+    box-shadow: 0 0 8px var(--main);
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+
+/* 学习时长 */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px;
+    text-align: center;
+}
+.stat-card .num {
+    font-size: 24px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 科目进度 */
+.subject-item { margin-bottom: 14px; }
+.subject-item:last-child { margin-bottom: 0; }
+.subject-head { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+.subject-name { font-weight: 700; color: #fff; }
+.subject-pct { color: var(--main); font-weight: 700; }
+.progress-bar { height: 8px; background: var(--card2); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--main), var(--sub)); }
+.progress-fill.math { background: linear-gradient(90deg, #4D9DFF, #6BB6FF); }
+.progress-fill.eng { background: linear-gradient(90deg, #00D9A3, #00F5B8); }
+.progress-fill.pol { background: linear-gradient(90deg, #FF6B1A, #FFD93D); }
+.progress-fill.maj { background: linear-gradient(90deg, #A66BFF, #C89AFF); }
+
+/* 打卡 */
+.punch-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.punch-day {
+    aspect-ratio: 1; border-radius: 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--text-dim);
+}
+.punch-day.done { background: linear-gradient(135deg, rgba(77,157,255,0.15), rgba(166,107,255,0.1)); border-color: var(--main); color: var(--main); }
+.punch-day.today { border-color: var(--sub); color: var(--sub); }
+
+/* 错题本 */
+.wrong-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.wrong-item:last-child { border-bottom: none; }
+.wrong-icon {
+    width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+    background: var(--card2); display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+}
+.wrong-info { flex: 1; }
+.wrong-name { font-size: 12px; font-weight: 700; color: #fff; }
+.wrong-tag { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.wrong-count { font-size: 11px; color: var(--main); font-weight: 700; }
+
+/* 每日计划 */
+.task-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.task-item:last-child { border-bottom: none; }
+.task-check {
+    width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+    border: 2px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: transparent;
+}
+.task-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+.task-text { font-size: 13px; flex: 1; }
+.task-text.done { color: var(--text-mute); text-decoration: line-through; }
+.task-time { font-size: 11px; color: var(--text-mute); }
+
+.footer {
+    text-align: center; padding: 30px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="mark">AI</div>
+        <span>考研学习工作台</span>
+    </div>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="topbar-link">定制同款 →</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱记录</a>
+        <a href="demo-study.html" class="scene-tab active">📚 考研学习</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身减脂</a>
+        <a href="demo-photo.html" class="scene-tab">📷 摄影作品</a>
+        <a href="demo-english.html" class="scene-tab">🌐 英语学习</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:40px">📚</div>
+    <div class="hero-countdown">176<small> 天</small></div>
+    <div class="hero-text">距离考研还有</div>
+    <div class="hero-sub">2026.12.26 初试 · 连续打卡 21 天</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📖 今日已学 6.5h</span>
+        <span class="hero-badge">🎯 目标院校 冲刺中</span>
+    </div>
+</div>
+
+<!-- 学习时长 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>⏱️ 今日学习</div>
+        <div class="sec-more">目标 8h</div>
+    </div>
+    <div class="stats-row">
+        <div class="stat-card"><div class="num">6.5h</div><div class="lbl">今日已学</div></div>
+        <div class="stat-card"><div class="num">42h</div><div class="lbl">本周累计</div></div>
+        <div class="stat-card"><div class="num">1,208</div><div class="lbl">累计小时</div></div>
+    </div>
+</div>
+
+<!-- 科目进度 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 科目进度</div>
+        <div class="sec-more">总体 62%</div>
+    </div>
+    <div class="card">
+        <div class="subject-item">
+            <div class="subject-head"><span class="subject-name">🧮 数学</span><span class="subject-pct">强化阶段 · 58%</span></div>
+            <div class="progress-bar"><div class="progress-fill math" style="width:58%"></div></div>
+        </div>
+        <div class="subject-item">
+            <div class="subject-head"><span class="subject-name">📖 英语</span><span class="subject-pct">真题阶段 · 65%</span></div>
+            <div class="progress-bar"><div class="progress-fill eng" style="width:65%"></div></div>
+        </div>
+        <div class="subject-item">
+            <div class="subject-head"><span class="subject-name">📰 政治</span><span class="subject-pct">一轮 · 45%</span></div>
+            <div class="progress-bar"><div class="progress-fill pol" style="width:45%"></div></div>
+        </div>
+        <div class="subject-item">
+            <div class="subject-head"><span class="subject-name">📚 专业课</span><span class="subject-pct">二轮 · 72%</span></div>
+            <div class="progress-bar"><div class="progress-fill maj" style="width:72%"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 每日计划 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📋 今日计划</div>
+        <div class="sec-more">4/6 完成</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-text done">高数强化第3章（3h）</div><div class="task-time">上午</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-text done">英语真题2018阅读（2h）</div><div class="task-time">下午</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-text done">政治网课第5节（1.5h）</div><div class="task-time">晚上</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-text done">专业课背诵（2h）</div><div class="task-time">晚上</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-text">错题本复习 12 道</div><div class="task-time">睡前</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-text">英语单词 50 个</div><div class="task-time">睡前</div></div>
+    </div>
+</div>
+
+<!-- 打卡日历 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🔥 本周打卡</div>
+        <div class="sec-more">连续 21 天</div>
+    </div>
+    <div class="card">
+        <div class="punch-grid">
+            <div class="punch-day done">一</div>
+            <div class="punch-day done">二</div>
+            <div class="punch-day done">三</div>
+            <div class="punch-day done">四</div>
+            <div class="punch-day done">五</div>
+            <div class="punch-day today">六</div>
+            <div class="punch-day">日</div>
+        </div>
+    </div>
+</div>
+
+<!-- 错题本 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📕 错题本</div>
+        <div class="sec-more">本周 +12</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="wrong-item">
+            <div class="wrong-icon">🧮</div>
+            <div class="wrong-info"><div class="wrong-name">高数 · 数列极限</div><div class="wrong-tag">第3章 · 复习2次</div></div>
+            <div class="wrong-count">5道</div>
+        </div>
+        <div class="wrong-item">
+            <div class="wrong-icon">📖</div>
+            <div class="wrong-info"><div class="wrong-name">英语 · 长难句</div><div class="wrong-tag">2018真题 · 复习1次</div></div>
+            <div class="wrong-count">4道</div>
+        </div>
+        <div class="wrong-item">
+            <div class="wrong-icon">📰</div>
+            <div class="wrong-info"><div class="wrong-name">政治 · 马原选择题</div><div class="wrong-tag">第5节 · 待复习</div></div>
+            <div class="wrong-count">3道</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    考研学习工作台 · AI工作台定制场景之一<br>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
+    <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
+</div>
+
+</body>
+</html>
