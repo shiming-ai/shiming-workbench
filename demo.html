@@ -1386,6 +1386,15 @@ body {
 
 </div><!-- /content -->
 
+<!-- 场景案例 iframe 容器 -->
+<div id="sceneFrameWrap" style="display:none;position:relative">
+    <div id="sceneFrameBar" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:50px;z-index:80">
+        <button onclick="switchScene('one', document.querySelectorAll('.sidebar-item[onclick*=\"one\"]')[0])" style="background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:16px;padding:5px 12px;font-size:11px;cursor:pointer">← 返回一人公司</button>
+        <span style="font-size:11px;color:var(--text-mute)">案例演示</span>
+    </div>
+    <iframe id="sceneFrame" src="" style="width:100%;height:calc(100vh - 50px);border:none;display:block;background:var(--bg)"></iframe>
+</div>
+
 <!-- 顶部导航栏 -->
 <div class="top-nav">
     <div class="menu-btn" onclick="toggleSidebar()">≡</div>
@@ -1400,12 +1409,17 @@ body {
 <!-- 场景切换器 -->
 <div class="scenario-bar">
     <div class="scenario-tabs" id="scenarioTabs">
-        <a href="demo.html" class="scenario-tab active"><span>🧑‍💼</span><span>一人公司</span></a>
-        <a href="demo-love.html" class="scenario-tab"><span>💕</span><span>恋爱记录</span></a>
-        <a href="demo-study.html" class="scenario-tab"><span>📚</span><span>考研学习</span></a>
-        <a href="demo-fitness.html" class="scenario-tab"><span>💪</span><span>健身减脂</span></a>
-        <a href="demo-photo.html" class="scenario-tab"><span>📷</span><span>摄影作品</span></a>
-        <a href="demo-english.html" class="scenario-tab"><span>🌐</span><span>英语学习</span></a>
+        <div class="scenario-tab active" data-sc="one" onclick="switchScene('one', this)"><span>🧑‍💼</span><span>一人公司</span></div>
+        <div class="scenario-tab" data-sc="love" onclick="switchScene('love', this)"><span>💕</span><span>恋爱记录</span></div>
+        <div class="scenario-tab" data-sc="study" onclick="switchScene('study', this)"><span>📚</span><span>考研学习</span></div>
+        <div class="scenario-tab" data-sc="fitness" onclick="switchScene('fitness', this)"><span>💪</span><span>健身减脂</span></div>
+        <div class="scenario-tab" data-sc="photo" onclick="switchScene('photo', this)"><span>📷</span><span>摄影作品</span></div>
+        <div class="scenario-tab" data-sc="english" onclick="switchScene('english', this)"><span>🌐</span><span>英语学习</span></div>
+        <div class="scenario-tab" data-sc="creator" onclick="switchScene('creator', this)"><span>🎬</span><span>创作者</span></div>
+        <div class="scenario-tab" data-sc="ecom" onclick="switchScene('ecom', this)"><span>🛒</span><span>电商</span></div>
+        <div class="scenario-tab" data-sc="food" onclick="switchScene('food', this)"><span>🍱</span><span>餐饮</span></div>
+        <div class="scenario-tab" data-sc="pet" onclick="switchScene('pet', this)"><span>🐶</span><span>宠物</span></div>
+        <div class="scenario-tab" data-sc="travel" onclick="switchScene('travel', this)"><span>✈️</span><span>旅行</span></div>
     </div>
 </div>
 
@@ -1452,6 +1466,43 @@ body {
             <span class="sidebar-item-icon">⚙️</span> 更多工具
         </div>
     </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">🎨 案例场景</div>
+        <div class="sidebar-item" onclick="switchScene('one', this)">
+            <span class="sidebar-item-icon">🧑‍💼</span> 一人公司
+        </div>
+        <div class="sidebar-item" onclick="switchScene('love', this)">
+            <span class="sidebar-item-icon">💕</span> 恋爱记录
+        </div>
+        <div class="sidebar-item" onclick="switchScene('study', this)">
+            <span class="sidebar-item-icon">📚</span> 考研学习
+        </div>
+        <div class="sidebar-item" onclick="switchScene('fitness', this)">
+            <span class="sidebar-item-icon">💪</span> 健身减脂
+        </div>
+        <div class="sidebar-item" onclick="switchScene('photo', this)">
+            <span class="sidebar-item-icon">📷</span> 摄影作品
+        </div>
+        <div class="sidebar-item" onclick="switchScene('english', this)">
+            <span class="sidebar-item-icon">🌐</span> 英语学习
+        </div>
+        <div class="sidebar-item" onclick="switchScene('creator', this)">
+            <span class="sidebar-item-icon">🎬</span> 创作者
+        </div>
+        <div class="sidebar-item" onclick="switchScene('ecom', this)">
+            <span class="sidebar-item-icon">🛒</span> 电商运营
+        </div>
+        <div class="sidebar-item" onclick="switchScene('food', this)">
+            <span class="sidebar-item-icon">🍱</span> 餐饮店
+        </div>
+        <div class="sidebar-item" onclick="switchScene('pet', this)">
+            <span class="sidebar-item-icon">🐶</span> 宠物
+        </div>
+        <div class="sidebar-item" onclick="switchScene('travel', this)">
+            <span class="sidebar-item-icon">✈️</span> 旅行
+        </div>
+    </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1468,6 +1519,64 @@ body {
 </div>
 
 <script>
+// ========== 场景案例切换 ==========
+const SCENE_FILES = {
+    one: null,
+    love: 'demo-love.html',
+    study: 'demo-study.html',
+    fitness: 'demo-fitness.html',
+    photo: 'demo-photo.html',
+    english: 'demo-english.html',
+    creator: 'demo-creator.html',
+    ecom: 'demo-ecom.html',
+    food: 'demo-food.html',
+    pet: 'demo-pet.html',
+    travel: 'demo-travel.html',
+};
+
+function switchScene(scene, el) {
+    const content = document.querySelector('.content');
+    const wrap = document.getElementById('sceneFrameWrap');
+    const frame = document.getElementById('sceneFrame');
+    const navTitle = document.getElementById('navTitle');
+    const sceneNames = {
+        one: '一人公司', love: '恋爱记录', study: '考研学习', fitness: '健身减脂',
+        photo: '摄影作品', english: '英语学习', creator: '创作者', ecom: '电商运营',
+        food: '餐饮店', pet: '宠物', travel: '旅行',
+    };
+
+    // 高亮侧边栏
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    if (el) el.classList.add('active');
+
+    // 高亮顶部场景条
+    document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+    const topTab = document.querySelector('.scenario-tab[data-sc="' + scene + '"]');
+    if (topTab) topTab.classList.add('active');
+
+    if (scene === 'one') {
+        // 显示原内容
+        content.style.display = '';
+        wrap.style.display = 'none';
+        frame.src = '';
+        navTitle.textContent = '一人公司';
+    } else {
+        // 显示iframe
+        content.style.display = 'none';
+        wrap.style.display = 'block';
+        frame.src = SCENE_FILES[scene];
+        navTitle.textContent = sceneNames[scene];
+        // 调整iframe高度
+        setTimeout(() => {
+            const barH = document.querySelector('.scenario-bar') ? document.querySelector('.scenario-bar').offsetHeight : 44;
+            const navH = document.querySelector('.top-nav') ? document.querySelector('.top-nav').offsetHeight : 50;
+            frame.style.height = 'calc(100vh - ' + (navH + barH) + 'px)';
+        }, 50);
+    }
+    // 关闭侧边栏
+    toggleSidebar();
+}
+
 // ========== 展示版复制微信 ==========
 function copyDemoWx(id) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
