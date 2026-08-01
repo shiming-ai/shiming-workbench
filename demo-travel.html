@@ -201,11 +201,115 @@ body::before {
     font-weight: 700;
 }
 
+
+/* ===== 左侧折叠导航 ===== */
+.sidebar-overlay {
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 99;
+    width: 78vw; max-width: 300px;
+    background: var(--card); border-right: 1px solid var(--border);
+    transform: translateX(-105%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-head {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.sidebar-brand { flex: 1; }
+.sidebar-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.sidebar-brand-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.sidebar-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.sidebar-nav-label {
+    font-size: 10px; color: var(--text-mute); letter-spacing: 1px;
+    padding: 8px 18px 6px; text-transform: uppercase;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    color: var(--text-dim); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar-item:active { background: var(--card2); color: var(--main); border-left-color: var(--main); }
+.sidebar-foot {
+    padding: 14px 18px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-btn {
+    display: block; padding: 11px;
+    background: #fff; color: #000;
+    border-radius: 10px; font-size: 12px; font-weight: 700;
+    text-align: center; text-decoration: none;
+}
+.sidebar-btn-outline {
+    display: block; padding: 10px;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 12px; font-weight: 600; text-align: center; text-decoration: none;
+}
+.menu-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
 </style>
 </head>
 <body>
+<!-- 遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <div class="sidebar-logo">✈️</div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">旅行工作台</div>
+            <div class="sidebar-brand-sub">Crazy Friday AI工作台</div>
+        </div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
+    </div>
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-label">📂 功能板块</div>
+        <a class="sidebar-item" href="#sec-itinerary">🗓️ 行程安排 · 5天4晚</a>
+        <a class="sidebar-item" href="#sec-budget">💰 预算 · 已用 ¥2,800</a>
+        <a class="sidebar-item" href="#sec-reserve">📋 已预订 · 4项</a>
+        <a class="sidebar-item" href="#sec-gear">🎒 装备清单 · 32件</a>
+        <a class="sidebar-item" href="#sec-album">📸 旅途相册</a>
+    </div>
+    <div class="sidebar-foot">
+        <a class="sidebar-btn" href="demo-gallery.html">🎨 全部场景</a>
+        <a class="sidebar-btn-outline" href="https://shiming-ai.github.io/shiming-workbench/landing.html">🛠️ 定制同款</a>
+    </div>
+</div>
+
 
 <div class="topbar">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
     <div class="topbar-logo">
         <div class="mark">✈️</div>
         <span>旅行工作台</span>
@@ -241,7 +345,7 @@ body::before {
 </div>
 
 <!-- 行程安排 -->
-<div class="section">
+<div class="section" id="sec-itinerary">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>🗓️ 行程安排 · 5天4晚</div>
         <div class="sec-more">8/15 → 8/19</div>
@@ -291,7 +395,7 @@ body::before {
 </div>
 
 <!-- 预算 -->
-<div class="section">
+<div class="section" id="sec-budget">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>💰 预算 · 已用 ¥2,800</div>
         <div class="sec-more">总预算 ¥4,800</div>
@@ -307,7 +411,7 @@ body::before {
 </div>
 
 <!-- 预订 -->
-<div class="section">
+<div class="section" id="sec-reserve">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>📋 已预订 · 4项</div>
         <div class="sec-more">全部确认</div>
@@ -341,7 +445,7 @@ body::before {
 </div>
 
 <!-- 装备清单 -->
-<div class="section">
+<div class="section" id="sec-gear">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>🎒 装备清单 · 32件</div>
         <div class="sec-more">已备 18件</div>
@@ -359,7 +463,7 @@ body::before {
 </div>
 
 <!-- 回忆相册 -->
-<div class="section">
+<div class="section" id="sec-album">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>📸 旅途相册</div>
         <div class="sec-more">回程后整理</div>
@@ -384,6 +488,22 @@ body::before {
     <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
     <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
 </div>
+
+
+<script>
+// 侧边栏
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => { closeSidebar(); });
+});
+</script>
 
 </body>
 </html>
