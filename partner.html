@@ -301,6 +301,77 @@ body::before {
 .contact-label { font-size: 11px; font-weight: 600; color: var(--text); }
 .contact-sub { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
 
+/* 高级克制按钮 */
+.apply-btn-primary {
+    display: block; padding: 15px;
+    background: #fff; color: #000;
+    border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+}
+.apply-btn-primary:active { transform: scale(0.98); background: #f0f0f0; }
+
+/* 微信列表 */
+.wechat-list {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+.wechat-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.wechat-row:last-child { border-bottom: none; }
+.wechat-row:active { background: var(--card); }
+.wechat-ico {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: #fff; color: #000;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+}
+.wechat-info { flex: 1; }
+.wechat-label { font-size: 12px; color: var(--text-mute); }
+.wechat-id { font-size: 14px; font-weight: 800; color: #fff; font-family: monospace; }
+.wechat-action {
+    font-size: 11px; padding: 4px 12px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text-dim);
+    flex-shrink: 0;
+}
+.wechat-row:active .wechat-action { color: var(--orange); border-color: var(--orange); }
+
+.apply-divider {
+    height: 1px; background: var(--border); margin: 24px 0;
+}
+
+.apply-links {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.apply-link-item {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 6px; text-align: center;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+.apply-link-item:active {
+    border-color: var(--text); background: var(--card2);
+}
+.apply-link-ico { font-size: 18px; margin-bottom: 4px; }
+.apply-link-label {
+    font-size: 11px; color: var(--text);
+    font-weight: 600;
+}
+.apply-link-sub { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
 .trust-line {
     font-size: 12px; color: var(--text-mute);
     margin-top: 24px; padding-top: 18px;
@@ -624,23 +695,42 @@ body::before {
                 加微信聊聊，说清楚你的情况就行。
             </div>
             <div class="apply-actions">
-                <button class="btn-primary" onclick="copyWechat('Yshim16506')" style="border:none;width:100%;cursor:pointer;">复制微信号：Yshim16506</button>
+                <a href="#" class="apply-btn-primary" onclick="copyWechat('Yshim16506'); return false;">📋 复制微信号：Yshim16506</a>
             </div>
-            <div class="contact-grid">
-                <a href="#" class="contact-item" onclick="copyWechat('Yshim16506'); return false;">
-                    <div class="contact-icon">💬</div>
-                    <div class="contact-label">微信①</div>
-                    <div class="contact-sub">Yshim16506</div>
+            <div class="wechat-list">
+                <div class="wechat-row" onclick="copyWechat('Yshim16506')">
+                    <div class="wechat-ico">💬</div>
+                    <div class="wechat-info">
+                        <div class="wechat-label">微信 ①</div>
+                        <div class="wechat-id">Yshim16506</div>
+                    </div>
+                    <div class="wechat-action">复制</div>
+                </div>
+                <div class="wechat-row" onclick="copyWechat('R26184352Y')">
+                    <div class="wechat-ico">💬</div>
+                    <div class="wechat-info">
+                        <div class="wechat-label">微信 ②</div>
+                        <div class="wechat-id">R26184352Y</div>
+                    </div>
+                    <div class="wechat-action">复制</div>
+                </div>
+            </div>
+            <div class="apply-divider"></div>
+            <div class="apply-links">
+                <a href="cf.html" class="apply-link-item">
+                    <div class="apply-link-ico">🚀</div>
+                    <div class="apply-link-label">生态蓝图</div>
+                    <div class="apply-link-sub">了解整体规划</div>
                 </a>
-                <a href="#" class="contact-item" onclick="copyWechat('R26184352Y'); return false;">
-                    <div class="contact-icon">💬</div>
-                    <div class="contact-label">微信②</div>
-                    <div class="contact-sub">R26184352Y</div>
+                <a href="demo-gallery.html" class="apply-link-item">
+                    <div class="apply-link-ico">🎨</div>
+                    <div class="apply-link-label">场景案例</div>
+                    <div class="apply-link-sub">12个真实场景</div>
                 </a>
-                <a href="landing.html" class="contact-item">
-                    <div class="contact-icon">🛠️</div>
-                    <div class="contact-label">企业服务</div>
-                    <div class="contact-sub">企业服务入口</div>
+                <a href="index.html" class="apply-link-item">
+                    <div class="apply-link-ico">🌐</div>
+                    <div class="apply-link-label">生态总览</div>
+                    <div class="apply-link-sub">7条业务线</div>
                 </a>
             </div>
             <div class="trust-line">
