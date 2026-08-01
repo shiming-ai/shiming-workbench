@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 电商卖家版 · 店铺数据/订单/库存/售后管理">
+<title>电商卖家工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #FFD93D; --sub: #00D9A3; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #000; font-weight: 900;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 8px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 7px 13px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #000; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(255,217,61,0.3);
+}
+.hero {
+    padding: 30px 0 24px;
+    background:
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(255,217,61,0.15), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(0,217,163,0.08), transparent);
+    text-align: center;
+}
+.hero-gmv {
+    font-size: 44px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-gmv small { font-size: 18px; font-weight: 700; }
+.hero-text { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 8px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.hero-badge {
+    font-size: 11px; padding: 5px 12px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 20px; color: var(--text-dim);
+}
+.section { padding: 18px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sec-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.sec-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--main); box-shadow: 0 0 8px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px; text-align: center;
+}
+.stat-card .num {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 平台 */
+.plat-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px 14px;
+    margin-bottom: 8px;
+}
+.plat-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    background: var(--card2); display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+}
+.plat-info { flex: 1; }
+.plat-name { font-size: 13px; font-weight: 700; color: #fff; }
+.plat-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.plat-gmv { font-size: 12px; font-weight: 800; color: var(--main); flex-shrink: 0; }
+
+/* 订单 */
+.order-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px 14px;
+    margin-bottom: 8px;
+}
+.order-icon { font-size: 20px; flex-shrink: 0; }
+.order-info { flex: 1; }
+.order-name { font-size: 13px; font-weight: 700; color: #fff; }
+.order-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.order-status { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.order-status.s1 { color: var(--sub); }
+.order-status.s2 { color: var(--green); }
+.order-status.s3 { color: var(--main); }
+
+/* 库存 */
+.stock-item { margin-bottom: 14px; }
+.stock-item:last-child { margin-bottom: 0; }
+.stock-head { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+.stock-name { font-weight: 700; color: #fff; }
+.stock-num { color: var(--text-dim); }
+.stock-num .low { color: var(--main); font-weight: 700; }
+.progress-bar { height: 8px; background: var(--card2); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--main), var(--sub)); }
+
+/* 售后 */
+.after-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.after-item:last-child { border-bottom: none; }
+.after-emoji { font-size: 18px; flex-shrink: 0; }
+.after-info { flex: 1; }
+.after-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.after-desc { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.after-tag { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.after-tag.t1 { color: var(--main); }
+.after-tag.t2 { color: var(--green); }
+
+.footer {
+    text-align: center; padding: 30px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="mark">¥</div>
+        <span>电商卖家工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link" style="margin-right:6px">🎨 全部场景</a><a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="topbar-link">定制同款 →</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱记录</a>
+        <a href="demo-study.html" class="scene-tab">📚 考研学习</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身减脂</a>
+        <a href="demo-photo.html" class="scene-tab">📷 摄影作品</a>
+        <a href="demo-english.html" class="scene-tab">🌐 英语学习</a>
+        <a href="demo-media.html" class="scene-tab">🎬 自媒体</a>
+        <a href="demo-solo.html" class="scene-tab">🦸 超级个体</a>
+        <a href="demo-ecom.html" class="scene-tab active">🛒 电商</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:40px">🛒</div>
+    <div class="hero-gmv">¥32,800<small> /月</small></div>
+    <div class="hero-text">本月GMV · 3个平台</div>
+    <div class="hero-sub">转化率 4.2% · 客单价 ¥186 · 好评率 98.6%</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📦 月订单 176单</span>
+        <span class="hero-badge">📈 环比 +23%</span>
+    </div>
+</div>
+
+<!-- 数据 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 本月数据</div>
+        <div class="sec-more">近30天</div>
+    </div>
+    <div class="stats-row">
+        <div class="stat-card"><div class="num">176</div><div class="lbl">订单数</div></div>
+        <div class="stat-card"><div class="num">4.2%</div><div class="lbl">转化率</div></div>
+        <div class="stat-card"><div class="num">98.6%</div><div class="lbl">好评率</div></div>
+    </div>
+</div>
+
+<!-- 平台 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🏪 店铺矩阵</div>
+        <div class="sec-more">3个平台</div>
+    </div>
+    <div class="plat-item">
+        <div class="plat-icon">📦</div>
+        <div class="plat-info"><div class="plat-name">闲鱼</div><div class="plat-desc">二手+新品 · 主攻流量</div></div>
+        <div class="plat-gmv">¥12,400</div>
+    </div>
+    <div class="plat-item">
+        <div class="plat-icon">🏬</div>
+        <div class="plat-info"><div class="plat-name">淘宝</div><div class="plat-desc">品牌店 · 高客单</div></div>
+        <div class="plat-gmv">¥15,800</div>
+    </div>
+    <div class="plat-item">
+        <div class="plat-icon">🎵</div>
+        <div class="plat-info"><div class="plat-name">抖音小店</div><div class="plat-desc">直播+短视频带货</div></div>
+        <div class="plat-gmv">¥4,600</div>
+    </div>
+</div>
+
+<!-- 订单 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📋 今日订单</div>
+        <div class="sec-more">今日 6 单</div>
+    </div>
+    <div class="order-item">
+        <div class="order-icon">📦</div>
+        <div class="order-info"><div class="order-name">夏季薄款卫衣 · 灰色M</div><div class="order-desc">买家：星星** · 14:32</div></div>
+        <div class="order-status s1">待发货</div>
+    </div>
+    <div class="order-item">
+        <div class="order-icon">🧢</div>
+        <div class="order-info"><div class="order-name">渔夫帽 · 卡其色</div><div class="order-desc">买家：小鹿** · 13:05</div></div>
+        <div class="order-status s1">待发货</div>
+    </div>
+    <div class="order-item">
+        <div class="order-icon">👟</div>
+        <div class="order-info"><div class="order-name">运动鞋 · 白色42码</div><div class="order-desc">买家：阿杰** · 昨天</div></div>
+        <div class="order-status s2">已发出</div>
+    </div>
+    <div class="order-item">
+        <div class="order-icon">🎒</div>
+        <div class="order-info"><div class="order-name">通勤双肩包</div><div class="order-desc">买家：林** · 已签收</div></div>
+        <div class="order-status s3">已完成</div>
+    </div>
+</div>
+
+<!-- 库存 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 库存预警</div>
+        <div class="sec-more">2款需补货</div>
+    </div>
+    <div class="card">
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">夏季薄款卫衣</span><span class="stock-num"><span class="low">剩 8件</span> / 100件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:8%;background:linear-gradient(90deg,var(--main),var(--sub))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">渔夫帽</span><span class="stock-num"><span class="low">剩 5件</span> / 80件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:6%;background:linear-gradient(90deg,var(--main),var(--sub))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">运动鞋</span><span class="stock-num">剩 32件 / 100件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:32%;background:linear-gradient(90deg,#00D9A3,#00F5B8)"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 售后 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🛟 售后处理</div>
+        <div class="sec-more">待处理 2 条</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="after-item">
+            <div class="after-emoji">📦</div>
+            <div class="after-info"><div class="after-name">卫衣尺寸不合适 · 申请换货</div><div class="after-desc">订单 #20260801 · 30分钟内回复</div></div>
+            <div class="after-tag t1">待处理</div>
+        </div>
+        <div class="after-item">
+            <div class="after-emoji">💬</div>
+            <div class="after-info"><div class="after-name">咨询发货时间</div><div class="after-desc">订单 #20260731 · 已回复</div></div>
+            <div class="after-tag t2">已处理</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    电商卖家工作台 · AI工作台定制场景之一<br>
+    <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
+    <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
+</div>
+
+</body>
+</html>
