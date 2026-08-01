@@ -277,6 +277,97 @@ body::before {
 }
 .blueprint-note strong { color: var(--blue); font-weight: 700; }
 
+/* ========== 增长里程碑 ========== */
+.milestone-item {
+    display: flex; gap: 16px; margin-bottom: 24px;
+    position: relative;
+}
+.milestone-item:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 17px; top: 42px; bottom: -12px;
+    width: 2px; background: var(--border);
+}
+.milestone-year {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900; color: #fff; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.milestone-item.m1 .milestone-year { background: linear-gradient(135deg, var(--orange), #FF8E53); }
+.milestone-item.m2 .milestone-year { background: linear-gradient(135deg, var(--purple), var(--blue)); }
+.milestone-item.m3 .milestone-year { background: linear-gradient(135deg, var(--green), var(--cyan)); }
+.milestone-content { flex: 1; padding-top: 2px; }
+.milestone-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.milestone-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+.milestone-desc strong { color: var(--text); font-weight: 700; }
+
+/* ========== 创始人 ========== */
+.founder-card {
+    background: var(--card); border-radius: 20px;
+    padding: 24px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    margin-bottom: 14px;
+}
+.founder-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow));
+}
+.founder-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.founder-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(255,107,26,0.3);
+}
+.founder-name { font-size: 17px; font-weight: 900; }
+.founder-role { font-size: 11px; color: var(--text-mute); margin-top: 2px; }
+.founder-desc { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+.founder-desc strong { color: var(--text); font-weight: 600; }
+.founder-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; margin-top: 16px;
+}
+.founder-stat {
+    background: var(--card2); border-radius: 12px;
+    padding: 12px 6px; text-align: center;
+    border: 1px solid var(--border);
+}
+.founder-stat-num {
+    font-size: 16px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.founder-stat-lbl { font-size: 9px; color: var(--text-mute); margin-top: 3px; }
+
+/* ========== 估值逻辑 ========== */
+.valuation-card {
+    background: linear-gradient(135deg, var(--card), var(--card2));
+    border-radius: 20px; padding: 28px 22px;
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+    position: relative; overflow: hidden;
+}
+.valuation-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+}
+.valuation-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+.valuation-row:last-child { border-bottom: none; }
+.valuation-label { color: var(--text-dim); }
+.valuation-value { font-weight: 800; color: var(--text); }
+.valuation-value.accent { color: var(--green); font-size: 15px; }
+.valuation-note {
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    font-size: 12px; color: var(--text-mute); line-height: 1.7;
+}
+.valuation-note strong { color: var(--green); }
+
 /* ========== 合伙人 ========== */
 .partner-intro {
     background: var(--card); border-radius: 20px;
@@ -666,6 +757,52 @@ body::before {
     </div>
 </section>
 
+<!-- ========== 增长里程碑 ========== -->
+<section class="section" id="milestone">
+    <div class="wrap">
+        <div class="section-eyebrow green fade-in">GROWTH PATH</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">三年增长路径</span><br><span class="blue-gradient">每一步都算数</span></h2>
+        <p class="section-sub fade-in">
+            不画大饼，用<strong style="color:var(--text)">可验证的里程碑</strong>说话<br>
+            每一年的目标都有清晰的收入支撑
+        </p>
+
+        <div class="milestone-item m1 fade-in">
+            <div class="milestone-year">26</div>
+            <div class="milestone-content">
+                <div class="milestone-title">2026 · 打基础跑闭环</div>
+                <div class="milestone-desc">
+                    7条业务线跑通，<strong>月营收目标5万</strong><br>
+                    招满10个共创伙伴，验证模型可复制<br>
+                    服务40+客户，沉淀真实案例库
+                </div>
+            </div>
+        </div>
+        <div class="milestone-item m2 fade-in">
+            <div class="milestone-year">27</div>
+            <div class="milestone-content">
+                <div class="milestone-title">2027 · 建网络做平台</div>
+                <div class="milestone-desc">
+                    共创网络扩至100人，<strong>月营收目标30万</strong><br>
+                    AI能力市场上线，平台抽佣跑通<br>
+                    孵化3个AI项目，行业方案标准化
+                </div>
+            </div>
+        </div>
+        <div class="milestone-item m3 fade-in">
+            <div class="milestone-year">28</div>
+            <div class="milestone-content">
+                <div class="milestone-title">2028 · 成生态树品牌</div>
+                <div class="milestone-desc">
+                    千人创作者联盟，<strong>年营收目标1000万</strong><br>
+                    AI生态平台成型，项目投资产生回报<br>
+                    成为AI一人公司领域<strong>第一品牌</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ========== 合伙人 ========== -->
 <section class="section" id="partner">
     <div class="wrap">
@@ -741,6 +878,82 @@ body::before {
         <div class="future-foot fade-in">
             你有项目想法？<strong>也可以拿进生态一起孵化</strong><br>
             出系统、出方法、出资源、出人，一起跑通
+        </div>
+    </div>
+</section>
+
+<!-- ========== 创始人 ========== -->
+<section class="section" id="founder">
+    <div class="wrap">
+        <div class="section-eyebrow orange fade-in">FOUNDER</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">这个生态</span><br><span class="gradient">谁在操盘</span></h2>
+        <p class="section-sub fade-in">投资人是投事，更是投人</p>
+
+        <div class="founder-card fade-in">
+            <div class="founder-head">
+                <div class="founder-avatar">👤</div>
+                <div>
+                    <div class="founder-name">时铭</div>
+                    <div class="founder-role">Crazy Friday 创始人 · AI一人公司实践者</div>
+                </div>
+            </div>
+            <div class="founder-desc">
+                不是PPT创业者。自己用AI<strong>真实跑通了6条业务线</strong>，<br>
+                从内容获客到交付变现，整条链路一个人走完。<br><br>
+                因为踩过所有的坑，所以知道哪里是坑。<br>
+                因为自己真的在赚钱，所以这套系统<strong>是真的能用的</strong>。
+            </div>
+            <div class="founder-stats">
+                <div class="founder-stat">
+                    <div class="founder-stat-num">6+</div>
+                    <div class="founder-stat-lbl">业务线实操</div>
+                </div>
+                <div class="founder-stat">
+                    <div class="founder-stat-num">8</div>
+                    <div class="founder-stat-lbl">平台运营</div>
+                </div>
+                <div class="founder-stat">
+                    <div class="founder-stat-num">1-5天</div>
+                    <div class="founder-stat-lbl">交付能力</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 估值逻辑 ========== -->
+<section class="section" id="valuation" style="padding-top:0;">
+    <div class="wrap">
+        <div class="section-eyebrow green fade-in">VALUATION</div>
+        <h2 class="section-h fade-in"><span style="color:#fff">估值逻辑</span><br><span class="blue-gradient">3000万的路径</span></h2>
+        <p class="section-sub fade-in">估值不是拍脑袋，是算得出来的</p>
+
+        <div class="valuation-card fade-in">
+            <div class="valuation-row">
+                <span class="valuation-label">2026 · 当前阶段</span>
+                <span class="valuation-value">月营收 5万 → 年化 60万</span>
+            </div>
+            <div class="valuation-row">
+                <span class="valuation-label">2027 · 平台化后</span>
+                <span class="valuation-value">月营收 30万 → 年化 360万</span>
+            </div>
+            <div class="valuation-row">
+                <span class="valuation-label">2028 · 生态成型</span>
+                <span class="valuation-value accent">年营收 1000万</span>
+            </div>
+            <div class="valuation-row">
+                <span class="valuation-label">估值参考</span>
+                <span class="valuation-value accent">AI平台 8-15x PS</span>
+            </div>
+            <div class="valuation-note">
+                <strong>3000万估值的支撑：</strong><br>
+                ① 年营收360万 × 8x PS ≈ 2880万<br>
+                ② 100个共创 × 平均月分成 ≈ 网络价值叠加<br>
+                ③ 8大平台模块的<strong>平台溢价</strong><br>
+                ④ 创作者联盟的<strong>网络效应</strong><br><br>
+                现在投的是<strong>3000万的起点</strong>，<br>
+                不是3000万本身。
+            </div>
         </div>
     </div>
 </section>
