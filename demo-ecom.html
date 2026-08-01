@@ -212,11 +212,117 @@ body::before {
     font-weight: 700;
 }
 
+
+/* ===== 左侧折叠导航 ===== */
+.sidebar-overlay {
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 99;
+    width: 78vw; max-width: 300px;
+    background: var(--card); border-right: 1px solid var(--border);
+    transform: translateX(-105%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-head {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.sidebar-brand { flex: 1; }
+.sidebar-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.sidebar-brand-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.sidebar-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.sidebar-nav-label {
+    font-size: 10px; color: var(--text-mute); letter-spacing: 1px;
+    padding: 8px 18px 6px; text-transform: uppercase;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    color: var(--text-dim); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar-item:active { background: var(--card2); color: var(--main); border-left-color: var(--main); }
+.sidebar-foot {
+    padding: 14px 18px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-btn {
+    display: block; padding: 11px;
+    background: #fff; color: #000;
+    border-radius: 10px; font-size: 12px; font-weight: 700;
+    text-align: center; text-decoration: none;
+}
+.sidebar-btn-outline {
+    display: block; padding: 10px;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 12px; font-weight: 600; text-align: center; text-decoration: none;
+}
+.menu-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
 </style>
 </head>
 <body>
+<!-- 遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <div class="sidebar-logo">🛒</div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">电商运营工作台</div>
+            <div class="sidebar-brand-sub">Crazy Friday AI工作台</div>
+        </div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
+    </div>
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-label">📂 功能板块</div>
+        <a class="sidebar-item" href="#sec-data">📊 本月数据</a>
+        <a class="sidebar-item" href="#sec-account">🏪 全网店铺矩阵 · 9平台</a>
+        <a class="sidebar-item" href="#sec-order">📋 今日订单 · 28单</a>
+        <a class="sidebar-item" href="#sec-service">💬 客服中心 · 多店聚合</a>
+        <a class="sidebar-item" href="#sec-stock">📦 库存预警 · 多仓</a>
+        <a class="sidebar-item" href="#sec-marketing">🎯 营销活动</a>
+        <a class="sidebar-item" href="#sec-client">⭐ 客户评价</a>
+    </div>
+    <div class="sidebar-foot">
+        <a class="sidebar-btn" href="demo-gallery.html">🎨 全部场景</a>
+        <a class="sidebar-btn-outline" href="https://shiming-ai.github.io/shiming-workbench/landing.html">🛠️ 定制同款</a>
+    </div>
+</div>
+
 
 <div class="topbar">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
     <div class="topbar-logo">
         <div class="mark">¥</div>
         <span>电商运营工作台</span>
@@ -256,7 +362,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-data">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>📊 本月数据</div>
         <div class="sec-more">近30天</div>
@@ -269,7 +375,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-account">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>🏪 全网店铺矩阵 · 9平台</div>
         <div class="sec-more">8家运营中</div>
@@ -323,7 +429,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-order">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>📋 今日订单 · 28单</div>
         <div class="sec-more">5家店铺</div>
@@ -370,7 +476,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-service">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>💬 客服中心 · 多店聚合</div>
         <div class="sec-more">3个店铺同时</div>
@@ -386,7 +492,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-stock">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>📦 库存预警 · 多仓</div>
         <div class="sec-more">3款需补</div>
@@ -411,7 +517,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-marketing">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>🎯 营销活动</div>
         <div class="sec-more">2个进行中</div>
@@ -440,7 +546,7 @@ body::before {
     </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-client">
     <div class="sec-header">
         <div class="sec-title"><span class="dot"></span>⭐ 客户评价</div>
         <div class="sec-more">好评率 98.6%</div>
@@ -471,6 +577,22 @@ body::before {
     <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">想要同款？定制你的专属工作台 →</a><br>
     <span style="font-size:10px">© 2026 Crazy Friday 疯狂星期五</span>
 </div>
+
+
+<script>
+// 侧边栏
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => { closeSidebar(); });
+});
+</script>
 
 </body>
 </html>
