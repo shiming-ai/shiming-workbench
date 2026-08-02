@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>疯狂星期五 · AI一人公司母系统路线图</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --bg: #050505;
+    --card: #0d0d12;
+    --card2: #13131a;
+    --border: #1f1f2e;
+    --text: #e8e8f0;
+    --text-dim: #8a8aa3;
+    --text-mute: #55556b;
+    --orange: #FF6B1A;
+    --orange-light: #FF9F43;
+    --purple: #A855F7;
+    --blue: #3B82F6;
+    --green: #22C55E;
+    --yellow: #FACC15;
+    --red: #EF4444;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* Hero区 */
+.hero {
+    background: radial-gradient(ellipse at top right, rgba(168,85,247,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(255,107,26,0.1) 0%, transparent 50%);
+    padding: 32px 16px 24px;
+    text-align: center;
+    position: relative;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+.hero-badge .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+.hero-title {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #fff 30%, var(--orange) 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-title span { color: var(--orange); }
+.hero-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+}
+.hero-slogan {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-mute);
+}
+.hero-slogan strong {
+    color: var(--orange);
+    font-weight: 600;
+}
+
+/* 当前阶段提示 */
+.current-stage {
+    background: linear-gradient(135deg, rgba(255,107,26,0.15), rgba(168,85,247,0.1));
+    border: 1px solid rgba(255,107,26,0.3);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px;
+}
+.stage-label {
+    font-size: 11px;
+    color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.stage-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.stage-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+.stage-focus {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+.stage-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: rgba(255,107,26,0.15);
+    color: var(--orange);
+    border-radius: 6px;
+}
+
+/* Section通用 */
+.section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin: 0 16px 16px;
+    border: 1px solid var(--border);
+}
+.sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.sec-title {
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sec-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+
+/* 品牌定位 */
+.position-card {
+    background: var(--card2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+.position-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.position-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+.position-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.flow-item {
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+    padding: 10px 4px;
+    background: var(--card);
+    border-radius: 10px;
+    font-size: 11px;
+}
+.flow-item .icon { font-size: 18px; display: block; margin-bottom: 4px; }
+.flow-item .txt { color: var(--text-dim); }
+.flow-arrow { color: var(--text-mute); font-size: 14px; }
+
+/* 六大工坊 */
+.workshops {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.workshop {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    position: relative;
+    overflow: hidden;
+}
+.workshop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--purple));
+    opacity: 0.6;
+}
+.workshop-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background: rgba(255,107,26,0.1);
+}
+.workshop-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.workshop-desc { font-size: 10px; color: var(--text-mute); line-height: 1.4; }
+.workshop-status {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-mute);
+}
+.workshop-status.active {
+    background: rgba(34,197,94,0.1);
+    color: var(--green);
+}
+.workshop-status.planned {
+    background: rgba(255,107,26,0.1);
+    color: var(--orange);
+}
+
+/* 孵化流程 */
+.process-flow {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 10px 0;
+}
+.process-flow::before {
+    content: '';
+    position: absolute;
+    top: 26px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+}
+.process-step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    width: 14%;
+}
+.step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-mute);
+}
+.process-step.active .step-num {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+}
+.step-name { font-size: 9px; color: var(--text-dim); }
+
+/* 三年路线图 */
+.roadmap {
+    position: relative;
+}
+.roadmap-item {
+    display: flex;
+    margin-bottom: 16px;
+    position: relative;
+}
+.roadmap-item:last-child { margin-bottom: 0; }
+.roadmap-time {
+    width: 80px;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--text-mute);
+    padding-top: 4px;
+}
+.roadmap-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--card2);
+    border: 2px solid var(--border);
+    margin-right: 12px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+.roadmap-item.active .roadmap-dot {
+    background: var(--orange);
+    border-color: var(--orange);
+    box-shadow: 0 0 10px rgba(255,107,26,0.4);
+}
+.roadmap-line {
+    position: absolute;
+    left: 90px;
+    top: 10px;
+    bottom: -16px;
+    width: 2px;
+    background: var(--border);
+}
+.roadmap-item.active .roadmap-line { background: linear-gradient(var(--orange), var(--border)); }
+.roadmap-content {
+    flex: 1;
+    background: var(--card2);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+}
+.roadmap-item.active .roadmap-content {
+    border-color: rgba(255,107,26,0.3);
+}
+.roadmap-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.roadmap-title span { font-size: 10px; font-weight: 400; color: var(--text-mute); margin-left: 6px; }
+.roadmap-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; margin-bottom: 8px; }
+.roadmap-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.roadmap-tag {
+    font-size: 9px;
+    padding: 2px 6px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-mute);
+    border-radius: 4px;
+}
+
+/* 商业模式 */
+.revenue-model {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+.revenue-item {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+.revenue-icon { font-size: 20px; margin-bottom: 6px; }
+.revenue-name { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.revenue-desc { font-size: 9px; color: var(--text-mute); }
+
+/* 底部固定按钮 */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(5,5,5,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+}
+.btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    color: #fff;
+}
+.btn-secondary {
+    background: var(--card2);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+/* 返回工作台提示 */
+.back-tip {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-mute);
+    font-size: 11px;
+}
+.back-tip a {
+    color: var(--orange);
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-badge">
+        <span class="dot"></span>
+        AI × CREATOR
+    </div>
+    <div class="hero-title">时铭AI一人公司母系统</div>
+    <div class="hero-sub">Crazy Friday · 从0到1，打造全球领先的AI一人公司操作系统</div>
+    <div class="hero-slogan">一个人 + AI = 一家公司<br><strong>让AI成为你的员工，让系统放大你的能力</strong></div>
+</div>
+
+<!-- 当前阶段 -->
+<div class="current-stage">
+    <div class="stage-label">当前阶段 · DAY 5</div>
+    <div class="stage-title">MVP验证期：先活下来</div>
+    <div class="stage-desc">
+        你现在的任务是验证"AI开发服务"和"闲鱼AI服务"能不能快速变现。不要开发大系统，先赚到第一单，再谈生态。
+    </div>
+    <div class="stage-focus">
+        <span class="stage-tag">闲鱼5产品上架</span>
+        <span class="stage-tag">知乎首篇文章</span>
+        <span class="stage-tag">作品集整理</span>
+        <span class="stage-tag">第一单成交</span>
+    </div>
+</div>
+
+<!-- 品牌定位 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">🎯</div>品牌定位</div>
+    </div>
+    <div class="position-card">
+        <div class="position-title">一站式 AI 创业基础设施</div>
+        <div class="position-sub">让每个人轻松创造价值，从想法到收入的完整闭环</div>
+        <div class="position-flow">
+            <div class="flow-item"><span class="icon">💡</span><span class="txt">发现机会</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-item"><span class="icon">📚</span><span class="txt">学习方法</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-item"><span class="icon">🤖</span><span class="txt">调用AI</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-item"><span class="icon">🛠</span><span class="txt">开发产品</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-item"><span class="icon">💰</span><span class="txt">获取收入</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- 六大工坊 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">🏭</div>六大核心工坊</div>
+        <div class="sec-more">构建一人公司完整运营体系</div>
+    </div>
+    <div class="workshops">
+        <div class="workshop">
+            <div class="workshop-icon">🧠</div>
+            <div class="workshop-title">超脑工坊</div>
+            <div class="workshop-desc">AI员工调度中心，智能工作流与自动化执行</div>
+            <span class="workshop-status planned">规划中</span>
+        </div>
+        <div class="workshop">
+            <div class="workshop-icon">📦</div>
+            <div class="workshop-title">OPC工坊</div>
+            <div class="workshop-desc">项目发现与孵化中心，找到可复制的项目</div>
+            <span class="workshop-status planned">规划中</span>
+        </div>
+        <div class="workshop">
+            <div class="workshop-icon">🤝</div>
+            <div class="workshop-title">接单工坊</div>
+            <div class="workshop-desc">需求对接与交付中心，用AI技能赚钱</div>
+            <span class="workshop-status active">MVP中</span>
+        </div>
+        <div class="workshop">
+            <div class="workshop-icon">🛒</div>
+            <div class="workshop-title">AI应用市场</div>
+            <div class="workshop-desc">工具分发与商业化，优秀AI应用流通</div>
+            <span class="workshop-status planned">规划中</span>
+        </div>
+        <div class="workshop">
+            <div class="workshop-icon">📖</div>
+            <div class="workshop-title">AI知识库</div>
+            <div class="workshop-desc">知识付费与训练体系，你的24小时AI团队</div>
+            <span class="workshop-status planned">规划中</span>
+        </div>
+        <div class="workshop">
+            <div class="workshop-icon">🏪</div>
+            <div class="workshop-title">商业服务后台</div>
+            <div class="workshop-desc">电商与企业服务支撑，稳定现金流</div>
+            <span class="workshop-status active">已具备</span>
+        </div>
+    </div>
+</div>
+
+<!-- AI项目孵化全流程 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">🚀</div>AI项目孵化全流程</div>
+    </div>
+    <div class="process-flow">
+        <div class="process-step active">
+            <div class="step-num">01</div>
+            <div class="step-name">发现项目</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">02</div>
+            <div class="step-name">测试验证</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">03</div>
+            <div class="step-name">项目孵化</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">04</div>
+            <div class="step-name">商业变现</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">05</div>
+            <div class="step-name">知识沉淀</div>
+        </div>
+    </div>
+    <div style="margin-top:12px; padding:12px; background:var(--card2); border-radius:10px; font-size:11px; color:var(--text-dim); line-height:1.6">
+        <strong style="color:var(--orange)">每一次测试，都是在创造未来的一个新项目。</strong><br>
+        你当前处于 <strong>01 发现项目</strong> 阶段：用AI开发服务和闲鱼服务测试市场需求。
+    </div>
+</div>
+
+<!-- 三年路线图 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">🗺</div>三年发展路线图</div>
+    </div>
+    <div class="roadmap">
+        <div class="roadmap-item active">
+            <div class="roadmap-time">2026 Q2-Q4</div>
+            <div class="roadmap-dot"></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-content">
+                <div class="roadmap-title">产品打磨期 <span>当前</span></div>
+                <div class="roadmap-desc">完成核心产品搭建，验证商业模式，种子用户1000+，月收入10万+</div>
+                <div class="roadmap-tags">
+                    <span class="roadmap-tag">MVP核心功能</span>
+                    <span class="roadmap-tag">内部测试</span>
+                    <span class="roadmap-tag">收入模式验证</span>
+                </div>
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">2026 Q4</div>
+            <div class="roadmap-dot"></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-content">
+                <div class="roadmap-title">生态建设期</div>
+                <div class="roadmap-desc">完善生态矩阵，提升用户规模，项目库1000+，月收入10-50万</div>
+                <div class="roadmap-tags">
+                    <span class="roadmap-tag">用户突破1万+</span>
+                    <span class="roadmap-tag">AI应用市场</span>
+                    <span class="roadmap-tag">AI员工系统</span>
+                </div>
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">2027 Q1-Q2</div>
+            <div class="roadmap-dot"></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-content">
+                <div class="roadmap-title">规模增长期</div>
+                <div class="roadmap-desc">扩大市场占有率，提升商业化能力，用户10万+，月收入100万+</div>
+                <div class="roadmap-tags">
+                    <span class="roadmap-tag">开放API</span>
+                    <span class="roadmap-tag">企业客户500+</span>
+                    <span class="roadmap-tag">数据分析2.0</span>
+                </div>
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">2027 Q3-Q4</div>
+            <div class="roadmap-dot"></div>
+            <div class="roadmap-line"></div>
+            <div class="roadmap-content">
+                <div class="roadmap-title">生态扩张期</div>
+                <div class="roadmap-desc">构建开发者生态，拓展企业客户，月收入500万+</div>
+                <div class="roadmap-tags">
+                    <span class="roadmap-tag">开发者1万+</span>
+                    <span class="roadmap-tag">插件市场</span>
+                    <span class="roadmap-tag">全球化支持</span>
+                </div>
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">2028+</div>
+            <div class="roadmap-dot"></div>
+            <div class="roadmap-content">
+                <div class="roadmap-title">平台领先期</div>
+                <div class="roadmap-desc">成为AI一人公司领域全球领先平台，用户100万+，年收入1亿+</div>
+                <div class="roadmap-tags">
+                    <span class="roadmap-tag">开放平台</span>
+                    <span class="roadmap-tag">企业版上线</span>
+                    <span class="roadmap-tag">AI Agent生态</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 商业模式 -->
+<div class="section">
+    <div class="sec-header">
+        <div class="sec-title"><div class="sec-icon">💎</div>商业模式</div>
+        <div class="sec-more">多元化收入结构</div>
+    </div>
+    <div class="revenue-model">
+        <div class="revenue-item"><div class="revenue-icon">👑</div><div class="revenue-name">会员订阅</div><div class="revenue-desc">199/365课程包</div></div>
+        <div class="revenue-item"><div class="revenue-icon">🛠</div><div class="revenue-name">项目佣金</div><div class="revenue-desc">接单服务抽成</div></div>
+        <div class="revenue-item"><div class="revenue-icon">🏢</div><div class="revenue-name">企业定制</div><div class="revenue-desc">高客单开发</div></div>
+        <div class="revenue-item"><div class="revenue-icon">🛒</div><div class="revenue-name">工具商城</div><div class="revenue-desc">模板/工具销售</div></div>
+        <div class="revenue-item"><div class="revenue-icon">🤝</div><div class="revenue-name">品牌授权</div><div class="revenue-desc">合作分成</div></div>
+        <div class="revenue-item"><div class="revenue-icon">📢</div><div class="revenue-name">广告合作</div><div class="revenue-desc">流量变现</div></div>
+    </div>
+</div>
+
+<div class="back-tip">
+    这是你的长期愿景。现在请回到工作台，完成今天的任务。<br>
+    <a href="index.html">← 返回作战工作台</a>
+</div>
+
+<div class="bottom-bar">
+    <button class="btn btn-secondary" onclick="location.href='index.html'">返回工作台</button>
+    <button class="btn btn-primary" onclick="copyVision()">复制愿景文案</button>
+</div>
+
+<script>
+function copyVision() {
+    const text = `Crazy Friday · AI一人公司母系统\n让AI成为你的员工，让系统放大你的能力。\n一个人 + AI = 一家公司。`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => alert('已复制愿景文案'));
+    } else {
+        alert(text);
+    }
+}
+</script>
+
+</body>
+</html>
