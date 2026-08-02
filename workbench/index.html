@@ -1118,11 +1118,11 @@ body {
 <div class="hero">
     <div class="hero-top">
         <div>
-    <div class="hero-title"><span class="name">时铭</span> · 工作台</div>
-    <div class="hero-sub">AI一人公司母系统 · MVP验证中 · Day <span id="heroDay">5</span></div>
+            <div class="hero-title"><span class="name">时铭</span> · 工作台</div>
+            <div class="hero-sub">AI一人公司母系统 · Day <span id="heroDay">1</span> / 300</div>
         </div>
         <div class="hero-day">
-            <div class="day-num" id="dayCount">5</div>
+            <div class="day-num" id="dayCount">1</div>
             <div class="day-label">DAY</div>
         </div>
     </div>
@@ -2524,7 +2524,7 @@ body {
     <div class="fab-mini income" onclick="quickMenuAction('income')"><div class="fm-icon">💰</div>记收入</div>
     <div class="fab-mini expense" onclick="quickMenuAction('expense')"><div class="fm-icon">📉</div>记支出</div>
     <div class="fab-mini task" onclick="quickMenuAction('task')"><div class="fm-icon">✅</div>加任务</div>
-     <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
+    <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
 </div>
 
 <!-- ===== 页面7: AI智能体中心 ===== -->
@@ -2677,7 +2677,7 @@ body {
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-logo"><span>时铭</span> · AI一人公司</div>
-        <div class="sidebar-sub">MVP验证中 · Day 5 / 300</div>
+        <div class="sidebar-sub" id="sidebarSub">AI一人公司母系统 · Day 1 / 300</div>
     </div>
 
     <div class="sidebar-section">
@@ -2835,6 +2835,8 @@ const dayDiff = Math.floor((new Date() - START_DATE) / 86400000) + 1;
 document.getElementById('dayCount').textContent = Math.max(1, dayDiff);
 document.getElementById('heroDay').textContent = Math.max(1, dayDiff);
 document.getElementById('navDayCount').textContent = 'Day ' + Math.max(1, dayDiff);
+const sidebarSubEl = document.getElementById('sidebarSub');
+if (sidebarSubEl) sidebarSubEl.textContent = 'AI一人公司母系统 · Day ' + Math.max(1, dayDiff) + ' / 300';
 
 // ========== AI 智能体管理 ==========
 const AGENTS_KEY = 'cf_agents';
@@ -4131,6 +4133,18 @@ function switchPage(page, el) {
     document.getElementById('page-' + page).classList.remove('hidden');
     document.querySelectorAll('.sidebar-item').forEach(n => n.classList.remove('active'));
     if (el) el.classList.add('active');
+    // 更新顶部导航标题显示当前板块
+    const navTitle = document.querySelector('.top-nav-title');
+    if (navTitle) {
+        const pageNames = {
+            today: '首页', money: '财务管理', crm: '客户订单', channel: '渠道数据',
+            content: '内容矩阵', study: '学习复盘', service: 'AI定制服务',
+            website: '企业官网', opportunity: 'AI变现机会', control: '母系统管控台',
+            incubation: '项目孵化', aiknowledge: 'AI营知识库', ecom: '电商服务',
+            more: '更多工具', agents: '智能体中心', skills: '技能库', share: '授权管理'
+        };
+        navTitle.innerHTML = '<span>时铭</span> · ' + (pageNames[page] || '工作台');
+    }
     window.scrollTo(0, 0);
     closeSidebar();
 }
