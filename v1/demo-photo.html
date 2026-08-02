@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 摄影作品版 · 作品集/修图进度/发布排期/约拍档期">
+<title>摄影作品工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #A66BFF; --sub: #FF6B9D; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 8px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 7px 13px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(166,107,255,0.3);
+}
+
+.hero {
+    padding: 30px 0 24px;
+    background:
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(166,107,255,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(255,107,157,0.08), transparent);
+    text-align: center;
+}
+.hero-fans {
+    font-size: 44px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-fans small { font-size: 18px; font-weight: 700; }
+.hero-text { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 8px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.hero-badge {
+    font-size: 11px; padding: 5px 12px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 20px; color: var(--text-dim);
+}
+
+.section { padding: 18px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sec-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.sec-title .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--main);
+    box-shadow: 0 0 8px var(--main);
+}
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat-card {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); padding: 14px; text-align: center;
+}
+.stat-card .num {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 作品墙 */
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.work-cell {
+    aspect-ratio: 1; border-radius: 12px;
+    background: var(--card2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; position: relative; overflow: hidden;
+}
+.work-cell .wtag {
+    position: absolute; top: 6px; left: 6px;
+    font-size: 8px; padding: 2px 6px; border-radius: 8px;
+    font-weight: 700;
+}
+.wtag.w1 { background: rgba(0,217,163,0.15); color: var(--green); }
+.wtag.w2 { background: rgba(255,107,157,0.15); color: var(--sub); }
+
+/* 修图进度 */
+.edit-item { margin-bottom: 14px; }
+.edit-item:last-child { margin-bottom: 0; }
+.edit-head { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+.edit-name { font-weight: 700; color: #fff; }
+.edit-pct { color: var(--main); font-weight: 700; }
+.progress-bar { height: 8px; background: var(--card2); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--main), var(--sub)); }
+
+/* 发布排期 */
+.post-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px 14px;
+    margin-bottom: 8px;
+}
+.post-date {
+    width: 44px; flex-shrink: 0; text-align: center;
+    background: var(--card2); border-radius: 10px; padding: 6px 0;
+}
+.post-date .d { font-size: 16px; font-weight: 900; color: var(--main); }
+.post-date .m { font-size: 9px; color: var(--text-mute); }
+.post-info { flex: 1; }
+.post-name { font-size: 13px; font-weight: 700; color: #fff; }
+.post-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.post-status { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.post-status.done { color: var(--green); }
+.post-status.todo { color: var(--main); }
+
+/* 约拍档期 */
+.booking-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.booking-item:last-child { border-bottom: none; }
+.booking-date { font-size: 13px; font-weight: 800; color: #fff; width: 70px; flex-shrink: 0; }
+.booking-info { flex: 1; }
+.booking-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.booking-type { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.booking-price { font-size: 12px; font-weight: 800; color: var(--main); }
+
+.footer {
+    text-align: center; padding: 30px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+
+/* ===== 左侧折叠导航 ===== */
+.sidebar-overlay {
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 99;
+    width: 78vw; max-width: 300px;
+    background: var(--card); border-right: 1px solid var(--border);
+    transform: translateX(-105%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-head {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.sidebar-brand { flex: 1; }
+.sidebar-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.sidebar-brand-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.sidebar-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.sidebar-nav-label {
+    font-size: 10px; color: var(--text-mute); letter-spacing: 1px;
+    padding: 8px 18px 6px; text-transform: uppercase;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    color: var(--text-dim); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar-item:active { background: var(--card2); color: var(--main); border-left-color: var(--main); }
+.sidebar-foot {
+    padding: 14px 18px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-btn {
+    display: block; padding: 11px;
+    background: #fff; color: #000;
+    border-radius: 10px; font-size: 12px; font-weight: 700;
+    text-align: center; text-decoration: none;
+}
+.sidebar-btn-outline {
+    display: block; padding: 10px;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 12px; font-weight: 600; text-align: center; text-decoration: none;
+}
+.menu-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- 遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <div class="sidebar-logo">📷</div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">摄影作品工作台</div>
+            <div class="sidebar-brand-sub">Crazy Friday AI工作台</div>
+        </div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
+    </div>
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-label">📂 功能板块</div>
+        <a class="sidebar-item" href="#sec-data">📊 本月数据</a>
+        <a class="sidebar-item" href="#sec-works">🖼️ 近期作品</a>
+        <a class="sidebar-item" href="#sec-edit">🎨 修图进度</a>
+        <a class="sidebar-item" href="#sec-schedule">📤 发布排期</a>
+        <a class="sidebar-item" href="#sec-booking">📅 约拍档期</a>
+    </div>
+    <div class="sidebar-foot">
+        <a class="sidebar-btn" href="demo-gallery.html">🎨 全部场景</a>
+        <a class="sidebar-btn-outline" href="https://shiming-ai.github.io/shiming-workbench/landing.html">🛠️ 定制同款</a>
+    </div>
+</div>
+
+
+<div class="topbar">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
+    <div class="topbar-logo">
+        <div class="mark">AI</div>
+        <span>摄影作品工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link" style="margin-right:6px">🎨 全部场景</a><a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="topbar-link">定制同款 →</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱记录</a>
+        <a href="demo-study.html" class="scene-tab">📚 考研学习</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身减脂</a>
+        <a href="demo-photo.html" class="scene-tab active">📷 摄影作品</a>
+        <a href="demo-english.html" class="scene-tab">🌐 英语学习</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:40px">📷</div>
+    <div class="hero-fans">8,642<small> 粉丝</small></div>
+    <div class="hero-text">小红书摄影博主</div>
+    <div class="hero-sub">本月涨粉 1,280 · 发布 12 组作品 · 目标 1万粉</div>
+    <div class="hero-badges">
+        <span class="hero-badge">🖼️ 作品 236组</span>
+        <span class="hero-badge">📸 约拍 3单</span>
+    </div>
+</div>
+
+<!-- 数据 -->
+<div class="section" id="sec-data">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 本月数据</div>
+        <div class="sec-more">近30天</div>
+    </div>
+    <div class="stats-row">
+        <div class="stat-card"><div class="num">+1,280</div><div class="lbl">涨粉</div></div>
+        <div class="stat-card"><div class="num">12</div><div class="lbl">发布作品</div></div>
+        <div class="stat-card"><div class="num">¥1,680</div><div class="lbl">约拍收入</div></div>
+    </div>
+</div>
+
+<!-- 近期作品 -->
+<div class="section" id="sec-works">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🖼️ 近期作品</div>
+        <div class="sec-more">点击看详情</div>
+    </div>
+    <div class="work-grid">
+        <div class="work-cell">🌆<span class="wtag w1">爆款</span></div>
+        <div class="work-cell">🌉</div>
+        <div class="work-cell">🏮</div>
+        <div class="work-cell">🌊<span class="wtag w1">爆款</span></div>
+        <div class="work-cell">🏔️</div>
+        <div class="work-cell">🎇</div>
+        <div class="work-cell">🌌</div>
+        <div class="work-cell">🍜</div>
+        <div class="work-cell">🗼</div>
+    </div>
+</div>
+
+<!-- 修图进度 -->
+<div class="section" id="sec-edit">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🎨 修图进度</div>
+        <div class="sec-more">待修 8 组</div>
+    </div>
+    <div class="card">
+        <div class="edit-item">
+            <div class="edit-head"><span class="edit-name">📷 城市夜景系列</span><span class="edit-pct">已修 8/12</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:67%"></div></div>
+        </div>
+        <div class="edit-item">
+            <div class="edit-head"><span class="edit-name">🏮 古镇人文系列</span><span class="edit-pct">已修 5/10</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        </div>
+        <div class="edit-item">
+            <div class="edit-head"><span class="edit-name">🌊 海边人像</span><span class="edit-pct">已修 3/6</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 发布排期 -->
+<div class="section" id="sec-schedule">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📤 发布排期</div>
+        <div class="sec-more">本周 3 组</div>
+    </div>
+    <div class="post-item">
+        <div class="post-date"><div class="d">28</div><div class="m">周六</div></div>
+        <div class="post-info"><div class="post-name">城市夜景 · 拍满一周</div><div class="post-desc">9图 + 调色教程分享</div></div>
+        <div class="post-status todo">待发布</div>
+    </div>
+    <div class="post-item">
+        <div class="post-date"><div class="d">30</div><div class="m">周一</div></div>
+        <div class="post-info"><div class="post-name">古镇人文系列 · 第2弹</div><div class="post-desc">配文案：老街的味道</div></div>
+        <div class="post-status todo">草稿中</div>
+    </div>
+    <div class="post-item">
+        <div class="post-date"><div class="d">26</div><div class="m">周四</div></div>
+        <div class="post-info"><div class="post-name">日落延时 · 手机也能拍</div><div class="post-desc">获赞 1,200+</div></div>
+        <div class="post-status done">已发布</div>
+    </div>
+</div>
+
+<!-- 约拍档期 -->
+<div class="section" id="sec-booking">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📅 约拍档期</div>
+        <div class="sec-more">3 单</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="booking-item">
+            <div class="booking-date">8/02 周六</div>
+            <div class="booking-info"><div class="booking-name">毕业照 · 情侣</div><div class="booking-type">校园外景 · 2小时</div></div>
+            <div class="booking-price">¥680</div>
+        </div>
+        <div class="booking-item">
+            <div class="booking-date">8/09 周六</div>
+            <div class="booking-info"><div class="booking-name">亲子写真</div><div class="booking-type">公园外景 · 3小时</div></div>
+            <div class="booking-price">¥880</div>
+        </div>
+        <div class="booking-item">
+            <div class="booking-date">8/15 周五</div>
+            <div class="booking-info"><div class="booking-name">商业拍摄 · 民宿宣传</div><div class="booking-type">民宿内景 · 半天</div></div>
+            <div class="booking-price">¥1,200</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    这是<b style="color:var(--main)">摄影作品</b>的演示工作台 · 数据为演示效果<br>
+    <span style="display:inline-flex;gap:10px;margin-top:12px;justify-content:center;flex-wrap:wrap">
+        <a href="demo-gallery.html" style="display:inline-block;padding:10px 20px;background:#fff;color:#000;border-radius:10px;font-weight:700;">🎨 看全部案例</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:inline-block;padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;">🛠️ 定制同款</a>
+    </span>
+    <br><br><span style="font-size:10px;color:var(--text-mute)">© 2026 Crazy Friday 疯狂星期五 · AI时代的一人公司生态</span>
+</div>
+
+
+<script>
+// 侧边栏
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => { closeSidebar(); });
+});
+</script>
+
+</body>
+</html>
