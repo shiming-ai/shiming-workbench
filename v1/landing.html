@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
+<title>Crazy Friday 疯狂星期五 · AI工作台定制 | 时铭</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+    --pink: #FF6B9D; --cyan: #00D9FF;
+}
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+.container { max-width: 460px; margin: 0 auto; padding: 0 18px; }
+
+/* ========== Hero ========== */
+.hero {
+    padding: 50px 18px 36px;
+    background: 
+        radial-gradient(ellipse 400px 200px at 50% 0%, rgba(255,107,26,0.15), transparent),
+        radial-gradient(ellipse 300px 200px at 80% 20%, rgba(0,217,163,0.08), transparent);
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    padding: 5px 14px;
+    background: rgba(255,107,26,0.12);
+    color: var(--orange);
+    border-radius: 20px;
+    margin-bottom: 22px;
+    font-weight: 600;
+    border: 1px solid rgba(255,107,26,0.2);
+}
+.hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+}
+.hero h1 {
+    font-size: 27px;
+    font-weight: 900;
+    line-height: 1.35;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+}
+.hero h1 .grad {
+    background: linear-gradient(135deg, #FF6B1A, #FFD93D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+.hero-desc strong { color: var(--text); font-weight: 600; }
+
+/* 双端展示 */
+.dual-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    perspective: 800px;
+}
+.dual-phone {
+    width: 140px;
+    background: var(--card);
+    border-radius: 18px;
+    border: 2px solid #2a2d3a;
+    padding: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    transform: rotate(-3deg);
+    transition: transform 0.3s;
+}
+.dual-phone:active { transform: rotate(0deg) scale(1.05); }
+.dual-phone .mini-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.dual-phone .mini-title { font-size: 9px; font-weight: 700; }
+.dual-phone .mini-day { font-size: 14px; font-weight: 800; color: var(--orange); }
+.dual-phone .mini-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 8px;
+}
+.dual-phone .mini-stat {
+    background: rgba(255,255,255,0.03); border-radius: 5px; padding: 5px 3px; text-align: center;
+}
+.dual-phone .mini-val { font-size: 10px; font-weight: 700; }
+.dual-phone .mini-lbl { font-size: 6px; color: var(--text-mute); }
+.dual-phone .mini-bars { display: flex; flex-direction: column; gap: 3px; }
+.dual-phone .mini-bar { display: flex; align-items: center; gap: 3px; font-size: 7px; }
+.dual-phone .mini-bar-track { flex: 1; height: 4px; background: var(--bg); border-radius: 2px; overflow: hidden; }
+.dual-phone .mini-bar-fill { height: 100%; border-radius: 2px; }
+.dual-phone .mini-bar-label { width: 24px; color: var(--text-dim); font-size: 6px; }
+
+.dual-laptop {
+    width: 180px;
+    background: var(--card);
+    border-radius: 10px 10px 4px 4px;
+    border: 2px solid #2a2d3a;
+    border-bottom: none;
+    padding: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    transform: rotate(2deg);
+    position: relative;
+    transition: transform 0.3s;
+}
+.dual-laptop:active { transform: rotate(0deg) scale(1.05); }
+.dual-laptop::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: -20px; right: -20px;
+    height: 6px;
+    background: #2a2d3a;
+    border-radius: 0 0 12px 12px;
+}
+.laptop-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.laptop-title { font-size: 10px; font-weight: 700; }
+.laptop-row { display: flex; gap: 4px; margin-bottom: 6px; }
+.laptop-card {
+    flex: 1; background: rgba(255,255,255,0.03); border-radius: 5px; padding: 6px 4px; text-align: center;
+}
+.laptop-card .v { font-size: 11px; font-weight: 700; }
+.laptop-card .l { font-size: 6px; color: var(--text-mute); }
+.laptop-table {
+    display: flex; flex-direction: column; gap: 3px;
+}
+.laptop-row-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255,255,255,0.02); border-radius: 4px; padding: 4px 6px; font-size: 7px;
+}
+.laptop-row-item .status {
+    font-size: 6px; padding: 1px 4px; border-radius: 3px; font-weight: 600;
+}
+
+.hero-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 17px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: none;
+    cursor: pointer;
+}
+.btn-primary:active { transform: scale(0.97); box-shadow: 0 4px 15px rgba(255,107,26,0.3); }
+.btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+}
+.btn-secondary:active { border-color: var(--orange); color: var(--orange); }
+.hero-trust {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 11px;
+    color: var(--text-mute);
+}
+.hero-trust span { display: flex; align-items: center; gap: 4px; }
+
+/* ========== 数字条 ========== */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,107,26,0.03), rgba(0,217,163,0.03));
+}
+.stat-item { text-align: center; }
+.stat-item:not(:last-child) { border-right: 1px solid var(--border); }
+.stat-num { font-size: 22px; font-weight: 800; }
+.stat-num.orange { color: var(--orange); }
+.stat-num.green { color: var(--green); }
+.stat-num.purple { color: var(--purple); }
+.stat-label { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+
+/* ========== Section通用 ========== */
+.section-eyebrow {
+    font-size: 11px;
+    color: var(--orange);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.section-title {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}
+.section-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+/* ========== 痛点 ========== */
+.pain-section { padding: 40px 0; }
+.pain-item {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+}
+.pain-item:active { border-color: var(--orange); }
+.pain-q {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+.pain-q-icon {
+    display: inline-block;
+    width: 20px; height: 20px;
+    background: rgba(255,71,87,0.15);
+    color: var(--red);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    margin-right: 6px;
+    font-weight: 700;
+}
+.pain-a {
+    font-size: 13px;
+    color: var(--green);
+    line-height: 1.6;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    align-items: start;
+    gap: 6px;
+}
+.pain-a-icon {
+    width: 20px; height: 20px;
+    background: rgba(0,217,163,0.15);
+    color: var(--green);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* ========== 行业场景 ========== */
+.scene-section { padding: 40px 0; }
+.scene-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.scene-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px 14px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, border-color 0.2s;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.scene-card:active { transform: scale(0.97); border-color: var(--orange); }
+.scene-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+}
+.scene-card.s1::before { background: linear-gradient(90deg, var(--orange), #FF8E53); }
+.scene-card.s2::before { background: linear-gradient(90deg, var(--blue), #6BB6FF); }
+.scene-card.s3::before { background: linear-gradient(90deg, var(--purple), #C89AFF); }
+.scene-card.s4::before { background: linear-gradient(90deg, var(--yellow), #FFE873); }
+.scene-card.s5::before { background: linear-gradient(90deg, var(--green), #00F5B8); }
+.scene-card.s6::before { background: linear-gradient(90deg, var(--pink), #FF8FB1); }
+.scene-card.s7::before { background: linear-gradient(90deg, var(--cyan), #4ECDC4); }
+.scene-card.s8::before { background: linear-gradient(90deg, var(--red), #FF6B6B); }
+.scene-icon { font-size: 22px; margin-bottom: 6px; }
+.scene-name { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.scene-desc { font-size: 10px; color: var(--text-mute); line-height: 1.5; margin-bottom: 8px; }
+.scene-price { font-size: 14px; font-weight: 800; }
+.scene-price small { font-size: 9px; color: var(--text-mute); font-weight: 400; }
+
+/* ========== 客户评价 ========== */
+.review-section { padding: 40px 0; }
+.review-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    position: relative;
+}
+.review-card::before {
+    content: '"';
+    position: absolute;
+    top: 8px; right: 16px;
+    font-size: 50px;
+    color: var(--border);
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.review-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+.review-info { flex: 1; }
+.review-name { font-size: 13px; font-weight: 700; }
+.review-tag { font-size: 10px; color: var(--text-mute); }
+.review-stars { color: var(--yellow); font-size: 11px; margin-bottom: 6px; }
+.review-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+}
+
+/* ========== 为什么选我 ========== */
+.why-section { padding: 40px 0; }
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.why-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px 14px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.why-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+.why-title { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+.why-desc { font-size: 10px; color: var(--text-mute); line-height: 1.5; }
+
+/* ========== 定价 ========== */
+.pricing-section { padding: 40px 0; }
+.price-anchor {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-bottom: 20px;
+    padding: 10px;
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px dashed var(--border);
+}
+.price-anchor s { color: var(--red); }
+.price-anchor strong { color: var(--green); }
+.price-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: transform 0.15s;
+}
+.price-card:active { transform: scale(0.98); }
+.price-card.featured {
+    border: 2px solid var(--orange);
+    box-shadow: 0 0 40px rgba(255,107,26,0.1);
+}
+.price-badge {
+    position: absolute;
+    top: -1px; right: -1px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff;
+    font-size: 10px;
+    padding: 4px 14px;
+    border-radius: 0 14px 0 12px;
+    font-weight: 700;
+}
+.price-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 4px; }
+.price-name { font-size: 16px; font-weight: 700; }
+.price-amount { font-size: 32px; font-weight: 900; line-height: 1; }
+.price-amount small { font-size: 14px; font-weight: 400; color: var(--text-dim); }
+.price-monthly { font-size: 11px; color: var(--text-mute); margin-bottom: 16px; }
+.price-features { list-style: none; margin-bottom: 18px; }
+.price-features li {
+    font-size: 13px;
+    padding: 4px 0;
+    color: var(--text-dim);
+    display: flex;
+    align-items: start;
+    gap: 8px;
+}
+.price-features li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 800;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+.price-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.price-btn:active { transform: scale(0.97); }
+
+/* ========== 流程 ========== */
+.flow-section { padding: 40px 0; }
+.flow-card {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+}
+.flow-card:last-child { border-bottom: none; }
+.flow-num {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.flow-num.c1 { background: rgba(255,107,26,0.15); color: var(--orange); }
+.flow-num.c2 { background: rgba(77,157,255,0.15); color: var(--blue); }
+.flow-num.c3 { background: rgba(168,107,255,0.15); color: var(--purple); }
+.flow-num.c4 { background: rgba(0,217,163,0.15); color: var(--green); }
+.flow-body { flex: 1; }
+.flow-body h4 { font-size: 14px; margin-bottom: 3px; }
+.flow-body p { font-size: 12px; color: var(--text-dim); }
+.flow-time {
+    font-size: 10px;
+    color: var(--text-mute);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-left: 6px;
+}
+
+/* ========== 下单 ========== */
+.order-section { padding: 40px 0; }
+.order-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 24px 20px;
+    border: 1px solid var(--border);
+}
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; display: block; }
+.form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--orange); }
+.form-textarea { min-height: 90px; resize: vertical; }
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b8f9e' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.order-note {
+    font-size: 11px;
+    color: var(--text-mute);
+    text-align: center;
+    margin-top: 12px;
+}
+
+/* ========== FAQ ========== */
+.faq-section { padding: 40px 0; }
+.faq-item {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+}
+.faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: start;
+    gap: 8px;
+}
+.faq-q::before {
+    content: 'Q';
+    background: rgba(255,107,26,0.15);
+    color: var(--orange);
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.faq-a {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    padding-left: 28px;
+}
+
+/* ========== 底部CTA ========== */
+.final-cta {
+    padding: 50px 18px;
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgba(255,107,26,0.08), transparent 70%);
+}
+.final-cta h2 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+.final-cta p {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center;
+    padding: 30px 18px 50px;
+    color: var(--text-mute);
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+}
+.footer a { color: var(--orange); text-decoration: none; }
+
+/* ========== Toast ========== */
+.toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 999;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ========== 紧迫感条 ========== */
+.urgency-bar {
+    background: linear-gradient(135deg, rgba(255,71,87,0.08), rgba(255,107,26,0.08));
+    border: 1px solid rgba(255,107,26,0.2);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.urgency-icon { font-size: 20px; }
+.urgency-text { flex: 1; }
+.urgency-main { font-size: 13px; color: var(--orange); font-weight: 700; }
+.urgency-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+/* ========== 分隔标签 ========== */
+.divider-tag {
+    text-align: center;
+    margin: 30px 0 20px;
+    position: relative;
+}
+.divider-tag::before, .divider-tag::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: var(--border);
+}
+.divider-tag::before { left: 0; }
+.divider-tag::after { right: 0; }
+.divider-tag span {
+    font-size: 11px;
+    color: var(--text-mute);
+    background: var(--bg);
+    padding: 0 12px;
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+    <div class="container">
+        <div class="hero-eyebrow">
+            <span class="dot"></span>
+            已帮助 41 位创业者搭建完成
+        </div>
+        <h1>
+            让你的生意<br>
+            拥有一套<span class="grad">AI操作系统</span>
+        </h1>
+        <div class="hero-desc">
+            客户 · 财务 · 内容 · 复盘 · 增长，一站式打理<br>
+            <strong>一个人 + AI，管好一整个生意</strong>
+        </div>
+
+        <!-- 双端展示 -->
+        <div class="dual-showcase">
+            <!-- 手机端 -->
+            <div class="dual-phone">
+                <div class="mini-header">
+                    <div class="mini-title">📊 翻盘作战</div>
+                    <div class="mini-day">D-47</div>
+                </div>
+                <div class="mini-grid">
+                    <div class="mini-stat">
+                        <div class="mini-val" style="color:var(--green)">¥850</div>
+                        <div class="mini-lbl">收入</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-val" style="color:var(--red)">¥500</div>
+                        <div class="mini-lbl">支出</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-val" style="color:var(--orange)">¥350</div>
+                        <div class="mini-lbl">利润</div>
+                    </div>
+                </div>
+                <div class="mini-bars">
+                    <div class="mini-bar">
+                        <div class="mini-bar-label">抖音</div>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:85%;background:var(--orange)"></div></div>
+                    </div>
+                    <div class="mini-bar">
+                        <div class="mini-bar-label">小红书</div>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:72%;background:var(--red)"></div></div>
+                    </div>
+                    <div class="mini-bar">
+                        <div class="mini-bar-label">视频号</div>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:60%;background:var(--blue)"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 电脑端 -->
+            <div class="dual-laptop">
+                <div class="laptop-header">
+                    <div class="laptop-title">💻 CRM看板</div>
+                    <div style="font-size:8px;color:var(--green)">● 在线</div>
+                </div>
+                <div class="laptop-row">
+                    <div class="laptop-card">
+                        <div class="v" style="color:var(--green)">¥12.5k</div>
+                        <div class="l">本月收入</div>
+                    </div>
+                    <div class="laptop-card">
+                        <div class="v" style="color:var(--orange)">7</div>
+                        <div class="l">待跟进</div>
+                    </div>
+                    <div class="laptop-card">
+                        <div class="v" style="color:var(--purple)">23</div>
+                        <div class="l">总客户</div>
+                    </div>
+                </div>
+                <div class="laptop-table">
+                    <div class="laptop-row-item">
+                        <span>张总 · 报白教育</span>
+                        <span class="status" style="background:rgba(0,217,163,0.15);color:var(--green)">已成交</span>
+                    </div>
+                    <div class="laptop-row-item">
+                        <span>李姐 · AI漫剧</span>
+                        <span class="status" style="background:rgba(255,107,26,0.15);color:var(--orange)">跟进中</span>
+                    </div>
+                    <div class="laptop-row-item">
+                        <span>王哥 · 工作台定制</span>
+                        <span class="status" style="background:rgba(77,157,255,0.15);color:var(--blue)">待回访</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-cta">
+            <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
+                🚀 我要定制一套
+            </button>
+            <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" class="btn-secondary">
+                体验展示版工作台 →
+            </a>
+        </div>
+        <div class="hero-trust">
+            <span>✓ 1对1定制</span>
+            <span>✓ 1-5天交付</span>
+            <span>✓ 不满意可退</span>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 数字条 ========== -->
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-num orange">5分钟</div>
+        <div class="stat-label">说清需求</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num green">1-5天</div>
+        <div class="stat-label">交付使用</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num purple">¥999起</div>
+        <div class="stat-label">一次定制，长期使用</div>
+    </div>
+</div>
+
+<!-- ========== 痛点 ========== -->
+<div class="pain-section">
+    <div class="container">
+        <div class="section-eyebrow">你有没有这些烦恼</div>
+        <div class="section-title">这些问题，一套工作台全解决</div>
+        <div class="section-sub">如果有哪怕一条中了，往下看</div>
+
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>客户上周说要跟进，结果忘了，这单黄了</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>CRM自动追踪，7/14/30天智能提醒回访</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>月底算账，接了5单只到账2单，尾款忘了催</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>收款状态一目了然，超期未收自动报警</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>6个号今天发什么？翻半天聊天记录才想起来</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>内容排期+选题模板+7日热力图，打开就发</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>忙了一天，问他今天赚了多少，说不出来</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>搞钱作战室：每日3大重点+连续达标打卡</div>
+        </div>
+        <div class="pain-item">
+            <div class="pain-q"><span class="pain-q-icon">!</span>Excel表格越用越乱，手机上根本没法看</div>
+            <div class="pain-a"><span class="pain-a-icon">✓</span>手机原生体验，添加到桌面就是APP</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 行业场景 ========== -->
+<div class="scene-section">
+    <div class="container">
+        <div class="section-eyebrow">B端 + C端 全覆盖</div>
+        <div class="section-title">8个场景，你要的都有</div>
+        <div class="section-sub">企业管理、个人成长、学习考研、恋爱健身……选一个最接近的，我帮你改到满意</div>
+
+        <div class="scene-grid">
+            <div class="scene-card s1">
+                <div class="scene-icon">🎯</div>
+                <div class="scene-name">一人公司版</div>
+                <div class="scene-desc">博主·自媒体·超级个体</div>
+                <div class="scene-price" style="color:var(--orange)">¥999<small>起</small></div>
+            </div>
+            <div class="scene-card s2">
+                <div class="scene-icon">📦</div>
+                <div class="scene-name">电商卖家版</div>
+                <div class="scene-desc">淘宝·抖音·拼多多</div>
+                <div class="scene-price" style="color:var(--blue)">¥999<small>起</small></div>
+            </div>
+            <div class="scene-card s3">
+                <div class="scene-icon">💻</div>
+                <div class="scene-name">自由职业版</div>
+                <div class="scene-desc">设计·开发·文案·顾问</div>
+                <div class="scene-price" style="color:var(--purple)">¥999<small>起</small></div>
+            </div>
+            <div class="scene-card s4">
+                <div class="scene-icon">🏪</div>
+                <div class="scene-name">实体店版</div>
+                <div class="scene-desc">餐饮·奶茶·零售店</div>
+                <div class="scene-price" style="color:var(--yellow)">¥1999<small>起</small></div>
+            </div>
+            <div class="scene-card s5">
+                <div class="scene-icon">📚</div>
+                <div class="scene-name">知识付费版</div>
+                <div class="scene-desc">课程·训练营·社群</div>
+                <div class="scene-price" style="color:var(--green)">¥1299<small>起</small></div>
+            </div>
+            <div class="scene-card s6">
+                <div class="scene-icon">💕</div>
+                <div class="scene-name">个人成长版</div>
+                <div class="scene-desc">考研·恋爱·减肥·习惯打卡</div>
+                <div class="scene-price" style="color:var(--pink)">¥499<small>起</small></div>
+            </div>
+            <div class="scene-card s7">
+                <div class="scene-icon">🏭</div>
+                <div class="scene-name">小微企业版</div>
+                <div class="scene-desc">团队·项目管理·审批</div>
+                <div class="scene-price" style="color:var(--cyan)">¥3999<small>起</small></div>
+            </div>
+            <div class="scene-card s8">
+                <div class="scene-icon">📊</div>
+                <div class="scene-name">通用职场版</div>
+                <div class="scene-desc">职场人·学生·想管理生活</div>
+                <div class="scene-price" style="color:var(--red)">¥499<small>起</small></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 客户评价 ========== -->
+<div class="review-section">
+    <div class="container">
+        <div class="section-eyebrow">真实反馈</div>
+        <div class="section-title">他们已经在用了</div>
+        <div class="section-sub">不是效果图，是真实用户的评价</div>
+
+        <div class="review-card">
+            <div class="review-header">
+                <div class="review-avatar" style="background:rgba(255,107,26,0.15)">🧑‍💼</div>
+                <div class="review-info">
+                    <div class="review-name">阿凯</div>
+                    <div class="review-tag">一人公司版 · 博主</div>
+                </div>
+            </div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">之前用Excel管客户，手机上根本看不了。现在打开手机就能看到今天该跟进谁、该发什么内容、赚了多少。一个月多接了4单，值了。</div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-header">
+                <div class="review-avatar" style="background:rgba(0,217,163,0.15)">👩‍🎨</div>
+                <div class="review-info">
+                    <div class="review-name">小林</div>
+                    <div class="review-tag">自由职业版 · 设计师</div>
+                </div>
+            </div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">时铭帮我定制的，1-5天就交付了。报价、合同、收款、项目进度全在一个页面，客户看了都说专业。尾款再也不用追了。</div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-header">
+                <div class="review-avatar" style="background:rgba(168,107,255,0.15)">👨‍🏫</div>
+                <div class="review-info">
+                    <div class="review-name">老张</div>
+                    <div class="review-tag">知识付费版 · 课程讲师</div>
+                </div>
+            </div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">学员管理+课程排期+收入统计，以前3个表格来回切，现在一个链接搞定。最爽的是数据在自己手机里，不怕泄露。</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 为什么选我 ========== -->
+<div class="why-section">
+    <div class="container">
+        <div class="section-eyebrow">信任保障</div>
+        <div class="section-title">为什么选我？</div>
+        <div class="section-sub">6个理由，让你放心下单</div>
+
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon">🎯</div>
+                <div class="why-title">真实案例</div>
+                <div class="why-desc">我自己天天在用</div>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">⚡</div>
+                <div class="why-title">1-5天交付</div>
+                <div class="why-desc">先看demo，满意再决定</div>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🔒</div>
+                <div class="why-title">数据本地</div>
+                <div class="why-desc">只有你能看到</div>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">📱</div>
+                <div class="why-title">不限设备</div>
+                <div class="why-desc">手机电脑都能用</div>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">♾️</div>
+                <div class="why-title">永久域名</div>
+                <div class="why-desc">不会失效</div>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🛡️</div>
+                <div class="why-title">不满意可退</div>
+                <div class="why-desc">3天无理由退款</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 定价 ========== -->
+<div class="pricing-section">
+    <div class="container">
+        <div class="section-eyebrow">透明定价</div>
+        <div class="section-title">三档方案，按需选择</div>
+        <div class="section-sub">先沟通再付款 · 1-5天交付 · 不满意可退</div>
+
+        <!-- 商业定制版 -->
+        <div class="price-card featured">
+            <div class="price-badge">⭐ 最多人选</div>
+            <div class="price-head">
+                <div class="price-name" style="color:var(--orange)">商业定制版</div>
+                <div class="price-amount" style="color:var(--orange)">999<small>元</small></div>
+            </div>
+            <div class="price-monthly">+ ¥99/月维护</div>
+            <ul class="price-features">
+                <li>选1个模板 + 定制功能模块</li>
+                <li>3次修改机会</li>
+                <li>1对1需求沟通</li>
+                <li>数据导入 + 30天售后</li>
+                <li>永久域名 + PWA桌面APP</li>
+            </ul>
+            <button class="price-btn" style="background:linear-gradient(135deg,var(--orange),#FF8E53);color:#fff;box-shadow:0 6px 20px rgba(255,107,26,0.3)" onclick="selectPlan('商业定制版999')">
+                选商业定制版 →
+            </button>
+        </div>
+
+        <!-- 深度定制版 -->
+        <div class="price-card">
+            <div class="price-head">
+                <div class="price-name" style="color:var(--purple)">深度定制版</div>
+                <div class="price-amount" style="color:var(--purple)">2999<small>元</small></div>
+            </div>
+            <div class="price-monthly">+ ¥199/月维护</div>
+            <ul class="price-features">
+                <li>深度定制 + 专属功能开发</li>
+                <li>不限修改次数</li>
+                <li>1对1专属顾问</li>
+                <li>数据导入 + 培训 + 90天售后</li>
+                <li>优先支持 + 永久域名</li>
+            </ul>
+            <button class="price-btn" style="background:rgba(168,107,255,0.12);color:var(--purple);border:1px solid var(--purple)" onclick="selectPlan('深度定制版2999')">
+                选深度定制版
+            </button>
+        </div>
+
+        <!-- 专属定制版 -->
+        <div class="price-card">
+            <div class="price-head">
+                <div class="price-name" style="color:var(--red)">企业级定制</div>
+                <div class="price-amount" style="color:var(--red)">面议</div>
+            </div>
+            <div class="price-monthly">按需报价 · 适合企业级需求</div>
+            <ul class="price-features">
+                <li>企业级深度定制</li>
+                <li>多人协作 + 权限管理</li>
+                <li>API对接 + 数据迁移</li>
+                <li>专属技术团队</li>
+                <li>全年售后 + SLA保障</li>
+            </ul>
+            <button class="price-btn" style="background:rgba(255,71,87,0.12);color:var(--red);border:1px solid var(--red)" onclick="selectPlan('企业级定制')">
+                咨询报价
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 交付流程 ========== -->
+<div class="flow-section">
+    <div class="container">
+        <div class="section-eyebrow">简单透明</div>
+        <div class="section-title">4步搞定，1-5天用上</div>
+
+        <div class="flow-card">
+            <div class="flow-num c1">1</div>
+            <div class="flow-body">
+                <h4>提交需求<span class="flow-time">5分钟</span></h4>
+                <p>填下面表单，说你做什么业务、想要什么功能</p>
+            </div>
+        </div>
+        <div class="flow-card">
+            <div class="flow-num c2">2</div>
+            <div class="flow-body">
+                <h4>微信沟通确认<span class="flow-time">1小时内</span></h4>
+                <p>我加你微信，确认细节、报价，付50%定金</p>
+            </div>
+        </div>
+        <div class="flow-card">
+            <div class="flow-num c3">3</div>
+            <div class="flow-body">
+                <h4>AI快速开发<span class="flow-time">1-5天</span></h4>
+                <p>用AI工具定制开发，实时沟通进度</p>
+            </div>
+        </div>
+        <div class="flow-card">
+            <div class="flow-num c4">4</div>
+            <div class="flow-body">
+                <h4>交付验收<span class="flow-time">满意付尾款</span></h4>
+                <p>发你链接，手机打开就能用，满意再付尾款</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 下单 ========== -->
+<div class="order-section" id="order">
+    <div class="container">
+        <div class="section-eyebrow">立即开始</div>
+        <div class="section-title">填个表，1小时内加你微信</div>
+        <div class="section-sub">不用懂技术，说人话就行</div>
+
+        <div class="urgency-bar">
+            <div class="urgency-icon">🔥</div>
+            <div class="urgency-text">
+                <div class="urgency-main">2026 早鸟价 · 名额有限</div>
+                <div class="urgency-sub">先体验展示版，满意再下单</div>
+            </div>
+        </div>
+
+        <div class="order-card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">称呼</label>
+                    <input type="text" class="form-input" id="oName" placeholder="怎么称呼你">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">微信/手机</label>
+                    <input type="text" class="form-input" id="oContact" placeholder="微信号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">选模板</label>
+                <select class="form-select" id="oTemplate">
+                    <option value="一人公司版">🎯 一人公司版</option>
+                    <option value="电商卖家版">📦 电商卖家版</option>
+                    <option value="自由职业版">💻 自由职业版</option>
+                    <option value="实体店版">🏪 实体店版</option>
+                    <option value="知识付费版">📚 知识付费版</option>
+                    <option value="个人成长版">💕 个人成长版</option>
+                    <option value="小微企业版">🏭 小微企业版</option>
+                    <option value="通用职场版">📊 通用职场版</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">选套餐</label>
+                <select class="form-select" id="oPlan">
+                    <option value="商业定制版999" selected>商业定制版 ¥999 + ¥99/月 ⭐</option>
+                    <option value="深度定制版2999">深度定制版 ¥2999 + ¥199/月</option>
+                    <option value="企业级定制">企业级定制 面议</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">你的需求（选填）</label>
+                <textarea class="form-textarea" id="oNeeds" placeholder="做什么业务？需要哪些功能？越具体越好"></textarea>
+            </div>
+            <button class="btn-primary" onclick="submitOrder()" style="margin-top:6px">
+                🚀 提交需求（享早鸟价）
+            </button>
+            <div class="order-note">提交后1小时内加你微信 · 不满意不收钱</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== FAQ ========== -->
+<div class="faq-section">
+    <div class="container">
+        <div class="section-eyebrow">答疑</div>
+        <div class="section-title">你可能想问的</div>
+
+        <div class="faq-item">
+            <div class="faq-q">做出来的是什么？APP吗？</div>
+            <div class="faq-a">网页版工作台，手机浏览器打开就能用。可以添加到手机桌面，用起来跟APP一模一样，永久域名不会失效。电脑也能用。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">我不懂技术能用吗？</div>
+            <div class="faq-a">完全不用懂技术。你只需要说你的业务和需求，剩下的我全搞定。交付后打开链接就能用，跟发微信一样简单。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">数据存在哪？安全吗？</div>
+            <div class="faq-a">数据存在你自己的手机浏览器本地，不会上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">和别人用同一个模板会一样吗？</div>
+            <div class="faq-a">模板只是基础框架。我会根据你的业务定制配色、功能、布局，每个人做出来都不一样。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">不满意能退吗？</div>
+            <div class="faq-a">交付前可以提修改意见。交付后3天内不满意全额退款（已产生的定制成本除外）。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">以后想加功能怎么办？</div>
+            <div class="faq-a">每月维护费包含小功能调整。大功能开发另计费，按需报价，绝不乱收费。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">能接入飞书/微信吗？</div>
+            <div class="faq-a">可以。支持飞书机器人推送、多维表格同步、微信通知等。深度定制版以上套餐包含API对接功能。</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 底部CTA ========== -->
+<div class="final-cta">
+    <h2>别再靠脑子记了<br><span style="color:var(--orange)">让AI帮你管业务</span></h2>
+    <p>省下的时间，拿去搞钱</p>
+    <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})" style="max-width:300px;margin:0 auto">
+        立即定制 →
+    </button>
+</div>
+
+<!-- ========== Footer ========== -->
+<div class="footer">
+    <p>© 2026 Crazy Friday 疯狂星期五 · 时铭 · AI工作台定制服务</p>
+    <p style="margin-top:8px">
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo.html">体验展示版工作台 →</a>
+    </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(msg, duration = 2500) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+}
+
+function selectPlan(plan) {
+    const select = document.getElementById('oPlan');
+    for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === plan) {
+            select.selectedIndex = i;
+            break;
+        }
+    }
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+    const name = plan.replace(/\d.*/, '').replace('面议', '');
+    toast('已为你选择 ' + name);
+}
+
+function submitOrder() {
+    const name = document.getElementById('oName').value.trim();
+    const contact = document.getElementById('oContact').value.trim();
+    const template = document.getElementById('oTemplate').value;
+    const plan = document.getElementById('oPlan').value;
+    const needs = document.getElementById('oNeeds').value.trim();
+
+    if (!name) return toast('请填写称呼');
+    if (!contact) return toast('请填写微信/手机号');
+
+    const orderText = `【AI工作台定制订单】
+━━━━━━━━━━━━━
+称呼：${name}
+联系：${contact}
+模板：${template}
+套餐：${plan}
+需求：${needs || '待沟通'}
+━━━━━━━━━━━━━
+
+请复制以上信息，加微信发送给我确认 ✅
+
+微信①：Yshim16506
+微信②：R26184352Y`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(orderText).then(() => {
+            showContactPanel();
+            document.getElementById('oName').value = '';
+            document.getElementById('oContact').value = '';
+            document.getElementById('oNeeds').value = '';
+        }).catch(() => {
+            fallbackCopy(orderText);
+            showContactPanel();
+        });
+    } else {
+        fallbackCopy(orderText);
+        showContactPanel();
+    }
+}
+
+function showContactPanel() {
+    var panel = document.getElementById('contactPanel');
+    if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'contactPanel';
+        panel.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px';
+        panel.innerHTML = `
+            <div onclick="event.stopPropagation()" style="background:var(--card);max-width:340px;width:100%;border-radius:20px;padding:28px 24px;text-align:center;border:1px solid var(--border)">
+                <div style="font-size:32px;margin-bottom:12px">🎉</div>
+                <div style="font-size:17px;font-weight:800;margin-bottom:8px">订单已复制到剪贴板！</div>
+                <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;line-height:1.6">
+                    打开微信，搜索以下微信号<br>粘贴订单信息发给我即可确认
+                </div>
+                <div style="background:var(--bg);border-radius:14px;padding:16px;margin-bottom:16px;border:1px dashed var(--border)">
+                    <div style="font-size:11px;color:var(--text-mute);margin-bottom:6px">📞 加微信确认订单</div>
+                    <div onclick="copyWx('Yshim16506')" style="font-size:16px;font-weight:700;color:var(--orange);cursor:pointer;margin-bottom:8px">微信①：Yshim16506</div>
+                    <div onclick="copyWx('R26184352Y')" style="font-size:16px;font-weight:700;color:var(--orange);cursor:pointer">微信②：R26184352Y</div>
+                    <div style="font-size:10px;color:var(--text-mute);margin-top:8px">点击微信号即可复制</div>
+                </div>
+                <button onclick="document.getElementById('contactPanel').remove()" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--orange),#FF8E53);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer">我知道了</button>
+            </div>
+        `;
+        panel.onclick = function() { panel.remove(); };
+        document.body.appendChild(panel);
+    }
+}
+
+function copyWx(id) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(() => toast('✅ 已复制：' + id));
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = id;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); toast('✅ 已复制：' + id); } catch(e) { toast('请手动复制：' + id); }
+        document.body.removeChild(ta);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        toast('✅ 订单已复制，请加微信发给我');
+    } catch (e) {
+        toast('请手动复制订单信息', 3000);
+    }
+    document.body.removeChild(textarea);
+}
+</script>
+
+</body>
+</html>
