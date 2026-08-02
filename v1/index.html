@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday 疯狂星期五 · AI一人公司母系统 | 让一个人拥有一家公司的AI生产力">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
+<title>Crazy Friday 疯狂星期五 · AI一人公司母系统</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+    --pink: #FF6B9D; --cyan: #00D9FF;
+}
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+.container { max-width: 480px; margin: 0 auto; padding: 0 18px; }
+
+/* ========== Nav ========== */
+.nav {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+    display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: #000; border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15);
+}
+.nav-logo-mark::after {
+    content: ''; position: absolute;
+    bottom: 5px; right: 5px; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--orange);
+    border: 1.5px solid #000;
+}
+.nav-logo-inner {
+    text-align: center;
+    line-height: 0.9;
+}
+.nav-logo-cf {
+    font-size: 13px; color: #fff; font-weight: 900;
+    letter-spacing: -0.5px;
+}
+.nav-logo-cf .dot { color: var(--orange); font-size: 14px; }
+.nav-logo-tag {
+    font-size: 5px; color: var(--text-mute);
+    letter-spacing: 0.5px; margin-top: 1px;
+}
+.nav-brand {
+    font-size: 15px; font-weight: 800; letter-spacing: -0.3px;
+    display: flex; flex-direction: column;
+}
+.nav-brand .en {
+    font-size: 15px;
+    background: linear-gradient(135deg, #fff 60%, var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-brand .cn { font-size: 10px; color: var(--text-mute); font-weight: 500; }
+.nav-cta {
+    font-size: 12px; padding: 8px 16px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53); color: #fff;
+    border-radius: 20px; text-decoration: none; font-weight: 700;
+    box-shadow: 0 4px 12px rgba(255,107,26,0.25);
+}
+
+/* ========== Hero ========== */
+.hero {
+    padding: 56px 18px 40px;
+    background:
+        radial-gradient(ellipse 500px 300px at 50% 0%, rgba(168,107,255,0.15), transparent),
+        radial-gradient(ellipse 300px 200px at 90% 20%, rgba(255,107,26,0.1), transparent),
+        radial-gradient(ellipse 200px 150px at 10% 50%, rgba(77,157,255,0.06), transparent);
+    text-align: center; position: relative; overflow: hidden;
+}
+.hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 5px 14px;
+    background: rgba(168,107,255,0.12); color: var(--purple);
+    border-radius: 20px; margin-bottom: 24px;
+    font-weight: 600; border: 1px solid rgba(168,107,255,0.2);
+}
+.hero h1 {
+    font-size: 32px; font-weight: 900;
+    line-height: 1.25; margin-bottom: 12px;
+    letter-spacing: -1px;
+}
+.hero h1 .white { color: #fff; }
+.hero h1 .orange {
+    background: linear-gradient(135deg, var(--orange), #FFD93D);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+    font-size: 18px; font-weight: 700; color: var(--text);
+    margin-bottom: 16px;
+}
+.hero-desc {
+    font-size: 14px; color: var(--text-dim);
+    line-height: 1.8; margin-bottom: 28px;
+    max-width: 340px; margin-left: auto; margin-right: auto;
+}
+.hero-desc strong { color: var(--text); font-weight: 600; }
+
+.hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-bottom: 28px;
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--card);
+}
+.hero-stat {
+    padding: 14px 4px; text-align: center;
+    border-right: 1px solid var(--border);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .num { font-size: 15px; font-weight: 900; }
+.hero-stat .lbl { font-size: 8px; color: var(--text-mute); margin-top: 4px; }
+
+.hero-cta {
+    display: flex; flex-direction: column; gap: 10px;
+}
+.btn-primary {
+    display: block; width: 100%; padding: 17px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border: none; cursor: pointer;
+    border-radius: 14px; font-size: 16px; font-weight: 700; text-align: center;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    transition: transform 0.15s;
+}
+.btn-primary:active { transform: scale(0.97); }
+.btn-secondary {
+    display: block; width: 100%; padding: 15px;
+    background: transparent; color: var(--text-dim);
+    text-decoration: none; border-radius: 14px;
+    font-size: 14px; font-weight: 600; text-align: center;
+    border: 1px solid var(--border); transition: all 0.15s;
+}
+.btn-secondary:active { border-color: var(--orange); color: var(--orange); }
+
+/* ========== Section通用 ========== */
+.section { padding: 50px 0; }
+.section-eyebrow {
+    font-size: 11px; color: var(--purple); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+.section-title {
+    font-size: 24px; font-weight: 900;
+    line-height: 1.35; margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+.section-sub {
+    font-size: 13px; color: var(--text-dim);
+    margin-bottom: 28px; line-height: 1.7;
+}
+
+/* ========== 核心价值 ========== */
+.value-card {
+    background: var(--card); border-radius: 18px;
+    padding: 24px 20px; border: 1px solid var(--border);
+    margin-bottom: 28px;
+    position: relative; overflow: hidden;
+}
+.value-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+}
+.value-title { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+.value-list { list-style: none; }
+.value-list li {
+    display: flex; align-items: start; gap: 10px;
+    font-size: 13px; color: var(--text-dim);
+    margin-bottom: 10px; line-height: 1.6;
+}
+.value-list li::before {
+    content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0;
+}
+
+/* ========== 流程 ========== */
+.chain-section {
+    background: var(--card); border-radius: 18px;
+    padding: 20px; border: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+.chain-title {
+    font-size: 15px; font-weight: 800; margin-bottom: 16px; text-align: center;
+}
+.chain-flow {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    align-items: center; justify-content: center;
+}
+.chain-item {
+    background: var(--bg); border-radius: 12px;
+    padding: 12px 8px; text-align: center; min-width: 64px;
+    border: 1px solid var(--border);
+}
+.chain-icon { font-size: 18px; margin-bottom: 4px; }
+.chain-name { font-size: 10px; font-weight: 700; }
+.chain-sub { font-size: 7px; color: var(--text-mute); margin-top: 2px; }
+.chain-arrow {
+    color: var(--purple); font-size: 14px; font-weight: 700;
+}
+
+/* ========== 六大工坊 ========== */
+.workshop-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.workshop-card {
+    background: var(--card); border-radius: 16px;
+    padding: 18px 14px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: transform 0.15s, border-color 0.2s;
+}
+.workshop-card:active { transform: scale(0.97); }
+.workshop-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.workshop-card.w1::before { background: linear-gradient(90deg, var(--purple), #C89AFF); }
+.workshop-card.w2::before { background: linear-gradient(90deg, var(--blue), #6BB6FF); }
+.workshop-card.w3::before { background: linear-gradient(90deg, var(--green), #00F5B8); }
+.workshop-card.w4::before { background: linear-gradient(90deg, var(--orange), #FF8E53); }
+.workshop-card.w5::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
+.workshop-card.w6::before { background: linear-gradient(90deg, var(--yellow), #FFE873); }
+
+.workshop-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 10px;
+}
+.workshop-card.w1 .workshop-icon { background: rgba(168,107,255,0.15); }
+.workshop-card.w2 .workshop-icon { background: rgba(77,157,255,0.15); }
+.workshop-card.w3 .workshop-icon { background: rgba(0,217,163,0.15); }
+.workshop-card.w4 .workshop-icon { background: rgba(255,107,26,0.15); }
+.workshop-card.w5 .workshop-icon { background: rgba(255,107,157,0.15); }
+.workshop-card.w6 .workshop-icon { background: rgba(255,217,61,0.15); }
+
+.workshop-name { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+.workshop-sub { font-size: 9px; color: var(--text-mute); margin-bottom: 8px; }
+.workshop-features {
+    list-style: none; font-size: 10px; color: var(--text-dim); line-height: 1.7;
+}
+.workshop-features li {
+    display: flex; align-items: start; gap: 4px;
+}
+.workshop-features li::before {
+    content: '·'; color: var(--text-mute); font-weight: 700; font-size: 14px; line-height: 1;
+}
+.workshop-foot {
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border);
+    font-size: 9px; color: var(--orange); font-weight: 600;
+}
+
+/* ========== 孵化中心 ========== */
+.incubator-section {
+    background: linear-gradient(135deg, rgba(168,107,255,0.08), rgba(77,157,255,0.05));
+    border-radius: 18px;
+    padding: 24px 20px;
+    border: 2px solid rgba(168,107,255,0.3);
+    box-shadow: 0 0 40px rgba(168,107,255,0.08);
+    position: relative; overflow: hidden;
+    margin-bottom: 16px;
+}
+.incubator-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+}
+.incubator-badge {
+    display: inline-block; font-size: 10px;
+    padding: 4px 12px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    color: #fff; font-weight: 700; margin-bottom: 12px;
+}
+.incubator-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+.incubator-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
+.incubator-invest {
+    display: flex; gap: 10px; margin-bottom: 16px;
+}
+.invest-item {
+    flex: 1; background: var(--bg); border-radius: 12px;
+    padding: 14px 8px; text-align: center; border: 1px solid var(--border);
+}
+.invest-num { font-size: 16px; font-weight: 900; color: var(--purple); }
+.invest-lbl { font-size: 9px; color: var(--text-mute); margin-top: 4px; }
+
+/* ========== 孵化流程 ========== */
+.incubator-flow {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    align-items: center; justify-content: center; margin-bottom: 16px;
+}
+.flow-item {
+    background: var(--bg); border-radius: 12px;
+    padding: 10px 8px; text-align: center; min-width: 70px;
+    border: 1px solid var(--border);
+}
+.flow-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--purple); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800; margin: 0 auto 4px;
+}
+.flow-name { font-size: 10px; font-weight: 700; }
+.flow-sub { font-size: 7px; color: var(--text-mute); margin-top: 2px; }
+.flow-arrow { color: var(--purple); font-size: 12px; font-weight: 700; }
+
+/* ========== 孵化方向 ========== */
+.direction-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.direction-item {
+    background: var(--card); border-radius: 12px;
+    padding: 14px 8px; text-align: center;
+    border: 1px solid var(--border);
+}
+.direction-icon { font-size: 20px; margin-bottom: 6px; }
+.direction-name { font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+.direction-sub { font-size: 8px; color: var(--text-mute); line-height: 1.4; }
+
+/* ========== 关于我们 ========== */
+.about-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 24px 20px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+.about-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--purple), var(--blue));
+}
+.about-title {
+    font-size: 20px; font-weight: 800; margin-bottom: 10px;
+}
+.about-text {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.8; margin-bottom: 20px;
+}
+.about-text strong { color: var(--text); }
+.about-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.about-item {
+    background: var(--bg); border-radius: 12px;
+    padding: 14px; text-align: center; border: 1px solid var(--border);
+}
+.about-num { font-size: 18px; font-weight: 900; }
+.about-lbl { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* ========== 合作生态 ========== */
+.eco-section {
+    background: var(--card); border-radius: 18px;
+    padding: 20px; border: 1px solid var(--border);
+}
+.eco-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text-dim); }
+.eco-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.eco-item {
+    background: var(--bg); border-radius: 10px;
+    padding: 12px 4px; text-align: center;
+    border: 1px solid var(--border);
+    font-size: 11px; color: var(--text-dim);
+}
+.eco-item .icon { font-size: 18px; margin-bottom: 4px; }
+
+/* ========== 联系 ========== */
+.contact-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 24px 20px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.contact-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.contact-desc { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+.contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.contact-item {
+    background: var(--bg); border-radius: 12px;
+    padding: 16px 12px; text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+}
+.contact-item:active { border-color: var(--orange); }
+.contact-icon { font-size: 24px; margin-bottom: 6px; }
+.contact-label { font-size: 12px; font-weight: 600; color: var(--text); }
+.contact-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center; padding: 40px 18px 80px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border);
+}
+.footer-links {
+    display: flex; justify-content: center; gap: 14px;
+    margin-bottom: 16px;
+}
+.footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; }
+
+/* ========== Toast ========== */
+.toast {
+    position: fixed; bottom: 40px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card); border: 1px solid var(--green);
+    color: var(--green); padding: 14px 28px;
+    border-radius: 30px; font-size: 13px; font-weight: 600;
+    z-index: 999; opacity: 0; transition: all 0.3s;
+    pointer-events: none; white-space: nowrap;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ========== Grid Background ========== */
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none; z-index: 0;
+}
+body > * { position: relative; z-index: 1; }
+
+/* ========== Hero Glow Animation ========== */
+@keyframes heroGlowMove {
+    0%   { background-position: 50% 0%, 90% 20%, 10% 50%; }
+    33%  { background-position: 60% 10%, 80% 30%, 20% 40%; }
+    66%  { background-position: 40% 5%, 95% 15%, 5% 55%; }
+    100% { background-position: 50% 0%, 90% 20%, 10% 50%; }
+}
+.hero {
+    animation: heroGlowMove 18s ease-in-out infinite;
+}
+
+/* ========== Scroll Reveal ========== */
+.section, .biz-card, .workshop-card, .value-card, .about-card,
+.incubator-section, .contact-card, .chain-section, .eco-section,
+.testimonial-card, .faq-item, .direction-item, .about-item,
+.invest-item, .flow-item, .chain-item, .eco-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* ========== Micro-interactions ========== */
+.workshop-card, .value-card, .about-card, .contact-card,
+.incubator-section, .chain-section, .eco-section,
+.testimonial-card, .faq-item, .biz-card {
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.6s ease-out;
+}
+.workshop-card:active, .value-card:active, .about-card:active,
+.contact-card:active, .incubator-section:active, .chain-section:active,
+.eco-section:active, .testimonial-card:active, .faq-item:active,
+.invest-item:active, .flow-item:active, .direction-item:active,
+.about-item:active, .eco-item:active, .chain-item:active {
+    transform: scale(0.97);
+}
+.btn-primary:active { transform: scale(0.96); }
+.btn-secondary:active { transform: scale(0.97); }
+.nav-cta:active { transform: scale(0.94); opacity: 0.85; }
+a { color: var(--text); text-decoration: none; }
+a:active { color: var(--orange); }
+.footer-links a:active { color: var(--orange); }
+
+/* ========== Card Hover Glow ========== */
+.workshop-card:hover, .biz-card:hover {
+    box-shadow: 0 0 20px rgba(255,107,26,0.15);
+    border-color: rgba(255,107,26,0.3);
+}
+.workshop-card.w1:hover { box-shadow: 0 0 20px rgba(168,107,255,0.15); border-color: rgba(168,107,255,0.3); }
+.workshop-card.w2:hover { box-shadow: 0 0 20px rgba(77,157,255,0.15); border-color: rgba(77,157,255,0.3); }
+.workshop-card.w3:hover { box-shadow: 0 0 20px rgba(0,217,163,0.15); border-color: rgba(0,217,163,0.3); }
+.workshop-card.w4:hover { box-shadow: 0 0 20px rgba(255,107,26,0.15); border-color: rgba(255,107,26,0.3); }
+.workshop-card.w5:hover { box-shadow: 0 0 20px rgba(255,107,157,0.15); border-color: rgba(255,107,157,0.3); }
+.workshop-card.w6:hover { box-shadow: 0 0 20px rgba(255,217,61,0.15); border-color: rgba(255,217,61,0.3); }
+
+/* ========== Floating Bottom Nav ========== */
+.float-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 95;
+    background: rgba(10,11,15,0.8);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: center; gap: 0;
+    padding: 8px 12px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+.float-nav.show { transform: translateY(0); }
+.float-nav a {
+    flex: 1; text-align: center; font-size: 12px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    padding: 8px 4px; border-radius: 10px;
+    transition: color 0.2s, background 0.2s;
+}
+.float-nav a:active { color: var(--orange); background: rgba(255,107,26,0.1); }
+
+/* ========== Back to Top ========== */
+.back-top {
+    position: fixed; bottom: 72px; right: 18px; z-index: 94;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    color: var(--text); font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; text-decoration: none;
+    opacity: 0; transform: translateY(20px) scale(0.8);
+    transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
+    pointer-events: none;
+}
+.back-top.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.back-top:active { transform: scale(0.9); border-color: var(--orange); color: var(--orange); }
+
+/* ========== Testimonials ========== */
+.testimonial-card {
+    background: var(--card); border-radius: 16px;
+    padding: 20px 18px; border: 1px solid var(--border);
+    margin-bottom: 12px; position: relative;
+}
+.testimonial-card::before {
+    content: '“'; position: absolute; top: 6px; left: 14px;
+    font-size: 40px; color: var(--purple); opacity: 0.2;
+    font-family: Georgia, serif; line-height: 1;
+}
+.testimonial-text {
+    font-size: 13px; color: var(--text); line-height: 1.8;
+    margin-bottom: 14px; position: relative; z-index: 1;
+}
+.testimonial-author {
+    display: flex; align-items: center; gap: 10px;
+}
+.testimonial-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+}
+.testimonial-info { flex: 1; }
+.testimonial-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.testimonial-role { font-size: 11px; color: var(--text-mute); margin-top: 1px; }
+
+/* ========== FAQ Accordion ========== */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item {
+    background: var(--card); border-radius: 14px;
+    border: 1px solid var(--border); overflow: hidden;
+}
+.faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px; font-size: 14px; font-weight: 700;
+    color: var(--text); cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.faq-q:active { color: var(--orange); }
+.faq-icon {
+    font-size: 18px; color: var(--purple); flex-shrink: 0; margin-left: 12px;
+    transition: transform 0.3s ease;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+.faq-a-inner {
+    padding: 0 18px 16px;
+    font-size: 13px; color: var(--text-dim); line-height: 1.8;
+}
+
+/* ========== OPC Methodology ========== */
+.opc-intro {
+    text-align: center; margin-bottom: 20px;
+    padding: 16px 14px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(168,107,255,0.08), rgba(77,157,255,0.05));
+    border: 1px solid rgba(168,107,255,0.2);
+}
+.opc-formula {
+    font-size: 13px; color: var(--text); font-weight: 600;
+    line-height: 1.7;
+}
+.opc-formula .plus { color: var(--orange); font-weight: 800; }
+.opc-formula .eq { color: var(--green); font-weight: 800; }
+.opc-layers {
+    display: flex; flex-direction: column; gap: 12px;
+}
+.opc-layer {
+    background: var(--card); border-radius: 16px;
+    padding: 18px 16px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    display: flex; gap: 14px; align-items: flex-start;
+}
+.opc-layer::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+}
+.opc-layer.l1::before { background: linear-gradient(180deg, var(--purple), #C89AFF); }
+.opc-layer.l2::before { background: linear-gradient(180deg, var(--blue), #6BB6FF); }
+.opc-layer.l3::before { background: linear-gradient(180deg, var(--green), #00F5B8); }
+.opc-layer.l4::before { background: linear-gradient(180deg, var(--orange), #FF8E53); }
+.opc-layer.l5::before { background: linear-gradient(180deg, var(--pink), var(--red)); }
+.opc-layer-num {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; flex-shrink: 0;
+    color: #fff;
+}
+.opc-layer.l1 .opc-layer-num { background: rgba(168,107,255,0.2); color: var(--purple); }
+.opc-layer.l2 .opc-layer-num { background: rgba(77,157,255,0.2); color: var(--blue); }
+.opc-layer.l3 .opc-layer-num { background: rgba(0,217,163,0.2); color: var(--green); }
+.opc-layer.l4 .opc-layer-num { background: rgba(255,107,26,0.2); color: var(--orange); }
+.opc-layer.l5 .opc-layer-num { background: rgba(255,107,157,0.2); color: var(--pink); }
+.opc-layer-body { flex: 1; min-width: 0; }
+.opc-layer-title {
+    font-size: 14px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+}
+.opc-layer-title .icon { font-size: 16px; }
+.opc-layer-desc {
+    font-size: 12px; color: var(--text-dim); line-height: 1.6;
+}
+
+</style>
+</head>
+<body>
+<noscript><style>.section, .workshop-card, .value-card, .about-card, .incubator-section, .contact-card, .chain-section, .eco-section, .testimonial-card, .faq-item, .direction-item, .about-item, .invest-item, .flow-item, .chain-item, .eco-item { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<!-- ========== Nav ========== -->
+<nav class="nav">
+    <div class="nav-logo">
+        <div class="nav-logo-mark">
+            <div class="nav-logo-inner">
+                <div class="nav-logo-cf">CF<span class="dot">.</span></div>
+                <div class="nav-logo-tag">AI×CREATOR</div>
+            </div>
+        </div>
+        <div class="nav-brand">
+            <div class="en">Crazy Friday.</div>
+            <div class="cn">疯狂星期五</div>
+        </div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+        <a href="hub.html" style="font-size:12px;padding:8px 14px;background:rgba(255,107,26,0.1);border-radius:20px;text-decoration:none;font-weight:700;border:1px solid rgba(255,107,26,0.4);white-space:nowrap;">
+            <span style="background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✨ 入口</span>
+        </a>
+        <a href="#contact" class="nav-cta">联系我们</a>
+    </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+    <div class="container">
+        <div class="hero-eyebrow">
+            AI一人公司母系统
+        </div>
+        <h1>
+            <span class="white">一个人 + AI</span><br>
+            <span class="orange">= 一家公司</span>
+        </h1>
+        <div class="hero-subtitle">Crazy Friday 疯狂星期五</div>
+        <div class="hero-desc">
+            Crazy Friday 是一套<strong>真实运营中的AI商业生态</strong>。<br>
+            一个人 + AI，就能拥有<strong>传统公司全部的战斗力</strong>。<br>
+            如果你是自由职业者、内容创作者或企业主——<br>
+            <strong>这套生态，给你用，也给你一起干。</strong>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="num" style="color:var(--orange)" data-count="6" data-suffix="">0</div>
+                <div class="lbl">核心工坊</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num" style="color:var(--purple)" data-count="" data-text="1-200万">1-200万</div>
+                <div class="lbl">项目共创</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num" style="color:var(--green)" data-count="40" data-suffix="+">0</div>
+                <div class="lbl">服务客户</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num" style="color:var(--blue)" data-count="" data-text="1-5天">1-5天</div>
+                <div class="lbl">交付周期</div>
+            </div>
+        </div>
+        <div class="hero-cta">
+            <a href="#workshop" class="btn-primary">探索AI一人公司母系统 →</a>
+            <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="btn-secondary">定制AI工作台 →</a>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 系统价值 ========== -->
+<div class="section">
+    <div class="container">
+        <div class="section-eyebrow">VALUE</div>
+        <div class="section-title">系统价值</div>
+        <div class="section-sub">为什么叫"母系统"？因为它是一套可以持续产生新项目的底层能力系统</div>
+
+        <div class="value-card">
+            <div class="value-title">Crazy Friday 母系统能给你什么</div>
+            <ul class="value-list">
+                <li>整合全球AI工具、项目资源与商业服务</li>
+                <li>用AI员工替代重复工作，大幅提升效率</li>
+                <li>从0到1打造个人品牌与AI产品</li>
+                <li>一站式完成项目落地与商业变现</li>
+                <li>持续迭代，打造个人商业闭环</li>
+            </ul>
+        </div>
+
+        <div class="chain-section">
+            <div class="chain-title">一人公司运营全流程</div>
+            <div class="chain-flow">
+                <div class="chain-item">
+                    <div class="chain-icon">💡</div>
+                    <div class="chain-name">发现机会</div>
+                    <div class="chain-sub">洞察趋势</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">📚</div>
+                    <div class="chain-name">学习方法</div>
+                    <div class="chain-sub">掌握技能</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">🛠</div>
+                    <div class="chain-name">调用AI</div>
+                    <div class="chain-sub">使用工具</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">🚀</div>
+                    <div class="chain-name">开发交付</div>
+                    <div class="chain-sub">完成产品</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">💰</div>
+                    <div class="chain-name">获得收入</div>
+                    <div class="chain-sub">持续赚钱</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">📈</div>
+                    <div class="chain-name">沉淀放大</div>
+                    <div class="chain-sub">打造品牌</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 商业生态飞轮 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">ECOSYSTEM</div>
+        <div class="section-title">三层生态飞轮</div>
+        <div class="section-sub">每一层为下一层供血，形成自增长闭环</div>
+
+        <!-- 第一层：内容 -->
+        <div class="value-card" style="border-left:3px solid var(--orange);margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <div style="font-size:24px">📱</div>
+                <div style="font-size:15px;font-weight:800">内容增长生态</div>
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(255,107,26,0.15);color:var(--orange);margin-left:auto">引流层</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                多平台内容矩阵 · AI漫剧 · 小红书/抖音/知乎/视频号<br>
+                一个选题AI生成多平台内容，持续获取流量和精准客户
+            </div>
+        </div>
+
+        <!-- 第二层：应用 -->
+        <div class="value-card" style="border-left:3px solid var(--purple);margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <div style="font-size:24px">🤖</div>
+                <div style="font-size:15px;font-weight:800">AI应用生态</div>
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(168,107,255,0.15);color:var(--purple);margin-left:auto">产品层</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                AI工作台 · AI客服 · AI工作流 · AI应用市场<br>
+                每一个需求沉淀为一个AI应用，持续积累技术资产
+            </div>
+        </div>
+
+        <!-- 第三层：变现 -->
+        <div class="value-card" style="border-left:3px solid var(--green)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <div style="font-size:24px">💰</div>
+                <div style="font-size:15px;font-weight:800">商业变现生态</div>
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(0,217,163,0.15);color:var(--green);margin-left:auto">变现层</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                工作台定制 · AI营课程 · 项目共创/投资 · 电商服务<br>
+                现金流+股权双轮驱动，服务收入反哺内容和技术
+            </div>
+        </div>
+
+        <!-- 飞轮说明 -->
+        <div style="text-align:center;margin-top:16px;padding:14px;background:var(--card);border-radius:14px;border:1px dashed var(--border)">
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
+                <strong style="color:var(--orange)">内容</strong>带来流量 → 流量转化为<strong style="color:var(--purple)">AI应用</strong>客户 →<br>
+                客户需求沉淀为<strong style="color:var(--green)">变现</strong>产品 → 变现收入反哺内容生产
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 六大核心工坊 ========== -->
+<div class="section" id="workshop" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">WORKSHOPS</div>
+        <div class="section-title">六大核心工坊</div>
+        <div class="section-sub">构建一人公司完整运营体系，每个工坊解决一个核心问题</div>
+
+        <div class="workshop-grid">
+            <div class="workshop-card w1">
+                <div class="workshop-icon">🧊</div>
+                <div class="workshop-name">OPC工坊</div>
+                <div class="workshop-sub">项目发现与孵化中心</div>
+                <ul class="workshop-features">
+                    <li>AI变现项目库</li>
+                    <li>项目拆解 & SOP流程</li>
+                    <li>案例库 & 方法论</li>
+                    <li>知识体系沉淀</li>
+                </ul>
+                <div class="workshop-foot">从0到1，找到可复制的项目</div>
+            </div>
+
+            <div class="workshop-card w2">
+                <div class="workshop-icon">🤖</div>
+                <div class="workshop-name">超脑工坊</div>
+                <div class="workshop-sub">AI员工与自动化</div>
+                <ul class="workshop-features">
+                    <li>AI员工市场</li>
+                    <li>客服/运营/文案</li>
+                    <li>工作流编排</li>
+                    <li>企业级AI解决方案</li>
+                </ul>
+                <div class="workshop-foot">一个人干不过来？交给AI员工</div>
+            </div>
+
+            <div class="workshop-card w3">
+                <div class="workshop-icon">🤝</div>
+                <div class="workshop-name">商机工坊</div>
+                <div class="workshop-sub">AI商机与需求对接</div>
+                <ul class="workshop-features">
+                    <li>AI商机挖掘与分发</li>
+                    <li>AI技能服务市场</li>
+                    <li>项目协作与共创</li>
+                    <li>评价体系与保障</li>
+                </ul>
+                <div class="workshop-foot">用AI技能赚钱，订单不断</div>
+            </div>
+
+            <div class="workshop-card w4">
+                <div class="workshop-icon">🏪</div>
+                <div class="workshop-name">AI应用市场</div>
+                <div class="workshop-sub">应用与工具生态</div>
+                <ul class="workshop-features">
+                    <li>AI应用商店</li>
+                    <li>开发者生态</li>
+                    <li>应用交易与分成</li>
+                    <li>插件与API开放</li>
+                </ul>
+                <div class="workshop-foot">优秀AI应用，在这里流通</div>
+            </div>
+
+            <div class="workshop-card w5">
+                <div class="workshop-icon">🎓</div>
+                <div class="workshop-name">AI营知识库</div>
+                <div class="workshop-sub">知识付费与训练体系</div>
+                <ul class="workshop-features">
+                    <li>系统化课程体系</li>
+                    <li>实战训练营</li>
+                    <li>社区交流与社群</li>
+                    <li>导师陪跑与咨询</li>
+                </ul>
+                <div class="workshop-foot">从新手到高手的成长路径</div>
+            </div>
+
+            <div class="workshop-card w6">
+                <div class="workshop-icon">💼</div>
+                <div class="workshop-name">商业服务后台</div>
+                <div class="workshop-sub">电商与企业服务支持</div>
+                <ul class="workshop-features">
+                    <li>电商服务支持</li>
+                    <li>店铺开通/报白/代运营</li>
+                    <li>违规处理/财税/资质</li>
+                    <li>企业服务解决方案</li>
+                </ul>
+                <div class="workshop-foot">稳定现金流，支撑整个生态</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 项目孵化中心 ========== -->
+<div class="section" id="incubator">
+    <div class="container">
+        <div class="section-eyebrow">INCUBATOR</div>
+        <div class="section-title">项目孵化中心</div>
+        <div class="section-sub">两种合作模式，总有一种适合你</div>
+
+        <!-- 模式A：项目投资 -->
+        <div class="incubator-section" style="border-left: 3px solid var(--blue);">
+            <div class="incubator-badge" style="background:rgba(77,157,255,0.15);color:var(--blue)">💎 模式A</div>
+            <div class="incubator-title">项目投资 · 我们出钱，你来做</div>
+            <div class="incubator-desc">
+                你有好的项目和团队，我们出资金，不干预运营。纯财务投资，尊重创业者自主权，助力项目快速成长。
+            </div>
+            <div class="incubator-invest">
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--blue)">1-200万</div>
+                    <div class="invest-lbl">投资额度</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--blue)">5-15%</div>
+                    <div class="invest-lbl">股权比例</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--blue)">不干预</div>
+                    <div class="invest-lbl">运营自主</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模式B：项目共创 -->
+        <div class="incubator-section" style="border-left: 3px solid var(--orange); margin-top: 14px;">
+            <div class="incubator-badge">🔥 模式B</div>
+            <div class="incubator-title">项目共创 · 一起干</div>
+            <div class="incubator-desc">
+                <strong style="color:var(--orange)">方向1：</strong>你出想法，我们出钱+技术+资源，联合打造<br>
+                <strong style="color:var(--green)">方向2：</strong>我们出项目，你来执行，利润分成
+            </div>
+            <div class="incubator-invest">
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--orange)">1-200万</div>
+                    <div class="invest-lbl">共创资金</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--orange)">7-25%</div>
+                    <div class="invest-lbl">股权比例</div>
+                </div>
+                <div class="invest-item">
+                    <div class="invest-num" style="color:var(--orange)">全程</div>
+                    <div class="invest-lbl">陪跑支持</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" style="font-size: 18px; margin: 28px 0 14px;">孵化全流程</div>
+            <div class="incubator-flow">
+                <div class="flow-item">
+                    <div class="flow-num">01</div>
+                    <div class="flow-name">项目征集</div>
+                    <div class="flow-sub">创意收集</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <div class="flow-num">02</div>
+                    <div class="flow-name">MVP验证</div>
+                    <div class="flow-sub">用户调研</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <div class="flow-num">03</div>
+                    <div class="flow-name">Demo制作</div>
+                    <div class="flow-sub">产品原型</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <div class="flow-num">04</div>
+                    <div class="flow-name">产品测试</div>
+                    <div class="flow-sub">小范围测试</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <div class="flow-num">05</div>
+                    <div class="flow-name">商业验证</div>
+                    <div class="flow-sub">市场验证</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <div class="flow-num">06</div>
+                    <div class="flow-name">上线推广</div>
+                    <div class="flow-sub">增长推广</div>
+                </div>
+            </div>
+
+        <div class="section-title" style="font-size: 18px; margin: 28px 0 14px;">重点孵化方向</div>
+        <div class="direction-grid">
+            <div class="direction-item">
+                <div class="direction-icon">🤖</div>
+                <div class="direction-name">AI应用</div>
+                <div class="direction-sub">智能工具·效率应用·AI Agent</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">☁️</div>
+                <div class="direction-name">SaaS服务</div>
+                <div class="direction-sub">垂直行业SaaS·平台工具</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">🎬</div>
+                <div class="direction-name">内容科技</div>
+                <div class="direction-sub">AIGC·数字内容·创作工具</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">🎓</div>
+                <div class="direction-name">教育科技</div>
+                <div class="direction-sub">AI教育·在线学习·智能辅导</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">❤️</div>
+                <div class="direction-name">医疗健康</div>
+                <div class="direction-sub">AI医疗·健康管理·数字疗法</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">✨</div>
+                <div class="direction-name">更多领域</div>
+                <div class="direction-sub">持续探索更多创新可能</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 核心服务 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">SUPPORT</div>
+        <div class="section-title">孵化核心服务</div>
+        <div class="section-sub">不只是给钱，更是全程赋能</div>
+
+        <div class="workshop-grid">
+            <div class="workshop-card w1">
+                <div class="workshop-icon">👤</div>
+                <div class="workshop-name">专业指导</div>
+                <div class="workshop-sub">行业专家1v1指导</div>
+                <ul class="workshop-features">
+                    <li>产品/技术/商业辅导</li>
+                    <li>商业模式打磨</li>
+                </ul>
+            </div>
+            <div class="workshop-card w2">
+                <div class="workshop-icon">🔗</div>
+                <div class="workshop-name">资源对接</div>
+                <div class="workshop-sub">链接关键资源</div>
+                <ul class="workshop-features">
+                    <li>投资人/合作伙伴/媒体</li>
+                    <li>政府资源/行业资源</li>
+                </ul>
+            </div>
+            <div class="workshop-card w3">
+                <div class="workshop-icon">🛠</div>
+                <div class="workshop-name">AI工具支持</div>
+                <div class="workshop-sub">全套AI工具赋能</div>
+                <ul class="workshop-features">
+                    <li>降低开发成本</li>
+                    <li>提升效率</li>
+                </ul>
+            </div>
+            <div class="workshop-card w4">
+                <div class="workshop-icon">💰</div>
+                <div class="workshop-name">资金支持</div>
+                <div class="workshop-sub">1-200万共创资金</div>
+                <ul class="workshop-features">
+                    <li>天使投资/VC资源</li>
+                    <li>种子轮资金支持</li>
+                </ul>
+            </div>
+            <div class="workshop-card w5">
+                <div class="workshop-icon">🏢</div>
+                <div class="workshop-name">办公空间</div>
+                <div class="workshop-sub">办公场地与基础设施</div>
+                <ul class="workshop-features">
+                    <li>降低创业成本</li>
+                    <li>基础办公支持</li>
+                </ul>
+            </div>
+            <div class="workshop-card w6">
+                <div class="workshop-icon">📈</div>
+                <div class="workshop-name">成长服务</div>
+                <div class="workshop-sub">法务/财务/HR</div>
+                <ul class="workshop-features">
+                    <li>专业后端服务</li>
+                    <li>助力健康成长</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 合作生态 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">ECOSYSTEM</div>
+        <div class="section-title">合作生态伙伴</div>
+        <div class="section-sub">整合全球领先AI工具与平台</div>
+
+        <div class="eco-section">
+            <div class="eco-title">AI模型</div>
+            <div class="eco-grid">
+                <div class="eco-item"><div class="icon">⚡</div>OpenAI</div>
+                <div class="eco-item"><div class="icon">🔮</div>Claude</div>
+                <div class="eco-item"><div class="icon">✨</div>Gemini</div>
+                <div class="eco-item"><div class="icon">🌊</div>DeepSeek</div>
+            </div>
+        </div>
+
+        <div class="eco-section" style="margin-top: 14px;">
+            <div class="eco-title">AI创作</div>
+            <div class="eco-grid">
+                <div class="eco-item"><div class="icon">🎨</div>Midjourney</div>
+                <div class="eco-item"><div class="icon">🎬</div>Runway</div>
+                <div class="eco-item"><div class="icon">🔧</div>Dify</div>
+                <div class="eco-item"><div class="icon">🤖</div>Coze</div>
+            </div>
+        </div>
+
+        <div class="eco-section" style="margin-top: 14px;">
+            <div class="eco-title">效率工具</div>
+            <div class="eco-grid">
+                <div class="eco-item"><div class="icon">📝</div>Notion</div>
+                <div class="eco-item"><div class="icon">🎨</div>Figma</div>
+                <div class="eco-item"><div class="icon">📄</div>飞书</div>
+                <div class="eco-item"><div class="icon">💬</div>微信</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 客户评价 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">TESTIMONIALS</div>
+        <div class="section-title">真实反馈</div>
+        <div class="section-sub">来自用户的使用感受</div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">用了Crazy Friday的工作台，从Excel管理直接升级到AI工作流，效率提升非常明显</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: rgba(168,107,255,0.15);">🧑‍💻</div>
+                <div class="testimonial-info">
+                    <div class="testimonial-name">阿凯</div>
+                    <div class="testimonial-role">一人公司版博主</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">时铭帮我定制的CRM系统，1-5天就交付了，客户看了都说专业</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: rgba(0,217,163,0.15);">🎨</div>
+                <div class="testimonial-info">
+                    <div class="testimonial-name">小林</div>
+                    <div class="testimonial-role">自由职业设计师</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">AI营的课程体系非常系统，从工具到方法论到变现路径，全都有</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: rgba(255,107,26,0.15);">📚</div>
+                <div class="testimonial-info">
+                    <div class="testimonial-name">老张</div>
+                    <div class="testimonial-role">知识付费讲师</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 案例展示 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">CASES</div>
+        <div class="section-title">案例展示</div>
+        <div class="section-sub">真实交付的工作台，点开就能用</div>
+
+        <a href="https://shiming-ai.github.io/shiming-workbench/" style="display:block;text-decoration:none;color:inherit;margin-bottom:12px">
+            <div class="value-card" style="cursor:pointer;border-left:3px solid var(--orange)">
+                <div style="display:flex;align-items:center;gap:14px">
+                    <div style="width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🦞</div>
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:700">一人公司版工作台</div>
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">AI一人公司母系统 · 自用实战版</div>
+                    </div>
+                    <div style="font-size:18px;color:var(--text-mute)">›</div>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" style="display:block;text-decoration:none;color:inherit;margin-bottom:12px">
+            <div class="value-card" style="cursor:pointer;border-left:3px solid var(--green)">
+                <div style="display:flex;align-items:center;gap:14px">
+                    <div style="width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">📱</div>
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:700">展示版工作台</div>
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">客户在线体验 · 只读假数据</div>
+                    </div>
+                    <div style="font-size:18px;color:var(--text-mute)">›</div>
+                </div>
+            </div>
+        </a>
+
+        <div style="text-align:center;font-size:11px;color:var(--text-mute);padding:10px">
+            更多行业案例持续更新中，加微信查看
+        </div>
+    </div>
+</div>
+
+<!-- ========== 数据成果墙 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">RESULTS</div>
+        <div class="section-title">用数字说话</div>
+        <div class="section-sub">不是PPT，是真实在跑的系统</div>
+
+        <!-- 主数据横幅 -->
+        <div style="background:linear-gradient(135deg,rgba(255,107,26,0.12),rgba(168,85,255,0.08));border:1px solid rgba(255,107,26,0.25);border-radius:16px;padding:20px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(255,107,26,0.2),transparent 70%);border-radius:50%"></div>
+            <div style="font-size:12px;color:var(--text-mute);margin-bottom:6px">工作台定制交付周期</div>
+            <div style="font-size:42px;font-weight:900;background:linear-gradient(90deg,var(--orange),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">1-5天</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:6px">最快1天出demo，需求明确后极速交付</div>
+        </div>
+
+        <!-- 三个小指标 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:22px;font-weight:800;color:var(--green);margin-bottom:3px">12</div>
+                <div style="font-size:9px;color:var(--text-mute);line-height:1.4">功能<br>模块</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:22px;font-weight:800;color:var(--purple);margin-bottom:3px">8</div>
+                <div style="font-size:9px;color:var(--text-mute);line-height:1.4">内容<br>平台</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:22px;font-weight:800;color:var(--blue);margin-bottom:3px">18</div>
+                <div style="font-size:9px;color:var(--text-mute);line-height:1.4">AI业务<br>类型</div>
+            </div>
+        </div>
+
+        <!-- 洞察 -->
+        <div style="text-align:center;font-size:11px;color:var(--text-dim);line-height:1.7;padding:0 10px">
+            客服 · 文案 · 开发 · 运营 · 财务<br>
+            <strong style="color:var(--orange)">传统公司5-10个人的职能，AI工作台一个人就能覆盖</strong>
+        </div>
+
+        <!-- 生态入口横幅 -->
+        <a href="cf.html" style="display:block;text-decoration:none;margin-top:12px;background:linear-gradient(135deg,rgba(168,85,255,0.12),rgba(77,157,255,0.08));border:1px solid rgba(168,107,255,0.25);border-radius:16px;padding:18px;position:relative;overflow:hidden">
+            <div style="font-size:11px;color:var(--purple);margin-bottom:6px">AI时代的一人公司生态 · 全景蓝图</div>
+            <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:4px">不只是工作台，还有更大的生态</div>
+            <div style="font-size:11px;color:var(--text-dim)">8大平台级模块 · 4种共创角色 · 3年路线图</div>
+            <div style="position:absolute;top:50%;right:14px;transform:translateY(-50%);font-size:20px;color:var(--purple)">›</div>
+        </a>
+    </div>
+</div>
+
+<!-- ========== 客户定制 × 项目孵化 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">CUSTOMIZE × INCUBATE</div>
+        <div class="section-title">定制即案例，测试即资产</div>
+        <div class="section-sub">每个交付的项目都在丰富我们的案例库</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:block;text-decoration:none;color:inherit">
+                <div class="value-card" style="cursor:pointer;border-left:3px solid var(--blue);height:100%">
+                    <div style="font-size:28px;margin-bottom:8px">🛠</div>
+                    <div style="font-size:14px;font-weight:700;margin-bottom:4px">AI工作台定制</div>
+                    <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:10px">为你的业务定制专属AI工作台，交付后自动沉淀为平台案例库</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <span style="font-size:9px;padding:3px 8px;background:var(--card2);border-radius:4px;color:var(--text-mute)">永久域名</span>
+                        <span style="font-size:9px;padding:3px 8px;background:var(--card2);border-radius:4px;color:var(--text-mute)">PWA安装</span>
+                        <span style="font-size:9px;padding:3px 8px;background:var(--card2);border-radius:4px;color:var(--text-mute)">成为案例</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" style="display:block;text-decoration:none;color:inherit">
+                <div class="value-card" style="cursor:pointer;border-left:3px solid var(--purple);height:100%">
+                    <div style="font-size:28px;margin-bottom:8px">🥚</div>
+                    <div style="font-size:14px;font-weight:700;margin-bottom:4px">项目孵化实验室</div>
+                    <div style="font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:10px">测试中的AI项目在这里验证，成功后升级为平台可售卖的成熟产品</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <span style="font-size:9px;padding:3px 8px;background:var(--card2);border-radius:4px;color:var(--text-mute)">测试→验证</span>
+                        <span style="font-size:9px;padding:3px 8px;background:var(--card2);border-radius:4px;color:var(--text-mute)">上线→变现</span>
+                        <span style="font-size:9px;padding:3px 8px;background:var(--card2);border-radius:4px;color:var(--text-mute)">资产沉淀</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:20px;margin-bottom:4px">📦</div>
+                <div style="font-size:11px;font-weight:600">可打包售卖</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">成熟模板可卖</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:20px;margin-bottom:4px">🔄</div>
+                <div style="font-size:11px;font-weight:600">案例自动沉淀</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">每个项目都复用</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:20px;margin-bottom:4px">🚀</div>
+                <div style="font-size:11px;font-weight:600">持续迭代优化</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">好项目自动入库</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 适合谁 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">FOR WHO</div>
+        <div class="section-title">这套系统适合谁</div>
+        <div class="section-sub">如果你是以下任何一种人，我们大概率能帮到你</div>
+
+        <div class="direction-grid">
+            <div class="direction-item">
+                <div class="direction-icon">🧑‍💻</div>
+                <div class="direction-name">自由职业者</div>
+                <div class="direction-sub">想用AI提升效率，一个人接更多单</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">✍️</div>
+                <div class="direction-name">内容创作者</div>
+                <div class="direction-sub">想用AI批量生产内容，多平台分发</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">🚀</div>
+                <div class="direction-name">超级个体</div>
+                <div class="direction-sub">想一个人创业，但不知道从哪开始</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">🏪</div>
+                <div class="direction-name">小店老板</div>
+                <div class="direction-sub">想用AI管理店铺，解放自己时间</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">📚</div>
+                <div class="direction-name">知识付费讲师</div>
+                <div class="direction-sub">想用AI做课程、管学员、搞引流</div>
+            </div>
+            <div class="direction-item">
+                <div class="direction-icon">💼</div>
+                <div class="direction-name">职场转型者</div>
+                <div class="direction-sub">想用AI开启副业，为离职做准备</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 3步开始 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">GET STARTED</div>
+        <div class="section-title">3步开始</div>
+        <div class="section-sub">从沟通到交付，简单直接</div>
+
+        <div class="chain-section">
+            <div class="chain-flow">
+                <div class="chain-item">
+                    <div class="chain-icon">💬</div>
+                    <div class="chain-name">加微信沟通</div>
+                    <div class="chain-sub">说需求·选模板·定方案</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">🛠</div>
+                    <div class="chain-name">AI定制开发</div>
+                    <div class="chain-sub">1-5天交付·实时沟通进度</div>
+                </div>
+                <div class="chain-arrow">→</div>
+                <div class="chain-item">
+                    <div class="chain-icon">🚀</div>
+                    <div class="chain-name">上线使用</div>
+                    <div class="chain-sub">永久域名·PWA安装·售后保障</div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#contact" style="display:block;text-align:center;margin-top:16px;padding:16px;background:linear-gradient(135deg,var(--orange),#FF8E53);border-radius:14px;color:#fff;text-decoration:none;font-size:15px;font-weight:700;box-shadow:0 6px 20px rgba(255,107,26,0.3)">
+            现在就开始 →
+        </a>
+    </div>
+</div>
+
+<!-- ========== 关于我们 ========== -->
+<div class="section" id="about">
+    <div class="container">
+        <div class="section-eyebrow">ABOUT US</div>
+        <div class="section-title">关于 Crazy Friday</div>
+        <div class="section-sub">构建AI时代的一人公司生态</div>
+
+        <div class="about-card">
+            <div class="about-title">我们的使命</div>
+            <div class="about-text">
+                <strong>Crazy Friday 疯狂星期五</strong>由<strong>时铭</strong>创立，致力于打造<strong>AI一人公司母系统</strong>。<br><br>
+                我们相信：在AI时代，一个人加上一套完整的系统，就能拥有传统公司的生产能力。<br><br>
+                通过<strong>OPC工坊、超脑工坊、商机工坊、AI应用市场、AI营知识库、商业服务后台</strong>六大核心模块，我们帮助每个创作者从0到1建立AI驱动的商业闭环。
+            </div>
+            <div class="about-grid">
+                <div class="about-item">
+                    <div class="about-num" style="color:var(--purple)">6</div>
+                    <div class="about-lbl">核心工坊</div>
+                </div>
+                <div class="about-item">
+                    <div class="about-num" style="color:var(--orange)">8</div>
+                    <div class="about-lbl">覆盖平台</div>
+                </div>
+                <div class="about-item">
+                    <div class="about-num" style="color:var(--green)">18</div>
+                    <div class="about-lbl">AI业务类型</div>
+                </div>
+                <div class="about-item">
+                    <div class="about-num" style="color:var(--blue)">¥599起</div>
+                    <div class="about-lbl">工作台定制</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 创始人说 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">FOUNDER</div>
+        <div class="section-title">创始人说</div>
+        <div class="section-sub">为什么我要做这件事</div>
+
+        <div class="value-card" style="border-left: 3px solid var(--orange);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🦞</div>
+                <div>
+                    <div style="font-size:16px;font-weight:800">时铭</div>
+                    <div style="font-size:11px;color:var(--text-dim)">Crazy Friday 创始人 · AI一人公司实践者</div>
+                </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-dim);line-height:1.8">
+                我做过电商、搞过内容、踩过无数坑。直到用AI把所有业务串起来，才发现——<br>
+                <strong style="color:var(--text)">一个人 + AI，真的等于一家公司。</strong><br><br>
+                我花2天给自己做了一个AI工作台，用它管客户、管财务、管内容、管交付。从此一个人拥有了传统公司的全部生产力。<br><br>
+                Crazy Friday不是课程，不是工具，是一套<strong style="color:var(--text)">真正在运营的AI商业系统</strong>。我自己每天都在用，每条业务线都在真实跑通。<br><br>
+                如果你也在找一条<strong style="color:var(--orange)">一个人+AI就能跑通的创业路径</strong>——欢迎加入。
+            </div>
+        </div>
+
+        <!-- IP矩阵 -->
+        <div style="margin-top:14px;padding:14px;background:var(--card);border-radius:14px;border:1px solid var(--border)">
+            <div style="font-size:12px;color:var(--text-mute);margin-bottom:10px">📍 我们的IP矩阵</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <span style="font-size:11px;padding:6px 12px;background:var(--card2);border-radius:20px;border:1px solid var(--border)">🦞 Crazy Friday</span>
+                <span style="font-size:11px;padding:6px 12px;background:var(--card2);border-radius:20px;border:1px solid var(--border)">🧪 Friday Lab</span>
+                <span style="font-size:11px;padding:6px 12px;background:var(--card2);border-radius:20px;border:1px solid var(--border)">📚 一人公司AI营</span>
+                <span style="font-size:11px;padding:6px 12px;background:var(--card2);border-radius:20px;border:1px solid var(--border)">🎬 AI漫剧工坊</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 未来愿景 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">VISION</div>
+        <div class="section-title">为什么有长期价值</div>
+        <div class="section-sub">母系统的价值在于持续产生新项目</div>
+
+        <div class="value-card">
+            <ul class="value-list">
+                <li><strong>项目孵化机制</strong>：每年可孕育多个新项目，验证成功即纳入生态</li>
+                <li><strong>业务线互相赋能</strong>：工具库、课程、咨询、商机工坊彼此导流，形成闭环</li>
+                <li><strong>现金流+股权双轮驱动</strong>：服务带来稳定现金流，孵化投资带来长期增值</li>
+                <li><strong>网络效应</strong>：服务越多创业者，平台数据和资源越丰富，壁垒越高</li>
+                <li><strong>AI能力沉淀</strong>：每个项目积累的方法论、SOP、工作流都可复用</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 阶段路线图 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">ROADMAP</div>
+        <div class="section-title">我们在哪，要去哪</div>
+        <div class="section-sub">分阶段验证，不画大饼</div>
+
+        <!-- 阶段1 -->
+        <div class="value-card" style="border-left:3px solid var(--green);margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--green);color:#000;font-weight:700">进行中</span>
+                <div style="font-size:14px;font-weight:800">2026 · MVP验证期</div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                ✅ AI工作台已上线 · ✅ 落地页转化中 · ✅ 小红书内容引流中<br>
+                目标：服务40+客户 · 跑通定制→课程→共创的闭环 · 月营收破5万
+            </div>
+        </div>
+
+        <!-- 阶段2 -->
+        <div class="value-card" style="border-left:3px solid var(--orange);margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(255,107,26,0.15);color:var(--orange);font-weight:700">下一阶段</span>
+                <div style="font-size:14px;font-weight:800">2027-2028 · 规模化期</div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                AI营课程体系上线 · AI应用市场开放 · 孵化3-5个项目<br>
+                目标：服务200+客户 · 孵化首个成功项目 · 建立AI应用资产库
+            </div>
+        </div>
+
+        <!-- 阶段3 -->
+        <div class="value-card" style="border-left:3px solid var(--purple)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(168,107,255,0.15);color:var(--purple);font-weight:700">长期</span>
+                <div style="font-size:14px;font-weight:800">2029+ · 生态期</div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                AI一人公司生态成型 · 孵化项目独立运营 · 内容矩阵品牌化<br>
+                目标：成为AI一人公司赛道标杆 · 孵化项目总估值破亿
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== FAQ ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">FAQ</div>
+        <div class="section-title">常见问题</div>
+        <div class="section-sub">你想知道的，都在这里</div>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    Crazy Friday是什么？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">AI一人公司母系统，帮助每个人用AI建立商业闭环。从想法验证到项目开发，从需求对接到成交交付，让一个人就能拥有一家公司的AI生产力。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    项目共创怎么申请？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">联系我们，提交项目简介，面试沟通，签署协议。我们会全程陪跑，从MVP验证到上线推广提供全链路支持。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    AI工作台定制多久交付？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">根据需求复杂度1-5天交付，最快1天出demo。从需求梳理到产品上线，高效交付是我们的核心能力之一。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    一人公司AI营适合什么人？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">想用AI创业但不知道从哪开始的人。无论你是自由职业者、内容创作者、还是职场转型者，AI营都能帮你找到适合自己的AI变现路径。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    可以投资你们吗？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">欢迎交流，我们也在寻找战略合作伙伴。如果你看好AI一人公司赛道，欢迎联系我们深入沟通合作与投资机会。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    AI漫剧怎么合作？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">AI漫剧是我们的自有内容业务线，支持剧本合作、角色授权、平台分发、广告植入等多种合作方式。无论你是内容创作者、品牌方还是平台方，都欢迎联系我们探讨合作模式。</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    数据和隐私安全吗？
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-a">
+                    <div class="faq-a-inner">数据存在你自己的浏览器本地，不会上传服务器。我们高度重视用户隐私，所有敏感数据都在本地处理，确保你的信息安全。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 客户保障 ========== -->
+<div class="section" style="padding-top:0">
+    <div class="container">
+        <div class="section-eyebrow">GUARANTEE</div>
+        <div class="section-title">选择我们，放心交付</div>
+        <div class="section-sub">先看效果再决定，不盲目付费</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:10px">
+                <div style="font-size:24px;flex-shrink:0">🛡</div>
+                <div>
+                    <div style="font-size:13px;font-weight:700;margin-bottom:4px">先看demo再决定</div>
+                    <div style="font-size:11px;color:var(--text-dim);line-height:1.5">先出demo给你看效果，满意了再正式交付，不盲目付费。</div>
+                </div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:10px">
+                <div style="font-size:24px;flex-shrink:0">🔒</div>
+                <div>
+                    <div style="font-size:13px;font-weight:700;margin-bottom:4px">数据100%私有</div>
+                    <div style="font-size:11px;color:var(--text-dim);line-height:1.5">所有数据存在你自己浏览器，不上传服务器，比云端更安全。</div>
+                </div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:10px">
+                <div style="font-size:24px;flex-shrink:0">📡</div>
+                <div>
+                    <div style="font-size:13px;font-weight:700;margin-bottom:4px">永久域名访问</div>
+                    <div style="font-size:11px;color:var(--text-dim);line-height:1.5">交付后永久可用，不依赖任何平台，手机添加到桌面直接用。</div>
+                </div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:10px">
+                <div style="font-size:24px;flex-shrink:0">🔧</div>
+                <div>
+                    <div style="font-size:13px;font-weight:700;margin-bottom:4px">售后保障</div>
+                    <div style="font-size:11px;color:var(--text-dim);line-height:1.5">交付后bug修复有保障，功能调整灵活支持。</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:12px;padding:16px;background:linear-gradient(135deg,rgba(0,217,163,0.1),rgba(77,157,255,0.1));border:1px solid rgba(0,217,163,0.2);border-radius:14px;text-align:center">
+            <div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:6px">⚡ 2026限定早鸟价 · 仅限前30名</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.6">
+                前30名定制客户享早鸟价，满额恢复原价。<br>
+                <strong style="color:var(--text)">现在下单，1-5天交付，马上开始用AI赚钱</strong>
+            </div>
+            <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:inline-block;margin-top:10px;padding:10px 24px;background:linear-gradient(135deg,var(--orange),var(--green));color:#fff;border-radius:10px;text-decoration:none;font-size:13px;font-weight:700">立即定制 →</a>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 快速入口 ========== -->
+<div class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">QUICK ACCESS</div>
+        <div class="section-title">快速入口</div>
+        <div class="section-sub">点击直接体验</div>
+
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:block;text-decoration:none;color:inherit">
+            <div class="value-card" style="margin-bottom:12px;cursor:pointer;border-left:3px solid var(--orange)">
+                <div style="display:flex;align-items:center;gap:14px">
+                    <div style="font-size:28px">🚀</div>
+                    <div style="flex:1">
+                        <div style="font-size:15px;font-weight:700">定制AI工作台</div>
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">查看服务详情、行业场景与定价方案</div>
+                    </div>
+                    <div style="font-size:18px;color:var(--text-mute)">›</div>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" style="display:block;text-decoration:none;color:inherit">
+            <div class="value-card" style="margin-bottom:12px;cursor:pointer;border-left:3px solid var(--green)">
+                <div style="display:flex;align-items:center;gap:14px">
+                    <div style="font-size:28px">📱</div>
+                    <div style="flex:1">
+                        <div style="font-size:15px;font-weight:700">工作台展示版</div>
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:2px">在线体验AI一人公司工作台</div>
+                    </div>
+                    <div style="font-size:18px;color:var(--text-mute)">›</div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- ========== 联系 ========== -->
+<div class="section" id="contact" style="padding-top: 0;">
+    <div class="container">
+        <div class="section-eyebrow">CONTACT</div>
+        <div class="section-title">加入 Crazy Friday</div>
+        <div class="section-sub">让我们一起创造未来</div>
+
+        <div class="contact-card">
+            <div class="contact-title">开启你的AI创业之旅</div>
+            <div class="contact-desc">项目共创 · 工作台定制 · 课程学习 · 漫剧合作 · 企业咨询</div>
+            <div class="contact-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <a href="landing.html" class="contact-item">
+                    <div class="contact-icon">💻</div>
+                    <div class="contact-label">定制AI工作台</div>
+                    <div class="contact-sub">1-5天交付</div>
+                </a>
+                <a href="demo.html" class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-label">体验展示版</div>
+                    <div class="contact-sub">在线体验</div>
+                </a>
+                <a href="partner.html" class="contact-item" style="border-color: var(--orange); background: rgba(255,107,26,0.06);">
+                    <div class="contact-icon">🤝</div>
+                    <div class="contact-label" style="color: var(--orange);">共创伙伴</div>
+                    <div class="contact-sub">加入合伙人</div>
+                </a>
+                <a href="#incubator" class="contact-item">
+                    <div class="contact-icon">🚀</div>
+                    <div class="contact-label">项目共创</div>
+                    <div class="contact-sub">1-200万</div>
+                </a>
+                <a href="hub.html" class="contact-item">
+                    <div class="contact-icon">📚</div>
+                    <div class="contact-label">AI方案咨询</div>
+                    <div class="contact-sub">定制你的方案</div>
+                </a>
+                <a href="#" class="contact-item" onclick="toast('请加微信交流'); return false;">
+                    <div class="contact-icon">💼</div>
+                    <div class="contact-label">投资/合作</div>
+                    <div class="contact-sub">融资对接</div>
+                </a>
+            </div>
+            <div style="margin-top: 20px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px dashed var(--border);">
+                <div style="font-size: 12px; color: var(--text-mute); margin-bottom: 8px;">📞 直接联系</div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="font-size: 14px; font-weight: 700; color: var(--orange); cursor: pointer;" onclick="copyWechat('Yshim16506')">微信①：Yshim16506</div>
+                    <div style="font-size: 14px; font-weight: 700; color: var(--orange); cursor: pointer;" onclick="copyWechat('R26184352Y')">微信②：R26184352Y</div>
+                </div>
+                <div style="font-size: 10px; color: var(--text-mute); margin-top: 8px;">点击微信号即可复制</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== Footer ========== -->
+<div class="footer">
+    <div class="footer-links">
+        <a href="#workshop">六大工坊</a>
+        <a href="#incubator">孵化中心</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">工作台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo.html">展示版</a>
+        <a href="#contact">联系</a>
+    </div>
+    <p>© 2026 Crazy Friday 疯狂星期五 · AI × CREATOR</p>
+    <p style="margin-top: 6px;">AI一人公司母系统 · 让每个人都能拥有AI驱动的商业能力</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ========== Floating Bottom Nav ========== -->
+<nav class="float-nav" id="floatNav">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">首页</a>
+    <a href="#workshop">工坊</a>
+    <a href="#incubator">孵化</a>
+    <a href="#about">关于</a>
+    <a href="#contact">联系</a>
+</nav>
+
+<!-- ========== Back to Top ========== -->
+<a href="#" class="back-top" id="backTop" aria-label="返回顶部">↑</a>
+
+<script>
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function copyWechat(id) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(() => toast('✅ 已复制：' + id));
+    } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = id;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            toast('✅ 已复制：' + id);
+        } catch (e) {
+            toast('请手动复制：' + id);
+        }
+        document.body.removeChild(textarea);
+    }
+}
+
+/* ========== FAQ Accordion ========== */
+function toggleFaq(el) {
+    var item = el.parentElement;
+    var answer = item.querySelector('.faq-a');
+    var isOpen = item.classList.contains('open');
+    // Close all
+    var allItems = document.querySelectorAll('.faq-item');
+    for (var i = 0; i < allItems.length; i++) {
+        allItems[i].classList.remove('open');
+        allItems[i].querySelector('.faq-a').style.maxHeight = '0';
+    }
+    // Open clicked if it was closed
+    if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+}
+
+/* ========== Number Count-up Animation ========== */
+function animateNumber(el, target, duration) {
+    var start = 0;
+    var startTime = null;
+    var suffix = el.getAttribute('data-suffix') || '';
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Ease out
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(eased * target);
+        el.textContent = current + (progress >= 1 ? suffix : '');
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            el.textContent = target + suffix;
+        }
+    }
+    requestAnimationFrame(step);
+}
+
+function initNumberAnimations() {
+    var nums = document.querySelectorAll('.hero-stat .num[data-count]');
+    for (var i = 0; i < nums.length; i++) {
+        var el = nums[i];
+        var target = el.getAttribute('data-count');
+        var text = el.getAttribute('data-text');
+        if (text) {
+            // Non-numeric value: fade in
+            el.style.opacity = '0';
+            el.style.transition = 'opacity 0.8s ease-out';
+            setTimeout(function(e, t) {
+                return function() {
+                    e.textContent = t;
+                    e.style.opacity = '1';
+                };
+            }(el, text), 300);
+        } else if (target) {
+            el.textContent = '0';
+            setTimeout(function(e, t) {
+                return function() {
+                    animateNumber(e, parseInt(t, 10), 1500);
+                };
+            }(el, target), 300 + i * 150);
+        }
+    }
+}
+
+/* ========== Scroll Reveal (IntersectionObserver) ========== */
+function initScrollReveal() {
+    var elements = document.querySelectorAll(
+        '.section, .biz-card, .workshop-card, .value-card, .about-card, ' +
+        '.incubator-section, .contact-card, .chain-section, .eco-section, ' +
+        '.testimonial-card, .faq-item, .direction-item, .about-item, ' +
+        '.invest-item, .flow-item, .chain-item, .eco-item'
+    );
+    // Filter out the hero section (first .section or elements in hero)
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    entries[i].target.classList.add('animate-in');
+                    observer.unobserve(entries[i].target);
+                }
+            }
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+        for (var i = 0; i < elements.length; i++) {
+            observer.observe(elements[i]);
+        }
+    } else {
+        // Fallback: just show everything
+        for (var j = 0; j < elements.length; j++) {
+            elements[j].classList.add('animate-in');
+        }
+    }
+}
+
+/* ========== Floating Nav & Back-to-top ========== */
+function initScrollNav() {
+    var floatNav = document.getElementById('floatNav');
+    var backTop = document.getElementById('backTop');
+    var hero = document.querySelector('.hero');
+    var heroHeight = hero ? hero.offsetHeight : 400;
+
+    function onScroll() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        // Show float nav after hero
+        if (scrollY > heroHeight * 0.8) {
+            floatNav.classList.add('show');
+        } else {
+            floatNav.classList.remove('show');
+        }
+        // Show back-to-top after one screen
+        if (scrollY > window.innerHeight) {
+            backTop.classList.add('show');
+        } else {
+            backTop.classList.remove('show');
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Smooth scroll to top
+    backTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        var start = window.pageYOffset || document.documentElement.scrollTop;
+        var startTime = null;
+        var duration = 500;
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            window.scrollTo(0, start * (1 - eased));
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    });
+}
+
+/* ========== Smooth scroll for anchor links ========== */
+function initSmoothScroll() {
+    var links = document.querySelectorAll('a[href^="#"]');
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href === '#' || href.length < 2) return;
+            var target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                var offset = 70; // nav height
+                var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        });
+    }
+}
+
+/* ========== Init ========== */
+document.addEventListener('DOMContentLoaded', function() {
+    initNumberAnimations();
+    initScrollReveal();
+    initScrollNav();
+    initSmoothScroll();
+});
+</script>
+
+</body>
+</html>
+
+
