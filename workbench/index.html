@@ -2532,15 +2532,31 @@ body {
     <div class="section">
         <div class="sec-header">
             <div class="sec-title">🤖 AI 智能体中心</div>
-            <div class="sec-more" onclick="showAgentCreate()">+ 新建智能体</div>
+            <div class="sec-more" onclick="showAgentCreate()" style="cursor:pointer;color:var(--orange)">+ 新建智能体</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.7">
-            智能体 = 一个能自主完成特定任务的AI。<br>
-            你可以创建、配置、管理所有智能体，每个智能体可调用技能库中的Skill。
+            你的 AI 员工军团 · 每个智能体能自主完成一类任务
+        </div>
+
+        <!-- 统计条 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="agentCountStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">智能体总数</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--green)" id="agentRunningStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">运行中</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--blue)" id="skillTotalStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">技能总数</div>
+            </div>
         </div>
     </div>
 
     <div class="section" style="padding-top:0">
+        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">📂 我的智能体</div>
         <div id="agentsList"></div>
     </div>
 
@@ -2606,25 +2622,42 @@ body {
 <div id="page-share" class="hidden">
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title">🔗 授权给别人用</div>
-            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 创建授权</div>
+            <div class="sec-title">🔗 授权管理</div>
+            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 自定义</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
-            创建一个独立工作台链接发给客户/伙伴。<br>
-            对方看到的是<b style="color:var(--text)">只读快照</b>，看不到你的真实数据。
+            给客户/伙伴发<b style="color:var(--text)">只读演示工作台</b><br>
+            对方看到演示快照，<b style="color:var(--green)">数据完全隔离</b>
+        </div>
+
+        <!-- 快捷模板 -->
+        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">⚡ 快捷模板</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+            <div class="biz-card" style="margin:0" onclick="createShare('客户演示','给意向客户看案例')">
+                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🤝</div><div><div class="biz-name">客户演示</div><div class="biz-desc">发意向客户</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="createShare('合伙人试用','给合伙人体检系统')">
+                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🧑‍🤝‍🧑</div><div><div class="biz-name">合伙人试用</div><div class="biz-desc">体检系统</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="createShare('定制沟通','定制需求确认用')">
+                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🛠️</div><div><div class="biz-name">定制沟通</div><div class="biz-desc">需求确认</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="createShare('投资人演示','投资人看生态演示')">
+                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">💼</div><div><div class="biz-name">投资人</div><div class="biz-desc">生态演示</div></div></div>
+            </div>
         </div>
     </div>
 
     <div class="section" style="padding-top:0">
+        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">📂 已创建的授权</div>
         <div id="shareList"></div>
 
         <div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px;margin-top:16px;text-align:center">
-            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 怎么用</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.7">
-                1. 创建一个"授权"（指定客户/模板/有效期）<br>
-                2. 系统生成独立URL（含token）<br>
-                3. 把URL发给对方<br>
-                4. 对方打开是<b style="color:var(--orange)">只读演示版</b>，数据与你完全隔离
+            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 工作原理</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:2">
+                📌 每个授权 = 独立链接（token隔离）<br>
+                🔒 对方看到 <b style="color:var(--orange)">只读演示</b>，无真实数据<br>
+                🗑 可随时 <b style="color:var(--red)">回收</b> 授权链接
             </div>
         </div>
     </div>
@@ -2818,8 +2851,17 @@ function setShares(arr) { save(SHARES_KEY, arr); }
 function renderAgents() {
     const list = document.getElementById('agentsList');
     const agents = getAgents();
+
+    // 更新统计条
+    const countStat = document.getElementById('agentCountStat');
+    const runStat = document.getElementById('agentRunningStat');
+    if (countStat) countStat.textContent = agents.length;
+    if (runStat) runStat.textContent = agents.filter(a => a.status !== 'off').length;
+    const skillStat = document.getElementById('skillTotalStat');
+    if (skillStat) skillStat.textContent = getSkills().length;
+
     if (agents.length === 0) {
-        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:32px 18px;text-align:center"><div style="font-size:36px;margin-bottom:8px">🤖</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有智能体</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上面的"<b style="color:var(--orange)">+新建智能体</b>"<br>或点下方"推荐模板"一键启用</div></div>';
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:32px 18px;text-align:center"><div style="font-size:36px;margin-bottom:8px">🤖</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有智能体</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上方"<b style="color:var(--orange)">+新建智能体</b>"<br>或点下方"推荐模板"一键启用</div></div>';
         return;
     }
     list.innerHTML = agents.map((a, i) => `
@@ -2827,20 +2869,43 @@ function renderAgents() {
             <div class="agent-head">
                 <div class="biz-icon">${a.icon || '🤖'}</div>
                 <div class="agent-name">${a.name}</div>
-                <div class="agent-tag ${a.status === 'off' ? 'off' : ''}">${a.status === 'off' ? '已停用' : '运行中'}</div>
+                <div class="agent-tag ${a.status === 'off' ? 'off' : ''}">${a.status === 'off' ? '已停用' : '● 运行中'}</div>
             </div>
             <div class="agent-desc">${a.desc || '暂无描述'}</div>
             <div class="agent-meta">
                 <span class="agent-meta-item">⚙️ ${a.model || 'GPT-4'}</span>
                 <span class="agent-meta-item">🛠️ ${(a.skills||[]).length} 个技能</span>
                 <span class="agent-meta-item">▶️ ${a.calls || 0} 次调用</span>
+                <span class="agent-meta-item">📅 ${a.time ? a.time.split(' ')[0] : '-'}</span>
             </div>
             <div class="agent-actions">
+                <button class="agent-action-btn" onclick="configAgent(${i})">⚙️ 配置</button>
                 <button class="agent-action-btn" onclick="toggleAgent(${i})">${a.status === 'off' ? '▶️ 启用' : '⏸ 停用'}</button>
-                <button class="agent-action-btn" onclick="deleteAgent(${i})">🗑 删除</button>
+                <button class="agent-action-btn" onclick="deleteAgent(${i})" style="color:var(--red)">🗑 删除</button>
             </div>
         </div>
     `).join('');
+}
+
+// 配置智能体（改描述/模型/挂载技能）
+function configAgent(i) {
+    const agents = getAgents();
+    const a = agents[i];
+    const model = prompt('选择模型（GPT-4 / Claude / 文心一言）：', a.model || 'GPT-4');
+    if (!model) return;
+    const skills = getSkills();
+    if (skills.length > 0) {
+        const skillNames = skills.map((s, j) => (j+1) + '. ' + s.name).join('\n');
+        const pick = prompt('挂载技能（输入序号，用逗号分隔，可留空）：\n' + skillNames, '');
+        if (pick !== null) {
+            const idxs = pick.split(/[,，]/).map(x => parseInt(x)-1).filter(x => !isNaN(x) && x >= 0 && x < skills.length);
+            a.skills = idxs.map(j => skills[j].name);
+        }
+    }
+    a.model = model;
+    setAgents(agents);
+    renderAgents();
+    toast('✅ 已保存配置');
 }
 
 function quickAddAgent(name, icon, desc) {
@@ -2966,17 +3031,20 @@ function renderShares() {
     const list = document.getElementById('shareList');
     const shares = getShares();
     if (shares.length === 0) {
-        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"+创建授权"<br>给客户/伙伴发只读版工作台</div></div>';
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上方模板或右上角"+自定义"<br>给客户/伙伴发只读版工作台</div></div>';
         return;
     }
     list.innerHTML = shares.map(s => `
         <div class="share-item">
-            <div class="share-name">${s.name}</div>
-            <div class="share-meta">${s.desc || ''} · 创建于 ${s.time}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <span class="share-name" style="margin-bottom:0">${s.name}</span>
+                <span style="font-size:9px;padding:2px 8px;background:rgba(0,217,163,0.12);color:var(--green);border-radius:10px;font-weight:700">● ${s.status || '有效'}</span>
+            </div>
+            <div class="share-meta">${s.desc || ''} · ${s.time}</div>
             <div class="share-link">${s.url}</div>
             <div class="agent-actions" style="margin-top:0">
                 <button class="agent-action-btn" onclick="copyText('${s.url}')">📋 复制链接</button>
-                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 删除</button>
+                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 回收</button>
             </div>
         </div>
     `).join('');
@@ -2993,16 +3061,16 @@ function copyText(t) {
     }
 }
 
-function createShare() {
-    const name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
+function createShare(name, desc) {
+    if (!name) name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
     if (!name) return;
-    const desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
+    if (!desc) desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
     if (!confirm('生成的链接只读演示，对方看不到你的真实数据。\n确定创建？')) return;
     const id = Date.now();
     const token = Math.random().toString(36).slice(2, 10);
     const url = 'https://shiming-ai.github.io/shiming-workbench/demo-gallery.html?share=' + token;
     const shares = getShares();
-    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN') });
+    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN'), status: '有效' });
     setShares(shares);
     renderShares();
     toast('✅ 授权链接已生成');
