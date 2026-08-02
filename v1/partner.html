@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday · 生态合伙人计划 · 7条业务线全开放，找对的人共建AI一人公司生态">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0f' stroke='%23fff' stroke-width='2'/><text x='50' y='58' text-anchor='middle' font-size='32' font-weight='900' fill='%23FF6B1A'>CF</text></svg>">
+<title>生态合伙人 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+    --pink: #FF6B9D; --cyan: #00D9FF;
+}
+html { scroll-behavior: smooth; }
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
+
+/* ========== Nav ========== */
+.nav {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+.nav-mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #000; border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+}
+.nav-mark::after {
+    content: ''; position: absolute; bottom: 4px; right: 4px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange); border: 1px solid #000;
+}
+.nav-cf { font-size: 12px; color: #fff; font-weight: 900; }
+.nav-cf .dot { color: var(--orange); }
+.nav-brand { font-size: 14px; font-weight: 800; line-height: 1; }
+.nav-brand .en {
+    background: linear-gradient(135deg, #fff 60%, var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-brand .cn { font-size: 9px; color: var(--text-mute); font-weight: 500; margin-top: 2px; }
+.nav-cta {
+    font-size: 12px; padding: 8px 18px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border-radius: 22px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(255,107,26,0.3);
+}
+
+/* ========== Section通用 ========== */
+.section { padding: 50px 0; }
+.section-eyebrow {
+    font-size: 11px; color: var(--orange); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+.section-eyebrow.purple { color: var(--purple); }
+.section-eyebrow.green { color: var(--green); }
+.section-title {
+    font-size: 26px; font-weight: 900;
+    line-height: 1.25; letter-spacing: -1px;
+    margin-bottom: 12px;
+}
+.section-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.section-sub {
+    font-size: 14px; color: var(--text-dim); line-height: 1.7;
+    margin-bottom: 28px;
+}
+.section-sub strong { color: var(--text); font-weight: 600; }
+
+/* ========== Hero ========== */
+.hero {
+    min-height: 90vh; display: flex; align-items: center;
+    padding: 60px 18px 40px;
+    background:
+        radial-gradient(ellipse 700px 500px at 50% 0%, rgba(255,107,26,0.18), transparent 60%),
+        radial-gradient(ellipse 400px 300px at 80% 50%, rgba(168,107,255,0.08), transparent);
+    text-align: center;
+}
+.hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 16px;
+    background: rgba(255,107,26,0.12); color: var(--orange);
+    border-radius: 20px; margin-bottom: 24px;
+    font-weight: 600; border: 1px solid rgba(255,107,26,0.25);
+}
+.hero h1 {
+    font-size: 36px; font-weight: 900;
+    line-height: 1.18; letter-spacing: -1.5px;
+    margin-bottom: 18px;
+}
+.hero h1 .white { color: #fff; }
+.hero h1 .gradient {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+    font-size: 16px; color: var(--text); font-weight: 600;
+    margin-bottom: 12px;
+}
+.hero-desc {
+    font-size: 14px; color: var(--text-dim); line-height: 1.8;
+    margin-bottom: 32px; max-width: 360px; margin-left: auto; margin-right: auto;
+}
+.hero-desc strong { color: var(--text); font-weight: 600; }
+
+.hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card);
+    margin-bottom: 32px;
+}
+.hero-stat {
+    padding: 14px 4px; text-align: center;
+    border-right: 1px solid var(--border);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .num {
+    font-size: 17px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-stat .lbl { font-size: 8px; color: var(--text-mute); margin-top: 4px; }
+
+.btn-primary {
+    display: inline-block; padding: 16px 36px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border: none; cursor: pointer;
+    border-radius: 14px; font-size: 15px; font-weight: 700; text-align: center;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+    transition: transform 0.15s;
+}
+.btn-primary:active { transform: scale(0.97); }
+.btn-ghost {
+    display: inline-block; padding: 14px 28px;
+    background: transparent; color: var(--text-dim);
+    text-decoration: none; border-radius: 14px;
+    font-size: 14px; font-weight: 600; text-align: center;
+    border: 1px solid var(--border); transition: all 0.15s;
+}
+.btn-ghost:active { border-color: var(--orange); color: var(--orange); }
+
+/* ========== 合伙人类型 ========== */
+.role-list { display: flex; flex-direction: column; gap: 14px; }
+.role-card {
+    background: var(--card); border-radius: 18px;
+    padding: 24px 22px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: all 0.2s;
+}
+.role-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.role-card[data-c="o"]::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.role-card[data-c="g"]::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.role-card[data-c="p"]::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.role-card[data-c="b"]::before { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.role-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.role-emoji {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+}
+.role-card[data-c="o"] .role-emoji { background: rgba(255,107,26,0.12); border: 1px solid rgba(255,107,26,0.2); }
+.role-card[data-c="g"] .role-emoji { background: rgba(0,217,163,0.12); border: 1px solid rgba(0,217,163,0.2); }
+.role-card[data-c="p"] .role-emoji { background: rgba(168,107,255,0.12); border: 1px solid rgba(168,107,255,0.2); }
+.role-card[data-c="b"] .role-emoji { background: rgba(77,157,255,0.12); border: 1px solid rgba(77,157,255,0.2); }
+.role-name { font-size: 17px; font-weight: 900; margin-bottom: 4px; }
+.role-tag {
+    font-size: 10px; padding: 3px 10px; border-radius: 10px;
+    font-weight: 600; display: inline-block;
+}
+.role-card[data-c="o"] .role-tag { background: rgba(255,107,26,0.12); color: var(--orange); }
+.role-card[data-c="g"] .role-tag { background: rgba(0,217,163,0.12); color: var(--green); }
+.role-card[data-c="p"] .role-tag { background: rgba(168,107,255,0.12); color: var(--purple); }
+.role-card[data-c="b"] .role-tag { background: rgba(77,157,255,0.12); color: var(--blue); }
+.role-desc {
+    font-size: 13px; color: var(--text-dim); line-height: 1.8;
+    margin-bottom: 16px;
+}
+.role-desc strong { color: var(--text); font-weight: 600; }
+.role-perks { list-style: none; }
+.role-perks li {
+    display: flex; align-items: start; gap: 8px;
+    font-size: 12px; color: var(--text-dim);
+    margin-bottom: 8px; line-height: 1.6;
+}
+.role-perks li::before {
+    content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0;
+}
+.role-fit {
+    font-size: 11px; color: var(--text-mute);
+    padding-top: 14px; margin-top: 14px;
+    border-top: 1px solid var(--border);
+}
+.role-fit strong { color: var(--text-dim); }
+
+/* ========== 赋能板块 ========== */
+.perk-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.perk-card {
+    background: var(--card); border-radius: 16px;
+    padding: 20px 16px; border: 1px solid var(--border);
+    text-align: left;
+    transition: all 0.2s;
+}
+.perk-card:active { transform: scale(0.97); border-color: var(--orange); }
+.perk-icon { font-size: 24px; margin-bottom: 10px; }
+.perk-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; color: #fff; }
+.perk-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+
+/* ========== 流程 ========== */
+.process-card {
+    background: var(--card); border-radius: 18px;
+    padding: 24px; border: 1px solid var(--border);
+}
+.process-item {
+    display: flex; gap: 16px; margin-bottom: 20px;
+    position: relative;
+}
+.process-item:last-child { margin-bottom: 0; }
+.process-item:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 17px; top: 42px; bottom: -10px;
+    width: 2px; background: var(--border);
+}
+.process-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; font-size: 14px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; box-shadow: 0 4px 12px rgba(255,107,26,0.3);
+}
+.process-content { flex: 1; padding-top: 4px; }
+.process-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.process-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* ========== 申请区 ========== */
+.apply-section {
+    background:
+        radial-gradient(ellipse 400px 300px at 50% 50%, rgba(255,107,26,0.08), transparent),
+        var(--card);
+    border-radius: 20px; padding: 36px 24px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.apply-title {
+    font-size: 22px; font-weight: 900; line-height: 1.4;
+    margin-bottom: 14px;
+}
+.apply-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.apply-desc {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.8; margin-bottom: 24px;
+}
+.apply-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+
+.contact-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.contact-item {
+    background: var(--card2); border-radius: 14px;
+    padding: 16px 8px; border: 1px solid var(--border);
+    text-align: center; text-decoration: none;
+    transition: all 0.15s;
+}
+.contact-item:active { border-color: var(--orange); transform: scale(0.97); }
+.contact-icon { font-size: 22px; margin-bottom: 6px; }
+.contact-label { font-size: 11px; font-weight: 600; color: var(--text); }
+.contact-sub { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
+/* 高级克制按钮 */
+.apply-btn-primary {
+    display: block; padding: 15px;
+    background: #fff; color: #000;
+    border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+}
+.apply-btn-primary:active { transform: scale(0.98); background: #f0f0f0; }
+
+/* 微信列表 */
+.wechat-list {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+.wechat-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.wechat-row:last-child { border-bottom: none; }
+.wechat-row:active { background: var(--card); }
+.wechat-ico {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: #fff; color: #000;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+}
+.wechat-info { flex: 1; }
+.wechat-label { font-size: 12px; color: var(--text-mute); }
+.wechat-id { font-size: 14px; font-weight: 800; color: #fff; font-family: monospace; }
+.wechat-action {
+    font-size: 11px; padding: 4px 12px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text-dim);
+    flex-shrink: 0;
+}
+.wechat-row:active .wechat-action { color: var(--orange); border-color: var(--orange); }
+
+.apply-divider {
+    height: 1px; background: var(--border); margin: 24px 0;
+}
+
+.apply-links {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.apply-link-item {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 6px; text-align: center;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+.apply-link-item:active {
+    border-color: var(--text); background: var(--card2);
+}
+.apply-link-ico { font-size: 18px; margin-bottom: 4px; }
+.apply-link-label {
+    font-size: 11px; color: var(--text);
+    font-weight: 600;
+}
+.apply-link-sub { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
+.trust-line {
+    font-size: 12px; color: var(--text-mute);
+    margin-top: 24px; padding-top: 18px;
+    border-top: 1px solid var(--border);
+    line-height: 1.8;
+}
+.trust-line strong { color: var(--text); font-weight: 600; }
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center; padding: 40px 18px 80px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border);
+}
+.footer-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;
+    margin-bottom: 12px;
+}
+.footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; }
+.footer-links a:active { color: var(--orange); }
+
+/* ========== 浮动CTA ========== */
+.float-cta {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%); z-index: 80;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none;
+    border-radius: 30px; font-size: 14px; font-weight: 700;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.4);
+    opacity: 0; pointer-events: none; transition: all 0.3s;
+    white-space: nowrap;
+}
+.float-cta.show { opacity: 1; pointer-events: auto; }
+.float-cta:active { transform: translateX(-50%) scale(0.95); }
+
+/* ========== 滚动渐入 ========== */
+.fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Nav ========== -->
+<nav class="nav">
+    <a href="cf.html" class="nav-logo">
+        <div class="nav-mark"><div class="nav-cf">CF<span class="dot">.</span></div></div>
+        <div class="nav-brand">
+            <span class="en">Crazy Friday</span>
+            <span class="cn">疯狂星期五</span>
+        </div>
+    </a>
+    <a href="#apply" class="nav-cta">聊聊合作</a>
+</nav>
+
+<!-- ========== Hero ========== -->
+<section class="hero">
+    <div style="width:100%">
+        <div class="hero-eyebrow">🚀 2026 生态合伙人招募</div>
+        <h1>
+            <span class="white">7条业务线全开放</span><br>
+            <span class="gradient">找对的人共建生态</span>
+        </h1>
+        <p class="hero-sub">Crazy Friday 生态合伙人计划</p>
+        <p class="hero-desc">
+            我们跑通了AI一人公司的<strong>全部核心环节</strong>。<br>
+            现在邀请认同这个方向的伙伴，加入一起，<br>
+            共享生态、分工协作、长期共建。
+        </p>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="num">7</div><div class="lbl">业务线</div></div>
+            <div class="hero-stat"><div class="num">18+</div><div class="lbl">AI能力</div></div>
+            <div class="hero-stat"><div class="num">3</div><div class="lbl">共创角色</div></div>
+            <div class="hero-stat"><div class="num">3年</div><div class="lbl">生态规划</div></div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <a href="#roles" class="btn-primary">了解三种角色 ↓</a>
+            <a href="cf.html" class="btn-ghost">了解生态</a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 合伙人类型 ========== -->
+<section class="section" id="roles">
+    <div class="wrap">
+        <div class="section-eyebrow orange fade-in">PARTNER ROLES</div>
+        <h2 class="section-title fade-in">三种角色<span class="accent">总有一种适合你</span></h2>
+        <p class="section-sub fade-in">根据你的资源和能力，选择合适的角色加入</p>
+
+        <div class="role-list">
+            <div class="role-card fade-in" data-c="o">
+                <div class="role-head">
+                    <div class="role-emoji">🤝</div>
+                    <div>
+                        <div class="role-name">流量合伙人</div>
+                        <span class="role-tag">流量 · 引流 · 客户推荐</span>
+                    </div>
+                </div>
+                <div class="role-desc">
+                    你有<strong>流量、人脉、社群</strong>。负责把客户引荐到生态，我们负责服务和交付。成交后你持续分润。
+                </div>
+                <ul class="role-perks">
+                    <li>专属推广链接，海报文案全配齐</li>
+                    <li>客户跟进状态实时可见，业绩一目了然</li>
+                    <li>长期分润，合作越久回报越高</li>
+                    <li>可发展下级，享受二级分润</li>
+                </ul>
+                <div class="role-fit">
+                    <strong>适合：</strong>博主、社群主、有行业人脉的职场人
+                </div>
+            </div>
+
+            <div class="role-card fade-in" data-c="g">
+                <div class="role-head">
+                    <div class="role-emoji">🛠️</div>
+                    <div>
+                        <div class="role-name">技术合伙人</div>
+                        <span class="role-tag">交付 · 开发 · 共创产品</span>
+                    </div>
+                </div>
+                <div class="role-desc">
+                    你有<strong>AI技术或开发能力</strong>。一起做项目交付、共创产品、共建系统。技术合伙人占项目/产品大头收益。
+                </div>
+                <ul class="role-perks">
+                    <li>共享全套技术栈模板和工具链</li>
+                    <li>大项目联合交付，创始人亲自带</li>
+                    <li>共创产品拥有长期分成权</li>
+                    <li>参与产品方向决策</li>
+                </ul>
+                <div class="role-fit">
+                    <strong>适合：</strong>AI工程师、独立开发者、产品经理
+                </div>
+            </div>
+
+            <div class="role-card fade-in" data-c="p">
+                <div class="role-head">
+                    <div class="role-emoji">🏢</div>
+                    <div>
+                        <div class="role-name">区域合伙人</div>
+                        <span class="role-tag">区域 · 行业 · 独占合作</span>
+                    </div>
+                </div>
+                <div class="role-desc">
+                    你想在<strong>本地或某个行业</strong>做AI服务生意。区域/行业独占保护，全业务线开放，品牌授权使用。
+                </div>
+                <ul class="role-perks">
+                    <li>区域或行业独占，不设第二家</li>
+                    <li>全业务线长期分润</li>
+                    <li>品牌授权使用，专业形象</li>
+                    <li>本地化运营策略支持</li>
+                </ul>
+                <div class="role-fit">
+                    <strong>适合：</strong>想做本地AI服务的创业者、行业资源方
+                </div>
+            </div>
+
+            <div class="role-card fade-in" data-c="b">
+                <div class="role-head">
+                    <div class="role-emoji">📜</div>
+                    <div>
+                        <div class="role-name">授权服务商</div>
+                        <span class="role-tag">品牌 · 系统 · 服务授权</span>
+                    </div>
+                </div>
+                <div class="role-desc">
+                    你有<strong>服务能力或团队</strong>。获得Crazy Friday品牌与系统授权，直接对外提供AI服务，我们供货赋能。
+                </div>
+                <ul class="role-perks">
+                    <li>品牌授权使用，专业背书</li>
+                    <li>系统底价供货，利润空间大</li>
+                    <li>交付物料全配齐，开箱即用</li>
+                    <li>服务商专属支持通道</li>
+                </ul>
+                <div class="role-fit">
+                    <strong>适合：</strong>有客户资源的设计/开发/代运营团队
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 赋能板块 ========== -->
+<section class="section" id="perks" style="padding-top:0;">
+    <div class="wrap">
+        <div class="section-eyebrow purple fade-in">EMPOWERMENT</div>
+        <h2 class="section-title fade-in">你将获得<span class="accent">全套生态支持</span></h2>
+        <p class="section-sub fade-in">不是丢个授权就完事，是真的帮你做成</p>
+
+        <div class="perk-grid">
+            <div class="perk-card fade-in">
+                <div class="perk-icon">🖥️</div>
+                <div class="perk-title">独立工作台</div>
+                <div class="perk-desc">客户、订单、收益一站管理，数据完全独立</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">📦</div>
+                <div class="perk-title">全套推广素材</div>
+                <div class="perk-desc">海报、文案、落地页、案例库，开箱即用</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">💎</div>
+                <div class="perk-title">合伙人底价</div>
+                <div class="perk-desc">专属报价通道，保证你的利润空间</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">📚</div>
+                <div class="perk-title">AI营课程权限</div>
+                <div class="perk-desc">系统学习AI变现方法论，持续升级能力</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">🤝</div>
+                <div class="perk-title">创始人1v1支持</div>
+                <div class="perk-desc">大客户联合跟进，关键时刻有人托底</div>
+            </div>
+            <div class="perk-card fade-in">
+                <div class="perk-icon">🌐</div>
+                <div class="perk-title">共创网络资源</div>
+                <div class="perk-desc">共享整个生态的人脉、流量、技术</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 流程 ========== -->
+<section class="section" id="process" style="padding-top:0;">
+    <div class="wrap">
+        <div class="section-eyebrow green fade-in">HOW TO JOIN</div>
+        <h2 class="section-title fade-in">从申请到共创<span class="accent">清晰四步</span></h2>
+        <p class="section-sub fade-in">不用复杂流程，踏实走完每一步</p>
+
+        <div class="process-card fade-in">
+            <div class="process-item">
+                <div class="process-num">1</div>
+                <div class="process-content">
+                    <div class="process-name">提交申请</div>
+                    <div class="process-desc">说明你的资源、能力和想做的方向。我们3天内回复。</div>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="process-num">2</div>
+                <div class="process-content">
+                    <div class="process-name">创始人1v1沟通</div>
+                    <div class="process-desc">双方了解彼此，确认角色匹配和合作方式。</div>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="process-num">3</div>
+                <div class="process-content">
+                    <div class="process-name">开通权限</div>
+                    <div class="process-desc">签署合作协议，开通独立工作台、素材库、专属底价。</div>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="process-num">4</div>
+                <div class="process-content">
+                    <div class="process-name">开始共建</div>
+                    <div class="process-desc">接单、引流、交付，系统自动结算，长期分润。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 共建机制 ========== -->
+<section class="section" id="mechanism" style="padding-top:0;">
+    <div class="wrap">
+        <div class="section-eyebrow purple fade-in">MECHANISM</div>
+        <h2 class="section-title fade-in">双向投入<span class="accent">才能长久</span></h2>
+        <p class="section-sub fade-in">共创不是单方面给予，是双向奔赴</p>
+
+        <div class="process-card fade-in">
+            <div class="process-item">
+                <div class="process-num" style="background:linear-gradient(135deg,var(--orange),var(--yellow));">一</div>
+                <div class="process-content">
+                    <div class="process-name">生态共建金</div>
+                    <div class="process-desc">
+                        确认角色时缴纳一笔<strong style="color:var(--orange)">生态共建金</strong>（渠道1000 / 技术3000 / 区域5000）。<br>
+                        这不是加盟费，是<strong>合作诚意的对赌</strong>——后续分润按比例抵扣，真正开始赚钱后等于零成本。
+                    </div>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="process-num" style="background:linear-gradient(135deg,var(--green),var(--cyan));">二</div>
+                <div class="process-content">
+                    <div class="process-name">系统分润抵扣</div>
+                    <div class="process-desc">
+                        渠道1000可抵扣前4单分润；技术3000含全套技术模板与工具；区域5000含品牌授权与区域保护。<br>
+                        <strong style="color:var(--green)">跑得越快，成本越低。</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="process-num" style="background:linear-gradient(135deg,var(--purple),var(--blue));">三</div>
+                <div class="process-content">
+                    <div class="process-name">双向承诺</div>
+                    <div class="process-desc">
+                        我们承诺：项目真实、分成透明、系统可用、数据归属清晰。<br>
+                        你承诺：认真投入、遵守规范、不私下交易。<br>
+                        <strong style="color:var(--text)">双方都有承诺，合作才走得远。</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 申请区 ========== -->
+<section class="section" id="apply" style="padding-top:0;">
+    <div class="wrap">
+        <div class="apply-section fade-in">
+            <div class="apply-title">2026年<br><span class="accent">AI生态的窗口就这么几年</span></div>
+            <div class="apply-desc">
+                认可这个方向？想一起干？<br>
+                加微信聊聊，说清楚你的情况就行。
+            </div>
+            <div class="apply-actions">
+                <a href="#" class="apply-btn-primary" onclick="copyWechat('Yshim16506'); return false;">📋 复制微信号：Yshim16506</a>
+            </div>
+            <div class="wechat-list">
+                <div class="wechat-row" onclick="copyWechat('Yshim16506')">
+                    <div class="wechat-ico">💬</div>
+                    <div class="wechat-info">
+                        <div class="wechat-label">微信 ①</div>
+                        <div class="wechat-id">Yshim16506</div>
+                    </div>
+                    <div class="wechat-action">复制</div>
+                </div>
+                <div class="wechat-row" onclick="copyWechat('R26184352Y')">
+                    <div class="wechat-ico">💬</div>
+                    <div class="wechat-info">
+                        <div class="wechat-label">微信 ②</div>
+                        <div class="wechat-id">R26184352Y</div>
+                    </div>
+                    <div class="wechat-action">复制</div>
+                </div>
+            </div>
+            <div class="apply-divider"></div>
+            <div class="apply-links">
+                <a href="cf.html" class="apply-link-item">
+                    <div class="apply-link-ico">🚀</div>
+                    <div class="apply-link-label">生态蓝图</div>
+                    <div class="apply-link-sub">了解整体规划</div>
+                </a>
+                <a href="demo-gallery.html" class="apply-link-item">
+                    <div class="apply-link-ico">🎨</div>
+                    <div class="apply-link-label">场景案例</div>
+                    <div class="apply-link-sub">12个真实场景</div>
+                </a>
+                <a href="index.html" class="apply-link-item">
+                    <div class="apply-link-ico">🌐</div>
+                    <div class="apply-link-label">生态总览</div>
+                    <div class="apply-link-sub">7条业务线</div>
+                </a>
+            </div>
+            <div class="trust-line">
+                <strong>我们不是招代理商，是找共建者。</strong><br>
+                认同这个方向、有真资源、真想做事的人，长期合作、长期分润。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== Footer ========== -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="cf.html">生态官网</a>
+        <a href="hub.html">入口页</a>
+        <a href="index.html">官网全景</a>
+        <a href="demo.html">体验系统</a>
+        <a href="agreement.html">合作协议</a>
+    </div>
+    <div>© 2026 Crazy Friday 疯狂星期五 · AI时代的一人公司生态</div>
+</footer>
+
+<!-- ========== 浮动CTA ========== -->
+<a href="#apply" class="float-cta" id="floatApply">聊聊合作</a>
+
+<!-- ========== Toast ========== -->
+<div id="toast" style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);color:var(--text);padding:14px 24px;border-radius:12px;border:1px solid var(--border);font-size:13px;z-index:100;opacity:0;transition:all 0.3s;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,0.4);"></div>
+
+<script>
+// 滚动渐入
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// 浮动CTA
+const floatApply = document.getElementById('floatApply');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) floatApply.classList.add('show');
+    else floatApply.classList.remove('show');
+}, { passive: true });
+
+// 平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+});
+
+// 复制微信
+function copyWechat(id) {
+    const toast = document.getElementById('toast');
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(id).then(() => {
+            toast.textContent = '✓ 已复制：' + id;
+        }).catch(() => {
+            toast.textContent = '微信号：' + id;
+        });
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = id; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast.textContent = '✓ 已复制：' + id; }
+        catch(e) { toast.textContent = '微信号：' + id; }
+        document.body.removeChild(ta);
+    }
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+    }, 2500);
+}
+</script>
+
+</body>
+</html>
