@@ -1410,6 +1410,7 @@ body {
 <div class="scenario-bar">
     <div class="scenario-tabs" id="scenarioTabs">
         <div class="scenario-tab active" data-sc="one" onclick="switchScene('one', this)"><span>🧑‍💼</span><span>一人公司</span></div>
+        <div class="scenario-tab" data-sc="solo" onclick="switchScene('solo', this)"><span>🦸</span><span>超级个体</span></div>
         <div class="scenario-tab" data-sc="love" onclick="switchScene('love', this)"><span>💕</span><span>恋爱记录</span></div>
         <div class="scenario-tab" data-sc="study" onclick="switchScene('study', this)"><span>📚</span><span>考研学习</span></div>
         <div class="scenario-tab" data-sc="fitness" onclick="switchScene('fitness', this)"><span>💪</span><span>健身减脂</span></div>
@@ -1472,6 +1473,9 @@ body {
         <div class="sidebar-item" onclick="switchScene('one', this)">
             <span class="sidebar-item-icon">🧑‍💼</span> 一人公司
         </div>
+        <div class="sidebar-item" onclick="switchScene('solo', this)">
+            <span class="sidebar-item-icon">🦸</span> 超级个体
+        </div>
         <div class="sidebar-item" onclick="switchScene('love', this)">
             <span class="sidebar-item-icon">💕</span> 恋爱记录
         </div>
@@ -1522,6 +1526,7 @@ body {
 // ========== 场景案例切换 ==========
 const SCENE_FILES = {
     one: null,
+    solo: 'demo-solo.html',
     love: 'demo-love.html',
     study: 'demo-study.html',
     fitness: 'demo-fitness.html',
@@ -1540,7 +1545,7 @@ function switchScene(scene, el) {
     const frame = document.getElementById('sceneFrame');
     const navTitle = document.getElementById('navTitle');
     const sceneNames = {
-        one: '一人公司', love: '恋爱记录', study: '考研学习', fitness: '健身减脂',
+        one: '一人公司', solo: '超级个体', love: '恋爱记录', study: '考研学习', fitness: '健身减脂',
         photo: '摄影作品', english: '英语学习', creator: '创作者', ecom: '电商运营',
         food: '餐饮店', pet: '宠物', travel: '旅行',
     };
