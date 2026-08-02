@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 旅行工作台 · 行程/机票酒店/装备清单/费用">
+<title>旅行工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #00D9FF; --sub: #4D9DFF; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 6px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 6px 11px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; font-size: 11px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(0,217,255,0.3);
+}
+
+.hero {
+    padding: 28px 0 22px;
+    background:
+        radial-gradient(ellipse 500px 280px at 50% 0%, rgba(0,217,255,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(77,157,255,0.08), transparent);
+    text-align: center;
+}
+.hero-countdown {
+    font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-countdown small { font-size: 17px; font-weight: 700; }
+.hero-text { font-size: 13px; color: var(--text); font-weight: 600; margin-top: 6px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.hero-badge {
+    font-size: 11px; padding: 4px 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 16px; color: var(--text-dim);
+}
+
+.section { padding: 16px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.sec-title { font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.sec-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--main); box-shadow: 0 0 6px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); padding: 14px; margin-bottom: 10px; }
+
+/* 行程 */
+.trip-day {
+    display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.trip-day:last-child { border-bottom: none; }
+.day-num {
+    width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; color: #fff;
+}
+.day-info { flex: 1; }
+.day-date { font-size: 11px; color: var(--text-dim); }
+.day-name { font-size: 13px; font-weight: 800; color: #fff; margin-top: 2px; }
+.day-tags { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+.day-tag { font-size: 9px; padding: 1px 6px; border-radius: 6px; background: var(--card2); color: var(--text-dim); }
+
+/* 行程费用 */
+.budget-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.budget-cell {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px;
+}
+.budget-cell .ico { font-size: 18px; margin-bottom: 4px; }
+.budget-cell .name { font-size: 11px; color: var(--text-dim); }
+.budget-cell .amt { font-size: 18px; font-weight: 900; color: #fff; margin-top: 2px; }
+.budget-cell .amt.paid { color: var(--green); }
+.budget-cell .pct { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
+/* 预定 */
+.booking-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.booking-item:last-child { border-bottom: none; }
+.booking-ico { font-size: 22px; flex-shrink: 0; }
+.booking-info { flex: 1; }
+.booking-name { font-size: 12px; font-weight: 700; color: #fff; }
+.booking-meta { font-size: 10px; color: var(--text-dim); margin-top: 1px; }
+.booking-amt { font-size: 13px; font-weight: 800; color: var(--main); flex-shrink: 0; }
+.booking-status { font-size: 9px; font-weight: 700; flex-shrink: 0; padding: 3px 7px; border-radius: 10px; }
+.b-paid { background: rgba(0,217,163,0.15); color: var(--green); }
+.b-pending { background: rgba(0,217,255,0.15); color: var(--main); }
+
+/* 装备清单 */
+.gear-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.gear-item:last-child { border-bottom: none; }
+.gear-check {
+    width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: transparent;
+}
+.gear-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+.gear-text { font-size: 12px; flex: 1; }
+.gear-text.done { color: var(--text-mute); text-decoration: line-through; }
+.gear-tag { font-size: 9px; padding: 2px 6px; border-radius: 6px; background: var(--card2); color: var(--text-mute); flex-shrink: 0; }
+
+/* 回忆相册 */
+.album-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.album-cell {
+    aspect-ratio: 1; border-radius: 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+}
+.album-cell.more {
+    background: linear-gradient(135deg, rgba(0,217,255,0.12), transparent);
+    border-color: var(--main); color: var(--main); font-size: 11px; font-weight: 700;
+}
+
+.footer {
+    text-align: center; padding: 28px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+
+.hero-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 14px;
+    background: rgba(0,217,163,0.1); color: var(--green);
+    border-radius: 20px; margin-bottom: 14px;
+    font-weight: 700; border: 1px solid rgba(0,217,163,0.25);
+}
+.hero-status::before {
+    content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+    animation: heroBlink 1.5s infinite;
+}
+@keyframes heroBlink { 50% { opacity: 0.3; } }
+.hero-trend {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--green);
+    margin-top: 8px; padding: 3px 10px;
+    background: rgba(0,217,163,0.1); border-radius: 12px;
+    font-weight: 700;
+}
+
+
+/* ===== 左侧折叠导航 ===== */
+.sidebar-overlay {
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 99;
+    width: 78vw; max-width: 300px;
+    background: var(--card); border-right: 1px solid var(--border);
+    transform: translateX(-105%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-head {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.sidebar-brand { flex: 1; }
+.sidebar-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.sidebar-brand-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.sidebar-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.sidebar-nav-label {
+    font-size: 10px; color: var(--text-mute); letter-spacing: 1px;
+    padding: 8px 18px 6px; text-transform: uppercase;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    color: var(--text-dim); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar-item:active { background: var(--card2); color: var(--main); border-left-color: var(--main); }
+.sidebar-foot {
+    padding: 14px 18px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-btn {
+    display: block; padding: 11px;
+    background: #fff; color: #000;
+    border-radius: 10px; font-size: 12px; font-weight: 700;
+    text-align: center; text-decoration: none;
+}
+.sidebar-btn-outline {
+    display: block; padding: 10px;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 12px; font-weight: 600; text-align: center; text-decoration: none;
+}
+.menu-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- 遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <div class="sidebar-logo">✈️</div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">旅行工作台</div>
+            <div class="sidebar-brand-sub">Crazy Friday AI工作台</div>
+        </div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
+    </div>
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-label">📂 功能板块</div>
+        <a class="sidebar-item" href="#sec-itinerary">🗓️ 行程安排 · 5天4晚</a>
+        <a class="sidebar-item" href="#sec-budget">💰 预算 · 已用 ¥2,800</a>
+        <a class="sidebar-item" href="#sec-reserve">📋 已预订 · 4项</a>
+        <a class="sidebar-item" href="#sec-gear">🎒 装备清单 · 32件</a>
+        <a class="sidebar-item" href="#sec-album">📸 旅途相册</a>
+    </div>
+    <div class="sidebar-foot">
+        <a class="sidebar-btn" href="demo-gallery.html">🎨 全部场景</a>
+        <a class="sidebar-btn-outline" href="https://shiming-ai.github.io/shiming-workbench/landing.html">🛠️ 定制同款</a>
+    </div>
+</div>
+
+
+<div class="topbar">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
+    <div class="topbar-logo">
+        <div class="mark">✈️</div>
+        <span>旅行工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link">🎨 全部场景</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-solo.html" class="scene-tab">🦸 超级个体</a>
+        <a href="demo-creator.html" class="scene-tab">🎬 创作者</a>
+        <a href="demo-ecom.html" class="scene-tab">🛒 电商</a>
+        <a href="demo-food.html" class="scene-tab">🍱 餐饮</a>
+        <a href="demo-pet.html" class="scene-tab">🐶 宠物</a>
+        <a href="demo-travel.html" class="scene-tab active">✈️ 旅行</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:36px">🗻</div>
+    <div class="hero-countdown">18<small> 天</small></div>
+    <div class="hero-status">实时数据 · 本月</div>
+    <div class="hero-text">距离出发 · 云南大理 5日游</div>
+    <div class="hero-sub">机票已订 · 酒店已订 · 行程已规划 · 装备待打包</div>
+    <div class="hero-badges">
+        <span class="hero-badge">💰 总预算 ¥4,800</span>
+        <span class="hero-badge">📷 行程 5站</span>
+        <span class="hero-badge">🎒 装备 32件</span>
+    </div>
+</div>
+
+<!-- 行程安排 -->
+<div class="section" id="sec-itinerary">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🗓️ 行程安排 · 5天4晚</div>
+        <div class="sec-more">8/15 → 8/19</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="trip-day">
+            <div class="day-num">D1</div>
+            <div class="day-info">
+                <div class="day-date">8月15日 · 周五</div>
+                <div class="day-name">大理古城 + 才村码头</div>
+                <div class="day-tags"><span class="day-tag">✈️ 落地</span><span class="day-tag">🏛️ 古城</span><span class="day-tag">🌅 洱海日落</span></div>
+            </div>
+        </div>
+        <div class="trip-day">
+            <div class="day-num">D2</div>
+            <div class="day-info">
+                <div class="day-date">8月16日 · 周六</div>
+                <div class="day-name">苍山洗马潭索道</div>
+                <div class="day-tags"><span class="day-tag">⛰️ 苍山</span><span class="day-tag">🚡 索道</span></div>
+            </div>
+        </div>
+        <div class="trip-day">
+            <div class="day-num">D3</div>
+            <div class="day-info">
+                <div class="day-date">8月17日 · 周日</div>
+                <div class="day-name">环洱海一日游</div>
+                <div class="day-tags"><span class="day-tag">🚗 包车</span><span class="day-tag">📸 拍照</span></div>
+            </div>
+        </div>
+        <div class="trip-day">
+            <div class="day-num">D4</div>
+            <div class="day-info">
+                <div class="day-date">8月18日 · 周一</div>
+                <div class="day-name">喜洲古镇 + 海舌公园</div>
+                <div class="day-tags"><span class="day-tag">🏯 古镇</span><span class="day-tag">🌾 田园</span></div>
+            </div>
+        </div>
+        <div class="trip-day">
+            <div class="day-num">D5</div>
+            <div class="day-info">
+                <div class="day-date">8月19日 · 周二</div>
+                <div class="day-name">返程 · 大理 → 杭州</div>
+                <div class="day-tags"><span class="day-tag">✈️ 返程</span><span class="day-tag">🛍️ 伴手礼</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 预算 -->
+<div class="section" id="sec-budget">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>💰 预算 · 已用 ¥2,800</div>
+        <div class="sec-more">总预算 ¥4,800</div>
+    </div>
+    <div class="budget-grid">
+        <div class="budget-cell"><div class="ico">✈️</div><div class="name">机票（往返）</div><div class="amt paid">¥1,280</div><div class="pct">已支付</div></div>
+        <div class="budget-cell"><div class="ico">🏨</div><div class="name">酒店·4晚</div><div class="amt paid">¥960</div><div class="pct">已支付</div></div>
+        <div class="budget-cell"><div class="ico">🍜</div><div class="name">餐饮预算</div><div class="amt">¥800</div><div class="pct">待消费</div></div>
+        <div class="budget-cell"><div class="ico">🚗</div><div class="name">交通+门票</div><div class="amt">¥1,000</div><div class="pct">待支付</div></div>
+        <div class="budget-cell"><div class="ico">🛍️</div><div class="name">伴手礼</div><div class="amt">¥500</div><div class="pct">待消费</div></div>
+        <div class="budget-cell"><div class="ico">💼</div><div class="name">应急</div><div class="amt">¥260</div><div class="pct">备用</div></div>
+    </div>
+</div>
+
+<!-- 预订 -->
+<div class="section" id="sec-reserve">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📋 已预订 · 4项</div>
+        <div class="sec-more">全部确认</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="booking-item">
+            <div class="booking-ico">✈️</div>
+            <div class="booking-info"><div class="booking-name">杭州↔大理 · 8/15 / 8/19</div><div class="booking-meta">东航 MU5805 · 春秋 9C8631</div></div>
+            <div class="booking-amt">¥1,280</div>
+            <div class="booking-status b-paid">已订</div>
+        </div>
+        <div class="booking-item">
+            <div class="booking-ico">🏨</div>
+            <div class="booking-info"><div class="booking-name">大理古城客栈·4晚</div><div class="booking-meta">海景大床房·含早</div></div>
+            <div class="booking-amt">¥960</div>
+            <div class="booking-status b-paid">已订</div>
+        </div>
+        <div class="booking-item">
+            <div class="booking-ico">🚡</div>
+            <div class="booking-info"><div class="booking-name">苍山洗马潭索道</div><div class="booking-info">2张·当日票</div></div>
+            <div class="booking-amt">¥520</div>
+            <div class="booking-status b-pending">待订</div>
+        </div>
+        <div class="booking-item">
+            <div class="booking-ico">🚗</div>
+            <div class="booking-info"><div class="booking-name">环洱海包车·1天</div><div class="booking-meta">9座商务·含司机</div></div>
+            <div class="booking-amt">¥480</div>
+            <div class="booking-status b-pending">待订</div>
+        </div>
+    </div>
+</div>
+
+<!-- 装备清单 -->
+<div class="section" id="sec-gear">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🎒 装备清单 · 32件</div>
+        <div class="sec-more">已备 18件</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="gear-item"><div class="gear-check done">✓</div><div class="gear-text done">身份证 · 银行卡</div><span class="gear-tag">必带</span></div>
+        <div class="gear-item"><div class="gear-check done">✓</div><div class="gear-text done">充电器 · 充电宝</div><span class="gear-tag">电子</span></div>
+        <div class="gear-item"><div class="gear-check done">✓</div><div class="gear-text done">防晒霜 SPF50</div><span class="gear-tag">护肤</span></div>
+        <div class="gear-item"><div class="gear-check done">✓</div><div class="gear-text done">遮阳帽 · 墨镜</div><span class="gear-tag">穿搭</span></div>
+        <div class="gear-item"><div class="gear-check done">✓</div><div class="gear-text done">相机 · 三脚架</div><span class="gear-tag">摄影</span></div>
+        <div class="gear-item"><div class="gear-check"></div><div class="gear-text">薄外套 · 防晒衣</div><span class="gear-tag">穿搭</span></div>
+        <div class="gear-item"><div class="gear-check"></div><div class="gear-text">泳衣 · 拖鞋</div><span class="gear-tag">洗漱</span></div>
+        <div class="gear-item"><div class="gear-check"></div><div class="gear-text">胃药 · 晕车药</div><span class="gear-tag">药品</span></div>
+    </div>
+</div>
+
+<!-- 回忆相册 -->
+<div class="section" id="sec-album">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📸 旅途相册</div>
+        <div class="sec-more">回程后整理</div>
+    </div>
+    <div class="album-grid">
+        <div class="album-cell">🏔️</div>
+        <div class="album-cell">🌅</div>
+        <div class="album-cell">🏛️</div>
+        <div class="album-cell">🍜</div>
+        <div class="album-cell">🌸</div>
+        <div class="album-cell">🐎</div>
+        <div class="album-cell">📷</div>
+        <div class="album-cell">🎒</div>
+        <div class="album-cell more">+∞</div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    这是<b style="color:var(--main)">旅行</b>的演示工作台 · 数据为演示效果<br>
+    <span style="display:inline-flex;gap:10px;margin-top:12px;justify-content:center;flex-wrap:wrap">
+        <a href="demo-gallery.html" style="display:inline-block;padding:10px 20px;background:#fff;color:#000;border-radius:10px;font-weight:700;">🎨 看全部案例</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:inline-block;padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;">🛠️ 定制同款</a>
+    </span>
+    <br><br><span style="font-size:10px;color:var(--text-mute)">© 2026 Crazy Friday 疯狂星期五 · AI时代的一人公司生态</span>
+</div>
+
+
+<script>
+// 侧边栏
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => { closeSidebar(); });
+});
+</script>
+
+</body>
+</html>
