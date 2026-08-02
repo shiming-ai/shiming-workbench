@@ -1174,10 +1174,10 @@ body {
         <div id="dailyReport"></div>
     </div>
 
-    <!-- 搞钱作战室 -->
+    <!-- 变现作战室 -->
     <div class="section card-red card-featured">
         <div class="sec-header">
-            <div class="sec-title"><span class="emoji">🔥</span>搞钱作战室</div>
+            <div class="sec-title"><span class="emoji">🔥</span>变现作战室</div>
             <div class="sec-more" id="warRoomStreak">连续达标 0 天</div>
         </div>
         <div id="warRoom"></div>
@@ -4955,7 +4955,7 @@ const serviceTemplates = [
     {
         icon: '🎯', name: '个人IP/一人公司版', color: 'var(--orange)',
         target: '博主、自媒体、一人公司、超级个体',
-        features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '搞钱作战室', '翻盘进度环'],
+        features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '变现作战室', '翻盘进度环'],
         price: '599定制+99/月', badge: '🔥 热门',
         desc: '你正在用的就是这版，经过实战验证'
     },
@@ -5633,7 +5633,7 @@ function markRepurchaseDone(crmIdx, milestone) {
     toast('✅ 已标记回访，下次节点自动提醒');
 }
 
-// ========== 搞钱作战室 ==========
+// ========== 变现作战室 ==========
 function renderWarRoom() {
     const today = todayStr();
     const incomes = load('incomes', DEFAULT_INCOMES);
@@ -5913,10 +5913,10 @@ const dailyTaskTemplates = {
     ],
 };
 
-// 每日搞钱箴言（按日期轮换，31条）
+// 每日变现箴言（按日期轮换，31条）
 const dailyQuotes = [
     '不要等完美才行动，完成比完美更重要',
-    '今天不搞钱，明天没钱花',
+    '今天不变现，明天没进账',
     '一个客户也是一个客户，积少成多',
     '发内容比想内容重要100倍',
     '闲鱼咨询回复速度=成单率',
@@ -5945,7 +5945,7 @@ const dailyQuotes = [
     '每天1个新咨询，月入30+线索',
     'AI漫剧赛道，早布局早吃肉',
     '一人公司最大的成本是时间',
-    '今天又是搞钱的一天，冲',
+    '今天又是变现的一天，冲',
 ];
 
 function renderDailyReport() {
@@ -5995,7 +5995,7 @@ function renderDailyReport() {
             </div>
         </div>
 
-        <!-- 搞钱箴言 -->
+        <!-- 变现箴言 -->
         <div style="padding:10px 12px;background:rgba(255,107,26,0.08);border-left:3px solid var(--orange);border-radius:8px;margin-bottom:10px">
             <div style="font-size:10px;color:var(--orange);margin-bottom:4px">💡 今日箴言</div>
             <div style="font-size:13px;color:var(--text);font-weight:500">${quote}</div>
@@ -6060,7 +6060,7 @@ function renderTodayFocus() {
     const todayPosts = load('posts', []).filter(p => p.date === today && p.status === 'pending');
     if (todayPosts.length > 0) focusItems.push({ icon: '📕', text: `今天还有${todayPosts.length}条内容待发布，先完成小红书主账号` });
     else focusItems.push({ icon: '📕', text: '今天内容已发完，可以排明天的选题' });
-    if (focusItems.length === 0) focusItems.push({ icon: '🎉', text: '今天的核心任务都完成了，继续搞钱！' });
+    if (focusItems.length === 0) focusItems.push({ icon: '🎉', text: '今天的核心任务都完成了，继续变现！' });
 
     focus.innerHTML = focusItems.slice(0, 3).map(f => `
         <div class="metric-row">
