@@ -1142,18 +1142,6 @@ body {
     </div>
 </div>
 
-<!-- ===== AI作战指挥舱（今日全局状态） ===== -->
-<div class="content" style="padding-top:12px">
-    <div class="section" style="background:linear-gradient(135deg,rgba(0,217,255,0.05),rgba(168,107,255,0.06));border:1px solid rgba(0,217,255,0.2);border-radius:16px;margin-bottom:12px">
-        <div class="sec-header">
-            <div class="sec-title"><span class="emoji">🧠</span>AI作战指挥舱</div>
-            <div class="sec-more" style="font-size:10px;color:var(--green);display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green)"></span>实时</div>
-        </div>
-        <div id="commandDeck" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
-        <div id="aiBrief" style="background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:12px;padding:12px"></div>
-    </div>
-</div>
-
 <div class="content">
 
 <!-- ===== 页面1: 今日 ===== -->
@@ -2618,43 +2606,25 @@ body {
 <div id="page-share" class="hidden">
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title">🔗 授权管理</div>
-            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 新建授权</div>
+            <div class="sec-title">🔗 授权给别人用</div>
+            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 创建授权</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
-            给客户/伙伴发一个<b style="color:var(--text)">只读演示工作台</b><br>
-            对方看到的是演示快照，<b style="color:var(--green)">数据完全隔离</b>
-        </div>
-
-        <!-- 授权模板 -->
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">📋 快捷授权模板</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
-            <div class="biz-card" style="margin:0" onclick="createShare('客户演示','给意向客户看案例')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🤝</div><div><div class="biz-name">客户演示</div><div class="biz-desc">发意向客户</div></div></div>
-            </div>
-            <div class="biz-card" style="margin:0" onclick="createShare('合伙人试用','给合伙人体检系统')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🤝</div><div><div class="biz-name">合伙人试用</div><div class="biz-desc">体检系统</div></div></div>
-            </div>
-            <div class="biz-card" style="margin:0" onclick="createShare('定制沟通','定制需求确认用')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🛠️</div><div><div class="biz-name">定制沟通</div><div class="biz-desc">需求确认</div></div></div>
-            </div>
-            <div class="biz-card" style="margin:0" onclick="createShare('投资人','投资人看生态演示')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">💼</div><div><div class="biz-name">投资人</div><div class="biz-desc">生态演示</div></div></div>
-            </div>
+            创建一个独立工作台链接发给客户/伙伴。<br>
+            对方看到的是<b style="color:var(--text)">只读快照</b>，看不到你的真实数据。
         </div>
     </div>
 
     <div class="section" style="padding-top:0">
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">📂 已创建的授权</div>
         <div id="shareList"></div>
 
         <div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px;margin-top:16px;text-align:center">
-            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 工作原理</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;text-align:left">
-                <div>1️⃣ 选择模板 → 生成<strong style="color:var(--orange)">独立URL</strong></div>
-                <div>2️⃣ 每个授权独立 token，<strong style="color:var(--green)">互不影响</strong></div>
-                <div>3️⃣ 对方打开 = <strong style="color:var(--orange)">只读演示</strong>，无你的真实数据</div>
-                <div>4️⃣ 可随时<strong style="color:var(--red)">删除/回收</strong>授权链接</div>
+            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 怎么用</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.7">
+                1. 创建一个"授权"（指定客户/模板/有效期）<br>
+                2. 系统生成独立URL（含token）<br>
+                3. 把URL发给对方<br>
+                4. 对方打开是<b style="color:var(--orange)">只读演示版</b>，数据与你完全隔离
             </div>
         </div>
     </div>
@@ -2996,20 +2966,17 @@ function renderShares() {
     const list = document.getElementById('shareList');
     const shares = getShares();
     if (shares.length === 0) {
-        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上方模板或右上角"+新建授权"<br>给客户/伙伴发只读版工作台</div></div>';
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"+创建授权"<br>给客户/伙伴发只读版工作台</div></div>';
         return;
     }
     list.innerHTML = shares.map(s => `
         <div class="share-item">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <span class="share-name" style="margin-bottom:0">${s.name}</span>
-                <span style="font-size:9px;padding:2px 8px;background:rgba(0,217,163,0.12);color:var(--green);border-radius:10px;font-weight:700">● ${s.status || '有效'}</span>
-            </div>
+            <div class="share-name">${s.name}</div>
             <div class="share-meta">${s.desc || ''} · 创建于 ${s.time}</div>
             <div class="share-link">${s.url}</div>
             <div class="agent-actions" style="margin-top:0">
                 <button class="agent-action-btn" onclick="copyText('${s.url}')">📋 复制链接</button>
-                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 回收</button>
+                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 删除</button>
             </div>
         </div>
     `).join('');
@@ -3026,16 +2993,16 @@ function copyText(t) {
     }
 }
 
-function createShare(name, desc) {
-    if (!name) name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
+function createShare() {
+    const name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
     if (!name) return;
-    if (!desc) desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
+    const desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
     if (!confirm('生成的链接只读演示，对方看不到你的真实数据。\n确定创建？')) return;
     const id = Date.now();
     const token = Math.random().toString(36).slice(2, 10);
     const url = 'https://shiming-ai.github.io/shiming-workbench/demo-gallery.html?share=' + token;
     const shares = getShares();
-    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN'), status: '有效' });
+    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN') });
     setShares(shares);
     renderShares();
     toast('✅ 授权链接已生成');
@@ -5989,62 +5956,6 @@ function toggleReportTask(i) {
     if (tasks[i].done) toast('✅ 已完成：' + tasks[i].text);
 }
 
-// ========== AI作战指挥舱 ==========
-function renderCommandDeck() {
-    const deck = document.getElementById('commandDeck');
-    const brief = document.getElementById('aiBrief');
-    if (!deck) return;
-
-    const tasks = load(getTodayKey(), []);
-    const undone = tasks.filter(t => !t.done);
-    const incomes = load('incomes', DEFAULT_INCOMES);
-    const expenses = load('expenses', DEFAULT_EXPENSES);
-    const today = todayStr();
-    const todayIncome = incomes.filter(i => i.time.startsWith(today)).reduce((s,i) => s+i.amount, 0);
-    const todayExpense = expenses.filter(e => e.time.startsWith(today)).reduce((s,e) => s+e.amount, 0);
-    const crm = load('crm', DEFAULT_CRM);
-    const clientsToFollow = crm.filter(c => c.status !== '已成交' && c.status !== '已退款').length;
-    const monthIn = incomes.filter(i => i.time.startsWith(monthPrefix())).reduce((s,i) => s+i.amount, 0);
-
-    const items = [
-        { icon: '💰', num: '¥' + todayIncome.toLocaleString(), lbl: '今日收入', color: '#00D9A3' },
-        { icon: '📋', num: undone.length + '件', lbl: '待办任务', color: '#FFD93D' },
-        { icon: '👥', num: clientsToFollow + '位', lbl: '待跟进客户', color: '#4D9DFF' },
-        { icon: '🎯', num: '¥' + monthIn.toLocaleString(), lbl: '本月累计', color: '#FF6B1A' },
-    ];
-
-    deck.innerHTML = items.map(i => `
-        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center">
-            <div style="font-size:16px">${i.icon}</div>
-            <div style="font-size:14px;font-weight:800;color:${i.color};margin-top:4px">${i.num}</div>
-            <div style="font-size:9px;color:var(--text-mute);margin-top:2px">${i.lbl}</div>
-        </div>
-    `).join('');
-
-    // AI今日简报
-    let tips = [];
-    if (undone.length > 0) tips.push('先完成「' + undone[0].text + '」，今日优先级最高');
-    if (todayIncome === 0 && undone.length === 0) tips.push('今日还没收入，建议发布1条内容激活流量');
-    if (clientsToFollow > 0) tips.push('有 ' + clientsToFollow + ' 位客户待跟进，30分钟内回复转化率最高');
-    const monthGoal = 30000;
-    const pct = Math.min(100, Math.round(monthIn / monthGoal * 100));
-    tips.push('本月目标完成 ' + pct + '%，距目标还差 ¥' + Math.max(0, monthGoal - monthIn).toLocaleString());
-    if (tips.length < 3) tips.push('AI建议：每天固定1小时做内容，复利效应在3个月后显现');
-
-    brief.innerHTML = `
-        <div style="font-size:11px;color:var(--text-mute);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-            <span style="width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green)"></span>
-            AI 今日简报
-        </div>
-        ${tips.slice(0,3).map((t,i) => `
-            <div style="display:flex;gap:8px;margin-bottom:6px;font-size:12px;color:var(--text-dim)">
-                <span style="color:var(--orange);font-weight:800;flex-shrink:0">${i+1}.</span>
-                <span style="line-height:1.6">${t}</span>
-            </div>
-        `).join('')}
-    `;
-}
-
 // ========== 今日聚焦 ==========
 function renderTodayFocus() {
     const tasks = load(getTodayKey(), []);
@@ -6979,7 +6890,6 @@ renderChannelGoals();
 renderBizOverview();
 renderServices();
 renderServicePage();
-renderCommandDeck();
 renderTodayFocus();
 renderDailyReport();
 renderWarRoom();
