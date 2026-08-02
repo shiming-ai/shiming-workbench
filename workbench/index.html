@@ -1118,11 +1118,11 @@ body {
 <div class="hero">
     <div class="hero-top">
         <div>
-            <div class="hero-title"><span class="name">时铭</span> · 工作台</div>
-            <div class="hero-sub">AI一人公司母系统 · Day <span id="heroDay">1</span> / 300</div>
+    <div class="hero-title"><span class="name">时铭</span> · 工作台</div>
+    <div class="hero-sub">AI一人公司母系统 · MVP验证中 · Day <span id="heroDay">5</span></div>
         </div>
         <div class="hero-day">
-            <div class="day-num" id="dayCount">1</div>
+            <div class="day-num" id="dayCount">5</div>
             <div class="day-label">DAY</div>
         </div>
     </div>
@@ -1174,10 +1174,10 @@ body {
         <div id="dailyReport"></div>
     </div>
 
-    <!-- 变现作战室 -->
+    <!-- 搞钱作战室 -->
     <div class="section card-red card-featured">
         <div class="sec-header">
-            <div class="sec-title"><span class="emoji">🔥</span>变现作战室</div>
+            <div class="sec-title"><span class="emoji">🔥</span>搞钱作战室</div>
             <div class="sec-more" id="warRoomStreak">连续达标 0 天</div>
         </div>
         <div id="warRoom"></div>
@@ -2524,7 +2524,7 @@ body {
     <div class="fab-mini income" onclick="quickMenuAction('income')"><div class="fm-icon">💰</div>记收入</div>
     <div class="fab-mini expense" onclick="quickMenuAction('expense')"><div class="fm-icon">📉</div>记支出</div>
     <div class="fab-mini task" onclick="quickMenuAction('task')"><div class="fm-icon">✅</div>加任务</div>
-    <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
+     <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
 </div>
 
 <!-- ===== 页面7: AI智能体中心 ===== -->
@@ -2532,31 +2532,15 @@ body {
     <div class="section">
         <div class="sec-header">
             <div class="sec-title">🤖 AI 智能体中心</div>
-            <div class="sec-more" onclick="showAgentCreate()" style="cursor:pointer;color:var(--orange)">+ 新建智能体</div>
+            <div class="sec-more" onclick="showAgentCreate()">+ 新建智能体</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.7">
-            你的 AI 员工军团 · 每个智能体能自主完成一类任务
-        </div>
-
-        <!-- 统计条 -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
-                <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="agentCountStat">0</div>
-                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">智能体总数</div>
-            </div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
-                <div style="font-size:20px;font-weight:800;color:var(--green)" id="agentRunningStat">0</div>
-                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">运行中</div>
-            </div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
-                <div style="font-size:20px;font-weight:800;color:var(--blue)" id="skillTotalStat">0</div>
-                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">技能总数</div>
-            </div>
+            智能体 = 一个能自主完成特定任务的AI。<br>
+            你可以创建、配置、管理所有智能体，每个智能体可调用技能库中的Skill。
         </div>
     </div>
 
     <div class="section" style="padding-top:0">
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">📂 我的智能体</div>
         <div id="agentsList"></div>
     </div>
 
@@ -2622,68 +2606,26 @@ body {
 <div id="page-share" class="hidden">
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title">🔗 授权管理</div>
-            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 自定义</div>
+            <div class="sec-title">🔗 授权给别人用</div>
+            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 创建授权</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
-            给客户/伙伴发<b style="color:var(--text)">只读演示工作台</b><br>
-            对方看到演示快照，<b style="color:var(--green)">数据完全隔离</b>
-        </div>
-
-        <!-- 快捷模板 -->
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">⚡ 快捷模板</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
-            <div class="biz-card" style="margin:0" onclick="createShare('客户演示','给意向客户看案例')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🤝</div><div><div class="biz-name">客户演示</div><div class="biz-desc">发意向客户</div></div></div>
-            </div>
-            <div class="biz-card" style="margin:0" onclick="createShare('合伙人试用','给合伙人体检系统')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🧑‍🤝‍🧑</div><div><div class="biz-name">合伙人试用</div><div class="biz-desc">体检系统</div></div></div>
-            </div>
-            <div class="biz-card" style="margin:0" onclick="createShare('定制沟通','定制需求确认用')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">🛠️</div><div><div class="biz-name">定制沟通</div><div class="biz-desc">需求确认</div></div></div>
-            </div>
-            <div class="biz-card" style="margin:0" onclick="createShare('投资人演示','投资人看生态演示')">
-                <div style="display:flex;align-items:center;gap:8px"><div class="biz-icon">💼</div><div><div class="biz-name">投资人</div><div class="biz-desc">生态演示</div></div></div>
-            </div>
+            创建一个独立工作台链接发给客户/伙伴。<br>
+            对方看到的是<b style="color:var(--text)">只读快照</b>，看不到你的真实数据。
         </div>
     </div>
 
     <div class="section" style="padding-top:0">
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">📂 已创建的授权</div>
         <div id="shareList"></div>
 
         <div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px;margin-top:16px;text-align:center">
-            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 工作原理</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:2">
-                📌 每个授权 = 独立链接（token隔离）<br>
-                🔒 对方看到 <b style="color:var(--orange)">只读演示</b>，无真实数据<br>
-                🗑 可随时 <b style="color:var(--red)">回收</b> 授权链接
+            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 怎么用</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.7">
+                1. 创建一个"授权"（指定客户/模板/有效期）<br>
+                2. 系统生成独立URL（含token）<br>
+                3. 把URL发给对方<br>
+                4. 对方打开是<b style="color:var(--orange)">只读演示版</b>，数据与你完全隔离
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 页面: 工具箱 ===== -->
-<div id="page-tools" class="hidden">
-    <div class="section">
-        <div class="sec-header">
-            <div class="sec-title">🧰 工具箱</div>
-            <div class="sec-more" style="font-size:11px;color:var(--text-mute)">⭐ 收藏 <span id="favCount">0</span></div>
-        </div>
-        <div style="font-size:13px;color:var(--text);font-weight:700;margin-bottom:14px">用心做好的每一个小工具</div>
-
-        <!-- 搜索框 -->
-        <div style="position:relative;margin-bottom:14px">
-            <input id="toolSearch" placeholder="搜索工具，用途或关键词…" style="width:100%;padding:11px 14px 11px 38px;background:var(--card);border:1px solid var(--border);border-radius:14px;font-size:13px;color:var(--text);outline:none" oninput="filterTools()">
-            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text-mute)">🔍</span>
-        </div>
-
-        <!-- 主体布局：左侧分类 + 右侧工具 -->
-        <div style="display:grid;grid-template-columns:94px 1fr;gap:12px">
-            <!-- 左侧分类 -->
-            <div id="toolCats" style="display:flex;flex-direction:column;gap:6px"></div>
-            <!-- 右侧工具网格 -->
-            <div id="toolGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
         </div>
     </div>
 </div>
@@ -2702,7 +2644,7 @@ body {
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-logo"><span>时铭</span> · AI一人公司</div>
-        <div class="sidebar-sub" id="sidebarSub">AI一人公司母系统 · Day 1 / 300</div>
+        <div class="sidebar-sub">MVP验证中 · Day 5 / 300</div>
     </div>
 
     <div class="sidebar-section">
@@ -2730,10 +2672,6 @@ body {
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">工具箱</div>
-        <div class="sidebar-item" onclick="switchPage('tools', this)">
-            <span class="sidebar-item-icon">🧰</span> 工具箱
-            <span class="s-count" id="toolCount">23</span>
-        </div>
         <div class="sidebar-item" onclick="switchPage('service', this)" style="border-left:2px solid var(--green)">
             <span class="sidebar-item-icon">🚀</span> AI定制服务
             <span style="font-size:8px;padding:1px 5px;background:var(--green);color:#fff;border-radius:4px;margin-left:auto">赚钱</span>
@@ -2864,8 +2802,6 @@ const dayDiff = Math.floor((new Date() - START_DATE) / 86400000) + 1;
 document.getElementById('dayCount').textContent = Math.max(1, dayDiff);
 document.getElementById('heroDay').textContent = Math.max(1, dayDiff);
 document.getElementById('navDayCount').textContent = 'Day ' + Math.max(1, dayDiff);
-const sidebarSubEl = document.getElementById('sidebarSub');
-if (sidebarSubEl) sidebarSubEl.textContent = 'AI一人公司母系统 · Day ' + Math.max(1, dayDiff) + ' / 300';
 
 // ========== AI 智能体管理 ==========
 const AGENTS_KEY = 'cf_agents';
@@ -2882,17 +2818,8 @@ function setShares(arr) { save(SHARES_KEY, arr); }
 function renderAgents() {
     const list = document.getElementById('agentsList');
     const agents = getAgents();
-
-    // 更新统计条
-    const countStat = document.getElementById('agentCountStat');
-    const runStat = document.getElementById('agentRunningStat');
-    if (countStat) countStat.textContent = agents.length;
-    if (runStat) runStat.textContent = agents.filter(a => a.status !== 'off').length;
-    const skillStat = document.getElementById('skillTotalStat');
-    if (skillStat) skillStat.textContent = getSkills().length;
-
     if (agents.length === 0) {
-        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:32px 18px;text-align:center"><div style="font-size:36px;margin-bottom:8px">🤖</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有智能体</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上方"<b style="color:var(--orange)">+新建智能体</b>"<br>或点下方"推荐模板"一键启用</div></div>';
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:32px 18px;text-align:center"><div style="font-size:36px;margin-bottom:8px">🤖</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有智能体</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上面的"<b style="color:var(--orange)">+新建智能体</b>"<br>或点下方"推荐模板"一键启用</div></div>';
         return;
     }
     list.innerHTML = agents.map((a, i) => `
@@ -2900,43 +2827,20 @@ function renderAgents() {
             <div class="agent-head">
                 <div class="biz-icon">${a.icon || '🤖'}</div>
                 <div class="agent-name">${a.name}</div>
-                <div class="agent-tag ${a.status === 'off' ? 'off' : ''}">${a.status === 'off' ? '已停用' : '● 运行中'}</div>
+                <div class="agent-tag ${a.status === 'off' ? 'off' : ''}">${a.status === 'off' ? '已停用' : '运行中'}</div>
             </div>
             <div class="agent-desc">${a.desc || '暂无描述'}</div>
             <div class="agent-meta">
                 <span class="agent-meta-item">⚙️ ${a.model || 'GPT-4'}</span>
                 <span class="agent-meta-item">🛠️ ${(a.skills||[]).length} 个技能</span>
                 <span class="agent-meta-item">▶️ ${a.calls || 0} 次调用</span>
-                <span class="agent-meta-item">📅 ${a.time ? a.time.split(' ')[0] : '-'}</span>
             </div>
             <div class="agent-actions">
-                <button class="agent-action-btn" onclick="configAgent(${i})">⚙️ 配置</button>
                 <button class="agent-action-btn" onclick="toggleAgent(${i})">${a.status === 'off' ? '▶️ 启用' : '⏸ 停用'}</button>
-                <button class="agent-action-btn" onclick="deleteAgent(${i})" style="color:var(--red)">🗑 删除</button>
+                <button class="agent-action-btn" onclick="deleteAgent(${i})">🗑 删除</button>
             </div>
         </div>
     `).join('');
-}
-
-// 配置智能体（改描述/模型/挂载技能）
-function configAgent(i) {
-    const agents = getAgents();
-    const a = agents[i];
-    const model = prompt('选择模型（GPT-4 / Claude / 文心一言）：', a.model || 'GPT-4');
-    if (!model) return;
-    const skills = getSkills();
-    if (skills.length > 0) {
-        const skillNames = skills.map((s, j) => (j+1) + '. ' + s.name).join('\n');
-        const pick = prompt('挂载技能（输入序号，用逗号分隔，可留空）：\n' + skillNames, '');
-        if (pick !== null) {
-            const idxs = pick.split(/[,，]/).map(x => parseInt(x)-1).filter(x => !isNaN(x) && x >= 0 && x < skills.length);
-            a.skills = idxs.map(j => skills[j].name);
-        }
-    }
-    a.model = model;
-    setAgents(agents);
-    renderAgents();
-    toast('✅ 已保存配置');
 }
 
 function quickAddAgent(name, icon, desc) {
@@ -3062,20 +2966,17 @@ function renderShares() {
     const list = document.getElementById('shareList');
     const shares = getShares();
     if (shares.length === 0) {
-        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上方模板或右上角"+自定义"<br>给客户/伙伴发只读版工作台</div></div>';
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"+创建授权"<br>给客户/伙伴发只读版工作台</div></div>';
         return;
     }
     list.innerHTML = shares.map(s => `
         <div class="share-item">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <span class="share-name" style="margin-bottom:0">${s.name}</span>
-                <span style="font-size:9px;padding:2px 8px;background:rgba(0,217,163,0.12);color:var(--green);border-radius:10px;font-weight:700">● ${s.status || '有效'}</span>
-            </div>
-            <div class="share-meta">${s.desc || ''} · ${s.time}</div>
+            <div class="share-name">${s.name}</div>
+            <div class="share-meta">${s.desc || ''} · 创建于 ${s.time}</div>
             <div class="share-link">${s.url}</div>
             <div class="agent-actions" style="margin-top:0">
                 <button class="agent-action-btn" onclick="copyText('${s.url}')">📋 复制链接</button>
-                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 回收</button>
+                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 删除</button>
             </div>
         </div>
     `).join('');
@@ -3092,16 +2993,16 @@ function copyText(t) {
     }
 }
 
-function createShare(name, desc) {
-    if (!name) name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
+function createShare() {
+    const name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
     if (!name) return;
-    if (!desc) desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
+    const desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
     if (!confirm('生成的链接只读演示，对方看不到你的真实数据。\n确定创建？')) return;
     const id = Date.now();
     const token = Math.random().toString(36).slice(2, 10);
     const url = 'https://shiming-ai.github.io/shiming-workbench/demo-gallery.html?share=' + token;
     const shares = getShares();
-    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN'), status: '有效' });
+    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN') });
     setShares(shares);
     renderShares();
     toast('✅ 授权链接已生成');
@@ -3120,8 +3021,6 @@ renderAgents();
 renderSkills();
 renderOfficialSkills();
 renderShares();
-renderToolCats();
-renderToolGrid();
 
 // ========== 进度环 ==========
 function renderRings() {
@@ -4164,121 +4063,8 @@ function switchPage(page, el) {
     document.getElementById('page-' + page).classList.remove('hidden');
     document.querySelectorAll('.sidebar-item').forEach(n => n.classList.remove('active'));
     if (el) el.classList.add('active');
-    // 更新顶部导航标题显示当前板块
-    const navTitle = document.querySelector('.top-nav-title');
-    if (navTitle) {
-        const pageNames = {
-            today: '首页', money: '财务管理', crm: '客户订单', channel: '渠道数据',
-            content: '内容矩阵', study: '学习复盘', service: 'AI定制服务',
-            website: '企业官网', opportunity: 'AI变现机会', control: '母系统管控台',
-            incubation: '项目孵化', aiknowledge: 'AI营知识库', ecom: '电商服务',
-            more: '更多工具', agents: '智能体中心', skills: '技能库', share: '授权管理', tools: '工具箱'
-        };
-        navTitle.innerHTML = '<span>时铭</span> · ' + (pageNames[page] || '工作台');
-    }
     window.scrollTo(0, 0);
     closeSidebar();
-}
-
-// ========== 工具箱 ==========
-const TOOLS = [
-    { id: 'ai-markdown', cat: 'ai', icon: '📝', name: 'AI写作', desc: '将Markdown列表和本地图片拼接成干净的扫描输出', color: '#FF6B1A', isNew: true },
-    { id: 'ai-image', cat: 'ai', icon: '🖼️', name: 'AI图片生成', desc: '一键生成工作流、批量处理图片', color: '#A66BFF' },
-    { id: 'ai-video', cat: 'ai', icon: '🎬', name: 'AI视频剪辑', desc: '短视频自动生成、配音、字幕、滤镜', color: '#FF4757' },
-    { id: 'ai-voice', cat: 'ai', icon: '🎙️', name: 'AI语音', desc: '文字转语音、克隆、变声、实时翻译', color: '#4D9DFF' },
-    { id: 'img-compress', cat: 'image', icon: '🗜️', name: '图片压缩', desc: '按 1.3、4、9、16、19 等常用比例裁剪', color: '#00D9A3' },
-    { id: 'img-watermark', cat: 'image', icon: '💧', name: '图片去水印', desc: '轻松为小红书图文视频分享链接', color: '#FF6B9D' },
-    { id: 'img-resize', cat: 'image', icon: '📐', name: '图片压缩', desc: '一键压缩图片体积、速度和精度', color: '#00D9FF' },
-    { id: 'img-format', cat: 'image', icon: '🔄', name: '图片格式转换', desc: '支持 JPG、AVIF、GIF、WebP、TIFF、PNG 等格式互转', color: '#FFD93D' },
-    { id: 'img-montage', cat: 'image', icon: '🖼️', name: '图片拼接', desc: '将多张图片自动拼接成一片横版或纵向长图', color: '#7C3AED' },
-    { id: 'img-gif', cat: 'image', icon: '🎞️', name: 'GIF生成', desc: '将多张图片按序生成动画 GIF，支持尺寸、速度、循环和颜色设置', color: '#F97316' },
-    { id: 'img-text', cat: 'image', icon: '📝', name: '图片水印', desc: '为图片添加文字或图片水印，支持位置、字号、透明度与旋转角度', color: '#0EA5E9' },
-    { id: 'img-split', cat: 'image', icon: '🔪', name: '图片分割', desc: '为图片水平加水印或纵向平均分割', color: '#EC4899' },
-    { id: 'img-grid', cat: 'image', icon: '🟫', name: '图片九宫格', desc: '一键裁切为9宫格，适合小红书与朋友圈', color: '#10B981' },
-    { id: 'video-cut', cat: 'video', icon: '✂️', name: '视频剪切', desc: '支持裁剪、滤镜、封面图、上传' },
-    { id: 'video-sub', cat: 'video', icon: '📋', name: '视频字幕生成', desc: '自动生成字幕+在线编辑' },
-    { id: 'video-gif', cat: 'video', icon: '🎬', name: '视频转GIF', desc: '视频片段转GIF动图' },
-    { id: 'md-count', cat: 'text', icon: '🔢', name: '字数统计', desc: '统计文本字数/段落/字符' },
-    { id: 'pdf-merge', cat: 'text', icon: '📄', name: 'PDF合并', desc: '多个PDF合并成一个' },
-    { id: 'code-format', cat: 'text', icon: '⌨️', name: '代码格式化', desc: 'JSON/HTML/CSS一键美化' },
-    { id: 'qr-gen', cat: 'life', icon: '📱', name: '二维码生成', desc: '文本/网址/名片二维码生成与美化' },
-    { id: 'password', cat: 'life', icon: '🔐', name: '密码生成', desc: '高强度密码自动生成' },
-    { id: 'weather', cat: 'life', icon: '🌤️', name: '天气预报', desc: '查看今日/未来一周天气' },
-];
-
-let currentCat = 'all';
-
-function getFavs() { return load('toolFavs', []); }
-function setFavs(arr) { save('toolFavs', arr); }
-
-function renderToolCats() {
-    const cats = {};
-    TOOLS.forEach(t => cats[t.cat] = (cats[t.cat] || 0) + 1);
-    const list = [
-        { id: 'all', name: '全部', icon: '🗂️', count: TOOLS.length },
-        { id: 'ai', name: 'AI工具', icon: '🤖', count: cats.ai || 0 },
-        { id: 'image', name: '图片设计', icon: '🖼️', count: cats.image || 0 },
-        { id: 'video', name: '视频工具', icon: '🎬', count: cats.video || 0 },
-        { id: 'text', name: '文本工具', icon: '📝', count: cats.text || 0 },
-        { id: 'life', name: '生活效率', icon: '🌟', count: cats.life || 0 },
-    ];
-    document.getElementById('toolCats').innerHTML = list.map(c => `
-        <div onclick="selectToolCat('${c.id}',this)" style="background:${currentCat===c.id?'var(--orange)':'var(--card)'};border:1px solid ${currentCat===c.id?'var(--orange)':'var(--border)'};border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.15s">
-            <div style="font-size:18px;margin-bottom:4px">${c.icon}</div>
-            <div style="font-size:11px;font-weight:700;color:${currentCat===c.id?'#fff':'var(--text)'}">${c.name}</div>
-            <div style="font-size:10px;color:${currentCat===c.id?'rgba(255,255,255,0.7)':'var(--text-mute)'};margin-top:2px">${c.count}</div>
-        </div>
-    `).join('');
-}
-
-function renderToolGrid() {
-    const favs = getFavs();
-    const search = (document.getElementById('toolSearch').value || '').toLowerCase().trim();
-    let items = TOOLS.filter(t => (currentCat === 'all' || t.cat === currentCat));
-    if (search) {
-        items = items.filter(t => t.name.toLowerCase().includes(search) || t.desc.toLowerCase().includes(search));
-    }
-    if (items.length === 0) {
-        document.getElementById('toolGrid').innerHTML = '<div style="grid-column:1/-1;padding:40px 20px;text-align:center;color:var(--text-dim);background:var(--card);border-radius:14px;border:1px dashed var(--border)">🔍 没找到相关工具</div>';
-        return;
-    }
-    document.getElementById('toolGrid').innerHTML = items.map(t => {
-        const isFav = favs.includes(t.id);
-        const color = t.color || 'var(--orange)';
-        return `
-        <div onclick="alert('「${t.name}」演示版\\n\\n${t.desc}\\n\\n完整版需部署API")" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;position:relative;transition:all 0.2s" onmouseenter="this.style.borderColor='${color}'" onmouseleave="this.style.borderColor='var(--border)'">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="width:38px;height:38px;border-radius:10px;background:${color}22;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid ${color}44">${t.icon}</div>
-                <div onclick="event.stopPropagation();toggleFav('${t.id}')" style="font-size:14px;color:${isFav?'#FFD93D':'var(--text-mute)'};cursor:pointer">${isFav?'★':'☆'}</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
-                <div style="font-size:13px;font-weight:800;color:#fff">${t.name}</div>
-                ${t.isNew ? '<span style="font-size:8px;padding:1px 5px;background:#FF4757;color:#fff;border-radius:6px;font-weight:800">NEW</span>' : ''}
-            </div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${t.desc}</div>
-        </div>`;
-    }).join('');
-}
-
-function selectToolCat(cat, el) {
-    currentCat = cat;
-    renderToolCats();
-    renderToolGrid();
-}
-
-function filterTools() {
-    renderToolGrid();
-}
-
-function toggleFav(id) {
-    const favs = getFavs();
-    const idx = favs.indexOf(id);
-    if (idx > -1) favs.splice(idx, 1);
-    else favs.push(id);
-    setFavs(favs);
-    const c = document.getElementById('favCount');
-    if (c) c.textContent = favs.length;
-    renderToolGrid();
 }
 
 // ========== AI变现机会 ==========
@@ -5087,7 +4873,7 @@ const serviceTemplates = [
     {
         icon: '🎯', name: '个人IP/一人公司版', color: 'var(--orange)',
         target: '博主、自媒体、一人公司、超级个体',
-        features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '变现作战室', '翻盘进度环'],
+        features: ['客户CRM管理', '财务收支记录', '内容矩阵排期', '每日变现日报', '搞钱作战室', '翻盘进度环'],
         price: '599定制+99/月', badge: '🔥 热门',
         desc: '你正在用的就是这版，经过实战验证'
     },
@@ -5765,7 +5551,7 @@ function markRepurchaseDone(crmIdx, milestone) {
     toast('✅ 已标记回访，下次节点自动提醒');
 }
 
-// ========== 变现作战室 ==========
+// ========== 搞钱作战室 ==========
 function renderWarRoom() {
     const today = todayStr();
     const incomes = load('incomes', DEFAULT_INCOMES);
@@ -6045,10 +5831,10 @@ const dailyTaskTemplates = {
     ],
 };
 
-// 每日变现箴言（按日期轮换，31条）
+// 每日搞钱箴言（按日期轮换，31条）
 const dailyQuotes = [
     '不要等完美才行动，完成比完美更重要',
-    '今天不变现，明天没进账',
+    '今天不搞钱，明天没钱花',
     '一个客户也是一个客户，积少成多',
     '发内容比想内容重要100倍',
     '闲鱼咨询回复速度=成单率',
@@ -6077,7 +5863,7 @@ const dailyQuotes = [
     '每天1个新咨询，月入30+线索',
     'AI漫剧赛道，早布局早吃肉',
     '一人公司最大的成本是时间',
-    '今天又是变现的一天，冲',
+    '今天又是搞钱的一天，冲',
 ];
 
 function renderDailyReport() {
@@ -6127,7 +5913,7 @@ function renderDailyReport() {
             </div>
         </div>
 
-        <!-- 变现箴言 -->
+        <!-- 搞钱箴言 -->
         <div style="padding:10px 12px;background:rgba(255,107,26,0.08);border-left:3px solid var(--orange);border-radius:8px;margin-bottom:10px">
             <div style="font-size:10px;color:var(--orange);margin-bottom:4px">💡 今日箴言</div>
             <div style="font-size:13px;color:var(--text);font-weight:500">${quote}</div>
@@ -6192,7 +5978,7 @@ function renderTodayFocus() {
     const todayPosts = load('posts', []).filter(p => p.date === today && p.status === 'pending');
     if (todayPosts.length > 0) focusItems.push({ icon: '📕', text: `今天还有${todayPosts.length}条内容待发布，先完成小红书主账号` });
     else focusItems.push({ icon: '📕', text: '今天内容已发完，可以排明天的选题' });
-    if (focusItems.length === 0) focusItems.push({ icon: '🎉', text: '今天的核心任务都完成了，继续变现！' });
+    if (focusItems.length === 0) focusItems.push({ icon: '🎉', text: '今天的核心任务都完成了，继续搞钱！' });
 
     focus.innerHTML = focusItems.slice(0, 3).map(f => `
         <div class="metric-row">
