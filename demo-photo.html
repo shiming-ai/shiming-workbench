@@ -256,6 +256,38 @@ body::before {
     flex-shrink: 0;
 }
 
+
+/* 案例价值卡 */
+.value-card {
+    background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    margin: -6px 0 18px;
+    position: relative;
+    overflow: hidden;
+}
+.value-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--main), var(--sub));
+}
+.value-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.value-badge {
+    font-size: 10px; padding: 3px 10px;
+    background: rgba(0,217,163,0.12); color: var(--green);
+    border-radius: 10px; font-weight: 700;
+}
+.value-title { font-size: 15px; font-weight: 800; color: #fff; }
+.value-slogan { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
+.value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.value-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 6px; text-align: center;
+}
+.value-item .vi-num { font-size: 13px; font-weight: 800; color: var(--main); }
+.value-item .vi-desc { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
 </style>
 </head>
 <body>
@@ -310,6 +342,22 @@ body::before {
 
 <div class="hero">
     <div style="font-size:40px">📷</div>
+
+
+<!-- 案例价值卡 -->
+<div class="value-card">
+    <div class="value-head">
+        <span style="font-size:20px">📷</span>
+        <span class="value-title">摄影工作台</span>
+        <span class="value-badge" style="margin-left:auto">✨ 可定制同款</span>
+    </div>
+    <div class="value-slogan">摄影师的作品与生意</div>
+    <div class="value-grid">
+        <div class="value-item"><div class="vi-num">作品管理</div><div class="vi-desc">236组</div></div>
+        <div class="value-item"><div class="vi-num">修图进度</div><div class="vi-desc">可视化</div></div>
+        <div class="value-item"><div class="vi-num">约拍档期</div><div class="vi-desc">¥680+</div></div>
+    </div>
+</div>
     <div class="hero-fans">8,642<small> 粉丝</small></div>
     <div class="hero-text">小红书摄影博主</div>
     <div class="hero-sub">本月涨粉 1,280 · 发布 12 组作品 · 目标 1万粉</div>
