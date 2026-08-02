@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 电商运营版 · 9大平台矩阵/订单/客服/库存/营销活动">
+<title>电商运营工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #FFD93D; --sub: #FF6B1A; --green: #00D9A3; --red: #FF4757;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #000; font-weight: 900;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 6px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 6px 11px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; font-size: 11px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #000; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(255,217,61,0.3);
+}
+
+.hero {
+    padding: 28px 0 22px;
+    background:
+        radial-gradient(ellipse 500px 280px at 50% 0%, rgba(255,217,61,0.15), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(255,107,26,0.08), transparent);
+    text-align: center;
+}
+.hero-gmv {
+    font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-gmv small { font-size: 17px; font-weight: 700; }
+.hero-text { font-size: 13px; color: var(--text); font-weight: 600; margin-top: 6px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.hero-badge {
+    font-size: 11px; padding: 4px 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 16px; color: var(--text-dim);
+}
+
+.section { padding: 16px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.sec-title { font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.sec-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--main); box-shadow: 0 0 6px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); padding: 14px; margin-bottom: 10px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.stat-card {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px;
+}
+.stat-card .num {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 10px; color: var(--text-mute); margin-top: 3px; }
+.stat-card .delta { font-size: 10px; color: var(--green); margin-top: 2px; font-weight: 700; }
+
+.platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.platform-cell {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 10px 6px; text-align: center;
+}
+.platform-cell.active { border-color: var(--main); background: linear-gradient(135deg, rgba(255,217,61,0.08), transparent); }
+.platform-cell .ico { font-size: 20px; margin-bottom: 4px; }
+.platform-cell .name { font-size: 11px; font-weight: 700; color: #fff; }
+.platform-cell .gmv { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+.platform-cell .gmv .hl { color: var(--main); font-weight: 800; }
+
+.order-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--border); padding: 10px 12px;
+    margin-bottom: 6px;
+}
+.order-ico { font-size: 18px; flex-shrink: 0; }
+.order-info { flex: 1; min-width: 0; }
+.order-name { font-size: 12px; font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.order-meta { font-size: 10px; color: var(--text-mute); margin-top: 1px; }
+.order-status { font-size: 9px; font-weight: 700; flex-shrink: 0; padding: 3px 8px; border-radius: 10px; }
+.s-pending { background: rgba(255,217,61,0.12); color: var(--main); }
+.s-shipping { background: rgba(0,217,255,0.12); color: var(--main); }
+.s-done { background: rgba(0,217,163,0.12); color: var(--green); }
+.s-urgent { background: rgba(255,71,87,0.15); color: var(--red); }
+
+.kf-row { display: flex; gap: 6px; }
+.kf-card {
+    flex: 1; background: var(--card2); border-radius: 10px;
+    padding: 10px 6px; text-align: center;
+    border: 1px solid var(--border);
+}
+.kf-card .num { font-size: 18px; font-weight: 900; color: var(--text); }
+.kf-card .num.urgent { color: var(--red); }
+.kf-card .lbl { font-size: 9px; color: var(--text-mute); margin-top: 2px; }
+
+.stock-item { margin-bottom: 10px; }
+.stock-item:last-child { margin-bottom: 0; }
+.stock-head { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+.stock-name { font-weight: 700; color: #fff; }
+.stock-num { color: var(--text-dim); font-size: 10px; }
+.stock-num .hl { color: var(--red); font-weight: 700; }
+.progress-bar { height: 6px; background: var(--card2); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; }
+
+.event-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.event-item:last-child { border-bottom: none; }
+.event-ico {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: var(--card2); display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+}
+.event-info { flex: 1; }
+.event-name { font-size: 12px; font-weight: 700; color: #fff; }
+.event-desc { font-size: 10px; color: var(--text-mute); margin-top: 1px; }
+.event-status { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.event-status.s1 { color: var(--green); }
+.event-status.s2 { color: var(--main); }
+
+.review-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.review-item:last-child { border-bottom: none; }
+.review-stars { color: var(--main); font-size: 12px; }
+.review-text { font-size: 12px; color: var(--text); flex: 1; }
+.review-time { font-size: 10px; color: var(--text-mute); }
+
+.footer {
+    text-align: center; padding: 28px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+
+.hero-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 14px;
+    background: rgba(0,217,163,0.1); color: var(--green);
+    border-radius: 20px; margin-bottom: 14px;
+    font-weight: 700; border: 1px solid rgba(0,217,163,0.25);
+}
+.hero-status::before {
+    content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+    animation: heroBlink 1.5s infinite;
+}
+@keyframes heroBlink { 50% { opacity: 0.3; } }
+.hero-trend {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--green);
+    margin-top: 8px; padding: 3px 10px;
+    background: rgba(0,217,163,0.1); border-radius: 12px;
+    font-weight: 700;
+}
+
+
+/* ===== 左侧折叠导航 ===== */
+.sidebar-overlay {
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 99;
+    width: 78vw; max-width: 300px;
+    background: var(--card); border-right: 1px solid var(--border);
+    transform: translateX(-105%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-head {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.sidebar-brand { flex: 1; }
+.sidebar-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.sidebar-brand-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.sidebar-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.sidebar-nav-label {
+    font-size: 10px; color: var(--text-mute); letter-spacing: 1px;
+    padding: 8px 18px 6px; text-transform: uppercase;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    color: var(--text-dim); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar-item:active { background: var(--card2); color: var(--main); border-left-color: var(--main); }
+.sidebar-foot {
+    padding: 14px 18px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-btn {
+    display: block; padding: 11px;
+    background: #fff; color: #000;
+    border-radius: 10px; font-size: 12px; font-weight: 700;
+    text-align: center; text-decoration: none;
+}
+.sidebar-btn-outline {
+    display: block; padding: 10px;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 12px; font-weight: 600; text-align: center; text-decoration: none;
+}
+.menu-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- 遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <div class="sidebar-logo">🛒</div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">电商运营工作台</div>
+            <div class="sidebar-brand-sub">Crazy Friday AI工作台</div>
+        </div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
+    </div>
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-label">📂 功能板块</div>
+        <a class="sidebar-item" href="#sec-data">📊 本月数据</a>
+        <a class="sidebar-item" href="#sec-account">🏪 全网店铺矩阵 · 9平台</a>
+        <a class="sidebar-item" href="#sec-order">📋 今日订单 · 28单</a>
+        <a class="sidebar-item" href="#sec-service">💬 客服中心 · 多店聚合</a>
+        <a class="sidebar-item" href="#sec-stock">📦 库存预警 · 多仓</a>
+        <a class="sidebar-item" href="#sec-marketing">🎯 营销活动</a>
+        <a class="sidebar-item" href="#sec-client">⭐ 客户评价</a>
+    </div>
+    <div class="sidebar-foot">
+        <a class="sidebar-btn" href="demo-gallery.html">🎨 全部场景</a>
+        <a class="sidebar-btn-outline" href="https://shiming-ai.github.io/shiming-workbench/landing.html">🛠️ 定制同款</a>
+    </div>
+</div>
+
+
+<div class="topbar">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
+    <div class="topbar-logo">
+        <div class="mark">¥</div>
+        <span>电商运营工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link">🎨 全部场景</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-solo.html" class="scene-tab">🦸 超级个体</a>
+        <a href="demo-creator.html" class="scene-tab">🎬 创作者</a>
+        <a href="demo-ecom.html" class="scene-tab active">🛒 电商</a>
+        <a href="demo-study.html" class="scene-tab">📚 考研</a>
+        <a href="demo-english.html" class="scene-tab">🌐 英语</a>
+        <a href="demo-love.html" class="scene-tab">💕 恋爱</a>
+        <a href="demo-fitness.html" class="scene-tab">💪 健身</a>
+        <a href="demo-photo.html" class="scene-tab">📷 摄影</a>
+        <a href="demo-food.html" class="scene-tab">🍱 餐饮</a>
+        <a href="demo-pet.html" class="scene-tab">🐶 宠物</a>
+        <a href="demo-travel.html" class="scene-tab">✈️ 旅行</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:36px">🛒</div>
+    <div class="hero-gmv">¥128,600<small> /月</small></div>
+    <div class="hero-status">实时数据 · 本月</div>
+    <div class="hero-text">本月GMV · 9平台全网店铺</div>
+    <div class="hero-sub">转化率 4.2% · 客单价 ¥186 · 复购率 32%</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📦 月订单 692单</span>
+        <span class="hero-badge">👥 客户 1,800+</span>
+        <span class="hero-badge">⭐ 好评率 98.6%</span>
+    </div>
+</div>
+
+<div class="section" id="sec-data">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 本月数据</div>
+        <div class="sec-more">近30天</div>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="num">¥128.6k</div><div class="lbl">总GMV</div><div class="delta">↑ 23%</div></div>
+        <div class="stat-card"><div class="num">692</div><div class="lbl">订单数</div><div class="delta">↑ 18%</div></div>
+        <div class="stat-card"><div class="num">¥186</div><div class="lbl">客单价</div><div class="delta">↑ 5%</div></div>
+        <div class="stat-card"><div class="num">4.2%</div><div class="lbl">转化率</div><div class="delta">↑ 0.6%</div></div>
+    </div>
+</div>
+
+<div class="section" id="sec-account">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🏪 全网店铺矩阵 · 9平台</div>
+        <div class="sec-more">8家运营中</div>
+    </div>
+    <div class="platform-grid">
+        <div class="platform-cell active">
+            <div class="ico">🏬</div>
+            <div class="name">淘宝</div>
+            <div class="gmv"><span class="hl">¥32k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">🛍️</div>
+            <div class="name">天猫</div>
+            <div class="gmv"><span class="hl">¥28k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">🛒</div>
+            <div class="name">京东</div>
+            <div class="gmv"><span class="hl">¥18k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">🎵</div>
+            <div class="name">抖音小店</div>
+            <div class="gmv"><span class="hl">¥15k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">📕</div>
+            <div class="name">小红书</div>
+            <div class="gmv"><span class="hl">¥11k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">📦</div>
+            <div class="name">闲鱼</div>
+            <div class="gmv"><span class="hl">¥9k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">🚀</div>
+            <div class="name">拼多多</div>
+            <div class="gmv"><span class="hl">¥7k</span></div>
+        </div>
+        <div class="platform-cell active">
+            <div class="ico">⚡</div>
+            <div class="name">快手小店</div>
+            <div class="gmv"><span class="hl">¥5k</span></div>
+        </div>
+        <div class="platform-cell">
+            <div class="ico">🏭</div>
+            <div class="name">1688</div>
+            <div class="gmv">供应链</div>
+        </div>
+    </div>
+</div>
+
+<div class="section" id="sec-order">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📋 今日订单 · 28单</div>
+        <div class="sec-more">5家店铺</div>
+    </div>
+    <div class="order-item">
+        <div class="order-ico">🏬</div>
+        <div class="order-info">
+            <div class="order-name">夏季薄款卫衣·灰色M</div>
+            <div class="order-meta">淘宝 · 星星** · ¥169 · 14:32</div>
+        </div>
+        <div class="order-status s-pending">待发货</div>
+    </div>
+    <div class="order-item">
+        <div class="order-ico">📕</div>
+        <div class="order-info">
+            <div class="order-name">渔夫帽·卡其</div>
+            <div class="order-meta">小红书 · 小鹿** · ¥89 · 13:05</div>
+        </div>
+        <div class="order-status s-pending">待发货</div>
+    </div>
+    <div class="order-item">
+        <div class="order-ico">🎵</div>
+        <div class="order-info">
+            <div class="order-name">运动鞋·白42</div>
+            <div class="order-meta">抖音 · 阿杰** · ¥299 · 11:20</div>
+        </div>
+        <div class="order-status s-shipping">已发出</div>
+    </div>
+    <div class="order-item">
+        <div class="order-ico">🛍️</div>
+        <div class="order-info">
+            <div class="order-name">连衣裙·藏蓝L</div>
+            <div class="order-meta">天猫 · 林** · ¥359 · 09:15</div>
+        </div>
+        <div class="order-status s-urgent">催发货</div>
+    </div>
+    <div class="order-item">
+        <div class="order-ico">📦</div>
+        <div class="order-info">
+            <div class="order-name">通勤双肩包</div>
+            <div class="order-meta">闲鱼 · 已签收 · ¥158</div>
+        </div>
+        <div class="order-status s-done">已完成</div>
+    </div>
+</div>
+
+<div class="section" id="sec-service">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>💬 客服中心 · 多店聚合</div>
+        <div class="sec-more">3个店铺同时</div>
+    </div>
+    <div class="kf-row">
+        <div class="kf-card"><div class="num urgent">12</div><div class="lbl">待回复</div></div>
+        <div class="kf-card"><div class="num">86</div><div class="lbl">今日已回</div></div>
+        <div class="kf-card"><div class="num">98%</div><div class="lbl">响应率</div></div>
+        <div class="kf-card"><div class="num">4.9</div><div class="lbl">客服评分</div></div>
+    </div>
+    <div style="font-size:11px;color:var(--text-mute);margin-top:8px;line-height:1.6;">
+        💡 淘宝3条 · 天猫5条 · 抖音4条 · 全部聚合到一个面板回复
+    </div>
+</div>
+
+<div class="section" id="sec-stock">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📦 库存预警 · 多仓</div>
+        <div class="sec-more">3款需补</div>
+    </div>
+    <div class="card">
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">夏季薄款卫衣 · 杭州仓</span><span class="stock-num"><span class="hl">剩 8件</span> / 100件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:8%;background:linear-gradient(90deg,var(--red),var(--main))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">渔夫帽 · 义乌仓</span><span class="stock-num"><span class="hl">剩 5件</span> / 80件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:6%;background:linear-gradient(90deg,var(--red),var(--main))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">运动鞋 · 广州仓</span><span class="stock-num">剩 32件 / 100件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:32%;background:linear-gradient(90deg,var(--green),var(--sub))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">通勤双肩包 · 义务仓</span><span class="stock-num">剩 68件 / 80件</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,var(--green),var(--sub))"></div></div>
+        </div>
+    </div>
+</div>
+
+<div class="section" id="sec-marketing">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>🎯 营销活动</div>
+        <div class="sec-more">2个进行中</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="event-item">
+            <div class="event-ico">🎉</div>
+            <div class="event-info"><div class="event-name">618年中大促</div><div class="event-desc">全平台参与 · 跨店满减 · 倒计时 12天</div></div>
+            <div class="event-status s1">进行中</div>
+        </div>
+        <div class="event-item">
+            <div class="event-ico">🎁</div>
+            <div class="event-info"><div class="event-name">满199减30</div><div class="event-desc">淘宝/天猫/京东同步 · 自动叠加优惠券</div></div>
+            <div class="event-status s1">进行中</div>
+        </div>
+        <div class="event-item">
+            <div class="event-ico">📢</div>
+            <div class="event-info"><div class="event-name">直播带货预告</div><div class="event-desc">抖音+快手 · 本周六 19:00</div></div>
+            <div class="event-status s2">待开始</div>
+        </div>
+        <div class="event-item">
+            <div class="event-ico">🎯</div>
+            <div class="event-info"><div class="event-name">小红书种草笔记</div><div class="event-desc">已联系博主 8位 · 待发布</div></div>
+            <div class="event-status s2">进行中</div>
+        </div>
+    </div>
+</div>
+
+<div class="section" id="sec-client">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>⭐ 客户评价</div>
+        <div class="sec-more">好评率 98.6%</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="review-item">
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"尺码标准，质量比图片好，下次还来"</div>
+            <div class="review-time">淘宝 · 2小时前</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"客服回复超快，包装也精致"</div>
+            <div class="review-time">抖音 · 5小时前</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"回购第三次了，真的不错"</div>
+            <div class="review-time">小红书 · 1天前</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    这是<b style="color:var(--main)">电商运营</b>的演示工作台 · 数据为演示效果<br>
+    <span style="display:inline-flex;gap:10px;margin-top:12px;justify-content:center;flex-wrap:wrap">
+        <a href="demo-gallery.html" style="display:inline-block;padding:10px 20px;background:#fff;color:#000;border-radius:10px;font-weight:700;">🎨 看全部案例</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:inline-block;padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;">🛠️ 定制同款</a>
+    </span>
+    <br><br><span style="font-size:10px;color:var(--text-mute)">© 2026 Crazy Friday 疯狂星期五 · AI时代的一人公司生态</span>
+</div>
+
+
+<script>
+// 侧边栏
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => { closeSidebar(); });
+});
+</script>
+
+</body>
+</html>
