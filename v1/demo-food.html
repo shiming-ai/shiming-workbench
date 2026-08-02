@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI工作台 · 餐饮店工作台 · 营业额/库存/排班/外卖/会员">
+<title>餐饮店工作台 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --main: #FF6B1A; --sub: #FFD93D; --green: #00D9A3;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.topbar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.topbar-logo .mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff;
+}
+.topbar-link {
+    font-size: 11px; color: var(--text-dim); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 16px;
+}
+.topbar-link:active { color: var(--main); border-color: var(--main); }
+
+.scene-bar {
+    position: sticky; top: 51px; z-index: 85;
+    background: rgba(13,14,20,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.scene-bar::-webkit-scrollbar { display: none; }
+.scene-tabs { display: flex; gap: 6px; white-space: nowrap; }
+.scene-tab {
+    flex-shrink: 0; padding: 6px 11px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; font-size: 11px; font-weight: 600;
+    color: var(--text-dim); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+}
+.scene-tab.active {
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    color: #fff; border-color: var(--main);
+    box-shadow: 0 4px 12px rgba(255,107,26,0.3);
+}
+
+.hero {
+    padding: 28px 0 22px;
+    background:
+        radial-gradient(ellipse 500px 280px at 50% 0%, rgba(255,107,26,0.16), transparent 70%),
+        radial-gradient(ellipse 300px 200px at 85% 40%, rgba(255,217,61,0.08), transparent);
+    text-align: center;
+}
+.hero-rev {
+    font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.hero-rev small { font-size: 17px; font-weight: 700; }
+.hero-text { font-size: 13px; color: var(--text); font-weight: 600; margin-top: 6px; }
+.hero-sub { font-size: 12px; color: var(--text-mute); margin-top: 4px; }
+.hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.hero-badge {
+    font-size: 11px; padding: 4px 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 16px; color: var(--text-dim);
+}
+
+.section { padding: 16px 0; }
+.sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.sec-title { font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.sec-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--main); box-shadow: 0 0 6px var(--main); }
+.sec-more { font-size: 11px; color: var(--text-mute); }
+.card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); padding: 14px; margin-bottom: 10px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat-card {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px; text-align: center;
+}
+.stat-card .num {
+    font-size: 18px; font-weight: 900;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-card .lbl { font-size: 9px; color: var(--text-mute); margin-top: 3px; }
+
+/* 订单类型 */
+.order-channel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.channel-cell {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); padding: 12px;
+}
+.channel-ico { font-size: 22px; margin-bottom: 6px; }
+.channel-name { font-size: 11px; font-weight: 700; color: #fff; }
+.channel-amt { font-size: 18px; font-weight: 900; color: var(--main); margin-top: 2px; }
+.channel-pct { font-size: 9px; color: var(--text-mute); margin-top: 1px; }
+
+/* 排班 */
+.shift-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.shift-day {
+    background: var(--card2); border-radius: 8px;
+    padding: 6px 2px; text-align: center;
+    border: 1px solid var(--border);
+}
+.shift-day .d { font-size: 10px; color: var(--text-mute); }
+.shift-day .n { font-size: 11px; font-weight: 700; color: var(--main); margin-top: 2px; }
+.shift-day.full { background: linear-gradient(135deg, rgba(255,107,26,0.15), transparent); border-color: var(--main); }
+
+/* 库存 */
+.stock-item { margin-bottom: 10px; }
+.stock-item:last-child { margin-bottom: 0; }
+.stock-head { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+.stock-name { font-weight: 700; color: #fff; }
+.stock-num { color: var(--text-dim); font-size: 10px; }
+.stock-num .low { color: var(--main); font-weight: 700; }
+.progress-bar { height: 6px; background: var(--card2); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; }
+
+/* 任务 */
+.task-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.task-item:last-child { border-bottom: none; }
+.task-check {
+    width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: transparent;
+}
+.task-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+.task-text { font-size: 12px; flex: 1; }
+.task-text.done { color: var(--text-mute); text-decoration: line-through; }
+.task-ico { font-size: 16px; flex-shrink: 0; }
+.task-time { font-size: 10px; color: var(--text-mute); flex-shrink: 0; }
+
+/* 评价 */
+.review-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.review-item:last-child { border-bottom: none; }
+.review-stars { color: var(--sub); font-size: 11px; flex-shrink: 0; }
+.review-text { font-size: 11px; color: var(--text); flex: 1; }
+.review-time { font-size: 10px; color: var(--text-mute); }
+
+.footer {
+    text-align: center; padding: 28px 16px 60px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+
+.hero-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 14px;
+    background: rgba(0,217,163,0.1); color: var(--green);
+    border-radius: 20px; margin-bottom: 14px;
+    font-weight: 700; border: 1px solid rgba(0,217,163,0.25);
+}
+.hero-status::before {
+    content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+    animation: heroBlink 1.5s infinite;
+}
+@keyframes heroBlink { 50% { opacity: 0.3; } }
+.hero-trend {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--green);
+    margin-top: 8px; padding: 3px 10px;
+    background: rgba(0,217,163,0.1); border-radius: 12px;
+    font-weight: 700;
+}
+
+
+/* ===== 左侧折叠导航 ===== */
+.sidebar-overlay {
+    position: fixed; inset: 0; z-index: 95;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: all; }
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 99;
+    width: 78vw; max-width: 300px;
+    background: var(--card); border-right: 1px solid var(--border);
+    transform: translateX(-105%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.5);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-head {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--main), var(--sub));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.sidebar-brand { flex: 1; }
+.sidebar-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.sidebar-brand-sub { font-size: 10px; color: var(--text-mute); margin-top: 2px; }
+.sidebar-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.sidebar-nav-label {
+    font-size: 10px; color: var(--text-mute); letter-spacing: 1px;
+    padding: 8px 18px 6px; text-transform: uppercase;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 18px;
+    color: var(--text-dim); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar-item:active { background: var(--card2); color: var(--main); border-left-color: var(--main); }
+.sidebar-foot {
+    padding: 14px 18px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-btn {
+    display: block; padding: 11px;
+    background: #fff; color: #000;
+    border-radius: 10px; font-size: 12px; font-weight: 700;
+    text-align: center; text-decoration: none;
+}
+.sidebar-btn-outline {
+    display: block; padding: 10px;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 12px; font-weight: 600; text-align: center; text-decoration: none;
+}
+.menu-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- 遮罩 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<!-- 侧边栏 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <div class="sidebar-logo">🍱</div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">餐饮店工作台</div>
+            <div class="sidebar-brand-sub">Crazy Friday AI工作台</div>
+        </div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
+    </div>
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-label">📂 功能板块</div>
+        <a class="sidebar-item" href="#sec-data">📊 今日数据</a>
+        <a class="sidebar-item" href="#sec-order">📱 订单渠道 · 4个</a>
+        <a class="sidebar-item" href="#sec-shift">👨‍🍳 本周排班 · 8人</a>
+        <a class="sidebar-item" href="#sec-stock">📦 食材库存预警</a>
+        <a class="sidebar-item" href="#sec-task">📋 今日任务</a>
+        <a class="sidebar-item" href="#sec-client">⭐ 客户评价</a>
+    </div>
+    <div class="sidebar-foot">
+        <a class="sidebar-btn" href="demo-gallery.html">🎨 全部场景</a>
+        <a class="sidebar-btn-outline" href="https://shiming-ai.github.io/shiming-workbench/landing.html">🛠️ 定制同款</a>
+    </div>
+</div>
+
+
+<div class="topbar">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
+    <div class="topbar-logo">
+        <div class="mark">🍱</div>
+        <span>餐饮店工作台</span>
+    </div>
+    <a href="demo-gallery.html" class="topbar-link">🎨 全部场景</a>
+</div>
+
+<div class="scene-bar">
+    <div class="scene-tabs">
+        <a href="demo.html" class="scene-tab">🧑‍💼 一人公司</a>
+        <a href="demo-solo.html" class="scene-tab">🦸 超级个体</a>
+        <a href="demo-creator.html" class="scene-tab">🎬 创作者</a>
+        <a href="demo-ecom.html" class="scene-tab">🛒 电商</a>
+        <a href="demo-food.html" class="scene-tab active">🍱 餐饮</a>
+        <a href="demo-pet.html" class="scene-tab">🐶 宠物</a>
+        <a href="demo-travel.html" class="scene-tab">✈️ 旅行</a>
+    </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+    <div style="font-size:36px">🍱</div>
+    <div class="hero-rev">¥86,500<small> /月</small></div>
+    <div class="hero-status">实时数据 · 本月</div>
+    <div class="hero-text">本月营业额 · 双门店</div>
+    <div class="hero-sub">客单价 ¥58 · 日均客流 86人 · 复购率 42%</div>
+    <div class="hero-badges">
+        <span class="hero-badge">📍 2家门店</span>
+        <span class="hero-badge">👨‍🍳 员工 8人</span>
+        <span class="hero-badge">⭐ 大众点评 4.8</span>
+    </div>
+</div>
+
+<div class="section" id="sec-data">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📊 今日数据</div>
+        <div class="sec-more">实时</div>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="num">¥3,820</div><div class="lbl">今日营收</div></div>
+        <div class="stat-card"><div class="num">68单</div><div class="lbl">今日订单</div></div>
+        <div class="stat-card"><div class="num">¥56</div><div class="lbl">客单价</div></div>
+    </div>
+</div>
+
+<!-- 订单渠道 -->
+<div class="section" id="sec-order">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📱 订单渠道 · 4个</div>
+        <div class="sec-more">本月68单/日</div>
+    </div>
+    <div class="order-channel">
+        <div class="channel-cell">
+            <div class="channel-ico">🏪</div>
+            <div class="channel-name">堂食</div>
+            <div class="channel-amt">¥28k</div>
+            <div class="channel-pct">占33% · 32单/日</div>
+        </div>
+        <div class="channel-cell">
+            <div class="channel-ico">🛵</div>
+            <div class="channel-name">美团外卖</div>
+            <div class="channel-amt">¥32k</div>
+            <div class="channel-pct">占37% · 38单/日</div>
+        </div>
+        <div class="channel-cell">
+            <div class="channel-ico">📕</div>
+            <div class="channel-name">饿了么</div>
+            <div class="channel-amt">¥15k</div>
+            <div class="channel-pct">占17% · 18单/日</div>
+        </div>
+        <div class="channel-cell">
+            <div class="channel-ico">📲</div>
+            <div class="channel-name">小程序</div>
+            <div class="channel-amt">¥11k</div>
+            <div class="channel-pct">占13% · 12单/日</div>
+        </div>
+    </div>
+</div>
+
+<!-- 员工排班 -->
+<div class="section" id="sec-shift">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>👨‍🍳 本周排班 · 8人</div>
+        <div class="sec-more">2人轮休</div>
+    </div>
+    <div class="card">
+        <div class="shift-grid">
+            <div class="shift-day full"><div class="d">一</div><div class="n">3</div></div>
+            <div class="shift-day full"><div class="d">二</div><div class="n">3</div></div>
+            <div class="shift-day"><div class="d">三</div><div class="n">2</div></div>
+            <div class="shift-day full"><div class="d">四</div><div class="n">3</div></div>
+            <div class="shift-day full"><div class="d">五</div><div class="n">3</div></div>
+            <div class="shift-day full"><div class="d">六</div><div class="n">4</div></div>
+            <div class="shift-day full"><div class="d">日</div><div class="n">4</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 库存预警 -->
+<div class="section" id="sec-stock">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📦 食材库存预警</div>
+        <div class="sec-more">2款待补</div>
+    </div>
+    <div class="card">
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🐔 鸡腿肉</span><span class="stock-num"><span class="low">剩 8kg</span> / 30kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:27%;background:linear-gradient(90deg,var(--main),var(--sub))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🥬 生菜</span><span class="stock-num"><span class="low">剩 3kg</span> / 20kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:15%;background:linear-gradient(90deg,var(--main),var(--sub))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🍚 大米</span><span class="stock-num">剩 45kg / 100kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:45%;background:linear-gradient(90deg,var(--green),var(--sub))"></div></div>
+        </div>
+        <div class="stock-item">
+            <div class="stock-head"><span class="stock-name">🌶️ 辣椒</span><span class="stock-num">剩 12kg / 15kg</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:80%;background:linear-gradient(90deg,var(--green),var(--sub))"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 今日任务 -->
+<div class="section" id="sec-task">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>📋 今日任务</div>
+        <div class="sec-more">3/6 完成</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-ico">🥬</div><div class="task-text done">早市采购·生菜已补</div><div class="task-time">07:30</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-ico">🍳</div><div class="task-text done">午高峰·68单完成</div><div class="task-time">14:30</div></div>
+        <div class="task-item"><div class="task-check done">✓</div><div class="task-ico">📊</div><div class="task-text done">盘点库存·记录到系统</div><div class="task-time">15:00</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-ico">🍱</div><div class="task-text">晚高峰·17:30开始</div><div class="task-time">17:30</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-ico">📣</div><div class="task-text">推送晚餐活动·朋友圈</div><div class="task-time">16:00</div></div>
+        <div class="task-item"><div class="task-check"></div><div class="task-ico">💰</div><div class="task-text">今日营收结算</div><div class="task-time">22:00</div></div>
+    </div>
+</div>
+
+<!-- 客户评价 -->
+<div class="section" id="sec-client">
+    <div class="sec-header">
+        <div class="sec-title"><span class="dot"></span>⭐ 客户评价</div>
+        <div class="sec-more">本周 +24 条</div>
+    </div>
+    <div class="card" style="padding: 6px 14px;">
+        <div class="review-item">
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"鸡腿堡超大块，孩子超爱"</div>
+            <div class="review-time">美团 · 2小时前</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"出餐快，配送也很快"</div>
+            <div class="review-time">饿了么 · 3小时前</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"回头客了，第N次点"</div>
+            <div class="review-time">堂食 · 今天</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="footer">
+    这是<b style="color:var(--main)">餐饮店</b>的演示工作台 · 数据为演示效果<br>
+    <span style="display:inline-flex;gap:10px;margin-top:12px;justify-content:center;flex-wrap:wrap">
+        <a href="demo-gallery.html" style="display:inline-block;padding:10px 20px;background:#fff;color:#000;border-radius:10px;font-weight:700;">🎨 看全部案例</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" style="display:inline-block;padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;">🛠️ 定制同款</a>
+    </span>
+    <br><br><span style="font-size:10px;color:var(--text-mute)">© 2026 Crazy Friday 疯狂星期五 · AI时代的一人公司生态</span>
+</div>
+
+
+<script>
+// 侧边栏
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => { closeSidebar(); });
+});
+</script>
+
+</body>
+</html>
