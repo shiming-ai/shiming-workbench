@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday · AI工作台场景广场 · 12个真实场景案例，总有一个适合你">
+<title>AI工作台场景广场 · Crazy Friday</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --purple: #A66BFF;
+    --blue: #4D9DFF; --red: #FF4757; --yellow: #FFD93D;
+    --pink: #FF6B9D; --cyan: #00D9FF;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
+
+.nav {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(10,11,15,0.8);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+.nav-mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #000; border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+}
+.nav-mark::after {
+    content: ''; position: absolute; bottom: 4px; right: 4px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange); border: 1px solid #000;
+}
+.nav-cf { font-size: 12px; color: #fff; font-weight: 900; }
+.nav-cf .dot { color: var(--orange); }
+.nav-brand { font-size: 14px; font-weight: 800; line-height: 1; }
+.nav-brand .en {
+    background: linear-gradient(135deg, #fff 60%, var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-brand .cn { font-size: 9px; color: var(--text-mute); font-weight: 500; margin-top: 2px; }
+.nav-cta {
+    font-size: 12px; padding: 8px 18px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border-radius: 22px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(255,107,26,0.3);
+}
+
+.hero {
+    padding: 48px 18px 32px;
+    background:
+        radial-gradient(ellipse 600px 400px at 50% 0%, rgba(255,107,26,0.18), transparent 60%),
+        radial-gradient(ellipse 400px 300px at 85% 40%, rgba(166,107,255,0.1), transparent);
+    text-align: center;
+}
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; padding: 6px 16px;
+    background: rgba(255,107,26,0.12); color: var(--orange);
+    border-radius: 20px; margin-bottom: 20px;
+    font-weight: 600; border: 1px solid rgba(255,107,26,0.25);
+}
+.hero h1 {
+    font-size: 32px; font-weight: 900; letter-spacing: -1.5px;
+    margin-bottom: 12px; line-height: 1.2;
+}
+.hero h1 .gradient {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+    font-size: 13px; color: var(--text-dim); line-height: 1.8;
+    max-width: 340px; margin: 0 auto 20px;
+}
+.hero-count {
+    display: flex; justify-content: center; gap: 14px;
+}
+.hero-count-item {
+    font-size: 11px; color: var(--text-mute);
+    padding: 6px 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 20px;
+}
+.hero-count-item strong { color: var(--orange); font-size: 14px; }
+
+/* 场景网格 - 全部2×N整齐 */
+.scene-section { padding: 26px 0; }
+.sec-label {
+    font-size: 11px; color: var(--text-mute); letter-spacing: 1.5px;
+    margin-bottom: 14px; text-transform: uppercase;
+    font-weight: 700;
+}
+.sec-label::before {
+    content: ''; display: inline-block; width: 14px; height: 2px;
+    background: var(--orange); margin-right: 8px; vertical-align: middle;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.scene-card {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--card); border-radius: 16px;
+    border: 1px solid var(--border); padding: 18px 14px;
+    position: relative; overflow: hidden;
+    transition: all 0.2s;
+}
+.scene-card:active { transform: scale(0.97); border-color: var(--orange); }
+.scene-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.scene-card.c1::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+.scene-card.c2::before { background: linear-gradient(90deg, var(--pink), var(--red)); }
+.scene-card.c3::before { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+.scene-card.c4::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.scene-card.c5::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+.scene-card.c6::before { background: linear-gradient(90deg, var(--yellow), var(--orange)); }
+.scene-card.c7::before { background: linear-gradient(90deg, var(--red), var(--pink)); }
+.scene-card.c8::before { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+.scene-card.c9::before { background: linear-gradient(90deg, var(--green), var(--sub, #00D9FF)); }
+.scene-emoji { font-size: 30px; margin-bottom: 8px; }
+.scene-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.scene-desc { font-size: 10px; color: var(--text-dim); line-height: 1.5; }
+.scene-arrow {
+    position: absolute; top: 14px; right: 12px;
+    font-size: 14px; color: var(--text-mute);
+}
+
+/* 底部CTA */
+.cta-box {
+    margin: 30px 0;
+    background:
+        radial-gradient(ellipse 400px 250px at 50% 100%, rgba(255,107,26,0.1), transparent),
+        var(--card);
+    border-radius: 20px; padding: 30px 22px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.cta-title { font-size: 19px; font-weight: 900; margin-bottom: 10px; line-height: 1.4; }
+.cta-title .accent {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cta-desc {
+    font-size: 12px; color: var(--text-dim); line-height: 1.7;
+    margin-bottom: 20px;
+}
+.btn-primary {
+    display: inline-block; padding: 15px 36px;
+    background: linear-gradient(135deg, var(--orange), #FF8E53);
+    color: #fff; text-decoration: none; border-radius: 14px;
+    font-size: 14px; font-weight: 700; text-align: center;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.35);
+}
+
+.footer {
+    text-align: center; padding: 30px 18px 80px;
+    color: var(--text-mute); font-size: 11px;
+    border-top: 1px solid var(--border);
+}
+.footer-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 14px;
+    margin-bottom: 10px;
+}
+.footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+    <a href="index.html" class="nav-logo">
+        <div class="nav-mark"><div class="nav-cf">CF<span class="dot">.</span></div></div>
+        <div class="nav-brand">
+            <span class="en">Crazy Friday</span>
+            <span class="cn">疯狂星期五</span>
+        </div>
+    </a>
+    <a href="landing.html" class="nav-cta">定制我的</a>
+</nav>
+
+<div class="hero">
+    <div class="hero-badge">🎨 AI工作台 · 场景广场</div>
+    <h1>一个工作台<br><span class="gradient">十二种活法</span></h1>
+    <p class="hero-desc">
+        每个场景都是真实可用的工作台设计，<br>
+        找到你的人生场景，定制成你的专属工作台。
+    </p>
+    <div class="hero-count">
+        <div class="hero-count-item"><strong>12</strong> 个场景</div>
+        <div class="hero-count-item"><strong>1-5天</strong> 交付</div>
+        <div class="hero-count-item"><strong>999</strong> 元起</div>
+    </div>
+</div>
+
+<div class="wrap">
+
+<!-- 商务场景 · 4个2×2 -->
+<div class="scene-section">
+    <div class="sec-label">💼 商务经营</div>
+    <div class="grid-2">
+        <a href="demo.html" class="scene-card c1">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🧑‍💼</div>
+            <div class="scene-name">一人公司</div>
+            <div class="scene-desc">内容/客户/财务/交付一站管理</div>
+        </a>
+        <a href="demo-solo.html" class="scene-card c3">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🦸</div>
+            <div class="scene-name">超级个体</div>
+            <div class="scene-desc">多业务线并行，一人撑起公司</div>
+        </a>
+        <a href="demo-creator.html" class="scene-card c7">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🎬</div>
+            <div class="scene-name">创作者工作台</div>
+            <div class="scene-desc">选题/脚本/账号矩阵/收益</div>
+        </a>
+        <a href="demo-ecom.html" class="scene-card c6">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🛒</div>
+            <div class="scene-name">电商运营</div>
+            <div class="scene-desc">9大平台店铺/订单/库存/营销</div>
+        </a>
+    </div>
+</div>
+
+<!-- 实体经营 · 2个1×2 -->
+<div class="scene-section">
+    <div class="sec-label">🍱 实体门店</div>
+    <div class="grid-2">
+        <a href="demo-food.html" class="scene-card c1">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🍱</div>
+            <div class="scene-name">餐饮店</div>
+            <div class="scene-desc">营业额/外卖/排班/库存</div>
+        </a>
+        <a href="demo-pet.html" class="scene-card c2">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🐶</div>
+            <div class="scene-name">宠物管理</div>
+            <div class="scene-desc">喂养/健康/相册/用品</div>
+        </a>
+    </div>
+</div>
+
+<!-- 学习场景 · 2个1×2 -->
+<div class="scene-section">
+    <div class="sec-label">📚 学习成长</div>
+    <div class="grid-2">
+        <a href="demo-study.html" class="scene-card c8">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">📚</div>
+            <div class="scene-name">考研学习</div>
+            <div class="scene-desc">倒计时/科目进度/错题本</div>
+        </a>
+        <a href="demo-english.html" class="scene-card c6">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">🌐</div>
+            <div class="scene-name">英语学习</div>
+            <div class="scene-desc">单词/听力/口语/雅思</div>
+        </a>
+    </div>
+</div>
+
+<!-- 生活方式 · 4个2×2 -->
+<div class="scene-section">
+    <div class="sec-label">💕 生活方式</div>
+    <div class="grid-2">
+        <a href="demo-love.html" class="scene-card c2">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">💕</div>
+            <div class="scene-name">恋爱记录</div>
+            <div class="scene-desc">纪念日/约会/礼物/感情温度</div>
+        </a>
+        <a href="demo-fitness.html" class="scene-card c4">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">💪</div>
+            <div class="scene-name">健身减脂</div>
+            <div class="scene-desc">体重曲线/训练/饮食</div>
+        </a>
+        <a href="demo-photo.html" class="scene-card c5">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">📷</div>
+            <div class="scene-name">摄影作品</div>
+            <div class="scene-desc">作品集/修图/约拍档期</div>
+        </a>
+        <a href="demo-travel.html" class="scene-card c8">
+            <div class="scene-arrow">›</div>
+            <div class="scene-emoji">✈️</div>
+            <div class="scene-name">旅行规划</div>
+            <div class="scene-desc">行程/预订/装备/预算</div>
+        </a>
+    </div>
+</div>
+
+<div class="cta-box">
+    <div class="cta-title">没有你的场景？<br><span class="accent">定制专属你的工作台</span></div>
+    <div class="cta-desc">
+        把你的想法告诉我，我帮你做成专属工作台。<br>
+        企业管理 / 兴趣记录 / 行业工具，什么场景都能做。
+    </div>
+    <a href="landing.html" class="btn-primary">开始定制 →</a>
+</div>
+</div>
+
+<div class="footer">
+    <div class="footer-links">
+        <a href="hub.html">入口页</a>
+        <a href="index.html">官网</a>
+        <a href="landing.html">定制服务</a>
+        <a href="partner.html">共创伙伴</a>
+    </div>
+    <div>© 2026 Crazy Friday 疯狂星期五 · AI时代的一人公司生态</div>
+</div>
+
+</body>
+</html>
