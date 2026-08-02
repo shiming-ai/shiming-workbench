@@ -1040,6 +1040,76 @@ body {
 
 /* 滚动条隐藏 */
 ::-webkit-scrollbar { display: none; }
+
+/* ===== AI 智能体相关 ===== */
+.biz-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+    transition: all 0.15s; cursor: pointer;
+}
+.biz-card:active { transform: scale(0.98); border-color: var(--orange); }
+.biz-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0; background: var(--card2);
+    border: 1px solid var(--border);
+}
+.biz-name { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.biz-desc { font-size: 11px; color: var(--text-dim); }
+
+.agent-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 16px; margin-bottom: 12px;
+    position: relative; overflow: hidden;
+}
+.agent-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow));
+}
+.agent-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.agent-name { font-size: 14px; font-weight: 800; color: #fff; flex: 1; }
+.agent-tag { font-size: 9px; padding: 2px 8px; border-radius: 10px;
+    background: rgba(0,217,163,0.12); color: var(--green); font-weight: 700; }
+.agent-tag.off { background: rgba(139,143,158,0.12); color: var(--text-mute); }
+.agent-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; margin-bottom: 10px; }
+.agent-meta { display: flex; gap: 8px; font-size: 10px; color: var(--text-mute); padding-top: 8px; border-top: 1px solid var(--border); }
+.agent-meta-item { padding: 2px 8px; background: var(--card2); border-radius: 8px; }
+.agent-actions { display: flex; gap: 6px; margin-top: 10px; }
+.agent-action-btn {
+    flex: 1; padding: 8px; background: var(--card2);
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text-dim); font-size: 11px; cursor: pointer;
+    text-align: center; font-weight: 600;
+}
+.agent-action-btn:active { color: var(--orange); border-color: var(--orange); }
+
+.skill-item {
+    background: var(--card2); border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--border);
+}
+.skill-ico { font-size: 20px; flex-shrink: 0; }
+.skill-info { flex: 1; }
+.skill-name { font-size: 12px; font-weight: 700; color: #fff; }
+.skill-desc { font-size: 10px; color: var(--text-dim); margin-top: 1px; }
+.skill-add-btn { font-size: 10px; padding: 4px 10px;
+    background: var(--orange); color: #fff; border-radius: 8px;
+    font-weight: 700; cursor: pointer; flex-shrink: 0;
+}
+.skill-add-btn:active { transform: scale(0.95); }
+
+.share-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+}
+.share-name { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.share-meta { font-size: 11px; color: var(--text-dim); margin-bottom: 8px; }
+.share-link {
+    background: var(--bg); border: 1px dashed var(--border);
+    border-radius: 8px; padding: 8px 10px;
+    font-size: 11px; font-family: monospace; color: var(--orange);
+    word-break: break-all; margin-bottom: 8px;
+}
 </style>
 </head>
 <body>
@@ -2454,7 +2524,110 @@ body {
     <div class="fab-mini income" onclick="quickMenuAction('income')"><div class="fm-icon">💰</div>记收入</div>
     <div class="fab-mini expense" onclick="quickMenuAction('expense')"><div class="fm-icon">📉</div>记支出</div>
     <div class="fab-mini task" onclick="quickMenuAction('task')"><div class="fm-icon">✅</div>加任务</div>
-    <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
+     <div class="fab-mini top" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab(false)"><div class="fm-icon">↑</div>回顶部</div>
+</div>
+
+<!-- ===== 页面7: AI智能体中心 ===== -->
+<div id="page-agents" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🤖 AI 智能体中心</div>
+            <div class="sec-more" onclick="showAgentCreate()">+ 新建智能体</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.7">
+            智能体 = 一个能自主完成特定任务的AI。<br>
+            你可以创建、配置、管理所有智能体，每个智能体可调用技能库中的Skill。
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div id="agentsList"></div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title">💡 推荐智能体模板</div>
+            <div class="sec-more">一键启用</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="biz-card" style="margin:0" onclick="quickAddAgent('订单管理', '📦', '监控多平台订单，自动分类标记待处理')">
+                <div style="display:flex;align-items:center;gap:10px"><div class="biz-icon">📦</div><div><div class="biz-name">订单管理 Agent</div><div class="biz-desc">自动监控+分类</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="quickAddAgent('客户跟进', '👥', '客户意向自动评分+提醒最佳跟进时间')">
+                <div style="display:flex;align-items:center;gap:10px"><div class="biz-icon">👥</div><div><div class="biz-name">客户跟进 Agent</div><div class="biz-desc">智能评分+提醒</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="quickAddAgent('内容发布', '📣', '一键多平台发布+自动排期')">
+                <div style="display:flex;align-items:center;gap:10px"><div class="biz-icon">📣</div><div><div class="biz-name">内容发布 Agent</div><div class="biz-desc">多平台同步</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="quickAddAgent('财务记账', '💰', '自动分类收入支出+生成报表')">
+                <div style="display:flex;align-items:center;gap:10px"><div class="biz-icon">💰</div><div><div class="biz-name">财务记账 Agent</div><div class="biz-desc">自动分类</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="quickAddAgent('数据复盘', '📊', '每日/周/月自动分析+生成报告')">
+                <div style="display:flex;align-items:center;gap:10px"><div class="biz-icon">📊</div><div><div class="biz-name">数据复盘 Agent</div><div class="biz-desc">自动分析</div></div></div>
+            </div>
+            <div class="biz-card" style="margin:0" onclick="quickAddAgent('内容创作', '✍️', '选题+脚本+标题+配图一键出')">
+                <div style="display:flex;align-items:center;gap:10px"><div class="biz-icon">✍️</div><div><div class="biz-name">内容创作 Agent</div><div class="biz-desc">全流程</div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 页面8: 技能库 ===== -->
+<div id="page-skills" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🛠️ 技能库（Skill）</div>
+            <div class="sec-more" onclick="showSkillCreate()">+ 添加技能</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.7">
+            技能 = 智能体可调用的最小功能单元。<br>
+            例：「查询订单」「发送通知」「生成报告」。
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title">📦 已添加的技能</div>
+            <div class="sec-more" id="skillCountInline">0个</div>
+        </div>
+        <div id="skillsList"></div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div class="sec-header">
+            <div class="sec-title">🌟 官方推荐技能</div>
+            <div class="sec-more">点击添加</div>
+        </div>
+        <div id="officialSkills"></div>
+    </div>
+</div>
+
+<!-- ===== 页面9: 授权给别人 ===== -->
+<div id="page-share" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🔗 授权给别人用</div>
+            <div class="sec-more" onclick="createShare()" style="cursor:pointer;color:var(--orange)">+ 创建授权</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            创建一个独立工作台链接发给客户/伙伴。<br>
+            对方看到的是<b style="color:var(--text)">只读快照</b>，看不到你的真实数据。
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div id="shareList"></div>
+
+        <div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px;margin-top:16px;text-align:center">
+            <div style="font-size:13px;font-weight:800;margin-bottom:6px">💡 怎么用</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.7">
+                1. 创建一个"授权"（指定客户/模板/有效期）<br>
+                2. 系统生成独立URL（含token）<br>
+                3. 把URL发给对方<br>
+                4. 对方打开是<b style="color:var(--orange)">只读演示版</b>，数据与你完全隔离
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- 顶部导航栏 -->
@@ -2532,6 +2705,20 @@ body {
         </div>
         <div class="sidebar-item" onclick="location.href='roadmap.html'">
             <span class="sidebar-item-icon">🗺</span> 母系统路线图
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">🤖 AI 智能体</div>
+        <div class="sidebar-item" onclick="switchPage('agents', this)">
+            <span class="sidebar-item-icon">🧠</span> 智能体中心
+        </div>
+        <div class="sidebar-item" onclick="switchPage('skills', this)">
+            <span class="sidebar-item-icon">🛠️</span> 技能库
+            <span class="sidebar-item-badge" id="skillCount">0</span>
+        </div>
+        <div class="sidebar-item" onclick="switchPage('share', this)">
+            <span class="sidebar-item-icon">🔗</span> 授权给别人
         </div>
     </div>
 
@@ -2615,6 +2802,225 @@ const dayDiff = Math.floor((new Date() - START_DATE) / 86400000) + 1;
 document.getElementById('dayCount').textContent = Math.max(1, dayDiff);
 document.getElementById('heroDay').textContent = Math.max(1, dayDiff);
 document.getElementById('navDayCount').textContent = 'Day ' + Math.max(1, dayDiff);
+
+// ========== AI 智能体管理 ==========
+const AGENTS_KEY = 'cf_agents';
+const SKILLS_KEY = 'cf_skills';
+const SHARES_KEY = 'cf_shares';
+
+function getAgents() { return load(AGENTS_KEY, []); }
+function setAgents(arr) { save(AGENTS_KEY, arr); }
+function getSkills() { return load(SKILLS_KEY, []); }
+function setSkills(arr) { save(SKILLS_KEY, arr); }
+function getShares() { return load(SHARES_KEY, []); }
+function setShares(arr) { save(SHARES_KEY, arr); }
+
+function renderAgents() {
+    const list = document.getElementById('agentsList');
+    const agents = getAgents();
+    if (agents.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:32px 18px;text-align:center"><div style="font-size:36px;margin-bottom:8px">🤖</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有智能体</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点上面的"<b style="color:var(--orange)">+新建智能体</b>"<br>或点下方"推荐模板"一键启用</div></div>';
+        return;
+    }
+    list.innerHTML = agents.map((a, i) => `
+        <div class="agent-item">
+            <div class="agent-head">
+                <div class="biz-icon">${a.icon || '🤖'}</div>
+                <div class="agent-name">${a.name}</div>
+                <div class="agent-tag ${a.status === 'off' ? 'off' : ''}">${a.status === 'off' ? '已停用' : '运行中'}</div>
+            </div>
+            <div class="agent-desc">${a.desc || '暂无描述'}</div>
+            <div class="agent-meta">
+                <span class="agent-meta-item">⚙️ ${a.model || 'GPT-4'}</span>
+                <span class="agent-meta-item">🛠️ ${(a.skills||[]).length} 个技能</span>
+                <span class="agent-meta-item">▶️ ${a.calls || 0} 次调用</span>
+            </div>
+            <div class="agent-actions">
+                <button class="agent-action-btn" onclick="toggleAgent(${i})">${a.status === 'off' ? '▶️ 启用' : '⏸ 停用'}</button>
+                <button class="agent-action-btn" onclick="deleteAgent(${i})">🗑 删除</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function quickAddAgent(name, icon, desc) {
+    const agents = getAgents();
+    if (agents.find(a => a.name === name)) {
+        toast('该智能体已存在');
+        return;
+    }
+    agents.push({
+        name, icon, desc,
+        model: 'GPT-4',
+        skills: [],
+        status: 'active',
+        calls: 0,
+        time: new Date().toLocaleString('zh-CN')
+    });
+    setAgents(agents);
+    renderAgents();
+    toast('✅ ' + name + ' 已启用');
+}
+
+function toggleAgent(i) {
+    const agents = getAgents();
+    agents[i].status = agents[i].status === 'off' ? 'active' : 'off';
+    setAgents(agents);
+    renderAgents();
+    toast('智能体已' + (agents[i].status === 'off' ? '停用' : '启用'));
+}
+
+function deleteAgent(i) {
+    if (!confirm('确定删除该智能体？')) return;
+    const agents = getAgents();
+    agents.splice(i, 1);
+    setAgents(agents);
+    renderAgents();
+    toast('已删除');
+}
+
+function showAgentCreate() {
+    const name = prompt('智能体名称：', '我的新智能体');
+    if (!name) return;
+    const desc = prompt('一句话描述它做什么：', '处理我的业务...');
+    const icon = prompt('选个 emoji 图标：', '🤖');
+    quickAddAgent(name, icon || '🤖', desc || '自定义智能体');
+}
+
+// 技能库
+function renderSkills() {
+    const list = document.getElementById('skillsList');
+    const count = document.getElementById('skillCountInline');
+    const skills = getSkills();
+    if (skills.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:20px;text-align:center"><div style="font-size:11px;color:var(--text-dim)">还没有技能<br>点下方"官方推荐"或"+添加技能"</div></div>';
+    } else {
+        list.innerHTML = skills.map((s, i) => `
+            <div class="skill-item">
+                <div class="skill-ico">${s.icon}</div>
+                <div class="skill-info">
+                    <div class="skill-name">${s.name}</div>
+                    <div class="skill-desc">${s.desc}</div>
+                </div>
+                <button class="skill-add-btn" style="background:rgba(255,71,87,0.15);color:var(--red)" onclick="removeSkill(${i})">移除</button>
+            </div>
+        `).join('');
+    }
+    count.textContent = skills.length + '个';
+    const badge = document.getElementById('skillCount');
+    if (badge) badge.textContent = skills.length;
+}
+
+function removeSkill(i) {
+    const skills = getSkills();
+    skills.splice(i, 1);
+    setSkills(skills);
+    renderSkills();
+}
+
+function addSkill(name, icon, desc) {
+    const skills = getSkills();
+    if (skills.find(s => s.name === name)) return;
+    skills.push({ name, icon, desc });
+    setSkills(skills);
+    renderSkills();
+    toast('✅ 已添加：' + name);
+}
+
+function showSkillCreate() {
+    const name = prompt('技能名称：', '查询订单');
+    if (!name) return;
+    const desc = prompt('功能描述：', '从工作台获取订单数据');
+    const icon = prompt('emoji：', '⚡');
+    addSkill(name, icon || '⚡', desc || '');
+}
+
+const OFFICIAL_SKILLS = [
+    { name: '查询订单', icon: '📦', desc: '获取订单列表与详情' },
+    { name: '查询客户', icon: '👥', desc: '获取客户信息与跟进记录' },
+    { name: '发送通知', icon: '🔔', desc: '推送消息到微信/邮件' },
+    { name: '生成报告', icon: '📊', desc: '自动汇总数据生成报告' },
+    { name: '创建任务', icon: '✅', desc: '创建任务和提醒' },
+    { name: '内容发布', icon: '📣', desc: '发布到多平台' },
+    { name: '财务记账', icon: '💰', desc: '记录收入支出' },
+    { name: '数据复盘', icon: '📈', desc: '分析数据生成洞察' },
+];
+
+function renderOfficialSkills() {
+    const list = document.getElementById('officialSkills');
+    const added = getSkills().map(s => s.name);
+    list.innerHTML = OFFICIAL_SKILLS.map(s => `
+        <div class="skill-item">
+            <div class="skill-ico">${s.icon}</div>
+            <div class="skill-info">
+                <div class="skill-name">${s.name}</div>
+                <div class="skill-desc">${s.desc}</div>
+            </div>
+            <button class="skill-add-btn" onclick="addSkill('${s.name}','${s.icon}','${s.desc}')" ${added.includes(s.name) ? 'style="background:var(--card2);color:var(--text-mute);pointer-events:none"' : ''}>${added.includes(s.name) ? '已添加' : '+ 添加'}</button>
+        </div>
+    `).join('');
+}
+
+// 授权给别人
+function renderShares() {
+    const list = document.getElementById('shareList');
+    const shares = getShares();
+    if (shares.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:24px 18px;text-align:center"><div style="font-size:32px;margin-bottom:8px">🔗</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有授权链接</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"+创建授权"<br>给客户/伙伴发只读版工作台</div></div>';
+        return;
+    }
+    list.innerHTML = shares.map(s => `
+        <div class="share-item">
+            <div class="share-name">${s.name}</div>
+            <div class="share-meta">${s.desc || ''} · 创建于 ${s.time}</div>
+            <div class="share-link">${s.url}</div>
+            <div class="agent-actions" style="margin-top:0">
+                <button class="agent-action-btn" onclick="copyText('${s.url}')">📋 复制链接</button>
+                <button class="agent-action-btn" onclick="deleteShare(${s.id})" style="color:var(--red)">🗑 删除</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function copyText(t) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(t).then(() => toast('✅ 已复制'));
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = t; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast('✅ 已复制'); } catch(e) {}
+        document.body.removeChild(ta);
+    }
+}
+
+function createShare() {
+    const name = prompt('授权名称（给谁/什么场景）：', '给王哥的演示');
+    if (!name) return;
+    const desc = prompt('备注（客户/场景）：', '客户咨询AI工作台');
+    if (!confirm('生成的链接只读演示，对方看不到你的真实数据。\n确定创建？')) return;
+    const id = Date.now();
+    const token = Math.random().toString(36).slice(2, 10);
+    const url = 'https://shiming-ai.github.io/shiming-workbench/demo-gallery.html?share=' + token;
+    const shares = getShares();
+    shares.push({ id, name, desc, url, time: new Date().toLocaleString('zh-CN') });
+    setShares(shares);
+    renderShares();
+    toast('✅ 授权链接已生成');
+}
+
+function deleteShare(id) {
+    if (!confirm('确定删除此授权？')) return;
+    let shares = getShares();
+    shares = shares.filter(s => s.id !== id);
+    setShares(shares);
+    renderShares();
+}
+
+// 初始渲染
+renderAgents();
+renderSkills();
+renderOfficialSkills();
+renderShares();
 
 // ========== 进度环 ==========
 function renderRings() {
