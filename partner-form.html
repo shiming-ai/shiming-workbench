@@ -725,9 +725,11 @@ function submitForm() {
     // ===== 云同步双通道 =====
     // 通道A: Formspree 邮件通知（填 endpoint 后启用）
     const FORMSPREE_ENDPOINT = 'https://formsubmit.co/1109028348@qq.com'; // ✅ 已激活
-    // 通道B: Supabase 云数据库（填 URL + key 后启用）
-    const SUPABASE_URL = ''; // TODO: 填入 https://xxxx.supabase.co
-    const SUPABASE_KEY = ''; // TODO: 填入 anon public key
+    // 通道B: kvdb.io 云存储（量大版-自动进后台）
+    const KVDB_BUCKET = 'MRr9X2qAfQK9XokEWQWGAW';
+    // 通道C: Supabase 云数据库（预留，以后可加）
+    const SUPABASE_URL = '';
+    const SUPABASE_KEY = '';
 
     if (FORMSPREE_ENDPOINT) {
         fetch(FORMSPREE_ENDPOINT, {
@@ -735,6 +737,15 @@ function submitForm() {
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify(data)
         }).catch(e => console.error('Formspree失败:', e));
+    }
+    // kvdb 云端写入（量大版核心：每条登记自动存云端，工作台自动显示）
+    if (KVDB_BUCKET) {
+        // 用时间戳作为key
+        const k = 'p_' + Date.now();
+        fetch('https://kvdb.io/' + KVDB_BUCKET + '/' + k, {
+            method: 'POST',
+            body: 'v=' + encodeURIComponent(JSON.stringify(data))
+        }).catch(e => console.error('kvdb写入失败:', e));
     }
     if (SUPABASE_URL && SUPABASE_KEY) {
         fetch(SUPABASE_URL + '/rest/v1/partner_regs', {
