@@ -2654,9 +2654,28 @@ body {
             <div class="sec-more" onclick="showAddPartner()" style="cursor:pointer;color:var(--orange)">+ 添加</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
-            你的开发者/外包资源
+            你的开发者/外包资源 · 登记数据自动归档
         </div>
     </div>
+
+    <!-- 从邮件导入 -->
+    <div class="section" style="padding-top:0">
+        <div onclick="document.getElementById('importPanel').style.display = document.getElementById('importPanel').style.display==='none'?'block':'none'" style="background:linear-gradient(135deg,rgba(0,217,255,0.08),rgba(168,107,255,0.06));border:1px solid rgba(0,217,255,0.25);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:12px">
+            <span style="font-size:20px">📥</span>
+            <div style="flex:1">
+                <div style="font-size:13px;font-weight:800;color:var(--blue)">从邮箱登记导入</div>
+                <div style="font-size:11px;color:var(--text-dim)">QQ邮箱收到登记邮件 → 复制全文 → 粘贴这里自动识别</div>
+            </div>
+            <span style="font-size:14px;color:var(--blue)">▾</span>
+        </div>
+        <div id="importPanel" style="display:none">
+            <textarea id="importText" placeholder="粘贴QQ邮箱收到的登记邮件内容到这里..." style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px;color:var(--text);min-height:120px;outline:none"></textarea>
+            <div style="display:flex;gap:8px;margin-top:8px">
+                <button onclick="importFromEmail()" style="flex:1;padding:11px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer">🔍 识别并导入</button>
+            </div>
+        </div>
+    </div>
+
     <div class="section" style="padding-top:0">
         <div id="partnersList"></div>
     </div>
@@ -4211,7 +4230,59 @@ function renderPartners() {
         list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🤝</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有合作商</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+添加</b>"</div></div>';
         return;
     }
-    list.innerHTML = partners.map((p, i) => `<div class="agent-item"><div class="agent-head"><div class="biz-icon">🤝</div><div class="agent-name">${p.name}</div><div class="agent-tag">${p.rating >= 4 ? '⭐ 靠谱' : '⭐ 待观察'}</div></div><div class="agent-desc">${p.specialty || ''}</div><div class="agent-meta"><span class="agent-meta-item">💬 ${p.contact || '微信'}</span><span class="agent-meta-item">💰 ¥${p.priceRange || '-'}</span></div><div class="agent-actions"><button class="agent-action-btn" onclick="deletePartner(${i})" style="color:var(--red)">🗑</button></div></div>`).join('');
+    list.innerHTML = partners.map((p, i) => `<div class="agent-item"><div class="agent-head"><div class="biz-icon">🤝</div><div class="agent-name">${p.name}</div><div class="agent-tag">${p.rating >= 4 ? '⭐ 靠谱' : '⭐ 待观察'}</div></div><div class="agent-desc">${p.specialty || ''}</div>${p.note ? '<div class="agent-meta" style="border-top:none;padding-top:4px"><span class="agent-meta-item">📝 ' + p.note + '</span></div>' : ''}<div class="agent-meta"><span class="agent-meta-item">💬 ${p.contact || '微信'}</span><span class="agent-meta-item">💰 ¥${p.priceRange || '-'}</span>${p.time ? '<span class="agent-meta-item">📅 ' + p.time + '</span>' : ''}</div><div class="agent-actions"><button class="agent-action-btn" onclick="deletePartner(${i})" style="color:var(--red)">🗑</button></div></div>`).join('');
+}
+
+// 从邮箱登记邮件导入（自动解析）
+function importFromEmail() {
+    const raw = document.getElementById('importText').value.trim();
+    if (!raw) return toast('请先粘贴邮件内容');
+    const text = raw.replace(/[\r\n]+/g, '\n');
+
+    // 尝试按登记表格式解析（每行：字段名：值）
+    const get = (key) => {
+        const kws = [key, key.replace('：', ':')];
+        for (const kw of kws) {
+            const lines = text.split('\n').filter(l => l.includes(kw));
+            for (const line of lines) {
+                const parts = line.split(/[:：]/);
+                if (parts.length > 1) {
+                    const val = parts.slice(1).join(':').trim();
+                    if (val && val !== '未填写' && val !== '无') return val;
+                }
+            }
+        }
+        return '';
+    };
+
+    // 兼容多种字段名
+    const name = get('昵称') || get('姓名') || get('Name');
+    const wechat = get('微信') || get('Wechat');
+    const contact = wechat;
+    const city = get('城市') || get('City');
+    const skills = get('擅长') || get('Skills') || get('擅长方向');
+    const tools = get('常用工具') || get('工具') || get('Tools');
+    const specialty = [skills, tools].filter(Boolean).join(' · ');
+    const priceRaw = get('报价') || get('Prices') || get('价格');
+    const priceRange = priceRaw || '-';
+    const weekly = get('每周可投入') || '';
+    const long = get('是否接受长期合作') || '';
+    const response = get('响应') || '';
+    const rating = weekly.includes('全职') ? 5 : 4;
+
+    if (!name) return toast('❌ 没识别到昵称，请确认粘贴的是登记邮件全文');
+
+    const partners = getPartners();
+    partners.push({
+        name, contact, specialty: specialty || '未填', priceRange,
+        rating, icon: '🤝', time: todayStr(),
+        note: [city, weekly, long, response].filter(Boolean).join(' | ')
+    });
+    setPartners(partners);
+    renderPartners();
+    document.getElementById('importPanel').style.display = 'none';
+    document.getElementById('importText').value = '';
+    toast('✅ 已导入：' + name);
 }
 
 function showAddPartner() {
