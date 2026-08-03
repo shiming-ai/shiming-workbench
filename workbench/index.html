@@ -1110,7 +1110,96 @@ body {
     font-size: 11px; font-family: monospace; color: var(--orange);
     word-break: break-all; margin-bottom: 8px;
 }
+/* ===== 主题切换系统 ===== */
+[data-theme="dark-gold"] {
+    --bg: #0f0a05;
+    --card: #1a1408;
+    --card2: #221a0e;
+    --border: #3d2e15;
+    --text: #f5e6c8;
+    --text-dim: #c9a85a;
+    --text-mute: #8d7340;
+    --orange: #FFD700;
+    --orange-light: #FFC400;
+    --green: #D4AF37;
+    --red: #B8860B;
+    --blue: #B8860B;
+    --purple: #C9A85A;
+    background-image: radial-gradient(ellipse 800px 400px at 50% 0%, rgba(255,215,0,0.04), transparent 60%);
+}
+[data-theme="apple-light"] {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --card2: #fbfbfd;
+    --border: #e5e5e7;
+    --text: #1d1d1f;
+    --text-dim: #6e6e73;
+    --text-mute: #a1a1a6;
+    --orange: #007AFF;
+    --orange-light: #5AC8FA;
+    --green: #34C759;
+    --red: #FF3B30;
+    --blue: #007AFF;
+    --purple: #AF52DE;
+}
+[data-theme="apple-dark"] {
+    --bg: #000000;
+    --card: #1c1c1e;
+    --card2: #2c2c2e;
+    --border: #3a3a3c;
+    --text: #f5f5f7;
+    --text-dim: #98989d;
+    --text-mute: #6e6e73;
+    --orange: #0A84FF;
+    --orange-light: #5AC8FA;
+    --green: #30D158;
+    --red: #FF453A;
+    --blue: #0A84FF;
+    --purple: #BF5AF2;
+}
+body { transition: background 0.3s, color 0.3s; }
+.card, .agent-item, .topbar, .sidebar, .nav, .stat-card { transition: background 0.3s, border-color 0.3s, color 0.3s; }
+
+/* 系统设置侧边栏 */
+.theme-card {
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 14px; padding: 16px; cursor: pointer;
+    transition: all 0.2s; text-align: center;
+    position: relative; overflow: hidden;
+}
+.theme-card.active { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,107,26,0.15); }
+.theme-card:active { transform: scale(0.97); }
+.theme-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+[data-theme="dark"] .theme-card.t-dark::before,
+.theme-card.t-dark::before { background: linear-gradient(90deg, #0a0b0f, #FF6B1A); }
+[data-theme="dark-gold"] .theme-card.t-dark-gold::before,
+.theme-card.t-dark-gold::before { background: linear-gradient(90deg, #0f0a05, #FFD700); }
+[data-theme="apple-light"] .theme-card.t-apple-light::before,
+.theme-card.t-apple-light::before { background: linear-gradient(90deg, #f5f5f7, #007AFF); }
+[data-theme="apple-dark"] .theme-card.t-apple-dark::before,
+.theme-card.t-apple-dark::before { background: linear-gradient(90deg, #000, #0A84FF); }
+.theme-card .tc-ico { font-size: 32px; margin-bottom: 6px; }
+.theme-card .tc-name { font-size: 13px; font-weight: 800; color: var(--text); }
+.theme-card .tc-desc { font-size: 10px; color: var(--text-mute); margin-top: 3px; line-height: 1.5; }
+.theme-card .tc-check {
+    position: absolute; top: 8px; right: 8px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--orange); color: #fff;
+    display: none; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800;
+}
+.theme-card.active .tc-check { display: flex; }
 </style>
+
+<script>
+// 主题系统：初始化时应用用户上次选择
+(function() {
+    const saved = localStorage.getItem('cf_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+})();
+</script>
 </head>
 <body>
 
@@ -2708,6 +2797,67 @@ body {
     </div>
 </div>
 
+<!-- ===== 页面: 主题设置 ===== -->
+<div id="page-settings" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🎨 主题设置</div>
+            <div class="sec-more" style="font-size:11px;color:var(--green)">已保存</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            选择主题后<strong style="color:var(--text)">自动保存</strong>到本地<br>
+            下次打开工作台自动应用
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">🖥 商务与深色主题</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+            <div class="theme-card t-dark" onclick="switchTheme('dark')" id="tc-dark">
+                <span class="tc-check">✓</span>
+                <div class="tc-ico">🌑</div>
+                <div class="tc-name">默认深色</div>
+                <div class="tc-desc">日常使用<br>专业感强</div>
+            </div>
+            <div class="theme-card t-dark-gold" onclick="switchTheme('dark-gold')" id="tc-dark-gold">
+                <span class="tc-check">✓</span>
+                <div class="tc-ico">🪙</div>
+                <div class="tc-name">黑金商务</div>
+                <div class="tc-desc">对外招商<br>演示宣传</div>
+            </div>
+        </div>
+
+        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">🍎 苹果极简</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="theme-card t-apple-light" onclick="switchTheme('apple-light')" id="tc-apple-light">
+                <span class="tc-check">✓</span>
+                <div class="tc-ico">☀️</div>
+                <div class="tc-name">苹果浅色</div>
+                <div class="tc-desc">长期办公<br>干净克制</div>
+            </div>
+            <div class="theme-card t-apple-dark" onclick="switchTheme('apple-dark')" id="tc-apple-dark">
+                <span class="tc-check">✓</span>
+                <div class="tc-ico">🌚</div>
+                <div class="tc-name">苹果暗夜</div>
+                <div class="tc-desc">夜间使用<br>高级简约</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:14px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px">
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
+                <strong style="color:var(--text)">💡 主题使用建议：</strong><br>
+                📌 日常操作 → <b style="color:var(--text)">默认深色</b>（不刺眼）<br>
+                📌 对外招商/截图 → <b style="color:#FFD700">黑金商务</b>（氛围感强）<br>
+                📌 长期大客户 → <b style="color:#007AFF">苹果极简</b>（高端）<br>
+                <br>
+                切换主题<strong style="color:var(--text)">不改变</strong>任何页面布局和功能
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 顶部导航栏 -->
 <div class="top-nav">
     <div class="menu-btn" onclick="toggleSidebar()">≡</div>
@@ -2819,6 +2969,13 @@ body {
         </div>
         <div class="sidebar-item" onclick="exportData()">
             <span class="sidebar-item-icon">📥</span> 导出备份
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">⚙️ 系统</div>
+        <div class="sidebar-item" onclick="switchPage('settings', this)">
+            <span class="sidebar-item-icon">🎨</span> 主题设置
         </div>
     </div>
 </div>
@@ -3355,6 +3512,7 @@ renderOfficialSkills();
 renderShares();
 renderOrders();
 renderPartners();
+highlightCurrentTheme();
 
 // ========== 进度环 ==========
 function renderRings() {
@@ -4406,12 +4564,30 @@ function switchPage(page, el) {
             website: '企业官网', opportunity: 'AI变现机会', control: '母系统管控台',
             incubation: '项目孵化', aiknowledge: 'AI营知识库', ecom: '电商服务',
             more: '更多工具', agents: '智能体中心', skills: '技能库', share: '授权管理',
-            orders: '接单工坊', partners: '合作商'
+            orders: '接单工坊', partners: '合作商', settings: '主题设置'
         };
         navTitle.innerHTML = '<span>时铭</span> · ' + (pageNames[page] || '工作台');
     }
     window.scrollTo(0, 0);
     closeSidebar();
+}
+
+// ========== 主题切换 ==========
+function switchTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('cf_theme', theme);
+    // 更新选中态
+    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
+    const card = document.getElementById('tc-' + theme);
+    if (card) card.classList.add('active');
+    toast('✅ 主题已切换');
+}
+
+function highlightCurrentTheme() {
+    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
+    const card = document.getElementById('tc-' + cur);
+    if (card) card.classList.add('active');
 }
 
 // ========== AI变现机会 ==========
