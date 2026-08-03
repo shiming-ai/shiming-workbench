@@ -1110,96 +1110,9 @@ body {
     font-size: 11px; font-family: monospace; color: var(--orange);
     word-break: break-all; margin-bottom: 8px;
 }
-/* ===== 主题切换系统 ===== */
-[data-theme="dark-gold"] {
-    --bg: #0f0a05;
-    --card: #1a1408;
-    --card2: #221a0e;
-    --border: #3d2e15;
-    --text: #f5e6c8;
-    --text-dim: #c9a85a;
-    --text-mute: #8d7340;
-    --orange: #FFD700;
-    --orange-light: #FFC400;
-    --green: #D4AF37;
-    --red: #B8860B;
-    --blue: #B8860B;
-    --purple: #C9A85A;
-    background-image: radial-gradient(ellipse 800px 400px at 50% 0%, rgba(255,215,0,0.04), transparent 60%);
-}
-[data-theme="apple-light"] {
-    --bg: #f5f5f7;
-    --card: #ffffff;
-    --card2: #fbfbfd;
-    --border: #e5e5e7;
-    --text: #1d1d1f;
-    --text-dim: #6e6e73;
-    --text-mute: #a1a1a6;
-    --orange: #007AFF;
-    --orange-light: #5AC8FA;
-    --green: #34C759;
-    --red: #FF3B30;
-    --blue: #007AFF;
-    --purple: #AF52DE;
-}
-[data-theme="apple-dark"] {
-    --bg: #000000;
-    --card: #1c1c1e;
-    --card2: #2c2c2e;
-    --border: #3a3a3c;
-    --text: #f5f5f7;
-    --text-dim: #98989d;
-    --text-mute: #6e6e73;
-    --orange: #0A84FF;
-    --orange-light: #5AC8FA;
-    --green: #30D158;
-    --red: #FF453A;
-    --blue: #0A84FF;
-    --purple: #BF5AF2;
-}
-body { transition: background 0.3s, color 0.3s; }
-.card, .agent-item, .topbar, .sidebar, .nav, .stat-card { transition: background 0.3s, border-color 0.3s, color 0.3s; }
-
-/* 系统设置侧边栏 */
-.theme-card {
-    background: var(--card); border: 2px solid var(--border);
-    border-radius: 14px; padding: 16px; cursor: pointer;
-    transition: all 0.2s; text-align: center;
-    position: relative; overflow: hidden;
-}
-.theme-card.active { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,107,26,0.15); }
-.theme-card:active { transform: scale(0.97); }
-.theme-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-}
-[data-theme="dark"] .theme-card.t-dark::before,
-.theme-card.t-dark::before { background: linear-gradient(90deg, #0a0b0f, #FF6B1A); }
-[data-theme="dark-gold"] .theme-card.t-dark-gold::before,
-.theme-card.t-dark-gold::before { background: linear-gradient(90deg, #0f0a05, #FFD700); }
-[data-theme="apple-light"] .theme-card.t-apple-light::before,
-.theme-card.t-apple-light::before { background: linear-gradient(90deg, #f5f5f7, #007AFF); }
-[data-theme="apple-dark"] .theme-card.t-apple-dark::before,
-.theme-card.t-apple-dark::before { background: linear-gradient(90deg, #000, #0A84FF); }
-.theme-card .tc-ico { font-size: 32px; margin-bottom: 6px; }
-.theme-card .tc-name { font-size: 13px; font-weight: 800; color: var(--text); }
-.theme-card .tc-desc { font-size: 10px; color: var(--text-mute); margin-top: 3px; line-height: 1.5; }
-.theme-card .tc-check {
-    position: absolute; top: 8px; right: 8px;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--orange); color: #fff;
-    display: none; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 800;
-}
-.theme-card.active .tc-check { display: flex; }
 </style>
 
-<script>
-// 主题系统：初始化时应用用户上次选择
-(function() {
-    const saved = localStorage.getItem('cf_theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', saved);
-})();
-</script>
+
 </head>
 <body>
 
@@ -2797,64 +2710,45 @@ body { transition: background 0.3s, color 0.3s; }
     </div>
 </div>
 
-<!-- ===== 页面: 主题设置 ===== -->
-<div id="page-settings" class="hidden">
+<!-- ===== 页面: 商品市集 ===== -->
+<div id="page-market" class="hidden">
     <div class="section">
         <div class="sec-header">
-            <div class="sec-title">🎨 主题设置</div>
-            <div class="sec-more" style="font-size:11px;color:var(--green)">已保存</div>
+            <div class="sec-title">🛒 商品市集</div>
+            <div class="sec-more" onclick="showAddProduct()" style="cursor:pointer;color:var(--orange)">+ 上架商品</div>
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
-            选择主题后<strong style="color:var(--text)">自动保存</strong>到本地<br>
-            下次打开工作台自动应用
+            标准化产品持续零售 · AI工具/提示词/课程/套餐<br>
+            零售价 + 渠道价，<b style="color:var(--green)">差价就是你的</b>
+        </div>
+
+        <!-- 统计 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--green)" id="marketOnStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">在售</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--blue)" id="marketSalesStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">累计销量</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--orange)" id="marketRevenueStat">¥0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">累计营收</div>
+            </div>
         </div>
     </div>
 
     <div class="section" style="padding-top:0">
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">🖥 商务与深色主题</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-            <div class="theme-card t-dark" onclick="switchTheme('dark')" id="tc-dark">
-                <span class="tc-check">✓</span>
-                <div class="tc-ico">🌑</div>
-                <div class="tc-name">默认深色</div>
-                <div class="tc-desc">日常使用<br>专业感强</div>
-            </div>
-            <div class="theme-card t-dark-gold" onclick="switchTheme('dark-gold')" id="tc-dark-gold">
-                <span class="tc-check">✓</span>
-                <div class="tc-ico">🪙</div>
-                <div class="tc-name">黑金商务</div>
-                <div class="tc-desc">对外招商<br>演示宣传</div>
+        <div class="sec-header">
+            <div class="sec-title">📂 全部商品</div>
+            <div class="sec-more" style="display:flex;gap:6px">
+                <span onclick="filterMarket('all')" id="mfilter-all" style="cursor:pointer;font-size:11px;padding:3px 10px;border-radius:10px;background:var(--orange);color:#fff">全部</span>
+                <span onclick="filterMarket('auto')" id="mfilter-auto" style="cursor:pointer;font-size:11px;padding:3px 10px;border-radius:10px;background:var(--card2)">自动发货</span>
+                <span onclick="filterMarket('manual')" id="mfilter-manual" style="cursor:pointer;font-size:11px;padding:3px 10px;border-radius:10px;background:var(--card2)">人工交付</span>
             </div>
         </div>
-
-        <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:10px">🍎 苹果极简</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="theme-card t-apple-light" onclick="switchTheme('apple-light')" id="tc-apple-light">
-                <span class="tc-check">✓</span>
-                <div class="tc-ico">☀️</div>
-                <div class="tc-name">苹果浅色</div>
-                <div class="tc-desc">长期办公<br>干净克制</div>
-            </div>
-            <div class="theme-card t-apple-dark" onclick="switchTheme('apple-dark')" id="tc-apple-dark">
-                <span class="tc-check">✓</span>
-                <div class="tc-ico">🌚</div>
-                <div class="tc-name">苹果暗夜</div>
-                <div class="tc-desc">夜间使用<br>高级简约</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section" style="padding-top:14px">
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px">
-            <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
-                <strong style="color:var(--text)">💡 主题使用建议：</strong><br>
-                📌 日常操作 → <b style="color:var(--text)">默认深色</b>（不刺眼）<br>
-                📌 对外招商/截图 → <b style="color:#FFD700">黑金商务</b>（氛围感强）<br>
-                📌 长期大客户 → <b style="color:#007AFF">苹果极简</b>（高端）<br>
-                <br>
-                切换主题<strong style="color:var(--text)">不改变</strong>任何页面布局和功能
-            </div>
-        </div>
+        <div id="marketList"></div>
     </div>
 </div>
 
@@ -2960,6 +2854,10 @@ body { transition: background 0.3s, color 0.3s; }
             <span class="sidebar-item-icon">🤝</span> 合作商
             <span class="sidebar-item-badge" id="partnerCount">0</span>
         </div>
+        <div class="sidebar-item" onclick="switchPage('market', this)" style="border-left:2px solid var(--green)">
+            <span class="sidebar-item-icon">🛒</span> 商品市集
+            <span class="sidebar-item-badge" id="marketCount">0</span>
+        </div>
     </div>
 
     <div class="sidebar-section">
@@ -2972,12 +2870,6 @@ body { transition: background 0.3s, color 0.3s; }
         </div>
     </div>
 
-    <div class="sidebar-section">
-        <div class="sidebar-section-title">⚙️ 系统</div>
-        <div class="sidebar-item" onclick="switchPage('settings', this)">
-            <span class="sidebar-item-icon">🎨</span> 主题设置
-        </div>
-    </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -3512,7 +3404,7 @@ renderOfficialSkills();
 renderShares();
 renderOrders();
 renderPartners();
-highlightCurrentTheme();
+renderMarket();
 
 // ========== 进度环 ==========
 function renderRings() {
@@ -4564,7 +4456,7 @@ function switchPage(page, el) {
             website: '企业官网', opportunity: 'AI变现机会', control: '母系统管控台',
             incubation: '项目孵化', aiknowledge: 'AI营知识库', ecom: '电商服务',
             more: '更多工具', agents: '智能体中心', skills: '技能库', share: '授权管理',
-            orders: '接单工坊', partners: '合作商', settings: '主题设置'
+            orders: '接单工坊', partners: '合作商', market: '商品市集'
         };
         navTitle.innerHTML = '<span>时铭</span> · ' + (pageNames[page] || '工作台');
     }
@@ -4572,22 +4464,108 @@ function switchPage(page, el) {
     closeSidebar();
 }
 
-// ========== 主题切换 ==========
-function switchTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('cf_theme', theme);
-    // 更新选中态
-    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
-    const card = document.getElementById('tc-' + theme);
-    if (card) card.classList.add('active');
-    toast('✅ 主题已切换');
+// ========== 商品市集 ==========
+const MARKET_KEY = 'cf_market';
+const MARKET_CATS = ['AI工具', '提示词包', '系统搭建', '运营套餐', '策划方案', '课程', '素材', '咨询服务'];
+
+function getProducts() { return load(MARKET_KEY, []); }
+function setProducts(arr) { save(MARKET_KEY, arr); }
+
+let marketFilter = 'all';
+
+function filterMarket(f) {
+    marketFilter = f;
+    ['all','auto','manual'].forEach(k => {
+        const el = document.getElementById('mfilter-' + k);
+        if (el) el.style.background = k === f ? 'var(--orange)' : 'var(--card2)';
+    });
+    renderMarket();
 }
 
-function highlightCurrentTheme() {
-    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
-    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
-    const card = document.getElementById('tc-' + cur);
-    if (card) card.classList.add('active');
+function renderMarket() {
+    const list = document.getElementById('marketList');
+    let products = getProducts();
+    if (marketFilter === 'auto') products = products.filter(p => p.delivery === 'auto');
+    if (marketFilter === 'manual') products = products.filter(p => p.delivery === 'manual');
+
+    // 统计
+    const onStat = document.getElementById('marketOnStat');
+    const salesStat = document.getElementById('marketSalesStat');
+    const revStat = document.getElementById('marketRevenueStat');
+    const countBadge = document.getElementById('marketCount');
+    if (onStat) onStat.textContent = products.filter(p => p.status !== 'off').length;
+    if (salesStat) salesStat.textContent = products.reduce((s, p) => s + (p.sales || 0), 0);
+    if (revStat) revStat.textContent = '¥' + products.reduce((s, p) => s + ((p.sales||0) * (p.price||0)), 0).toLocaleString();
+    if (countBadge) countBadge.textContent = products.filter(p => p.status !== 'off').length;
+
+    if (products.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🛒</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有商品</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+上架商品</b>"<br>把你的AI工具/提示词/课程挂上来卖</div></div>';
+        return;
+    }
+
+    list.innerHTML = products.map((p, i) => `
+        <div class="agent-item">
+            <div class="agent-head">
+                <div class="biz-icon">${p.icon || '📦'}</div>
+                <div class="agent-name">${p.name}</div>
+                <div class="agent-tag" style="background:${p.status === 'off' ? 'rgba(139,143,158,0.12)' : 'rgba(0,217,163,0.12)'};color:${p.status === 'off' ? 'var(--text-mute)' : 'var(--green)'}">${p.status === 'off' ? '已下架' : '在售'}</div>
+            </div>
+            <div class="agent-desc">${p.desc || ''}${p.cat ? ' · ' + p.cat : ''}</div>
+            <div class="agent-meta">
+                <span class="agent-meta-item">🏷️ 零售 ¥${(p.price||0).toLocaleString()}</span>
+                <span class="agent-meta-item">🤝 渠道 ¥${(p.channelPrice||0).toLocaleString()}</span>
+                <span class="agent-meta-item" style="color:var(--green);font-weight:800">差价 ¥${((p.price||0)-(p.channelPrice||0)).toLocaleString()}</span>
+                <span class="agent-meta-item">📦 ${p.delivery === 'auto' ? '自动发货' : '人工交付'}</span>
+                <span class="agent-meta-item">▶️ 已售 ${p.sales || 0}</span>
+            </div>
+            <div class="agent-actions">
+                <button class="agent-action-btn" onclick="toggleProduct(${i})">${p.status === 'off' ? '▶️ 上架' : '⏸ 下架'}</button>
+                <button class="agent-action-btn" onclick="addSale(${i})">+ 记一单</button>
+                <button class="agent-action-btn" onclick="deleteProduct(${i})" style="color:var(--red)">🗑 删除</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showAddProduct() {
+    const name = prompt('商品名称：', 'AI提示词包·1000条');
+    if (!name) return;
+    const desc = prompt('一句话描述：', '覆盖文案/运营/绘画/编程的精选提示词');
+    const cat = prompt('分类（' + MARKET_CATS.join('/') + '）：', '提示词包');
+    const price = parseInt(prompt('零售价（卖给客户）：', '199')) || 0;
+    const channelPrice = parseInt(prompt('渠道价（给合作商）：', '99')) || 0;
+    const delivery = confirm('自动发货？\n确定=自动（发链接/文件），取消=人工交付') ? 'auto' : 'manual';
+    const icon = prompt('图标：', '📦');
+    const products = getProducts();
+    products.push({ name, desc, cat, price, channelPrice, delivery, icon: icon || '📦', status: 'on', sales: 0, time: todayStr() });
+    setProducts(products);
+    renderMarket();
+    toast('✅ 商品已上架');
+}
+
+function toggleProduct(i) {
+    const products = getProducts();
+    products[i].status = products[i].status === 'off' ? 'on' : 'off';
+    setProducts(products);
+    renderMarket();
+    toast(products[i].status === 'off' ? '已下架' : '已上架');
+}
+
+function addSale(i) {
+    const products = getProducts();
+    products[i].sales = (products[i].sales || 0) + 1;
+    setProducts(products);
+    renderMarket();
+    toast('✅ 销量+1，营收已累计');
+}
+
+function deleteProduct(i) {
+    if (!confirm('确定删除该商品？')) return;
+    const products = getProducts();
+    products.splice(i, 1);
+    setProducts(products);
+    renderMarket();
+    toast('已删除');
 }
 
 // ========== AI变现机会 ==========
