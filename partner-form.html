@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="Crazy Friday AI 合作伙伴登记表 · 一起做更有价值的AI项目">
+<title>Crazy Friday · AI 合作伙伴登记表</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --bg: #0a0b0f; --card: #13151c; --card2: #1a1d27; --border: #1f2230;
+    --text: #e4e6ed; --text-dim: #8b8f9e; --text-mute: #5a5e6e;
+    --orange: #FF6B1A; --green: #00D9A3; --blue: #4D9DFF; --purple: #A66BFF;
+    --yellow: #FFD93D; --red: #FF4757; --pink: #FF6B9D;
+}
+body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========== 顶部Hero ========== */
+.hero {
+    min-height: 100vh;
+    padding: 70px 20px 50px;
+    background:
+        radial-gradient(ellipse 700px 440px at 50% 0%, rgba(255,107,26,0.15), transparent 65%),
+        radial-gradient(ellipse 400px 300px at 85% 50%, rgba(168,107,255,0.08), transparent 60%);
+    text-align: center;
+    position: relative;
+}
+.hero-brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--orange); font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 28px;
+}
+.hero-brand::before { content: ''; width: 18px; height: 2px; background: var(--orange); }
+
+.hero h1 {
+    font-size: 42px; font-weight: 900; letter-spacing: -2px;
+    line-height: 1.1; margin-bottom: 18px;
+    background: linear-gradient(135deg, #fff 0%, var(--orange) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+    font-size: 16px; color: var(--text); font-weight: 600;
+    margin-bottom: 8px;
+}
+.hero-desc {
+    font-size: 14px; color: var(--text-dim); line-height: 1.7;
+    max-width: 360px; margin: 0 auto 28px;
+}
+.hero-desc strong { color: var(--orange); font-weight: 700; }
+
+/* 业务矩阵 */
+.biz-list {
+    display: flex; justify-content: center; gap: 10px;
+    flex-wrap: wrap; margin-bottom: 36px;
+}
+.biz-pill {
+    padding: 8px 14px; border-radius: 22px;
+    background: var(--card); border: 1px solid var(--border);
+    font-size: 12px; color: var(--text); font-weight: 600;
+}
+.biz-pill .em { font-size: 14px; margin-right: 4px; }
+
+/* 数据带 */
+.stats-band {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card);
+    max-width: 360px; margin: 0 auto 36px;
+}
+.stat-cell {
+    padding: 18px 8px; text-align: center;
+    border-right: 1px solid var(--border);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-num {
+    font-size: 24px; font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.stat-label { font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* 4个核心优势 */
+.features {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    max-width: 360px; margin: 0 auto;
+}
+.feature-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 10px; text-align: center;
+}
+.feature-em { font-size: 22px; margin-bottom: 6px; }
+.feature-tt { font-size: 12px; font-weight: 800; color: #fff; }
+.feature-td { font-size: 10px; color: var(--text-mute); margin-top: 3px; line-height: 1.5; }
+
+/* ========== 登记表 ========== */
+.form-section {
+    padding: 50px 20px 30px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+}
+.form-head {
+    text-align: center; margin-bottom: 28px;
+}
+.form-eyebrow {
+    font-size: 11px; color: var(--orange);
+    letter-spacing: 2px; font-weight: 800;
+    text-transform: uppercase; margin-bottom: 8px;
+}
+.form-eyebrow::before, .form-eyebrow::after {
+    content: ''; display: inline-block; width: 16px; height: 1px;
+    background: var(--orange); margin: 0 8px; vertical-align: middle;
+}
+.form-h {
+    font-size: 26px; font-weight: 900; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.form-sub {
+    font-size: 13px; color: var(--text-dim); line-height: 1.7;
+}
+
+.form-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px; margin-bottom: 14px;
+}
+
+.form-num {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 800; color: var(--orange);
+    margin-bottom: 12px;
+}
+.form-num .n {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--orange); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+}
+.form-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 0; border-bottom: 1px solid var(--border);
+}
+.form-row:last-child { border-bottom: none; }
+.form-label { font-size: 13px; color: var(--text); width: 80px; flex-shrink: 0; }
+.form-label .req { color: var(--red); }
+.form-input {
+    flex: 1; background: transparent;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; font-size: 13px; color: var(--text);
+    outline: none; transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--orange); }
+.form-input::placeholder { color: var(--text-mute); }
+.form-textarea {
+    width: 100%; background: transparent;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-size: 13px; color: var(--text);
+    outline: none; min-height: 70px; resize: vertical;
+    font-family: inherit;
+}
+.form-textarea:focus { border-color: var(--orange); }
+.form-textarea::placeholder { color: var(--text-mute); }
+.form-count { font-size: 10px; color: var(--text-mute); text-align: right; margin-top: 4px; }
+.form-required::after { content: ' *'; color: var(--red); }
+
+/* 复选框 */
+.check-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+    margin-top: 4px;
+}
+.check-list {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+}
+.check-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 12px; border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    transition: all 0.2s; font-size: 12px;
+    background: var(--card); color: var(--text-dim);
+}
+.check-item.checked {
+    background: rgba(255,107,26,0.15); border-color: var(--orange);
+    color: var(--orange);
+}
+.check-item:active { transform: scale(0.96); }
+.check-item input { display: none; }
+.check-item .cb {
+    width: 13px; height: 13px; border: 1.5px solid currentColor;
+    border-radius: 3px; display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+}
+.check-item.checked .cb { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+/* 单选 */
+.radio-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.radio-item {
+    padding: 8px 14px; border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    font-size: 12px; color: var(--text-dim);
+    transition: all 0.2s;
+}
+.radio-item.active {
+    background: rgba(255,107,26,0.15); border-color: var(--orange);
+    color: var(--orange);
+}
+.radio-item:active { transform: scale(0.96); }
+
+/* 报价 */
+.price-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.price-input {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--card2);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 10px;
+}
+.price-input input {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-size: 14px; color: var(--text); min-width: 0;
+    font-weight: 800;
+}
+.price-input input::placeholder { color: var(--text-mute); font-weight: 400; }
+.price-input .unit { font-size: 11px; color: var(--text-mute); flex-shrink: 0; }
+
+/* Tip 提示 */
+.tip {
+    background: rgba(0,217,163,0.08);
+    border: 1px solid rgba(0,217,163,0.2);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 11px; color: var(--green);
+    line-height: 1.6; margin-top: 8px;
+}
+
+/* 提交按钮 */
+.submit-btn {
+    display: block; width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    color: #fff; border: none; border-radius: 14px;
+    font-size: 16px; font-weight: 800; cursor: pointer;
+    box-shadow: 0 8px 30px rgba(255,107,26,0.4);
+    transition: transform 0.15s;
+    margin-top: 16px;
+}
+.submit-btn:active { transform: scale(0.97); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.submit-footer {
+    text-align: center; margin-top: 14px;
+    font-size: 11px; color: var(--text-mute);
+}
+.submit-footer .lock { color: var(--orange); }
+
+/* 上传按钮 */
+.upload-box {
+    border: 1.5px dashed var(--border);
+    border-radius: 12px; padding: 24px;
+    text-align: center; cursor: pointer;
+    background: var(--card2);
+    transition: all 0.2s;
+}
+.upload-box:active { border-color: var(--orange); }
+.upload-box .em { font-size: 28px; color: var(--text-mute); }
+.upload-box .tt { font-size: 13px; color: var(--text); margin-top: 8px; }
+.upload-box .td { font-size: 11px; color: var(--text-mute); margin-top: 4px; }
+
+/* 底部 */
+.footer-features {
+    padding: 30px 20px; background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.f-cell {
+    text-align: center; padding: 14px 6px;
+    background: var(--bg); border-radius: 10px;
+    border: 1px solid var(--border);
+}
+.f-cell .em { font-size: 22px; margin-bottom: 6px; }
+.f-cell .tt { font-size: 12px; font-weight: 800; color: #fff; }
+.f-cell .td { font-size: 10px; color: var(--text-mute); margin-top: 4px; line-height: 1.5; }
+
+.bottom {
+    padding: 40px 20px 60px; text-align: center;
+    color: var(--text-mute); font-size: 11px;
+}
+.bottom strong { color: var(--text); }
+.bottom a { color: var(--orange); text-decoration: none; }
+
+/* Toast */
+#toast {
+    position: fixed; bottom: 40px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card); color: var(--text);
+    padding: 12px 22px; border-radius: 12px;
+    border: 1px solid var(--border); font-size: 13px;
+    z-index: 100; opacity: 0; transition: all 0.3s;
+    pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Hero ========== -->
+<section class="hero">
+    <div class="hero-brand">CRAZY FRIDAY × PARTNER NETWORK</div>
+    <h1>加入我们<br>AI 合作伙伴网络</h1>
+    <p class="hero-sub">有项目，我们派单<br>你负责交付，一起做大</p>
+    <p class="hero-desc">
+        你负责客户和沟通<br>
+        合作方负责交付，<strong>每一次合作都有人赚</strong><br>
+        长期共建、流程透明、按期结算
+    </p>
+
+    <div class="biz-list">
+        <span class="biz-pill"><span class="em">🤖</span>AI工作台</span>
+        <span class="biz-pill"><span class="em">🎬</span>AI漫剧</span>
+        <span class="biz-pill"><span class="em">🛠️</span>AI应用</span>
+        <span class="biz-pill"><span class="em">⚙️</span>自动化</span>
+    </div>
+
+    <div class="stats-band">
+        <div class="stat-cell"><div class="stat-num">126+</div><div class="stat-label">合作伙伴</div></div>
+        <div class="stat-cell"><div class="stat-num">358+</div><div class="stat-label">累计项目</div></div>
+        <div class="stat-cell"><div class="stat-num">¥1.28M</div><div class="stat-label">累计接单</div></div>
+    </div>
+
+    <div class="features">
+        <div class="feature-item">
+            <div class="feature-em">🚀</div>
+            <div class="feature-tt">优质项目资源</div>
+            <div class="feature-td">真实需求<br>长期稳定</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-em">🛡️</div>
+            <div class="feature-tt">透明靠谱</div>
+            <div class="feature-td">流程透明<br>按期结算</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-em">🤝</div>
+            <div class="feature-tt">长期共赢</div>
+            <div class="feature-td">一起做大<br>长期合作</div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-em">🎯</div>
+            <div class="feature-tt">专业支持</div>
+            <div class="feature-td">全程协助<br>合作不孤立</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 登记表 ========== -->
+<section class="form-section">
+    <div class="form-head">
+        <div class="form-eyebrow">填表</div>
+        <div class="form-h">合作登记</div>
+        <div class="form-sub">请填写以下信息，我们会尽快审核并联系你</div>
+    </div>
+
+    <!-- 区块1：基础信息 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">1</span>基础信息</div>
+        <div class="form-row">
+            <div class="form-label form-required">昵称</div>
+            <input class="form-input" id="f-nickname" placeholder="请输入你的昵称">
+        </div>
+        <div class="form-row">
+            <div class="form-label form-required">微信号</div>
+            <input class="form-input" id="f-wechat" placeholder="请输入微信号">
+        </div>
+        <div class="form-row">
+            <div class="form-label">手机号</div>
+            <input class="form-input" id="f-phone" placeholder="选填">
+        </div>
+        <div class="form-row">
+            <div class="form-label form-required">所在城市</div>
+            <input class="form-input" id="f-city" placeholder="如：北京/上海/杭州">
+        </div>
+        <div class="form-row">
+            <div class="form-label form-required">是否可远程</div>
+            <div class="radio-list" style="flex:1">
+                <div class="radio-item checked" data-name="remote" data-val="可以" onclick="selectRadio(this)">可以</div>
+                <div class="radio-item" data-name="remote" data-val="不可以" onclick="selectRadio(this)">不可以</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">个人/团队</div>
+            <div class="radio-list" style="flex:1">
+                <div class="radio-item" data-name="team" data-val="个人" onclick="selectRadio(this)">个人</div>
+                <div class="radio-item checked" data-name="team" data-val="工作室" onclick="selectRadio(this)">工作室</div>
+                <div class="radio-item" data-name="team" data-val="公司" onclick="selectRadio(this)">公司</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 区块2：擅长方向 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">2</span>擅长方向（可多选）</div>
+        <div class="check-grid" id="chks-skills">
+            <label class="check-item" data-val="AI工作台"><div class="cb"></div>AI工作台</label>
+            <label class="check-item" data-val="AI应用开发"><div class="cb"></div>AI应用开发</label>
+            <label class="check-item" data-val="AI Agent"><div class="cb"></div>AI Agent</label>
+            <label class="check-item" data-val="AI自动化"><div class="cb"></div>AI自动化</label>
+            <label class="check-item" data-val="AI漫剧"><div class="cb"></div>AI漫剧</label>
+            <label class="check-item" data-val="网站开发"><div class="cb"></div>网站开发</label>
+            <label class="check-item" data-val="小程序开发"><div class="cb"></div>小程序开发</label>
+            <label class="check-item" data-val="AI绘图"><div class="cb"></div>AI绘图</label>
+            <label class="check-item" data-val="Prompt工程"><div class="cb"></div>Prompt</label>
+            <label class="check-item" data-val="工作流搭建"><div class="cb"></div>工作流搭建</label>
+            <label class="check-item" data-val="UI设计"><div class="cb"></div>UI设计</label>
+            <label class="check-item" data-val="企业AI咨询"><div class="cb"></div>企业AI咨询</label>
+        </div>
+        <input class="form-input" id="f-skill-other" placeholder="其他方向（请填写）" style="margin-top:10px">
+
+        <div style="font-size:11px;color:var(--text-mute);margin-top:14px;margin-bottom:6px">每个擅长等级的熟练度</div>
+        <div class="radio-list">
+            <div class="radio-item" data-name="level" data-val="入门" onclick="selectRadio(this)">入门</div>
+            <div class="radio-item checked" data-name="level" data-val="熟练" onclick="selectRadio(this)">熟练</div>
+            <div class="radio-item" data-name="level" data-val="专家" onclick="selectRadio(this)">专家</div>
+        </div>
+    </div>
+
+    <!-- 区块3：熟悉工具 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">3</span>熟悉工具（可多选）</div>
+        <div class="check-list" id="chks-tools">
+            <label class="check-item" data-val="ChatGPT"><div class="cb"></div>ChatGPT</label>
+            <label class="check-item" data-val="Claude"><div class="cb"></div>Claude</label>
+            <label class="check-item" data-val="Gemini"><div class="cb"></div>Gemini</label>
+            <label class="check-item" data-val="Cursor"><div class="cb"></div>Cursor</label>
+            <label class="check-item" data-val="Coze"><div class="cb"></div>Coze</label>
+            <label class="check-item" data-val="Dify"><div class="cb"></div>Dify</label>
+            <label class="check-item" data-val="n8n"><div class="cb"></div>n8n</label>
+            <label class="check-item" data-val="Make"><div class="cb"></div>Make</label>
+            <label class="check-item" data-val="Midjourney"><div class="cb"></div>Midjourney</label>
+            <label class="check-item" data-val="ComfyUI"><div class="cb"></div>ComfyUI</label>
+            <label class="check-item" data-val="即梦"><div class="cb"></div>即梦</label>
+            <label class="check-item" data-val="可灵"><div class="cb"></div>可灵</label>
+            <label class="check-item" data-val="Figma"><div class="cb"></div>Figma</label>
+            <label class="check-item" data-val="Trae"><div class="cb"></div>Trae</label>
+            <label class="check-item" data-val="WorkBuddy"><div class="cb"></div>WorkBuddy</label>
+            <label class="check-item" data-val="Lovable"><div class="cb"></div>Lovable</label>
+            <label class="check-item" data-val="Bolt"><div class="cb"></div>Bolt</label>
+            <label class="check-item" data-val="Replit"><div class="cb"></div>Replit</label>
+        </div>
+        <input class="form-input" id="f-tool-other" placeholder="其他工具（请填写）" style="margin-top:10px">
+    </div>
+
+    <!-- 区块4：可承接项目 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">4</span>可承接哪些项目？</div>
+        <textarea class="form-textarea" id="f-projects" placeholder="详细描述你可以承接的项目类型/方向/场景等..."></textarea>
+        <div class="form-count"><span id="cnt-projects">0</span> / 300</div>
+    </div>
+
+    <!-- 区块5：作品案例 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">5</span>作品案例（强烈推荐）</div>
+        <textarea class="form-textarea" id="f-cases" placeholder="请提供作品链接、GitHub、演示地址、截图或视频等（多项更佳）"></textarea>
+        <div class="form-count"><span id="cnt-cases">0</span> / 300</div>
+        <div class="upload-box" style="margin-top:10px">
+            <div class="em">⬆</div>
+            <div class="tt">点击上传图片（最多9张）</div>
+            <div class="td">支持 JPG / PNG / PDF / MP4 格式</div>
+        </div>
+    </div>
+
+    <!-- 区块6：报价 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">6</span>报价（请填写大致起步价）</div>
+        <div class="price-grid">
+            <div class="price-input"><input type="number" id="p-workbench" placeholder="AI工作台"><span class="unit">元起</span></div>
+            <div class="price-input"><input type="number" id="p-app" placeholder="AI应用开发"><span class="unit">元起</span></div>
+            <div class="price-input"><input type="number" id="p-website" placeholder="网站开发"><span class="unit">元起</span></div>
+            <div class="price-input"><input type="number" id="p-agent" placeholder="AI Agent"><span class="unit">元起</span></div>
+            <div class="price-input"><input type="number" id="p-video" placeholder="AI漫剧"><span class="unit">元/分钟</span></div>
+            <div class="price-input"><input type="number" id="p-other" placeholder="其他"><span class="unit">元</span></div>
+        </div>
+        <div class="tip">💡 报价建议：无固定报价时可填"0"或留空，结算"基础+溢价"</div>
+    </div>
+
+    <!-- 区块7：每周可投入时间（升级） -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">7</span>每周可投入时间</div>
+        <div class="radio-list">
+            <div class="radio-item" data-name="weekly" data-val="全职" onclick="selectRadio(this)">全职</div>
+            <div class="radio-item" data-name="weekly" data-val="晚上" onclick="selectRadio(this)">晚上</div>
+            <div class="radio-item" data-name="weekly" data-val="周末" onclick="selectRadio(this)">周末</div>
+            <div class="radio-item checked" data-name="weekly" data-val="空闲时间" onclick="selectRadio(this)">空闲时间</div>
+        </div>
+        <div class="form-row" style="border-bottom:none;padding-top:8px"><div class="form-label">每天可投入</div><input class="form-input" type="number" id="f-hours" placeholder="如：3"><span class="unit" style="font-size:11px;color:var(--text-mute)"\>小时</span></div>
+    </div>
+
+    <!-- 区块8：响应时间承诺（新增） -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">8</span>响应时间承诺 ⭐新增</div>
+        <div class="radio-list">
+            <div class="radio-item" data-name="response" data-val="30分钟内" onclick="selectRadio(this)">30分钟内</div>
+            <div class="radio-item checked" data-name="response" data-val="2小时内" onclick="selectRadio(this)">2小时内</div>
+            <div class="radio-item" data-name="response" data-val="半天内" onclick="selectRadio(this)">半天内</div>
+            <div class="radio-item" data-name="response" data-val="24小时内" onclick="selectRadio(this)">24小时内</div>
+        </div>
+        <div class="tip">⚡ 响应越快 = 派单优先级越高。我们优先推给"30分钟内响应"的伙伴</div>
+    </div>
+
+    <!-- 区块9：最低接单金额（新增） -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">9</span>最低接单金额 ⭐新增</div>
+        <div style="display:flex;align-items:center;gap:8px">
+            <input class="form-input" type="number" id="f-mini" placeholder="如：500" style="flex:1">
+            <span style="font-size:12px;color:var(--text-mute)">元</span>
+        </div>
+        <div class="tip">💰 低于这个金额的单不接·过滤低质量单</div>
+    </div>
+
+    <!-- 区块10：结算方式（新增） -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">10</span>结算方式偏好 ⭐新增</div>
+        <div class="check-list">
+            <label class="check-item" data-val="项目结"><div class="cb"></div>项目结束结</label>
+            <label class="check-item" data-val="周结"><div class="cb"></div>周结</label>
+            <label class="check-item" data-val="月结"><div class="cb"></div>月结</label>
+        </div>
+        <div class="tip">💳 结算方式影响现金流，不同能力的伙伴可选择不同</div>
+    </div>
+
+    <!-- 区块11：是否接受长期合作 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">11</span>是否接受长期合作</div>
+        <div class="radio-list">
+            <div class="radio-item checked" data-name="long" data-val="接受" onclick="selectRadio(this)">接受</div>
+            <div class="radio-item" data-name="long" data-val="看项目" onclick="selectRadio(this)">看项目</div>
+            <div class="radio-item" data-name="long" data-val="暂时不接受" onclick="selectRadio(this)">暂时不接受</div>
+        </div>
+    </div>
+
+    <!-- 区块12：希望合作方式 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">12</span>希望合作方式（可多选）</div>
+        <div class="check-list">
+            <label class="check-item" data-val="派单合作"><div class="cb"></div>派单合作</label>
+            <label class="check-item" data-val="长期合作"><div class="cb"></div>长期合作</label>
+            <label class="check-item" data-val="技术合作"><div class="cb"></div>技术合作</label>
+            <label class="check-item" data-val="联合开发"><div class="cb"></div>联合开发</label>
+            <label class="check-item" data-val="项目分成"><div class="cb"></div>项目分成</label>
+            <label class="check-item" data-val="股权合作"><div class="cb"></div>股权合作</label>
+        </div>
+        <input class="form-input" id="f-coop-other" placeholder="其他合作方式（请填写）" style="margin-top:10px">
+    </div>
+
+    <!-- 区块13：补充说明 -->
+    <div class="form-card">
+        <div class="form-num"><span class="n">13</span>补充说明（选填）</div>
+        <textarea class="form-textarea" id="f-note" placeholder="你想对我们说的话、你的优势、经验、备注等..."></textarea>
+        <div class="form-count"><span id="cnt-note">0</span> / 200</div>
+    </div>
+
+    <!-- 提交 -->
+    <div style="text-align:center;margin-top:14px">
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:8px">提交后，我们会将你加入 <b style="color:var(--orange)">Crazy Friday AI 合作伙伴人才库</b></div>
+        <div style="font-size:11px;color:var(--text-mute);margin-bottom:14px">后续如果有与你能力匹配的项目，将第一时间联系你！</div>
+    </div>
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">📨 提交登记表</button>
+    <div class="submit-footer">
+        <span class="lock">🔒</span> 信息仅用于合作沟通，我们会严格保密
+    </div>
+</section>
+
+<!-- ========== 底部 ========== -->
+<section class="footer-features">
+    <div class="f-cell"><div class="em">🚀</div><div class="tt">真实项目</div><div class="td">不做虚假项目</div></div>
+    <div class="f-cell"><div class="em">🛡️</div><div class="tt">按时结算</div><div class="td">流程透明靠谱</div></div>
+    <div class="f-cell"><div class="em">🤝</div><div class="tt">长期合作</div><div class="td">一起成长共赢</div></div>
+    <div class="f-cell"><div class="em">🎯</div><div class="tt">专业支持</div><div class="td">全程协助支持</div></div>
+</section>
+
+<div class="bottom">
+    <strong>提交后即可加入 <a href="https://shiming-ai.github.io/shiming-workbench/hub.html">Crazy Friday AI 合作伙伴人才库</a></strong><br>
+    <br>
+    © 2026 Crazy Friday 疯狂星期五 · 一起做更靠谱的 AI 项目<br>
+    <span style="margin-top:8px;display:inline-block">由 <a href="https://shiming-ai.github.io/shiming-workbench/workbench/index.html">Crazy Friday 工作台</a> 提供支持</span>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ========== 工具 ==========
+function $(id) { return document.getElementById(id); }
+function toast(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2000);
+}
+
+// ========== 交互 ==========
+document.querySelectorAll('.check-item').forEach(el => {
+    el.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.classList.toggle('checked');
+    });
+});
+
+function selectRadio(el) {
+    const name = el.dataset.name;
+    document.querySelectorAll('.radio-item[data-name="' + name + '"]').forEach(other => {
+        other.classList.remove('active');
+    });
+    el.classList.add('active');
+}
+
+// 实时字数
+['f-projects', 'f-cases', 'f-note'].forEach(id => {
+    const el = $(id);
+    if (el) el.addEventListener('input', () => {
+        const cid = 'cnt-' + id.replace('f-', '');
+        const cnt = $(cid);
+        if (cnt) cnt.textContent = el.value.length;
+    });
+});
+
+// ========== 提交 ==========
+function submitForm() {
+    const data = {
+        nickname: $('f-nickname').value.trim(),
+        wechat: $('f-wechat').value.trim(),
+        city: $('f-city').value.trim(),
+        skills: [],
+        tools: [],
+        projects: $('f-projects').value.trim(),
+        cases: $('f-cases').value.trim(),
+        prices: {
+            workbench: $('p-workbench').value,
+            app: $('p-app').value,
+            website: $('p-website').value,
+            agent: $('p-agent').value,
+            video: $('p-video').value,
+            other: $('p-other').value
+        },
+        hours: $('f-hours').value,
+        response: '2小时内',
+        mini: $('f-mini').value,
+        settle: [],
+        long: '',
+        coop: [],
+        note: $('f-note').value.trim(),
+        time: new Date().toLocaleString('zh-CN')
+    };
+
+    // 收集擅长/工具/合作方式
+    document.querySelectorAll('#chks-skills .checked').forEach(el => data.skills.push(el.dataset.val));
+    if ($('f-skill-other').value.trim()) data.skills.push($('f-skill-other').value.trim());
+    document.querySelectorAll('#chks-tools .checked').forEach(el => data.tools.push(el.dataset.val));
+    if ($('f-tool-other').value.trim()) data.tools.push($('f-tool-other').value.trim());
+    document.querySelectorAll('.radio-item[data-name="response"].active').forEach(el => data.response = el.dataset.val);
+    document.querySelectorAll('.radio-item[data-name="long"].active').forEach(el => data.long = el.dataset.val);
+    document.querySelectorAll('.radio-item[data-name="remote"].active').forEach(el => data.remote = el.dataset.val);
+    document.querySelectorAll('.radio-item[data-name="team"].active').forEach(el => data.team = el.dataset.val);
+    document.querySelectorAll('.radio-item[data-name="weekly"].active').forEach(el => data.weekly = el.dataset.val);
+    document.querySelectorAll('.radio-item[data-name="level"].active').forEach(el => data.level = el.dataset.val);
+    document.querySelectorAll('.form-card > .form-num').forEach(); // placeholder
+    // 结算方式
+    document.querySelectorAll('.form-card').forEach(card => {
+        const num = card.querySelector('.form-num');
+        if (num && num.textContent.includes('10')) {
+            card.querySelectorAll('.check-item.checked').forEach(c => data.settle.push(c.dataset.val));
+        }
+        if (num && num.textContent.includes('12')) {
+            card.querySelectorAll('.check-item.checked').forEach(c => data.coop.push(c.dataset.val));
+        }
+    });
+
+    // 验证必填
+    if (!data.nickname) return toast('请输入昵称');
+    if (!data.wechat) return toast('请输入微信号');
+    if (!data.city) return toast('请输入所在城市');
+    if (data.skills.length === 0) return toast('请至少选择1个擅长方向');
+
+    // 保存到localStorage
+    const list = JSON.parse(localStorage.getItem('cf_partners_reg') || '[]');
+    list.push(data);
+    localStorage.setItem('cf_partners_reg', JSON.stringify(list));
+
+    // 模拟成功
+    const btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '✅ 已提交，感谢加入！';
+    btn.style.background = 'var(--green)';
+    toast('🎉 提交成功，我们会尽快联系你');
+
+    // 3秒后恢复
+    setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = '📨 提交登记表';
+        btn.style.background = '';
+    }, 3000);
+}
+</script>
+
+</body>
+</html>
