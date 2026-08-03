@@ -235,6 +235,16 @@ function addSale(i){const p=load(MARKET_KEY,[]);p[i].sales=(p[i].sales||0)+1;sav
 function deleteProduct(i){if(!confirm('删除？'))return;const p=load(MARKET_KEY,[]);p.splice(i,1);save(MARKET_KEY,p);renderMarket()}
 
 renderOrders();renderPartners();renderMarket();
+
+// 支持 URL hash 自动切换tab（#orders/#partners/#market）
+(function(){
+    const hash = location.hash.replace('#','');
+    if (hash && ['orders','partners','market'].includes(hash)) {
+        const tabs = document.querySelectorAll('.tab');
+        const map = { orders:0, partners:1, market:2 };
+        switchTab(hash, tabs[map[hash]]);
+    }
+})();
 </script>
 </body>
 </html>
