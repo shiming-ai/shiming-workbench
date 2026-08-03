@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b0f">
+<title>接单工坊 · Crazy Friday</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --bg:#0a0b0f; --card:#13151c; --card2:#1a1d27; --border:#1f2230; --text:#e4e6ed; --text-dim:#8b8f9e; --text-mute:#5a5e6e; --orange:#FF6B1A; --green:#00D9A3; --blue:#4D9DFF; --purple:#A66BFF; --yellow:#FFD93D; --red:#FF4757; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; overflow-x:hidden; }
+.topbar { position:sticky; top:0; z-index:90; background:rgba(10,11,15,.9); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:14px 18px; display:flex; align-items:center; gap:10px; }
+.topbar .logo { width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,var(--orange),var(--yellow)); display:flex; align-items:center; justify-content:center; font-size:15px; color:#fff; }
+.topbar .tt { font-size:16px; font-weight:800; flex:1; }
+.topbar .back { font-size:12px; color:var(--text-dim); text-decoration:none; padding:6px 12px; border:1px solid var(--border); border-radius:16px; }
+.wrap { max-width:480px; margin:0 auto; padding:16px; }
+.tabs { display:flex; gap:8px; margin-bottom:16px; }
+.tab { flex:1; padding:10px; text-align:center; background:var(--card); border:1px solid var(--border); border-radius:12px; font-size:13px; font-weight:700; color:var(--text-dim); cursor:pointer; }
+.tab.active { background:linear-gradient(135deg,var(--orange),var(--yellow)); color:#fff; border-color:transparent; }
+.panel { display:none; }
+.panel.show { display:block; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:12px; }
+.card-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.card-title { font-size:14px; font-weight:800; }
+.card-more { font-size:11px; color:var(--orange); cursor:pointer; font-weight:700; }
+.desc { font-size:12px; color:var(--text-dim); line-height:1.7; margin-bottom:12px; }
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+.stat { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 6px; text-align:center; }
+.stat .num { font-size:20px; font-weight:800; color:var(--orange); }
+.stat .lbl { font-size:9px; color:var(--text-mute); margin-top:2px; }
+.item { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:10px; }
+.item-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.item-icon { width:36px; height:36px; border-radius:10px; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:18px; }
+.item-name { font-size:14px; font-weight:800; flex:1; }
+.tag { font-size:9px; padding:3px 8px; border-radius:10px; font-weight:700; }
+.tag-orange { background:rgba(255,107,26,.12); color:var(--orange); }
+.tag-blue { background:rgba(77,157,255,.12); color:var(--blue); }
+.tag-purple { background:rgba(166,107,255,.12); color:var(--purple); }
+.tag-green { background:rgba(0,217,163,.12); color:var(--green); }
+.item-desc { font-size:12px; color:var(--text-dim); margin-bottom:8px; }
+.item-meta { display:flex; gap:6px; flex-wrap:wrap; font-size:10px; color:var(--text-mute); margin-bottom:8px; }
+.meta-item { padding:3px 8px; background:var(--card2); border-radius:8px; }
+.btn-row { display:flex; gap:6px; }
+.btn { flex:1; padding:8px; text-align:center; background:var(--card2); border:1px solid var(--border); border-radius:8px; font-size:11px; font-weight:700; color:var(--text-dim); cursor:pointer; }
+.btn:active { color:var(--orange); border-color:var(--orange); }
+.empty { background:var(--card); border:1px dashed var(--border); border-radius:14px; padding:30px 16px; text-align:center; color:var(--text-dim); font-size:12px; }
+.empty .em { font-size:34px; margin-bottom:8px; }
+.sync-banner { background:rgba(0,217,163,.1); border:1px solid rgba(0,217,163,.3); border-radius:10px; padding:10px 12px; font-size:12px; color:var(--green); margin-bottom:12px; }
+#toast { position:fixed; bottom:40px; left:50%; transform:translateX(-50%) translateY(20px); background:#fff; color:#0a0b0f; padding:10px 20px; border-radius:22px; font-size:12px; font-weight:700; opacity:0; transition:.3s; pointer-events:none; z-index:100; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">💰</div>
+    <div class="tt">接单工坊</div>
+    <a class="back" href="https://shiming-ai.github.io/shiming-workbench/workbench/index.html">← 返回工作台</a>
+</div>
+
+<div class="wrap">
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('orders',this)">📋 订单池</div>
+        <div class="tab" onclick="switchTab('partners',this)">🤝 合作商</div>
+        <div class="tab" onclick="switchTab('market',this)">🛒 商品市集</div>
+    </div>
+
+    <!-- 订单池 -->
+    <div class="panel show" id="panel-orders">
+        <div class="card">
+            <div class="card-head"><div class="card-title">📋 订单池</div><div class="card-more" onclick="addOrder()">+ 接新单</div></div>
+            <div class="desc">接客户单 → 派给合作商 → <b style="color:var(--green)">赚差价</b></div>
+            <div class="stat-row">
+                <div class="stat"><div class="num" id="s1">0</div><div class="lbl">进行中</div></div>
+                <div class="stat"><div class="num" id="s2">0</div><div class="lbl">待派单</div></div>
+                <div class="stat"><div class="num" id="s3">¥0</div><div class="lbl">本月留存</div></div>
+            </div>
+        </div>
+        <div id="ordersList"></div>
+    </div>
+
+    <!-- 合作商 -->
+    <div class="panel" id="panel-partners">
+        <div class="card">
+            <div class="card-head"><div class="card-title">🤝 合作商</div><div class="card-more" onclick="addPartner()">+ 添加</div></div>
+            <div class="desc">你的开发者/外包资源 · 登记数据云端自动同步</div>
+        </div>
+        <div id="partnersList"></div>
+    </div>
+
+    <!-- 商品市集 -->
+    <div class="panel" id="panel-market">
+        <div class="card">
+            <div class="card-head"><div class="card-title">🛒 商品市集</div><div class="card-more" onclick="addProduct()">+ 上架商品</div></div>
+            <div class="desc">标准化产品持续零售 · 差价就是你的</div>
+        </div>
+        <div id="marketList"></div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', KVDB_BUCKET='MRr9X2qAfQK9XokEWQWGAW';
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function $(id){return document.getElementById(id)}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function monthPrefix(){return todayStr().slice(0,7)}
+
+function switchTab(name,el){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+    $('panel-'+name).classList.add('show');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// ===== 订单池 =====
+function renderOrders(){
+    const orders=load(ORDERS_KEY,[]);
+    $('s1').textContent=orders.filter(o=>o.status!=='已交付').length;
+    $('s2').textContent=orders.filter(o=>o.status==='待派单').length;
+    let p=0;const mp=monthPrefix();
+    orders.forEach(o=>{if(o.status==='已交付'&&o.time&&o.time.startsWith(mp))p+=(o.acceptPrice||0)-(o.assignPrice||0)});
+    $('s3').textContent='¥'+p.toLocaleString();
+    const list=$('ordersList');
+    if(orders.length===0){list.innerHTML='<div class="empty"><div class="em">📋</div>还没有订单<br>点上方"+接新单"</div>';return}
+    list.innerHTML=orders.map((o,i)=>{
+        const profit=(o.acceptPrice||0)-(o.assignPrice||0);
+        const tc=o.status==='待派单'?'tag-orange':o.status==='已派单'?'tag-blue':o.status==='交付中'?'tag-purple':'tag-green';
+        return '<div class="item"><div class="item-head"><div class="item-icon">📦</div><div class="item-name">'+o.name+'</div><span class="tag '+tc+'">'+o.status+'</span></div><div class="item-desc">'+o.client+' '+o.need+'</div><div class="item-meta"><span class="meta-item">💵 接 ¥'+(o.acceptPrice||0).toLocaleString()+'</span><span class="meta-item">📤 派 ¥'+(o.assignPrice||0).toLocaleString()+'</span><span class="meta-item" style="color:'+(profit>=0?'var(--green)':'var(--red)')+';font-weight:800">差 ¥'+profit.toLocaleString()+'</span>'+(o.partner?'<span class="meta-item">🤝 '+o.partner+'</span>':'')+'</div><div class="btn-row"><div class="btn" onclick="advanceOrder('+i+')">▶️ 下一步</div><div class="btn" onclick="deleteOrder('+i+')">🗑</div></div></div>';
+    }).join('');
+}
+function addOrder(){
+    const name=prompt('订单名称：','AI工作台定制');if(!name)return;
+    const client=prompt('客户：','抖音客户');
+    const need=prompt('需求：','电商管理工作台');
+    const price=parseInt(prompt('接单价（客户给）：','3000'))||0;
+    const orders=load(ORDERS_KEY,[]);
+    orders.push({name,client,need,acceptPrice:price,assignPrice:0,partner:'',status:'待派单',time:todayStr()});
+    save(ORDERS_KEY,orders);renderOrders();toast('✅ 新单已接入');
+}
+function advanceOrder(i){
+    const orders=load(ORDERS_KEY,[]);
+    const cur=orders[i].status;
+    const next={'待派单':'已派单','已派单':'交付中','交付中':'已交付'};
+    orders[i].status=next[cur]||cur;
+    if(cur==='待派单'){
+        const partners=load(PARTNERS_KEY,[]);
+        if(partners.length>0){
+            const p=prompt('派给谁？\n'+partners.map((p,j)=>(j+1)+'. '+p.name).join('\n'),'1');
+            const idx=parseInt(p)-1;
+            if(idx>=0&&idx<partners.length){orders[i].partner=partners[idx].name;orders[i].assignPrice=parseInt(prompt('派单价：','1800'))||0}
+        }else{toast('⚠️ 先添加合作商')}
+    }
+    save(ORDERS_KEY,orders);renderOrders();toast('✅ 已更新');
+}
+function deleteOrder(i){if(!confirm('删除？'))return;const o=load(ORDERS_KEY,[]);o.splice(i,1);save(ORDERS_KEY,o);renderOrders()}
+
+// ===== 合作商 =====
+function renderPartners(){
+    const partners=load(PARTNERS_KEY,[]);
+    const list=$('partnersList');
+    if(partners.length===0){list.innerHTML='<div class="empty"><div class="em">🤝</div>还没有合作商<br>点上方"+添加"或登记表提交后自动同步</div>'}
+    else{
+        list.innerHTML=partners.map((p,i)=>'<div class="item"><div class="item-head"><div class="item-icon">🤝</div><div class="item-name">'+p.name+'</div><span class="tag '+(p.rating>=4?'tag-green':'tag-orange')+'">'+(p.rating>=4?'⭐ 靠谱':'⭐ 待观察')+'</span></div><div class="item-desc">'+p.specialty+'</div><div class="item-meta"><span class="meta-item">💬 '+p.contact+'</span><span class="meta-item">💰 ¥'+p.priceRange+'</span>'+(p.time?'<span class="meta-item">📅 '+p.time+'</span>':'')+(p.note?'<span class="meta-item">📝 '+p.note+'</span>':'')+'</div><div class="btn-row"><div class="btn" onclick="orderFromPartner('+i+')">📤 派单</div><div class="btn" onclick="deletePartner('+i+')">🗑</div></div></div>').join('');
+    }
+    syncCloud();
+}
+function addPartner(){
+    const name=prompt('合作商名称：','老王AI工作室');if(!name)return;
+    const contact=prompt('微信：','wx_xxx');
+    const specialty=prompt('擅长：','AI工作台/小程序');
+    const price=prompt('报价区间：','2000-5000');
+    const rating=parseInt(prompt('靠谱评分(1-5)：','4'))||3;
+    const partners=load(PARTNERS_KEY,[]);
+    partners.push({name,contact,specialty,priceRange:price,rating,time:todayStr()});
+    save(PARTNERS_KEY,partners);renderPartners();toast('✅ 已添加');
+}
+function orderFromPartner(i){
+    const partners=load(PARTNERS_KEY,[]);const p=partners[i];
+    const name=prompt('订单名称：','AI工作台定制');if(!name)return;
+    const need=prompt('需求：','客户要一个后台');
+    const accept=parseInt(prompt('接单价：','3000'))||0;
+    const assign=parseInt(prompt('派单价(给'+p.name+')：',String(Math.round(accept*0.6))))||0;
+    const orders=load(ORDERS_KEY,[]);
+    orders.push({name,client:'新客户',need,acceptPrice:accept,assignPrice:assign,partner:p.name,status:'已派单',time:todayStr()});
+    save(ORDERS_KEY,orders);renderOrders();toast('✅ 已派单给 '+p.name);
+}
+function deletePartner(i){if(!confirm('删除？'))return;const p=load(PARTNERS_KEY,[]);p.splice(i,1);save(PARTNERS_KEY,p);renderPartners()}
+
+// 云端同步
+function syncCloud(){
+    fetch('https://kvdb.io/'+KVDB_BUCKET+'/?prefix=p_&limit=200').then(r=>r.text()).then(text=>{
+        const keys=text.trim().split('\n').filter(Boolean);
+        if(!keys.length)return;
+        const partners=load(PARTNERS_KEY,[]);
+        const seen=new Set(partners.map(p=>p.name+'|'+p.contact));
+        let added=0;
+        Promise.all(keys.map(key=>fetch('https://kvdb.io/'+KVDB_BUCKET+'/'+key).then(r=>r.text()).then(val=>{
+            try{
+                const d=JSON.parse(val);
+                const name=d.nickname||d.name||'未填昵称';
+                const contact=d.wechat||'';
+                const sig=name+'|'+contact;
+                if(seen.has(sig))return;
+                seen.add(sig);
+                partners.push({name,contact,specialty:[d.skills||'',d.tools||''].filter(Boolean).join(' · '),priceRange:(d.mini?d.mini+'元起':(d.prices&&(d.prices.workbench||d.prices.app))?(d.prices.workbench||d.prices.app)+'元起':'-'),rating:(d.weekly&&d.weekly.includes('全职'))?5:4,time:(d.time||'').slice(0,10),note:[d.city,d.weekly,d.long,d.response].filter(Boolean).join(' | ')});
+                added++;
+            }catch(e){}
+        }))).then(()=>{
+            if(added>0){save(PARTNERS_KEY,partners);renderPartners();const l=$('partnersList');l.insertAdjacentHTML('beforebegin','<div class="sync-banner">☁️ 云端同步：新登记 +'+added+' 条</div>')}
+        });
+    }).catch(()=>{});
+}
+
+// ===== 商品市集 =====
+function renderMarket(){
+    const products=load(MARKET_KEY,[]);
+    const list=$('marketList');
+    if(products.length===0){list.innerHTML='<div class="empty"><div class="em">🛒</div>还没有商品<br>点上方"+上架商品"</div>';return}
+    list.innerHTML=products.map((p,i)=>'<div class="item"><div class="item-head"><div class="item-icon">📦</div><div class="item-name">'+p.name+'</div><span class="tag '+(p.status==='off'?'tag-orange':'tag-green')+'">'+(p.status==='off'?'已下架':'在售')+'</span></div><div class="item-meta"><span class="meta-item">🏷️ ¥'+p.price.toLocaleString()+'</span><span class="meta-item">🤝 ¥'+(p.channelPrice||0).toLocaleString()+'</span><span class="meta-item">▶️ 已售 '+(p.sales||0)+'</span></div><div class="btn-row"><div class="btn" onclick="toggleProduct('+i+')">'+(p.status==='off'?'上架':'下架')+'</div><div class="btn" onclick="addSale('+i+')">+ 记一单</div><div class="btn" onclick="deleteProduct('+i+')">🗑</div></div></div>').join('');
+}
+function addProduct(){
+    const name=prompt('商品名称：','AI提示词包');if(!name)return;
+    const price=parseInt(prompt('零售价：','199'))||0;
+    const cp=parseInt(prompt('渠道价：','99'))||0;
+    const products=load(MARKET_KEY,[]);
+    products.push({name,price,channelPrice:cp,sales:0,status:'on',time:todayStr()});
+    save(MARKET_KEY,products);renderMarket();toast('✅ 已上架');
+}
+function toggleProduct(i){const p=load(MARKET_KEY,[]);p[i].status=p[i].status==='off'?'on':'off';save(MARKET_KEY,p);renderMarket()}
+function addSale(i){const p=load(MARKET_KEY,[]);p[i].sales=(p[i].sales||0)+1;save(MARKET_KEY,p);renderMarket();toast('✅ 销量+1')}
+function deleteProduct(i){if(!confirm('删除？'))return;const p=load(MARKET_KEY,[]);p.splice(i,1);save(MARKET_KEY,p);renderMarket()}
+
+renderOrders();renderPartners();renderMarket();
+</script>
+</body>
+</html>
