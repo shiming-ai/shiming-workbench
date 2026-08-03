@@ -32,26 +32,33 @@ body {
     position: relative;
 }
 .hero-brand {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; color: var(--orange); font-weight: 800;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; color: var(--orange); font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 32px;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,107,26,0.25);
+    border-radius: 20px;
+    background: rgba(255,107,26,0.05);
 }
-.hero-brand::before { content: ''; width: 18px; height: 2px; background: var(--orange); }
+.hero-brand::before { content: ''; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 8px var(--orange); }
 
 .hero h1 {
-    font-size: 42px; font-weight: 900; letter-spacing: -2px;
-    line-height: 1.1; margin-bottom: 18px;
-    background: linear-gradient(135deg, #fff 0%, var(--orange) 100%);
+    font-size: 48px; font-weight: 900; letter-spacing: -2.5px;
+    line-height: 1.1; margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #fff 30%, var(--orange) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(255,107,26,0.15));
 }
 .hero-sub {
-    font-size: 16px; color: var(--text); font-weight: 600;
-    margin-bottom: 8px;
+    font-size: 17px; color: var(--text); font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 .hero-desc {
-    font-size: 14px; color: var(--text-dim); line-height: 1.7;
-    max-width: 360px; margin: 0 auto 28px;
+    font-size: 13px; color: var(--text-dim); line-height: 2;
+    max-width: 360px; margin: 0 auto 32px;
+    letter-spacing: 0.3px;
 }
 .hero-desc strong { color: var(--orange); font-weight: 700; }
 
@@ -311,13 +318,13 @@ body {
 
 <!-- ========== Hero ========== -->
 <section class="hero">
-    <div class="hero-brand">CRAZY FRIDAY × PARTNER NETWORK</div>
-    <h1>加入接单工坊<br>AI 接单登记</h1>
-    <p class="hero-sub">我们有项目派给你<br>你负责交付，按单结算</p>
+    <div class="hero-brand">CRAZY FRIDAY · 接单工坊</div>
+    <h1>接单工坊<br>AI 接单登记</h1>
+    <p class="hero-sub">项目派给你，交付按单算</p>
     <p class="hero-desc">
-        你负责客户和沟通<br>
-        合作方负责交付，<strong>每一次合作都有人赚</strong><br>
-        长期共建、流程透明、按期结算
+        我们对接客户、报价、沟通<br>
+        你负责交付，<strong>每一次合作都有收入</strong><br>
+        长期共建 + 流程透明 + 按期结算
     </p>
 
     <div class="biz-list">
@@ -336,8 +343,8 @@ body {
     <div class="features">
         <div class="feature-item">
             <div class="feature-em">🚀</div>
-            <div class="feature-tt">优质项目资源</div>
-            <div class="feature-td">真实需求<br>长期稳定</div>
+            <div class="feature-tt">稳定项目流</div>
+            <div class="feature-td">真实需求<br>长期派单</div>
         </div>
         <div class="feature-item">
             <div class="feature-em">🛡️</div>
@@ -599,9 +606,9 @@ body {
 <!-- ========== 底部 ========== -->
 <section class="footer-features">
     <div class="f-cell"><div class="em">🚀</div><div class="tt">真实项目</div><div class="td">不做虚假项目</div></div>
-    <div class="f-cell"><div class="em">🛡️</div><div class="tt">按时结算</div><div class="td">流程透明靠谱</div></div>
-    <div class="f-cell"><div class="em">🤝</div><div class="tt">长期合作</div><div class="td">一起成长共赢</div></div>
-    <div class="f-cell"><div class="em">🎯</div><div class="tt">专业支持</div><div class="td">全程协助支持</div></div>
+    <div class="f-cell"><div class="em">🛡️</div><div class="tt">按期结算</div><div class="td">流程透明<br>准时到账</div></div>
+    <div class="f-cell"><div class="em">🤝</div><div class="tt">长期主义</div><div class="td">持续合作<br>越做越大</div></div>
+    <div class="f-cell"><div class="em">🎯</div><div class="tt">专业支持</div><div class="td">全程协助<br>不是放手</div></div>
 </section>
 
 <div class="bottom">
