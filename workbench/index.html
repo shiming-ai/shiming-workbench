@@ -4227,10 +4227,58 @@ function renderPartners() {
     const list = document.getElementById('partnersList');
     const partners = getPartners();
     if (partners.length === 0) {
-        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🤝</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有合作商</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+添加</b>"</div></div>';
-        return;
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🤝</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有合作商</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+添加</b>"<br>或登记表提交后自动同步</div></div>';
+    } else {
+        list.innerHTML = partners.map((p, i) => `<div class="agent-item"><div class="agent-head"><div class="biz-icon">🤝</div><div class="agent-name">${p.name}</div><div class="agent-tag">${p.rating >= 4 ? '⭐ 靠谱' : '⭐ 待观察'}</div></div><div class="agent-desc">${p.specialty || ''}</div>${p.note ? '<div class="agent-meta" style="border-top:none;padding-top:4px"><span class="agent-meta-item">📝 ' + p.note + '</span></div>' : ''}<div class="agent-meta"><span class="agent-meta-item">💬 ${p.contact || '微信'}</span><span class="agent-meta-item">💰 ¥${p.priceRange || '-'}</span>${p.time ? '<span class="agent-meta-item">📅 ' + p.time + '</span>' : ''}</div><div class="agent-actions"><button class="agent-action-btn" onclick="deletePartner(${i})" style="color:var(--red)">🗑</button></div></div>`).join('');
     }
-    list.innerHTML = partners.map((p, i) => `<div class="agent-item"><div class="agent-head"><div class="biz-icon">🤝</div><div class="agent-name">${p.name}</div><div class="agent-tag">${p.rating >= 4 ? '⭐ 靠谱' : '⭐ 待观察'}</div></div><div class="agent-desc">${p.specialty || ''}</div>${p.note ? '<div class="agent-meta" style="border-top:none;padding-top:4px"><span class="agent-meta-item">📝 ' + p.note + '</span></div>' : ''}<div class="agent-meta"><span class="agent-meta-item">💬 ${p.contact || '微信'}</span><span class="agent-meta-item">💰 ¥${p.priceRange || '-'}</span>${p.time ? '<span class="agent-meta-item">📅 ' + p.time + '</span>' : ''}</div><div class="agent-actions"><button class="agent-action-btn" onclick="deletePartner(${i})" style="color:var(--red)">🗑</button></div></div>`).join('');
+    // 云端同步：从 kvdb 拉取登记数据
+    syncCloudPartners();
+}
+
+// 从 kvdb 云存储同步登记数据（量大版）
+function syncCloudPartners() {
+    const KVDB_BUCKET = 'MRr9X2qAfQK9XokEWQWGAW';
+    fetch('https://kvdb.io/' + KVDB_BUCKET + '/?prefix=p_&limit=200', {
+        method: 'GET'
+    }).then(r => r.text()).then(text => {
+        const keys = text.trim().split('\n').filter(Boolean);
+        if (keys.length === 0) return;
+        const partners = getPartners();
+        const seen = new Set(partners.map(p => p.name + '|' + p.contact));
+        let added = 0;
+        const fetches = keys.map(key => {
+            return fetch('https://kvdb.io/' + KVDB_BUCKET + '/' + key)
+                .then(r => r.text())
+                .then(val => {
+                    try {
+                        const d = JSON.parse(val);
+                        const name = d.nickname || d.name || '未填昵称';
+                        const contact = d.wechat || d.contact || '';
+                        const sig = name + '|' + contact;
+                        if (seen.has(sig)) return;
+                        seen.add(sig);
+                        partners.push({
+                            name, contact,
+                            specialty: [d.skills || '', d.tools || ''].filter(Boolean).join(' · '),
+                            priceRange: (d.prices && (d.prices.workbench || d.prices.app)) ? (d.prices.workbench || d.prices.app) + '元起' : (d.mini ? d.mini + '元起' : '-'),
+                            rating: (d.weekly && d.weekly.includes('全职')) ? 5 : 4,
+                            icon: '🤝', time: (d.time || '').slice(0, 10),
+                            note: [d.city, d.weekly, d.long, d.response].filter(Boolean).join(' | '),
+                            source: '云端'
+                        });
+                        added++;
+                    } catch(e) {}
+                });
+        });
+        Promise.all(fetches).then(() => {
+            if (added > 0) {
+                setPartners(partners);
+                renderPartners();
+                const list = document.getElementById('partnersList');
+                list.insertAdjacentHTML('beforebegin', '<div style="background:rgba(0,217,163,0.1);border:1px solid rgba(0,217,163,0.3);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--green);margin-bottom:10px">☁️ 云端同步：新登记 +' + added + ' 条</div>');
+            }
+        });
+    }).catch(() => {});
 }
 
 // 从邮箱登记邮件导入（自动解析）
