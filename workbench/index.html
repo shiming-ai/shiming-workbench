@@ -2630,6 +2630,58 @@ body {
     </div>
 </div>
 
+<!-- ===== 页面: 接单工坊-订单池 ===== -->
+<div id="page-orders" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">📋 订单池</div>
+            <div class="sec-more" onclick="showAddOrder()" style="cursor:pointer;color:var(--orange)">+ 接新单</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            接客户单 → 派给合作商 → <b style="color:var(--green)">赚差价</b><br>
+            你只做客户和接单，开发交给同行
+        </div>
+
+        <!-- 统计条 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--orange)" id="orderActiveStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">进行中</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--blue)" id="orderPendingStat">0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">待派单</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center">
+                <div style="font-size:20px;font-weight:800;color:var(--green)" id="orderProfitStat">¥0</div>
+                <div style="font-size:9px;color:var(--text-mute);margin-top:2px">本月差价</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div id="ordersList"></div>
+    </div>
+</div>
+
+<!-- ===== 页面: 接单工坊-合作商 ===== -->
+<div id="page-partners" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🤝 合作商名录</div>
+            <div class="sec-more" onclick="showAddPartner()" style="cursor:pointer;color:var(--orange)">+ 添加合作商</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            你的开发外包资源池 · 同行/外包/兼职<br>
+            每个合作商记住专长、报价、靠谱度
+        </div>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div id="partnersList"></div>
+    </div>
+</div>
+
 <!-- 顶部导航栏 -->
 <div class="top-nav">
     <div class="menu-btn" onclick="toggleSidebar()">≡</div>
@@ -2719,6 +2771,18 @@ body {
         </div>
         <div class="sidebar-item" onclick="switchPage('share', this)">
             <span class="sidebar-item-icon">🔗</span> 授权给别人
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">📦 接单工坊</div>
+        <div class="sidebar-item" onclick="switchPage('orders', this)" style="border-left:2px solid var(--orange)">
+            <span class="sidebar-item-icon">📋</span> 订单池
+            <span class="sidebar-item-badge" id="orderCount">0</span>
+        </div>
+        <div class="sidebar-item" onclick="switchPage('partners', this)">
+            <span class="sidebar-item-icon">🤝</span> 合作商
+            <span class="sidebar-item-badge" id="partnerCount">0</span>
         </div>
     </div>
 
@@ -3016,11 +3080,198 @@ function deleteShare(id) {
     renderShares();
 }
 
+// ========== 接单工坊 ==========
+const ORDERS_KEY = 'cf_orders';
+const PARTNERS_KEY = 'cf_partners';
+
+const ORDER_STATUS = ['待派单', '已派单', '交付中', '已交付'];
+
+function getOrders() { return load(ORDERS_KEY, []); }
+function setOrders(arr) { save(ORDERS_KEY, arr); }
+function getPartners() { return load(PARTNERS_KEY, []); }
+function setPartners(arr) { save(PARTNERS_KEY, arr); }
+
+function renderOrders() {
+    const list = document.getElementById('ordersList');
+    const orders = getOrders();
+
+    const activeStat = document.getElementById('orderActiveStat');
+    const pendingStat = document.getElementById('orderPendingStat');
+    const profitStat = document.getElementById('orderProfitStat');
+    const countBadge = document.getElementById('orderCount');
+
+    if (activeStat) activeStat.textContent = orders.filter(o => o.status !== '已交付').length;
+    if (pendingStat) pendingStat.textContent = orders.filter(o => o.status === '待派单').length;
+    let monthProfit = 0;
+    const mp = monthPrefix();
+    orders.forEach(o => {
+        const diff = (o.acceptPrice || 0) - (o.assignPrice || 0);
+        if (o.status === '已交付' && o.time && o.time.startsWith(mp)) monthProfit += diff;
+    });
+    if (profitStat) profitStat.textContent = '¥' + monthProfit.toLocaleString();
+    if (countBadge) countBadge.textContent = orders.filter(o => o.status !== '已交付').length;
+
+    if (orders.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">📋</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有订单</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+接新单</b>"<br>接客户需求 → 派单给合作商赚差价</div></div>';
+        return;
+    }
+
+    list.innerHTML = orders.map((o, i) => {
+        const profit = (o.acceptPrice || 0) - (o.assignPrice || 0);
+        const statusColor = o.status === '待派单' ? 'var(--orange)' : o.status === '已派单' ? 'var(--blue)' : o.status === '交付中' ? 'var(--purple)' : 'var(--green)';
+        return `
+        <div class="agent-item">
+            <div class="agent-head">
+                <div class="biz-icon">${o.icon || '📦'}</div>
+                <div class="agent-name">${o.name}</div>
+                <div class="agent-tag" style="background:${statusColor}22;color:${statusColor}">${o.status}</div>
+            </div>
+            <div class="agent-desc">${o.client ? '👤 ' + o.client + ' · ' : ''}${o.need || '客户需求'}</div>
+            <div class="agent-meta">
+                <span class="agent-meta-item">💵 接单 ¥${(o.acceptPrice||0).toLocaleString()}</span>
+                <span class="agent-meta-item">📤 派单 ¥${(o.assignPrice||0).toLocaleString()}</span>
+                <span class="agent-meta-item" style="color:${profit >= 0 ? 'var(--green)' : 'var(--red)'};font-weight:800">差价 ¥${profit.toLocaleString()}</span>
+            </div>
+            ${o.partner ? '<div class="agent-meta" style="border-top:none;padding-top:4px"><span class="agent-meta-item">🤝 ' + o.partner + '</span><span class="agent-meta-item">📅 ' + o.time + '</span></div>' : ''}
+            <div class="agent-actions">
+                ${o.status === '待派单' ? '<button class="agent-action-btn" onclick="assignOrder(' + i + ')">📤 派单</button>' : o.status === '已派单' ? '<button class="agent-action-btn" onclick="advanceOrder(' + i + ')">▶️ 开始交付</button>' : o.status === '交付中' ? '<button class="agent-action-btn" onclick="advanceOrder(' + i + ')">✅ 标记交付</button>' : '<button class="agent-action-btn" style="opacity:0.5;pointer-events:none">✅ 已交付</button>'}
+                <button class="agent-action-btn" onclick="deleteOrder(' + i + ')" style="color:var(--red)">🗑 删除</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function showAddOrder() {
+    const name = prompt('订单名称：', 'AI工作台定制');
+    if (!name) return;
+    const client = prompt('客户（谁/哪来的）：', '抖音来的客户');
+    const need = prompt('需求简述：', '需要一个电商管理工作台');
+    const acceptPrice = parseInt(prompt('客户报价（接单价）：', '3000')) || 0;
+    const icon = prompt('选个图标（可留空）：', '📦');
+    const orders = getOrders();
+    orders.push({ name, client, need, acceptPrice, assignPrice: 0, partner: '', icon: icon || '📦', status: '待派单', time: todayStr() });
+    setOrders(orders);
+    renderOrders();
+    toast('✅ 新单已接入');
+}
+
+function assignOrder(i) {
+    const orders = getOrders();
+    const partners = getPartners();
+    if (partners.length === 0) {
+        toast('⚠️ 先到"合作商"添加一个开发伙伴');
+        switchPage('partners', document.querySelectorAll('.sidebar-item')[20]);
+        return;
+    }
+    const list = partners.map((p, j) => (j+1) + '. ' + p.name + '（' + p.specialty + ' · 报价¥' + p.priceRange + '）').join('\n');
+    const pick = prompt('选择合作商：\n' + list, '1');
+    if (pick === null) return;
+    const idx = parseInt(pick) - 1;
+    if (isNaN(idx) || idx < 0 || idx >= partners.length) return toast('选择无效');
+    const assignPrice = parseInt(prompt('派单价（给合作商的价格）：', String(Math.round((orders[i].acceptPrice||0) * 0.6)))) || 0;
+    orders[i].partner = partners[idx].name;
+    orders[i].assignPrice = assignPrice;
+    orders[i].status = '已派单';
+    setOrders(orders);
+    renderOrders();
+    toast('✅ 已派单给 ' + partners[idx].name);
+}
+
+function advanceOrder(i) {
+    const orders = getOrders();
+    const cur = orders[i].status;
+    if (cur === '已派单') orders[i].status = '交付中';
+    else if (cur === '交付中') orders[i].status = '已交付';
+    setOrders(orders);
+    renderOrders();
+    toast('✅ 订单状态已更新');
+}
+
+function deleteOrder(i) {
+    if (!confirm('确定删除该订单？')) return;
+    const orders = getOrders();
+    orders.splice(i, 1);
+    setOrders(orders);
+    renderOrders();
+    toast('已删除');
+}
+
+function renderPartners() {
+    const list = document.getElementById('partnersList');
+    const partners = getPartners();
+    const countBadge = document.getElementById('partnerCount');
+    if (countBadge) countBadge.textContent = partners.length;
+
+    if (partners.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🤝</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有合作商</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+添加合作商</b>"<br>把你的同行/外包资源登记进来</div></div>';
+        return;
+    }
+    list.innerHTML = partners.map((p, i) => `
+        <div class="agent-item">
+            <div class="agent-head">
+                <div class="biz-icon">${p.icon || '🤝'}</div>
+                <div class="agent-name">${p.name}</div>
+                <div class="agent-tag" style="background:${p.rating >= 4 ? 'rgba(0,217,163,0.12)' : 'rgba(255,217,61,0.12)'};color:${p.rating >= 4 ? 'var(--green)' : 'var(--yellow)'}">${p.rating >= 4 ? '⭐ 靠谱' : '⭐ 待观察'}</div>
+            </div>
+            <div class="agent-desc">${p.specialty || ''}</div>
+            <div class="agent-meta">
+                <span class="agent-meta-item">💬 ${p.contact || '微信'}</span>
+                <span class="agent-meta-item">💰 报价 ¥${p.priceRange || '-'}</span>
+                <span class="agent-meta-item">⭐ 评分 ${p.rating || '-'}</span>
+            </div>
+            <div class="agent-actions">
+                <button class="agent-action-btn" onclick="orderByPartner(${i})">📤 派单</button>
+                <button class="agent-action-btn" onclick="deletePartner(${i})" style="color:var(--red)">🗑 删除</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showAddPartner() {
+    const name = prompt('合作商名称：', '老王AI工作室');
+    if (!name) return;
+    const contact = prompt('联系方式（微信号）：', 'wx_xxx');
+    const specialty = prompt('擅长领域：', 'AI工作台/小程序/网页');
+    const priceRange = prompt('报价区间：', '2000-5000');
+    const rating = parseInt(prompt('靠谱评分（1-5）：', '4')) || 3;
+    const partners = getPartners();
+    partners.push({ name, contact, specialty, priceRange, rating, icon: '🤝', time: todayStr() });
+    setPartners(partners);
+    renderPartners();
+    toast('✅ 合作商已登记');
+}
+
+function orderByPartner(i) {
+    const partners = getPartners();
+    const p = partners[i];
+    const name = prompt('订单名称：', 'AI工作台定制');
+    if (!name) return;
+    const need = prompt('需求简述：', '客户要一个管理后台');
+    const acceptPrice = parseInt(prompt('接单价（客户给的）：', '3000')) || 0;
+    const assignPrice = parseInt(prompt('派单价（给' + p.name + '的）：', String(Math.round(acceptPrice * 0.6)))) || 0;
+    const orders = getOrders();
+    orders.push({ name, client: '新客户', need, acceptPrice, assignPrice, partner: p.name, icon: '📦', status: '已派单', time: todayStr() });
+    setOrders(orders);
+    renderOrders();
+    toast('✅ 已派单给 ' + p.name);
+}
+
+function deletePartner(i) {
+    if (!confirm('确定删除该合作商？')) return;
+    const partners = getPartners();
+    partners.splice(i, 1);
+    setPartners(partners);
+    renderPartners();
+    toast('已删除');
+}
+
 // 初始渲染
 renderAgents();
 renderSkills();
 renderOfficialSkills();
 renderShares();
+renderOrders();
+renderPartners();
 
 // ========== 进度环 ==========
 function renderRings() {
@@ -4063,6 +4314,19 @@ function switchPage(page, el) {
     document.getElementById('page-' + page).classList.remove('hidden');
     document.querySelectorAll('.sidebar-item').forEach(n => n.classList.remove('active'));
     if (el) el.classList.add('active');
+    // 顶部导航显示当前板块
+    const navTitle = document.querySelector('.top-nav-title');
+    if (navTitle) {
+        const pageNames = {
+            today: '首页', money: '财务管理', crm: '客户订单', channel: '渠道数据',
+            content: '内容矩阵', study: '学习复盘', service: 'AI定制服务',
+            website: '企业官网', opportunity: 'AI变现机会', control: '母系统管控台',
+            incubation: '项目孵化', aiknowledge: 'AI营知识库', ecom: '电商服务',
+            more: '更多工具', agents: '智能体中心', skills: '技能库', share: '授权管理',
+            orders: '接单工坊', partners: '合作商'
+        };
+        navTitle.innerHTML = '<span>时铭</span> · ' + (pageNames[page] || '工作台');
+    }
     window.scrollTo(0, 0);
     closeSidebar();
 }
