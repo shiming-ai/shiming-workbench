@@ -2630,6 +2630,55 @@ body {
     </div>
 </div>
 
+<!-- ===== 页面: 接单工坊-订单池 ===== -->
+<div id="page-orders" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">📋 订单池</div>
+            <div class="sec-more" onclick="showAddOrder()" style="cursor:pointer;color:var(--orange)">+ 接新单</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            接客户单 → 派给合作商 → <b style="color:var(--green)">赚差价</b>
+        </div>
+    </div>
+    <div class="section" style="padding-top:0">
+        <div id="ordersList"></div>
+    </div>
+</div>
+
+<!-- ===== 页面: 接单工坊-合作商 ===== -->
+<div id="page-partners" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🤝 合作商</div>
+            <div class="sec-more" onclick="showAddPartner()" style="cursor:pointer;color:var(--orange)">+ 添加</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            你的开发者/外包资源
+        </div>
+    </div>
+    <div class="section" style="padding-top:0">
+        <div id="partnersList"></div>
+    </div>
+</div>
+
+<!-- ===== 页面: 接单工坊-商品市集 ===== -->
+<div id="page-market" class="hidden">
+    <div class="section">
+        <div class="sec-header">
+            <div class="sec-title">🛒 商品市集</div>
+            <div class="sec-more" onclick="showAddProduct()" style="cursor:pointer;color:var(--orange)">+ 上架商品</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;margin-bottom:14px">
+            标准化产品持续零售 · 差价就是你的
+        </div>
+    </div>
+    <div class="section" style="padding-top:0">
+        <div id="marketList"></div>
+    </div>
+</div>
+
+<!-- 顶部导航栏 -->
 <!-- 顶部导航栏 -->
 <div class="top-nav">
     <div class="menu-btn" onclick="toggleSidebar()">≡</div>
@@ -2719,6 +2768,22 @@ body {
         </div>
         <div class="sidebar-item" onclick="switchPage('share', this)">
             <span class="sidebar-item-icon">🔗</span> 授权给别人
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">📦 接单工坊</div>
+        <div class="sidebar-item" onclick="switchPage('orders', this)">
+            <span class="sidebar-item-icon">📋</span> 订单池
+        </div>
+        <div class="sidebar-item" onclick="switchPage('partners', this)">
+            <span class="sidebar-item-icon">🤝</span> 合作商
+        </div>
+        <div class="sidebar-item" onclick="switchPage('market', this)">
+            <span class="sidebar-item-icon">🛒</span> 商品市集
+        </div>
+        <div class="sidebar-item" onclick="window.open('partner-form.html','_blank')">
+            <span class="sidebar-item-icon">📨</span> 发给接单人
         </div>
     </div>
 
@@ -3021,6 +3086,9 @@ renderAgents();
 renderSkills();
 renderOfficialSkills();
 renderShares();
+renderOrders();
+renderPartners();
+renderMarket();
 
 // ========== 进度环 ==========
 function renderRings() {
@@ -4065,6 +4133,144 @@ function switchPage(page, el) {
     if (el) el.classList.add('active');
     window.scrollTo(0, 0);
     closeSidebar();
+}
+
+
+// ========== 接单工坊 ==========
+const ORDERS_KEY = 'cf_orders';
+const PARTNERS_KEY = 'cf_partners';
+const MARKET_KEY = 'cf_market';
+
+function getOrders() { return load(ORDERS_KEY, []); }
+function setOrders(a) { save(ORDERS_KEY, a); }
+function getPartners() { return load(PARTNERS_KEY, []); }
+function setPartners(a) { save(PARTNERS_KEY, a); }
+function getProducts() { return load(MARKET_KEY, []); }
+function setProducts(a) { save(MARKET_KEY, a); }
+
+function renderOrders() {
+    const list = document.getElementById('ordersList');
+    const orders = getOrders();
+    if (orders.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">📋</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有订单</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+接新单</b>"<br>接客户需求 → 派给合作商</div></div>';
+        return;
+    }
+    list.innerHTML = orders.map((o, i) => {
+        const profit = (o.acceptPrice || 0) - (o.assignPrice || 0);
+        const statusColor = o.status === '待派单' ? 'var(--orange)' : o.status === '已派单' ? 'var(--blue)' : o.status === '交付中' ? 'var(--purple)' : 'var(--green)';
+        return `<div class="agent-item"><div class="agent-head"><div class="biz-icon">${o.icon || '📦'}</div><div class="agent-name">${o.name}</div><div class="agent-tag" style="background:${statusColor}22;color:${statusColor}">${o.status}</div></div><div class="agent-desc">${o.client || ''} ${o.need || ''}</div><div class="agent-meta"><span class="agent-meta-item">💵 ¥${(o.acceptPrice||0).toLocaleString()}</span><span class="agent-meta-item">📤 ¥${(o.assignPrice||0).toLocaleString()}</span><span class="agent-meta-item" style="color:var(--green);font-weight:800">差 ¥${profit.toLocaleString()}</span></div><div class="agent-actions"><button class="agent-action-btn" onclick="advanceOrder(${i})">▶️ 下一步</button><button class="agent-action-btn" onclick="deleteOrder(${i})" style="color:var(--red)">🗑</button></div></div>`;
+    }).join('');
+}
+
+function showAddOrder() {
+    const name = prompt('订单名称：', 'AI工作台定制');
+    if (!name) return;
+    const client = prompt('客户：', '抖音客户');
+    const need = prompt('需求：', '工作台');
+    const acceptPrice = parseInt(prompt('接单价：', '3000')) || 0;
+    const orders = getOrders();
+    orders.push({ name, client, need, acceptPrice, assignPrice: 0, partner: '', icon: '📦', status: '待派单', time: todayStr() });
+    setOrders(orders);
+    renderOrders();
+    toast('✅ 已接入');
+}
+
+function advanceOrder(i) {
+    const orders = getOrders();
+    const cur = orders[i].status;
+    const next = { '待派单': '已派单', '已派单': '交付中', '交付中': '已交付' };
+    orders[i].status = next[cur] || cur;
+    if (cur === '待派单') {
+        const partners = getPartners();
+        if (partners.length > 0) {
+            const p = prompt('派给哪个合作商？\n' + partners.map((p, j) => (j+1) + '. ' + p.name).join('\n'), '1');
+            const idx = parseInt(p) - 1;
+            if (idx >= 0 && idx < partners.length) {
+                orders[i].partner = partners[idx].name;
+                orders[i].assignPrice = parseInt(prompt('派单价：', '1800')) || 0;
+            }
+        }
+    }
+    setOrders(orders);
+    renderOrders();
+    toast('✅ 已更新');
+}
+
+function deleteOrder(i) {
+    if (!confirm('删除该订单？')) return;
+    const orders = getOrders();
+    orders.splice(i, 1);
+    setOrders(orders);
+    renderOrders();
+}
+
+function renderPartners() {
+    const list = document.getElementById('partnersList');
+    const partners = getPartners();
+    if (partners.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🤝</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有合作商</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+添加</b>"</div></div>';
+        return;
+    }
+    list.innerHTML = partners.map((p, i) => `<div class="agent-item"><div class="agent-head"><div class="biz-icon">🤝</div><div class="agent-name">${p.name}</div><div class="agent-tag">${p.rating >= 4 ? '⭐ 靠谱' : '⭐ 待观察'}</div></div><div class="agent-desc">${p.specialty || ''}</div><div class="agent-meta"><span class="agent-meta-item">💬 ${p.contact || '微信'}</span><span class="agent-meta-item">💰 ¥${p.priceRange || '-'}</span></div><div class="agent-actions"><button class="agent-action-btn" onclick="deletePartner(${i})" style="color:var(--red)">🗑</button></div></div>`).join('');
+}
+
+function showAddPartner() {
+    const name = prompt('合作商名称：', '老王AI工作室');
+    if (!name) return;
+    const contact = prompt('联系方式：', 'wx_xxx');
+    const specialty = prompt('擅长：', 'AI工作台');
+    const priceRange = prompt('报价：', '2000-5000');
+    const rating = parseInt(prompt('靠谱评分（1-5）：', '4')) || 3;
+    const partners = getPartners();
+    partners.push({ name, contact, specialty, priceRange, rating });
+    setPartners(partners);
+    renderPartners();
+    toast('✅ 已添加');
+}
+
+function deletePartner(i) {
+    if (!confirm('删除？')) return;
+    const partners = getPartners();
+    partners.splice(i, 1);
+    setPartners(partners);
+    renderPartners();
+}
+
+function renderMarket() {
+    const list = document.getElementById('marketList');
+    const products = getProducts();
+    if (products.length === 0) {
+        list.innerHTML = '<div style="background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:28px 18px;text-align:center"><div style="font-size:34px;margin-bottom:8px">🛒</div><div style="font-size:13px;font-weight:800;margin-bottom:6px">还没有商品</div><div style="font-size:11px;color:var(--text-dim);line-height:1.7">点右上角"<b style="color:var(--orange)">+上架商品</b>"</div></div>';
+        return;
+    }
+    list.innerHTML = products.map((p, i) => `<div class="agent-item"><div class="agent-head"><div class="biz-icon">${p.icon || '📦'}</div><div class="agent-name">${p.name}</div><div class="agent-tag">${p.status === 'off' ? '已下架' : '在售'}</div></div><div class="agent-desc">${p.desc || ''}</div><div class="agent-meta"><span class="agent-meta-item">🏷️ ¥${(p.price||0).toLocaleString()}</span><span class="agent-meta-item">🤝 ¥${(p.channelPrice||0).toLocaleString()}</span><span class="agent-meta-item">▶️ ${p.sales || 0}</span></div><div class="agent-actions"><button class="agent-action-btn" onclick="toggleProduct(${i})">${p.status === 'off' ? '上架' : '下架'}</button><button class="agent-action-btn" onclick="deleteProduct(${i})" style="color:var(--red)">🗑</button></div></div>`).join('');
+}
+
+function showAddProduct() {
+    const name = prompt('商品名称：', 'AI提示词包');
+    if (!name) return;
+    const price = parseInt(prompt('零售价：', '199')) || 0;
+    const channelPrice = parseInt(prompt('渠道价：', '99')) || 0;
+    const products = getProducts();
+    products.push({ name, price, channelPrice, sales: 0, status: 'on', icon: '📦', time: todayStr() });
+    setProducts(products);
+    renderMarket();
+    toast('✅ 已上架');
+}
+
+function toggleProduct(i) {
+    const products = getProducts();
+    products[i].status = products[i].status === 'off' ? 'on' : 'off';
+    setProducts(products);
+    renderMarket();
+}
+
+function deleteProduct(i) {
+    if (!confirm('删除？')) return;
+    const products = getProducts();
+    products.splice(i, 1);
+    setProducts(products);
+    renderMarket();
 }
 
 // ========== AI变现机会 ==========
