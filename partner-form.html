@@ -569,6 +569,28 @@ body {
         <div style="font-size:11px;color:var(--text-mute);margin-bottom:14px">后续如果有与你能力匹配的项目，将第一时间联系你！</div>
     </div>
     <button class="submit-btn" id="submitBtn" onclick="submitForm()">📨 提交登记表</button>
+
+    <!-- 提交结果：复制发微信 -->
+    <div id="resultPanel" style="display:none;margin-top:16px">
+        <div style="background:linear-gradient(135deg,rgba(0,217,163,0.08),rgba(0,217,255,0.04));border:1px solid rgba(0,217,163,0.25);border-radius:14px;padding:16px;margin-bottom:12px;text-align:center">
+            <div style="font-size:28px;margin-bottom:6px">🎉</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:4px">提交成功！</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+                请<b style="color:var(--green)">复制下方信息</b>发送给我们<br>
+                我们会尽快审核并联系你
+            </div>
+        </div>
+
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;margin-bottom:12px">
+            <div id="resultText" style="font-size:12px;color:var(--text);line-height:1.8;white-space:pre-wrap;max-height:300px;overflow-y:auto"></div>
+            <button class="submit-btn" id="copyResultBtn" onclick="copyResult()" style="background:var(--green);box-shadow:0 8px 30px rgba(0,217,163,0.35);margin-top:12px">📋 复制并发送</button>
+        </div>
+
+        <div style="text-align:center;font-size:11px;color:var(--text-mute);line-height:1.8">
+            复制后打开微信，粘贴发送给「Crazy Friday」<br>
+            我们确认后把你加入人才库
+        </div>
+    </div>
     <div class="submit-footer">
         <span class="lock">🔒</span> 信息仅用于合作沟通，我们会严格保密
     </div>
@@ -693,19 +715,67 @@ function submitForm() {
     list.push(data);
     localStorage.setItem('cf_partners_reg', JSON.stringify(list));
 
-    // 模拟成功
-    const btn = $('submitBtn');
-    btn.disabled = true;
-    btn.textContent = '✅ 已提交，感谢加入！';
-    btn.style.background = 'var(--green)';
-    toast('🎉 提交成功，我们会尽快联系你');
+    // 生成格式化登记信息
+    const skillsStr = data.skills.join('、') || '未填写';
+    const toolsStr = data.tools.join('、') || '未填写';
+    const prices = [];
+    if (data.prices.workbench) prices.push('AI工作台 ' + data.prices.workbench + '元起');
+    if (data.prices.app) prices.push('AI应用 ' + data.prices.app + '元起');
+    if (data.prices.website) prices.push('网站 ' + data.prices.website + '元起');
+    if (data.prices.agent) prices.push('Agent ' + data.prices.agent + '元起');
+    if (data.prices.video) prices.push('AI漫剧 ' + data.prices.video + '元/分钟');
+    if (data.prices.other) prices.push('其他 ' + data.prices.other + '元');
+    const priceStr = prices.join('；') || '未填写';
 
-    // 3秒后恢复
-    setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = '📨 提交登记表';
-        btn.style.background = '';
-    }, 3000);
+    const result = [
+        '📋 Crazy Friday 合作伙伴登记',
+        '────────────────────',
+        '昵称：' + data.nickname,
+        '微信：' + data.wechat,
+        '所在城市：' + data.city,
+        '个人/团队：' + (data.team || '未填写'),
+        '擅长方向：' + skillsStr,
+        '熟练度：' + (data.level || '未填写'),
+        '常用工具：' + toolsStr,
+        '可承接项目：' + (data.projects || '未填写'),
+        '作品案例：' + (data.cases || '未填写'),
+        '报价：' + priceStr,
+        '最低接单金额：' + (data.mini ? data.mini + '元' : '未填写'),
+        '响应速度：' + data.response,
+        '结算偏好：' + (data.settle.length ? data.settle.join('、') : '未填写'),
+        '每周可投入：' + (data.weekly || '未填写'),
+        '是否长期合作：' + (data.long || '未填写'),
+        '希望合作：' + (data.coop.length ? data.coop.join('、') : '未填写'),
+        '补充：' + (data.note || '无'),
+        '────────────────────',
+        '填写时间：' + data.time
+    ].join('\n');
+
+    // 显示结果面板
+    const btn = $('submitBtn');
+    btn.style.display = 'none';
+    $('resultText').textContent = result;
+    $('resultPanel').style.display = 'block';
+    toast('✅ 提交成功');
+}
+
+// 复制结果
+function copyResult() {
+    const text = $('resultText').textContent;
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            const b = $('copyResultBtn');
+            b.textContent = '✅ 已复制，去微信粘贴吧';
+            setTimeout(() => { b.textContent = '📋 复制并发送'; }, 2500);
+        });
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast('✅ 已复制，去微信粘贴'); }
+        catch(e) { toast('请手动长按复制'); }
+        document.body.removeChild(ta);
+    }
 }
 </script>
 
