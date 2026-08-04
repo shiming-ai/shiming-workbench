@@ -101,7 +101,7 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 <div id="toast"></div>
 
 <script>
-const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', KVDB_BUCKET='MRr9X2qAfQK9XokEWQWGAW';
+const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', CLOUD_URL='https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7';
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function $(id){return document.getElementById(id)}
@@ -192,15 +192,14 @@ function deletePartner(i){if(!confirm('删除？'))return;const p=load(PARTNERS_
 
 // 云端同步
 function syncCloud(){
-    fetch('https://kvdb.io/'+KVDB_BUCKET+'/?prefix=p_&limit=200').then(r=>r.text()).then(text=>{
-        const keys=text.trim().split('\n').filter(Boolean);
-        if(!keys.length)return;
+    fetch('https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7').then(r=>r.json()).then(cloud=>{
+        const items=(cloud&&cloud.partners)||[];
+        if(!items.length)return;
         const partners=load(PARTNERS_KEY,[]);
         const seen=new Set(partners.map(p=>p.name+'|'+p.contact));
         let added=0;
-        Promise.all(keys.map(key=>fetch('https://kvdb.io/'+KVDB_BUCKET+'/'+key).then(r=>r.text()).then(val=>{
+        items.forEach(d=>{
             try{
-                const d=JSON.parse(val);
                 const name=d.nickname||d.name||'未填昵称';
                 const contact=d.wechat||'';
                 const sig=name+'|'+contact;
@@ -209,9 +208,8 @@ function syncCloud(){
                 partners.push({name,contact,specialty:[d.skills||'',d.tools||''].filter(Boolean).join(' · '),priceRange:(d.mini?d.mini+'元起':(d.prices&&(d.prices.workbench||d.prices.app))?(d.prices.workbench||d.prices.app)+'元起':'-'),rating:(d.weekly&&d.weekly.includes('全职'))?5:4,time:(d.time||'').slice(0,10),note:[d.city,d.weekly,d.long,d.response].filter(Boolean).join(' | ')});
                 added++;
             }catch(e){}
-        }))).then(()=>{
-            if(added>0){save(PARTNERS_KEY,partners);renderPartners();const l=$('partnersList');l.insertAdjacentHTML('beforebegin','<div class="sync-banner">☁️ 云端同步：新登记 +'+added+' 条</div>')}
         });
+        if(added>0){save(PARTNERS_KEY,partners);renderPartners();const l=$('partnersList');l.insertAdjacentHTML('beforebegin','<div class="sync-banner">☁️ 云端同步：新登记 +'+added+' 条</div>')}
     }).catch(()=>{});
 }
 
