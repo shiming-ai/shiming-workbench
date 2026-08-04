@@ -725,8 +725,7 @@ function submitForm() {
     // ===== 云同步双通道 =====
     // 通道A: Formspree 邮件通知（填 endpoint 后启用）
     const FORMSPREE_ENDPOINT = 'https://formsubmit.co/1109028348@qq.com'; // ✅ 已激活
-    // 通道B: kvdb.io 云存储（量大版-自动进后台）
-    const KVDB_BUCKET = 'MRr9X2qAfQK9XokEWQWGAW';
+    // 通道B: jsonblob 云存储（量大版-自动进后台）
     // 通道C: Supabase 云数据库（预留，以后可加）
     const SUPABASE_URL = '';
     const SUPABASE_KEY = '';
@@ -738,15 +737,19 @@ function submitForm() {
             body: JSON.stringify(data)
         }).catch(e => console.error('Formspree失败:', e));
     }
-    // kvdb 云端写入（量大版核心：每条登记自动存云端，工作台自动显示）
-    if (KVDB_BUCKET) {
-        // 用时间戳作为key
-        const k = 'p_' + Date.now();
-        fetch('https://kvdb.io/' + KVDB_BUCKET + '/' + k, {
-            method: 'POST',
-            body: 'v=' + encodeURIComponent(JSON.stringify(data))
-        }).catch(e => console.error('kvdb写入失败:', e));
-    }
+    // jsonblob 云端写入（量大版核心：每条登记自动存云端，后台自动显示）
+    try {
+        fetch('https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7')
+            .then(r => r.json()).then(cloud => {
+                if (!cloud.partners) cloud.partners = [];
+                cloud.partners.push({ ...data, _id: Date.now() });
+                return fetch('https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cloud)
+                });
+            }).catch(e => console.error('jsonblob写入失败:', e));
+    } catch(e) {}
     if (SUPABASE_URL && SUPABASE_KEY) {
         fetch(SUPABASE_URL + '/rest/v1/partner_regs', {
             method: 'POST',
