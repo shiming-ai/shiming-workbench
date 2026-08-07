@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0420">
+<title>我的 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-tab="me">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">我的</div>
+            <div class="brand-sub">Crazy Friday</div>
+        </div>
+    </div>
+    <div class="bell">⚙️</div>
+</div>
+
+<div class="wrap">
+    <!-- 用户卡 -->
+    <div class="hero" style="padding-bottom:0">
+        <div style="display:flex; align-items:center; gap:14px; padding:20px; background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.05)); border:1px solid rgba(168,85,247,0.2); border-radius:18px; backdrop-filter:blur(12px)">
+            <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#a855f7,#ec4899); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0">👨‍💼</div>
+            <div style="flex:1">
+                <div style="font-size:17px; font-weight:900">时铭</div>
+                <div style="font-size:11px; color:var(--text-dim); margin-top:2px">ID: CrazyFriday·VIP</div>
+                <div style="display:flex; gap:6px; margin-top:6px">
+                    <span style="font-size:9px; padding:2px 8px; background:rgba(255,215,0,0.15); color:#FFD700; border-radius:8px; font-weight:700">💎 VIP会员</span>
+                    <span style="font-size:9px; padding:2px 8px; background:rgba(168,85,247,0.15); color:var(--purple-light); border-radius:8px; font-weight:700">企业认证</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据 -->
+    <div class="orders-stats" style="margin-top:14px">
+        <div class="orders-stat"><div class="num">523</div><div class="lbl">本月客户</div></div>
+        <div class="orders-stat"><div class="num">23</div><div class="lbl">进行中项目</div></div>
+        <div class="orders-stat"><div class="num">¥128,560</div><div class="lbl">本月营收</div></div>
+    </div>
+
+    <div class="orders-stats" style="margin-top:8px">
+        <div class="orders-stat"><div class="num">2,856</div><div class="lbl">粉丝增长</div></div>
+        <div class="orders-stat"><div class="num">1,523</div><div class="lbl">活跃用户</div></div>
+        <div class="orders-stat"><div class="num">23.6%</div><div class="lbl">转化率</div></div>
+    </div>
+
+    <!-- 功能区 -->
+    <div class="grid" style="margin-top:14px">
+        <div class="grid-card"><div class="em">📋</div><div class="tt">我的接单</div><div class="td">5个进行中</div></div>
+        <div class="grid-card"><div class="em">👥</div><div class="tt">客户管理</div><div class="td">跟进记录</div></div>
+        <div class="grid-card"><div class="em">📊</div><div class="tt">项目数据</div><div class="td">实时分析</div></div>
+        <div class="grid-card"><div class="em">💰</div><div class="tt">财务管理</div><div class="td">对账管理</div></div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)">💎</div>
+                <div class="card-name">普通会员 · ¥0/月</div>
+            </div>
+            <div class="card-desc">升级创业合伙人：¥199/月 · 企业会员：¥999/月</div>
+            <div style="margin-top:10px; padding:10px; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.2); border-radius:10px; font-size:11px; line-height:1.7">
+                ✅ AI工具使用权 · ✅ 接单优先权 · ✅ 数据看板<br>
+                ✅ 项目孵化优先 · ✅ 专属客户经理
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="cta">💎 立即升级会员</a>
+
+    <div class="tip">
+        ⚙️ 系统设置 · 关于 · 联系客服
+    </div>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
