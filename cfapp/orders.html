@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0420">
+<title>接单工坊 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-tab="orders">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">接单工坊</div>
+            <div class="brand-sub">Crazy Friday</div>
+        </div>
+    </div>
+    <div class="bell">🔔</div>
+</div>
+
+<div class="wrap">
+    <div class="hero">
+        <div class="hero-title" style="font-size:36px">📋 需求大厅<br><span class="highlight">找交付</span></div>
+        <div class="hero-sub">5,000+ 真实需求 · 2,000+ 靠谱服务商</div>
+        <a href="../partner-form.html" target="_blank" class="hero-cta">+ 接新单 / 发登记</a>
+    </div>
+
+    <div class="orders-stats">
+        <div class="orders-stat"><div class="num">5,000+</div><div class="lbl">需求发布</div></div>
+        <div class="orders-stat"><div class="num">2,000+</div><div class="lbl">服务商</div></div>
+        <div class="orders-stat"><div class="num">98%</div><div class="lbl">交付满意度</div></div>
+    </div>
+
+    <div class="section-head">
+        <div class="section-tt">🔥 需求大厅</div>
+        <div class="section-more">实时更新</div>
+    </div>
+
+    <div class="section">
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon">📋</div>
+                <div class="card-name">AI商业计划书撰写</div>
+                <div class="card-tag">¥3,000-6,000</div>
+            </div>
+            <div class="card-desc">需要一份完整的AI项目BP，含商业模式、市场分析、融资策略</div>
+            <div class="card-meta">
+                <span class="meta-tag">📅 2周交付</span>
+                <span class="meta-tag">💼 高难度</span>
+                <span class="meta-tag">👁️ 32人接单</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon">📝</div>
+                <div class="card-name">小红书AI文案代写</div>
+                <div class="card-tag">¥1,500-3,000</div>
+            </div>
+            <div class="card-desc">美妆类账号，需周更20篇文案+标题，要求风格活泼</div>
+            <div class="card-meta">
+                <span class="meta-tag">📅 周更</span>
+                <span class="meta-tag">💼 中难度</span>
+                <span class="meta-tag">👁️ 28人接单</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon">🎨</div>
+                <div class="card-name">AI数字人视频制作</div>
+                <div class="card-tag">¥5,000-10,000</div>
+            </div>
+            <div class="card-desc">高级感形象，需要10条短视频，时长30秒以内</div>
+            <div class="card-meta">
+                <span class="meta-tag">📅 10天交付</span>
+                <span class="meta-tag">💼 高级别</span>
+                <span class="meta-tag">👁️ 15人接单</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon">📊</div>
+                <div class="card-name">数据分析报告</div>
+                <div class="card-tag">¥2,000-4,000</div>
+            </div>
+            <div class="card-desc">电商数据整理+可视化，7天交付</div>
+            <div class="card-meta">
+                <span class="meta-tag">📅 7天</span>
+                <span class="meta-tag">💼 中难度</span>
+                <span class="meta-tag">👁️ 20人接单</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="glow-line"></div>
+
+    <div class="section-head">
+        <div class="section-tt">🌟 我的接单</div>
+        <div class="section-more" onclick="document.getElementById('ordersList').style.display='block'">刷新</div>
+    </div>
+    <div id="ordersList" style="display:none">
+        <div class="empty" id="ordersEmpty">
+            <div class="em">📋</div>
+            暂无接单 · 发登记让别人发现你
+        </div>
+    </div>
+
+    <a href="../partner-form.html" target="_blank" class="cta">📨 发登记让别人找你</a>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
