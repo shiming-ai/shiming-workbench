@@ -19,7 +19,9 @@
             <div class="brand-sub">疯狂星期五</div>
         </div>
     </div>
-    <div class="bell">🔔</div>
+    <div style="display:flex;align-items:center;gap:8px">
+        <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/share.html'" title="分享">📤</div>
+    </div>
 </div>
 
 <!-- Hero -->
@@ -153,7 +155,27 @@
     </div>
 
     <a href="discover.html" class="cta">立即开启你的AI创业之路</a>
+
+    <div style="margin:20px 0; text-align:center; padding:18px; background:linear-gradient(135deg, rgba(168,85,247,.12), rgba(236,72,153,.06)); border:1px solid rgba(168,85,247,.25); border-radius:16px">
+        <div style="font-size:13px; font-weight:800; margin-bottom:6px">🎁 分享给朋友</div>
+        <div style="font-size:11px; color:#a89ec9; margin-bottom:10px">复制口令 · 朋友打开即见宝藏</div>
+        <button onclick="copyShare()" style="width:100%; padding:11px; background:linear-gradient(135deg,#A855F7,#EC4899); border:none; border-radius:20px; color:#fff; font-size:13px; font-weight:800; cursor:pointer">📋 复制分享口令</button>
+    </div>
 </div>
+
+<script>
+function copyShare(){
+    const code = '复制此口令打开查看宝藏👉Crazy Friday｜一个人+AI就是一家公司\nhttps://shiming-ai.github.io/shiming-workbench/share.html';
+    if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(code).then(()=>toast('✅ 口令已复制，去微信粘贴吧')).catch(()=>{});
+    }else{
+        const ta=document.createElement('textarea'); ta.value=code; ta.style.position='fixed'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); toast('✅ 口令已复制'); }catch(e){}
+        document.body.removeChild(ta);
+    }
+}
+</script>
 
 <div id="toast"></div>
 <script src="app.js"></script>
