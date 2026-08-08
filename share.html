@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0420">
+<title>疯狂星期五 · 一个人+AI就是一家公司</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+    background: linear-gradient(160deg, #0d0420 0%, #1a0d2e 50%, #261342 100%);
+    color:#f5f3ff;
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+    min-height:100vh;
+    padding-bottom:60px;
+    position:relative;
+    overflow-x:hidden;
+}
+body::before {
+    content:''; position:fixed; top:-150px; left:50%; transform:translateX(-50%);
+    width:600px; height:400px; border-radius:50%;
+    background:radial-gradient(ellipse, rgba(168,85,247,0.35), transparent 70%);
+    filter:blur(50px); pointer-events:none;
+}
+.wrap { max-width:480px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+
+/* ========== 顶部 ========== */
+.top { display:flex; align-items:center; justify-content:space-between; padding:18px 20px; position:relative; z-index:2; }
+.brand { display:flex; align-items:center; gap:10px; }
+.brand-icon { width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,#7C3AED,#A855F7); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:900; box-shadow:0 4px 16px rgba(168,85,247,.4); }
+.brand-name { font-size:15px; font-weight:800; }
+.share-btn { width:38px; height:38px; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; font-size:17px; cursor:pointer; }
+
+/* ========== Hero ========== */
+.hero { text-align:center; padding:30px 0 24px; }
+.hero-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11px; padding:5px 14px;
+    background:rgba(168,85,247,.15); color:#C084FC;
+    border-radius:20px; font-weight:700; margin-bottom:16px;
+}
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:#34D399; box-shadow:0 0 8px #34D399; }
+.hero h1 {
+    font-size:40px; font-weight:900; letter-spacing:-2px; line-height:1.1;
+    margin-bottom:12px;
+}
+.hero h1 .grad {
+    background:linear-gradient(135deg,#C084FC,#A855F7,#EC4899);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero-sub { font-size:14px; color:#a89ec9; margin-bottom:8px; }
+.hero-tag { font-size:12px; color:#6d6489; margin-bottom:24px; }
+
+/* ========== 卡片 ========== */
+.main-card {
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px; padding:20px;
+    backdrop-filter:blur(16px);
+    margin-bottom:14px;
+}
+.main-card .label { font-size:11px; color:#6d6489; margin-bottom:10px; letter-spacing:1px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.grid-item {
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px; padding:14px 10px; text-align:center;
+    cursor:pointer; transition:all .2s;
+}
+.grid-item:active { transform:scale(.97); }
+.grid-item .em { font-size:26px; margin-bottom:6px; }
+.grid-item .tt { font-size:12px; font-weight:800; }
+.grid-item .td { font-size:10px; color:#6d6489; margin-top:3px; }
+
+/* ========== 统计 ========== */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:16px 8px; margin-bottom:14px; }
+.stat { text-align:center; border-right:1px solid rgba(255,255,255,.05); }
+.stat:last-child { border-right:none; }
+.stat-num { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.stat-lbl { font-size:10px; color:#6d6489; margin-top:4px; }
+
+/* ========== 案例 ========== */
+.case-list { margin-bottom:14px; }
+.case-item {
+    display:flex; align-items:center; gap:12px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:14px; padding:14px; margin-bottom:10px;
+    cursor:pointer;
+}
+.case-ico { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.case-name { font-size:13px; font-weight:800; }
+.case-desc { font-size:11px; color:#a89ec9; margin-top:2px; }
+.case-arrow { margin-left:auto; color:#6d6489; font-size:16px; }
+
+/* ========== 口令卡 ========== */
+.code-card {
+    background:linear-gradient(135deg, rgba(168,85,247,.12), rgba(236,72,153,.06));
+    border:1px solid rgba(168,85,247,.25);
+    border-radius:20px; padding:20px; margin:20px 0;
+    text-align:center;
+}
+.code-card .cc-tt { font-size:14px; font-weight:800; margin-bottom:6px; }
+.code-card .cc-td { font-size:11px; color:#a89ec9; margin-bottom:12px; line-height:1.7; }
+.code-box {
+    background:rgba(0,0,0,.3); border:1px dashed rgba(168,85,247,.4);
+    border-radius:12px; padding:12px 14px;
+    font-size:12px; color:#C084FC; font-family:monospace;
+    word-break:break-all; line-height:1.8; margin-bottom:12px;
+    text-align:left;
+}
+.copy-btn {
+    width:100%; padding:13px;
+    background:linear-gradient(135deg,#A855F7,#EC4899);
+    border:none; border-radius:24px; color:#fff;
+    font-size:14px; font-weight:800; cursor:pointer;
+    box-shadow:0 8px 24px rgba(168,85,247,.4);
+}
+.copy-btn:active { transform:scale(.97); }
+
+/* ========== 底部CTA ========== */
+.cta {
+    display:block; width:100%; padding:14px;
+    background:linear-gradient(135deg,#A855F7,#EC4899);
+    border:none; border-radius:24px; color:#fff;
+    font-size:15px; font-weight:800; text-align:center;
+    text-decoration:none; cursor:pointer;
+    box-shadow:0 8px 24px rgba(168,85,247,.4);
+    margin-top:20px;
+}
+
+/* ========== 分享面板 ========== */
+.share-panel {
+    position:fixed; bottom:0; left:0; right:0; z-index:100;
+    background:#1a0d2e; border-top:1px solid rgba(255,255,255,.1);
+    border-radius:20px 20px 0 0;
+    padding:20px 20px 30px;
+    transform:translateY(100%);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+    max-width:480px; margin:0 auto;
+}
+.share-panel.show { transform:translateY(0); }
+.share-panel .sp-tt { font-size:14px; font-weight:800; text-align:center; margin-bottom:16px; }
+.share-opts { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.share-opt { text-align:center; cursor:pointer; }
+.share-opt .so-ico { width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; font-size:22px; margin:0 auto 6px; }
+.share-opt .so-lbl { font-size:10px; color:#a89ec9; }
+.overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:90;
+    opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.overlay.show { opacity:1; pointer-events:all; }
+
+#toast {
+    position:fixed; bottom:90px; left:50%; z-index:200;
+    transform:translateX(-50%) translateY(20px);
+    background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff;
+    padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700;
+    opacity:0; transition:all .3s; pointer-events:none;
+}
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- 顶部 -->
+<div class="top">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">Crazy Friday</div>
+        </div>
+    </div>
+    <div class="share-btn" onclick="openShare()">📤</div>
+</div>
+
+<div class="wrap">
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-badge"><span class="dot"></span> 疯狂星期五 · AI一人公司生态</div>
+        <h1>一个人<br><span class="grad">+ AI,</span><br>就是一家公司</h1>
+        <div class="hero-sub">AI时代的一人公司创业生态平台</div>
+        <div class="hero-tag">10,000+创业者 · 3,000+项目 · 1,000+AI工具</div>
+    </div>
+
+    <!-- 数据 -->
+    <div class="stats">
+        <div class="stat"><div class="stat-num">10K+</div><div class="stat-lbl">创业者</div></div>
+        <div class="stat"><div class="stat-num">3K+</div><div class="stat-lbl">项目</div></div>
+        <div class="stat"><div class="stat-num">1K+</div><div class="stat-lbl">AI工具</div></div>
+    </div>
+
+    <!-- 核心业务 -->
+    <div class="main-card">
+        <div class="label">🔥 核心业务</div>
+        <div class="grid">
+            <div class="grid-item"><div class="em">🛠️</div><div class="tt">AI工作台定制</div><div class="td">1-5天交付</div></div>
+            <div class="grid-item"><div class="em">📋</div><div class="tt">接单工坊</div><div class="td">派单赚差价</div></div>
+            <div class="grid-item"><div class="em">🎬</div><div class="tt">AI漫剧</div><div class="td">内容变现</div></div>
+            <div class="grid-item"><div class="em">🛒</div><div class="tt">商品市集</div><div class="td">标准产品</div></div>
+        </div>
+    </div>
+
+    <!-- 案例 -->
+    <div class="main-card" style="padding-bottom:4px">
+        <div class="label">✨ 场景案例</div>
+        <div class="case-list">
+            <div class="case-item" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/demo.html'">
+                <div class="case-ico">🧑‍💼</div>
+                <div><div class="case-name">一人公司工作台</div><div class="case-desc">全模块管理</div></div>
+                <div class="case-arrow">›</div>
+            </div>
+            <div class="case-item" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/demo-ecom.html'">
+                <div class="case-ico" style="background:linear-gradient(135deg,#10b981,#34D399)">🛒</div>
+                <div><div class="case-name">电商运营工作台</div><div class="case-desc">9大平台</div></div>
+                <div class="case-arrow">›</div>
+            </div>
+            <div class="case-item" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/demo-creator.html'">
+                <div class="case-ico" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">🎬</div>
+                <div><div class="case-name">创作者工作台</div><div class="case-desc">选题到收益</div></div>
+                <div class="case-arrow">›</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 口令 -->
+    <div class="code-card">
+        <div class="cc-tt">🎁 复制口令 · 分享宝藏</div>
+        <div class="cc-td">复制下方内容发给朋友<br>对方打开即可看到「疯狂星期五」</div>
+        <div class="code-box" id="codeText">复制此口令打开查看宝藏👉Crazy Friday｜一个人+AI就是一家公司<br>https://shiming-ai.github.io/shiming-workbench/share.html</div>
+        <button class="copy-btn" onclick="copyCode()">📋 复制口令分享</button>
+    </div>
+
+    <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html" class="cta">🚀 进入 Crazy Friday App</a>
+</div>
+
+<!-- 分享面板 -->
+<div class="overlay" id="overlay" onclick="closeShare()"></div>
+<div class="share-panel" id="sharePanel">
+    <div class="sp-tt">分享给朋友</div>
+    <div class="share-opts">
+        <div class="share-opt" onclick="copyLink()"><div class="so-ico">🔗</div><div class="so-lbl">复制链接</div></div>
+        <div class="share-opt" onclick="copyCode()"><div class="so-ico">📋</div><div class="so-lbl">复制口令</div></div>
+        <div class="share-opt" onclick="wechatShare()"><div class="so-ico">💬</div><div class="so-lbl">微信</div></div>
+        <div class="share-opt" onclick="closeShare()"><div class="so-ico">✕</div><div class="so-lbl">取消</div></div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SHARE_URL = 'https://shiming-ai.github.io/shiming-workbench/share.html';
+const SHARE_CODE = '复制此口令打开查看宝藏👉Crazy Friday｜一个人+AI就是一家公司\n' + SHARE_URL;
+
+function toast(m){
+    const t=document.getElementById('toast');
+    t.textContent=m; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+}
+function copyText(text, cb){
+    if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(text).then(()=>cb()).catch(()=>cb());
+    }else{
+        const ta=document.createElement('textarea');
+        ta.value=text; ta.style.position='fixed'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); }catch(e){}
+        document.body.removeChild(ta); cb();
+    }
+}
+function copyCode(){
+    copyText(SHARE_CODE, ()=>toast('✅ 口令已复制，去微信粘贴吧'));
+    closeShare();
+}
+function copyLink(){
+    copyText(SHARE_URL, ()=>toast('✅ 链接已复制'));
+    closeShare();
+}
+function openShare(){ document.getElementById('sharePanel').classList.add('show'); document.getElementById('overlay').classList.add('show'); }
+function closeShare(){ document.getElementById('sharePanel').classList.remove('show'); document.getElementById('overlay').classList.remove('show'); }
+function wechatShare(){ copyCode(); }
+</script>
+</body>
+</html>
