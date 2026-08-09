@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="疯狂星期五 · 关于AI 关于一人公司 关于变现">
+<title>疯狂星期五 · 帖子</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+    background:#0d0420; color:#f5f3ff;
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+    min-height:100vh; overflow-x:hidden; padding-bottom:70px;
+}
+
+/* ========== 顶部导航 ========== */
+.nav {
+    position:sticky; top:0; z-index:90;
+    background:rgba(13,4,32,.9); backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    padding:12px 16px;
+    display:flex; align-items:center; justify-content:space-between;
+}
+.nav-left { display:flex; align-items:center; gap:14px; }
+.nav-back { font-size:18px; color:#a89ec9; cursor:pointer; padding:4px; }
+.nav-title { font-size:13px; font-weight:700; color:#a89ec9; }
+.nav-right { display:flex; align-items:center; gap:14px; }
+.nav-ico { font-size:18px; color:#a89ec9; cursor:pointer; }
+
+/* ========== 作者区 ========== */
+.author {
+    display:flex; align-items:center; gap:12px;
+    padding:16px 20px;
+}
+.avatar {
+    width:48px; height:48px; border-radius:50%;
+    background:linear-gradient(135deg,#7C3AED,#A855F7,#EC4899);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; flex-shrink:0;
+    border:2px solid rgba(168,85,247,.4);
+}
+.avatar-name { font-size:15px; font-weight:800; }
+.avatar-desc { font-size:11px; color:#6d6489; margin-top:3px; }
+.follow-btn {
+    margin-left:auto; padding:7px 18px;
+    background:linear-gradient(135deg,#A855F7,#EC4899);
+    border-radius:20px; font-size:12px; font-weight:700;
+    cursor:pointer; flex-shrink:0;
+}
+.follow-btn.done { background:rgba(255,255,255,.08); color:#a89ec9; }
+
+/* ========== 标题区 ========== */
+.title-area { padding:6px 20px 4px; }
+.post-title { font-size:24px; font-weight:900; line-height:1.3; }
+.post-sub { font-size:12px; color:#a89ec9; margin-top:6px; }
+.post-tags { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+.post-tag {
+    padding:4px 12px; border-radius:16px;
+    background:rgba(168,85,247,.12); color:#C084FC;
+    font-size:11px; font-weight:600;
+}
+
+/* ========== 正文内容区 ========== */
+.content { padding:16px 20px; }
+.content-card {
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px; padding:20px;
+    line-height:2; font-size:14px; color:#d6cfe8;
+}
+.content-card p { margin-bottom:14px; }
+.content-card .big { font-size:17px; font-weight:800; color:#fff; margin:8px 0; }
+.content-card .hl { color:#C084FC; font-weight:700; }
+.content-card .emoji-big { font-size:26px; }
+
+/* 内容里的卡片列表 */
+.content-list { margin:14px 0; }
+.content-list-item {
+    display:flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px; padding:12px; margin-bottom:8px;
+}
+.content-list-item .li-emoji { font-size:20px; }
+.content-list-item .li-name { font-size:13px; font-weight:700; }
+.content-list-item .li-desc { font-size:11px; color:#8d82a8; margin-top:1px; }
+
+/* ========== 互动条 ========== */
+.action-bar {
+    position:sticky; bottom:0; z-index:80;
+    background:rgba(13,4,32,.92); backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:10px 20px;
+    display:flex; align-items:center; gap:6px;
+}
+.action-input {
+    flex:1; display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px; padding:9px 14px;
+    font-size:12px; color:#8d82a8; cursor:pointer;
+}
+.action-item {
+    display:flex; align-items:center; gap:4px;
+    padding:8px 10px; font-size:12px; color:#a89ec9;
+    cursor:pointer; flex-shrink:0;
+}
+.action-item .ai { font-size:17px; }
+.action-item.liked { color:#EC4899; }
+.action-item .count { font-size:10px; }
+
+/* ========== 评论区 ========== */
+.comments { padding:0 20px; }
+.comments-head {
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:700; margin-bottom:12px;
+}
+.comment-item {
+    display:flex; gap:10px; padding:12px 0;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+.comment-avatar {
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(135deg,#3b82f6,#22d3ee);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; flex-shrink:0;
+}
+.comment-body { flex:1; }
+.comment-name { font-size:12px; font-weight:700; color:#a89ec9; }
+.comment-text { font-size:13px; margin-top:3px; line-height:1.6; }
+.comment-time { font-size:10px; color:#6d6489; margin-top:4px; }
+.comment-like { font-size:12px; color:#8d82a8; cursor:pointer; flex-shrink:0; }
+
+/* ========== 底部App提示 ========== */
+.app-tip {
+    margin:20px;
+    background:linear-gradient(135deg, rgba(168,85,247,.12), rgba(236,72,153,.06));
+    border:1px solid rgba(168,85,247,.2);
+    border-radius:16px; padding:18px;
+    display:flex; align-items:center; gap:12px;
+}
+.app-tip-icon { width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg,#7C3AED,#A855F7); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.app-tip-text { flex:1; }
+.app-tip-title { font-size:13px; font-weight:800; }
+.app-tip-desc { font-size:10px; color:#8d82a8; margin-top:2px; }
+.app-tip-btn {
+    padding:8px 16px; background:linear-gradient(135deg,#A855F7,#EC4899);
+    border-radius:18px; font-size:12px; font-weight:700; flex-shrink:0; cursor:pointer;
+}
+
+#toast {
+    position:fixed; bottom:90px; left:50%; z-index:200;
+    transform:translateX(-50%) translateY(20px);
+    background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff;
+    padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700;
+    opacity:0; transition:all .3s; pointer-events:none;
+}
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="nav">
+    <div class="nav-left">
+        <span class="nav-back" onclick="history.back()">‹</span>
+        <span class="nav-title">帖子详情</span>
+    </div>
+    <div class="nav-right">
+        <span class="nav-ico" onclick="sharePost()">📤</span>
+        <span class="nav-ico">⋯</span>
+    </div>
+</div>
+
+<!-- 作者区 -->
+<div class="author">
+    <div class="avatar">🦄</div>
+    <div style="flex:1">
+        <div class="avatar-name">时铭</div>
+        <div class="avatar-desc">Crazy Friday · 疯狂星期五</div>
+    </div>
+    <div class="follow-btn" id="followBtn" onclick="toggleFollow()">+ 关注</div>
+</div>
+
+<!-- 标题区 -->
+<div class="title-area">
+    <div class="post-title">疯狂星期五</div>
+    <div class="post-sub">关于Ai 关于一人公司 关于变现</div>
+    <div class="post-tags">
+        <span class="post-tag">🤖 AI</span>
+        <span class="post-tag">🏢 一人公司</span>
+        <span class="post-tag">💰 变现</span>
+        <span class="post-tag">🚀 创业</span>
+    </div>
+</div>
+
+<!-- 正文内容区 -->
+<div class="content">
+    <div class="content-card">
+        <div class="emoji-big">🦄</div>
+        <div class="big">疯狂星期五是什么？</div>
+        <p>
+            <span class="hl">Crazy Friday（疯狂星期五）</span> 是一个 AI 一人公司创业生态。
+            我们的信念很简单：<span class="hl">一个人 + AI = 一家公司</span>。
+        </p>
+        <p>
+            在这个 AI 时代，个体的能力被空前放大。
+            一个人可以同时做内容、做产品、做服务、做管理——
+            只要用对工具，用对方法。
+        </p>
+
+        <div class="big">我们提供什么</div>
+        <div class="content-list">
+            <div class="content-list-item">
+                <div class="li-emoji">🛠️</div>
+                <div>
+                    <div class="li-name">AI 工作台</div>
+                    <div class="li-desc">任何生意都能数字化管理</div>
+                </div>
+            </div>
+            <div class="content-list-item">
+                <div class="li-emoji">📋</div>
+                <div>
+                    <div class="li-name">接单工坊</div>
+                    <div class="li-desc">接单派单，赚差价</div>
+                </div>
+            </div>
+            <div class="content-list-item">
+                <div class="li-emoji">🎬</div>
+                <div>
+                    <div class="li-name">AI 漫剧 / 内容</div>
+                    <div class="li-desc">内容变现的完整链路</div>
+                </div>
+            </div>
+            <div class="content-list-item">
+                <div class="li-emoji">💰</div>
+                <div>
+                    <div class="li-name">商品市集</div>
+                    <div class="li-desc">标准化产品持续零售</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="big">关于变现</div>
+        <p>
+            做内容、做产品、做服务、做中介——每条路都能变现。
+            关键是 <span class="hl">跑通最小闭环</span>：
+            先用最低成本验证有人愿意付费，再放大。
+        </p>
+
+        <div class="big">关于一人公司</div>
+        <p>
+            一个人不再等于"一个人的工作量"。
+            通过 <span class="hl">AI 工作流</span> + <span class="hl">外包协作网络</span>，
+            一个人可以运营完整的一家公司：
+            获客、交付、服务、管理，全部搞定。
+        </p>
+
+        <p style="margin-bottom:0">
+            加入我们，一起把想法变成现金流。<br>
+            <span class="hl">一个人 + AI，就是一家公司。</span>
+        </p>
+    </div>
+</div>
+
+<!-- 评论区 -->
+<div class="comments">
+    <div class="comments-head">💬 评论 <span style="color:#8d82a8;font-weight:400">1</span></div>
+    <div class="comment-item">
+        <div class="comment-avatar">🌟</div>
+        <div class="comment-body">
+            <div class="comment-name">灵光用户_8K2L</div>
+            <div class="comment-text">这个理念太戳我了！一个人+AI真的可以做成一家公司吗？想了解</div>
+            <div class="comment-time">5分钟前</div>
+        </div>
+        <div class="comment-like">♡</div>
+    </div>
+</div>
+
+<!-- 底部App提示 -->
+<div class="app-tip">
+    <div class="app-tip-icon">🦄</div>
+    <div class="app-tip-text">
+        <div class="app-tip-title">Crazy Friday App</div>
+        <div class="app-tip-desc">探索完整生态 · 下载体验</div>
+    </div>
+    <div class="app-tip-btn" onclick="location.href='index.html'">打开 ›</div>
+</div>
+
+<!-- 互动条 -->
+<div class="action-bar">
+    <div class="action-input" onclick="location.href='../partner-form.html'">✍️ 发表评论...</div>
+    <div class="action-item" id="likeBtn" onclick="toggleLike()"><span class="ai">♡</span><span class="count" id="likeCount">128</span></div>
+    <div class="action-item" onclick="sharePost()"><span class="ai">↗</span></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+function toast(m){
+    const t=document.getElementById('toast');
+    t.textContent=m; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+}
+function toggleFollow(){
+    const b=document.getElementById('followBtn');
+    if(b.classList.contains('done')){ b.classList.remove('done'); b.textContent='+ 关注'; }
+    else { b.classList.add('done'); b.textContent='✓ 已关注'; toast('已关注'); }
+}
+function toggleLike(){
+    const b=document.getElementById('likeBtn');
+    const c=document.getElementById('likeCount');
+    let n=parseInt(c.textContent);
+    if(b.classList.contains('liked')){ b.classList.remove('liked'); c.textContent=(n-1); }
+    else { b.classList.add('liked'); c.textContent=(n+1); }
+}
+function sharePost(){
+    const code='疯狂星期五｜关于AI 关于一人公司 关于变现\nhttps://shiming-ai.github.io/shiming-workbench/cfapp/about.html';
+    if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(code).then(()=>toast('✅ 已复制'));
+    }else{
+        const ta=document.createElement('textarea'); ta.value=code; ta.style.position='fixed'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); toast('✅ 已复制'); }catch(e){}
+        document.body.removeChild(ta);
+    }
+}
+</script>
+</body>
+</html>
