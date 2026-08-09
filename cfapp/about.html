@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0420">
+<title>疯狂星期五 · 关于</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* 关于页专用 */
+.about-hero {
+    padding: 40px 20px 30px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse 400px 250px at 50% 0%, rgba(168,85,247,0.2), transparent 70%);
+}
+.about-logo {
+    width: 72px; height: 72px; border-radius: 22px;
+    background: linear-gradient(135deg,#7C3AED,#A855F7,#EC4899);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 900; color: #fff;
+    margin: 0 auto 18px;
+    box-shadow: 0 8px 32px rgba(168,85,247,0.5);
+}
+.about-title { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
+.about-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+
+.about-tags {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+.about-tag {
+    padding: 6px 14px; border-radius: 20px;
+    background: rgba(168,85,247,0.12); color: var(--purple-light);
+    font-size: 12px; font-weight: 700;
+}
+
+/* 理念卡 */
+.idea-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 18px; margin: 0 18px 12px;
+}
+.idea-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.idea-emoji {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.idea-name { font-size: 15px; font-weight: 800; }
+.idea-text { font-size: 12px; color: var(--text-dim); line-height: 1.9; }
+
+/* 关于区块 */
+.about-section { padding: 18px; }
+.about-section .stitle { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
+.about-body {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 16px;
+    font-size: 13px; color: var(--text-dim); line-height: 2;
+}
+.about-body strong { color: var(--text); }
+.about-body .hl { color: var(--purple-light); font-weight: 800; }
+</style>
+</head>
+<body data-tab="discover">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">关于疯狂星期五</div>
+            <div class="brand-sub">Crazy Friday</div>
+        </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+        <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/share.html'">📤</div>
+    </div>
+</div>
+
+<div class="wrap">
+    <div class="about-hero">
+        <div class="about-logo">CF</div>
+        <div class="about-title">疯狂星期五</div>
+        <div class="about-sub">关于AI · 关于一人公司 · 关于变现</div>
+        <div class="about-tags">
+            <span class="about-tag">🤖 AI</span>
+            <span class="about-tag">🏢 一人公司</span>
+            <span class="about-tag">💰 变现</span>
+        </div>
+    </div>
+
+    <!-- 三观 -->
+    <div class="section-head" style="padding-top:8px">
+        <div class="section-tt">✨ 我们的理念</div>
+    </div>
+
+    <div class="idea-card">
+        <div class="idea-head">
+            <div class="idea-emoji" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(168,85,247,.05))">🤖</div>
+            <div class="idea-name">关于 AI</div>
+        </div>
+        <div class="idea-text">
+            AI 不是替代人的工具，而是放大人的杠杆。<br>
+            一个人 + AI，可以做出一家公司的产能。<br>
+            我们相信：<span style="color:var(--purple-light);font-weight:800">AI 时代，个体能力被空前放大</span>。
+        </div>
+    </div>
+
+    <div class="idea-card">
+        <div class="idea-head">
+            <div class="idea-emoji" style="background:linear-gradient(135deg,rgba(52,211,153,.2),rgba(52,211,153,.05))">🏢</div>
+            <div class="idea-name">关于一人公司</div>
+        </div>
+        <div class="idea-text">
+            一个人不再等于"一个人的工作量"。<br>
+            通过 AI 工作流 + 外包协作网络，<br>
+            一个人可以运营<span style="color:var(--green);font-weight:800">完整的一家公司</span>：获客、交付、服务、管理。
+        </div>
+    </div>
+
+    <div class="idea-card">
+        <div class="idea-head">
+            <div class="idea-emoji" style="background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(236,72,153,.05))">💰</div>
+            <div class="idea-name">关于变现</div>
+        </div>
+        <div class="idea-text">
+            做内容、做产品、做服务、做中介。<br>
+            每条路都能变现，关键是<span style="color:var(--pink);font-weight:800">跑通最小闭环</span>。<br>
+            我们帮你把想法变成现金流。
+        </div>
+    </div>
+
+    <!-- 关于 -->
+    <div class="about-section">
+        <div class="stitle">📖 疯狂星期五是什么</div>
+        <div class="about-body">
+            <strong>Crazy Friday（疯狂星期五）</strong> 是一个 <span class="hl">AI 一人公司创业生态</span>。<br><br>
+            我们为想用 AI 做生意的人提供：<br>
+            · <span class="hl">AI 工作台</span> — 任何生意都能数字化管理<br>
+            · <span class="hl">接单工坊</span> — 接单派单，赚差价<br>
+            · <span class="hl">AI 工具</span> — 精选全球顶级 AI 能力<br>
+            · <span class="hl">创业路线</span> — 从 Idea 到品牌<br><br>
+            在这里，<strong>一个人 + AI = 一家公司</strong>。
+        </div>
+    </div>
+
+    <div style="padding: 6px 18px 0">
+        <a href="index.html" class="cta">🚀 进入 Crazy Friday</a>
+    </div>
+
+    <div style="text-align:center; padding: 24px 20px 10px; color:var(--text-mute); font-size:11px">
+        疯狂星期五 · Crazy Friday<br>关于AI · 关于一人公司 · 关于变现
+    </div>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
