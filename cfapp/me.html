@@ -6,6 +6,40 @@
 <meta name="theme-color" content="#0d0420">
 <title>我的 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; min-height:100vh; padding-bottom:80px; }
+.wrap { max-width:480px; margin:0 auto; }
+
+.user-hero { padding:24px 20px; display:flex; align-items:center; gap:14px; }
+.avatar-lg { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#7C3AED,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; }
+.user-name { font-size:17px; font-weight:900; }
+.user-id { font-size:11px; color:#8d82a8; margin-top:2px; }
+.user-badges { display:flex; gap:6px; margin-top:6px; }
+.badge { font-size:9px; padding:2px 8px; border-radius:8px; font-weight:700; }
+.badge-gold { background:rgba(255,215,0,.15); color:#FFD700; }
+.badge-purple { background:rgba(168,85,247,.15); color:#C084FC; }
+
+.data-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0 20px 8px; }
+.data-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px 6px; text-align:center; }
+.data-card .num { font-size:20px; font-weight:900; color:#C084FC; }
+.data-card .lbl { font-size:10px; color:#8d82a8; margin-top:3px; }
+
+.tabs { display:flex; gap:8px; padding:14px 20px; }
+.tab { flex:1; padding:9px; text-align:center; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; font-size:12px; font-weight:700; color:#8d82a8; cursor:pointer; }
+.tab.active { background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.1)); border-color:#A855F7; color:#C084FC; }
+
+.list { padding:0 20px; }
+.post-item { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; margin-bottom:10px; cursor:pointer; }
+.post-item .pt { font-size:14px; font-weight:800; margin-bottom:6px; }
+.post-item .pc { font-size:12px; color:#a89ec9; line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.post-item .pm { display:flex; gap:14px; margin-top:8px; font-size:10px; color:#6d6489; }
+.empty { background:rgba(255,255,255,.04); border:1px dashed rgba(255,255,255,.1); border-radius:14px; padding:30px 16px; text-align:center; color:#8d82a8; font-size:12px; }
+.empty .em { font-size:34px; margin-bottom:8px; }
+
+#toast { position:fixed; bottom:100px; left:50%; z-index:200; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; opacity:0; transition:all .3s; pointer-events:none; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
 </head>
 <body data-tab="me">
 
@@ -21,64 +55,79 @@
 </div>
 
 <div class="wrap">
-    <!-- 用户卡 -->
-    <div class="hero" style="padding-bottom:0">
-        <div style="display:flex; align-items:center; gap:14px; padding:20px; background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.05)); border:1px solid rgba(168,85,247,0.2); border-radius:18px; backdrop-filter:blur(12px)">
-            <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#a855f7,#ec4899); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0">👨‍💼</div>
-            <div style="flex:1">
-                <div style="font-size:17px; font-weight:900">时铭</div>
-                <div style="font-size:11px; color:var(--text-dim); margin-top:2px">ID: CrazyFriday·VIP</div>
-                <div style="display:flex; gap:6px; margin-top:6px">
-                    <span style="font-size:9px; padding:2px 8px; background:rgba(255,215,0,0.15); color:#FFD700; border-radius:8px; font-weight:700">💎 VIP会员</span>
-                    <span style="font-size:9px; padding:2px 8px; background:rgba(168,85,247,0.15); color:var(--purple-light); border-radius:8px; font-weight:700">企业认证</span>
-                </div>
+    <div class="user-hero">
+        <div class="avatar-lg">🦄</div>
+        <div>
+            <div class="user-name">时铭</div>
+            <div class="user-id">Crazy Friday · 疯狂星期五</div>
+            <div class="user-badges">
+                <span class="badge badge-gold">💎 VIP</span>
+                <span class="badge badge-purple">创作者</span>
             </div>
         </div>
     </div>
 
-    <!-- 数据 -->
-    <div class="orders-stats" style="margin-top:14px">
-        <div class="orders-stat"><div class="num">523</div><div class="lbl">本月客户</div></div>
-        <div class="orders-stat"><div class="num">23</div><div class="lbl">进行中项目</div></div>
-        <div class="orders-stat"><div class="num">¥128,560</div><div class="lbl">本月营收</div></div>
+    <div class="data-cards">
+        <div class="data-card"><div class="num" id="myPostCount">0</div><div class="lbl">我的帖子</div></div>
+        <div class="data-card"><div class="num" id="myFavCount">0</div><div class="lbl">收藏</div></div>
+        <div class="data-card"><div class="num" id="myLikeCount">0</div><div class="lbl">获赞</div></div>
     </div>
 
-    <div class="orders-stats" style="margin-top:8px">
-        <div class="orders-stat"><div class="num">2,856</div><div class="lbl">粉丝增长</div></div>
-        <div class="orders-stat"><div class="num">1,523</div><div class="lbl">活跃用户</div></div>
-        <div class="orders-stat"><div class="num">23.6%</div><div class="lbl">转化率</div></div>
+    <div class="tabs">
+        <div class="tab active" id="tabPosts" onclick="switchTab('posts')">📝 我的帖子</div>
+        <div class="tab" id="tabFavs" onclick="switchTab('favs')">⭐ 我的收藏</div>
+        <div class="tab" id="tabAll" onclick="switchTab('all')">🗂️ 全部</div>
     </div>
 
-    <!-- 功能区 -->
-    <div class="grid" style="margin-top:14px">
-        <div class="grid-card"><div class="em">📋</div><div class="tt">我的接单</div><div class="td">5个进行中</div></div>
-        <div class="grid-card"><div class="em">👥</div><div class="tt">客户管理</div><div class="td">跟进记录</div></div>
-        <div class="grid-card"><div class="em">📊</div><div class="tt">项目数据</div><div class="td">实时分析</div></div>
-        <div class="grid-card"><div class="em">💰</div><div class="tt">财务管理</div><div class="td">对账管理</div></div>
-    </div>
-
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)">💎</div>
-                <div class="card-name">普通会员 · ¥0/月</div>
-            </div>
-            <div class="card-desc">升级创业合伙人：¥199/月 · 企业会员：¥999/月</div>
-            <div style="margin-top:10px; padding:10px; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.2); border-radius:10px; font-size:11px; line-height:1.7">
-                ✅ AI工具使用权 · ✅ 接单优先权 · ✅ 数据看板<br>
-                ✅ 项目孵化优先 · ✅ 专属客户经理
-            </div>
-        </div>
-    </div>
-
-    <a href="#" class="cta">💎 立即升级会员</a>
-
-    <div class="tip">
-        ⚙️ 系统设置 · 关于 · 联系客服
-    </div>
+    <div class="list" id="postList"></div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script src="data.js"></script>
+<script>
+let curTab = 'posts';
+
+function switchTab(t) {
+    curTab = t;
+    document.getElementById('tabPosts').classList.toggle('active', t==='posts');
+    document.getElementById('tabFavs').classList.toggle('active', t==='favs');
+    document.getElementById('tabAll').classList.toggle('active', t==='all');
+    renderList();
+}
+
+function renderList() {
+    const d = loadCommunity();
+    document.getElementById('myPostCount').textContent = d.myPosts.length;
+    document.getElementById('myFavCount').textContent = d.myFavs.length;
+    const myLikes = d.posts.filter(p => p.liked).length;
+    document.getElementById('myLikeCount').textContent = myLikes;
+
+    let items = [];
+    if (curTab === 'posts') items = getMyPosts();
+    else if (curTab === 'favs') items = getMyFavPosts();
+    else items = d.posts;
+
+    const list = document.getElementById('postList');
+    if (items.length === 0) {
+        list.innerHTML = '<div class="empty"><div class="em">📭</div>'+ (curTab==='favs' ? '还没有收藏' : curTab==='posts' ? '还没有发布帖子\n点首页 ✏️ 发布' : '暂无内容') +'</div>';
+        return;
+    }
+    list.innerHTML = items.map(p => `
+        <div class="post-item" onclick="location.href='post.html?id=${p.id}'">
+            <div class="pt">${p.title}</div>
+            <div class="pc">${p.content.replace(/\n/g,' ')}</div>
+            <div class="pm">
+                <span>❤️ ${p.like}</span>
+                <span>⭐ ${p.fav}</span>
+                <span>💬 ${p.comment}</span>
+                <span style="margin-left:auto">${p.time}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+renderList();
+</script>
 </body>
 </html>
