@@ -6,6 +6,24 @@
 <meta name="theme-color" content="#0d0420">
 <title>消息 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; min-height:100vh; padding-bottom:80px; }
+.wrap { max-width:480px; margin:0 auto; }
+.page-head { padding:16px 20px; font-size:20px; font-weight:900; }
+.notif-item { display:flex; gap:12px; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,.04); align-items:flex-start; }
+.notif-item.unread { background:rgba(168,85,247,.05); }
+.notif-ico { width:42px; height:42px; border-radius:12px; background:rgba(168,85,247,.12); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.notif-body { flex:1; }
+.notif-text { font-size:13px; line-height:1.6; }
+.notif-time { font-size:10px; color:#6d6489; margin-top:4px; }
+.unread-dot { width:8px; height:8px; border-radius:50%; background:#EC4899; margin-top:6px; flex-shrink:0; }
+.empty { background:rgba(255,255,255,.04); border:1px dashed rgba(255,255,255,.1); border-radius:14px; padding:30px 16px; margin:20px; text-align:center; color:#8d82a8; font-size:12px; }
+.empty .em { font-size:34px; margin-bottom:8px; }
+.clear-btn { text-align:center; padding:14px; color:#8d82a8; font-size:12px; cursor:pointer; }
+#toast { position:fixed; bottom:100px; left:50%; z-index:200; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; opacity:0; transition:all .3s; pointer-events:none; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
 </head>
 <body data-tab="messages">
 
@@ -17,50 +35,38 @@
             <div class="brand-sub">Crazy Friday</div>
         </div>
     </div>
-    <div class="bell">⚙️</div>
+    <div class="bell" style="font-size:12px;cursor:pointer" onclick="markAllRead();renderNotifs();toast('全部已读')">全部已读</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding-bottom:20px">
-        <div class="hero-title" style="font-size:30px">💬 消息</div>
-    </div>
-
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#a855f7,#ec4899)">📋</div>
-                <div class="card-name">接单工坊 · 系统</div>
-                <div class="card-tag">5分钟前</div>
-            </div>
-            <div class="card-desc">您的登记已成功加入接单工坊人才库 · 5个客户已查看</div>
-        </div>
-
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">🤝</div>
-                <div class="card-name">老王工作室</div>
-                <div class="card-tag">2小时前</div>
-            </div>
-            <div class="card-desc">您好，看到您登记接单，想沟通一个AI工作台定制项目...</div>
-        </div>
-
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">🎨</div>
-                <div class="card-name">Crazy Friday · 学院</div>
-                <div class="card-tag">昨天</div>
-            </div>
-            <div class="card-desc">您预约的《AI创业实战营》即将开课</div>
-        </div>
-
-        <div class="empty">
-            <div class="em">💬</div>
-            暂无更多消息
-        </div>
-    </div>
+    <div class="page-head">🔔 通知</div>
+    <div id="notifList"></div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script src="data.js"></script>
+<script>
+function renderNotifs() {
+    const d = loadCommunity();
+    const list = document.getElementById('notifList');
+    if (!d.notifications.length) {
+        list.innerHTML = '<div class="empty"><div class="em">🔕</div>暂无通知</div>';
+        return;
+    }
+    list.innerHTML = d.notifications.map(n => `
+        <div class="notif-item ${n.read?'':'unread'}">
+            <div class="notif-ico">${n.icon}</div>
+            <div class="notif-body">
+                <div class="notif-text">${n.text}</div>
+                <div class="notif-time">${n.time}</div>
+            </div>
+            ${n.read?'':'<div class="unread-dot"></div>'}
+        </div>
+    `).join('') + '<div class="clear-btn" onclick="markAllRead();renderNotifs();toast(\'✅ 已全部标记已读\')">— 全部标记已读 —</div>';
+}
+
+renderNotifs();
+</script>
 </body>
 </html>
