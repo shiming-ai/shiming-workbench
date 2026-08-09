@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0420">
+<title>发布帖子</title>
+<link rel="stylesheet" href="style.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; min-height:100vh; padding:20px; }
+.nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.nav-back { font-size:18px; color:#a89ec9; cursor:pointer; }
+.nav-title { font-size:14px; font-weight:700; }
+.nav-send { padding:8px 20px; background:linear-gradient(135deg,#A855F7,#EC4899); border:none; border-radius:18px; color:#fff; font-size:13px; font-weight:700; cursor:pointer; }
+
+input.title-input { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,.1); padding:14px 4px; font-size:20px; font-weight:800; color:#fff; outline:none; }
+textarea.content-input { width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:14px; font-size:14px; color:#fff; outline:none; margin-top:14px; min-height:200px; resize:vertical; font-family:inherit; line-height:1.8; }
+
+.tags-row { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.tag-option { padding:7px 14px; border-radius:18px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); font-size:12px; cursor:pointer; transition:all .2s; }
+.tag-option.active { background:rgba(168,85,247,.2); border-color:#A855F7; color:#C084FC; }
+
+.tip { background:rgba(255,255,255,.03); border:1px dashed rgba(255,255,255,.1); border-radius:12px; padding:14px; margin-top:16px; font-size:11px; color:#8d82a8; line-height:1.8; }
+
+#toast { position:fixed; bottom:80px; left:50%; z-index:200; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; opacity:0; transition:all .3s; pointer-events:none; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <span class="nav-back" onclick="history.back()">‹</span>
+    <span class="nav-title">发布新帖</span>
+    <button class="nav-send" onclick="doPublish()">发布</button>
+</div>
+
+<input class="title-input" id="pTitle" placeholder="标题：写下你的想法...">
+<textarea class="content-input" id="pContent" placeholder="分享你的内容、思考、经验...\n支持多行文字"></textarea>
+
+<div class="tags-row" id="tagsRow">
+    <span class="tag-option" data-tag="💡 思考">💡 思考</span>
+    <span class="tag-option" data-tag="🤖 AI">🤖 AI</span>
+    <span class="tag-option active" data-tag="🏢 一人公司">🏢 一人公司</span>
+    <span class="tag-option" data-tag="💰 变现">💰 变现</span>
+    <span class="tag-option" data-tag="📋 接单">📋 接单</span>
+    <span class="tag-option" data-tag="🛠️ 工具">🛠️ 工具</span>
+    <span class="tag-option" data-tag="📖 学习">📖 学习</span>
+</div>
+
+<div class="tip">
+    📝 发布规则<br>
+    · 分享真实有价值的内容<br>
+    · 拒绝广告、垃圾信息<br>
+    · 你的帖子会出现在首页推荐流
+</div>
+
+<div id="toast"></div>
+<script src="data.js"></script>
+<script>
+const selectedTags = ['🏢 一人公司'];
+document.querySelectorAll('.tag-option').forEach(el => {
+    el.addEventListener('click', () => {
+        const tag = el.dataset.tag;
+        const idx = selectedTags.indexOf(tag);
+        if (idx > -1) { selectedTags.splice(idx,1); el.classList.remove('active'); }
+        else { selectedTags.push(tag); el.classList.add('active'); }
+    });
+});
+
+function doPublish() {
+    const title = document.getElementById('pTitle').value.trim();
+    const content = document.getElementById('pContent').value.trim();
+    if (!title && !content) return toast('请写点内容再发布');
+    if (!title) return toast('请填写标题');
+    if (content.length < 5) return toast('内容太短了，至少5个字');
+    const post = publishPost(title, content, selectedTags);
+    toast('🎉 发布成功！');
+    setTimeout(() => location.href = 'post.html?id=' + post.id, 800);
+}
+</script>
+</body>
+</html>
