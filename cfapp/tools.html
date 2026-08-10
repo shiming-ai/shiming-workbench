@@ -4,8 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<title>AI工具中心 · Crazy Friday</title>
+<meta name="description" content="Crazy Friday · AI变现工具库 · 2026年30+款真能赚钱的AI工具">
+<title>AI变现工具库 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.tool-hero { padding:28px 18px 10px; }
+.tool-hero h2 { font-size:22px; font-weight:900; margin-bottom:6px; }
+.tool-hero p { font-size:11px; color:#8d82a8; line-height:1.7; }
+.tool-search { padding:12px 18px; }
+.tool-search-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:12px 16px; display:flex; align-items:center; gap:8px; }
+.tool-search-box input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:14px; }
+.tool-search-box input::placeholder { color:#6d6489; }
+.cat-scroll { display:flex; gap:8px; overflow-x:auto; padding:6px 18px 14px; scrollbar-width:none; }
+.cat-scroll::-webkit-scrollbar { display:none; }
+.cat-chip { flex-shrink:0; padding:8px 14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:20px; font-size:12px; font-weight:700; color:#a89ec9; cursor:pointer; }
+.cat-chip.active { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; box-shadow:0 4px 14px rgba(168,85,247,.35); }
+.tool-count { padding:0 18px 8px; font-size:11px; color:#6d6489; }
+.tool-list { padding:0 18px 20px; }
+.tool-item { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin-bottom:10px; position:relative; overflow:hidden; }
+.tool-item::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--tc,#A855F7),transparent); opacity:.6; }
+.tool-head { display:flex; align-items:center; gap:10px; }
+.tool-ico { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; background:rgba(255,255,255,.06); }
+.tool-name { font-size:14px; font-weight:800; }
+.tool-tags { display:flex; gap:5px; margin-top:4px; flex-wrap:wrap; }
+.tool-tag { font-size:8px; padding:2px 7px; border-radius:8px; font-weight:700; }
+.tag-hot { background:rgba(255,215,0,.15); color:#FFD700; }
+.tag-new { background:rgba(168,85,247,.15); color:#C084FC; }
+.tag-free { background:rgba(52,211,153,.12); color:#34D399; }
+.tag-cn { background:rgba(56,189,248,.12); color:#38BDF8; }
+.tag-gh { background:rgba(255,255,255,.08); color:#a89ec9; }
+.tool-score { margin-left:auto; font-size:12px; font-weight:900; color:#FFD700; }
+.tool-use { font-size:11px; color:#8d82a8; margin-top:8px; line-height:1.6; }
+.tool-money { font-size:11px; color:#34D399; margin-top:6px; line-height:1.6; background:rgba(52,211,153,.07); border-radius:8px; padding:8px 10px; }
+.tool-money b { color:#34D399; }
+.tool-actions { display:flex; gap:8px; margin-top:10px; }
+.tool-btn { flex:1; padding:8px; text-align:center; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:10px; font-size:11px; font-weight:700; color:#a89ec9; cursor:pointer; text-decoration:none; }
+.tool-btn:active { transform:scale(.97); }
+.tool-btn.go { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.tool-btn.faved { color:#FFD700; border-color:rgba(255,215,0,.4); }
+.empty-state { text-align:center; padding:40px 20px; color:#6d6489; }
+.empty-state .em { font-size:40px; margin-bottom:10px; }
+.fav-bar { display:flex; gap:8px; padding:0 18px 12px; }
+.fav-toggle { padding:8px 16px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#a89ec9; }
+.fav-toggle.active { background:rgba(255,215,0,.12); color:#FFD700; border-color:rgba(255,215,0,.35); }
+</style>
 </head>
 <body data-tab="discover">
 
@@ -13,162 +55,161 @@
     <div class="brand">
         <div class="brand-icon">CF</div>
         <div>
-            <div class="brand-name">AI工具中心</div>
-            <div class="brand-sub">02 · 精选全球优质AI工具</div>
+            <div class="brand-name">AI变现工具库</div>
+            <div class="brand-sub">02 · 2026真能赚钱的AI工具</div>
         </div>
     </div>
-    <div class="bell">🔍</div>
+    <div class="bell" style="cursor:pointer" onclick="location.href='playbook.html'">📖</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding:24px 18px 12px">
-        <div style="font-size:18px;font-weight:900;margin-bottom:6px">精选全球优质<span style="color:#C084FC">AI工具</span></div>
-        <div style="font-size:11px;color:#8d82a8">发现你的下一个生产力</div>
+    <div class="tool-hero">
+        <h2>AI<span style="color:#C084FC">变现</span>工具库</h2>
+        <p>对标2026年真实能赚钱的AI工具（含GitHub现象级开源项目）<br>每个工具都标注了「怎么用它赚钱」，点进去就能用</p>
     </div>
 
-    <!-- 搜索 -->
-    <div style="padding:0 18px 14px">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
+    <div class="tool-search">
+        <div class="tool-search-box">
             <span style="color:#8d82a8">🔍</span>
-            <input id="searchInput" placeholder="搜索AI工具..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
+            <input id="searchInput" placeholder="搜索工具：ChatGPT / n8n / 画图 / 剪辑...">
         </div>
     </div>
 
-    <!-- 分类 -->
-    <div class="grid" style="padding:0 18px">
-        <div class="grid-card" onclick="filterTool('all')"><div class="em">📦</div><div class="tt">全部工具</div><div class="td">3000+</div></div>
-        <div class="grid-card" onclick="filterTool('image')"><div class="em">🎨</div><div class="tt">AI绘图</div><div class="td">8款</div></div>
-        <div class="grid-card" onclick="filterTool('writing')"><div class="em">✍️</div><div class="tt">AI写作</div><div class="td">12款</div></div>
-        <div class="grid-card" onclick="filterTool('video')"><div class="em">🎬</div><div class="tt">AI视频</div><div class="td">5款</div></div>
-        <div class="grid-card" onclick="filterTool('office')"><div class="em">💼</div><div class="tt">AI办公</div><div class="td">9款</div></div>
-        <div class="grid-card" onclick="filterTool('dev')"><div class="em">💻</div><div class="tt">AI开发</div><div class="td">6款</div></div>
-        <div class="grid-card" onclick="filterTool('search')"><div class="em">🔍</div><div class="tt">AI搜索</div><div class="td">3款</div></div>
-        <div class="grid-card" onclick="filterTool('more')"><div class="em">⋯</div><div class="tt">更多分类</div><div class="td">持续更新</div></div>
+    <div class="fav-bar">
+        <div class="fav-toggle active" id="favAll" onclick="showFavOnly(false)">全部工具 <span id="totalCount"></span></div>
+        <div class="fav-toggle" id="favOnly" onclick="showFavOnly(true)">⭐ 我的收藏 <span id="favCount">0</span></div>
     </div>
 
-    <!-- 今日推荐 -->
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">✨ 今日推荐</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section" id="toolsList">
-        <div class="card" data-cat="chat">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">💬</div>
-                <div style="flex:1">
-                    <div class="card-name">ChatGPT</div>
-                    <div style="display:flex;gap:4px;margin-top:4px">
-                        <span style="font-size:9px;padding:2px 6px;background:rgba(255,255,255,.06);border-radius:6px;color:#C084FC;font-weight:700">HOT</span>
-                        <span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700">9.8</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-desc">⭐ 9.8分 · ⏰ 响应秒级 · 🌐 全球可访问</div>
-            <div class="card-meta">
-                <span class="meta-tag">💰 ¥50K-¥200K/月</span>
-                <span class="meta-tag">🏢 企业级</span>
-                <span class="meta-tag">📅 1-2月</span>
-                <span class="meta-tag">🛠 综合性</span>
-            </div>
-        </div>
+    <div class="cat-scroll" id="catBar"></div>
+    <div class="tool-count" id="toolCount"></div>
+    <div class="tool-list" id="toolList"></div>
 
-        <div class="card" data-cat="chat">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">⚡</div>
-                <div style="flex:1">
-                    <div class="card-name">Claude 3 Sonnet</div>
-                    <div style="display:flex;gap:4px;margin-top:4px">
-                        <span style="font-size:9px;padding:2px 6px;background:rgba(168,85,247,.15);border-radius:6px;color:#C084FC;font-weight:700">NEW</span>
-                        <span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700">9.6</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-desc">⭐ 9.6分 · 💬 200K · 🌐 7×24h</div>
-            <div class="card-meta">
-                <span class="meta-tag">💰 ¥3,000/月</span>
-                <span class="meta-tag">⏰ 快速</span>
-                <span class="meta-tag">🏢 企业版</span>
-                <span class="meta-tag">🛠 分析力</span>
-            </div>
-        </div>
-
-        <div class="card" data-cat="image">
-            <div class="card-head">
-                <div class="card-icon" style="background:#000">🌙</div>
-                <div style="flex:1">
-                    <div class="card-name">Midjourney</div>
-                    <span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700;margin-top:4px;display:inline-block">9.7</span>
-                </div>
-            </div>
-            <div class="card-desc">⭐ 9.7分 · 👁️ 2.1M · 质量第一</div>
-        </div>
-
-        <div class="card" data-cat="video">
-            <div class="card-head">
-                <div class="card-icon" style="background:#fff;color:#000">👦</div>
-                <div style="flex:1">
-                    <div class="card-name">Runway</div>
-                    <span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700;margin-top:4px;display:inline-block">9.5</span>
-                </div>
-            </div>
-            <div class="card-desc">⭐ 9.5分 · 🎬 AI视频生成王者</div>
-        </div>
-    </div>
-
-    <!-- 热门排行 -->
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">🏆 热门排行 TOP 10</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section" id="rankList">
-        <div class="card" data-rank="1" style="border-left:3px solid #FFD700">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">🥇</div>
-                <div style="flex:1">
-                    <div class="card-name">1. ChatGPT</div>
-                    <div style="font-size:11px;color:#8d82a8;margin-top:2px">2.1w人使用 · ⭐ 9.8</div>
-                </div>
-            </div>
-        </div>
-        <div class="card" data-rank="2" style="border-left:3px solid #C0C0C0">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🥈</div>
-                <div style="flex:1">
-                    <div class="card-name">2. Midjourney</div>
-                    <div style="font-size:11px;color:#8d82a8;margin-top:2px">8.7k人使用 · ⭐ 9.7</div>
-                </div>
-            </div>
-        </div>
-        <div class="card" data-rank="3" style="border-left:3px solid #CD7F32">
-            <div class="card-head">
-                <div class="card-icon" style="background:#fff;color:#000">🥉</div>
-                <div style="flex:1">
-                    <div class="card-name">3. Runway</div>
-                    <div style="font-size:11px;color:#8d82a8;margin-top:2px">2.0w人使用 · ⭐ 9.5</div>
-                </div>
-            </div>
-        </div>
-        <div class="card"><div class="card-head"><div class="card-icon">4</div><div class="card-name">Claude 3</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">1.2w人使用 · ⭐ 9.6</div></div></div>
-        <div class="card"><div class="card-head"><div class="card-icon">5</div><div class="card-name">Notion AI</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">8.9k人使用 · ⭐ 9.4</div></div></div>
+    <div class="tip" style="margin:0 18px 20px">
+        💡 工具只是放大器，<b style="color:#34D399">会用的人赚钱</b><br>
+        想知道每种工具的具体变现玩法 → 看「📖 变现玩法库」
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
-<script src="data.js"></script>
 <script>
-function filterTool(cat) {
-    const all = document.querySelectorAll('[data-cat]');
-    all.forEach(el => {
-        if (cat === 'all' || el.dataset.cat === cat || cat === 'more') el.style.display = '';
-        else if (cat !== 'all') el.style.display = 'none';
-    });
-    toast('✅ 已切换分类：' + (event?.target?.querySelector('.tt')?.textContent || cat));
+// ===== AI变现工具库数据（2026真实工具，含GitHub开源项目） =====
+const TOOLS = [
+    // ---------- AI对话 / Agent ----------
+    { id:'t1', name:'ChatGPT', ico:'💬', cat:'对话Agent', score:9.8, tags:['HOT','全球'], use:'OpenAI旗舰对话模型，2026年已升级到强推理+多模态，可联网、可写代码、可做分析。', money:'变现：做AI客服/AI咨询/内容代写，接单单子100-500元/单', url:'https://chat.openai.com', color:'#10b981' },
+    { id:'t2', name:'Claude', ico:'⚡', cat:'对话Agent', score:9.7, tags:['HOT','长文本'], use:'Anthropic出品，长文本和代码能力顶级，是AI开发者的最爱，配合Cursor做一人微SaaS。', money:'变现：AI编程外包（2000-8000/单）、Claude API套壳服务', url:'https://claude.ai', color:'#f59e0b' },
+    { id:'t3', name:'DeepSeek', ico:'🐋', cat:'对话Agent', score:9.5, tags:['国产','开源','免费'], use:'深度求索开源模型，推理能力强、API价格极低，是套壳应用和自动化的首选底座。', money:'变现：低API成本跑自动化内容/AI应用，利润空间大', url:'https://chat.deepseek.com', color:'#3b82f6' },
+    { id:'t4', name:'豆包', ico:'🫘', cat:'对话Agent', score:9.3, tags:['国产','免费'], use:'字节跳动旗下，中文理解好、免费额度大，适合做中文内容创作和客服机器人。', money:'变现：AI文案、小红书/抖音脚本代写，日更素材', url:'https://www.doubao.com', color:'#ec4899' },
+    { id:'t5', name:'Kimi', ico:'🌙', cat:'对话Agent', score:9.2, tags:['国产','长文本'], use:'月之暗面出品，超长上下文，适合读文档、写长文、做研报分析。', money:'变现：文档处理/长文代写服务，知识付费助理', url:'https://kimi.moonshot.cn', color:'#8b5cf6' },
+    { id:'t6', name:'Gemini', ico:'✨', cat:'对话Agent', score:9.1, tags:['谷歌'], use:'Google多模态旗舰，视频理解能力强，和YouTube/Google生态深度整合。', money:'变现：出海内容、多语言翻译服务、YouTube脚本', url:'https://gemini.google.com', color:'#4285F4' },
+
+    // ---------- AI绘图 ----------
+    { id:'t7', name:'Midjourney', ico:'🎨', cat:'AI绘图', score:9.7, tags:['HOT','质量王'], use:'AI绘图质量天花板，商业图/海报/壁纸/头像/UI素材，一张成品图可卖10-500元。', money:'变现：接图单、卖壁纸/头像包、小红书AI绘画号带货', url:'https://www.midjourney.com', color:'#8b5cf6' },
+    { id:'t8', name:'Stable Diffusion', ico:'🌌', cat:'AI绘图', score:9.4, tags:['开源','免费'], use:'开源绘图模型，可本地部署、可控性强，配合LoRA可以定制风格批量出图。', money:'变现：批量素材/定制IP形象/电商产品图，成本趋近0', url:'https://stability.ai', color:'#a855f7' },
+    { id:'t9', name:'即梦AI', ico:'🖼️', cat:'AI绘图', score:9.2, tags:['国产'], use:'字节旗下，中文提示词友好，图生图/参考图能力强，操作简单。', money:'变现：小红书AI头像/壁纸引流，接头像定制单', url:'https://jimeng.jianying.com', color:'#f43f5e' },
+    { id:'t10', name:'可灵AI', ico:'🎬', cat:'AI绘图', score:9.3, tags:['国产','视频'], use:'快手出品，图生视频和文生视频国内领先，适合做短剧/漫剧素材。', money:'变现：AI漫剧、短视频素材、广告片头制作', url:'https://klingai.com', color:'#14b8a6' },
+    { id:'t11', name:'FLUX', ico:'⚗️', cat:'AI绘图', score:9.0, tags:['开源'], use:'Black Forest Labs开源模型，文字渲染准确率高，适合海报/Logo设计。', money:'变现：设计外包、电商详情页、海报模板售卖', url:'https://flux.ai', color:'#f97316' },
+
+    // ---------- AI视频 ----------
+    { id:'t12', name:'Runway', ico:'🎥', cat:'AI视频', score:9.5, tags:['视频'], use:'AI视频生成和编辑，Gen系列模型支持文生视频/图生视频/视频修复。', money:'变现：广告视频、产品演示视频、短视频批量生产', url:'https://runwayml.com', color:'#6d28d9' },
+    { id:'t13', name:'Sora', ico:'🌀', cat:'AI视频', score:9.6, tags:['OpenAI','60s'], use:'OpenAI视频模型，可生成长达60秒的高质量视频，物理世界理解强。', money:'变现：电影级短视频、宣传片外包、内容IP素材', url:'https://sora.com', color:'#10b981' },
+    { id:'t14', name:'HeyGen', ico:'🗣️', cat:'AI视频', score:9.2, tags:['数字人'], use:'数字人视频生成，输入文字+照片即出真人播报视频，支持多语言。', money:'变现：数字人口播号、带货视频、企业宣传片（500-2000/条）', url:'https://www.heygen.com', color:'#6366f1' },
+    { id:'t15', name:'Pika', ico:'🍥', cat:'AI视频', score:9.0, tags:['创意'], use:'创意短视频生成，风格化强，适合做趣味内容/表情包。', money:'变现：趣味短视频账号、品牌创意广告', url:'https://pika.art', color:'#f472b6' },
+
+    // ---------- AI编程 / 自动化（GitHub现象级） ----------
+    { id:'t16', name:'Cursor', ico:'💻', cat:'AI编程', score:9.7, tags:['HOT','AI编程'], use:'AI代码编辑器，一人开发全栈应用的主力，2026年AI程序员标配。', money:'变现：接单开发（3000-30000/单）、做一人微SaaS产品', url:'https://cursor.com', color:'#f59e0b' },
+    { id:'t17', name:'GitHub Copilot', ico:'🐙', cat:'AI编程', score:9.3, tags:['GitHub'], use:'GitHub官方AI编程助手，和编辑器/仓库深度集成，写代码提速。', money:'变现：外包开发提速、开源项目接赞助', url:'https://github.com/features/copilot', color:'#374151' },
+    { id:'t18', name:'Claude Code', ico:'🤖', cat:'AI编程', score:9.6, tags:['HOT','Agent'], use:'Claude命令行编程Agent，能自主读写代码、跑测试、修bug，2026年最火。', money:'变现：AI Agent外包、自动化开发流水线服务', url:'https://www.anthropic.com/claude-code', color:'#d97706' },
+    { id:'t19', name:'v0.dev', ico:'⚛️', cat:'AI编程', score:9.2, tags:['前端'], use:'Vercel出品，描述需求即生成前端界面，快速做落地页/官网。', money:'变现：官网/落地页快速交付（1000-5000/个）', url:'https://v0.dev', color:'#0ea5e9' },
+    { id:'t20', name:'Bolt.new', ico:'⚡', cat:'AI编程', score:9.1, tags:['全栈'], use:'浏览器里直接生成全栈应用，边聊边出网站，一人创业神器。', money:'变现：微SaaS、工具站快速落地，接单演示', url:'https://bolt.new', color:'#22c55e' },
+    { id:'t21', name:'Dify', ico:'🔧', cat:'AI平台', score:9.4, tags:['开源','GitHub'], use:'开源AI应用开发平台，可视化编排LLM工作流，GitHub顶级项目，一键部署AI应用。', money:'变现：帮企业搭AI应用（5000-50000/套）、卖Dify模板', url:'https://dify.ai', color:'#8b5cf6' },
+    { id:'t22', name:'Coze', ico:'🧩', cat:'AI平台', score:9.3, tags:['开源','字节'], use:'字节扣子，可视化搭建AI Bot和Agent，支持发布到微信/抖音/飞书，2026年已开源。', money:'变现：AI机器人定制、企业知识库Bot（2000-20000/个）', url:'https://www.coze.cn', color:'#3b82f6' },
+    { id:'t23', name:'n8n', ico:'🔀', cat:'自动化', score:9.5, tags:['开源','GitHub','变现'], use:'开源自动化工作流（2026年AI原生化），把AI接入400+应用自动跑，接单/发内容/回消息全自动。', money:'变现：自动化接单、自动发内容、帮企业搭自动化（3000-30000）', url:'https://n8n.io', color:'#ea4c89' },
+    { id:'t24', name:'OpenClaw', ico:'🦾', cat:'Agent', score:9.6, tags:['开源','25万星','变现'], use:'2026年现象级开源通用AI Agent（原Clawdbot，25万+GitHub星标），能自主完成复杂任务，云端+本地双部署。', money:'变现：Agent服务、自动化运营外包、5大变现野路子', url:'https://github.com/openclaw/openclaw', color:'#a855f7' },
+    { id:'t25', name:'AiToEarn', ico:'💰', cat:'自动化', score:9.0, tags:['开源','变现'], use:'"用AI赚钱"开源项目，自动把内容发布到抖音/小红书/TikTok，让AI替你持续产出+分发。', money:'变现：自动运营多平台账号，引流带货、接广告', url:'https://github.com/yikart/AiToEarn', color:'#f59e0b' },
+    { id:'t26', name:'Replit', ico:'🔄', cat:'AI编程', score:9.0, tags:['云端'], use:'云端IDE+AI Agent，浏览器直接写代码部署，最快7天ship一个产品（Marc Lou模式）。', money:'变现：一人微SaaS、快速验证产品想法', url:'https://replit.com', color:'#f97316' },
+
+    // ---------- AI写作 ----------
+    { id:'t27', name:'Notion AI', ico:'📝', cat:'AI写作', score:9.2, tags:['办公'], use:'笔记+AI写作，文档生成、会议纪要、知识库管理一体。', money:'变现：内容团队协作、知识付费课程资料', url:'https://www.notion.so', color:'#22d3ee' },
+    { id:'t28', name:'秘塔写作猫', ico:'🐱', cat:'AI写作', score:9.0, tags:['国产'], use:'中文写作优化，查错别字/润色/扩写，公众号/小红书文案利器。', money:'变现：代写服务、内容工厂流水线', url:'https://xiezuocat.com', color:'#fb923c' },
+    { id:'t29', name:'Copy.ai', ico:'📣', cat:'AI写作', score:8.8, tags:['营销'], use:'营销文案生成，广告语/邮件/社交媒体文案批量出。', money:'变现：营销文案外包、电商详情页代写', url:'https://www.copy.ai', color:'#ef4444' },
+
+    // ---------- AI语音 ----------
+    { id:'t30', name:'ElevenLabs', ico:'🎙️', cat:'AI语音', score:9.3, tags:['配音'], use:'全球顶级AI配音/声音克隆，多语言、情绪自然，有声书/视频配音。', money:'变现：有声书配音、短视频配音、广告旁白（按分钟收费）', url:'https://elevenlabs.io', color:'#7c3aed' },
+    { id:'t31', name:'剪映语音', ico:'✂️', cat:'AI语音', score:9.1, tags:['国产'], use:'剪映内置AI配音/数字人，免费、中文自然，短视频配音首选。', money:'变现：短视频批量配音、口播号矩阵', url:'https://www.capcut.cn', color:'#0ea5e9' },
+    { id:'t32', name:'Fish Audio', ico:'🐟', cat:'AI语音', score:9.0, tags:['开源'], use:'开源声音克隆，效果惊艳，可克隆音色做配音。', money:'变现：声音克隆定制、有声内容制作', url:'https://fish.audio', color:'#06b6d4' },
+
+    // ---------- AI办公 / 搜索 ----------
+    { id:'t33', name:'Gamma', ico:'📊', cat:'AI办公', score:9.1, tags:['PPT'], use:'AI一键生成PPT/文档/网页，设计感强，商务汇报神器。', money:'变现：PPT代做（50-300/份）、模板售卖', url:'https://gamma.app', color:'#8b5cf6' },
+    { id:'t34', name:'Perplexity', ico:'🔍', cat:'AI搜索', score:9.3, tags:['搜索'], use:'AI搜索引擎，答案+引用来源，做调研/写稿查证效率极高。', money:'变现：行业调研服务、内容创作查证提效', url:'https://www.perplexity.ai', color:'#14b8a6' },
+    { id:'t35', name:'飞书智能伙伴', ico:'📋', cat:'AI办公', score:9.0, tags:['国产'], use:'飞书内置AI，会议纪要点到即出、周报自动生成、知识库问答。', money:'变现：企业数字化服务、办公自动化部署', url:'https://www.feishu.cn', color:'#2563eb' },
+
+    // ---------- 出海/其他变现 ----------
+    { id:'t36', name:'Make.com', ico:'🔗', cat:'自动化', score:8.9, tags:['自动化'], use:'可视化自动化平台，2000+应用连接，免代码搭自动流程。', money:'变现：自动化代搭、SaaS订阅（月费制）', url:'https://www.make.com', color:'#f97316' },
+    { id:'t37', name:'Zapier', ico:'🧲', cat:'自动化', score:8.8, tags:['自动化'], use:'老牌自动化平台，适合给客户快速搭"AI+业务"连接。', money:'变现：企业自动化方案（月服务费模式）', url:'https://zapier.com', color:'#ff4f00' }
+];
+
+const CATS = ['全部','对话Agent','AI绘图','AI视频','AI编程','AI平台','自动化','Agent','AI写作','AI语音','AI办公','AI搜索'];
+let curCat = '全部', searchKw = '', favOnly = false;
+const FAV_KEY = 'cf_tool_favs';
+function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY))||[] }catch(e){ return [] } }
+function setFavs(a){ localStorage.setItem(FAV_KEY, JSON.stringify(a)) }
+
+function renderCats(){
+    document.getElementById('catBar').innerHTML = CATS.map(c =>
+        `<div class="cat-chip ${c===curCat?'active':''}" onclick="setCat('${c}')">${c}</div>`).join('');
 }
-document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('searchInput');
-    if (input) input.addEventListener('input', () => toast('搜索: ' + input.value));
-});
+function setCat(c){ curCat=c; renderCats(); renderTools(); }
+
+function renderTools(){
+    const list = document.getElementById('toolList');
+    const favs = getFavs();
+    let arr = TOOLS.filter(t => (curCat==='全部'||t.cat===curCat) && (!searchKw || (t.name+t.cat+t.use+t.money).toLowerCase().includes(searchKw.toLowerCase())));
+    if (favOnly) arr = arr.filter(t => favs.includes(t.id));
+    document.getElementById('toolCount').textContent = `共 ${arr.length} 款工具`;
+    document.getElementById('totalCount').textContent = TOOLS.length;
+    document.getElementById('favCount').textContent = favs.length;
+    if (!arr.length) {
+        list.innerHTML = `<div class="empty-state"><div class="em">🔍</div>没有找到匹配的工具<br><span style="font-size:11px">换个关键词试试，或看「📖 变现玩法库」</span></div>`;
+        return;
+    }
+    list.innerHTML = arr.map(t => {
+        const faved = favs.includes(t.id);
+        const tags = (t.tags||[]).map(g => `<span class="tool-tag ${g==='HOT'?'tag-hot':g==='开源'?'tag-gh':g==='国产'?'tag-cn':g==='免费'?'tag-free':'tag-new'}">${g}</span>`).join('');
+        return `<div class="tool-item" style="--tc:${t.color}">
+            <div class="tool-head">
+                <div class="tool-ico" style="background:${t.color}22;color:${t.color}">${t.ico}</div>
+                <div style="flex:1">
+                    <div class="tool-name">${t.name}</div>
+                    <div class="tool-tags">${tags}</div>
+                </div>
+                <div class="tool-score">⭐ ${t.score}</div>
+            </div>
+            <div class="tool-use">${t.use}</div>
+            <div class="tool-money">💰 <b>变现玩法</b>：${t.money}</div>
+            <div class="tool-actions">
+                <div class="tool-btn ${faved?'faved':''}" onclick="toggleFav('${t.id}')">${faved?'★ 已收藏':'☆ 收藏'}</div>
+                <a class="tool-btn go" href="${t.url}" target="_blank" rel="noopener">🚀 去使用</a>
+            </div>
+        </div>`;
+    }).join('');
+}
+function toggleFav(id){
+    const favs = getFavs();
+    if (favs.includes(id)) setFavs(favs.filter(x=>x!==id));
+    else { setFavs([...favs, id]); toast('✅ 已收藏'); }
+    renderTools();
+}
+function showFavOnly(v){
+    favOnly = v;
+    document.getElementById('favAll').classList.toggle('active', !v);
+    document.getElementById('favOnly').classList.toggle('active', v);
+    renderTools();
+}
+document.getElementById('searchInput').addEventListener('input', e => { searchKw = e.target.value; renderTools(); });
+
+renderCats();
+renderTools();
 </script>
 </body>
 </html>
