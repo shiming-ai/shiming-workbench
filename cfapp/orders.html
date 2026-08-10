@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 接单工坊 · 需求对接与交付中心">
 <title>接单工坊 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
@@ -13,6 +14,30 @@
 .tab-btn.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:30px; height:2px; background:linear-gradient(90deg,#A855F7,#EC4899); border-radius:1px; }
 .tab-content { display:none; }
 .tab-content.active { display:block; }
+.req-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin:0 18px 10px; position:relative; overflow:hidden; }
+.req-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--rc,#A855F7),transparent); }
+.req-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.req-ico { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; background:rgba(255,255,255,.06); }
+.req-name { font-size:13px; font-weight:800; flex:1; }
+.req-price { font-size:13px; font-weight:900; color:#FFD700; }
+.req-desc { font-size:11px; color:#a89ec9; line-height:1.6; margin-bottom:8px; }
+.req-meta { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.req-tag { font-size:9px; padding:3px 8px; background:rgba(255,255,255,.06); border-radius:8px; color:#8d82a8; font-weight:700; }
+.req-actions { display:flex; gap:8px; }
+.req-btn { flex:1; padding:9px; text-align:center; border-radius:10px; font-size:11px; font-weight:800; cursor:pointer; }
+.req-btn.grab { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; }
+.req-btn.grab:disabled { opacity:.4; }
+.req-btn.look { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:#a89ec9; }
+.orders-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:16px 18px 6px; }
+.orders-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 6px; text-align:center; }
+.orders-stat .num { font-size:18px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.orders-stat .lbl { font-size:9px; color:#6d6489; margin-top:3px; }
+.pub-btn { display:block; margin:16px 18px; padding:13px; text-align:center; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:20px; font-size:13px; font-weight:800; color:#fff; cursor:pointer; box-shadow:0 8px 24px rgba(168,85,247,.35); }
+.mine-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; margin:0 18px 10px; }
+.mine-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.mine-name { font-size:13px; font-weight:800; }
+.mine-status { font-size:9px; padding:3px 9px; border-radius:10px; background:rgba(245,158,11,.12); color:#F59E0B; font-weight:700; }
+.mine-meta { font-size:11px; color:#8d82a8; line-height:1.6; }
 </style>
 </head>
 <body data-tab="orders">
@@ -25,13 +50,13 @@
             <div class="brand-sub">05 · 需求对接与交付中心</div>
         </div>
     </div>
-    <div class="bell">🔍</div>
+    <div class="bell" style="cursor:pointer" onclick="location.href='../partner-form.html'">📨</div>
 </div>
 
 <div class="wrap">
     <div class="orders-stats">
-        <div class="orders-stat"><div class="num">5,000+</div><div class="lbl">需求发布</div></div>
-        <div class="orders-stat"><div class="num">2,000+</div><div class="lbl">服务商</div></div>
+        <div class="orders-stat"><div class="num" id="reqCount">0</div><div class="lbl">需求在挂</div></div>
+        <div class="orders-stat"><div class="num" id="myCount">0</div><div class="lbl">我的接单</div></div>
         <div class="orders-stat"><div class="num">98%</div><div class="lbl">交付满意</div></div>
     </div>
 
@@ -41,79 +66,144 @@
     </div>
 
     <div class="tab-content active" id="tab-market">
-        <div class="section">
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">📦</div>
-                    <div class="card-name">AI商业计划书撰写</div>
-                    <span class="card-tag">¥3,000-6,000</span>
-                </div>
-                <div class="card-desc">需要一个完整的BP，含商业模式、市场分析、融资策略</div>
-                <div class="card-meta">
-                    <span class="meta-tag">📅 2周交付</span>
-                    <span class="meta-tag">💼 高难度</span>
-                    <span class="meta-tag">👁️ 32人接单</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">📝</div>
-                    <div class="card-name">小红书AI文案代写</div>
-                    <span class="card-tag">¥1,500-3,000</span>
-                </div>
-                <div class="card-desc">美妆类账号，需周更20篇，要求风格活泼</div>
-                <div class="card-meta">
-                    <span class="meta-tag">📅 周更</span>
-                    <span class="meta-tag">💼 中难度</span>
-                    <span class="meta-tag">👁️ 28人接单</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">🎨</div>
-                    <div class="card-name">AI数字人视频</div>
-                    <span class="card-tag">¥5,000-10,000</span>
-                </div>
-                <div class="card-desc">高级感形象，10条短视频，30秒以内</div>
-                <div class="card-meta">
-                    <span class="meta-tag">📅 10天交付</span>
-                    <span class="meta-tag">💼 高级</span>
-                    <span class="meta-tag">👁️ 15人接单</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">📊</div>
-                    <div class="card-name">数据分析报告</div>
-                    <span class="card-tag">¥2,000-4,000</span>
-                </div>
-                <div class="card-desc">电商数据整理+可视化</div>
-                <div class="card-meta">
-                    <span class="meta-tag">📅 7天</span>
-                    <span class="meta-tag">💼 中难度</span>
-                    <span class="meta-tag">👁️ 20人接单</span>
-                </div>
-            </div>
+        <div id="marketList"></div>
+        <div class="pub-btn" onclick="publishReq()">+ 发布需求</div>
+        <div class="tip" style="margin:0 18px 20px">
+            📨 想接单？先填「接单登记」<br>有需求第一时间派给你
         </div>
-        <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:13px;border-radius:20px;display:block;margin:20px 18px;font-weight:800">+ 发布需求</a>
     </div>
 
     <div class="tab-content" id="tab-mine">
-        <div class="empty" style="background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:40px 16px;margin:20px 18px;text-align:center;color:#8d82a8;font-size:12px">
-            <div style="font-size:48px;margin-bottom:12px">📋</div>
-            还没有接单记录<br>
-            <a style="display:inline-block;margin-top:14px;padding:8px 18px;background:linear-gradient(135deg,#A855F7,#EC4899);border-radius:18px;color:#fff;font-weight:700;font-size:12px">去需求大厅 →</a>
-        </div>
+        <div id="mineList"></div>
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
 <script>
+const CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7';
+const MY_KEY = 'cf_my_grabs';
+const LS_KEY = 'cf_orders_v1';
+
+// 种子需求
+const SEED_REQS = [
+    { id:'r1', ico:'📦', cat:'AI应用', name:'AI商业计划书撰写', desc:'需要一个完整的BP，含商业模式、市场分析、融资策略', price:'¥3,000-6,000', time:'2周交付', level:'高难度', grabs:32, color:'#A855F7' },
+    { id:'r2', ico:'📝', cat:'AI写作', name:'小红书AI文案代写', desc:'美妆类账号，需周更20篇，要求风格活泼', price:'¥1,500-3,000', time:'周更', level:'中难度', grabs:28, color:'#34D399' },
+    { id:'r3', ico:'🎨', cat:'AI绘图', name:'AI数字人视频', desc:'高级感形象，10条短视频，30秒以内', price:'¥5,000-10,000', time:'10天交付', level:'高级', grabs:15, color:'#22d3ee' },
+    { id:'r4', ico:'📊', cat:'AI分析', name:'电商数据分析报告', desc:'电商数据整理+可视化，出图表+结论', price:'¥2,000-4,000', time:'7天', level:'中难度', grabs:20, color:'#F59E0B' },
+    { id:'r5', ico:'🤖', cat:'Agent', name:'企业智能客服Agent', desc:'用Coze/Dify搭一个知识库客服，能回答产品问题', price:'¥8,000-20,000', time:'3周', level:'高级', grabs:9, color:'#EF4444' },
+    { id:'r6', ico:'🎬', cat:'AI视频', name:'产品宣传短视频', desc:'30秒产品宣传片，AI生成+真人配音', price:'¥3,000-8,000', time:'1周', level:'中难度', grabs:12, color:'#6366f1' }
+];
+
+function load(k, d){ try{ return JSON.parse(localStorage.getItem(k))||d }catch(e){ return d } }
+function save(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+
+function getReqs(){
+    let reqs = load(LS_KEY, SEED_REQS);
+    // 若为空用种子
+    if (!reqs || !reqs.length) { reqs = SEED_REQS; save(LS_KEY, reqs); }
+    return reqs;
+}
+function getCloudReqs(cb){
+    fetch(CLOUD_URL).then(r=>r.json()).then(cloud=>{
+        const leads = (cloud.leads||[]).map(l => ({
+            id:'c'+l._id, ico:'📨', cat:'客户需求', name:l.name||'客户需求',
+            desc:l.desc||l.need||'', price:l.price?('¥'+l.price):'面议',
+            time:'实时', level:'待沟通', grabs:0, color:'#34D399', cloud:true
+        }));
+        cb(leads);
+    }).catch(()=>cb([]));
+}
+
+function renderMarket(){
+    const list = document.getElementById('marketList');
+    const reqs = getReqs();
+    const my = load(MY_KEY, []);
+    document.getElementById('reqCount').textContent = reqs.length;
+    list.innerHTML = reqs.map(r => {
+        const grabbed = my.includes(r.id);
+        return `<div class="req-card" style="--rc:${r.color}">
+            <div class="req-head">
+                <div class="req-ico" style="color:${r.color}">${r.ico}</div>
+                <div class="req-name">${r.name}</div>
+                <div class="req-price">${r.price}</div>
+            </div>
+            <div class="req-desc">${r.desc}</div>
+            <div class="req-meta">
+                <span class="req-tag">📅 ${r.time}</span>
+                <span class="req-tag">💼 ${r.level}</span>
+                <span class="req-tag">👁️ ${r.grabs}人接单</span>
+                <span class="req-tag">🏷️ ${r.cat}</span>
+            </div>
+            <div class="req-actions">
+                <div class="req-btn grab" ${grabbed?'disabled':''} onclick="grabReq('${r.id}')">${grabbed?'✅ 已抢单':'⚡ 立即抢单'}</div>
+                <div class="req-btn look" onclick="location.href='../partner-form.html'">📨 登记接单</div>
+            </div>
+        </div>`;
+    }).join('');
+    // 云端合并显示
+    getCloudReqs(leads => {
+        if (leads.length) {
+            list.insertAdjacentHTML('afterbegin', leads.map(l => `<div class="req-card" style="--rc:#34D399">
+                <div class="req-head"><div class="req-ico" style="color:#34D399">${l.ico}</div><div class="req-name">${l.name}</div><div class="req-price">${l.price}</div></div>
+                <div class="req-desc">${l.desc}</div>
+                <div class="req-meta"><span class="req-tag">☁️ 客户实时发布</span><span class="req-tag">${l.time}</span></div>
+                <div class="req-actions"><div class="req-btn grab" onclick="toast('✅ 已标记意向，等待平台派单')">⚡ 表达意向</div></div>
+            </div>`).join(''));
+            document.getElementById('reqCount').textContent = reqs.length + leads.length;
+        }
+    });
+}
+
+function grabReq(id){
+    const my = load(MY_KEY, []);
+    if (my.includes(id)) return;
+    my.push(id);
+    save(MY_KEY, my);
+    // 更新需求抢单数
+    const reqs = getReqs();
+    const r = reqs.find(x=>x.id===id);
+    if (r) { r.grabs = (r.grabs||0)+1; save(LS_KEY, reqs); }
+    renderMarket(); renderMine();
+    toast('✅ 抢单成功！等待客户确认');
+}
+function renderMine(){
+    const list = document.getElementById('mineList');
+    const my = load(MY_KEY, []);
+    const reqs = getReqs();
+    const mine = reqs.filter(r => my.includes(r.id));
+    document.getElementById('myCount').textContent = my.length;
+    if (!mine.length) {
+        list.innerHTML = `<div class="empty" style="background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:40px 16px;margin:20px 18px;text-align:center;color:#8d82a8;font-size:12px">
+            <div style="font-size:48px;margin-bottom:12px">📋</div>还没有接单记录<br>
+            <a style="display:inline-block;margin-top:14px;padding:8px 18px;background:linear-gradient(135deg,#A855F7,#EC4899);border-radius:18px;color:#fff;font-weight:700;font-size:12px" onclick="switchOTab('market')">去需求大厅 →</a></div>`;
+        return;
+    }
+    list.innerHTML = mine.map(r => `<div class="mine-card">
+        <div class="mine-head"><div class="mine-name">${r.ico} ${r.name}</div><span class="mine-status">⏳ 待客户确认</span></div>
+        <div class="mine-meta">💰 ${r.price}<br>📅 ${r.time} · ${r.level}</div>
+    </div>`).join('');
+}
+function publishReq(){
+    const name = prompt('需求标题：', 'AI工作台定制');
+    if (!name) return;
+    const desc = prompt('需求描述：', '需要一个小红书运营AI工作台');
+    const price = prompt('预算（元，可填范围）：', '3000-5000');
+    const req = { _id: Date.now(), type:'lead', name, desc, price, time: new Date().toLocaleString('zh-CN') };
+    // 写云端
+    fetch(CLOUD_URL).then(r=>r.json()).then(cloud=>{
+        if (!cloud.leads) cloud.leads = [];
+        cloud.leads.push(req);
+        return fetch(CLOUD_URL, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud) });
+    }).then(()=>{ toast('✅ 需求已发布，同步到云端后台'); renderMarket(); })
+    .catch(()=>{ toast('✅ 需求已发布（本地）'); });
+}
 function switchOTab(t) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + t));
+    if (t === 'mine') renderMine();
 }
+renderMarket();
 </script>
 </body>
 </html>
