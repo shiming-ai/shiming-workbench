@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<title>超脑工坊 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.ai-robot {
+    width:120px; height:120px; margin:0 auto;
+    background:radial-gradient(circle, rgba(168,85,247,.4), transparent 70%);
+    display:flex; align-items:center; justify-content:center;
+    font-size:80px; position:relative;
+}
+.ai-robot::after {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(circle, transparent 30%, rgba(168,85,247,.15) 50%, transparent 70%);
+    animation:pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(1.2);opacity:1} }
+.status-dot { width:8px; height:8px; border-radius:50%; background:#34D399; box-shadow:0 0 6px #34D399; display:inline-block; }
+</style>
+</head>
+<body data-tab="me">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">超脑工坊</div>
+            <div class="brand-sub">06 · AI员工</div>
+        </div>
+    </div>
+    <div class="bell">⚙️</div>
+</div>
+
+<div class="wrap">
+    <div class="hero" style="padding:30px 20px 10px">
+        <div class="ai-robot">🤖</div>
+        <div class="hero-title" style="font-size:24px;text-align:center;margin:14px 0 4px">超脑工坊</div>
+        <div class="hero-sub" style="text-align:center;font-size:12px;color:#a89ec9">你的AI员工团队 · 7×24h为你工作</div>
+    </div>
+
+    <div class="section-head">
+        <div class="section-tt">👥 我的AI员工</div>
+        <div class="section-more">1/20</div>
+    </div>
+
+    <div class="section">
+        <div class="card" style="border-left:3px solid #34D399">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899);font-size:24px">🤖</div>
+                <div style="flex:1">
+                    <div class="card-name">运营专家Emma</div>
+                    <div style="font-size:11px;color:#34D399;margin-top:3px;display:flex;align-items:center;gap:4px"><span class="status-dot"></span>在线</div>
+                </div>
+                <span class="card-tag" style="background:rgba(52,211,153,.15);color:#34D399">活跃</span>
+            </div>
+            <div class="card-desc">社交媒体运营 · 内容策略 · 用户增长</div>
+            <div class="card-meta">
+                <span class="meta-tag">🕐 今日 2序 23次</span>
+                <span class="meta-tag">📅 在线 18/26</span>
+                <span class="meta-tag">⚙️ 工作 18/26</span>
+            </div>
+        </div>
+
+        <div class="card" style="border-left:3px solid #FFD93D">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#FFD93D,#FFA500);font-size:24px">🎨</div>
+                <div style="flex:1">
+                    <div class="card-name">设计狮Midjourney Bot</div>
+                    <div style="font-size:11px;color:#FFD93D;margin-top:3px;display:flex;align-items:center;gap:4px"><span class="status-dot" style="background:#FFD93D;box-shadow:0 0 6px #FFD93D"></span>工作中</div>
+                </div>
+                <span class="card-tag" style="background:rgba(255,217,61,.15);color:#FFD93D">繁忙</span>
+            </div>
+            <div class="card-desc">AI绘图 · 海报设计 · Logo创作</div>
+            <div class="card-meta">
+                <span class="meta-tag">🕐 今日 1序 1次</span>
+                <span class="meta-tag">📅 在线 18/26</span>
+                <span class="meta-tag">⏸ 暂停 0/20</span>
+            </div>
+        </div>
+
+        <div class="card" style="border-left:3px solid #60A5FA">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#60A5FA,#22D3EE);font-size:24px">📊</div>
+                <div style="flex:1">
+                    <div class="card-name">数据分析师Data Analyst</div>
+                    <div style="font-size:11px;color:#60A5FA;margin-top:3px;display:flex;align-items:center;gap:4px"><span class="status-dot" style="background:#60A5FA;box-shadow:0 0 6px #60A5FA"></span>学习中</div>
+                </div>
+                <span class="card-tag" style="background:rgba(96,165,250,.15);color:#60A5FA">训练</span>
+            </div>
+            <div class="card-desc">数据分析 · 报表生成 · 趋势预测</div>
+            <div class="card-meta">
+                <span class="meta-tag">🕐 今日 2序 15/20</span>
+                <span class="meta-tag">📊 9日 2序 15/20</span>
+                <span class="meta-tag">⚙️ 工作中</span>
+            </div>
+        </div>
+    </div>
+
+    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:14px;border-radius:20px;display:block;margin:24px 18px;font-weight:800;font-size:15px">+ 添加AI员工</a>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
