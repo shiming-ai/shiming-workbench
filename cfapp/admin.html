@@ -12,9 +12,27 @@
 .bar-row { display:flex; align-items:flex-end; gap:10px; height:100px; padding-top:10px; }
 .bar { flex:1; border-radius:6px 6px 0 0; position:relative; }
 .bar-label { position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); font-size:9px; color:#6d6489; }
-.tab-row { display:flex; padding:0 18px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,.06); }
-.tab-btn { flex:1; text-align:center; padding:12px 0; font-size:12px; font-weight:700; color:#8d82a8; cursor:pointer; }
-.tab-btn.active { color:#C084FC; border-bottom:2px solid #A855F7; }
+.tab-row { display:flex; padding:0 18px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,.06); overflow-x:auto; scrollbar-width:none; }
+.tab-row::-webkit-scrollbar { display:none; }
+.tab-btn { flex-shrink:0; padding:12px 16px; font-size:12px; font-weight:700; color:#8d82a8; cursor:pointer; position:relative; white-space:nowrap; }
+.tab-btn.active { color:#C084FC; }
+.tab-btn.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:30px; height:2px; background:linear-gradient(90deg,#A855F7,#EC4899); border-radius:1px; }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+.cloud-banner { background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(34,211,238,.05)); border:1px solid rgba(52,211,153,.3); border-radius:12px; padding:12px 14px; margin:14px 18px; font-size:12px; color:#34D399; line-height:1.7; }
+.lead-item { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:13px; margin:0 18px 10px; }
+.lead-head { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.lead-av { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; background:rgba(52,211,153,.15); }
+.lead-name { font-size:13px; font-weight:800; flex:1; }
+.lead-type { font-size:9px; padding:2px 8px; border-radius:8px; font-weight:700; }
+.lt-partner { background:rgba(52,211,153,.12); color:#34D399; }
+.lt-lead { background:rgba(56,189,248,.12); color:#38BDF8; }
+.lead-desc { font-size:11px; color:#a89ec9; line-height:1.6; margin-bottom:6px; }
+.lead-meta { display:flex; gap:6px; flex-wrap:wrap; }
+.lead-tag { font-size:9px; padding:3px 8px; background:rgba(255,255,255,.06); border-radius:8px; color:#8d82a8; }
+.lead-action { margin-top:8px; }
+.lead-btn { display:inline-block; padding:7px 14px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:16px; color:#fff; font-size:11px; font-weight:800; cursor:pointer; }
+.empty-cloud { text-align:center; padding:30px 20px; color:#6d6489; font-size:12px; }
 </style>
 </head>
 <body data-tab="me">
@@ -24,68 +42,150 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">商业服务后台</div>
-            <div class="brand-sub">11 · 生意管理</div>
+            <div class="brand-sub">11 · 生意管理 · 云端线索自动同步</div>
         </div>
     </div>
-    <div class="bell">⚙️</div>
+    <div class="bell" style="cursor:pointer" onclick="location.href='../order-workbench.html'">📦</div>
 </div>
 
 <div class="wrap">
     <div class="orders-stats" style="padding-top:16px">
-        <div class="orders-stat"><div class="num">523</div><div class="lbl">客户总数</div></div>
-        <div class="orders-stat"><div class="num">23</div><div class="lbl">项目进行中</div></div>
-        <div class="orders-stat"><div class="num">¥128K</div><div class="lbl">本月收入</div></div>
+        <div class="orders-stat"><div class="num" id="statCloud">0</div><div class="lbl">云端线索</div></div>
+        <div class="orders-stat"><div class="num" id="statProject">23</div><div class="lbl">项目进行中</div></div>
+        <div class="orders-stat"><div class="num" id="statIncome">¥128K</div><div class="lbl">本月收入</div></div>
     </div>
 
-    <div class="chart-card">
-        <div class="chart-title">📈 收入趋势（近7天）</div>
-        <div class="bar-row">
-            <div class="bar" style="height:30%;background:rgba(168,85,247,.3)"><span class="bar-label">周一</span></div>
-            <div class="bar" style="height:45%;background:rgba(168,85,247,.4)"><span class="bar-label">周二</span></div>
-            <div class="bar" style="height:38%;background:rgba(168,85,247,.35)"><span class="bar-label">周三</span></div>
-            <div class="bar" style="height:60%;background:rgba(168,85,247,.5)"><span class="bar-label">周四</span></div>
-            <div class="bar" style="height:52%;background:rgba(168,85,247,.45)"><span class="bar-label">周五</span></div>
-            <div class="bar" style="height:78%;background:linear-gradient(180deg,#A855F7,#EC4899)"><span class="bar-label">周六</span></div>
-            <div class="bar" style="height:65%;background:rgba(236,72,153,.4)"><span class="bar-label">周日</span></div>
-        </div>
+    <div class="cloud-banner" id="cloudBanner" style="display:none">
+        ☁️ <b>云端已同步新线索</b>：登记接单 + 客户需求自动汇聚到这里<br>
+        点「转客户」把意向线索变成正式客户档案
     </div>
 
     <div class="tab-row">
-        <div class="tab-btn active">客户管理</div>
-        <div class="tab-btn">项目管理</div>
-        <div class="tab-btn">财务管理</div>
-        <div class="tab-btn">数据分析</div>
+        <div class="tab-btn active" data-tab="cloud" onclick="switchATab('cloud')">☁️ 云端线索</div>
+        <div class="tab-btn" data-tab="customer" onclick="switchATab('customer')">客户管理</div>
+        <div class="tab-btn" data-tab="chart" onclick="switchATab('chart')">数据分析</div>
     </div>
 
-    <div class="section" style="padding-top:0">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">👤</div>
-                <div style="flex:1"><div class="card-name">张先生 · 电商老板</div><div style="font-size:10px;color:#6d6489;margin-top:2px">跟进中 · 3天前联系</div></div>
-                <span class="card-tag">¥8,000</span>
-            </div>
-            <div class="card-meta"><span class="meta-tag">📱 微信</span><span class="meta-tag">🎯 意向:AI工作台</span></div>
+    <div class="tab-content active" id="tab-cloud">
+        <div id="cloudList">
+            <div class="empty-cloud">☁️ 正在从云端同步线索...</div>
         </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">👤</div>
-                <div style="flex:1"><div class="card-name">李总 · 餐饮连锁</div><div style="font-size:10px;color:#6d6489;margin-top:2px">已成交 · 已交付</div></div>
-                <span class="card-tag">¥20,000</span>
+    </div>
+
+    <div class="tab-content" id="tab-customer">
+        <div class="section" style="padding-top:0">
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">👤</div>
+                    <div style="flex:1"><div class="card-name">张先生 · 电商老板</div><div style="font-size:10px;color:#6d6489;margin-top:2px">跟进中 · 3天前联系</div></div>
+                    <span class="card-tag">¥8,000</span>
+                </div>
+                <div class="card-meta"><span class="meta-tag">📱 微信</span><span class="meta-tag">🎯 意向:AI工作台</span></div>
             </div>
-            <div class="card-meta"><span class="meta-tag">🤝 长期客户</span><span class="meta-tag">✅ 满意</span></div>
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">👤</div>
+                    <div style="flex:1"><div class="card-name">李总 · 餐饮连锁</div><div style="font-size:10px;color:#6d6489;margin-top:2px">已成交 · 已交付</div></div>
+                    <span class="card-tag">¥20,000</span>
+                </div>
+                <div class="card-meta"><span class="meta-tag">🤝 长期客户</span><span class="meta-tag">✅ 满意</span></div>
+            </div>
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">👤</div>
+                    <div style="flex:1"><div class="card-name">王总 · 培训机构</div><div style="font-size:10px;color:#6d6489;margin-top:2px">已成交 · 复购</div></div>
+                    <span class="card-tag">¥15,000</span>
+                </div>
+                <div class="card-meta"><span class="meta-tag">⭐ 复购</span><span class="meta-tag">📅 周结</span></div>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">👤</div>
-                <div style="flex:1"><div class="card-name">王总 · 培训机构</div><div style="font-size:10px;color:#6d6489;margin-top:2px">已成交 · 复购</div></div>
-                <span class="card-tag">¥15,000</span>
+    </div>
+
+    <div class="tab-content" id="tab-chart">
+        <div class="chart-card">
+            <div class="chart-title">📈 收入趋势（近7天）</div>
+            <div class="bar-row">
+                <div class="bar" style="height:30%;background:rgba(168,85,247,.3)"><span class="bar-label">周一</span></div>
+                <div class="bar" style="height:45%;background:rgba(168,85,247,.4)"><span class="bar-label">周二</span></div>
+                <div class="bar" style="height:38%;background:rgba(168,85,247,.35)"><span class="bar-label">周三</span></div>
+                <div class="bar" style="height:60%;background:rgba(168,85,247,.5)"><span class="bar-label">周四</span></div>
+                <div class="bar" style="height:52%;background:rgba(168,85,247,.45)"><span class="bar-label">周五</span></div>
+                <div class="bar" style="height:78%;background:linear-gradient(180deg,#A855F7,#EC4899)"><span class="bar-label">周六</span></div>
+                <div class="bar" style="height:65%;background:rgba(236,72,153,.4)"><span class="bar-label">周日</span></div>
             </div>
-            <div class="card-meta"><span class="meta-tag">⭐ 复购</span><span class="meta-tag">📅 周结</span></div>
+        </div>
+        <div class="tip" style="margin:0 18px">
+            📊 更多分析维度（客户来源/成交转化/复购率）<br>在「数据中心」查看完整看板
         </div>
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7';
+const HANDLED_KEY = 'cf_handled_leads';
+
+function getHandled(){ try{ return JSON.parse(localStorage.getItem(HANDLED_KEY))||[] }catch(e){ return [] } }
+function setHandled(a){ localStorage.setItem(HANDLED_KEY, JSON.stringify(a)) }
+
+function loadCloud(){
+    const list = document.getElementById('cloudList');
+    fetch(CLOUD_URL).then(r=>r.json()).then(cloud=>{
+        const handled = getHandled();
+        const partners = (cloud.partners||[]).map(p => ({
+            _id: p._id || p.time, type:'partner', ico:'🤝', name: p.nickname||p.name||'未填昵称',
+            desc: '擅长：' + (p.skills||'未填') + (p.tools?' · 工具：'+p.tools:''),
+            meta: [p.city, p.weekly, p.long, p.response].filter(Boolean).join(' · '),
+            price: p.mini?('最低 ¥'+p.mini) : (p.prices&&(p.prices.workbench||p.prices.app)?'¥'+(p.prices.workbench||p.prices.app)+'起':''),
+            time: (p.time||'').slice(0,10)
+        }));
+        const leads = (cloud.leads||[]).map(l => ({
+            _id: l._id, type:'lead', ico:'📨', name: l.name||'客户需求',
+            desc: l.desc||l.need||'',
+            meta: ['预算', l.price, l.time].filter(Boolean).join(' · '),
+            price: l.price?('预算 ¥'+l.price):'', time: l.time||''
+        }));
+        const all = [...partners, ...leads].filter(x => !handled.includes(String(x._id)));
+        document.getElementById('statCloud').textContent = all.length;
+        if (all.length) document.getElementById('cloudBanner').style.display = '';
+        if (!all.length) {
+            list.innerHTML = `<div class="empty-cloud">☁️ 暂无新线索<br><span style="font-size:11px">发「接单登记」给别人填，提交后自动出现在这里</span></div>`;
+            return;
+        }
+        list.innerHTML = all.map(x => `<div class="lead-item">
+            <div class="lead-head">
+                <div class="lead-av">${x.ico}</div>
+                <div class="lead-name">${x.name}</div>
+                <span class="lead-type ${x.type==='partner'?'lt-partner':'lt-lead'}">${x.type==='partner'?'接单登记':'客户需求'}</span>
+            </div>
+            <div class="lead-desc">${x.desc}</div>
+            <div class="lead-meta">
+                ${x.price?'<span class="lead-tag">💰 '+x.price+'</span>':''}
+                ${x.time?'<span class="lead-tag">📅 '+x.time+'</span>':''}
+                ${x.meta?`<span class="lead-tag">${x.meta}</span>`:''}
+            </div>
+            <div class="lead-action">
+                <span class="lead-btn" onclick="handleLead('${x._id}')">✅ 转客户</span>
+            </div>
+        </div>`).join('');
+    }).catch(()=>{
+        list.innerHTML = `<div class="empty-cloud">☁️ 云端暂时无法连接<br>请稍后刷新重试</div>`;
+    });
+}
+function handleLead(id){
+    const handled = getHandled();
+    if (!handled.includes(String(id))) handled.push(String(id));
+    setHandled(handled);
+    loadCloud();
+    toast('✅ 已转客户，可在客户管理跟进');
+}
+function switchATab(t){
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + t));
+    if (t === 'cloud') loadCloud();
+}
+loadCloud();
+</script>
 </body>
 </html>
