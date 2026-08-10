@@ -6,6 +6,25 @@
 <meta name="theme-color" content="#0d0420">
 <title>发现 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.home-hero { padding:36px 20px 30px; position:relative; overflow:hidden; }
+.home-hero::before { content:''; position:absolute; bottom:-120px; left:50%; transform:translateX(-50%); width:420px; height:260px; border-radius:50%; background:radial-gradient(ellipse, rgba(168,85,247,.4), transparent 70%); filter:blur(30px); }
+.home-title { font-size:42px; font-weight:900; letter-spacing:-2px; line-height:1.12; margin-bottom:10px; position:relative; z-index:1; }
+.home-title .grad { background:linear-gradient(135deg,#C084FC,#A855F7,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.home-sub { font-size:13px; color:#a89ec9; margin-bottom:22px; position:relative; z-index:1; }
+.home-stats { display:grid; grid-template-columns:repeat(4,1fr); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px 8px; position:relative; z-index:1; }
+.home-stat { text-align:center; border-right:1px solid rgba(255,255,255,.05); }
+.home-stat:last-child { border-right:none; }
+.hs-num { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.hs-lbl { font-size:9px; color:#6d6489; margin-top:4px; }
+.mod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 18px; }
+.mod-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; cursor:pointer; }
+.mod-card:active { transform:scale(.97); }
+.mod-emoji { font-size:26px; margin-bottom:8px; }
+.mod-name { font-size:13px; font-weight:800; }
+.mod-desc { font-size:10px; color:#8d82a8; margin-top:3px; line-height:1.5; }
+.mod-num { font-size:9px; color:#6d6489; margin-top:4px; }
+</style>
 </head>
 <body data-tab="discover">
 
@@ -21,156 +40,46 @@
 </div>
 
 <div class="wrap">
-    <!-- 搜索 -->
-    <div style="padding: 16px 18px 0">
-        <div style="background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 12px 16px; display:flex; align-items:center; gap:8px;">
-            <span style="color:var(--text-mute); font-size:14px">🔍</span>
-            <input id="searchInput" placeholder="搜索AI工具、关键词、需求方向..." style="flex:1; background:transparent; border:none; outline:none; font-size:13px; color:var(--text)">
+    <div class="home-hero" style="padding:28px 20px 24px">
+        <div class="home-title" style="font-size:34px">发现<span class="grad">更多</span></div>
+        <div class="home-sub">Crazy Friday 全部板块</div>
+        <div class="home-stats">
+            <div class="home-stat"><div class="hs-num">15</div><div class="hs-lbl">板块</div></div>
+            <div class="home-stat"><div class="hs-num">10K+</div><div class="hs-lbl">创业者</div></div>
+            <div class="home-stat"><div class="hs-num">3K+</div><div class="hs-lbl">项目</div></div>
+            <div class="home-stat"><div class="hs-num">1K+</div><div class="hs-lbl">工具</div></div>
         </div>
     </div>
 
-    <!-- 分类 -->
-    <div class="grid" style="margin-top:14px">
-        <div class="grid-card"><div class="em">🛠️</div><div class="tt">全部工具</div><div class="td">3000+</div></div>
-        <div class="grid-card"><div class="em">🖼️</div><div class="tt">AI绘图</div><div class="td">8款</div></div>
-        <div class="grid-card"><div class="em">🎬</div><div class="tt">AI视频</div><div class="td">5款</div></div>
-        <div class="grid-card"><div class="em">💬</div><div class="tt">AI写作</div><div class="td">12款</div></div>
-        <div class="grid-card"><div class="em">💻</div><div class="tt">AI编程</div><div class="td">6款</div></div>
-        <div class="grid-card"><div class="em">⚙️</div><div class="tt">AI办公</div><div class="td">7款</div></div>
+    <div class="section-head">
+        <div class="section-tt">🧩 全部板块</div>
     </div>
-
-    <!-- 今日推荐 -->
-    <div class="section-head" style="margin-top:24px">
-        <div class="section-tt">⭐ 今日推荐</div>
-        <div class="section-more">查看全部</div>
-    </div>
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">💬</div>
-                <div class="card-name">ChatGPT</div>
-                <div class="card-tag">9.8 ⭐</div>
-            </div>
-            <div class="card-desc">通用对话之王 · 强大模型 · 普及度第一</div>
-            <div class="card-meta"><span class="meta-tag">¥50K-¥200K</span><span class="meta-tag">应有</span><span class="meta-tag">VIP</span></div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">⚡</div>
-                <div class="card-name">Claude 3 Sonnet</div>
-                <div class="card-tag">9.6 ⭐</div>
-            </div>
-            <div class="card-desc">长文档处理 · 分析能力 · 稳定</div>
-            <div class="card-meta"><span class="meta-tag">¥3,000</span><span class="meta-tag">月度</span><span class="meta-tag">企业版</span></div>
-        </div>
-    </div>
-
-    <!-- 热门排行 -->
-    <div class="section-head" style="margin-top:24px">
-        <div class="section-tt">🔥 热门排行 TOP 10</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:#000">🌙</div>
-                <div class="card-name">Midjourney</div>
-                <div class="card-tag">9.7 ⭐</div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:#fff;color:#000">👦</div>
-                <div class="card-name">Runway</div>
-                <div class="card-tag">9.5 ⭐</div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">⚙️</div>
-                <div class="card-name">Cursor</div>
-                <div class="card-tag">⭐ 推荐</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- AI创业路线图 -->
-    <div class="section-head" id="roadmap" style="margin-top:24px">
-        <div class="section-tt">🚀 AI创业路线图</div>
-        <div class="section-more">从0到1，打造AI一人公司</div>
-    </div>
-    <div class="section">
-        <div class="path-card">
-            <div class="path-num">💡</div>
-            <div class="path-info">
-                <div class="path-name">Idea 创意</div>
-                <div class="path-desc">发现机会 · 验证假设</div>
-            </div>
-        </div>
-        <div class="path-card">
-            <div class="path-num">🛠️</div>
-            <div class="path-info">
-                <div class="path-name">MVP 验证</div>
-                <div class="path-desc">小步快跑 · 快速试错</div>
-            </div>
-        </div>
-        <div class="path-card">
-            <div class="path-num">📈</div>
-            <div class="path-info">
-                <div class="path-name">增长 扩张</div>
-                <div class="path-desc">渠道 · 用户 · 收入</div>
-            </div>
-        </div>
-        <div class="path-card">
-            <div class="path-num">🛡️</div>
-            <div class="path-info">
-                <div class="path-name">品牌 壁垒</div>
-                <div class="path-desc">建立护城河</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 服务商中心入口 -->
-    <div class="section-head" id="partners" style="margin-top:24px">
-        <div class="section-tt">🤝 服务商中心</div>
-        <div class="section-more">找靠谱服务商</div>
-    </div>
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon">💡</div>
-                <div class="card-name">AI陪跑</div>
-                <div class="card-tag">📚</div>
-            </div>
-            <div class="card-desc">1.2w人使用 · 4.8 ⭐ · 8h交付</div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon">📐</div>
-                <div class="card-name">星图AI工作室</div>
-                <div class="card-tag">⭐ 4.9</div>
-            </div>
-            <div class="card-desc">8.7w人 · 32小时 · 6个团队</div>
-        </div>
+    <div class="mod-grid">
+        <div class="mod-card" onclick="location.href='tools.html'"><div class="mod-emoji">🛠️</div><div class="mod-name">AI工具中心</div><div class="mod-desc">精选全球优质AI工具</div><div class="mod-num">02 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='opc.html'"><div class="mod-emoji">📦</div><div class="mod-name">OPC工场</div><div class="mod-desc">项目库·发现好项目</div><div class="mod-num">03 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='academy.html'"><div class="mod-emoji">🎓</div><div class="mod-name">AI营</div><div class="mod-desc">系统学习·实战提升</div><div class="mod-num">04 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='orders.html'"><div class="mod-emoji">📋</div><div class="mod-name">接单工坊</div><div class="mod-desc">需求对接·赚差价</div><div class="mod-num">05 · 5000+</div></div>
+        <div class="mod-card" onclick="location.href='brain.html'"><div class="mod-emoji">🤖</div><div class="mod-name">超脑工坊</div><div class="mod-desc">你的AI员工团队</div><div class="mod-num">06 · 7×24h</div></div>
+        <div class="mod-card" onclick="location.href='apps.html'"><div class="mod-emoji">📱</div><div class="mod-name">AI应用市场</div><div class="mod-desc">安装即用</div><div class="mod-num">07 · 100+</div></div>
+        <div class="mod-card" onclick="location.href='services.html'"><div class="mod-emoji">🤝</div><div class="mod-name">服务中心</div><div class="mod-desc">找靠谱服务商</div><div class="mod-num">08 · 2000+</div></div>
+        <div class="mod-card" onclick="location.href='incubation.html'"><div class="mod-emoji">🌱</div><div class="mod-name">项目孵化中心</div><div class="mod-desc">Idea→品牌</div><div class="mod-num">09 · 100+</div></div>
+        <div class="mod-card" onclick="location.href='mall.html'"><div class="mod-emoji">🛍️</div><div class="mod-name">简单大厅</div><div class="mod-desc">商品·服务</div><div class="mod-num">10 · 上架中</div></div>
+        <div class="mod-card" onclick="location.href='admin.html'"><div class="mod-emoji">💼</div><div class="mod-name">商业服务后台</div><div class="mod-desc">客户·项目·财务</div><div class="mod-num">11 · 管理</div></div>
+        <div class="mod-card" onclick="location.href='data.html'"><div class="mod-emoji">📊</div><div class="mod-name">数据中心</div><div class="mod-desc">数据洞察</div><div class="mod-num">12 · 实时</div></div>
+        <div class="mod-card" onclick="location.href='member.html'"><div class="mod-emoji">💎</div><div class="mod-name">会员中心</div><div class="mod-desc">解锁全部权益</div><div class="mod-num">13 · 升级</div></div>
+        <div class="mod-card" onclick="location.href='roadmap.html'"><div class="mod-emoji">🗺️</div><div class="mod-name">AI创业路线图</div><div class="mod-desc">从0到1</div><div class="mod-num">14 · 全流程</div></div>
+        <div class="mod-card" onclick="location.href='partners.html'"><div class="mod-emoji">🌐</div><div class="mod-name">生态合作伙伴</div><div class="mod-desc">共创未来</div><div class="mod-num">15 · 12+</div></div>
+        <div class="mod-card" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border-color:#A855F7" onclick="location.href='post.html?id=p1'"><div class="mod-emoji">🦄</div><div class="mod-name">疯狂星期五</div><div class="mod-desc">关于AI·一人公司·变现</div><div class="mod-num">理念</div></div>
+        <div class="mod-card" style="background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(34,211,238,.05));border-color:#34D399" onclick="location.href='../partner-form.html'"><div class="mod-emoji">📨</div><div class="mod-name">接单登记</div><div class="mod-desc">发登记让别人找你</div><div class="mod-num">立即</div></div>
     </div>
 
     <div class="tip">
-        💡 发现更多AI工具、服务商、创业项目<br>
-        加入 <b style="color:var(--purple-light)">Crazy Friday 生态</b>
+        💡 一个人 + AI = 一家公司<br>加入 <b style="color:#C084FC">Crazy Friday 生态</b>
     </div>
 
-    <!-- 搜索结果 -->
-    <div style="padding:0 18px">
-        <div class="section-head" style="padding:0 0 10px;margin-top:8px">
-            <div class="section-tt">🔍 搜索帖子</div>
-        </div>
-        <div id="searchResults"></div>
-    </div>
 </div>
-
 <div id="toast"></div>
 <script src="app.js"></script>
-<script src="data.js"></script>
 <script>
 function doSearch() {
     const q = document.getElementById('searchInput').value.trim().toLowerCase();
