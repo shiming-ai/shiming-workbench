@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<title>简单大厅 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.good-card { display:flex; gap:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin-bottom:12px; cursor:pointer; }
+.good-img { width:88px; height:88px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:38px; flex-shrink:0; }
+.good-name { font-size:14px; font-weight:800; }
+.good-tags { display:flex; gap:4px; margin-top:4px; }
+.good-price { font-size:15px; font-weight:900; color:#C084FC; margin-top:6px; }
+.good-old { font-size:10px; color:#6d6489; text-decoration:line-through; margin-left:6px; }
+.good-buy { display:inline-block; margin-top:8px; padding:5px 14px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:14px; font-size:11px; font-weight:700; }
+.cat-row { display:flex; gap:8px; padding:0 18px; overflow-x:auto; margin-bottom:16px; scrollbar-width:none; }
+.cat-row::-webkit-scrollbar { display:none; }
+.cat-chip { flex-shrink:0; padding:7px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; }
+.cat-chip.active { background:rgba(168,85,247,.2); border-color:#A855F7; color:#C084FC; font-weight:700; }
+</style>
+</head>
+<body data-tab="discover">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">简单大厅</div>
+            <div class="brand-sub">10 · 商品</div>
+        </div>
+    </div>
+    <div class="bell">🔍</div>
+</div>
+
+<div class="wrap">
+    <div style="padding:16px 18px 12px">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
+            <span style="color:#8d82a8">🔍</span>
+            <input placeholder="搜索商品..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
+        </div>
+    </div>
+
+    <div class="cat-row">
+        <span class="cat-chip active">全部</span>
+        <span class="cat-chip">最新</span>
+        <span class="cat-chip">推荐</span>
+        <span class="cat-chip">高价</span>
+    </div>
+
+    <div class="section" style="padding-top:0">
+        <div class="good-card">
+            <div class="good-img" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.1))">🎬</div>
+            <div style="flex:1">
+                <div class="good-name">AI产品宣传片创作</div>
+                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700">爆款</span><span style="font-size:9px;padding:2px 6px;background:rgba(255,255,255,.06);border-radius:6px;color:#a89ec9">视频</span></div>
+                <div class="good-price">¥8,000<span class="good-old">¥10,000</span></div>
+                <span class="good-buy">立即购买</span>
+            </div>
+        </div>
+        <div class="good-card">
+            <div class="good-img" style="background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(52,211,153,.1))">💻</div>
+            <div style="flex:1">
+                <div class="good-name">企业AI解决方案开发</div>
+                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(168,85,247,.15);border-radius:6px;color:#C084FC;font-weight:700">定制</span></div>
+                <div class="good-price">¥20,000<span class="good-old">¥25,000</span></div>
+                <span class="good-buy">立即购买</span>
+            </div>
+        </div>
+        <div class="good-card">
+            <div class="good-img" style="background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(34,211,238,.1))">📊</div>
+            <div style="flex:1">
+                <div class="good-name">AI数据分析报告</div>
+                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(255,255,255,.06);border-radius:6px;color:#a89ec9">数据</span></div>
+                <div class="good-price">¥3,000<span class="good-old">¥4,000</span></div>
+                <span class="good-buy">立即购买</span>
+            </div>
+        </div>
+        <div class="good-card">
+            <div class="good-img" style="background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(244,63,94,.1))">📱</div>
+            <div style="flex:1">
+                <div class="good-name">小红书AI陪跑营</div>
+                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700">推荐</span></div>
+                <div class="good-price">¥1,999<span class="good-old">¥2,999</span></div>
+                <span class="good-buy">立即购买</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
