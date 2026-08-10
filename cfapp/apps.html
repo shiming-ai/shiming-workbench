@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<title>AI应用市场 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.app-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:0 18px; }
+.app-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; cursor:pointer; }
+.app-card:active { transform:scale(.97); }
+.app-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; }
+.app-name { font-size:13px; font-weight:800; }
+.app-stat { font-size:10px; color:#8d82a8; margin-top:3px; }
+.app-btn { display:inline-block; margin-top:10px; padding:6px 16px; background:rgba(168,85,247,.15); border:1px solid rgba(168,85,247,.3); color:#C084FC; border-radius:14px; font-size:11px; font-weight:700; }
+.cat-row { display:flex; gap:8px; padding:0 18px; overflow-x:auto; margin-bottom:16px; scrollbar-width:none; }
+.cat-row::-webkit-scrollbar { display:none; }
+.cat-chip { flex-shrink:0; padding:7px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; }
+.cat-chip.active { background:rgba(168,85,247,.2); border-color:#A855F7; color:#C084FC; font-weight:700; }
+</style>
+</head>
+<body data-tab="discover">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">AI应用市场</div>
+            <div class="brand-sub">07 · 安装即用</div>
+        </div>
+    </div>
+    <div class="bell">🔍</div>
+</div>
+
+<div class="wrap">
+    <div style="padding:16px 18px 12px">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
+            <span style="color:#8d82a8">🔍</span>
+            <input placeholder="搜索应用..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
+        </div>
+    </div>
+
+    <div class="cat-row">
+        <span class="cat-chip active">全部</span>
+        <span class="cat-chip">AI写作</span>
+        <span class="cat-chip">AI绘图</span>
+        <span class="cat-chip">AI视频</span>
+        <span class="cat-chip">AI办公</span>
+        <span class="cat-chip">视频创作</span>
+        <span class="cat-chip">文案策划</span>
+        <span class="cat-chip">运营推广</span>
+        <span class="cat-chip">更多</span>
+    </div>
+
+    <div class="section-head">
+        <div class="section-tt">🔥 热门应用</div>
+        <div class="section-more">查看更多</div>
+    </div>
+    <div class="app-grid">
+        <div class="app-card">
+            <div class="app-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">✍️</div>
+            <div class="app-name">AI伴写小助理</div>
+            <div class="app-stat">1.2w人使用 · ⭐ 4.8</div>
+            <span class="app-btn">安装</span>
+        </div>
+        <div class="app-card">
+            <div class="app-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">📣</div>
+            <div class="app-name">运营专家Emma</div>
+            <div class="app-stat">8.7w人使用 · ⭐ 4.9</div>
+            <span class="app-btn">安装</span>
+        </div>
+        <div class="app-card">
+            <div class="app-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">🎨</div>
+            <div class="app-name">星弧设计工作室</div>
+            <div class="app-stat">267单 · ⭐ 4.7</div>
+            <span class="app-btn">安装</span>
+        </div>
+        <div class="app-card">
+            <div class="app-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">💻</div>
+            <div class="app-name">创客科技开发</div>
+            <div class="app-stat">189单 · ⭐ 4.6</div>
+            <span class="app-btn">安装</span>
+        </div>
+        <div class="app-card">
+            <div class="app-icon" style="background:linear-gradient(135deg,#EC4899,#F43F5E)">🎬</div>
+            <div class="app-name">AI视频工坊</div>
+            <div class="app-stat">5.6w人使用 · ⭐ 4.7</div>
+            <span class="app-btn">安装</span>
+        </div>
+        <div class="app-card">
+            <div class="app-icon" style="background:linear-gradient(135deg,#8B5CF6,#D946EF)">📊</div>
+            <div class="app-name">数据分析助手</div>
+            <div class="app-stat">3.2w人使用 · ⭐ 4.8</div>
+            <span class="app-btn">安装</span>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
