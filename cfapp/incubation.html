@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<title>项目孵化中心 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.path-stage { display:flex; align-items:center; gap:8px; padding:12px 18px; }
+.path-dot { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
+.path-line { flex:1; height:2px; background:linear-gradient(90deg,rgba(168,85,247,.4),rgba(236,72,153,.4)); }
+.path-item { flex:1; text-align:center; }
+.path-item .pi-name { font-size:11px; font-weight:700; margin-top:6px; }
+.path-item .pi-desc { font-size:9px; color:#6d6489; margin-top:2px; }
+</style>
+</head>
+<body data-tab="me">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">项目孵化中心</div>
+            <div class="brand-sub">09 · 从Idea到品牌</div>
+        </div>
+    </div>
+    <div class="bell">🔍</div>
+</div>
+
+<div class="wrap">
+    <div class="hero" style="padding:24px 18px 20px;text-align:center">
+        <div style="font-size:19px;font-weight:900">把你的想法<span style="color:#C084FC">变成现实</span></div>
+        <div style="font-size:11px;color:#8d82a8;margin-top:4px">从创意到融资，全流程孵化</div>
+    </div>
+
+    <div class="orders-stats">
+        <div class="orders-stat"><div class="num">100+</div><div class="lbl">孵化项目</div></div>
+        <div class="orders-stat"><div class="num">30+</div><div class="lbl">导师团队</div></div>
+        <div class="orders-stat"><div class="num">20+</div><div class="lbl">投资机构</div></div>
+    </div>
+
+    <div class="section-head">
+        <div class="section-tt">🛤️ 孵化路径</div>
+    </div>
+    <div class="path-stage">
+        <div class="path-dot">💡</div><div class="path-line"></div>
+        <div class="path-dot">🔍</div><div class="path-line"></div>
+        <div class="path-dot">🛠️</div><div class="path-line"></div>
+        <div class="path-dot">📈</div><div class="path-line"></div>
+        <div class="path-dot">💰</div>
+    </div>
+    <div class="path-stage">
+        <div class="path-item"><div class="pi-name">Idea</div><div class="pi-desc">创意</div></div>
+        <div class="path-item"><div class="pi-name">验证</div><div class="pi-desc">需求</div></div>
+        <div class="path-item"><div class="pi-name">MVP</div><div class="pi-desc">产品</div></div>
+        <div class="path-item"><div class="pi-name">增长</div><div class="pi-desc">市场</div></div>
+        <div class="path-item"><div class="pi-name">融资</div><div class="pi-desc">资本</div></div>
+    </div>
+
+    <div class="section-head" style="padding-top:24px">
+        <div class="section-tt">🔥 在孵项目</div>
+        <div class="section-more">查看更多</div>
+    </div>
+    <div class="section">
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">🚀</div>
+                <div class="card-name">AI个人IP孵化</div>
+                <span class="card-tag">阶段:增长</span>
+            </div>
+            <div class="card-desc">打造个人AI IP · 已获种子轮</div>
+            <div class="card-meta">
+                <span class="meta-tag">📈 增长 45%</span>
+                <span class="meta-tag">💰 融资 500w</span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">🛠️</div>
+                <div class="card-name">AI效率工具</div>
+                <span class="card-tag">阶段:MVP</span>
+            </div>
+            <div class="card-desc">自动生成工作周报 · MVP已上线</div>
+            <div class="card-meta">
+                <span class="meta-tag">👥 用户 1.2k</span>
+                <span class="meta-tag">📊 验证 68%</span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">💡</div>
+                <div class="card-name">AI教育产品</div>
+                <span class="card-tag">阶段:Idea</span>
+            </div>
+            <div class="card-desc">个性化学习 · 待验证需求</div>
+            <div class="card-meta">
+                <span class="meta-tag">🔍 调研中</span>
+                <span class="meta-tag">👥 10访谈</span>
+            </div>
+        </div>
+    </div>
+
+    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:14px;border-radius:20px;display:block;margin:24px 18px;font-weight:800">🚀 提交你的项目</a>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
