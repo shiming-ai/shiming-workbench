@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<title>会员中心 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.member-card { border-radius:16px; padding:18px; margin-bottom:12px; cursor:pointer; text-align:center; position:relative; }
+.member-card.hot { border:2px solid #A855F7; }
+.member-name { font-size:15px; font-weight:800; }
+.member-price { font-size:28px; font-weight:900; color:#C084FC; margin:6px 0; }
+.member-price .unit { font-size:12px; color:#8d82a8; font-weight:400; }
+.member-desc { font-size:11px; color:#a89ec9; line-height:1.7; }
+.member-badge { position:absolute; top:-10px; right:12px; background:linear-gradient(135deg,#A855F7,#EC4899); padding:3px 12px; border-radius:12px; font-size:10px; font-weight:700; }
+.compare { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; margin:0 18px; overflow:hidden; }
+.compare-row { display:flex; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.05); font-size:12px; }
+.compare-row:last-child { border:none; }
+.compare-label { width:80px; color:#8d82a8; flex-shrink:0; }
+.compare-val { flex:1; color:#a89ec9; text-align:center; }
+.compare-val.vip { color:#C084FC; font-weight:700; }
+</style>
+</head>
+<body data-tab="me">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">会员中心</div>
+            <div class="brand-sub">13 · 解锁更多权益</div>
+        </div>
+    </div>
+    <div class="bell">⚙️</div>
+</div>
+
+<div class="wrap">
+    <div class="hero" style="padding:24px 20px 10px">
+        <div style="font-size:19px;font-weight:900;text-align:center">升级会员 · <span style="color:#C084FC">解锁全部能力</span></div>
+    </div>
+
+    <div class="section" style="padding-top:8px">
+        <div class="member-card" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+            <div class="member-name">普通会员</div>
+            <div class="member-price">¥0<span class="unit">/月</span></div>
+            <div class="member-desc">基础AI工具使用权<br>社区浏览 · 基础数据</div>
+        </div>
+        <div class="member-card hot" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border-color:#A855F7">
+            <div class="member-badge">最受欢迎</div>
+            <div class="member-name">Pro会员</div>
+            <div class="member-price">¥199<span class="unit">/月</span></div>
+            <div class="member-desc">全部AI工具 + 接单优先<br>项目孵化 + 专属客服</div>
+        </div>
+        <div class="member-card" style="background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(245,158,11,.05));border:1px solid rgba(255,215,0,.3)">
+            <div class="member-name" style="color:#FFD700">企业会员</div>
+            <div class="member-price" style="color:#FFD700">¥999<span class="unit">/月</span></div>
+            <div class="member-desc">多账号 + 团队协作<br>数据看板 + 专属经理</div>
+        </div>
+    </div>
+
+    <div class="section-head">
+        <div class="section-tt">📊 权益对比</div>
+    </div>
+    <div class="compare">
+        <div class="compare-row"><div class="compare-label">AI工具</div><div class="compare-val">基础</div><div class="compare-val vip">全部</div><div class="compare-val">全部</div></div>
+        <div class="compare-row"><div class="compare-label">接单优先</div><div class="compare-val">—</div><div class="compare-val vip">✅</div><div class="compare-val">✅</div></div>
+        <div class="compare-row"><div class="compare-label">项目孵化</div><div class="compare-val">—</div><div class="compare-val vip">✅</div><div class="compare-val">✅</div></div>
+        <div class="compare-row"><div class="compare-label">数据看板</div><div class="compare-val">基础</div><div class="compare-val vip">完整</div><div class="compare-val">完整</div></div>
+        <div class="compare-row"><div class="compare-label">团队协作</div><div class="compare-val">—</div><div class="compare-val">—</div><div class="compare-val vip">✅</div></div>
+        <div class="compare-row"><div class="compare-label">专属经理</div><div class="compare-val">—</div><div class="compare-val">—</div><div class="compare-val vip">✅</div></div>
+    </div>
+
+    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:15px;border-radius:22px;display:block;margin:24px 18px;font-weight:800;font-size:16px">💎 立即升级 Pro</a>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
