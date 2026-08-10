@@ -4,36 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<meta name="description" content="Crazy Friday · 一个人+AI就是一家公司">
+<meta name="description" content="Crazy Friday · 一个人+AI就是一家公司 · AI变现工具库·接单工坊·变现玩法库">
 <title>Crazy Friday · 一个人+AI就是一家公司</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.home-hero { padding:36px 20px 30px; position:relative; overflow:hidden; }
-.home-hero::before { content:''; position:absolute; bottom:-120px; left:50%; transform:translateX(-50%); width:420px; height:260px; border-radius:50%; background:radial-gradient(ellipse, rgba(168,85,247,.4), transparent 70%); filter:blur(30px); }
-.home-title { font-size:42px; font-weight:900; letter-spacing:-2px; line-height:1.12; margin-bottom:10px; position:relative; z-index:1; }
+.home-hero { padding:30px 20px 24px; position:relative; overflow:hidden; }
+.home-hero::before { content:''; position:absolute; bottom:-120px; left:50%; transform:translateX(-50%); width:440px; height:280px; border-radius:50%; background:radial-gradient(ellipse, rgba(168,85,247,.4), transparent 70%); filter:blur(30px); }
+.home-hero::after { content:''; position:absolute; top:-80px; right:-60px; width:180px; height:180px; border-radius:50%; background:radial-gradient(ellipse, rgba(236,72,153,.25), transparent 70%); filter:blur(24px); }
+.home-title { font-size:40px; font-weight:900; letter-spacing:-2px; line-height:1.1; margin-bottom:10px; position:relative; z-index:1; }
 .home-title .grad { background:linear-gradient(135deg,#C084FC,#A855F7,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.home-sub { font-size:13px; color:#a89ec9; margin-bottom:22px; position:relative; z-index:1; }
-.home-cta { display:inline-flex; align-items:center; gap:8px; padding:12px 22px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:24px; font-size:14px; font-weight:800; text-decoration:none; box-shadow:0 8px 24px rgba(168,85,247,.4); position:relative; z-index:1; margin-bottom:22px; }
+.home-sub { font-size:13px; color:#a89ec9; margin-bottom:20px; position:relative; z-index:1; }
 .home-stats { display:grid; grid-template-columns:repeat(4,1fr); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px 8px; position:relative; z-index:1; }
 .home-stat { text-align:center; border-right:1px solid rgba(255,255,255,.05); }
 .home-stat:last-child { border-right:none; }
 .hs-num { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
 .hs-lbl { font-size:9px; color:#6d6489; margin-top:4px; }
 
+.quick-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:16px 18px 0; }
+.quick-btn { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:12px 6px; text-align:center; cursor:pointer; text-decoration:none; }
+.quick-btn:active { transform:scale(.96); }
+.quick-ico { font-size:20px; margin-bottom:4px; }
+.quick-name { font-size:10px; font-weight:700; color:#e4e6ed; }
+.quick-btn.hl { background:linear-gradient(135deg,#A855F7,#EC4899); border-color:transparent; }
+.quick-btn.hl .quick-name { color:#fff; }
+
+.section-head { display:flex; justify-content:space-between; align-items:center; padding:24px 18px 12px; }
+.section-tt { font-size:15px; font-weight:900; }
+.section-more { font-size:11px; color:#8d82a8; cursor:pointer; }
+
+.play-scroll { display:flex; gap:10px; overflow-x:auto; padding:0 18px 6px; scrollbar-width:none; }
+.play-scroll::-webkit-scrollbar { display:none; }
+.play-card { flex-shrink:0; width:200px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; cursor:pointer; position:relative; overflow:hidden; }
+.play-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--pc,#A855F7),transparent); }
+.play-ico { font-size:24px; margin-bottom:6px; }
+.play-name { font-size:13px; font-weight:800; margin-bottom:3px; }
+.play-inc { font-size:11px; color:#FFD700; font-weight:800; margin-bottom:5px; }
+.play-desc { font-size:10px; color:#8d82a8; line-height:1.5; }
+.play-tag { display:inline-block; font-size:8px; padding:2px 7px; border-radius:8px; font-weight:700; margin-bottom:6px; }
+.tag-easy { background:rgba(52,211,153,.12); color:#34D399; }
+.tag-mid { background:rgba(245,158,11,.12); color:#F59E0B; }
+.tag-hard { background:rgba(239,68,68,.12); color:#EF4444; }
+
 .mod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 18px; }
-.mod-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; cursor:pointer; }
+.mod-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; cursor:pointer; transition:transform .12s, border-color .2s; position:relative; overflow:hidden; }
 .mod-card:active { transform:scale(.97); }
-.mod-emoji { font-size:26px; margin-bottom:8px; }
-.mod-name { font-size:13px; font-weight:800; }
-.mod-desc { font-size:10px; color:#8d82a8; margin-top:3px; line-height:1.5; }
-.mod-num { font-size:9px; color:#6d6489; margin-top:4px; }
+.mod-card:hover { border-color:rgba(168,85,247,.4); }
+.mod-emoji { font-size:24px; margin-bottom:7px; display:block; }
+.mod-name { font-size:13px; font-weight:800; display:block; }
+.mod-desc { font-size:10px; color:#8d82a8; margin-top:3px; line-height:1.5; display:block; }
+.mod-num { font-size:9px; color:#6d6489; margin-top:4px; display:block; }
+.mod-badge { position:absolute; top:10px; right:10px; font-size:8px; padding:2px 7px; border-radius:8px; background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; font-weight:800; }
 
 .hot-scroll { display:flex; gap:10px; overflow-x:auto; padding:0 18px 18px; scrollbar-width:none; }
 .hot-scroll::-webkit-scrollbar { display:none; }
-.hot-card { flex-shrink:0; width:100px; padding:12px 8px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; text-align:center; cursor:pointer; }
+.hot-card { flex-shrink:0; width:96px; padding:12px 8px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; text-align:center; cursor:pointer; }
+.hot-card:active { transform:scale(.96); }
 .hot-emoji { font-size:26px; margin-bottom:5px; }
 .hot-name { font-size:11px; font-weight:700; }
 .hot-sub { font-size:9px; color:#6d6489; margin-top:2px; }
+
+.post-mini { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:13px; margin:0 18px 10px; cursor:pointer; }
+.post-mini-head { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.post-mini-av { width:28px; height:28px; border-radius:50%; background:rgba(168,85,247,.2); display:flex; align-items:center; justify-content:center; font-size:14px; }
+.post-mini-name { font-size:11px; font-weight:700; flex:1; }
+.post-mini-title { font-size:13px; font-weight:800; margin-bottom:4px; }
+.post-mini-meta { font-size:10px; color:#6d6489; }
 </style>
 </head>
 <body data-tab="home">
@@ -53,26 +88,86 @@
 </div>
 
 <div class="wrap">
+    <!-- Hero -->
     <div class="home-hero">
         <div class="home-title">一个人<br><span class="grad">+ AI,</span><br>就是一家公司</div>
-        <div class="home-sub">AI时代的一人公司创业生态平台</div>
-        <a href="publish.html" class="home-cta">发布你的想法 →</a>
-        <div class="home-stats">
-            <div class="home-stat"><div class="hs-num">10K+</div><div class="hs-lbl">创业者</div></div>
-            <div class="home-stat"><div class="hs-num">3K+</div><div class="hs-lbl">项目</div></div>
-            <div class="home-stat"><div class="hs-num">1K+</div><div class="hs-lbl">AI工具</div></div>
-            <div class="home-stat"><div class="hs-num">99%</div><div class="hs-lbl">满意</div></div>
+        <div class="home-sub">AI时代的一人公司创业生态平台 · 工具 · 玩法 · 接单 · 变现</div>
+        <div class="home-stats" id="homeStats">
+            <div class="home-stat"><div class="hs-num" id="st1">10K+</div><div class="hs-lbl">创业者</div></div>
+            <div class="home-stat"><div class="hs-num" id="st2">37</div><div class="hs-lbl">变现工具</div></div>
+            <div class="home-stat"><div class="hs-num" id="st3">9</div><div class="hs-lbl">变现玩法</div></div>
+            <div class="home-stat"><div class="hs-num" id="st4">16</div><div class="hs-lbl">业务板块</div></div>
         </div>
     </div>
 
+    <!-- 快捷动作 -->
+    <div class="quick-row">
+        <a class="quick-btn" href="publish.html"><div class="quick-ico">✏️</div><div class="quick-name">发布想法</div></a>
+        <a class="quick-btn" href="orders.html"><div class="quick-ico">📋</div><div class="quick-name">接单大厅</div></a>
+        <a class="quick-btn hl" href="../partner-form.html"><div class="quick-ico">📨</div><div class="quick-name">接单登记</div></a>
+    </div>
+
+    <!-- 变现路径横滚 -->
+    <div class="section-head">
+        <div class="section-tt">💡 变现玩法</div>
+        <div class="section-more" onclick="location.href='playbook.html'">全部 9 条 →</div>
+    </div>
+    <div class="play-scroll">
+        <div class="play-card" style="--pc:#34D399" onclick="location.href='playbook.html'">
+            <span class="play-tag tag-easy">零门槛</span>
+            <div class="play-ico">🎨</div>
+            <div class="play-name">AI绘画接单</div>
+            <div class="play-inc">500-8000元/月</div>
+            <div class="play-desc">头像/海报/电商图，当天就能接</div>
+        </div>
+        <div class="play-card" style="--pc:#34D399" onclick="location.href='playbook.html'">
+            <span class="play-tag tag-easy">零门槛</span>
+            <div class="play-ico">📝</div>
+            <div class="play-name">AI内容代写</div>
+            <div class="play-inc">1000-10000元/月</div>
+            <div class="play-desc">小红书/公众号脚本，模板化量产</div>
+        </div>
+        <div class="play-card" style="--pc:#34D399" onclick="location.href='playbook.html'">
+            <span class="play-tag tag-easy">零门槛</span>
+            <div class="play-ico">🗣️</div>
+            <div class="play-name">数字人口播号</div>
+            <div class="play-inc">3000-30000元/月</div>
+            <div class="play-desc">矩阵号引流带货接广告</div>
+        </div>
+        <div class="play-card" style="--pc:#F59E0B" onclick="location.href='playbook.html'">
+            <span class="play-tag tag-mid">进阶</span>
+            <div class="play-ico">🔄</div>
+            <div class="play-name">内容工厂</div>
+            <div class="play-inc">5000-50000元/月</div>
+            <div class="play-desc">AiToEarn自动写自动发多平台</div>
+        </div>
+        <div class="play-card" style="--pc:#F59E0B" onclick="location.href='playbook.html'">
+            <span class="play-tag tag-mid">进阶</span>
+            <div class="play-ico">🤖</div>
+            <div class="play-name">AI Agent定制</div>
+            <div class="play-inc">8000-80000元/单</div>
+            <div class="play-desc">OpenClaw/Dify/Coze智能体</div>
+        </div>
+        <div class="play-card" style="--pc:#EF4444" onclick="location.href='playbook.html'">
+            <span class="play-tag tag-hard">高阶</span>
+            <div class="play-ico">📋</div>
+            <div class="play-name">接单派单差价</div>
+            <div class="play-inc">1万-10万+/月</div>
+            <div class="play-desc">接单→派单→验收→赚差价</div>
+        </div>
+    </div>
+
+    <!-- 全部板块 -->
     <div class="section-head">
         <div class="section-tt">🧩 全部板块</div>
+        <div class="section-more" onclick="location.href='discover.html'">板块导航 →</div>
     </div>
     <div class="mod-grid">
-        <div class="mod-card" onclick="location.href='tools.html'"><div class="mod-emoji">🛠️</div><div class="mod-name">AI工具中心</div><div class="mod-desc">精选全球优质AI工具</div><div class="mod-num">02 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='tools.html'"><div class="mod-emoji">🛠️</div><div class="mod-name">AI变现工具库</div><div class="mod-desc">37款真能赚钱的AI工具</div><div class="mod-num">02 · 2026最新</div><span class="mod-badge">NEW</span></div>
+        <div class="mod-card" onclick="location.href='playbook.html'"><div class="mod-emoji">💡</div><div class="mod-name">变现玩法库</div><div class="mod-desc">9条可执行赚钱路径</div><div class="mod-num">NEW · 工具+步骤+收入</div><span class="mod-badge">NEW</span></div>
+        <div class="mod-card" onclick="location.href='orders.html'"><div class="mod-emoji">📋</div><div class="mod-name">接单工坊</div><div class="mod-desc">需求对接·赚差价</div><div class="mod-num">05 · 5000+需求</div></div>
         <div class="mod-card" onclick="location.href='opc.html'"><div class="mod-emoji">📦</div><div class="mod-name">OPC工场</div><div class="mod-desc">项目库·发现好项目</div><div class="mod-num">03 · 3000+</div></div>
-        <div class="mod-card" onclick="location.href='academy.html'"><div class="mod-emoji">🎓</div><div class="mod-name">AI营</div><div class="mod-desc">系统学习·实战提升</div><div class="mod-num">04 · 3000+</div></div>
-        <div class="mod-card" onclick="location.href='orders.html'"><div class="mod-emoji">📋</div><div class="mod-name">接单工坊</div><div class="mod-desc">需求对接·赚差价</div><div class="mod-num">05 · 5000+</div></div>
+        <div class="mod-card" onclick="location.href='academy.html'"><div class="mod-emoji">🎓</div><div class="mod-name">AI营</div><div class="mod-desc">系统学习·实战提升</div><div class="mod-num">04 · 课程</div></div>
         <div class="mod-card" onclick="location.href='brain.html'"><div class="mod-emoji">🤖</div><div class="mod-name">超脑工坊</div><div class="mod-desc">你的AI员工团队</div><div class="mod-num">06 · 7×24h</div></div>
         <div class="mod-card" onclick="location.href='apps.html'"><div class="mod-emoji">📱</div><div class="mod-name">AI应用市场</div><div class="mod-desc">安装即用</div><div class="mod-num">07 · 100+</div></div>
         <div class="mod-card" onclick="location.href='services.html'"><div class="mod-emoji">🤝</div><div class="mod-name">服务中心</div><div class="mod-desc">找靠谱服务商</div><div class="mod-num">08 · 2000+</div></div>
@@ -84,30 +179,74 @@
         <div class="mod-card" onclick="location.href='roadmap.html'"><div class="mod-emoji">🗺️</div><div class="mod-name">AI创业路线图</div><div class="mod-desc">从0到1</div><div class="mod-num">14 · 全流程</div></div>
         <div class="mod-card" onclick="location.href='partners.html'"><div class="mod-emoji">🌐</div><div class="mod-name">生态合作伙伴</div><div class="mod-desc">共创未来</div><div class="mod-num">15 · 12+</div></div>
         <div class="mod-card" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border-color:#A855F7" onclick="location.href='post.html?id=p1'"><div class="mod-emoji">🦄</div><div class="mod-name">疯狂星期五</div><div class="mod-desc">关于AI·一人公司·变现</div><div class="mod-num">理念</div></div>
-        <div class="mod-card" style="background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(34,211,238,.05));border-color:#34D399" onclick="location.href='../partner-form.html'"><div class="mod-emoji">📨</div><div class="mod-name">接单登记</div><div class="mod-desc">发登记让别人找你</div><div class="mod-num">立即</div></div>
     </div>
 
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">🔥 热门工具</div>
-        <div class="section-more" onclick="location.href='tools.html'">更多</div>
+    <!-- 热门工具 -->
+    <div class="section-head">
+        <div class="section-tt">🔥 热门变现工具</div>
+        <div class="section-more" onclick="location.href='tools.html'">工具库 37 款 →</div>
     </div>
     <div class="hot-scroll">
-        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💬</div><div class="hot-name">ChatGPT</div><div class="hot-sub">9.8⭐</div></div>
-        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🎨</div><div class="hot-name">Midjourney</div><div class="hot-sub">9.7⭐</div></div>
-        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">⚡</div><div class="hot-name">Claude</div><div class="hot-sub">9.6⭐</div></div>
-        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">📝</div><div class="hot-name">Notion AI</div><div class="hot-sub">9.4⭐</div></div>
-        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🎬</div><div class="hot-name">Runway</div><div class="hot-sub">9.5⭐</div></div>
-        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💻</div><div class="hot-name">Cursor</div><div class="hot-sub">推荐</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🦾</div><div class="hot-name">OpenClaw</div><div class="hot-sub">⭐9.6 Agent</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🔀</div><div class="hot-name">n8n</div><div class="hot-sub">⭐9.5 自动化</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💬</div><div class="hot-name">ChatGPT</div><div class="hot-sub">⭐9.8</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">⚡</div><div class="hot-name">Claude</div><div class="hot-sub">⭐9.7</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🎨</div><div class="hot-name">Midjourney</div><div class="hot-sub">⭐9.7</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💻</div><div class="hot-name">Cursor</div><div class="hot-sub">⭐9.7</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💰</div><div class="hot-name">AiToEarn</div><div class="hot-sub">开源变现</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🗣️</div><div class="hot-name">HeyGen</div><div class="hot-sub">⭐9.2 数字人</div></div>
     </div>
+
+    <!-- 社区热帖 -->
+    <div class="section-head">
+        <div class="section-tt">🔥 社区热帖</div>
+        <div class="section-more" onclick="location.href='post.html?id=p1'">社区 →</div>
+    </div>
+    <div id="hotPosts"></div>
 
     <div class="tip">
-        💡 一个人 + AI = 一家公司<br>加入 <b style="color:#C084FC">Crazy Friday 生态</b>
+        💡 一个人 + AI = 一家公司<br>工具·玩法·接单·交付，<b style="color:#C084FC">一条龙闭环</b>
     </div>
 
-    <a href="post.html?id=p1" class="cta">🦄 了解疯狂星期五理念</a>
+    <a href="../partner-form.html" class="cta">📨 有交付能力？登记接单，有单派给你</a>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script src="data.js"></script>
+<script>
+// 动态统计
+(function(){
+    try {
+        const d = loadCommunity();
+        const posts = d.posts || [];
+        const totalViews = posts.reduce((s,p)=>s+(p.views||0),0);
+        const totalLikes = posts.reduce((s,p)=>s+(p.like||0),0);
+        document.getElementById('st1').textContent = (totalViews/100).toFixed(0) + 'K+';
+        document.getElementById('st2').textContent = '37';
+        document.getElementById('st3').textContent = '9';
+        document.getElementById('st4').textContent = '16';
+    } catch(e) {}
+})();
+// 社区热帖
+(function(){
+    try {
+        const posts = getPosts().slice(0,3);
+        const el = document.getElementById('hotPosts');
+        if (el && posts.length) {
+            el.innerHTML = posts.map(p => `
+                <div class="post-mini" onclick="location.href='post.html?id=${p.id}'">
+                    <div class="post-mini-head">
+                        <div class="post-mini-av">${p.avatar}</div>
+                        <div class="post-mini-name">${p.author}</div>
+                        <span style="font-size:9px;color:#6d6489">${p.time}</span>
+                    </div>
+                    <div class="post-mini-title">${p.title}</div>
+                    <div class="post-mini-meta">❤️ ${p.like} · ⭐ ${p.fav} · 💬 ${p.comment} · 👁️ ${(p.views||0).toLocaleString()}</div>
+                </div>`).join('');
+        }
+    } catch(e) {}
+})();
+</script>
 </body>
 </html>
