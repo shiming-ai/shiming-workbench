@@ -2,119 +2,112 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<title>疯狂星期五 · 社区</title>
+<meta name="description" content="Crazy Friday · 一个人+AI就是一家公司">
+<title>Crazy Friday · 一个人+AI就是一家公司</title>
 <link rel="stylesheet" href="style.css">
 <style>
-/* 帖子流 */
-.feed { padding: 0 18px; }
-.feed-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px; padding: 16px; margin-bottom: 12px;
-    cursor: pointer;
-}
-.feed-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.feed-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#7C3AED,#A855F7,#EC4899); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.feed-author { font-size: 13px; font-weight: 800; }
-.feed-time { font-size: 10px; color: #6d6489; margin-top: 1px; }
-.feed-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; line-height: 1.4; }
-.feed-text {
-    font-size: 12.5px; color: #a89ec9; line-height: 1.7;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-    margin-bottom: 10px;
-}
-.feed-tags { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.feed-tag { padding: 3px 10px; border-radius: 12px; background: rgba(168,85,247,0.12); color: #C084FC; font-size: 10px; font-weight: 600; }
-.feed-actions { display: flex; align-items: center; gap: 4px; }
-.feed-action { display: flex; align-items: center; gap: 5px; padding: 6px 10px; font-size: 12px; color: #8d82a8; }
-.feed-action .ai { font-size: 15px; }
-.feed-action.liked { color: #EC4899; }
-.feed-action.faved { color: #FFD700; }
-.feed-action span.count { font-size: 10px; }
+.home-hero { padding:36px 20px 30px; position:relative; overflow:hidden; }
+.home-hero::before { content:''; position:absolute; bottom:-120px; left:50%; transform:translateX(-50%); width:420px; height:260px; border-radius:50%; background:radial-gradient(ellipse, rgba(168,85,247,.4), transparent 70%); filter:blur(30px); }
+.home-title { font-size:42px; font-weight:900; letter-spacing:-2px; line-height:1.12; margin-bottom:10px; position:relative; z-index:1; }
+.home-title .grad { background:linear-gradient(135deg,#C084FC,#A855F7,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.home-sub { font-size:13px; color:#a89ec9; margin-bottom:22px; position:relative; z-index:1; }
+.home-cta { display:inline-flex; align-items:center; gap:8px; padding:12px 22px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:24px; font-size:14px; font-weight:800; text-decoration:none; box-shadow:0 8px 24px rgba(168,85,247,.4); position:relative; z-index:1; margin-bottom:22px; }
+.home-stats { display:grid; grid-template-columns:repeat(4,1fr); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px 8px; position:relative; z-index:1; }
+.home-stat { text-align:center; border-right:1px solid rgba(255,255,255,.05); }
+.home-stat:last-child { border-right:none; }
+.hs-num { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.hs-lbl { font-size:9px; color:#6d6489; margin-top:4px; }
+
+.mod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 18px; }
+.mod-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; cursor:pointer; }
+.mod-card:active { transform:scale(.97); }
+.mod-emoji { font-size:26px; margin-bottom:8px; }
+.mod-name { font-size:13px; font-weight:800; }
+.mod-desc { font-size:10px; color:#8d82a8; margin-top:3px; line-height:1.5; }
+.mod-num { font-size:9px; color:#6d6489; margin-top:4px; }
+
+.hot-scroll { display:flex; gap:10px; overflow-x:auto; padding:0 18px 18px; scrollbar-width:none; }
+.hot-scroll::-webkit-scrollbar { display:none; }
+.hot-card { flex-shrink:0; width:100px; padding:12px 8px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; text-align:center; cursor:pointer; }
+.hot-emoji { font-size:26px; margin-bottom:5px; }
+.hot-name { font-size:11px; font-weight:700; }
+.hot-sub { font-size:9px; color:#6d6489; margin-top:2px; }
 </style>
 </head>
 <body data-tab="home">
 
-<!-- 顶部 -->
 <div class="topbar">
     <div class="brand">
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">Crazy Friday</div>
-            <div class="brand-sub">疯狂星期五 · 社区</div>
+            <div class="brand-sub">一个人 + AI = 一家公司</div>
         </div>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
         <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='publish.html'">✏️</div>
-        <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='post.html'" title="疯狂星期五">🦄</div>
+        <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='post.html?id=p1'">🦄</div>
     </div>
 </div>
 
 <div class="wrap">
-    <div class="section-head" style="padding-top:8px">
-        <div class="section-tt">🔥 推荐</div>
-        <div class="section-more" onclick="location.href='discover.html'">发现更多 ›</div>
+    <div class="home-hero">
+        <div class="home-title">一个人<br><span class="grad">+ AI,</span><br>就是一家公司</div>
+        <div class="home-sub">AI时代的一人公司创业生态平台</div>
+        <a href="publish.html" class="home-cta">发布你的想法 →</a>
+        <div class="home-stats">
+            <div class="home-stat"><div class="hs-num">10K+</div><div class="hs-lbl">创业者</div></div>
+            <div class="home-stat"><div class="hs-num">3K+</div><div class="hs-lbl">项目</div></div>
+            <div class="home-stat"><div class="hs-num">1K+</div><div class="hs-lbl">AI工具</div></div>
+            <div class="home-stat"><div class="hs-num">99%</div><div class="hs-lbl">满意</div></div>
+        </div>
     </div>
-    <div class="feed" id="feed"></div>
+
+    <div class="section-head">
+        <div class="section-tt">🧩 全部板块</div>
+    </div>
+    <div class="mod-grid">
+        <div class="mod-card" onclick="location.href='tools.html'"><div class="mod-emoji">🛠️</div><div class="mod-name">AI工具中心</div><div class="mod-desc">精选全球优质AI工具</div><div class="mod-num">02 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='opc.html'"><div class="mod-emoji">📦</div><div class="mod-name">OPC工场</div><div class="mod-desc">项目库·发现好项目</div><div class="mod-num">03 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='academy.html'"><div class="mod-emoji">🎓</div><div class="mod-name">AI营</div><div class="mod-desc">系统学习·实战提升</div><div class="mod-num">04 · 3000+</div></div>
+        <div class="mod-card" onclick="location.href='orders.html'"><div class="mod-emoji">📋</div><div class="mod-name">接单工坊</div><div class="mod-desc">需求对接·赚差价</div><div class="mod-num">05 · 5000+</div></div>
+        <div class="mod-card" onclick="location.href='brain.html'"><div class="mod-emoji">🤖</div><div class="mod-name">超脑工坊</div><div class="mod-desc">你的AI员工团队</div><div class="mod-num">06 · 7×24h</div></div>
+        <div class="mod-card" onclick="location.href='apps.html'"><div class="mod-emoji">📱</div><div class="mod-name">AI应用市场</div><div class="mod-desc">安装即用</div><div class="mod-num">07 · 100+</div></div>
+        <div class="mod-card" onclick="location.href='services.html'"><div class="mod-emoji">🤝</div><div class="mod-name">服务中心</div><div class="mod-desc">找靠谱服务商</div><div class="mod-num">08 · 2000+</div></div>
+        <div class="mod-card" onclick="location.href='incubation.html'"><div class="mod-emoji">🌱</div><div class="mod-name">项目孵化中心</div><div class="mod-desc">Idea→品牌</div><div class="mod-num">09 · 100+</div></div>
+        <div class="mod-card" onclick="location.href='mall.html'"><div class="mod-emoji">🛍️</div><div class="mod-name">简单大厅</div><div class="mod-desc">商品·服务</div><div class="mod-num">10 · 上架中</div></div>
+        <div class="mod-card" onclick="location.href='admin.html'"><div class="mod-emoji">💼</div><div class="mod-name">商业服务后台</div><div class="mod-desc">客户·项目·财务</div><div class="mod-num">11 · 管理</div></div>
+        <div class="mod-card" onclick="location.href='data.html'"><div class="mod-emoji">📊</div><div class="mod-name">数据中心</div><div class="mod-desc">数据洞察</div><div class="mod-num">12 · 实时</div></div>
+        <div class="mod-card" onclick="location.href='member.html'"><div class="mod-emoji">💎</div><div class="mod-name">会员中心</div><div class="mod-desc">解锁全部权益</div><div class="mod-num">13 · 升级</div></div>
+        <div class="mod-card" onclick="location.href='roadmap.html'"><div class="mod-emoji">🗺️</div><div class="mod-name">AI创业路线图</div><div class="mod-desc">从0到1</div><div class="mod-num">14 · 全流程</div></div>
+        <div class="mod-card" onclick="location.href='partners.html'"><div class="mod-emoji">🌐</div><div class="mod-name">生态合作伙伴</div><div class="mod-desc">共创未来</div><div class="mod-num">15 · 12+</div></div>
+        <div class="mod-card" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border-color:#A855F7" onclick="location.href='post.html?id=p1'"><div class="mod-emoji">🦄</div><div class="mod-name">疯狂星期五</div><div class="mod-desc">关于AI·一人公司·变现</div><div class="mod-num">理念</div></div>
+        <div class="mod-card" style="background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(34,211,238,.05));border-color:#34D399" onclick="location.href='../partner-form.html'"><div class="mod-emoji">📨</div><div class="mod-name">接单登记</div><div class="mod-desc">发登记让别人找你</div><div class="mod-num">立即</div></div>
+    </div>
+
+    <div class="section-head" style="padding-top:24px">
+        <div class="section-tt">🔥 热门工具</div>
+        <div class="section-more" onclick="location.href='tools.html'">更多</div>
+    </div>
+    <div class="hot-scroll">
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💬</div><div class="hot-name">ChatGPT</div><div class="hot-sub">9.8⭐</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🎨</div><div class="hot-name">Midjourney</div><div class="hot-sub">9.7⭐</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">⚡</div><div class="hot-name">Claude</div><div class="hot-sub">9.6⭐</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">📝</div><div class="hot-name">Notion AI</div><div class="hot-sub">9.4⭐</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">🎬</div><div class="hot-name">Runway</div><div class="hot-sub">9.5⭐</div></div>
+        <div class="hot-card" onclick="location.href='tools.html'"><div class="hot-emoji">💻</div><div class="hot-name">Cursor</div><div class="hot-sub">推荐</div></div>
+    </div>
+
+    <div class="tip">
+        💡 一个人 + AI = 一家公司<br>加入 <b style="color:#C084FC">Crazy Friday 生态</b>
+    </div>
+
+    <a href="post.html?id=p1" class="cta">🦄 了解疯狂星期五理念</a>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
-<script src="data.js"></script>
-<script>
-function renderFeed() {
-    const d = loadCommunity();
-    const feed = document.getElementById('feed');
-    if (d.posts.length === 0) {
-        feed.innerHTML = '<div class="empty" style="margin:0 18px"><div class="em">📭</div>还没有帖子<br>点右上角 ✏️ 发布第一篇</div>';
-        return;
-    }
-    feed.innerHTML = d.posts.map(p => `
-        <div class="feed-card" onclick="location.href='post.html?id=${p.id}'">
-            <div class="feed-head">
-                <div class="feed-avatar">${p.avatar}</div>
-                <div style="flex:1">
-                    <div class="feed-author">${p.author}</div>
-                    <div class="feed-time">${p.time}</div>
-                </div>
-            </div>
-            <div class="feed-title">${p.title}</div>
-            <div class="feed-text">${p.content.replace(/\n/g,'<br>')}</div>
-            <div class="feed-tags">${p.tags.map(t => '<span class="feed-tag">'+t+'</span>').join('')}</div>
-            <div class="feed-actions" onclick="event.stopPropagation()">
-                <div class="feed-action ${p.liked?'liked':''}" onclick="likePost('${p.id}',this)">
-                    <span class="ai">${p.liked?'❤️':'🤍'}</span><span class="count">${fmtCount(p.like)}</span>
-                </div>
-                <div class="feed-action ${p.faved?'faved':''}" onclick="favPost('${p.id}',this)">
-                    <span class="ai">${p.faved?'⭐':'☆'}</span><span class="count">${fmtCount(p.fav)}</span>
-                </div>
-                <div class="feed-action" onclick="location.href='post.html?id=${p.id}'">
-                    <span class="ai">💬</span><span class="count">${p.comment}</span>
-                </div>
-                <div class="feed-action" style="margin-left:auto;color:#6d6489">
-                    <span class="ai">👁️</span><span class="count">${fmtCount(p.views)}</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-function likePost(id, el) {
-    const p = toggleLikePost(id);
-    el.classList.toggle('liked', p.liked);
-    el.innerHTML = '<span class="ai">'+(p.liked?'❤️':'🤍')+'</span><span class="count">'+fmtCount(p.like)+'</span>';
-    toast(p.liked ? '❤️ 已点赞' : '已取消点赞');
-}
-function favPost(id, el) {
-    const p = toggleFavPost(id);
-    el.classList.toggle('faved', p.faved);
-    el.innerHTML = '<span class="ai">'+(p.faved?'⭐':'☆')+'</span><span class="count">'+fmtCount(p.fav)+'</span>';
-    toast(p.faved ? '⭐ 已收藏' : '已取消收藏');
-}
-
-renderFeed();
-</script>
 </body>
 </html>
