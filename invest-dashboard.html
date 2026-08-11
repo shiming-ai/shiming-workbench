@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday 疯狂星期五 · 招商路演数据大屏 · 投资人路演专用 · 一个人+AI就是一家公司">
+<title>Crazy Friday · 招商路演大屏</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+    --bg:#0d0420; --bg2:#140a26; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+    --border:rgba(255,255,255,.09); --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
+    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
+    --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --blue:#60A5FA; --red:#F87171;
+}
+html { scroll-behavior:smooth; }
+body {
+    background:var(--bg); color:var(--text); min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+    line-height:1.6; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background-image:
+        radial-gradient(ellipse 900px 500px at 50% -10%, rgba(168,85,247,.22), transparent 60%),
+        radial-gradient(ellipse 600px 400px at 100% 20%, rgba(236,72,153,.12), transparent 60%),
+        radial-gradient(ellipse 700px 500px at 0% 70%, rgba(124,58,237,.12), transparent 60%);
+    background-attachment:fixed;
+}
+/* ===== 顶部品牌条 ===== */
+.topbar { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:14px 26px; background:rgba(13,4,32,.82); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid var(--border); }
+.tb-left { display:flex; align-items:center; gap:12px; }
+.tb-logo { width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg,var(--purple-deep),var(--pink)); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:#fff; box-shadow:0 4px 16px rgba(168,85,247,.5); }
+.tb-name { font-size:15px; font-weight:900; }
+.tb-sub { font-size:10px; color:var(--dim); margin-top:1px; }
+.tb-right { display:flex; align-items:center; gap:10px; }
+.tb-clock { font-size:13px; font-weight:800; color:var(--cyan); background:rgba(34,211,238,.1); border:1px solid rgba(34,211,238,.25); padding:7px 14px; border-radius:20px; }
+.tb-live { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:800; color:var(--green); background:rgba(52,211,153,.1); border:1px solid rgba(52,211,153,.25); padding:7px 14px; border-radius:20px; }
+.tb-live .dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 1.4s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,.5)} 50%{opacity:.5;box-shadow:0 0 0 6px rgba(52,211,153,0)} }
+/* ===== 布局 ===== */
+.wrap { max-width:1400px; margin:0 auto; padding:88px 26px 50px; }
+.sec { margin-bottom:26px; }
+.sec-hd { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.sec-hd .bar { width:4px; height:20px; border-radius:2px; background:linear-gradient(180deg,var(--purple),var(--pink)); }
+.sec-hd h2 { font-size:19px; font-weight:900; letter-spacing:-.3px; }
+.sec-hd .note { font-size:11px; color:var(--mute); margin-left:6px; }
+/* ===== Hero ===== */
+.hero { text-align:center; padding:26px 0 8px; position:relative; }
+.hero .badge { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:800; color:var(--purple-light); background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.32); padding:7px 16px; border-radius:22px; margin-bottom:16px; }
+.hero h1 { font-size:clamp(30px,5vw,52px); font-weight:900; letter-spacing:-2px; line-height:1.12; margin-bottom:12px; }
+.hero h1 .grad { background:linear-gradient(135deg,#C084FC,#A855F7,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero .sub { font-size:14px; color:var(--dim); line-height:1.9; }
+.hero .sub b { color:#fff; }
+/* ===== KPI ===== */
+.kpi-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-top:22px; }
+.kpi { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 10px; text-align:center; position:relative; transition:transform .15s, border-color .2s; }
+.kpi:hover { border-color:rgba(168,85,247,.45); transform:translateY(-2px); }
+.kpi .n { font-size:clamp(20px,2.4vw,30px); font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.kpi .l { font-size:11px; color:var(--dim); margin-top:5px; font-weight:700; }
+.kpi .d { font-size:9px; color:var(--mute); margin-top:3px; }
+.kpi .live { position:absolute; top:10px; right:10px; font-size:8px; font-weight:800; color:var(--green); background:rgba(52,211,153,.1); border:1px solid rgba(52,211,153,.25); padding:2px 7px; border-radius:10px; }
+.kpi .plan { position:absolute; top:10px; right:10px; font-size:8px; font-weight:800; color:var(--gold); background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.25); padding:2px 7px; border-radius:10px; }
+/* ===== 双栏 ===== */
+.grid2 { display:grid; grid-template-columns:1.15fr .85fr; gap:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:20px; }
+.card-title { font-size:13px; font-weight:900; color:var(--purple-light); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.card-title svg { flex-shrink:0; }
+/* 收入线 */
+.inc-row { display:flex; align-items:center; gap:10px; margin-bottom:13px; }
+.inc-row .ir-name { width:110px; font-size:11px; font-weight:800; color:var(--dim); flex-shrink:0; }
+.inc-row .ir-track { flex:1; height:22px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden; position:relative; }
+.inc-row .ir-fill { height:100%; border-radius:6px; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:9px; font-weight:900; color:#fff; min-width:34px; transition:width .8s ease; }
+.inc-row .ir-val { width:70px; font-size:10px; font-weight:800; color:#fff; text-align:right; flex-shrink:0; }
+.inc-row .ir-val small { display:block; font-size:8px; color:var(--mute); font-weight:600; }
+/* 飞轮 */
+.flywheel { position:relative; width:min(330px,100%); aspect-ratio:1; margin:0 auto; }
+.fw-ring { width:100%; height:100%; }
+.fw-center { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; }
+.fw-center .t { font-size:13px; font-weight:900; }
+.fw-center .s { font-size:9px; color:var(--mute); margin-top:2px; }
+.fw-node { position:absolute; width:88px; text-align:center; }
+.fw-node .nt { font-size:11px; font-weight:900; color:#fff; }
+.fw-node .nd { font-size:8px; color:var(--mute); line-height:1.4; }
+/* 里程碑 */
+.mile { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.mile-step { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 12px; position:relative; }
+.mile-step.now { border-color:rgba(168,85,247,.55); background:rgba(168,85,247,.1); }
+.mile-step .mt { font-size:9px; font-weight:900; color:var(--purple-light); letter-spacing:.5px; }
+.mile-step .mn { font-size:13px; font-weight:900; margin:5px 0 3px; }
+.mile-step .md { font-size:10px; color:var(--dim); line-height:1.6; }
+.mile-step .done { position:absolute; top:10px; right:10px; font-size:9px; font-weight:800; color:var(--green); }
+/* 融资 */
+.fund-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.fund-row .fr-name { width:86px; font-size:11px; font-weight:800; color:var(--dim); flex-shrink:0; }
+.fund-row .fr-track { flex:1; height:18px; background:rgba(255,255,255,.06); border-radius:5px; overflow:hidden; }
+.fund-row .fr-fill { height:100%; border-radius:5px; }
+.fund-row .fr-val { width:52px; font-size:11px; font-weight:900; color:#fff; text-align:right; flex-shrink:0; }
+.ask-box { background:linear-gradient(160deg,rgba(168,85,247,.14),rgba(236,72,153,.05)); border:1px solid rgba(168,85,247,.3); border-radius:16px; padding:18px; text-align:center; margin-bottom:14px; }
+.ask-box .a-num { font-size:34px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.ask-box .a-sub { font-size:11px; color:var(--dim); margin-top:5px; }
+.ask-box .a-tag { display:inline-block; font-size:10px; font-weight:800; color:var(--gold); background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); padding:4px 12px; border-radius:16px; margin-top:8px; }
+/* 联系 */
+.contact-strip { display:flex; align-items:center; justify-content:space-between; gap:14px; background:var(--card); border:1px solid var(--border); border-radius:18px; padding:20px 22px; flex-wrap:wrap; }
+.cs-left .t { font-size:15px; font-weight:900; }
+.cs-left .s { font-size:11px; color:var(--dim); margin-top:3px; }
+.cs-right { display:flex; gap:10px; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:24px; font-size:13px; font-weight:900; text-decoration:none; cursor:pointer; border:none; color:#fff; }
+.btn-main { background:linear-gradient(135deg,var(--purple),var(--pink)); box-shadow:0 8px 24px rgba(168,85,247,.4); }
+.btn-ghost { background:rgba(255,255,255,.06); border:1px solid var(--border); }
+.btn-gold { background:rgba(255,215,0,.14); border:1px solid rgba(255,215,0,.4); color:var(--gold); }
+.footer { text-align:center; padding:22px 0 34px; font-size:10px; color:var(--mute); border-top:1px solid var(--border); margin-top:30px; }
+.footer .fl { font-size:12px; font-weight:800; color:var(--dim); margin-bottom:5px; }
+/* 数据可信度脚注 */
+.trust { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; font-size:10px; color:var(--mute); margin-top:12px; }
+.trust span { display:inline-flex; align-items:center; gap:5px; }
+.trust .g { color:var(--green); }
+.trust .y { color:var(--gold); }
+/* 响应式 */
+@media (max-width:1080px){
+    .kpi-grid { grid-template-columns:repeat(3,1fr); }
+    .grid2 { grid-template-columns:1fr; }
+    .mile { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:640px){
+    .wrap { padding:80px 14px 40px; }
+    .tb-clock { display:none; }
+    .kpi-grid { grid-template-columns:repeat(2,1fr); gap:9px; }
+    .mile { grid-template-columns:1fr; }
+    .inc-row .ir-name { width:84px; font-size:10px; }
+    .inc-row .ir-val { width:56px; }
+    .btn { padding:11px 16px; font-size:12px; }
+    .hero h1 { font-size:30px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="tb-left">
+        <div class="tb-logo">CF</div>
+        <div><div class="tb-name">Crazy Friday · 招商路演</div><div class="tb-sub">AI 时代的一人公司生态 · 路演数据大屏</div></div>
+    </div>
+    <div class="tb-right">
+        <div class="tb-live"><span class="dot"></span>实时数据</div>
+        <div class="tb-clock" id="clock">--:--:--</div>
+    </div>
+</div>
+
+<div class="wrap">
+
+    <!-- ===== Hero ===== -->
+    <div class="hero">
+        <div class="badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5L13 2z" fill="#C084FC"/></svg>
+            投资人路演版 · 数据可核验
+        </div>
+        <h1>一个人 + AI，<br><span class="grad">就是一家公司</span></h1>
+        <div class="sub">工具 · 玩法 · 接单 · 交付 · 变现，<b>一套完整闭环</b><br>中国版 Fiverr / Upwork 的 AI 垂直版，比猪八戒更轻、更聚焦一人公司</div>
+    </div>
+
+    <!-- ===== KPI ===== -->
+    <div class="sec">
+        <div class="kpi-grid">
+            <div class="kpi"><span class="live" id="liveTag1">云端实时</span><div class="n" id="kpiPartners">0</div><div class="l">交付伙伴</div><div class="d">接单网络</div></div>
+            <div class="kpi"><span class="live" id="liveTag2">云端实时</span><div class="n" id="kpiCases">0</div><div class="l">行业案例</div><div class="d">客户可见</div></div>
+            <div class="kpi"><span class="live" id="liveTag3">云端实时</span><div class="n" id="kpiOrders">0</div><div class="l">累计项目</div><div class="d">已交付记录</div></div>
+            <div class="kpi"><span class="plan">规划口径</span><div class="n">¥1.28M</div><div class="l">累计接单额</div><div class="d">目标验证中</div></div>
+            <div class="kpi"><span class="plan">规划口径</span><div class="n">37</div><div class="l">AI 变现工具</div><div class="d">已入库</div></div>
+            <div class="kpi"><span class="plan">规划口径</span><div class="n">16</div><div class="l">业务板块</div><div class="d">生态闭环</div></div>
+        </div>
+        <div class="trust">
+            <span><span class="g">●</span> 云端实时 = 从云端数据库实时读取，可核验</span>
+            <span><span class="y">●</span> 规划口径 = 目标值/规划值，非已发生交易</span>
+        </div>
+    </div>
+
+    <!-- ===== 收入线 + 飞轮 ===== -->
+    <div class="sec">
+        <div class="grid2">
+            <!-- 五条收入线 -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="4" height="10" rx="1" fill="#A855F7"/><rect x="10" y="7" width="4" height="14" rx="1" fill="#C084FC"/><rect x="17" y="3" width="4" height="18" rx="1" fill="#EC4899"/></svg>
+                    五条收入线（规划口径 · 月度结构）
+                    <span class="note">比例 = 结构示意，非承诺</span>
+                </div>
+                <div class="inc-row"><div class="ir-name">接单派单差价</div><div class="ir-track"><div class="ir-fill" style="width:100%;background:linear-gradient(90deg,#7C3AED,#A855F7)">48%</div></div><div class="ir-val">¥50万<small>规划目标/月</small></div></div>
+                <div class="inc-row"><div class="ir-name">工具/模板售卖</div><div class="ir-track"><div class="ir-fill" style="width:58%;background:linear-gradient(90deg,#7C3AED,#C084FC)">17%</div></div><div class="ir-val">¥18万<small>规划目标/月</small></div></div>
+                <div class="inc-row"><div class="ir-name">会员订阅</div><div class="ir-track"><div class="ir-fill" style="width:42%;background:linear-gradient(90deg,#A855F7,#EC4899)">12%</div></div><div class="ir-val">¥12万<small>规划目标/月</small></div></div>
+                <div class="inc-row"><div class="ir-name">AI 定制服务</div><div class="ir-track"><div class="ir-fill" style="width:30%;background:linear-gradient(90deg,#EC4899,#F472B6)">8%</div></div><div class="ir-val">¥8万<small>规划目标/月</small></div></div>
+                <div class="inc-row"><div class="ir-name">项目孵化分红</div><div class="ir-track"><div class="ir-fill" style="width:20%;background:linear-gradient(90deg,#F59E0B,#FBBF24)">5%</div></div><div class="ir-val">¥5万<small>规划目标/月</small></div></div>
+                <div style="font-size:10px;color:var(--mute);margin-top:8px">合计规划月流水 ¥93万 · 轻资产高毛利，平台留存为主</div>
+            </div>
+
+            <!-- 商业飞轮 -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 9 9" stroke="#A855F7" stroke-width="2" stroke-linecap="round"/><path d="M12 3v9h9" stroke="#EC4899" stroke-width="2" stroke-linecap="round"/></svg>
+                    商业飞轮
+                </div>
+                <div class="flywheel">
+                    <svg class="fw-ring" viewBox="0 0 330 330">
+                        <circle cx="165" cy="165" r="150" fill="none" stroke="rgba(168,85,247,.18)" stroke-width="2"/>
+                        <circle cx="165" cy="165" r="118" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="1" stroke-dasharray="3 5"/>
+                        <path d="M165 15 A150 150 0 0 1 273 52" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M273 52 A150 150 0 0 1 315 165" fill="none" stroke="#C084FC" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M315 165 A150 150 0 0 1 220 297" fill="none" stroke="#EC4899" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M220 297 A150 150 0 0 1 60 272" fill="none" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M60 272 A150 150 0 0 1 15 165" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="165" cy="15" r="6" fill="#A855F7"/><circle cx="273" cy="52" r="6" fill="#C084FC"/><circle cx="315" cy="165" r="6" fill="#EC4899"/><circle cx="220" cy="297" r="6" fill="#F59E0B"/><circle cx="60" cy="272" r="6" fill="#34D399"/>
+                    </svg>
+                    <div class="fw-center"><div class="t">CF 飞轮</div><div class="s">每单成交都沉淀为下次获客</div></div>
+                    <div class="fw-node" style="top:-6px;left:50%;transform:translateX(-50%)"><div class="nt">获客</div><div class="nd">内容+案例+招商引流</div></div>
+                    <div class="fw-node" style="top:64px;right:-12px"><div class="nt">线索</div><div class="nd">登记自动进云端后台</div></div>
+                    <div class="fw-node" style="top:150px;right:-16px"><div class="nt">成交</div><div class="nd">转客户→订单→收款</div></div>
+                    <div class="fw-node" style="top:236px;right:2px"><div class="nt">交付</div><div class="nd">自营 or 派单网络</div></div>
+                    <div class="fw-node" style="top:250px;left:50%;transform:translateX(-50%)"><div class="nt">复利</div><div class="nd">案例沉淀→复购→转介绍</div></div>
+                    <div class="fw-node" style="top:64px;left:-14px"><div class="nt" style="opacity:0">·</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 里程碑 + 融资 ===== -->
+    <div class="sec">
+        <div class="grid2">
+            <div class="card">
+                <div class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M12 3v18" stroke="#A855F7" stroke-width="2"/></svg>
+                    发展阶段与里程碑
+                </div>
+                <div class="mile">
+                    <div class="mile-step"><span class="done">已完成</span><div class="mt">MVP 验证</div><div class="mn">闭环跑通</div><div class="md">工具→接单→交付→案例<br>真实流程可走通</div></div>
+                    <div class="mile-step now"><span class="done" style="color:var(--purple-light)">当前</span><div class="mt">生态放大</div><div class="mn">16 板块上线</div><div class="md">交付网络扩张<br>支付闭环搭建中</div></div>
+                    <div class="mile-step"><div class="mt">D30 目标</div><div class="mn">付费验证</div><div class="md">5 个真实付费客户<br>月流水进入记录</div></div>
+                    <div class="mile-step"><div class="mt">D90 目标</div><div class="mn">规模化复制</div><div class="md">城市合伙人<br>跨城市扩张</div></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#EC4899" stroke-width="2"/><path d="M12 7v5l3 2" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/></svg>
+                    本轮融资需求
+                </div>
+                <div class="ask-box">
+                    <div class="a-num">¥50–100 万</div>
+                    <div class="a-sub">天使轮 · 出让 10–15% · 里程碑对赌制</div>
+                    <div class="a-tag">先做验证，不空谈估值</div>
+                </div>
+                <div class="fund-row"><div class="fr-name">产品开发</div><div class="fr-track"><div class="fr-fill" style="width:30%;background:linear-gradient(90deg,#7C3AED,#A855F7)"></div></div><div class="fr-val">30%</div></div>
+                <div class="fund-row"><div class="fr-name">市场获客</div><div class="fr-track"><div class="fr-fill" style="width:25%;background:linear-gradient(90deg,#A855F7,#C084FC)"></div></div><div class="fr-val">25%</div></div>
+                <div class="fund-row"><div class="fr-name">交付网络</div><div class="fr-track"><div class="fr-fill" style="width:20%;background:linear-gradient(90deg,#EC4899,#F472B6)"></div></div><div class="fr-val">20%</div></div>
+                <div class="fund-row"><div class="fr-name">品牌建设</div><div class="fr-track"><div class="fr-fill" style="width:15%;background:linear-gradient(90deg,#F59E0B,#FBBF24)"></div></div><div class="fr-val">15%</div></div>
+                <div class="fund-row"><div class="fr-name">运营储备</div><div class="fr-track"><div class="fr-fill" style="width:10%;background:linear-gradient(90deg,#34D399,#6EE7B7)"></div></div><div class="fr-val">10%</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 联系 ===== -->
+    <div class="sec">
+        <div class="contact-strip">
+            <div class="cs-left">
+                <div class="t">想投资 / 想合作？</div>
+                <div class="s">先逛生态，觉得靠谱再聊 · 邮件：shim16506@gmail.com</div>
+            </div>
+            <div class="cs-right">
+                <a class="btn btn-ghost" href="invest.html">查看招商详情</a>
+                <a class="btn btn-ghost" href="demo-gallery.html">真实案例广场</a>
+                <a class="btn btn-main" href="cfapp/index.html">进入生态 App</a>
+                <button class="btn btn-gold" onclick="copyPitch()">一键复制路演话术</button>
+            </div>
+        </div>
+        <div style="font-size:10px;color:var(--mute);text-align:center;margin-top:12px" id="copyTip">💡 一键复制路演话术，粘贴到微信/邮件发给投资人</div>
+    </div>
+
+    <div class="footer">
+        <div class="fl">Crazy Friday · 疯狂星期五</div>
+        一个人 + AI = 一家公司<br>
+        © 2026 Crazy Friday 生态 · 数据诚实标注，绝不虚报
+    </div>
+</div>
+
+<script>
+/* ===== 实时时钟 ===== */
+function tick(){
+    const d = new Date();
+    const p = n => String(n).padStart(2,'0');
+    document.getElementById('clock').textContent = d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+}
+tick(); setInterval(tick, 1000);
+
+/* ===== 云端真实数据 ===== */
+const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+function fmt(n){ return n >= 10000 ? (n/10000).toFixed(1)+'万+' : n+'+' ; }
+fetch(CLOUD).then(r=>r.json()).then(cloud=>{
+    const p = (cloud.partners||[]).length;
+    const c = (cloud.demo_cases||[]).length;
+    const o = (cloud.orders||[]).length;
+    if (p) { document.getElementById('kpiPartners').textContent = fmt(p); document.getElementById('liveTag1').textContent = '云端实时'; }
+    if (c) { document.getElementById('kpiCases').textContent = fmt(c); document.getElementById('liveTag2').textContent = '云端实时'; }
+    if (o) { document.getElementById('kpiOrders').textContent = fmt(o); document.getElementById('liveTag3').textContent = '云端实时'; }
+}).catch(e=>{
+    /* 云端不可用时，明确标注，不假装有数据 */
+    ['liveTag1','liveTag2','liveTag3'].forEach(id=>{ document.getElementById(id).textContent='待接入'; document.getElementById(id).style.color='var(--red)'; });
+    document.getElementById('kpiPartners').textContent='--';
+    document.getElementById('kpiCases').textContent='--';
+    document.getElementById('kpiOrders').textContent='--';
+});
+
+/* ===== 一键复制路演话术 ===== */
+function copyPitch(){
+    const text = [
+        '【Crazy Friday · 疯狂星期五｜AI一人公司生态 · 路演简介】',
+        '',
+        '一句话定位：一个人+AI就是一家公司，中国版Fiverr/Upwork的AI垂直版。',
+        '',
+        '商业闭环：工具库→玩法库→接单工坊→交付网络→案例广场→招商合作，全链路已上线。',
+        '',
+        '五条收入线（规划口径）：接单派单差价 / 工具模板售卖 / 会员订阅 / AI定制 / 项目孵化分红。',
+        '',
+        '当前阶段：16大板块+37工具+9玩法已上线，正在补支付闭环与真实成交验证。',
+        '',
+        '本轮融资：¥50-100万天使轮，出让10-15%，里程碑对赌，先做验证不空谈估值。',
+        '',
+        '资金用途：产品开发30% / 市场获客25% / 交付网络20% / 品牌15% / 运营10%。',
+        '',
+        '数据诚实：大屏上"云端实时"= 真实可核验，"规划口径"= 目标值，绝不虚报。',
+        '',
+        '想投资/合作：shim16506@gmail.com',
+        '路演大屏：https://shiming-ai.github.io/shiming-workbench/invest-dashboard.html'
+    ].join('\n');
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(ok, ()=>fallback(text)); }
+    else fallback(text);
+}
+function fallback(t){
+    const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); ok(); } catch(e){}
+    document.body.removeChild(ta);
+}
+function ok(){ document.getElementById('copyTip').textContent = '✅ 已复制！直接粘贴到微信/邮件发给对方'; }
+</script>
+
+</body>
+</html>
