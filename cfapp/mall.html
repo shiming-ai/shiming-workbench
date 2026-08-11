@@ -4,20 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<title>简单大厅 · Crazy Friday</title>
+<meta name="description" content="Crazy Friday · 模板/提示词/SOP市集 · 一次开发零成本卖多次">
+<title>模板市集 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.good-card { display:flex; gap:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin-bottom:12px; cursor:pointer; }
-.good-img { width:88px; height:88px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:38px; flex-shrink:0; }
-.good-name { font-size:14px; font-weight:800; }
-.good-tags { display:flex; gap:4px; margin-top:4px; }
-.good-price { font-size:15px; font-weight:900; color:#C084FC; margin-top:6px; }
-.good-old { font-size:10px; color:#6d6489; text-decoration:line-through; margin-left:6px; }
-.good-buy { display:inline-block; margin-top:8px; padding:5px 14px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:14px; font-size:11px; font-weight:700; }
-.cat-row { display:flex; gap:8px; padding:0 18px; overflow-x:auto; margin-bottom:16px; scrollbar-width:none; }
+.mall-hero { padding:24px 18px 12px; }
+.mall-hero h2 { font-size:22px; font-weight:900; }
+.mall-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.search-row { padding:0 18px 12px; }
+.search-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:11px 14px; display:flex; align-items:center; gap:8px; }
+.search-box input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:13px; }
+.cat-row { display:flex; gap:8px; padding:0 18px 14px; overflow-x:auto; scrollbar-width:none; }
 .cat-row::-webkit-scrollbar { display:none; }
-.cat-chip { flex-shrink:0; padding:7px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; }
-.cat-chip.active { background:rgba(168,85,247,.2); border-color:#A855F7; color:#C084FC; font-weight:700; }
+.cat-chip { flex-shrink:0; padding:8px 14px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; font-weight:700; }
+.cat-chip.active { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; box-shadow:0 4px 14px rgba(168,85,247,.35); }
+.mall-list { padding:0 18px 20px; }
+.mall-item { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin-bottom:10px; transition:transform .12s; position:relative; overflow:hidden; }
+.mall-item.bought { border-color:rgba(52,211,153,.4); background:rgba(52,211,153,.05); }
+.mall-item::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--mc,#A855F7),transparent); }
+.mall-head { display:flex; gap:12px; margin-bottom:10px; }
+.mall-ico { width:62px; height:62px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:30px; flex-shrink:0; }
+.mall-info { flex:1; min-width:0; }
+.mall-name { font-size:14px; font-weight:800; }
+.mall-tags { display:flex; gap:5px; margin-top:5px; flex-wrap:wrap; }
+.mtag { font-size:9px; padding:2px 7px; border-radius:8px; font-weight:700; }
+.mtag-hot { background:rgba(255,215,0,.15); color:#FFD700; }
+.mtag-new { background:rgba(168,85,247,.15); color:#C084FC; }
+.mtag-tag { background:rgba(96,165,250,.12); color:#60A5FA; }
+.mall-desc { font-size:11px; color:#a89ec9; line-height:1.6; margin-bottom:8px; }
+.mall-bottom { display:flex; align-items:center; justify-content:space-between; }
+.mall-price { font-size:18px; font-weight:900; color:#FFD700; }
+.mall-old { font-size:10px; color:#6d6489; text-decoration:line-through; margin-left:6px; }
+.mall-sales { font-size:10px; color:#6d6489; }
+.mall-actions { display:flex; gap:6px; }
+.mall-btn { padding:8px 16px; border-radius:12px; font-size:11px; font-weight:800; cursor:pointer; border:none; }
+.mall-buy { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; box-shadow:0 4px 14px rgba(168,85,247,.3); }
+.mall-buy:active { transform:scale(.96); }
+.mall-bought { background:rgba(52,211,153,.18); color:#34D399; }
+.mall-view { background:rgba(255,255,255,.06); color:#a89ec9; border:1px solid var(--border); }
+.bought-badge { position:absolute; top:10px; right:10px; font-size:9px; padding:3px 9px; border-radius:8px; background:linear-gradient(135deg,#34D399,#10b981); color:#fff; font-weight:800; }
+.preview-overlay { position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter:blur(10px); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; }
+.preview-card { background:#1a0d2e; border:1px solid var(--border); border-radius:18px; padding:24px; max-width:400px; max-height:80vh; overflow-y:auto; }
+.preview-card h3 { font-size:18px; font-weight:900; margin-bottom:12px; }
+.preview-card pre { background:rgba(0,0,0,.4); border-radius:10px; padding:14px; font-size:12px; line-height:1.7; overflow-x:auto; color:#34D399; white-space:pre-wrap; word-break:break-all; }
+.preview-close { display:block; margin-top:14px; padding:10px; text-align:center; background:var(--card2); border-radius:10px; font-size:13px; font-weight:700; cursor:pointer; }
+.empty-mall { text-align:center; padding:40px 20px; color:#6d6489; font-size:13px; }
 </style>
 </head>
 <body data-tab="discover">
@@ -26,69 +57,242 @@
     <div class="brand">
         <div class="brand-icon">CF</div>
         <div>
-            <div class="brand-name">简单大厅</div>
-            <div class="brand-sub">10 · 商品</div>
+            <div class="brand-name">模板市集</div>
+            <div class="brand-sub">10 · 付费模板/SOP/提示词包</div>
         </div>
     </div>
-    <div class="bell">🔍</div>
+    <div class="bell" style="cursor:pointer" onclick="showMyPurchases()">📦</div>
 </div>
 
 <div class="wrap">
-    <div style="padding:16px 18px 12px">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
+    <div class="mall-hero">
+        <h2>模板<span style="color:#FFD700">市集</span></h2>
+        <p>我把跑通的提示词包、SOP文档、Agent配置、视频素材<br>做成可复用模板，<b style="color:#FFD700">一次开发零成本多次卖</b></p>
+    </div>
+
+    <div class="search-row">
+        <div class="search-box">
             <span style="color:#8d82a8">🔍</span>
-            <input placeholder="搜索商品..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
+            <input id="searchInput" placeholder="搜索模板...">
         </div>
     </div>
 
-    <div class="cat-row">
-        <span class="cat-chip active">全部</span>
-        <span class="cat-chip">最新</span>
-        <span class="cat-chip">推荐</span>
-        <span class="cat-chip">高价</span>
-    </div>
+    <div class="cat-row" id="catBar"></div>
 
-    <div class="section" style="padding-top:0">
-        <div class="good-card">
-            <div class="good-img" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.1))">🎬</div>
-            <div style="flex:1">
-                <div class="good-name">AI产品宣传片创作</div>
-                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700">爆款</span><span style="font-size:9px;padding:2px 6px;background:rgba(255,255,255,.06);border-radius:6px;color:#a89ec9">视频</span></div>
-                <div class="good-price">¥8,000<span class="good-old">¥10,000</span></div>
-                <span class="good-buy">立即购买</span>
-            </div>
-        </div>
-        <div class="good-card">
-            <div class="good-img" style="background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(52,211,153,.1))">💻</div>
-            <div style="flex:1">
-                <div class="good-name">企业AI解决方案开发</div>
-                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(168,85,247,.15);border-radius:6px;color:#C084FC;font-weight:700">定制</span></div>
-                <div class="good-price">¥20,000<span class="good-old">¥25,000</span></div>
-                <span class="good-buy">立即购买</span>
-            </div>
-        </div>
-        <div class="good-card">
-            <div class="good-img" style="background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(34,211,238,.1))">📊</div>
-            <div style="flex:1">
-                <div class="good-name">AI数据分析报告</div>
-                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(255,255,255,.06);border-radius:6px;color:#a89ec9">数据</span></div>
-                <div class="good-price">¥3,000<span class="good-old">¥4,000</span></div>
-                <span class="good-buy">立即购买</span>
-            </div>
-        </div>
-        <div class="good-card">
-            <div class="good-img" style="background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(244,63,94,.1))">📱</div>
-            <div style="flex:1">
-                <div class="good-name">小红书AI陪跑营</div>
-                <div class="good-tags"><span style="font-size:9px;padding:2px 6px;background:rgba(255,215,0,.15);border-radius:6px;color:#FFD700;font-weight:700">推荐</span></div>
-                <div class="good-price">¥1,999<span class="good-old">¥2,999</span></div>
-                <span class="good-buy">立即购买</span>
-            </div>
-        </div>
+    <div class="mall-list" id="mallList"></div>
+
+    <div class="tip" style="margin:0 18px 20px">
+        💡 购买后<b style="color:#34D399">永久访问</b>，可在「📦 我的购买」查看<br>
+        沙箱环境模拟支付，真实接入请联系我们
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+// ============ 商品数据 ============
+const PRODUCTS = [
+    { id:'m1', ico:'✍️', cat:'提示词包', name:'小红书爆款提示词包·100条', desc:'100条实测爆款标题+正文模板，复制就能用。覆盖美妆/穿搭/美食/职场/教育5大行业', price:99, old:199, sales:1284, color:'#EC4899', tags:['爆款','立即见效'], type:'prompts',
+      preview:`# 小红书爆款标题模板
+
+## 美妆类
+1. 姐妹们！这个真的不是智商税！
+2. 黄黑皮逆袭冷白皮，就靠这3步
+3. 化妆师闺蜜偷偷教我的...
+
+## 穿搭类
+1. 梨形身材的姐妹看过来
+2. 这件衣服我回购了5次
+3. 通勤穿搭天花板` },
+
+    { id:'m2', ico:'📋', cat:'SOP文档', name:'接单派单·全流程SOP', desc:'从接客户需求→派单给交付→验收→收款→评价的完整SOP，含话术模板/报价公式/合同要点', price:299, old:599, sales:856, color:'#A855F7', tags:['必买','核心方法论'], type:'sop',
+      preview:`# 接单派单 SOP
+
+## 1. 接单
+- 客户在接单工坊发需求
+- 12小时内响应
+- 3天内给报价
+
+## 2. 报价
+- 公式：成本×2~3
+- 大单降10% 锁长期
+- 报价单含3-4个选项
+
+## 3. 派单
+- 优先派给评分≥4的合作商
+- 复杂项目拆3段付` },
+
+    { id:'m3', ico:'🤖', cat:'Agent配置', name:'Coze智能客服Agent·模板', desc:'一键导入Coze即用，3步搭好电商/教育/服务的24小时智能客服', price:499, old:999, sales:612, color:'#22D3EE', tags:['爆款','省时'], type:'config',
+      preview:`# Coze 智能客服 Agent
+
+## 3步搭好
+1. 创建Bot → 选择「知识库增强」
+2. 导入产品FAQ → 设触发规则
+3. 发布到微信公众号/抖音
+
+## 适用场景
+✓ 电商客服  ✓ 教育答疑  ✓ 本地服务` },
+
+    { id:'m4', ico:'🎬', cat:'视频素材', name:'AI产品宣传片·10个模板', desc:'Midjourney提示词+Runway模板，10个行业的30秒宣传片素材', price:399, old:799, sales:524, color:'#34D399', tags:['实用','热门'], type:'video',
+      preview:`# 10个行业视频模板
+
+1. 餐饮引流片
+2. 课程招生片
+3. 美业转化片
+4. 实体零售
+5. 知识付费` },
+
+    { id:'m5', ico:'🛠', cat:'提示词包', name:'AI绘画·商业变现提示词集', desc:'200条商业用途提示词：电商主图/品牌海报/小红书封面/IP形象定制', price:199, old:399, sales:1102, color:'#F472B6', tags:['新','高销量'], type:'prompts',
+      preview:`# AI绘画商业提示词
+
+电商主图模板：
+[产品] + [背景] + [光线] + [风格] + --ar 1:1 --q 2
+
+品牌海报模板：
+[品牌名] + [主视觉] + [留白] + [质感]` },
+
+    { id:'m6', ico:'📊', cat:'SOP文档', name:'一人公司·财务管理体系SOP', desc:'从记账/预算/现金流/税务的全套方法，附Excel模板', price:599, old:1199, sales:387, color:'#FFD700', tags:['高客单'], type:'sop',
+      preview:`# 一人公司财务 SOP
+
+## 三大表
+1. 现金流表（每日）
+2. 利润表（每月）
+3. 资产负债表（每季）
+
+## 关键指标
+- 现金流健康度
+- 客户回款周期` },
+
+    { id:'m7', ico:'🎯', cat:'Agent配置', name:'AI营销Agent·私域SOP', desc:'微信号/微信群自动化运营Agent，AI自动接待+标签+促活', price:799, old:1499, sales:298, color:'#F59E0B', tags:['爆款'], type:'config',
+      preview:`# AI营销 Agent 私域SOP
+
+## 配置
+1. 接入Coze/Dify
+2. 设触发关键词
+3. 自动打标签
+4. 定时推送内容` },
+
+    { id:'m8', ico:'📝', cat:'提示词包', name:'公众号10w+爆文·提示词集', desc:'50个真实爆款文章结构+AI生成提示词', price:149, old:299, sales:945, color:'#60A5FA', tags:['销量王'], type:'prompts',
+      preview:`# 公众号10w+爆文结构
+
+## 故事型
+- 引入冲突 → 转折 → 升华 → 行动
+
+## 干货型
+- 抛出问题 → 拆解 → 案例 → 总结` },
+
+    { id:'m9', ico:'💼', cat:'SOP文档', name:'一人微SaaS·从0到1上线SOP', desc:'找痛点→7天MVP→定价→收款→迭代的完整手册，Marc Lou式微SaaS路径', price:899, old:1799, sales:198, color:'#FF6B1A', tags:['高价值','新'], type:'sop',
+      preview:`# 一人微SaaS 上线SOP
+
+## Day 1-2 找痛点
+- 列你最烦的事
+- 选评分≥7分的
+
+## Day 3-5 MVP
+- Cursor/Bolt出MVP
+- 跑通核心功能` },
+
+    { id:'m10', ico:'🎁', cat:'视频素材', name:'直播带货片头包·50个', desc:'50个不同风格的15秒直播片头，含BGM+转场+文字动画', price:299, old:599, sales:412, color:'#A66BFF', tags:['热门'], type:'video',
+      preview:`# 直播片头包
+
+## 风格分类
+1. 知识分享型（15个）
+2. 带货种草型（15个）
+3. 品牌故事型（10个）
+4. 节日营销型（10个）` }
+];
+
+const CATS = ['全部','提示词包','SOP文档','Agent配置','视频素材'];
+let curCat = '全部', searchKw = '';
+const MY_KEY = 'cf_mall_purchases';
+function getMy(){ try{ return JSON.parse(localStorage.getItem(MY_KEY))||[] }catch(e){ return [] } }
+function setMy(a){ localStorage.setItem(MY_KEY, JSON.stringify(a)) }
+
+function renderCats(){
+    document.getElementById('catBar').innerHTML = CATS.map(c =>
+        `<span class="cat-chip ${c===curCat?'active':''}" onclick="setCat('${c}')">${c}</span>`).join('');
+}
+function setCat(c){ curCat = c; renderCats(); renderList(); }
+
+function renderList(){
+    const my = getMy();
+    const boughtIds = my.map(m => m.id);
+    let arr = PRODUCTS.filter(p => (curCat==='全部'||p.cat===curCat) && (!searchKw || (p.name+p.desc+p.cat).toLowerCase().includes(searchKw.toLowerCase())));
+    const list = document.getElementById('mallList');
+    if (!arr.length) {
+        list.innerHTML = '<div class="empty-mall">🔍 没找到匹配的商品</div>';
+        return;
+    }
+    list.innerHTML = arr.map(p => {
+        const bought = boughtIds.includes(p.id);
+        const tags = p.tags.map(t => `<span class="mtag ${t==='爆款'?'mtag-hot':t==='新'||t==='立即见效'?'mtag-new':'mtag-tag'}">${t}</span>`).join('');
+        return `<div class="mall-item ${bought?'bought':''}" style="--mc:${p.color}">
+            ${bought?'<div class="bought-badge">✓ 已购</div>':''}
+            <div class="mall-head">
+                <div class="mall-ico" style="background:${p.color}22;color:${p.color}">${p.ico}</div>
+                <div class="mall-info">
+                    <div class="mall-name">${p.name}</div>
+                    <div class="mall-tags">${tags}</div>
+                </div>
+            </div>
+            <div class="mall-desc">${p.desc}</div>
+            <div class="mall-bottom">
+                <div>
+                    <div><span class="mall-price">¥${p.price}</span>${p.old?'<span class="mall-old">¥'+p.old+'</span>':''}</div>
+                    <div class="mall-sales">已售 ${p.sales}+</div>
+                </div>
+                <div class="mall-actions">
+                    ${bought
+                        ? `<button class="mall-btn mall-view" onclick="previewProduct('${p.id}')">👁 查看内容</button>`
+                        : `<button class="mall-btn mall-buy" onclick="buyProduct('${p.id}')">💎 购买</button>`
+                    }
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function buyProduct(id){
+    const p = PRODUCTS.find(x => x.id===id);
+    if (!p) return;
+    if (!confirm(`💎 确认购买《${p.name}》?\n\n价格：¥${p.price}\n\n沙箱环境模拟支付（点确定算支付成功）`)) return;
+    const my = getMy();
+    if (my.find(m => m.id === id)) { toast('已购买，请查看'); return; }
+    my.unshift({
+        id, name: p.name, price: p.price,
+        time: new Date().toISOString().slice(0,10),
+        orderId: 'cf_' + Date.now()
+    });
+    setMy(my);
+    renderList();
+    toast('✅ 支付成功！永久查看权限');
+}
+function previewProduct(id){
+    const p = PRODUCTS.find(x => x.id===id);
+    if (!p) return;
+    const my = getMy();
+    if (!my.find(m => m.id === id)) { toast('请先购买'); return; }
+    const overlay = document.createElement('div');
+    overlay.className = 'preview-overlay';
+    overlay.onclick = (e) => { if (e.target === overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="preview-card">
+        <h3>${p.ico} ${p.name}</h3>
+        <div style="font-size:11px;color:#a89ec9;margin-bottom:10px">¥${p.price} · 已购买 · 永久查看</div>
+        <pre>${p.preview}</pre>
+        <div class="preview-close" onclick="document.body.removeChild(this.parentElement.parentElement)">关闭</div>
+    </div>`;
+    document.body.appendChild(overlay);
+}
+function showMyPurchases(){
+    const my = getMy();
+    if (!my.length) return toast('📦 暂无购买记录');
+    const list = my.map(m => `• ${m.name} ¥${m.price} ${m.time}`).join('\n');
+    alert(`📦 我的购买（${my.length}）\n\n${list}\n\n可在 mall.html 搜索商品再次查看`);
+}
+document.getElementById('searchInput').addEventListener('input', e => { searchKw = e.target.value; renderList(); });
+
+renderCats();
+renderList();
+</script>
 </body>
 </html>
