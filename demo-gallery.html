@@ -222,6 +222,8 @@ body::before {
 .real-case-status { font-size:9px; padding:2px 7px; border-radius:8px; background:rgba(0,217,163,.15); color:var(--green); font-weight:700; }
 .real-empty { text-align:center; padding:16px; color:var(--text-mute); font-size:11px; }
 </style>
+<!-- 实时成交滚动条（信任感可视化） -->
+<div id="cfLiveTicker"></div>
 <div class="real-cases" id="realCases">
     <div class="real-cases-title">🎬 最新真实成交案例</div>
     <div id="realCasesList">
@@ -229,7 +231,39 @@ body::before {
     </div>
 </div>
 <script>
-const DEMO_CLOUD = 'https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7';
+const DEMO_CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+/* 实时成交滚动条（独立实现，供未引入 app.js 的页面使用） */
+(function(){
+    const host = document.getElementById('cfLiveTicker'); if (!host) return;
+    const st = document.createElement('style'); st.textContent = `
+#cfLiveTicker { overflow:hidden; border-radius:14px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); margin:0 0 16px; }
+#cfLiveTicker .tk-in { display:flex; white-space:nowrap; padding:11px 0; animation:cf-scroll 28s linear infinite; }
+#cfLiveTicker:hover .tk-in { animation-play-state:paused; }
+@keyframes cf-scroll { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
+#cfLiveTicker .tk { display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:#d8d0f0; padding:0 18px; }
+#cfLiveTicker .chk { color:#34D399; font-weight:900; }
+#cfLiveTicker b { color:#FFD700; }
+#cfLiveTicker .tm { color:#6d6489; font-size:10px; }
+#cfLiveTicker .sep { width:1px; height:12px; background:rgba(255,255,255,.12); margin:0 6px; }`;
+    document.head.appendChild(st);
+    const seed = [
+        {sku_name:'AI工作台定制', price:299, time:'今天 09:42'},
+        {sku_name:'小红书提示词包', price:29, time:'今天 09:15'},
+        {sku_name:'变现玩法 SOP 合集', price:69, time:'昨天 21:03'},
+        {sku_name:'AI 漫剧代工', price:999, time:'昨天 16:20'},
+        {sku_name:'Pro 会员开通', price:99, time:'昨天 11:47'},
+        {sku_name:'定制 AI 应用', price:499, time:'前天 14:05'}
+    ];
+    function render(list){
+        if (!list || !list.length) list = seed;
+        const inner = list.map(o => `<span class="tk"><span class="chk">✓</span>刚刚成交 <b>¥${o.price}</b> · ${o.sku_name}<span class="tm">${o.time||''}</span></span><span class="sep"></span>`).join('');
+        host.innerHTML = `<div class="tk-in">${inner}${inner}</div>`;
+    }
+    fetch(DEMO_CLOUD).then(r=>r.json()).then(c=>{
+        const orders = (c.orders||[]).filter(o => o.pay_status === 'paid').slice(0, 12);
+        render(orders.length ? orders.map(o=>({sku_name:o.sku_name, price:o.price, time:(o.time||'').slice(5,16)})) : null);
+    }).catch(()=>render(null));
+})();
 function fmtRev(n) { return n >= 10000 ? (n/10000).toFixed(1)+'万' : n.toLocaleString(); }
 function loadRealCases() {
     fetch(DEMO_CLOUD).then(r=>r.json()).then(cloud=>{
