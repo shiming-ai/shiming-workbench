@@ -2,43 +2,55 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<title>我的 · Crazy Friday</title>
+<title>我的 · Crazy Friday 驾驶舱</title>
 <link rel="stylesheet" href="style.css">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; min-height:100vh; padding-bottom:80px; }
-.wrap { max-width:480px; margin:0 auto; }
-
-.user-hero { padding:24px 20px; display:flex; align-items:center; gap:14px; }
-.avatar-lg { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#7C3AED,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; }
-.user-name { font-size:17px; font-weight:900; }
-.user-id { font-size:11px; color:#8d82a8; margin-top:2px; }
-.user-badges { display:flex; gap:6px; margin-top:6px; }
+.user-hero { padding:24px 20px 16px; display:flex; align-items:center; gap:14px; position:relative; overflow:hidden; }
+.user-hero::after { content:''; position:absolute; top:-60px; right:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle, rgba(168,85,247,.25), transparent 70%); pointer-events:none; }
+.avatar-lg { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#7C3AED,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; box-shadow:0 4px 20px rgba(168,85,247,.4); position:relative; z-index:1; }
+.user-name { font-size:18px; font-weight:900; position:relative; z-index:1; }
+.user-id { font-size:11px; color:#8d82a8; margin-top:2px; position:relative; z-index:1; }
+.user-badges { display:flex; gap:6px; margin-top:6px; position:relative; z-index:1; }
 .badge { font-size:9px; padding:2px 8px; border-radius:8px; font-weight:700; }
 .badge-gold { background:rgba(255,215,0,.15); color:#FFD700; }
 .badge-purple { background:rgba(168,85,247,.15); color:#C084FC; }
-
-.data-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0 20px 8px; }
-.data-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px 6px; text-align:center; }
-.data-card .num { font-size:20px; font-weight:900; color:#C084FC; }
-.data-card .lbl { font-size:10px; color:#8d82a8; margin-top:3px; }
-
-.tabs { display:flex; gap:8px; padding:14px 20px; }
+.badge-green { background:rgba(52,211,153,.15); color:#34D399; }
+.badge-gray { background:rgba(255,255,255,.08); color:#8d82a8; }
+.data-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:0 20px 14px; }
+.data-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 4px; text-align:center; cursor:pointer; }
+.data-card:active { transform:scale(.95); }
+.data-card .num { font-size:19px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.data-card .lbl { font-size:9px; color:#8d82a8; margin-top:3px; }
+.mem-banner { margin:0 20px 14px; padding:12px 14px; border-radius:14px; display:flex; align-items:center; gap:10px; cursor:pointer; }
+.mem-active { background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(245,158,11,.05)); border:1px solid rgba(255,215,0,.3); }
+.mem-free { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); }
+.mem-ico { font-size:24px; }
+.mem-name { font-size:13px; font-weight:800; flex:1; }
+.mem-sub { font-size:10px; color:#8d82a8; margin-top:2px; }
+.mem-cta { font-size:10px; padding:6px 14px; border-radius:16px; font-weight:800; }
+.mem-cta.gold { background:linear-gradient(135deg,#FFD700,#F59E0B); color:#1a0d2e; }
+.mem-cta.plain { background:rgba(255,255,255,.08); color:#C084FC; }
+.sec-label { font-size:14px; font-weight:900; padding:16px 20px 10px; display:flex; align-items:center; gap:6px; }
+.sec-label .dot { width:8px; height:8px; border-radius:50%; background:linear-gradient(135deg,#A855F7,#EC4899); box-shadow:0 0 8px rgba(168,85,247,.5); }
+.asset-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 20px; }
+.asset-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; cursor:pointer; }
+.asset-card:active { transform:scale(.97); }
+.asset-ico { font-size:24px; margin-bottom:6px; }
+.asset-name { font-size:12px; font-weight:800; }
+.asset-desc { font-size:10px; color:#8d82a8; margin-top:3px; line-height:1.5; }
+.asset-num { font-size:10px; color:#C084FC; font-weight:700; margin-top:5px; }
+.tabs { display:flex; gap:8px; padding:16px 20px 12px; }
 .tab { flex:1; padding:9px; text-align:center; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; font-size:12px; font-weight:700; color:#8d82a8; cursor:pointer; }
 .tab.active { background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.1)); border-color:#A855F7; color:#C084FC; }
-
-.list { padding:0 20px; }
+.list { padding:0 20px 24px; }
 .post-item { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; margin-bottom:10px; cursor:pointer; }
 .post-item .pt { font-size:14px; font-weight:800; margin-bottom:6px; }
 .post-item .pc { font-size:12px; color:#a89ec9; line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .post-item .pm { display:flex; gap:14px; margin-top:8px; font-size:10px; color:#6d6489; }
 .empty { background:rgba(255,255,255,.04); border:1px dashed rgba(255,255,255,.1); border-radius:14px; padding:30px 16px; text-align:center; color:#8d82a8; font-size:12px; }
 .empty .em { font-size:34px; margin-bottom:8px; }
-
-#toast { position:fixed; bottom:100px; left:50%; z-index:200; transform:translateX(-50%) translateY(20px); background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; opacity:0; transition:all .3s; pointer-events:none; }
-#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body data-tab="me">
@@ -48,37 +60,52 @@ body { background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSyst
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">我的</div>
-            <div class="brand-sub">Crazy Friday</div>
+            <div class="brand-sub">Crazy Friday 驾驶舱</div>
         </div>
     </div>
-    <div class="bell">⚙️</div>
+    <div class="bell" style="cursor:pointer" onclick="location.href='search.html'">🔍</div>
 </div>
 
 <div class="wrap">
+    <!-- 用户卡 -->
     <div class="user-hero">
         <div class="avatar-lg">🦄</div>
         <div>
             <div class="user-name">时铭</div>
             <div class="user-id">Crazy Friday · 疯狂星期五</div>
-            <div class="user-badges">
-                <span class="badge badge-gold">💎 VIP</span>
+            <div class="user-badges" id="userBadges">
                 <span class="badge badge-purple">创作者</span>
+                <span class="badge badge-green">生态主理人</span>
             </div>
         </div>
     </div>
 
-    <div class="data-cards">
-        <div class="data-card"><div class="num" id="myPostCount">0</div><div class="lbl">我的帖子</div></div>
-        <div class="data-card"><div class="num" id="myFavCount">0</div><div class="lbl">收藏</div></div>
-        <div class="data-card"><div class="num" id="myLikeCount">0</div><div class="lbl">获赞</div></div>
+    <!-- 会员横幅 -->
+    <div class="mem-banner mem-free" id="memBanner" onclick="location.href='member.html'">
+        <div class="mem-ico">💎</div>
+        <div style="flex:1"><div class="mem-name" id="memName">普通会员</div><div class="mem-sub" id="memSub">开通会员解锁全部权益</div></div>
+        <div class="mem-cta plain" id="memCta">去开通</div>
     </div>
 
+    <!-- 数据看板 -->
+    <div class="data-cards">
+        <div class="data-card" onclick="location.href='post.html?id=p1'"><div class="num" id="myPostCount">0</div><div class="lbl">帖子</div></div>
+        <div class="data-card" onclick="location.href='mall.html'"><div class="num" id="myBuyCount">0</div><div class="lbl">购买</div></div>
+        <div class="data-card" onclick="location.href='academy.html'"><div class="num" id="myCertCount">0</div><div class="lbl">证书</div></div>
+        <div class="data-card" onclick="location.href='brain.html'"><div class="num" id="myEmpCount">0</div><div class="lbl">AI员工</div></div>
+    </div>
+
+    <!-- 我的生态 -->
+    <div class="sec-label"><span class="dot"></span>🧩 我的生态</div>
+    <div class="asset-grid" id="assetGrid"></div>
+
+    <!-- 社区 -->
+    <div class="sec-label"><span class="dot"></span>📝 我的社区</div>
     <div class="tabs">
         <div class="tab active" id="tabPosts" onclick="switchTab('posts')">📝 我的帖子</div>
         <div class="tab" id="tabFavs" onclick="switchTab('favs')">⭐ 我的收藏</div>
         <div class="tab" id="tabAll" onclick="switchTab('all')">🗂️ 全部</div>
     </div>
-
     <div class="list" id="postList"></div>
 </div>
 
@@ -87,7 +114,55 @@ body { background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSyst
 <script src="data.js"></script>
 <script>
 let curTab = 'posts';
+function gls(k,d){ try{ const v=JSON.parse(localStorage.getItem(k)); return v===null?d:v }catch(e){ return d } }
 
+// ===== 会员状态 =====
+function renderMember(){
+    const sub = gls('cf_member_sub', null);
+    const el = document.getElementById('memBanner');
+    if (sub) {
+        el.className = 'mem-banner mem-active';
+        document.getElementById('memName').textContent = '💎 ' + sub.name;
+        document.getElementById('memSub').textContent = '订阅生效中 · ' + (sub.endTime||'').slice(0,10) + '到期';
+        document.getElementById('memCta').textContent = '管理';
+        document.getElementById('memCta').className = 'mem-cta gold';
+        document.getElementById('userBadges').innerHTML = '<span class="badge badge-gold">💎 '+sub.name+'</span><span class="badge badge-purple">创作者</span>';
+    }
+}
+
+// ===== 我的生态 =====
+function renderAssets(){
+    const buys = gls('cf_mall_purchases', []).length + gls('cf_store_orders', []).length;
+    const certs = gls('cf_academy_certs', []).length;
+    const emps = gls('cf_brain_emps', []).length;
+    const projects = gls('cf_incub_projects', []).length;
+    const apps = gls('cf_apps_installed', []).length;
+    const cases = gls('cf_demo_cases', []).length;
+    const claims = gls('cf_opc_claim', []).length;
+    document.getElementById('myBuyCount').textContent = buys;
+    document.getElementById('myCertCount').textContent = certs;
+    document.getElementById('myEmpCount').textContent = emps;
+
+    const assets = [
+        { i:'🛍️', n:'我的购买', d:'模板+工作台', num:buys, u:'mall.html' },
+        { i:'📦', n:'已装应用', d:'应用市场', num:apps, u:'apps.html' },
+        { i:'🏅', n:'结业证书', d:'AI营学习成果', num:certs, u:'academy.html' },
+        { i:'🤖', n:'AI员工', d:'超脑工坊', num:emps, u:'brain.html' },
+        { i:'🌱', n:'孵化项目', d:'在孵池', num:projects, u:'incubation.html' },
+        { i:'⚡', n:'认领项目', d:'OPC工场', num:claims, u:'opc.html' },
+        { i:'🎬', n:'成交案例', d:'案例沉淀', num:cases, u:'../demo-gallery.html' },
+        { i:'🗺️', n:'路线图进度', d:'创业从0到1', num:gls('cf_roadmap_done',[]).length+'/15', u:'roadmap.html' }
+    ];
+    document.getElementById('assetGrid').innerHTML = assets.map(a => `
+        <div class="asset-card" onclick="location.href='${a.u}'">
+            <div class="asset-ico">${a.i}</div>
+            <div class="asset-name">${a.n}</div>
+            <div class="asset-desc">${a.d}</div>
+            <div class="asset-num">${a.num}</div>
+        </div>`).join('');
+}
+
+// ===== 社区 =====
 function switchTab(t) {
     curTab = t;
     document.getElementById('tabPosts').classList.toggle('active', t==='posts');
@@ -95,19 +170,13 @@ function switchTab(t) {
     document.getElementById('tabAll').classList.toggle('active', t==='all');
     renderList();
 }
-
 function renderList() {
     const d = loadCommunity();
     document.getElementById('myPostCount').textContent = d.myPosts.length;
-    document.getElementById('myFavCount').textContent = d.myFavs.length;
-    const myLikes = d.posts.filter(p => p.liked).length;
-    document.getElementById('myLikeCount').textContent = myLikes;
-
     let items = [];
     if (curTab === 'posts') items = getMyPosts();
     else if (curTab === 'favs') items = getMyFavPosts();
     else items = d.posts;
-
     const list = document.getElementById('postList');
     if (items.length === 0) {
         list.innerHTML = '<div class="empty"><div class="em">📭</div>'+ (curTab==='favs' ? '还没有收藏' : curTab==='posts' ? '还没有发布帖子\n点首页 ✏️ 发布' : '暂无内容') +'</div>';
@@ -117,16 +186,11 @@ function renderList() {
         <div class="post-item" onclick="location.href='post.html?id=${p.id}'">
             <div class="pt">${p.title}</div>
             <div class="pc">${p.content.replace(/\n/g,' ')}</div>
-            <div class="pm">
-                <span>❤️ ${p.like}</span>
-                <span>⭐ ${p.fav}</span>
-                <span>💬 ${p.comment}</span>
-                <span style="margin-left:auto">${p.time}</span>
-            </div>
-        </div>
-    `).join('');
+            <div class="pm"><span>❤️ ${p.like}</span><span>⭐ ${p.fav}</span><span>💬 ${p.comment}</span><span style="margin-left:auto">${p.time}</span></div>
+        </div>`).join('');
 }
-
+renderMember();
+renderAssets();
 renderList();
 </script>
 </body>
