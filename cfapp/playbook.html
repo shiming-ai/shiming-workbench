@@ -4,31 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<meta name="description" content="Crazy Friday · AI变现玩法库 · 2026年真能跑通的赚钱路径">
-<title>AI变现玩法库 · Crazy Friday</title>
+<meta name="description" content="Crazy Friday · AI变现玩法库 · 9条可执行赚钱路径·工具+步骤+避坑">
+<title>变现玩法库 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.pb-hero { padding:28px 18px 12px; }
-.pb-hero h2 { font-size:22px; font-weight:900; margin-bottom:6px; }
-.pb-hero p { font-size:11px; color:#8d82a8; line-height:1.7; }
-.pb-section { padding:14px 18px 4px; font-size:13px; font-weight:800; color:#C084FC; }
-.pb-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin:8px 18px; position:relative; overflow:hidden; }
-.pb-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--pc,#A855F7),transparent); }
+.pb-hero { padding:26px 18px 12px; }
+.pb-hero h2 { font-size:24px; font-weight:900; }
+.pb-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.pb-list { padding:0 18px 20px; }
+.pb-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; margin-bottom:14px; position:relative; overflow:hidden; }
+.pb-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--pc,#A855F7),transparent); }
 .pb-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.pb-ico { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; background:rgba(255,255,255,.06); }
-.pb-name { font-size:14px; font-weight:800; flex:1; }
-.pb-level { font-size:9px; padding:3px 9px; border-radius:10px; font-weight:700; }
+.pb-ico { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.pb-name { font-size:16px; font-weight:900; flex:1; }
+.pb-income { font-size:13px; font-weight:900; color:#FFD700; }
+.pb-level { display:inline-block; font-size:9px; padding:3px 9px; border-radius:8px; font-weight:700; margin-bottom:6px; }
 .lv-easy { background:rgba(52,211,153,.12); color:#34D399; }
 .lv-mid { background:rgba(245,158,11,.12); color:#F59E0B; }
 .lv-hard { background:rgba(239,68,68,.12); color:#EF4444; }
-.pb-income { font-size:12px; font-weight:800; color:#FFD700; margin-bottom:8px; }
-.pb-desc { font-size:11px; color:#a89ec9; line-height:1.7; margin-bottom:8px; }
-.pb-steps { background:rgba(0,0,0,.2); border-radius:10px; padding:10px 12px; margin-bottom:8px; }
-.pb-step { font-size:11px; color:#8d82a8; line-height:1.9; }
+.pb-desc { font-size:12px; color:#a89ec9; line-height:1.7; margin:6px 0 12px; }
+.pb-section { margin-top:10px; }
+.pb-section-title { font-size:11px; font-weight:800; color:#C084FC; margin-bottom:6px; display:flex; align-items:center; gap:4px; }
+.pb-tools { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px; }
+.pb-tool { font-size:10px; padding:3px 8px; background:rgba(255,255,255,.06); border-radius:6px; color:#a89ec9; }
+.pb-tool b { color:#34D399; }
+.pb-steps { background:rgba(0,0,0,.25); border-radius:10px; padding:10px 12px; margin-bottom:8px; font-size:11px; line-height:1.9; color:#c8c2d8; }
+.pb-step { padding:3px 0; }
 .pb-step b { color:#34D399; }
-.pb-tools { display:flex; gap:6px; flex-wrap:wrap; }
-.pb-tool { font-size:9px; padding:3px 9px; background:rgba(168,85,247,.12); color:#C084FC; border-radius:8px; font-weight:700; cursor:pointer; }
-.pb-cta { margin:6px 18px 24px; padding:13px; text-align:center; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:14px; font-size:13px; font-weight:800; cursor:pointer; text-decoration:none; color:#fff; display:block; }
+.pb-warn { background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.2); border-radius:10px; padding:10px 12px; font-size:11px; color:#FF8888; line-height:1.7; margin-bottom:8px; }
+.pb-warn b { color:#FF4757; }
+.pb-case { background:rgba(52,211,163,.06); border:1px solid rgba(52,211,163,.2); border-radius:10px; padding:10px 12px; font-size:11px; color:#34D399; line-height:1.7; }
+.pb-case b { color:#34D399; }
 </style>
 </head>
 <body data-tab="discover">
@@ -38,7 +44,7 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">变现玩法库</div>
-            <div class="brand-sub">对标2026年真能跑通的AI赚钱路径</div>
+            <div class="brand-sub">9条可执行赚钱路径 · 工具+步骤+避坑</div>
         </div>
     </div>
     <div class="bell" style="cursor:pointer" onclick="location.href='tools.html'">🛠️</div>
@@ -46,210 +52,114 @@
 
 <div class="wrap">
     <div class="pb-hero">
-        <h2>AI<span style="color:#C084FC">变现</span>玩法库</h2>
-        <p>不是收藏工具，是「怎么用它赚钱」的可执行路径<br>每条玩法 = 工具 + 步骤 + 收入预期，照着做就能跑</p>
+        <h2>💡 变现<span style="color:#C084FC">玩法</span>库</h2>
+        <p>9 条经实战验证的赚钱路径<br>每条 = 工具清单 + 操作步骤 + 避坑 + 收入预期 + 真实案例</p>
     </div>
 
-    <div class="pb-section">⚡ 零门槛速成（当天就能开始）</div>
+    <div class="pb-list" id="pbList"></div>
 
-    <div class="pb-card" style="--pc:#34D399">
-        <div class="pb-head">
-            <div class="pb-ico">🎨</div>
-            <div class="pb-name">AI绘画接单</div>
-            <div class="pb-level lv-easy">零门槛</div>
-        </div>
-        <div class="pb-income">💰 收入：500 - 8000元/月</div>
-        <div class="pb-desc">审美在线就能做。头像/壁纸/海报/电商图，需求量大且单价稳定。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 出样图</b>：Midjourney/即梦批量出10张作品发小红书+朋友圈</div>
-            <div class="pb-step"><b>② 接单</b>：头像定制30-100元、海报100-300元、电商图50-200元/张</div>
-            <div class="pb-step"><b>③ 交付</b>：用即梦/可灵改细节，当天交付好评返单</div>
-            <div class="pb-step"><b>④ 放大</b>：攒100个客户后上架「简单大厅」当固定商品</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">Midjourney</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">即梦AI</span>
-            <span class="pb-tool" onclick="location.href='mall.html'">上架商品</span>
-        </div>
+    <div class="tip" style="margin:0 18px 20px">
+        💡 玩法持续更新<br>
+        想学更系统的 → <a href="academy.html" style="color:#C084FC">AI营课程</a> ｜
+        想用工具 → <a href="tools.html" style="color:#C084FC">工具库</a> ｜
+        找项目 → <a href="opc.html" style="color:#C084FC">OPC工场</a>
     </div>
-
-    <div class="pb-card" style="--pc:#34D399">
-        <div class="pb-head">
-            <div class="pb-ico">📝</div>
-            <div class="pb-name">AI内容代写</div>
-            <div class="pb-level lv-easy">零门槛</div>
-        </div>
-        <div class="pb-income">💰 收入：1000 - 10000元/月</div>
-        <div class="pb-desc">小红书/公众号/抖音脚本，企业主没时间写，需求巨大。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 选品</b>：锁定1个行业（美业/餐饮/教育）+1个平台（小红书）</div>
-            <div class="pb-step"><b>② 模板化</b>：用豆包/Kimi搭好选题库+爆款结构模板</div>
-            <div class="pb-step"><b>③ 批量产</b>：每天出5篇，报价100-500元/篇（月包更划算）</div>
-            <div class="pb-step"><b>④ 复利</b>：做内容工厂，收学徒/招写手分成</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">豆包</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">Kimi</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">秘塔写作猫</span>
-        </div>
-    </div>
-
-    <div class="pb-card" style="--pc:#34D399">
-        <div class="pb-head">
-            <div class="pb-ico">🗣️</div>
-            <div class="pb-name">数字人口播号</div>
-            <div class="pb-level lv-easy">零门槛</div>
-        </div>
-        <div class="pb-income">💰 收入：3000 - 30000元/月</div>
-        <div class="pb-desc">用HeyGen/剪映数字人做口播视频，矩阵号引流带货接广告。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 立人设</b>：AI生成的数字人形象，做垂直领域（财经/知识/带货）</div>
-            <div class="pb-step"><b>② 量产</b>：写好脚本→剪映/可灵数字人出片，一天20条</div>
-            <div class="pb-step"><b>③ 矩阵</b>：同内容发抖音+视频号+小红书，测出爆款</div>
-            <div class="pb-step"><b>④ 变现</b>：带货佣金+广告+引流私域卖课</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">HeyGen</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">剪映</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">可灵AI</span>
-        </div>
-    </div>
-
-    <div class="pb-section">🔧 进阶玩法（1-2周上手）</div>
-
-    <div class="pb-card" style="--pc:#F59E0B">
-        <div class="pb-head">
-            <div class="pb-ico">🔄</div>
-            <div class="pb-name">自动化内容工厂（AiToEarn模式）</div>
-            <div class="pb-level lv-mid">进阶</div>
-        </div>
-        <div class="pb-income">💰 收入：5000 - 50000元/月</div>
-        <div class="pb-desc">用开源AiToEarn/n8n搭"自动写→自动发"流水线，AI持续产出并分发到多平台，躺着运营账号矩阵。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 部署</b>：AiToEarn docker一键部署，或n8n搭工作流</div>
-            <div class="pb-step"><b>② 接平台</b>：接入DeepSeek/豆包API当大脑，连抖音/小红书发布</div>
-            <div class="pb-step"><b>③ 定人设</b>：让AI按你的垂直领域持续产出选题+正文</div>
-            <div class="pb-step"><b>④ 放大</b>：多账号矩阵跑量，引流私域→卖货/接单/收徒</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">AiToEarn</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">n8n</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">DeepSeek</span>
-        </div>
-    </div>
-
-    <div class="pb-card" style="--pc:#F59E0B">
-        <div class="pb-head">
-            <div class="pb-ico">🤖</div>
-            <div class="pb-name">AI Agent定制服务（OpenClaw/Dify/Coze）</div>
-            <div class="pb-level lv-mid">进阶</div>
-        </div>
-        <div class="pb-income">💰 收入：8000 - 80000元/单</div>
-        <div class="pb-desc">2026年企业都在抢AI Agent，会用OpenClaw/Dify/Coze搭智能体的人极度稀缺。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 学会</b>：Coze免费搭Bot练手（客服/知识库/数据分析）</div>
-            <div class="pb-step"><b>② 案例</b>：给本地商家免费做1个智能客服，拿到案例+好评</div>
-            <div class="pb-step"><b>③ 报价</b>：企业定制Agent 5000-50000，SaaS化后收月费</div>
-            <div class="pb-step"><b>④ 规模</b>：接单工坊派单给同行，你做方案+验收赚差价</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">Coze</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">Dify</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">OpenClaw</span>
-            <span class="pb-tool" onclick="location.href='orders.html'">去接单</span>
-        </div>
-    </div>
-
-    <div class="pb-card" style="--pc:#F59E0B">
-        <div class="pb-head">
-            <div class="pb-ico">💻</div>
-            <div class="pb-name">一人微SaaS（Marc Lou模式）</div>
-            <div class="pb-level lv-mid">进阶</div>
-        </div>
-        <div class="pb-income">💰 收入：3000 - 10万+/月（订阅制复利）</div>
-        <div class="pb-desc">Marc Lou模式：一个人用Cursor/Bolt做小工具，7天ship一个，月费$9-29，多个产品累计百万美元。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 找痛点</b>：你在用AI时最烦什么？做成小工具（价格计算器/提示词库/图片工具）</div>
-            <div class="pb-step"><b>② 7天MVP</b>：Cursor/Bolt/Replit从0到1，先上线再完美</div>
-            <div class="pb-step"><b>③ 收钱</b>：定价$9-29/月，Stripe一键收款（出海），或微信支付（国内）</div>
-            <div class="pb-step"><b>④ 迭代</b>：3个月跑不出100付费用户就换方向，跑出了就复制第2个</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">Cursor</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">Bolt.new</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">Replit</span>
-        </div>
-    </div>
-
-    <div class="pb-card" style="--pc:#F59E0B">
-        <div class="pb-head">
-            <div class="pb-ico">📱</div>
-            <div class="pb-name">AI应用套壳/工具站</div>
-            <div class="pb-level lv-mid">进阶</div>
-        </div>
-        <div class="pb-income">💰 收入：2000 - 20000元/月</div>
-        <div class="pb-desc">接DeepSeek/豆包API做垂直工具站（AI起名/AI算卦/AI简历），流量变现。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 选题</b>：AI简历/AI起名/AI周报这类搜索量大、粘性高的</div>
-            <div class="pb-step"><b>② 开发</b>：Bolt/Coze快速搭，接DeepSeek低API成本</div>
-            <div class="pb-step"><b>③ 引流</b>：小红书/抖音发使用教程，导流到工具站</div>
-            <div class="pb-step"><b>④ 变现</b>：免费试用+会员解锁，广告位，或卖年卡</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='tools.html'">DeepSeek</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">Bolt.new</span>
-            <span class="pb-tool" onclick="location.href='tools.html'">Coze</span>
-        </div>
-    </div>
-
-    <div class="pb-section">🚀 高阶玩法（已有流量的放大）</div>
-
-    <div class="pb-card" style="--pc:#EF4444">
-        <div class="pb-head">
-            <div class="pb-ico">📋</div>
-            <div class="pb-name">接单派单赚差价（你的核心模式）</div>
-            <div class="pb-level lv-hard">高阶</div>
-        </div>
-        <div class="pb-income">💰 收入：1万 - 10万+/月</div>
-        <div class="pb-desc">你有客户和流量，别人有交付能力。接单→派单→验收→赚差价，轻资产运营。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 获客</b>：抖音/小红书引流，发「接单登记表」筛选接单人</div>
-            <div class="pb-step"><b>② 接单</b>：记录客户需求+报价 → 订单池</div>
-            <div class="pb-step"><b>③ 派单</b>：合作商名录选人，派单价自动算差价</div>
-            <div class="pb-step"><b>④ 交付</b>：验收→客户满意→收款→分成给接单人</div>
-            <div class="pb-step"><b>⑤ 复利</b>：成交案例沉淀成案例库→引流更多客户</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='../partner-form.html'">发登记表</span>
-            <span class="pb-tool" onclick="location.href='orders.html'">接单工坊</span>
-            <span class="pb-tool" onclick="location.href='../order-workbench.html'">订单管理</span>
-        </div>
-    </div>
-
-    <div class="pb-card" style="--pc:#EF4444">
-        <div class="pb-head">
-            <div class="pb-ico">📚</div>
-            <div class="pb-name">知识付费/收徒</div>
-            <div class="pb-level lv-hard">高阶</div>
-        </div>
-        <div class="pb-income">💰 收入：1万 - 50万/期</div>
-        <div class="pb-desc">把跑通的路径做成课/训练营/社群，教别人赚，你赚认知差。</div>
-        <div class="pb-steps">
-            <div class="pb-step"><b>① 跑出成绩</b>：先自己月入过万，才有资格教</div>
-            <div class="pb-step"><b>② 内容化</b>：把方法写成SOP/课程，用AI营沉淀</div>
-            <div class="pb-step"><b>③ 招生</b>：小红书直播+朋友圈，定价99-2999</div>
-            <div class="pb-step"><b>④ 交付</b>：社群+直播+陪跑，学员出结果=口碑裂变</div>
-        </div>
-        <div class="pb-tools">
-            <span class="pb-tool" onclick="location.href='academy.html'">AI营</span>
-            <span class="pb-tool" onclick="location.href='member.html'">会员中心</span>
-        </div>
-    </div>
-
-    <a href="../partner-form.html" class="pb-cta">🚀 有交付能力？先填登记表，有单派给你</a>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+// ===== 9条完整SOP =====
+const PLAYS = [
+    { id:'p1', ico:'🎨', name:'AI绘画接单', level:'零门槛', income:'500 - 8,000 元/月', color:'#34D399',
+      desc:'审美在线就能做。头像/海报/电商图需求大，单价30-500元。',
+      tools:[['Midjourney','主流'],['即梦AI','国产免费'],['可灵','国产免费'],['小红书','接单渠道']],
+      steps:'<b>① 出样图</b>：用Midjourney/即梦批量出10张作品发小红书+朋友圈<br><b>② 接单</b>：头像定制30-100元｜海报100-300元｜电商图50-200元/张<br><b>③ 交付</b>：用即梦/可灵改细节，当天交付好评返单<br><b>④ 放大</b>：攒100个客户后上架<a href="mall.html" style="color:#C084FC">模板市集</a>当固定商品',
+      warn:'⚠️ <b>避坑</b>：① 别用AI直出大尺度作品（违规） ② 别承诺"原创"用AI ③ 别一上来就开店，先在小红书积累100个精准粉',
+      case:'🎬 <b>真实案例</b>：杭州李姐，AI头像定制月均3,000+，主要客户来自小红书自然流量，单价60-120元' },
+    { id:'p2', ico:'📝', name:'AI内容代写', level:'零门槛', income:'1,000 - 10,000 元/月', color:'#34D399',
+      desc:'小红书/公众号/抖音脚本，企业主没时间写，需求巨大。',
+      tools:[['豆包','国产免费'],['Kimi','国产'],['秘塔写作猫','中文优化'],['Notion AI','笔记']],
+      steps:'<b>① 选品</b>：锁定1个行业（美业/餐饮/教育）+ 1个平台（小红书）<br><b>② 模板化</b>：用豆包/Kimi搭好选题库+爆款结构模板<br><b>③ 量产</b>：每天出5篇，报价100-500元/篇（月包更划算）<br><b>④ 复利</b>：做内容工厂，收学徒/招写手分成',
+      warn:'⚠️ <b>避坑</b>：① 别同时接太多行业（深度不够） ② 别只依赖AI文案，必须人工润色 ③ 别接完全不懂的行业（质量翻车）',
+      case:'🎬 <b>真实案例</b>：上海小王，专做小红书美业代写，月稳定12,000+，服务15个品牌' },
+    { id:'p3', ico:'🗣️', name:'数字人口播号', level:'零门槛', income:'3,000 - 30,000 元/月', color:'#34D399',
+      desc:'用HeyGen/剪映数字人做口播视频，矩阵号引流带货接广告。',
+      tools:[['HeyGen','数字人'],['剪映','剪辑'],['可灵','AI视频'],['Fish Audio','配音']],
+      steps:'<b>① 立人设</b>：AI生成的数字人形象，做垂直领域（财经/知识/带货）<br><b>② 量产</b>：写好脚本→剪映/可灵数字人出片，一天20条<br><b>③ 矩阵</b>：同内容发抖音+视频号+小红书，测出爆款<br><b>④ 变现</b>：带货佣金+广告+引流私域卖课',
+      warn:'⚠️ <b>避坑</b>：① 平台对数字人有政策限制，关注各平台规则 ② 别用明星脸数字人（侵权） ③ 内容必须配真人互动评论，否则限流',
+      case:'🎬 <b>真实案例</b>：广东阿明，5个财经数字人号，月带货收入8万+，单条爆款过百万播放' },
+    { id:'p4', ico:'🔄', name:'内容工厂（AiToEarn）', level:'进阶', income:'5,000 - 50,000 元/月', color:'#F59E0B',
+      desc:'用AiToEarn自动把内容发到抖音/小红书/TikTok，一个人运营N个号。',
+      tools:[['AiToEarn','自动发'],['DeepSeek','API'],['豆包','备选API'],['n8n','工作流']],
+      steps:'<b>① 部署</b>：AiToEarn docker一键部署，或n8n搭工作流<br><b>② 接平台</b>：接入DeepSeek/豆包API当大脑，连抖音/小红书发布<br><b>③ 定人设</b>：让AI按你的垂直领域持续产出选题+正文<br><b>④ 放大</b>：多账号矩阵跑量，引流私域→卖货/接单/收徒',
+      warn:'⚠️ <b>避坑</b>：① 内容要差异化（多账号别发一模一样） ② 别完全脱离人工审核（AI幻觉会引发违规） ③ 平台检测自动化发布可能限流，需要模拟真人节奏',
+      case:'🎬 <b>真实案例</b>：深圳小李，运营8个矩阵号，月引流私域300+人，转化变现约4万/月' },
+    { id:'p5', ico:'🤖', name:'AI Agent 定制', level:'进阶', income:'8,000 - 80,000 元/单', color:'#F59E0B',
+      desc:'2026年企业都在抢AI Agent，会用Coze/Dify搭智能体的人极度稀缺。',
+      tools:[['Coze','字节开源'],['Dify','开源'],['OpenClaw','Agent'],['飞书智能伙伴','企业']],
+      steps:'<b>① 学会</b>：Coze免费搭Bot练手（客服/知识库/数据分析）<br><b>② 案例</b>：给本地商家免费做1个智能客服，拿到案例+好评<br><b>③ 报价</b>：企业定制Agent 5,000-50,000，SaaS化后收月费<br><b>④ 规模</b>：<a href="orders.html" style="color:#C084FC">接单工坊</a>派单给同行，你做方案+验收赚差价',
+      warn:'⚠️ <b>避坑</b>：① 别只接小单（5000以下利润薄） ② 一定要给客户培训（不然他们不会用） ③ 做"Agent+服务"而不只是Agent本身',
+      case:'🎬 <b>真实案例</b>：上海刘工，专做企业客服Agent，客单价30,000+，月2单' },
+    { id:'p6', ico:'💻', name:'一人微SaaS', level:'进阶', income:'3,000 - 100,000+/月', color:'#F59E0B',
+      desc:'Marc Lou模式：一个人用Cursor/Bolt做小工具，月费$9-29，多个产品累计百万美元。',
+      tools:[['Cursor','编程'],['Bolt.new','全栈'],['Replit','云IDE'],['Stripe','海外支付']],
+      steps:'<b>① 找痛点</b>：你在用AI时最烦什么？做成小工具（价格计算器/提示词库/图片工具）<br><b>② 7天MVP</b>：Cursor/Bolt/Replit从0到1，先上线再完美<br><b>③ 收钱</b>：定价$9-29/月，Stripe一键收款（出海），或微信支付（国内）<br><b>④ 迭代</b>：3个月跑不出100付费用户就换方向，跑出了就复制第2个',
+      warn:'⚠️ <b>避坑</b>：① 别上来就做复杂产品 ② 别用"我觉得有用"判断市场，要看付费 ③ 别忽视 SEO 和独立开发社区（Reddit/IndieHackers）',
+      case:'🎬 <b>真实案例</b>：Marc Lou（法国），2025-2026年累计6个微SaaS，月收入超$50K' },
+    { id:'p7', ico:'📱', name:'AI套壳工具站', level:'进阶', income:'2,000 - 20,000 元/月', color:'#F59E0B',
+      desc:'接DeepSeek/豆包API做垂直工具站，AI起名/AI算卦/AI简历，流量变现。',
+      tools:[['DeepSeek','API'],['豆包','备选'],['Bolt.new','开发'],['Coze','Bot']],
+      steps:'<b>① 选题</b>：AI简历/AI起名/AI周报这类搜索量大、粘性高的<br><b>② 开发</b>：Bolt/Coze快速搭，接DeepSeek低API成本<br><b>③ 引流</b>：小红书/抖音发使用教程，导流到工具站<br><b>④ 变现</b>：免费试用+会员解锁，广告位，或卖年卡',
+      warn:'⚠️ <b>避坑</b>：① 别做大平台已经免费的（如通用ChatGPT） ② API 成本要算清（DeepSeek便宜但仍要预算） ③ 别做违规内容（如医疗/法律建议）',
+      case:'🎬 <b>真实案例</b>：广州阿林，AI简历工具站，月访问12万，会员费月入1.8万' },
+    { id:'p8', ico:'📋', name:'接单派单差价', level:'高阶', income:'10,000 - 100,000+/月', color:'#EF4444',
+      desc:'你有客户和流量，别人有交付能力。接单→派单→验收→赚差价，轻资产高毛利。',
+      tools:[['Crazy Friday接单工坊','你正在看'],['微信群','丢单'],['Coze','自动派单'],['Workbench','交付跟踪']],
+      steps:'<b>① 获客</b>：抖音/小红书引流，发「接单登记表」筛选接单人<br><b>② 接单</b>：记录客户需求+报价 → <a href="orders.html" style="color:#C084FC">订单池</a><br><b>③ 派单</b>：<a href="../partner-form.html" style="color:#C084FC">合作商名录</a>选人，派单价自动算差价<br><b>④ 交付</b>：验收→客户满意→收款→分成给接单人<br><b>⑤ 复利</b>：成交案例沉淀成案例库→引流更多客户',
+      warn:'⚠️ <b>避坑</b>：① 别接你不懂的领域（交付失控） ② 留15-20%缓冲（客户砍价/交付延期） ③ 接单人要评分，差评的别再用',
+      case:'🎬 <b>真实案例</b>：Crazy Friday生态主理人本人，<a href="../workbench/index.html" style="color:#C084FC">工作台</a>管理订单+案例沉淀+接单人' },
+    { id:'p9', ico:'🌱', name:'知识付费/收徒', level:'高阶', income:'10,000 - 500,000/期', color:'#EF4444',
+      desc:'把跑通的路径做成课/训练营/社群，教别人赚，你赚认知差。',
+      tools:[['Crazy Friday 知识库','你正在看'],['小报童','课程平台'],['知识星球','社群'],['腾讯会议','直播']],
+      steps:'<b>① 跑出成绩</b>：先自己月入过万，才有资格教<br><b>② 内容化</b>：把方法写成SOP/课程，用<a href="academy.html" style="color:#C084FC">AI营</a>沉淀<br><b>③ 招生</b>：小红书直播+朋友圈，定价99-2999<br><b>④ 交付</b>：社群+直播+陪跑，学员出结果=口碑裂变',
+      warn:'⚠️ <b>避坑</b>：① 别收钱后跑路（一次性生意） ② 别割韭菜（真实案例+方法论） ③ 别承诺稳赚（合规风险）',
+      case:'🎬 <b>真实案例</b>：大量AI变现博主，从"做副业月入X万"到"教别人做副业"的成功路径' }
+];
+const LV_CLASS = { '零门槛':'lv-easy', '进阶':'lv-mid', '高阶':'lv-hard' };
+
+function renderPlays(){
+    document.getElementById('pbList').innerHTML = PLAYS.map(p => `
+        <div class="pb-card" style="--pc:${p.color}">
+            <div class="pb-head">
+                <div class="pb-ico" style="background:${p.color}22;color:${p.color}">${p.ico}</div>
+                <div class="pb-name">${p.name}</div>
+                <div class="pb-income">${p.income}</div>
+            </div>
+            <span class="pb-level ${LV_CLASS[p.level]}">${p.level}</span>
+            <div class="pb-desc">${p.desc}</div>
+
+            <div class="pb-section">
+                <div class="pb-section-title">🛠️ 核心工具</div>
+                <div class="pb-tools">${p.tools.map(t=>`<span class="pb-tool">${t[0]}</span>`).join('')}</div>
+            </div>
+
+            <div class="pb-section">
+                <div class="pb-section-title">📋 操作步骤</div>
+                <div class="pb-steps">${p.steps}</div>
+            </div>
+
+            <div class="pb-section">
+                <div class="pb-warn">${p.warn}</div>
+            </div>
+
+            <div class="pb-section">
+                <div class="pb-case">${p.case}</div>
+            </div>
+        </div>
+    `).join('');
+}
+renderPlays();
+</script>
 </body>
 </html>
