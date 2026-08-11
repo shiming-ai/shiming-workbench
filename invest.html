@@ -284,9 +284,10 @@ body {
             <h3>一起把「一个人+AI」做成大生意</h3>
             <p>无论你想投资、合作、共创，还是先聊聊——<br>我们都在，欢迎来谈。</p>
             <a class="btn btn-main" href="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html">👀 先逛逛我们的生态</a>
+            <a class="btn btn-sub" onclick="copyBP()" style="border:1px solid rgba(255,215,0,.4);color:#FFD700;cursor:pointer">📋 一键复制招商话术</a>
             <a class="btn btn-sub" href="mailto:shim16506@gmail.com">📧 邮件联系：shim16506@gmail.com</a>
             <a class="btn btn-sub" href="https://shiming-ai.github.io/shiming-workbench/workbench/index.html">🦄 看看创始人工作台</a>
-            <div class="tips">💡 想最快了解我们：先看案例广场 → 再看 App 生态 → 觉得靠谱就联系</div>
+            <div class="tips" id="copyTip">💡 想最快了解我们：先看案例广场 → 再看 App 生态 → 觉得靠谱就联系</div>
         </div>
     </div>
 
@@ -296,6 +297,48 @@ body {
         © 2026 Crazy Friday 生态
     </div>
 </div>
+
+<script>
+function copyBP(){
+    const text = [
+        '【Crazy Friday · 疯狂星期五｜AI一人公司生态】',
+        '',
+        '定位：一个人+AI就是一家公司，中国版Fiverr/Upwork的AI垂直版，比猪八戒网更轻、更聚焦一人公司。',
+        '',
+        '已验证的成绩：',
+        '· 126+接单伙伴 · 358+累计项目 · ¥1.28M累计接单额',
+        '· 12个行业真实案例 · 37款AI变现工具 · 16大业务板块',
+        '· 从工具库/玩法库/接单/交付/案例到招商，完整闭环',
+        '',
+        '商业模式（5条收入线）：',
+        '1. 接单派单差价（平台留存）',
+        '2. 模板/提示词/成品工作台售卖',
+        '3. 会员订阅（Pro/企业）',
+        '4. AI定制服务（高客单）',
+        '5. 项目孵化分红',
+        '',
+        '商业飞轮：获客→线索→成交→交付→复利（案例自动沉淀→吸引更多客户）',
+        '',
+        '发展阶段：MVP已验证→生态放大→平台规模化',
+        '',
+        '想投资/想合作？欢迎聊：shim16506@gmail.com',
+        '看看生态：https://shiming-ai.github.io/shiming-workbench/invest.html'
+    ].join('\n');
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(()=>showCopyTip(), ()=>fallbackCopy(text));
+    } else fallbackCopy(text);
+}
+function fallbackCopy(t){
+    const ta = document.createElement('textarea');
+    ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showCopyTip(); } catch(e) {}
+    document.body.removeChild(ta);
+}
+function showCopyTip(){
+    const el = document.getElementById('copyTip');
+    if (el) { el.textContent = '✅ 已复制！粘贴到微信/邮件发给对方'; el.style.color = '#34D399'; }
+}
+</script>
 
 </body>
 </html>
