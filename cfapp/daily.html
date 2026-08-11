@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · AI变现日报 · 每天3分钟掌握AI赚钱机会">
+<title>AI变现日报 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.dl-top { padding:26px 18px 8px; text-align:center; }
+.dl-date { font-size:11px; color:#a89ec9; margin-bottom:8px; }
+.dl-title { font-size:24px; font-weight:900; }
+.dl-title .grad { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.dl-sub { font-size:12px; color:#a89ec9; margin-top:8px; }
+.dl-subscribe { display:flex; gap:8px; justify-content:center; margin:16px 18px 0; }
+.dl-subs-btn { flex:1; max-width:200px; padding:12px; border-radius:22px; font-size:13px; font-weight:800; cursor:pointer; border:none; text-align:center; }
+.dl-subs-btn.on { background:rgba(52,211,153,.18); color:#34D399; border:1px solid rgba(52,211,153,.4); }
+.dl-subs-btn.off { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; }
+.dl-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:16px 18px; }
+.dl-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px 6px; text-align:center; }
+.dl-stat .n { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.dl-stat .l { font-size:9px; color:#6d6489; margin-top:3px; }
+.sec-label { font-size:14px; font-weight:900; padding:20px 18px 10px; display:flex; align-items:center; gap:6px; }
+.sec-label .dot { width:8px; height:8px; border-radius:50%; background:linear-gradient(135deg,#A855F7,#EC4899); box-shadow:0 0 8px rgba(168,85,247,.5); }
+.news-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; margin:0 18px 10px; position:relative; overflow:hidden; }
+.news-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--nc,#A855F7),transparent); }
+.news-tag { display:inline-block; font-size:9px; padding:2px 8px; border-radius:8px; font-weight:700; margin-bottom:6px; }
+.nt-money { background:rgba(52,211,153,.12); color:#34D399; }
+.nt-tool { background:rgba(96,165,250,.12); color:#60A5FA; }
+.nt-play { background:rgba(255,215,0,.12); color:#FFD700; }
+.nt-case { background:rgba(236,72,153,.12); color:#EC4899; }
+.news-title { font-size:13px; font-weight:800; margin-bottom:5px; }
+.news-desc { font-size:11px; color:#a89ec9; line-height:1.7; margin-bottom:8px; }
+.news-action { font-size:11px; color:#34D399; background:rgba(52,211,153,.06); border-radius:8px; padding:8px 10px; line-height:1.6; }
+.news-action b { color:#34D399; }
+.news-foot { display:flex; justify-content:space-between; margin-top:8px; font-size:9px; color:#6d6489; }
+.history { margin:0 18px; }
+.history-item { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:12px 14px; margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.history-item:active { background:rgba(168,85,247,.1); }
+.hi-date { font-size:12px; font-weight:700; }
+.hi-count { font-size:10px; color:#6d6489; }
+</style>
+</head>
+<body data-tab="discover">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">AI变现日报</div>
+            <div class="brand-sub">每天3分钟 · 掌握AI赚钱机会</div>
+        </div>
+    </div>
+    <div class="bell" style="cursor:pointer" onclick="location.href='tools.html'">🛠️</div>
+</div>
+
+<div class="wrap">
+    <div class="dl-top">
+        <div class="dl-date" id="todayDate"></div>
+        <div class="dl-title">AI变现<span class="grad">日报</span></div>
+        <div class="dl-sub">今日商机 · 工具上新 · 变现玩法 · 成交案例</div>
+    </div>
+
+    <div class="dl-subscribe">
+        <button class="dl-subs-btn" id="subsBtn" onclick="toggleSub()">🔔 订阅日报</button>
+    </div>
+
+    <div class="dl-stats">
+        <div class="dl-stat"><div class="n" id="stMoney">3</div><div class="l">今日商机</div></div>
+        <div class="dl-stat"><div class="n" id="stTool">2</div><div class="l">工具上新</div></div>
+        <div class="dl-stat"><div class="n" id="stCase">3</div><div class="l">成交案例</div></div>
+    </div>
+
+    <div class="sec-label"><span class="dot"></span>💰 今日商机</div>
+    <div id="moneyNews"></div>
+
+    <div class="sec-label"><span class="dot"></span>🛠️ 工具上新</div>
+    <div id="toolNews"></div>
+
+    <div class="sec-label"><span class="dot"></span>💡 变现玩法</div>
+    <div id="playNews"></div>
+
+    <div class="sec-label"><span class="dot"></span>🎬 成交案例</div>
+    <div id="caseNews"></div>
+
+    <div class="sec-label"><span class="dot"></span>📅 历史日报</div>
+    <div class="history" id="historyList"></div>
+
+    <div class="tip" style="margin:14px 18px 20px">
+        💡 日报内容每日更新<br>订阅后每天推送到你的工作台
+    </div>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+const SUB_KEY = 'cf_daily_sub';
+function getSub(){ try{ return JSON.parse(localStorage.getItem(SUB_KEY)) }catch(e){ return null } }
+function setSub(s){ localStorage.setItem(SUB_KEY, JSON.stringify(s)) }
+
+// 今日日期
+const now = new Date();
+const todayStr = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日';
+document.getElementById('todayDate').textContent = todayStr + ' · 星期' + '日一二三四五六'[now.getDay()];
+
+// ===== 日报数据（今日） =====
+const TODAY = {
+    money: [
+        { tag:'商机', title:'AI头像定制需求暴涨，单价30-100元', desc:'小红书/抖音AI头像、情侣头像、宠物头像需求大增，会Midjourney/即梦就能接。', action:'操作：今晚发3张样图到小红书 → 明天就能收到私信 → 模板化量产', hot:true },
+        { tag:'商机', title:'本地商家智能客服缺人做，报价5000-20000', desc:'餐饮/美容/教育都在找AI客服（Coze/Dify），会搭Bot的人不够用。', action:'操作：用Coze免费练一个知识库Bot → 找1个本地商家免费做 → 拿案例收全款', hot:true },
+        { tag:'商机', title:'企业AI周报/汇报工具需求增长', desc:'打工人都不想写周报，AI工具/代做服务市场在涨。', action:'操作：搭一个"AI周报生成"工具站，引流+会员制' }
+    ],
+    tool: [
+        { tag:'工具', title:'n8n更新AI原生工作流，自动化接单更好搭', desc:'n8n 2026 AI原生化后，用自然语言就能搭自动化流程，接单/发内容全自动。', action:'玩法：搭"自动接单→通知→派单"流水线，卖自动化服务' },
+        { tag:'工具', title:'OpenClaw 25万星，Agent变现野路子', desc:'现象级开源AI Agent，云端+本地双部署，能自主完成复杂任务。', action:'玩法：帮人部署OpenClaw做自动化运营，按部署/按效果收费' }
+    ],
+    play: [
+        { tag:'玩法', title:'「内容工厂」玩法：AI写→AI发→多平台矩阵', desc:'用AiToEarn自动把内容发到抖音/小红书/TikTok，一个人运营N个号。', action:'操作：部署AiToEarn → 接DeepSeek → 定人设 → 跑量 → 引流私域' },
+        { tag:'玩法', title:'一人微SaaS：7天ship一个，月费9-29$', desc:'Marc Lou模式：Cursor/Bolt做小工具，先上线再优化，跑不出100用户就换。', action:'操作：本周挑1个小痛点工具 → 7天上线 → 定价月费 → 测市场' }
+    ],
+    case: [
+        { tag:'案例', title:'电商老板定制AI工作台 ¥8,000', desc:'9平台店铺管理+订单聚合+库存预警，客户满意，已续做二期。', action:'📌 对应成品：电商运营工作台 ¥999 起' },
+        { tag:'案例', title:'考研党冲刺工作台 ¥3,000', desc:'倒计时+4科进度+错题本，客户上岸后推荐了2个学弟。', action:'📌 对应成品：考研冲刺工作台 ¥599 起' },
+        { tag:'案例', title:'餐饮店数字化升级 ¥12,000', desc:'4渠道订单+智能排班+食材预警，损耗降15%，老板主动转介绍。', action:'📌 对应成品：餐饮门店工作台 ¥799 起' }
+    ]
+};
+
+function renderToday(){
+    // 商机
+    document.getElementById('stMoney').textContent = TODAY.money.length;
+    document.getElementById('moneyNews').innerHTML = TODAY.money.map(n => `
+        <div class="news-card" style="--nc:#34D399">
+            <span class="news-tag nt-money">💰 商机${n.hot?' · 今日重点':''}</span>
+            <div class="news-title">${n.title}</div>
+            <div class="news-desc">${n.desc}</div>
+            <div class="news-action">${n.action}</div>
+            <div class="news-foot"><span>${todayStr}</span><span>Crazy Friday 日报</span></div>
+        </div>`).join('');
+    // 工具
+    document.getElementById('stTool').textContent = TODAY.tool.length;
+    document.getElementById('toolNews').innerHTML = TODAY.tool.map(n => `
+        <div class="news-card" style="--nc:#60A5FA">
+            <span class="news-tag nt-tool">🛠️ 工具</span>
+            <div class="news-title">${n.title}</div>
+            <div class="news-desc">${n.desc}</div>
+            <div class="news-action">${n.action}</div>
+            <div class="news-foot"><span>${todayStr}</span><span><a href="tools.html" style="color:#60A5FA">工具库 →</a></span></div>
+        </div>`).join('');
+    // 玩法
+    document.getElementById('playNews').innerHTML = TODAY.play.map(n => `
+        <div class="news-card" style="--nc:#FFD700">
+            <span class="news-tag nt-play">💡 玩法</span>
+            <div class="news-title">${n.title}</div>
+            <div class="news-desc">${n.desc}</div>
+            <div class="news-action">${n.action}</div>
+            <div class="news-foot"><span>${todayStr}</span><span><a href="playbook.html" style="color:#FFD700">玩法库 →</a></span></div>
+        </div>`).join('');
+    // 案例
+    document.getElementById('stCase').textContent = TODAY.case.length;
+    document.getElementById('caseNews').innerHTML = TODAY.case.map(n => `
+        <div class="news-card" style="--nc:#EC4899">
+            <span class="news-tag nt-case">🎬 成交案例</span>
+            <div class="news-title">${n.title}</div>
+            <div class="news-desc">${n.desc}</div>
+            <div class="news-action">${n.action}</div>
+            <div class="news-foot"><span>${todayStr}</span><span><a href="store.html" style="color:#EC4899">工作台商店 →</a></span></div>
+        </div>`).join('');
+}
+
+function renderHistory(){
+    // 最近7天历史（用日期偏移生成）
+    const days = [];
+    for (let i=1; i<=6; i++) {
+        const d = new Date(now.getTime() - i*86400000);
+        const ds = d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
+        days.push({ date: ds, count: 5 + (i*3)%4 });
+    }
+    document.getElementById('historyList').innerHTML = days.map(d => `
+        <div class="history-item" onclick="toast('📅 ' + '${d.date}' + '日报：商机' + ${d.count} + '条 · 工具' + ${d.count-2} + '条')">
+            <div class="hi-date">📅 ${d.date}</div>
+            <div class="hi-count">${d.count}条内容 →</div>
+        </div>`).join('');
+}
+
+function renderSubBtn(){
+    const sub = getSub();
+    const btn = document.getElementById('subsBtn');
+    if (sub) {
+        btn.textContent = '✅ 已订阅 · 每天推送';
+        btn.className = 'dl-subs-btn on';
+    } else {
+        btn.textContent = '🔔 订阅日报';
+        btn.className = 'dl-subs-btn off';
+    }
+}
+function toggleSub(){
+    const sub = getSub();
+    if (sub) {
+        setSub(null);
+        toast('已取消订阅');
+    } else {
+        setSub({ time: new Date().toISOString(), daily: true });
+        toast('✅ 订阅成功！每天推送到工作台');
+    }
+    renderSubBtn();
+}
+
+renderToday();
+renderHistory();
+renderSubBtn();
+</script>
+</body>
+</html>
