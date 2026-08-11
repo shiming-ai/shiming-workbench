@@ -199,17 +199,9 @@ function buyStore(id){
 }
 function confirmBuy(id, btn){
     const s = STORES.find(x=>x.id===id);
-    btn.disabled = true; btn.textContent = '支付中...';
-    setTimeout(()=>{
-        const my = getMy();
-        my.unshift({ id, name:s.name, price:s.price, time:new Date().toISOString().slice(0,10), orderId:'ws_'+Date.now() });
-        setMy(my);
-        const overlay = btn.closest('.pay-overlay');
-        if (overlay) document.body.removeChild(overlay);
-        renderList();
-        toast('🎉 购买成功！交付物已发');
-        setTimeout(()=>openDeliver(id), 400);
-    }, 800);
+    if (!s) return;
+    /* 真实收款：跳转收款中心，付款后回执留痕、云端可核验、本板块显示已购 */
+    location.href = '../pay.html?sku=' + s.id + '&name=' + encodeURIComponent(s.name) + '&price=' + s.price + '&from=store&bkey=cf_store_orders';
 }
 function openDeliver(id){
     const s = STORES.find(x=>x.id===id); if(!s) return;
