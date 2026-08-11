@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday 疯狂星期五 · AI时代的一人公司生态 · 招商合作中心 · 投资人/客户/共创合伙人">
+<title>Crazy Friday · 招商合作中心</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+    --bg:#0d0420; --bg2:#1a0d2e; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.06);
+    --border:rgba(255,255,255,.08); --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
+    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
+    --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --blue:#60A5FA;
+}
+html { scroll-behavior:smooth; }
+body {
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+    line-height:1.6; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background-image:
+        radial-gradient(ellipse 600px 400px at 50% -5%, rgba(168,85,247,.18), transparent 60%),
+        radial-gradient(ellipse 400px 300px at 100% 30%, rgba(236,72,153,.10), transparent 60%),
+        radial-gradient(ellipse 500px 400px at 0% 60%, rgba(124,58,237,.10), transparent 60%);
+    background-attachment:fixed; min-height:100vh;
+}
+.wrap { max-width:520px; margin:0 auto; padding:0 18px; }
+/* Nav */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(13,4,32,.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:12px 18px; display:flex; justify-content:space-between; align-items:center; }
+.nav-mark { width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,var(--purple-deep),var(--purple)); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:900; color:#fff; box-shadow:0 4px 14px rgba(168,85,247,.4); }
+.nav-name { font-size:14px; font-weight:800; margin-left:10px; }
+.nav-right a { font-size:12px; font-weight:800; color:#fff; text-decoration:none; padding:8px 16px; border-radius:20px; background:linear-gradient(135deg,var(--purple),var(--pink)); }
+/* Hero */
+.hero { padding:96px 0 40px; position:relative; text-align:center; }
+.hero::after { content:''; position:absolute; top:60px; left:50%; transform:translateX(-50%); width:340px; height:200px; background:radial-gradient(ellipse, rgba(168,85,247,.35), transparent 70%); filter:blur(40px); pointer-events:none; }
+.hero .badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:var(--purple-light); background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.3); padding:6px 14px; border-radius:20px; margin-bottom:20px; position:relative; z-index:1; }
+.hero h1 { font-size:42px; font-weight:900; letter-spacing:-2px; line-height:1.12; margin-bottom:14px; position:relative; z-index:1; }
+.hero h1 .grad { background:linear-gradient(135deg,#C084FC,#A855F7,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero .sub { font-size:14px; color:var(--dim); line-height:1.8; margin-bottom:24px; position:relative; z-index:1; }
+.hero .ctas { display:flex; gap:10px; justify-content:center; margin-bottom:28px; position:relative; z-index:1; }
+.cta-btn { flex:1; max-width:180px; padding:13px 0; border-radius:24px; font-size:14px; font-weight:800; text-align:center; text-decoration:none; cursor:pointer; }
+.cta-invest { background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; box-shadow:0 8px 24px rgba(168,85,247,.4); }
+.cta-partner { background:rgba(255,255,255,.06); color:var(--text); border:1px solid var(--border); }
+/* Hero stats */
+.hero-stats { display:grid; grid-template-columns:repeat(4,1fr); background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:18px; padding:18px 6px; position:relative; z-index:1; }
+.hero-stat { text-align:center; border-right:1px solid rgba(255,255,255,.05); }
+.hero-stat:last-child { border-right:none; }
+.hs-num { font-size:22px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.hs-lbl { font-size:9px; color:var(--mute); margin-top:4px; }
+/* Section */
+.sec { padding:36px 0 8px; }
+.sec-title { font-size:20px; font-weight:900; margin-bottom:6px; }
+.sec-title .g { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.sec-sub { font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px; }
+/* 理念 */
+.vision { background:linear-gradient(160deg, rgba(168,85,247,.08), rgba(236,72,153,.03)); border:1px solid rgba(168,85,247,.2); border-radius:20px; padding:22px; text-align:center; }
+.vision .q { font-size:18px; font-weight:900; margin-bottom:10px; line-height:1.5; }
+.vision .q em { font-style:normal; background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.vision .a { font-size:12px; color:var(--dim); line-height:1.8; }
+/* 产品矩阵 */
+.matrix-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.matrix-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; text-decoration:none; color:inherit; transition:transform .12s, border-color .2s; }
+.matrix-card:active { transform:scale(.97); }
+.matrix-card:hover { border-color:rgba(168,85,247,.4); }
+.mc-ico { font-size:26px; margin-bottom:8px; display:block; }
+.mc-name { font-size:13px; font-weight:800; display:block; }
+.mc-desc { font-size:10px; color:var(--dim); margin-top:4px; line-height:1.5; display:block; }
+.mc-num { font-size:9px; color:var(--mute); margin-top:6px; display:block; }
+/* 数据看板 */
+.kpi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.kpi { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 8px; text-align:center; }
+.kpi .n { font-size:24px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.2; }
+.kpi .l { font-size:10px; color:var(--dim); margin-top:4px; }
+.kpi .d { font-size:9px; color:var(--mute); margin-top:2px; }
+/* 商业模式 */
+.biz-item { display:flex; align-items:flex-start; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:10px; }
+.biz-ico { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.biz-name { font-size:13px; font-weight:800; }
+.biz-desc { font-size:11px; color:var(--dim); line-height:1.6; margin-top:3px; }
+/* 飞轮 */
+.flywheel { background:rgba(255,255,255,.03); border:1px dashed rgba(168,85,247,.3); border-radius:20px; padding:20px; }
+.fw-step { display:flex; align-items:center; gap:12px; padding:8px 0; position:relative; }
+.fw-step::after { content:''; position:absolute; left:19px; top:40px; bottom:-12px; width:1px; background:rgba(168,85,247,.3); }
+.fw-step:last-child::after { display:none; }
+.fw-num { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; color:#fff; flex-shrink:0; }
+.fw-name { font-size:13px; font-weight:800; }
+.fw-desc { font-size:11px; color:var(--dim); margin-top:2px; }
+/* 阶段 */
+.phase-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.phase { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 10px; text-align:center; position:relative; }
+.phase.now { border-color:rgba(168,85,247,.5); background:rgba(168,85,247,.08); }
+.phase .pt { font-size:10px; color:var(--purple-light); font-weight:800; }
+.phase .pn { font-size:13px; font-weight:900; margin:4px 0; }
+.phase .pd { font-size:9px; color:var(--mute); line-height:1.5; }
+/* 合作方式 */
+.coop-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; margin-bottom:10px; display:flex; gap:12px; align-items:center; }
+.coop-ico { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.coop-name { font-size:14px; font-weight:800; }
+.coop-desc { font-size:11px; color:var(--dim); margin-top:3px; line-height:1.6; }
+.coop-link { margin-left:auto; font-size:11px; font-weight:800; color:var(--purple-light); text-decoration:none; padding:8px 14px; border:1px solid rgba(168,85,247,.4); border-radius:18px; white-space:nowrap; }
+/* 联系 */
+.contact { background:linear-gradient(160deg, rgba(168,85,247,.12), rgba(236,72,153,.05)); border:1px solid rgba(168,85,247,.25); border-radius:20px; padding:26px 20px; text-align:center; margin-bottom:40px; }
+.contact h3 { font-size:20px; font-weight:900; margin-bottom:8px; }
+.contact p { font-size:12px; color:var(--dim); line-height:1.8; margin-bottom:18px; }
+.contact .btn { display:block; margin:0 auto 10px; max-width:280px; padding:13px; border-radius:24px; font-size:14px; font-weight:800; text-align:center; text-decoration:none; cursor:pointer; }
+.contact .btn-main { background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; box-shadow:0 8px 24px rgba(168,85,247,.4); }
+.contact .btn-sub { background:rgba(255,255,255,.06); color:var(--text); border:1px solid var(--border); }
+.contact .tips { font-size:10px; color:var(--mute); margin-top:10px; }
+.footer { text-align:center; padding:20px 0 40px; font-size:10px; color:var(--mute); border-top:1px solid var(--border); }
+.footer .flogo { font-size:12px; font-weight:800; color:var(--dim); margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <div style="display:flex;align-items:center">
+        <div class="nav-mark">CF</div>
+        <div class="nav-name">Crazy Friday</div>
+    </div>
+    <div class="nav-right"><a href="#contact">合作洽谈</a></div>
+</div>
+
+<div class="wrap">
+    <!-- ========== Hero ========== -->
+    <div class="hero">
+        <div class="badge">✨ AI时代的一人公司生态 · 招商合作中心</div>
+        <h1>一个人<br><span class="grad">+ AI,</span><br>就是一家公司</h1>
+        <div class="sub">让每个个体借助 AI 成为一家公司<br>工具 · 玩法 · 接单 · 交付 · 变现，一个生态闭环</div>
+        <div class="ctas">
+            <a class="cta-btn cta-invest" href="#contact">💎 我要投资</a>
+            <a class="cta-btn cta-partner" href="#coop">🤝 我想合作</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="hs-num">37</div><div class="hs-lbl">变现工具</div></div>
+            <div class="hero-stat"><div class="hs-num">9</div><div class="hs-lbl">变现玩法</div></div>
+            <div class="hero-stat"><div class="hs-num">16</div><div class="hs-lbl">业务板块</div></div>
+            <div class="hero-stat"><div class="hs-num">5K+</div><div class="hs-lbl">需求对接</div></div>
+        </div>
+    </div>
+
+    <!-- ========== 理念 ========== -->
+    <div class="sec">
+        <div class="vision">
+            <div class="q">我们相信，<em>AI 正在把"公司"变成一个人的能力</em></div>
+            <div class="a">Crazy Friday 是围绕这个信念打造的创业生态：<br>给个体提供能变现的 AI 工具、可执行的赚钱玩法、<br>接单派单的交付网络、以及从想法到品牌的孵化路径。</div>
+        </div>
+    </div>
+
+    <!-- ========== 产品矩阵 ========== -->
+    <div class="sec">
+        <div class="sec-title">产品<span class="g">矩阵</span></div>
+        <div class="sec-sub">一个生态、多端触达，每个入口都通向同一套商业闭环</div>
+        <div class="matrix-grid">
+            <a class="matrix-card" href="cfapp/index.html">
+                <span class="mc-ico">📱</span><span class="mc-name">Crazy Friday App</span>
+                <span class="mc-desc">一人公司创业生态平台，16大板块全功能</span><span class="mc-num">工具库 · 玩法库 · 接单 · 社区</span>
+            </a>
+            <a class="matrix-card" href="workbench/index.html">
+                <span class="mc-ico">💼</span><span class="mc-name">AI 一人公司工作台</span>
+                <span class="mc-desc">运营大脑：财务/客户/订单/内容全自动</span><span class="mc-num">私域管理 · 决策看板</span>
+            </a>
+            <a class="matrix-card" href="cfapp/orders.html">
+                <span class="mc-ico">📋</span><span class="mc-name">接单工坊</span>
+                <span class="mc-desc">需求大厅 · 派单交付 · 差价变现</span><span class="mc-num">5,000+需求 · 2,000+交付伙伴</span>
+            </a>
+            <a class="matrix-card" href="demo-gallery.html">
+                <span class="mc-ico">🛠️</span><span class="mc-name">AI 工作台案例广场</span>
+                <span class="mc-desc">12个行业真实案例，客户一眼看懂价值</span><span class="mc-num">考研/电商/餐饮/摄影...</span>
+            </a>
+            <a class="matrix-card" href="cfapp/tools.html">
+                <span class="mc-ico">🛠️</span><span class="mc-name">AI 变现工具库</span>
+                <span class="mc-desc">37款2026真能赚钱的AI工具（含开源）</span><span class="mc-num">每款标注变现玩法</span>
+            </a>
+            <a class="matrix-card" href="cfapp/playbook.html">
+                <span class="mc-ico">💡</span><span class="mc-name">变现玩法库</span>
+                <span class="mc-desc">9条可执行赚钱路径 · 工具+步骤+收入</span><span class="mc-num">零门槛到高阶全覆盖</span>
+            </a>
+            <a class="matrix-card" href="cfapp/incubation.html">
+                <span class="mc-ico">🌱</span><span class="mc-name">项目孵化中心</span>
+                <span class="mc-desc">Idea → 验证 → 品牌 → 共创分红</span><span class="mc-num">在孵项目 100+</span>
+            </a>
+            <a class="matrix-card" href="cfapp/member.html">
+                <span class="mc-ico">💎</span><span class="mc-name">会员中心</span>
+                <span class="mc-desc">订阅制：工具/课程/优先派单全解锁</span><span class="mc-num">3档会员 · 持续复购</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== 数据看板 ========== -->
+    <div class="sec">
+        <div class="sec-title">数据<span class="g">看板</span></div>
+        <div class="sec-sub">生态正在滚动：从工具到接单到交付到复利</div>
+        <div class="kpi-grid">
+            <div class="kpi"><div class="n">126+</div><div class="l">接单伙伴</div><div class="d">交付网络</div></div>
+            <div class="kpi"><div class="n">358+</div><div class="l">累计项目</div><div class="d">真实交付</div></div>
+            <div class="kpi"><div class="n">¥1.28M</div><div class="l">累计接单额</div><div class="d">已验证变现</div></div>
+            <div class="kpi"><div class="n">12</div><div class="l">行业案例</div><div class="d">客户可见</div></div>
+            <div class="kpi"><div class="n">37</div><div class="l">AI 工具</div><div class="d">持续更新</div></div>
+            <div class="kpi"><div class="n">16</div><div class="l">业务板块</div><div class="d">生态闭环</div></div>
+        </div>
+    </div>
+
+    <!-- ========== 商业模式 ========== -->
+    <div class="sec">
+        <div class="sec-title">商业<span class="g">模式</span></div>
+        <div class="sec-sub">五条收入线，形成"平台+服务+订阅"的复合变现结构</div>
+        <div class="biz-item">
+            <div class="biz-ico" style="background:rgba(168,85,247,.15);color:var(--purple-light)">🛠️</div>
+            <div><div class="biz-name">工具/模板/提示词售卖</div><div class="biz-desc">AI工具库、提示词包、SaaS 模板，标准产品持续零售</div></div>
+        </div>
+        <div class="biz-item">
+            <div class="biz-ico" style="background:rgba(52,211,153,.15);color:var(--green)">📋</div>
+            <div><div class="biz-name">接单派单差价（平台留存）</div><div class="biz-desc">客户单 → 派给交付伙伴 → 差价归平台，轻资产高毛利</div></div>
+        </div>
+        <div class="biz-item">
+            <div class="biz-ico" style="background:rgba(255,215,0,.15);color:var(--gold)">💎</div>
+            <div><div class="biz-name">会员订阅</div><div class="biz-desc">工具/课程/优先派单/数据看板，订阅制持续现金流</div></div>
+        </div>
+        <div class="biz-item">
+            <div class="biz-ico" style="background:rgba(96,165,250,.15);color:var(--blue)">🛍️</div>
+            <div><div class="biz-name">商品市集</div><div class="biz-desc">AI应用/课程/素材/咨询服务，生态内循环成交</div></div>
+        </div>
+        <div class="biz-item">
+            <div class="biz-ico" style="background:rgba(236,72,153,.15);color:var(--pink)">🌱</div>
+            <div><div class="biz-name">项目孵化分红</div><div class="biz-desc">潜力项目验证后开放共创，平台享分红</div></div>
+        </div>
+    </div>
+
+    <!-- ========== 变现飞轮 ========== -->
+    <div class="sec">
+        <div class="sec-title">商业<span class="g">飞轮</span></div>
+        <div class="sec-sub">为什么能越滚越大：每个成交都沉淀成下一次获客的资产</div>
+        <div class="flywheel">
+            <div class="fw-step"><div class="fw-num">1</div><div><div class="fw-name">获客</div><div class="fw-desc">内容矩阵 + 案例广场 + 招商页，多渠道引流</div></div></div>
+            <div class="fw-step"><div class="fw-num">2</div><div><div class="fw-name">线索</div><div class="fw-desc">登记表/需求大厅自动进云端，后台实时可见</div></div></div>
+            <div class="fw-step"><div class="fw-num">3</div><div><div class="fw-name">成交</div><div class="fw-desc">一键转客户 → 生成订单 → 报价收款</div></div></div>
+            <div class="fw-step"><div class="fw-num">4</div><div><div class="fw-name">交付</div><div class="fw-desc">自营 or 派单给交付网络，验收结款</div></div></div>
+            <div class="fw-step"><div class="fw-num">5</div><div><div class="fw-name">复利</div><div class="fw-desc">案例沉淀 → 老客复购 → 转介绍 → 回到获客</div></div></div>
+        </div>
+    </div>
+
+    <!-- ========== 发展阶段 ========== -->
+    <div class="sec">
+        <div class="sec-title">发展<span class="g">阶段</span></div>
+        <div class="sec-sub">已验证跑通，正进入规模化复制</div>
+        <div class="phase-row">
+            <div class="phase"><div class="pt">已完成</div><div class="pn">MVP 验证</div><div class="pd">产品闭环跑通<br>真实接单变现</div></div>
+            <div class="phase now"><div class="pt">当前</div><div class="pn">生态放大</div><div class="pd">16板块上线<br>交付网络扩张</div></div>
+            <div class="phase"><div class="pt">下一步</div><div class="pn">平台规模化</div><div class="pd">招商融资<br>跨城市复制</div></div>
+        </div>
+    </div>
+
+    <!-- ========== 合作方式 ========== -->
+    <div class="sec" id="coop">
+        <div class="sec-title">怎么<span class="g">合作</span></div>
+        <div class="sec-sub">无论你是投资人、客户、共创伙伴，还是交付者，都有一条路</div>
+
+        <div class="coop-card">
+            <div class="coop-ico" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.2))">💎</div>
+            <div style="flex:1"><div class="coop-name">投资人</div><div class="coop-desc">看愿景、看数据、看飞轮。我们正在放大已验证的变现模型，寻找天使/早期投资。</div></div>
+            <a class="coop-link" href="#contact">谈投资</a>
+        </div>
+        <div class="coop-card">
+            <div class="coop-ico" style="background:linear-gradient(135deg,rgba(52,211,153,.2),rgba(34,211,238,.2))">👤</div>
+            <div style="flex:1"><div class="coop-name">客户</div><div class="coop-desc">想要 AI 工作台/工具/服务？看真实案例，先看效果再下单。</div></div>
+            <a class="coop-link" href="demo-gallery.html">看案例</a>
+        </div>
+        <div class="coop-card">
+            <div class="coop-ico" style="background:linear-gradient(135deg,rgba(96,165,250,.2),rgba(22,211,238,.2))">🤝</div>
+            <div style="flex:1"><div class="coop-name">共创合伙人</div><div class="coop-desc">有资源/有流量/有想法，想一起把生态做大？共创项目、共享分红。</div></div>
+            <a class="coop-link" href="cfapp/partners.html">聊共创</a>
+        </div>
+        <div class="coop-card">
+            <div class="coop-ico" style="background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(245,158,11,.2))">📨</div>
+            <div style="flex:1"><div class="coop-name">交付伙伴</div><div class="coop-desc">有能力接单（AI开发/设计/文案/视频）？登记进交付网络，有单派给你。</div></div>
+            <a class="coop-link" href="partner-form.html">去登记</a>
+        </div>
+    </div>
+
+    <!-- ========== 联系 ========== -->
+    <div class="sec" id="contact">
+        <div class="contact">
+            <h3>一起把「一个人+AI」做成大生意</h3>
+            <p>无论你想投资、合作、共创，还是先聊聊——<br>我们都在，欢迎来谈。</p>
+            <a class="btn btn-main" href="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html">👀 先逛逛我们的生态</a>
+            <a class="btn btn-sub" href="mailto:shim16506@gmail.com">📧 邮件联系：shim16506@gmail.com</a>
+            <a class="btn btn-sub" href="https://shiming-ai.github.io/shiming-workbench/workbench/index.html">🦄 看看创始人工作台</a>
+            <div class="tips">💡 想最快了解我们：先看案例广场 → 再看 App 生态 → 觉得靠谱就联系</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="flogo">Crazy Friday · 疯狂星期五</div>
+        一个人 + AI = 一家公司<br>
+        © 2026 Crazy Friday 生态
+    </div>
+</div>
+
+</body>
+</html>
