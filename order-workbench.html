@@ -101,7 +101,7 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 <div id="toast"></div>
 
 <script>
-const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', CLOUD_URL='https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7';
+const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', CLOUD_URL='https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function $(id){return document.getElementById(id)}
@@ -192,7 +192,7 @@ function deletePartner(i){if(!confirm('删除？'))return;const p=load(PARTNERS_
 
 // 云端同步
 function syncCloud(){
-    fetch('https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7').then(r=>r.json()).then(cloud=>{
+    fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c').then(r=>r.json()).then(cloud=>{
         const items=(cloud&&cloud.partners)||[];
         if(!items.length)return;
         const partners=load(PARTNERS_KEY,[]);
