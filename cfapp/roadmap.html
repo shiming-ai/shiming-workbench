@@ -4,94 +4,97 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · AI创业路线图 · 从0到1">
 <title>AI创业路线图 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.roadmap-node { display:flex; gap:14px; padding:14px 18px; position:relative; }
-.roadmap-node::before { content:''; position:absolute; left:35px; top:48px; bottom:-10px; width:2px; background:linear-gradient(180deg,rgba(168,85,247,.5),rgba(236,72,153,.2)); }
-.roadmap-node:last-child::before { display:none; }
-.node-circle { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; box-shadow:0 4px 16px rgba(168,85,247,.3); }
-.node-body { flex:1; padding-top:2px; }
-.node-title { font-size:14px; font-weight:800; }
-.node-desc { font-size:11px; color:#8d82a8; margin-top:3px; line-height:1.7; }
-.node-status { display:inline-block; margin-top:6px; padding:3px 10px; border-radius:10px; font-size:9px; font-weight:700; }
+.rm-hero{padding:24px 18px 12px}.rm-hero h2{font-size:22px;font-weight:900}.rm-hero p{font-size:12px;color:#a89ec9;line-height:1.7;margin-top:6px}
+.rm-progress{margin:0 18px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px}
+.rm-pbar{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.rm-pfill{height:100%;background:linear-gradient(90deg,#A855F7,#EC4899);border-radius:4px;transition:width .3s}
+.rm-ptext{font-size:12px;color:#a89ec9;display:flex;justify-content:space-between}
+.rm-ptext b{color:#C084FC}
+.rm-phase{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:15px;margin:0 18px 12px;position:relative;overflow:hidden}
+.rm-phase::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--rc,#A855F7),transparent)}
+.rm-ph-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rm-ph-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.rm-ph-name{font-size:14px;font-weight:800;flex:1}
+.rm-ph-goal{font-size:10px;color:#6d6489;background:rgba(255,255,255,.05);border-radius:8px;padding:3px 8px}
+.rm-task{display:flex;align-items:center;gap:10px;padding:9px 10px;background:rgba(255,255,255,.03);border-radius:10px;margin-bottom:6px;cursor:pointer;font-size:12px}
+.rm-task.done{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.25)}
+.rm-task-check{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.rm-task.done .rm-task-check{background:#34D399;border-color:#34D399;color:#fff}
+.rm-task-text{flex:1;color:#a89ec9}
+.rm-task.done .rm-task-text{color:#6d6489;text-decoration:line-through}
+.rm-task-link{font-size:9px;color:#C084FC;font-weight:700;text-decoration:none}
 </style>
 </head>
 <body data-tab="discover">
-
-<div class="topbar">
-    <div class="brand">
-        <div class="brand-icon">CF</div>
-        <div>
-            <div class="brand-name">AI创业路线图</div>
-            <div class="brand-sub">14 · 从0到1</div>
-        </div>
-    </div>
-    <div class="bell">🔍</div>
-</div>
-
+<div class="topbar"><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">AI创业路线图</div><div class="brand-sub">14 · 从0到1全流程</div></div></div><div class="bell" style="cursor:pointer" onclick="resetAll()">🔄</div></div>
 <div class="wrap">
-    <div class="hero" style="padding:24px 20px 10px">
-        <div style="font-size:19px;font-weight:900;text-align:center">AI创业<span style="color:#C084FC">全流程路线</span></div>
-        <div style="font-size:11px;color:#8d82a8;text-align:center;margin-top:4px">从发现机会到扩大客源，一步步走</div>
-    </div>
-
-    <div class="section" style="padding-top:10px">
-        <div class="roadmap-node">
-            <div class="node-circle">💡</div>
-            <div class="node-body">
-                <div class="node-title">发现机会</div>
-                <div class="node-desc">观察市场 · 发现痛点 · 找到你的AI切入点</div>
-                <span class="node-status" style="background:rgba(52,211,153,.15);color:#34D399">当前阶段</span>
-            </div>
-        </div>
-        <div class="roadmap-node">
-            <div class="node-circle">📚</div>
-            <div class="node-body">
-                <div class="node-title">学习方法</div>
-                <div class="node-desc">学习AI工具 · 掌握变现技能 · 进入AI营</div>
-            </div>
-        </div>
-        <div class="roadmap-node">
-            <div class="node-circle">🔍</div>
-            <div class="node-body">
-                <div class="node-title">调研市场</div>
-                <div class="node-desc">验证需求 · 分析竞品 · 确认客群</div>
-            </div>
-        </div>
-        <div class="roadmap-node">
-            <div class="node-circle">🛠️</div>
-            <div class="node-body">
-                <div class="node-title">小步MVP</div>
-                <div class="node-desc">用最小成本做出产品 · 快速试错迭代</div>
-            </div>
-        </div>
-        <div class="roadmap-node">
-            <div class="node-circle">💰</div>
-            <div class="node-body">
-                <div class="node-title">变现客户</div>
-                <div class="node-desc">找到付费客户 · 建立收入模型 · 扩大客源</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-head" style="padding-top:8px">
-        <div class="section-tt">📊 你的进度</div>
-    </div>
-    <div class="section" style="padding-top:0">
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;margin-bottom:10px">
-            <div style="font-size:12px;color:#8d82a8;margin-bottom:8px">整体进度</div>
-            <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden">
-                <div style="height:100%;width:20%;background:linear-gradient(90deg,#A855F7,#EC4899);border-radius:4px"></div>
-            </div>
-            <div style="font-size:10px;color:#6d6489;margin-top:6px">已完成 1/5 · 继续加油</div>
-        </div>
-    </div>
-
-    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:14px;border-radius:20px;display:block;margin:20px 18px;font-weight:800">🚀 开启你的创业之旅</a>
+  <div class="rm-hero"><h2>🗺️ AI创业<span style="color:#C084FC">路线图</span></h2><p>从0到1做AI变现，5个阶段<br>勾选任务，系统记录你的进度</p></div>
+  <div class="rm-progress">
+    <div class="rm-pbar"><div class="rm-pfill" id="rmFill" style="width:0%"></div></div>
+    <div class="rm-ptext"><span>已完成 <b id="rmDone">0</b>/<span id="rmTotal">0</span> 项</span><span id="rmPct">0%</span></div>
+  </div>
+  <div id="phaseList"></div>
+  <div class="tip" style="margin:0 18px 20px">💡 每阶段可跳转对应板块完成实战任务<br>完成全部任务即可成为「认证创业者」</div>
 </div>
-
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const PHASES=[
+{id:'p1',ico:'🎓',name:'阶段1 · 学习AI',color:'#A855F7',goal:'7天入门',tasks:[
+{name:'看完《AI变现入门》第1-3章',link:'academy.html'},{name:'学会2个AI工具（ChatGPT/即梦）',link:'tools.html'},{name:'了解5条变现路径',link:'playbook.html'}]},
+{id:'p2',ico:'🛠️',name:'阶段2 · 搭工具',color:'#22D3EE',goal:'3天搭建',tasks:[
+{name:'用创作工坊生成10条内容',link:'studio.html'},{name:'搭建你的AI工作台雏形',link:'../workbench/index.html'},{name:'订阅AI变现日报',link:'daily.html'}]},
+{id:'p3',ico:'📋',name:'阶段3 · 接首单',color:'#F59E0B',goal:'7天成交',tasks:[
+{name:'在接单工坊登记能力',link:'../partner-form.html'},{name:'去需求大厅抢1个单',link:'orders.html'},{name:'完成交付并沉淀案例',link:'../demo-gallery.html'}]},
+{id:'p4',ico:'💎',name:'阶段4 · 做产品',color:'#EC4899',goal:'14天上线',tasks:[
+{name:'上架1个模板到市集',link:'mall.html'},{name:'把案例做成成品工作台',link:'store.html'},{name:'开通会员开始订阅',link:'member.html'}]},
+{id:'p5',ico:'🌱',name:'阶段5 · 放大生态',color:'#34D399',goal:'持续增长',tasks:[
+{name:'认领1个OPC项目',link:'opc.html'},{name:'录入1个项目到孵化池',link:'incubation.html'},{name:'组建3个AI员工',link:'brain.html'}]}
+];
+const RM_KEY='cf_roadmap_done';
+function getDone(){try{return JSON.parse(localStorage.getItem(RM_KEY))||[]}catch(e){return[]}}
+function setDone(a){localStorage.setItem(RM_KEY,JSON.stringify(a))}
+function totalTasks(){return PHASES.reduce((s,p)=>s+p.tasks.length,0)}
+function render(){
+  const done=getDone();
+  const total=totalTasks();
+  document.getElementById('rmTotal').textContent=total;
+  document.getElementById('rmDone').textContent=done.length;
+  const pct=Math.round(done.length/total*100);
+  document.getElementById('rmFill').style.width=pct+'%';
+  document.getElementById('rmPct').textContent=pct+'%';
+  document.getElementById('phaseList').innerHTML=PHASES.map(p=>{
+    const phaseDone=p.tasks.filter((t,i)=>done.includes(p.id+'-'+i)).length;
+    return `<div class="rm-phase" style="--rc:${p.color}">
+      <div class="rm-ph-head"><div class="rm-ph-ico" style="background:${p.color}22;color:${p.color}">${p.ico}</div><div class="rm-ph-name">${p.name}</div><span class="rm-ph-goal">${p.goal}</span></div>
+      ${p.tasks.map((t,i)=>{
+        const isDone=done.includes(p.id+'-'+i);
+        return `<div class="rm-task ${isDone?'done':''}" onclick="toggle('${p.id}',${i})">
+          <div class="rm-task-check">${isDone?'✓':''}</div>
+          <div class="rm-task-text">${t.name}</div>
+          ${t.link?`<a class="rm-task-link" onclick="event.stopPropagation()" href="${t.link}">去完成 →</a>`:''}
+        </div>`;
+      }).join('')}
+      <div style="font-size:10px;color:#6d6489;margin-top:6px">阶段进度 ${phaseDone}/${p.tasks.length}</div>
+    </div>`;
+  }).join('');
+}
+function toggle(pid,idx){
+  const key=pid+'-'+idx;
+  const done=getDone();
+  if(done.includes(key))setDone(done.filter(x=>x!==key));
+  else{setDone([...done,key]);toast('✅ 任务完成')}
+  render();
+}
+function resetAll(){
+  if(!confirm('清空路线图进度？'))return;
+  setDone([]);render();toast('🔄 已重置');
+}
+render();
+</script>
 </body>
 </html>
