@@ -82,6 +82,7 @@
         </div>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
+        <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='search.html'">🔍</div>
         <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='publish.html'">✏️</div>
         <div class="bell" style="font-size:15px;cursor:pointer" onclick="location.href='post.html?id=p1'">🦄</div>
     </div>
@@ -105,6 +106,17 @@
         <a class="quick-btn" href="publish.html"><div class="quick-ico">✏️</div><div class="quick-name">发布想法</div></a>
         <a class="quick-btn" href="orders.html"><div class="quick-ico">📋</div><div class="quick-name">接单大厅</div></a>
         <a class="quick-btn hl" href="../partner-form.html"><div class="quick-ico">📨</div><div class="quick-name">接单登记</div></a>
+    </div>
+
+    <!-- 今日驾驶舱 -->
+    <div class="today-cockpit" id="todayCockpit" style="margin:14px 18px 0;background:linear-gradient(160deg,rgba(168,85,247,.1),rgba(236,72,153,.03));border:1px solid rgba(168,85,247,.25);border-radius:18px;padding:16px;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:14px;font-weight:900">📌 今日驾驶舱</div>
+            <span style="font-size:10px;color:#6d6489" id="cockpitDate"></span>
+        </div>
+        <div id="cockpitList" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="font-size:12px;color:#a89ec9">⏳ 正在加载你的今日状态...</div>
+        </div>
     </div>
 
     <!-- 变现路径横滚 -->
@@ -249,6 +261,41 @@
                 </div>`).join('');
         }
     } catch(e) {}
+})();
+// ===== 今日驾驶舱（聚合各板块真实数据） =====
+(function(){
+    function gls(k,d){ try{ const v=JSON.parse(localStorage.getItem(k)); return v===null?d:v }catch(e){ return d } }
+    const now = new Date();
+    document.getElementById('cockpitDate').textContent = (now.getMonth()+1)+'月'+now.getDate()+'日 星期'+'日一二三四五六'[now.getDay()];
+    // 各模块数据
+    const courses = gls('cf_academy_progress', {});
+    const learning = Object.values(courses).reduce((s,a)=>s+a.length,0);
+    const totalCourse = 5*7;
+    const roadmapDone = gls('cf_roadmap_done', []).length;
+    const emps = gls('cf_brain_emps', []);
+    const onlineEmps = emps.filter(e=>e.status==='online').length;
+    const myOrders = gls('cf_store_orders', []).length + gls('cf_mall_purchases', []).length;
+    const member = gls('cf_member_sub', null);
+    const projects = gls('cf_incub_projects', []).length;
+    const installed = gls('cf_apps_installed', []).length;
+    const hasCloud = !!(gls('cf_demo_cases', []).length || gls('cf_opc_claim', []).length);
+
+    const items = [];
+    if (member) items.push({ i:'💎', t:'会员生效', d:member.name, u:'member.html', c:'#FFD700' });
+    else items.push({ i:'💎', t:'未开通会员', d:'解锁全部权益', u:'member.html', c:'#FFD700' });
+    if (onlineEmps) items.push({ i:'🤖', t:onlineEmps+'位AI员工在线', d:'可派任务', u:'brain.html', c:'#34D399' });
+    else items.push({ i:'🤖', t:'组建AI员工', d:'7×24帮你干活', u:'brain.html', c:'#34D399' });
+    if (learning < totalCourse) items.push({ i:'🎓', t:'课程进度 '+learning+'/'+totalCourse, d:'继续学习领证书', u:'academy.html', c:'#A855F7' });
+    if (roadmapDone < 15) items.push({ i:'🗺️', t:'路线图 '+roadmapDone+'/15', d:'完成任务', u:'roadmap.html', c:'#22D3EE' });
+    items.push({ i:'🛍️', t:'已购 '+myOrders+' 件', d:'模板/工作台', u:'mall.html', c:'#EC4899' });
+    items.push({ i:'🌱', t:'在孵 '+projects+' 个项目', d:'推进孵化', u:'incubation.html', c:'#F59E0B' });
+    items.push({ i:'📱', t:'应用已装 '+installed+' 个', d:'我的应用', u:'apps.html', c:'#60A5FA' });
+
+    document.getElementById('cockpitList').innerHTML = items.slice(0,6).map(x => `
+        <div onclick="location.href='${x.u}'" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px;cursor:pointer">
+            <div style="font-size:14px">${x.i} <span style="font-size:11px;font-weight:800;color:#fff">${x.t}</span></div>
+            <div style="font-size:10px;color:#8d82a8;margin-top:3px">${x.d}</div>
+        </div>`).join('');
 })();
 </script>
 </body>
