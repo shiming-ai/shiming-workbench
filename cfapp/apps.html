@@ -4,100 +4,88 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · AI应用市场 · 安装即用">
 <title>AI应用市场 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.app-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:0 18px; }
-.app-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; cursor:pointer; }
-.app-card:active { transform:scale(.97); }
-.app-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; }
-.app-name { font-size:13px; font-weight:800; }
-.app-stat { font-size:10px; color:#8d82a8; margin-top:3px; }
-.app-btn { display:inline-block; margin-top:10px; padding:6px 16px; background:rgba(168,85,247,.15); border:1px solid rgba(168,85,247,.3); color:#C084FC; border-radius:14px; font-size:11px; font-weight:700; }
-.cat-row { display:flex; gap:8px; padding:0 18px; overflow-x:auto; margin-bottom:16px; scrollbar-width:none; }
-.cat-row::-webkit-scrollbar { display:none; }
-.cat-chip { flex-shrink:0; padding:7px 14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; }
-.cat-chip.active { background:rgba(168,85,247,.2); border-color:#A855F7; color:#C084FC; font-weight:700; }
+.ap-hero{padding:24px 18px 12px}.ap-hero h2{font-size:22px;font-weight:900}.ap-hero p{font-size:12px;color:#a89ec9;line-height:1.7;margin-top:6px}
+.search-row{padding:12px 18px 14px}.search-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:8px}.search-box input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px}
+.cat-row{display:flex;gap:8px;padding:0 18px 14px;overflow-x:auto;scrollbar-width:none}.cat-row::-webkit-scrollbar{display:none}
+.cat-chip{flex-shrink:0;padding:8px 14px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:#a89ec9;cursor:pointer;font-weight:700}
+.cat-chip.active{background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;border-color:transparent}
+.ap-list{padding:0 18px 20px}
+.ap-card{display:flex;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;margin-bottom:10px;align-items:center}
+.ap-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.ap-name{font-size:14px;font-weight:800}
+.ap-desc{font-size:11px;color:#a89ec9;line-height:1.5;margin-top:3px}
+.ap-tag{font-size:9px;padding:2px 7px;border-radius:8px;background:rgba(255,255,255,.06);color:#a89ec9;font-weight:700;margin-top:4px;display:inline-block}
+.ap-right{text-align:right;flex-shrink:0}
+.ap-install{padding:8px 16px;background:linear-gradient(135deg,#A855F7,#EC4899);border:none;border-radius:14px;color:#fff;font-size:11px;font-weight:800;cursor:pointer;display:block}
+.ap-install.installed{background:rgba(52,211,153,.18);color:#34D399}
+.ap-free{font-size:10px;color:#34D399;font-weight:700;margin-top:4px;display:block}
 </style>
 </head>
 <body data-tab="discover">
-
-<div class="topbar">
-    <div class="brand">
-        <div class="brand-icon">CF</div>
-        <div>
-            <div class="brand-name">AI应用市场</div>
-            <div class="brand-sub">07 · 安装即用</div>
-        </div>
-    </div>
-    <div class="bell">🔍</div>
-</div>
-
+<div class="topbar"><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">AI应用市场</div><div class="brand-sub">07 · 安装即用</div></div></div><div class="bell" style="cursor:pointer" onclick="showInstalled()">📦</div></div>
 <div class="wrap">
-    <div style="padding:16px 18px 12px">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
-            <span style="color:#8d82a8">🔍</span>
-            <input placeholder="搜索应用..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
-        </div>
-    </div>
-
-    <div class="cat-row">
-        <span class="cat-chip active">全部</span>
-        <span class="cat-chip">AI写作</span>
-        <span class="cat-chip">AI绘图</span>
-        <span class="cat-chip">AI视频</span>
-        <span class="cat-chip">AI办公</span>
-        <span class="cat-chip">视频创作</span>
-        <span class="cat-chip">文案策划</span>
-        <span class="cat-chip">运营推广</span>
-        <span class="cat-chip">更多</span>
-    </div>
-
-    <div class="section-head">
-        <div class="section-tt">🔥 热门应用</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="app-grid">
-        <div class="app-card">
-            <div class="app-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">✍️</div>
-            <div class="app-name">AI伴写小助理</div>
-            <div class="app-stat">1.2w人使用 · ⭐ 4.8</div>
-            <span class="app-btn">安装</span>
-        </div>
-        <div class="app-card">
-            <div class="app-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">📣</div>
-            <div class="app-name">运营专家Emma</div>
-            <div class="app-stat">8.7w人使用 · ⭐ 4.9</div>
-            <span class="app-btn">安装</span>
-        </div>
-        <div class="app-card">
-            <div class="app-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">🎨</div>
-            <div class="app-name">星弧设计工作室</div>
-            <div class="app-stat">267单 · ⭐ 4.7</div>
-            <span class="app-btn">安装</span>
-        </div>
-        <div class="app-card">
-            <div class="app-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">💻</div>
-            <div class="app-name">创客科技开发</div>
-            <div class="app-stat">189单 · ⭐ 4.6</div>
-            <span class="app-btn">安装</span>
-        </div>
-        <div class="app-card">
-            <div class="app-icon" style="background:linear-gradient(135deg,#EC4899,#F43F5E)">🎬</div>
-            <div class="app-name">AI视频工坊</div>
-            <div class="app-stat">5.6w人使用 · ⭐ 4.7</div>
-            <span class="app-btn">安装</span>
-        </div>
-        <div class="app-card">
-            <div class="app-icon" style="background:linear-gradient(135deg,#8B5CF6,#D946EF)">📊</div>
-            <div class="app-name">数据分析助手</div>
-            <div class="app-stat">3.2w人使用 · ⭐ 4.8</div>
-            <span class="app-btn">安装</span>
-        </div>
-    </div>
+  <div class="ap-hero"><h2>📱 AI<span style="color:#C084FC">应用市场</span></h2><p>一键安装即用的小工具/应用<br>全部免费，Pro会员解锁高级版</p></div>
+  <div class="search-row"><div class="search-box"><span style="color:#8d82a8">🔍</span><input id="searchInput" placeholder="搜索应用..."></div></div>
+  <div class="cat-row" id="catBar"></div>
+  <div class="ap-list" id="appList"></div>
+  <div class="tip" style="margin:0 18px 20px">💡 安装后自动加入「📦 我的应用」</div>
 </div>
-
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const APPS=[
+{id:'a1',ico:'📝',name:'AI起名助手',cat:'实用',desc:'给宝宝/品牌/宠物起名，一键生成30个',color:'#A855F7'},
+{id:'a2',ico:'🎁',name:'节日提醒管家',cat:'实用',desc:'纪念日/节日/生日自动提醒，再忙不忘',color:'#EC4899'},
+{id:'a3',ico:'🧮',name:'报价计算器',cat:'接单',desc:'输入成本自动算报价，含3档策略',color:'#34D399'},
+{id:'a4',ico:'📋',name:'合同模板生成',cat:'接单',desc:'一键生成合作合同/报价单，法律要点标注',color:'#FF6B1A'},
+{id:'a5',ico:'🎬',name:'视频字幕助手',cat:'创作',desc:'AI自动生成字幕+时间轴',color:'#22D3EE'},
+{id:'a6',ico:'🖼️',name:'封面设计器',cat:'创作',desc:'小红书/公众号封面，模板一键套',color:'#F472B6'},
+{id:'a7',ico:'📊',name:'周报生成器',cat:'办公',desc:'输入数据自动出周报/日报',color:'#60A5FA'},
+{id:'a8',ico:'🔗',name:'短链接生成',cat:'办公',desc:'长链接变短链，支持统计点击',color:'#F59E0B'},
+{id:'a9',ico:'🗣️',name:'AI配音',cat:'创作',desc:'文字转语音，多音色',color:'#10B981'},
+{id:'a10',ico:'📚',name:'知识库问答',cat:'实用',desc:'上传文档自动建知识库，问答即答',color:'#8B5CF6'}
+];
+const CATS=['全部','实用','接单','创作','办公'];
+const INS_KEY='cf_apps_installed';
+let curCat='全部',kw='';
+function getIns(){try{return JSON.parse(localStorage.getItem(INS_KEY))||[]}catch(e){return[]}}
+function setIns(a){localStorage.setItem(INS_KEY,JSON.stringify(a))}
+function renderCats(){document.getElementById('catBar').innerHTML=CATS.map(c=>`<span class="cat-chip ${c===curCat?'active':''}" onclick="setCat('${c}')">${c}</span>`).join('')}
+function setCat(c){curCat=c;renderCats();renderList()}
+function renderList(){
+  const ins=getIns();
+  const arr=APPS.filter(a=>(curCat==='全部'||a.cat===curCat)&&(!kw||(a.name+a.desc).toLowerCase().includes(kw)));
+  document.getElementById('appList').innerHTML=arr.map(a=>{
+    const done=ins.includes(a.id);
+    return `<div class="ap-card">
+      <div class="ap-ico" style="background:${a.color}22;color:${a.color}">${a.ico}</div>
+      <div style="flex:1"><div class="ap-name">${a.name}</div><div class="ap-desc">${a.desc}</div><span class="ap-tag">${a.cat}</span></div>
+      <div class="ap-right">
+        <button class="ap-install ${done?'installed':''}" onclick="install('${a.id}')">${done?'✓ 已安装':'安装'}</button>
+        <span class="ap-free">免费</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+function install(id){
+  const ins=getIns();
+  if(ins.includes(id)){toast('已安装，打开我的应用');return}
+  if(!confirm('安装这个应用？'))return;
+  ins.push(id);setIns(ins);renderList();
+  toast('✅ 已安装，可在📦查看');
+}
+function showInstalled(){
+  const ins=getIns();
+  if(!ins.length)return toast('📦 还没有安装应用');
+  const names=ins.map(id=>{const a=APPS.find(x=>x.id===id);return a?`• ${a.ico} ${a.name}`:''}).join('\n');
+  alert(`📦 我的应用（${ins.length}）\n\n${names}`);
+}
+document.getElementById('searchInput').addEventListener('input',e=>{kw=e.target.value;renderList()});
+renderCats();renderList();
+</script>
 </body>
 </html>
