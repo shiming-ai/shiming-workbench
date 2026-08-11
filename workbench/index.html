@@ -5153,7 +5153,7 @@ function renderDeliveryTracking() {
                 <div style="height:100%;width:${pct}%;background:${stage.color};border-radius:3px;transition:width 0.4s"></div>
             </div>
             <div style="display:flex;gap:4px">
-                ${stageIdx < DELIVERY_STAGES.length - 1 ? `<button onclick="advanceDelivery(${i})" style="flex:1;font-size:10px;padding:5px;border:1px solid ${stage.color};color:${stage.color};border-radius:6px;background:transparent;cursor:pointer">→ ${DELIVERY_STAGES[stageIdx+1].label}</button>` : ''}
+                ${stageIdx < DELIVERY_STAGES.length - 1 ? `<button onclick="advanceDeliveryItem(${i})" style="flex:1;font-size:10px;padding:5px;border:1px solid ${stage.color};color:${stage.color};border-radius:6px;background:transparent;cursor:pointer">→ ${DELIVERY_STAGES[stageIdx+1].label}</button>` : ''}
                 <button onclick="copyDeliveryInfo(${i})" style="font-size:10px;padding:5px 8px;border:1px solid var(--border);color:var(--text-dim);border-radius:6px;background:transparent;cursor:pointer">📋</button>
                 <button onclick="delDelivery(${i})" style="font-size:10px;padding:5px 8px;border:1px solid var(--border);color:var(--text-mute);border-radius:6px;background:transparent;cursor:pointer">×</button>
             </div>
@@ -5177,7 +5177,7 @@ function addDelivery() {
     toast('交付项目已添加');
 }
 
-function advanceDelivery(i) {
+function advanceDeliveryItem(i) {
     const items = load('deliveries', []);
     const idx = DELIVERY_STAGES.findIndex(s => s.key === items[i].stage);
     if (idx < DELIVERY_STAGES.length - 1) {
@@ -5462,7 +5462,7 @@ function renderDeliveryBoard() {
             </div>
             <div style="display:flex;gap:6px">
                 ${stage < deliveryStages.length - 1 ?
-                    `<button onclick="advanceDelivery(${crmList.indexOf(d)})" style="flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">→ 进入「${deliveryStages[stage+1]}」</button>` :
+                    `<button onclick="advanceCrmDelivery(${crmList.indexOf(d)})" style="flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">→ 进入「${deliveryStages[stage+1]}」</button>` :
                     '<div style="flex:1;text-align:center;padding:8px;color:var(--green);font-size:12px">✅ 已完成</div>'
                 }
                 <button onclick="switchPage('crm', document.querySelectorAll('.sidebar-item')[2])" style="padding:8px 12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">详情</button>
@@ -5471,7 +5471,7 @@ function renderDeliveryBoard() {
     }).join('');
 }
 
-function advanceDelivery(crmIdx) {
+function advanceCrmDelivery(crmIdx) {
     const crmList = load('crmList', []);
     if (!crmList[crmIdx]) return;
     crmList[crmIdx].deliveryStage = (crmList[crmIdx].deliveryStage || 0) + 1;
