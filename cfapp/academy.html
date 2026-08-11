@@ -4,8 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · AI营 · 从0到1学AI变现">
 <title>AI营 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.ay-hero { padding:24px 18px 12px; }
+.ay-hero h2 { font-size:22px; font-weight:900; }
+.ay-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.search-row { padding:12px 18px 14px; }
+.search-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:11px 14px; display:flex; align-items:center; gap:8px; }
+.search-box input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:13px; }
+.ay-courses { padding:0 18px 20px; }
+.course-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:15px; margin-bottom:12px; position:relative; overflow:hidden; cursor:pointer; }
+.course-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--cc,#A855F7),transparent); }
+.cc-head { display:flex; gap:12px; margin-bottom:8px; }
+.cc-ico { width:54px; height:54px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0; }
+.cc-name { font-size:15px; font-weight:900; }
+.cc-meta { font-size:10px; color:#a89ec9; margin-top:4px; }
+.cc-progress { height:6px; background:rgba(255,255,255,.1); border-radius:3px; overflow:hidden; margin:8px 0; }
+.cc-progress-fill { height:100%; background:linear-gradient(90deg,#A855F7,#EC4899); border-radius:3px; transition:width .3s; }
+.cc-status { font-size:10px; font-weight:700; position:absolute; top:12px; right:12px; padding:3px 10px; border-radius:8px; }
+.cs-ongoing { background:rgba(168,85,247,.15); color:#C084FC; }
+.cs-done { background:rgba(52,211,153,.15); color:#34D399; }
+.cs-new { background:rgba(255,215,0,.12); color:#FFD700; }
+.cs-cert { background:rgba(52,211,153,.2); color:#34D399; }
+/* 课程详情 */
+.detail-overlay { position:fixed; inset:0; background:rgba(0,0,0,.9); backdrop-filter:blur(12px); z-index:200; display:flex; align-items:center; justify-content:center; padding:18px; }
+.detail-card { background:#1a0d2e; border:1px solid var(--border); border-radius:20px; padding:22px; width:100%; max-width:400px; max-height:88vh; overflow-y:auto; }
+.detail-card h3 { font-size:18px; font-weight:900; margin-bottom:4px; }
+.detail-card .dc-sub { font-size:11px; color:#a89ec9; margin-bottom:14px; }
+.chapter { display:flex; align-items:center; gap:10px; padding:11px 12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:10px; margin-bottom:8px; cursor:pointer; }
+.chapter.done { border-color:rgba(52,211,153,.3); background:rgba(52,211,153,.05); }
+.chapter-num { width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; background:rgba(255,255,255,.08); flex-shrink:0; }
+.chapter.done .chapter-num { background:rgba(52,211,153,.2); color:#34D399; }
+.chapter-name { flex:1; font-size:12px; font-weight:700; }
+.chapter-dur { font-size:9px; color:#6d6489; }
+.chapter-check { width:22px; height:22px; border-radius:50%; border:2px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:11px; }
+.chapter.done .chapter-check { background:#34D399; border-color:#34D399; color:#fff; }
+.cert-btn { display:block; width:100%; margin-top:14px; padding:13px; background:linear-gradient(135deg,#FFD700,#F59E0B); border:none; border-radius:20px; color:#1a0d2e; font-size:14px; font-weight:900; cursor:pointer; }
+.cert-btn:disabled { background:rgba(255,255,255,.08); color:#6d6489; cursor:not-allowed; }
+.cert-view { display:block; width:100%; margin-top:14px; padding:13px; background:rgba(52,211,153,.18); border:1px solid rgba(52,211,153,.4); border-radius:20px; color:#34D399; font-size:14px; font-weight:800; cursor:pointer; }
+.close-btn { display:block; width:100%; margin-top:8px; padding:10px; background:transparent; color:#a89ec9; font-size:12px; cursor:pointer; border:none; }
+.ay-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 18px 14px; }
+.ay-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 6px; text-align:center; }
+.ay-stat .n { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.ay-stat .l { font-size:9px; color:#6d6489; margin-top:3px; }
+/* 证书 */
+.cert-overlay { position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:300; display:flex; align-items:center; justify-content:center; padding:20px; }
+.cert-paper { background:linear-gradient(160deg,#f8f4ff,#efe6ff); color:#2a1a4a; border-radius:18px; padding:34px 26px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+.cert-paper .cp-logo { font-size:12px; letter-spacing:2px; color:#A855F7; font-weight:900; margin-bottom:18px; }
+.cert-paper h3 { font-size:26px; font-weight:900; letter-spacing:4px; margin-bottom:8px; }
+.cert-paper .cp-line { width:60px; height:2px; background:linear-gradient(90deg,#A855F7,#EC4899); margin:0 auto 16px; }
+.cert-paper .cp-name { font-size:20px; font-weight:900; color:#7C3AED; margin:8px 0; }
+.cert-paper .cp-course { font-size:13px; color:#6b5b8a; margin-bottom:14px; }
+.cert-paper .cp-date { font-size:11px; color:#9a8ab8; }
+.cert-paper .cp-seal { width:60px; height:60px; border:3px solid #EC4899; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#EC4899; margin:18px auto 0; transform:rotate(-15deg); }
+</style>
 </head>
 <body data-tab="discover">
 
@@ -14,60 +68,237 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">AI营</div>
-            <div class="brand-sub">04 · 学院</div>
+            <div class="brand-sub">04 · 从0到1学AI变现</div>
         </div>
     </div>
-    <div class="bell">🔍</div>
+    <div class="bell" style="cursor:pointer" onclick="showCerts()">🏅</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding:24px 18px 12px">
-        <div style="font-size:18px;font-weight:900;margin-bottom:6px">系统学习<span style="color:#C084FC">AI知识</span> · 实战提升能力</div>
+    <div class="ay-hero">
+        <h2>AI<span style="color:#C084FC">营</span></h2>
+        <p>5 门实战课 · 从0到1学AI变现<br>学完章节，领取结业证书</p>
     </div>
 
-    <div style="padding:0 18px 14px">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
+    <div class="search-row">
+        <div class="search-box">
             <span style="color:#8d82a8">🔍</span>
-            <input placeholder="搜索课程、行业、关键词..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
+            <input id="searchInput" placeholder="搜索课程...">
         </div>
     </div>
 
-    <div class="orders-stats">
-        <div class="orders-stat"><div class="num">3,000+</div><div class="lbl">系统课程</div></div>
-        <div class="orders-stat"><div class="num">500+</div><div class="lbl">实战案例</div></div>
-        <div class="orders-stat"><div class="num">3,000+</div><div class="lbl">学完掌握</div></div>
+    <div class="ay-stats">
+        <div class="ay-stat"><div class="n" id="courseCount">5</div><div class="l">课程</div></div>
+        <div class="ay-stat"><div class="n" id="lessonDone">0</div><div class="l">已学章节</div></div>
+        <div class="ay-stat"><div class="n" id="certCount">0</div><div class="l">证书</div></div>
     </div>
 
-    <div class="section-head" style="padding-top:8px">
-        <div class="section-tt">🎓 今日推荐课程</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section">
-        <div class="card" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border:1px solid rgba(168,85,247,.25)">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899);font-size:22px">🎯</div>
-                <div class="card-name" style="font-size:15px">AI创业实战营</div>
-                <span class="card-tag" style="background:rgba(255,215,0,.15);color:#FFD700">推荐</span>
-            </div>
-            <div class="card-desc">从0到1，打造AI一人公司<br>100+系统课程 · 500+实战案例 · 3000+学完掌握</div>
-            <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:11px;border-radius:18px;display:block;margin-top:10px;font-weight:800">开始学习</a>
-        </div>
-    </div>
+    <div class="ay-courses" id="courseList"></div>
 
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">🔥 热门课程 TOP 10</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section">
-        <div class="card" style="border-left:3px solid #FFD700"><div class="card-head"><div class="card-icon">🥇</div><div class="card-name">1. AI提示词工程实战</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">学习 1.2w人 · ⭐ 4.9</div></div></div>
-        <div class="card" style="border-left:3px solid #C0C0C0"><div class="card-head"><div class="card-icon">🥈</div><div class="card-name">2. AI数字人带货</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">学习 8.7k人 · ⭐ 4.8</div></div></div>
-        <div class="card" style="border-left:3px solid #CD7F32"><div class="card-head"><div class="card-icon">🥉</div><div class="card-name">3. AI Agent智能体搭建</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">学习 3.2w人 · ⭐ 4.8</div></div></div>
-        <div class="card"><div class="card-head"><div class="card-icon">4</div><div class="card-name">AI数字人简历</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 4.7</div></div></div>
-        <div class="card"><div class="card-head"><div class="card-icon">5</div><div class="card-name">AI脚本编写</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 4.6</div></div></div>
+    <div class="tip" style="margin:0 18px 20px">
+        💡 学习进度自动保存<br>学完全部章节可领取结业证书
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+// ===== 课程数据 =====
+const COURSES = [
+    { id:'c1', ico:'🎯', name:'AI变现入门·7天从0到1', color:'#A855F7', students:'12.4k', chapters:[
+        { name:'第1天：AI变现的5条路', dur:'12分钟' },
+        { name:'第2天：选对赛道与定位', dur:'15分钟' },
+        { name:'第3天：AI工具配置实操', dur:'20分钟' },
+        { name:'第4天：内容引流3板斧', dur:'18分钟' },
+        { name:'第5天：第一笔订单成交', dur:'22分钟' },
+        { name:'第6天：交付与收款', dur:'16分钟' },
+        { name:'第7天：复盘与放大', dur:'14分钟' }
+    ]},
+    { id:'c2', ico:'🛠️', name:'AI工作台搭建实战', color:'#FF6B1A', students:'8.2k', chapters:[
+        { name:'工作台为什么是刚需', dur:'10分钟' },
+        { name:'财务模块搭建', dur:'18分钟' },
+        { name:'客户管理模块', dur:'16分钟' },
+        { name:'订单/交付模块', dur:'20分钟' },
+        { name:'数据看板与复盘', dur:'15分钟' },
+        { name:'上线与美化', dur:'12分钟' }
+    ]},
+    { id:'c3', ico:'💬', name:'接单话术与成交技巧', color:'#34D399', students:'6.7k', chapters:[
+        { name:'客户从哪来：引流定位', dur:'14分钟' },
+        { name:'微信破冰话术模板', dur:'12分钟' },
+        { name:'报价策略与谈判', dur:'18分钟' },
+        { name:'拒绝砍价3招', dur:'10分钟' },
+        { name:'逼单与收款', dur:'15分钟' },
+        { name:'复购与转介绍', dur:'12分钟' }
+    ]},
+    { id:'c4', ico:'📕', name:'小红书AI运营从0到1', color:'#EC4899', students:'9.8k', chapters:[
+        { name:'账号定位与人设', dur:'12分钟' },
+        { name:'爆款选题方法论', dur:'15分钟' },
+        { name:'AI写笔记全流程', dur:'18分钟' },
+        { name:'配图与封面', dur:'12分钟' },
+        { name:'发布节奏与数据', dur:'14分钟' },
+        { name:'引流私域', dur:'16分钟' }
+    ]},
+    { id:'c5', ico:'🎬', name:'AI视频与数字人变现', color:'#22D3EE', students:'5.1k', chapters:[
+        { name:'AI视频工具全景', dur:'15分钟' },
+        { name:'数字人口播搭建', dur:'20分钟' },
+        { name:'脚本与配音', dur:'14分钟' },
+        { name:'矩阵号运营', dur:'18分钟' },
+        { name:'带货与广告变现', dur:'16分钟' }
+    ]}
+];
+const PROG_KEY = 'cf_academy_progress';
+const CERT_KEY = 'cf_academy_certs';
+
+function getProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY))||{} }catch(e){ return {} } }
+function setProg(p){ localStorage.setItem(PROG_KEY, JSON.stringify(p)) }
+function getCerts(){ try{ return JSON.parse(localStorage.getItem(CERT_KEY))||[] }catch(e){ return [] } }
+function setCerts(a){ localStorage.setItem(CERT_KEY, JSON.stringify(a)) }
+
+function courseDone(c){
+    const p = getProg();
+    const done = (p[c.id]||[]).length;
+    return done >= c.chapters.length;
+}
+
+function renderCourses(){
+    const kw = (document.getElementById('searchInput')?.value||'').trim().toLowerCase();
+    const prog = getProg();
+    const certs = getCerts();
+    let doneCount = 0, certCount = certs.length;
+    Object.values(prog).forEach(arr => doneCount += arr.length);
+    document.getElementById('lessonDone').textContent = doneCount;
+    document.getElementById('certCount').textContent = certCount;
+
+    const list = document.getElementById('courseList');
+    const arr = COURSES.filter(c => !kw || c.name.toLowerCase().includes(kw));
+    list.innerHTML = arr.map(c => {
+        const done = (prog[c.id]||[]).length;
+        const total = c.chapters.length;
+        const pct = Math.round(done/total*100);
+        const isCert = certs.includes(c.id);
+        const status = isCert ? '<span class="cs-cert">🏅 已结业</span>' : done===0 ? '<span class="cs-new">未开始</span>' : pct>=100 ? '<span class="cs-done">✅ 已学完</span>' : '<span class="cs-ongoing">⏳ 学习中</span>';
+        return `<div class="course-card" style="--cc:${c.color}" onclick="openCourse('${c.id}')">
+            ${status}
+            <div class="cc-head">
+                <div class="cc-ico" style="background:${c.color}22;color:${c.color}">${c.ico}</div>
+                <div style="flex:1">
+                    <div class="cc-name">${c.name}</div>
+                    <div class="cc-meta">👥 ${c.students}人学 · ${total}章 · ${Math.round(total*15)}分钟</div>
+                </div>
+            </div>
+            <div class="cc-progress"><div class="cc-progress-fill" style="width:${pct}%"></div></div>
+            <div style="font-size:10px;color:#6d6489;display:flex;justify-content:space-between">
+                <span>进度 ${done}/${total}</span><span>${pct}%</span>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function openCourse(id){
+    const c = COURSES.find(x=>x.id===id); if(!c) return;
+    const prog = getProg();
+    const done = prog[c.id] || [];
+    const certs = getCerts();
+    const isCert = certs.includes(c.id);
+    const overlay = document.createElement('div');
+    overlay.className = 'detail-overlay';
+    overlay.onclick = (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="detail-card">
+        <h3>${c.ico} ${c.name}</h3>
+        <div class="dc-sub">👥 ${c.students}人学 · ${c.chapters.length}章 · 已学 ${done.length}/${c.chapters.length}</div>
+        <div id="chapters-${c.id}"></div>
+        ${isCert
+            ? `<button class="cert-view" onclick="viewCert('${c.id}')">🏅 查看结业证书</button>`
+            : `<button class="cert-btn" id="certBtn-${c.id}" onclick="claimCert('${c.id}')" ${done.length>=c.chapters.length?'':'disabled'}>${done.length>=c.chapters.length?'🎓 领取结业证书':'学完全部章节后领取证书'}</button>`
+        }
+        <button class="close-btn" onclick="document.body.removeChild(this.parentElement.parentElement)">关闭</button>
+    </div>`;
+    document.body.appendChild(overlay);
+    renderChapters(c, overlay);
+}
+
+function renderChapters(c, overlay){
+    const prog = getProg();
+    const done = prog[c.id] || [];
+    const el = overlay.querySelector('#chapters-'+c.id);
+    el.innerHTML = c.chapters.map((ch,i) => {
+        const isDone = done.includes(i);
+        return `<div class="chapter ${isDone?'done':''}" onclick="toggleLesson('${c.id}',${i})">
+            <div class="chapter-num">${i+1}</div>
+            <div class="chapter-name">${ch.name}</div>
+            <div class="chapter-dur">${ch.dur}</div>
+            <div class="chapter-check">${isDone?'✓':''}</div>
+        </div>`;
+    }).join('');
+}
+
+function toggleLesson(cid, idx){
+    const prog = getProg();
+    if (!prog[cid]) prog[cid] = [];
+    const has = prog[cid].includes(idx);
+    if (has) prog[cid] = prog[cid].filter(x=>x!==idx);
+    else prog[cid].push(idx);
+    setProg(prog);
+    // 更新界面
+    const c = COURSES.find(x=>x.id===cid);
+    const overlay = document.querySelector('.detail-overlay');
+    if (overlay) {
+        renderChapters(c, overlay);
+        // 更新证书按钮
+        const done = prog[cid].length;
+        const btn = overlay.querySelector('#certBtn-'+cid);
+        if (btn) {
+            btn.disabled = done < c.chapters.length;
+            btn.textContent = done >= c.chapters.length ? '🎓 领取结业证书' : '学完全部章节后领取证书';
+        }
+    }
+    renderCourses();
+    toast(has ? '已取消完成' : '✅ 章节已学完');
+}
+
+function claimCert(cid){
+    const c = COURSES.find(x=>x.id===cid);
+    const prog = getProg();
+    if ((prog[cid]||[]).length < c.chapters.length) return toast('还没学完');
+    const certs = getCerts();
+    if (!certs.includes(cid)) certs.push(cid);
+    setCerts(certs);
+    renderCourses();
+    toast('🎉 恭喜结业！证书已领取');
+    // 显示证书
+    const overlay = document.querySelector('.detail-overlay');
+    if (overlay) document.body.removeChild(overlay);
+    viewCert(cid);
+}
+
+function viewCert(cid){
+    const c = COURSES.find(x=>x.id===cid); if(!c) return;
+    const now = new Date();
+    const dateStr = now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日';
+    const overlay = document.createElement('div');
+    overlay.className = 'cert-overlay';
+    overlay.onclick = (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="cert-paper">
+        <div class="cp-logo">CRAZY FRIDAY · 疯狂星期五</div>
+        <h3>结业证书</h3>
+        <div class="cp-line"></div>
+        <div>兹证明</div>
+        <div class="cp-name">时铭</div>
+        <div class="cp-course">已完成《${c.name}》全部课程学习<br>具备AI变现实操能力</div>
+        <div class="cp-date">${dateStr} · 官方认证</div>
+        <div class="cp-seal">CF<br>认证</div>
+    </div>`;
+    document.body.appendChild(overlay);
+}
+
+function showCerts(){
+    const certs = getCerts();
+    if (!certs.length) return toast('🏅 还没有证书，学完课程领取');
+    alert(`🏅 我的证书（${certs.length}）\n\n${certs.map(id=>{const c=COURSES.find(x=>x.id===id);return c?`• ${c.name}`:''}).join('\n')}`);
+}
+
+document.getElementById('searchInput').addEventListener('input', renderCourses);
+renderCourses();
+</script>
 </body>
 </html>
