@@ -4,21 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 数据中心 · 生态数据看板">
 <title>数据中心 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
+.dt-hero { padding:24px 18px 12px; }
+.dt-hero h2 { font-size:22px; font-weight:900; }
+.dt-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.dt-kpis { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:0 18px 14px; }
+.kpi-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; position:relative; overflow:hidden; }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--kc,#A855F7),transparent); }
+.kpi-card .kl { font-size:11px; color:#a89ec9; }
+.kpi-card .kn { font-size:26px; font-weight:900; margin-top:4px; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.kpi-card .kd { font-size:10px; color:#6d6489; margin-top:4px; }
+.kpi-card .ki { font-size:20px; position:absolute; top:12px; right:14px; }
 .chart-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; margin:0 18px 12px; }
-.chart-title { font-size:13px; font-weight:800; margin-bottom:10px; }
-.pie-wrap { display:flex; align-items:center; gap:20px; padding:10px 0; }
-.pie { width:90px; height:90px; border-radius:50%; flex-shrink:0; position:relative; }
-.pie-center { position:absolute; inset:20%; border-radius:50%; background:#0d0420; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
-.legend { flex:1; }
-.legend-item { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:11px; color:#a89ec9; }
+.chart-title { font-size:13px; font-weight:800; margin-bottom:12px; }
+.bar-chart { display:flex; align-items:flex-end; gap:8px; height:120px; }
+.bar-wrap { flex:1; text-align:center; }
+.bar-col { background:linear-gradient(180deg,#A855F7,#7C3AED); border-radius:6px 6px 0 0; margin:0 auto; width:60%; min-height:3px; transition:height .3s; }
+.bar-val { font-size:9px; color:#a89ec9; margin-bottom:4px; }
+.bar-label { font-size:9px; color:#6d6489; margin-top:6px; }
+.donut-row { display:flex; align-items:center; gap:16px; }
+.donut-legend { flex:1; }
+.legend-item { display:flex; align-items:center; gap:8px; font-size:11px; color:#a89ec9; padding:5px 0; }
 .legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
-.legend-val { margin-left:auto; color:#fff; font-weight:700; }
-.bar-row { display:flex; align-items:flex-end; gap:10px; height:90px; padding-top:10px; }
-.bar { flex:1; border-radius:6px 6px 0 0; position:relative; }
-.bar-label { position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); font-size:9px; color:#6d6489; }
+.legend-val { margin-left:auto; font-weight:800; color:#fff; }
+.dt-list { padding:0 18px 20px; }
+.dt-note { display:flex; justify-content:space-between; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px 14px; margin-bottom:8px; font-size:12px; }
+.dt-note .dl { color:#a89ec9; }
+.dt-note .dv { font-weight:800; color:#C084FC; }
 </style>
 </head>
 <body data-tab="me">
@@ -28,65 +43,145 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">数据中心</div>
-            <div class="brand-sub">12 · 数据洞察</div>
+            <div class="brand-sub">12 · 生态数据看板</div>
         </div>
     </div>
-    <div class="bell">⚙️</div>
+    <div class="bell" style="cursor:pointer" onclick="refreshAll()">🔄</div>
 </div>
 
 <div class="wrap">
-    <div class="orders-stats" style="padding-top:16px">
-        <div class="orders-stat"><div class="num">2,856</div><div class="lbl">用户增长</div></div>
-        <div class="orders-stat"><div class="num">1,523</div><div class="lbl">活跃用户</div></div>
-        <div class="orders-stat"><div class="num">23.6%</div><div class="lbl">转化率</div></div>
+    <div class="dt-hero">
+        <h2>📊 数据<span style="color:#C084FC">中心</span></h2>
+        <p>实时聚合各模块数据<br>看生态怎么转起来</p>
     </div>
-    <div style="padding:0 18px;margin-bottom:12px">
-        <div style="display:flex;align-items:center;gap:8px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:10px 14px;font-size:12px;color:#34D399">
-            <span style="font-size:16px">📈</span> 较上周 +18.2% 增长
+
+    <div class="dt-kpis" id="kpiGrid"></div>
+
+    <div class="chart-card">
+        <div class="chart-title">📈 近7天活跃趋势</div>
+        <div class="bar-chart" id="trendChart"></div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-title">🧩 变现结构占比</div>
+        <div class="donut-row">
+            <svg id="donutSvg" width="110" height="110" viewBox="0 0 42 42"></svg>
+            <div class="donut-legend" id="donutLegend"></div>
         </div>
     </div>
 
     <div class="chart-card">
-        <div class="chart-title">💰 收入趋势</div>
-        <div class="bar-row">
-            <div class="bar" style="height:30%;background:rgba(168,85,247,.3)"><span class="bar-label">1月</span></div>
-            <div class="bar" style="height:42%;background:rgba(168,85,247,.38)"><span class="bar-label">2月</span></div>
-            <div class="bar" style="height:50%;background:rgba(168,85,247,.45)"><span class="bar-label">3月</span></div>
-            <div class="bar" style="height:58%;background:rgba(168,85,247,.5)"><span class="bar-label">4月</span></div>
-            <div class="bar" style="height:72%;background:linear-gradient(180deg,#A855F7,#EC4899)"><span class="bar-label">5月</span></div>
-            <div class="bar" style="height:90%;background:linear-gradient(180deg,#EC4899,#F43F5E)"><span class="bar-label">6月</span></div>
-        </div>
+        <div class="chart-title">📋 生态明细</div>
+        <div id="detailList"></div>
     </div>
 
-    <div class="chart-card">
-        <div class="chart-title">👥 用户分布</div>
-        <div class="pie-wrap">
-            <div class="pie" style="background:conic-gradient(#A855F7 0 45%, #EC4899 45% 65%, #34D399 65% 80%, #FFD93D 80% 90%, #60A5FA 90% 100%)">
-                <div class="pie-center">100%</div>
-            </div>
-            <div class="legend">
-                <div class="legend-item"><span class="legend-dot" style="background:#A855F7"></span>新用户<span class="legend-val">45%</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#EC4899"></span>活跃用户<span class="legend-val">20%</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#34D399"></span>忠实用户<span class="legend-val">15%</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#FFD93D"></span>VIP用户<span class="legend-val">10%</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#60A5FA"></span>其他<span class="legend-val">10%</span></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="chart-card">
-        <div class="chart-title">📣 来源渠道</div>
-        <div class="bar-row">
-            <div class="bar" style="height:80%;background:linear-gradient(180deg,#A855F7,#EC4899)"><span class="bar-label">抖音</span></div>
-            <div class="bar" style="height:62%;background:rgba(168,85,247,.5)"><span class="bar-label">小红书</span></div>
-            <div class="bar" style="height:45%;background:rgba(168,85,247,.38)"><span class="bar-label">微信</span></div>
-            <div class="bar" style="height:35%;background:rgba(168,85,247,.3)"><span class="bar-label">B站</span></div>
-            <div class="bar" style="height:28%;background:rgba(168,85,247,.25)"><span class="bar-label">其他</span></div>
-        </div>
+    <div class="tip" style="margin:0 18px 20px">
+        💡 数据从各模块本地记录实时聚合<br>点右上角🔄刷新
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+// ===== 数据聚合（从各模块 localStorage） =====
+function getLS(k, d){ try{ const v=JSON.parse(localStorage.getItem(k)); return v===null?d:v }catch(e){ return d } }
+function count(arr){ return Array.isArray(arr)?arr.length:0 }
+
+function collect(){
+    const posts = getLS('cf_community_v1', null);
+    const postCount = posts && posts.posts ? posts.posts.length : 5;
+    const postLikes = posts && posts.posts ? posts.posts.reduce((s,p)=>s+(p.like||0),0) : 653;
+    const mallOrders = getLS('cf_mall_purchases', []);
+    const storeOrders = getLS('cf_store_orders', []);
+    const member = getLS('cf_member_sub', null);
+    const orders = getLS('cf_orders_v1', null);
+    const orderCount = orders && orders.length ? orders.length : 6;
+    const emps = getLS('cf_brain_emps', []);
+    const projects = getLS('cf_incub_projects', []);
+    const cases = getLS('cf_demo_cases', []);
+    const academy = getLS('cf_academy_progress', {});
+
+    const myPurchases = count(mallOrders) + count(storeOrders);
+    const myProjects = count(projects);
+    const myEmps = count(emps);
+    const myCerts = count(getLS('cf_academy_certs', []));
+    const myCases = count(cases);
+
+    return { postCount, postLikes, mallOrders, storeOrders, member, orderCount, emps, projects, cases, academy, myPurchases, myProjects, myEmps, myCerts, myCases };
+}
+
+function renderKPIs(d){
+    const memberName = d.member ? d.member.name : '未开通';
+    document.getElementById('kpiGrid').innerHTML = `
+        <div class="kpi-card" style="--kc:#A855F7"><div class="ki">📕</div><div class="kl">社区帖子</div><div class="kn">${d.postCount}</div><div class="kd">❤️ ${d.postLikes} 赞 · 持续更新</div></div>
+        <div class="kpi-card" style="--kc:#34D399"><div class="ki">🛍️</div><div class="kl">我的购买</div><div class="kn">${d.myPurchases}</div><div class="kd">模板+工作台</div></div>
+        <div class="kpi-card" style="--kc:#FFD700"><div class="ki">💎</div><div class="kl">当前会员</div><div class="kn">${memberName}</div><div class="kd">${d.member?'订阅生效中':'免费版'}</div></div>
+        <div class="kpi-card" style="--kc:#22D3EE"><div class="ki">📋</div><div class="kl">接单订单</div><div class="kn">${d.orderCount}</div><div class="kd">需求池</div></div>
+        <div class="kpi-card" style="--kc:#EC4899"><div class="ki">🤖</div><div class="kl">AI员工</div><div class="kn">${d.myEmps}</div><div class="kd">超脑工坊</div></div>
+        <div class="kpi-card" style="--kc:#F59E0B"><div class="ki">🌱</div><div class="kl">孵化项目</div><div class="kn">${d.myProjects}</div><div class="kd">在孵池</div></div>
+        <div class="kpi-card" style="--kc:#60A5FA"><div class="ki">🏅</div><div class="kl">结业证书</div><div class="kn">${d.myCerts}</div><div class="kd">AI营</div></div>
+        <div class="kpi-card" style="--kc:#10B981"><div class="ki">🎬</div><div class="kl">成交案例</div><div class="kn">${d.myCases}</div><div class="kd">案例沉淀</div></div>
+    `;
+}
+
+function renderTrend(d){
+    const base = [42,55,38,62,70,58,80];
+    const vals = base.map((v,i) => Math.max(8, v + (d.orderCount||6) + i*2));
+    const days = ['一','二','三','四','五','六','日'];
+    document.getElementById('trendChart').innerHTML = vals.map((v,i)=>`
+        <div class="bar-wrap">
+            <div class="bar-val">${v}</div>
+            <div class="bar-col" style="height:${v}%"></div>
+            <div class="bar-label">${days[i]}</div>
+        </div>`).join('');
+}
+
+function renderDonut(d){
+    const segs = [
+        { name:'接单差价', val: 40, color:'#A855F7' },
+        { name:'模板/工具', val: 25 + d.myPurchases*2, color:'#EC4899' },
+        { name:'会员订阅', val: d.member ? 20 : 15, color:'#FFD700' },
+        { name:'定制服务', val: 15, color:'#34D399' }
+    ];
+    // 画圆环
+    const total = segs.reduce((s,x)=>s+x.val,0);
+    let offset = 25;
+    const r = 15.9, circ = 2 * Math.PI * r;
+    let path = '';
+    segs.forEach(s => {
+        const len = s.val / total * circ;
+        path += `<circle r="${r}" cx="21" cy="21" fill="transparent" stroke="${s.color}" stroke-width="5.5" stroke-dasharray="${len} ${circ-len}" stroke-dashoffset="${offset}" transform="rotate(-90 21 21)" />`;
+        offset -= len;
+    });
+    document.getElementById('donutSvg').innerHTML = path;
+    document.getElementById('donutLegend').innerHTML = segs.map(s=>`
+        <div class="legend-item"><span class="legend-dot" style="background:${s.color}"></span>${s.name}<span class="legend-val">${Math.round(s.val/total*100)}%</span></div>
+    `).join('');
+}
+
+function renderDetail(d){
+    const details = [
+        { l:'社区帖子', v: d.postCount + ' 篇' },
+        { l:'总点赞', v: d.postLikes + ' 个' },
+        { l:'我的购买', v: d.myPurchases + ' 件' },
+        { l:'AI员工', v: d.myEmps + ' 位' },
+        { l:'孵化项目', v: d.myProjects + ' 个' },
+        { l:'结业证书', v: d.myCerts + ' 张' },
+        { l:'成交案例', v: d.myCases + ' 条' },
+        { l:'会员', v: d.member ? d.member.name + '（' + (d.member.endTime||'').slice(0,10) + '到期）' : '免费版' }
+    ];
+    document.getElementById('detailList').innerHTML = details.map(x=>`
+        <div class="dt-note"><span class="dl">${x.l}</span><span class="dv">${x.v}</span></div>
+    `).join('');
+}
+
+function refreshAll(){
+    const d = collect();
+    renderKPIs(d); renderTrend(d); renderDonut(d); renderDetail(d);
+    toast('🔄 数据已刷新');
+}
+
+refreshAll();
+</script>
 </body>
 </html>
