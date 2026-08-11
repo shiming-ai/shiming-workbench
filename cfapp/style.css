@@ -261,19 +261,22 @@ body {
 .tab {
     flex: 1; text-align: center; padding: 6px 0;
     color: var(--text-mute); text-decoration: none;
-    transition: all 0.2s; position: relative;
+    transition: all 0.25s; position: relative;
+    -webkit-tap-highlight-color: transparent;
 }
-.tab-icon { font-size: 20px; }
+.tab:active { transform: scale(0.9); }
+.tab-icon { font-size: 20px; transition: transform 0.25s; }
 .tab-label { font-size: 10px; margin-top: 2px; font-weight: 600; }
-.tab.active {
-    color: var(--purple-light);
-}
+.tab.active { color: var(--purple-light); }
+.tab.active .tab-icon { transform: translateY(-2px); }
 .tab.active::before {
     content: ''; position: absolute; top: 0; left: 50%;
     transform: translateX(-50%);
     width: 24px; height: 3px; border-radius: 2px;
     background: linear-gradient(90deg, var(--purple), var(--pink));
+    animation: tabSlide 0.3s ease;
 }
+@keyframes tabSlide { from { width: 0; } to { width: 24px; } }
 .tab-dot {
     position: absolute; top: 0; right: calc(50% - 22px);
     min-width: 16px; height: 16px; padding: 0 4px;
@@ -329,3 +332,32 @@ body {
     transition: all 0.3s; pointer-events: none;
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* ===== 页面切换动画（v3） ===== */
+.page-enter { animation: pageIn 0.3s ease both; }
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+body.app-loaded { transition: opacity .2s ease; }
+
+/* ===== 顶部返回按钮 ===== */
+.nav-back {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-dim); cursor: pointer;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0; transition: transform .15s, background .2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.nav-back:active { transform: scale(0.88); background: rgba(255,255,255,.12); }
+.topbar { gap: 10px; }
+
+/* ===== 全局点击反馈（柔和按压） ===== */
+.mod-card, .card, .tool-item, .mall-item, .st-card, .course-card,
+.proj-card, .op-card, .ap-card, .sv-card, .asset-card, .matrix-card,
+.emp-card, .req-card, .good-card, .post-mini, .play-card, .hot-card {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .12s ease, border-color .2s ease, opacity .2s ease;
+}
+/* ===== 通用空状态微调 ===== */
+.empty { transition: all .3s; }
