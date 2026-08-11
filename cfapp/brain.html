@@ -74,6 +74,12 @@
 
     <div class="add-emp" onclick="addEmp()">+ 新建 AI 员工</div>
 
+    <div style="margin:16px 18px 0;padding:12px 14px;background:linear-gradient(135deg,rgba(52,211,163,.08),rgba(34,211,238,.03));border:1px solid rgba(52,211,163,.25);border-radius:14px;cursor:pointer;display:flex;align-items:center;gap:10px" onclick="showHistory()">
+        <span style="font-size:18px">📋</span>
+        <div style="flex:1"><div style="font-size:13px;font-weight:800;color:#34D399" id="historyBadge">📋 产出历史</div><div style="font-size:10px;color:#8d82a8;margin-top:2px">AI员工的产出自动记录</div></div>
+        <span style="font-size:14px;color:#34D399">→</span>
+    </div>
+
     <div class="tip" style="margin:0 18px 20px">
         💡 给AI员工指派任务，它会自动产出<br>
         文案/图片/脚本/分析——<b style="color:#34D399">你负责验收和变现</b>
@@ -203,10 +209,12 @@ function runTask(i, btn){
         e2.done += 1;
         e2.status = 'online';
         setEmps(emps2);
+        // 保存产出历史（跨员工）
+        saveHistory(e2.name, task, output);
         renderEmps();
         btn.disabled = false;
         btn.textContent = '✅ 完成，再派一个';
-        toast('✅ AI任务完成！产出已生成');
+        toast('✅ AI任务完成！产出已记录');
     }, 1500);
 }
 
@@ -241,7 +249,31 @@ function showEmpHelp(){
     alert('🤖 超脑工坊怎么用？\n\n1. 创建AI员工（选角色）\n2. 派任务给它\n3. AI自动产出（文案/数据/脚本）\n4. 你验收、拿去变现\n\n提示：这里用本地模拟引擎演示，接入真实大模型后产出会更强。');
 }
 
+// ===== 产出历史（跨员工统一）=====
+const HIS_KEY = 'cf_brain_history';
+function getHistory(){ try{ return JSON.parse(localStorage.getItem(HIS_KEY))||[] }catch(e){ return [] } }
+function saveHistory(empName, task, output){
+    const h = getHistory();
+    h.unshift({ id:'h'+Date.now(), emp:empName, task:task.slice(0,40), output, time: new Date().toISOString() });
+    localStorage.setItem(HIS_KEY, JSON.stringify(h.slice(0,50)));
+    renderHistoryBadge();
+}
+function renderHistoryBadge(){
+    const count = getHistory().length;
+    const el = document.getElementById('historyBadge');
+    if (el) el.textContent = count>0 ? `📋 产出历史 ${count}` : '📋 产出历史';
+}
+function showHistory(){
+    const h = getHistory();
+    if (!h.length) return alert('📋 暂无产出历史\n派任务给AI员工，产出自动记录');
+    const text = '📋 产出历史（最近' + Math.min(h.length, 10) + '条）\n\n' + h.slice(0,10).map((x,i) =>
+        `${i+1}. [${x.emp}] ${x.task}\n   ⏰ ${(x.time||'').slice(5,16)}\n   📄 ${x.output.slice(0,80)}...`
+    ).join('\n\n') + '\n\n💡 提示：完整历史存在你的浏览器，可在"我的"驾驶舱查看';
+    alert(text);
+}
+
 renderEmps();
+renderHistoryBadge();
 </script>
 </body>
 </html>
