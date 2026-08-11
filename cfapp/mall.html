@@ -80,6 +80,15 @@
 
     <div class="cat-row" id="catBar"></div>
 
+    <!-- 云端自研资产（资产沉淀库上架） -->
+    <div id="cloudProducts" style="padding:0 18px 4px;display:none">
+        <div style="display:flex;align-items:center;gap:8px;margin:14px 0 10px">
+            <span style="font-size:12px;font-weight:900;color:#C084FC">🛍️ 自研资产（云端实时）</span>
+            <span style="font-size:9px;color:var(--text-mute)">来自资产沉淀库上架</span>
+        </div>
+        <div id="cloudList"></div>
+    </div>
+
     <div class="mall-list" id="mallList"></div>
 
     <div class="tip" style="margin:0 18px 20px">
@@ -256,17 +265,10 @@ function renderList(){
 function buyProduct(id){
     const p = PRODUCTS.find(x => x.id===id);
     if (!p) return;
-    if (!confirm(`💎 确认购买《${p.name}》?\n\n价格：¥${p.price}\n\n沙箱环境模拟支付（点确定算支付成功）`)) return;
     const my = getMy();
     if (my.find(m => m.id === id)) { toast('已购买，请查看'); return; }
-    my.unshift({
-        id, name: p.name, price: p.price,
-        time: new Date().toISOString().slice(0,10),
-        orderId: 'cf_' + Date.now()
-    });
-    setMy(my);
-    renderList();
-    toast('✅ 支付成功！永久查看权限');
+    /* 真实收款：跳转收款中心，付款后回执留痕、云端可核验、本板块显示已购 */
+    location.href = '../pay.html?sku=' + p.id + '&name=' + encodeURIComponent(p.name) + '&price=' + p.price + '&from=mall&bkey=cf_mall_purchases';
 }
 function previewProduct(id){
     const p = PRODUCTS.find(x => x.id===id);
@@ -291,6 +293,45 @@ function showMyPurchases(){
     alert(`📦 我的购买（${my.length}）\n\n${list}\n\n可在 mall.html 搜索商品再次查看`);
 }
 document.getElementById('searchInput').addEventListener('input', e => { searchKw = e.target.value; renderList(); });
+
+/* 云端自研资产：从资产沉淀库上架的 products 动态渲染 */
+const CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+function loadCloudProducts(){
+    const box = document.getElementById('cloudProducts');
+    const list = document.getElementById('cloudList');
+    fetch(CLOUD_URL).then(r=>r.json()).then(c=>{
+        const ps = (c.products||[]).filter(p=>p.status==='on_shelf');
+        if (!ps.length){ box.style.display='none'; return; }
+        box.style.display='block';
+        const my = getMy();
+        list.innerHTML = ps.map(p=>{
+            const bought = my.find(m=>m.id==='ext_'+p.id);
+            return `<div class="mall-item" style="--mc:#A855F7">
+                ${bought?'<div class="bought-badge">✓ 已购</div>':''}
+                <div class="mall-head">
+                    <div class="mall-ico" style="background:rgba(168,85,247,.13);color:#C084FC">🗄️</div>
+                    <div class="mall-info">
+                        <div class="mall-name">${p.name}</div>
+                        <div class="mall-tags"><span class="mtag mtag-tag">自研</span><span class="mtag mtag-new">上架中</span></div>
+                    </div>
+                </div>
+                <div class="mall-desc">${p.desc||''}</div>
+                <div class="mall-bottom">
+                    <div>
+                        <div><span class="mall-price">¥${p.price}</span></div>
+                        <div class="mall-sales">${p.deliver==='digital'?'数字自动交付':'服务交付'}</div>
+                    </div>
+                    <div class="mall-actions">
+                        ${bought
+                            ? `<button class="mall-btn" onclick="toast('已购买，可联系交付')">查看</button>`
+                            : `<button class="mall-btn mall-buy" onclick="location.href='../pay.html?sku=ext_${p.id}&name=${encodeURIComponent(p.name)}&price=${p.price}&from=mall&bkey=cf_mall_purchases'">💎 购买</button>`}
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    }).catch(()=>{ box.style.display='none'; });
+}
+loadCloudProducts();
 
 renderCats();
 renderList();
