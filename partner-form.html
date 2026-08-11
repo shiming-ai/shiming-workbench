@@ -739,11 +739,11 @@ function submitForm() {
     }
     // jsonblob 云端写入（量大版核心：每条登记自动存云端，后台自动显示）
     try {
-        fetch('https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7')
+        fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c')
             .then(r => r.json()).then(cloud => {
                 if (!cloud.partners) cloud.partners = [];
                 cloud.partners.push({ ...data, _id: Date.now() });
-                return fetch('https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7', {
+                return fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c', {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(cloud)
