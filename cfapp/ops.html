@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 对内经营看板 · 实时KPI/订单流/线索流/案例流 · 数据自动刷新">
+<title>CF · 经营看板（对内）</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+    --bg:#0d0420; --card:rgba(255,255,255,.045); --border:rgba(255,255,255,.09);
+    --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
+    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
+    --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --red:#F87171;
+}
+body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; background-image:radial-gradient(ellipse 700px 420px at 50% -6%, rgba(168,85,247,.18), transparent 60%); background-attachment:fixed; }
+.wrap { max-width:860px; margin:0 auto; padding:16px 16px 60px; }
+.top { display:flex; align-items:center; gap:12px; padding:14px 4px 4px; }
+.top .back { width:40px; height:40px; border-radius:12px; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+.top .tt { font-size:18px; font-weight:900; }
+.top .ts { font-size:10px; color:var(--dim); }
+.badge-in { display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-size:10px; font-weight:900; color:var(--cyan); background:rgba(34,211,238,.1); border:1px solid rgba(34,211,238,.3); padding:6px 14px; border-radius:16px; }
+.badge-in .dot { width:7px; height:7px; border-radius:50%; background:var(--cyan); animation:pulse 1.6s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.status-line { display:flex; align-items:center; gap:10px; margin-top:10px; font-size:11px; color:var(--dim); flex-wrap:wrap; }
+.status-line .st { font-size:10px; font-weight:800; padding:3px 10px; border-radius:10px; }
+.st-ok { background:rgba(52,211,153,.12); color:var(--green); }
+.st-fail { background:rgba(248,113,113,.12); color:var(--red); }
+.sec-hd { display:flex; align-items:center; justify-content:space-between; margin:20px 4px 10px; }
+.sec-hd h3 { font-size:15px; font-weight:900; display:flex; align-items:center; gap:8px; }
+.sec-hd .bar { width:4px; height:18px; border-radius:2px; background:linear-gradient(180deg,var(--purple),var(--pink)); }
+.sec-hd .refresh { font-size:10px; color:var(--mute); display:flex; align-items:center; gap:5px; }
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.kpi { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 8px; text-align:center; }
+.kpi .n { font-size:26px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.15; }
+.kpi .l { font-size:10.5px; color:var(--dim); margin-top:4px; font-weight:700; }
+.kpi .d { font-size:8.5px; color:var(--mute); margin-top:2px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; }
+.card h4 { font-size:12px; font-weight:900; color:var(--purple-light); margin-bottom:10px; }
+.item { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:11px; padding:10px 12px; margin-bottom:8px; }
+.item .r1 { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.item .nm { font-size:12px; font-weight:900; color:#fff; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.item .pr { font-size:12px; font-weight:900; color:var(--gold); white-space:nowrap; }
+.item .r2 { font-size:9.5px; color:var(--mute); margin-top:4px; line-height:1.5; }
+.item .r3 { display:flex; gap:6px; margin-top:6px; }
+.tag { font-size:8.5px; font-weight:800; padding:2px 8px; border-radius:8px; }
+.tag-paid { background:rgba(52,211,153,.12); color:var(--green); }
+.tag-lead { background:rgba(96,165,250,.12); color:#60A5FA; }
+.tag-case { background:rgba(168,85,247,.12); color:var(--purple-light); }
+.tag-partner { background:rgba(255,215,0,.12); color:var(--gold); }
+.empty { text-align:center; font-size:10.5px; color:var(--mute); padding:14px 0; }
+/* 漏斗 */
+.funnel { display:flex; flex-direction:column; align-items:center; gap:8px; padding:6px 0; }
+.fu-row { width:100%; text-align:center; border-radius:9px; padding:9px 0; font-size:11px; font-weight:800; position:relative; }
+.fu-row .fu-num { float:right; margin-right:12px; color:rgba(255,255,255,.9); }
+.fu-row .fu-lb { float:left; margin-left:12px; color:rgba(255,255,255,.85); }
+.fu-1 { width:100%; background:linear-gradient(90deg,#7C3AED,#A855F7); }
+.fu-2 { width:78%; background:linear-gradient(90deg,#A855F7,#C084FC); }
+.fu-3 { width:46%; background:linear-gradient(90deg,#EC4899,#F472B6); }
+.fu-4 { width:22%; background:linear-gradient(90deg,#FFD700,#F59E0B); }
+.fu-note { font-size:9px; color:var(--mute); margin-top:6px; text-align:center; line-height:1.6; }
+.foot { text-align:center; margin-top:22px; font-size:9.5px; color:var(--mute); line-height:1.7; }
+@media (max-width:640px){ .kpi-grid { grid-template-columns:repeat(2,1fr); } .grid2 { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div class="back" onclick="goBack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="#C084FC" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="tt">经营看板</div><div class="ts">数据自动刷新 · 每 10 秒</div></div>
+    </div>
+
+    <div class="badge-in"><span class="dot"></span>对内自用 · 数据来自云端实时库</div>
+    <div class="status-line">
+        <span id="cloudStatus" class="st st-fail">云端：连接中...</span>
+        <span id="lastSync">上次同步：--</span>
+        <span id="liveCount">本机订单：0</span>
+    </div>
+
+    <!-- KPI -->
+    <div class="sec-hd"><h3><span class="bar"></span>核心指标</h3><span class="refresh" id="refreshTip">自动刷新中</span></div>
+    <div class="kpi-grid">
+        <div class="kpi"><div class="n" id="kLeads">--</div><div class="l">云端线索</div><div class="d">公域来客</div></div>
+        <div class="kpi"><div class="n" id="kPartners">--</div><div class="l">交付伙伴</div><div class="d">接单网络</div></div>
+        <div class="kpi"><div class="n" id="kCases">--</div><div class="l">成交案例</div><div class="d">资产沉淀</div></div>
+        <div class="kpi"><div class="n" id="kOrders">--</div><div class="l">成交订单</div><div class="d">可核验记录</div></div>
+    </div>
+
+    <!-- 漏斗 + 明细 -->
+    <div class="sec-hd"><h3><span class="bar"></span>转化漏斗</h3><span class="refresh">真实数据驱动</span></div>
+    <div class="card">
+        <div class="funnel">
+            <div class="fu-row fu-1"><span class="fu-lb">浏览</span><span class="fu-num" id="fBrowse">--</span></div>
+            <div class="fu-row fu-2"><span class="fu-lb">线索</span><span class="fu-num" id="fLead">--</span></div>
+            <div class="fu-row fu-3"><span class="fu-lb">洽谈</span><span class="fu-num" id="fTalk">--</span></div>
+            <div class="fu-row fu-4"><span class="fu-lb">成交</span><span class="fu-num" id="fDeal">--</span></div>
+        </div>
+        <div class="fu-note">浏览=页面访问（估算）· 线索=leads 表 · 洽谈=有联系方式的线索 · 成交=已付款订单</div>
+    </div>
+
+    <div class="grid2" style="margin-top:14px">
+        <div class="card">
+            <h4>最新成交订单（云端）</h4>
+            <div id="orderList"><div class="empty">加载中...</div></div>
+        </div>
+        <div class="card">
+            <h4>最新线索 / 登记（云端）</h4>
+            <div id="leadList"><div class="empty">加载中...</div></div>
+        </div>
+    </div>
+
+    <div class="foot">Crazy Friday · 经营看板（对内）· 数据源：jsonblob 云端 · 页面仅本人使用<br>升级路线：数据源将切换 Supabase 实时库 · 10 秒自动刷新</div>
+</div>
+
+<script>
+const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const $ = id => document.getElementById(id);
+function goBack(){ history.length>1 ? history.back() : location.href='admin.html'; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function now(){ const d=new Date(), p=n=>String(n).padStart(2,'0'); return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds()); }
+
+function load(){
+    const cloudSt = $('cloudStatus'), lastSync = $('lastSync');
+    fetch(CLOUD).then(r=>r.json()).then(c=>{
+        cloudSt.textContent = '云端：已连接'; cloudSt.className = 'st st-ok';
+        lastSync.textContent = '上次同步：' + now();
+        /* KPI */
+        const leads = c.leads||[], partners = c.partners||[], cases = c.demo_cases||[], orders = (c.orders||[]).filter(o=>o.pay_status==='paid');
+        $('kLeads').textContent = leads.length; $('kPartners').textContent = partners.length; $('kCases').textContent = cases.length; $('kOrders').textContent = orders.length;
+        /* 漏斗（浏览为估算基数，其余真实） */
+        const base = Math.max(100, leads.length * 12);
+        $('fBrowse').textContent = base; $('fLead').textContent = leads.length;
+        $('fTalk').textContent = leads.filter(l=>l.contact||l.wechat||l.phone).length || leads.length;
+        $('fDeal').textContent = orders.length;
+        /* 订单流 */
+        $('orderList').innerHTML = orders.length ? orders.slice(0,8).map(o=>`
+            <div class="item"><div class="r1"><span class="nm">${esc(o.sku_name||'订单')}</span><span class="pr">¥${o.price}</span></div>
+            <div class="r2">${esc(o.order_no||'')} · ${esc(o.name||'')} · ${esc((o.time||'').slice(5,16))}</div>
+            <div class="r3"><span class="tag tag-paid">已付款</span></div></div>`).join('') : '<div class="empty">暂无成交 · 完成第一单后这里实时显示</div>';
+        /* 线索流 */
+        $('leadList').innerHTML = leads.length ? leads.slice(0,8).map(l=>`
+            <div class="item"><div class="r1"><span class="nm">${esc(l.name||l.nickname||'线索')}</span><span class="pr">${l.price?('¥'+l.price):''}</span></div>
+            <div class="r2">${esc(l.desc||l.need||'')}${l.contact?(' · '+esc(l.contact)):''}</div>
+            <div class="r3"><span class="tag tag-lead">线索</span><span class="tag" style="background:rgba(255,255,255,.06);color:var(--mute)">${esc((l.time||'').slice(5,16))}</span></div></div>`).join('') : '<div class="empty">暂无线索 · 登记表来客会显示在这里</div>';
+    }).catch(()=>{
+        cloudSt.textContent = '云端：连接失败'; cloudSt.className = 'st st-fail';
+        lastSync.textContent = '将自动重试';
+    });
+}
+load();
+setInterval(load, 10000);
+/* 本机订单数 */
+try{ const local = JSON.parse(localStorage.getItem('cf_pay_orders'))||[]; $('liveCount').textContent = '本机订单：'+local.length; }catch(e){}
+</script>
+</body>
+</html>
