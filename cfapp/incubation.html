@@ -4,15 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 项目孵化中心 · 从Idea到品牌">
 <title>项目孵化中心 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.path-stage { display:flex; align-items:center; gap:8px; padding:12px 18px; }
-.path-dot { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#A855F7,#EC4899); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
-.path-line { flex:1; height:2px; background:linear-gradient(90deg,rgba(168,85,247,.4),rgba(236,72,153,.4)); }
-.path-item { flex:1; text-align:center; }
-.path-item .pi-name { font-size:11px; font-weight:700; margin-top:6px; }
-.path-item .pi-desc { font-size:9px; color:#6d6489; margin-top:2px; }
+.ic-hero { padding:24px 18px 12px; }
+.ic-hero h2 { font-size:22px; font-weight:900; }
+.ic-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.ic-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 18px 14px; }
+.ic-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 6px; text-align:center; }
+.ic-stat .n { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.ic-stat .l { font-size:9px; color:#6d6489; margin-top:3px; }
+.ic-path { display:flex; gap:4px; margin:0 18px 14px; padding:12px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:14px; }
+.ic-step { flex:1; text-align:center; font-size:9px; color:#6d6489; position:relative; }
+.ic-step .dot { width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.08); margin:0 auto 4px; display:flex; align-items:center; justify-content:center; font-size:10px; }
+.ic-step.done .dot { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; }
+.ic-step.done { color:#C084FC; }
+.ic-list { padding:0 18px; }
+.proj-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:15px; margin-bottom:10px; position:relative; overflow:hidden; }
+.proj-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--pc,#A855F7),transparent); }
+.proj-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.proj-ico { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.proj-name { font-size:14px; font-weight:800; flex:1; }
+.proj-stage { font-size:9px; padding:3px 9px; border-radius:10px; font-weight:700; }
+.ps-idea { background:rgba(255,255,255,.08); color:#8d82a8; }
+.ps-verify { background:rgba(96,165,250,.12); color:#60A5FA; }
+.ps-test { background:rgba(245,158,11,.12); color:#F59E0B; }
+.ps-live { background:rgba(52,211,153,.12); color:#34D399; }
+.ps-coop { background:rgba(236,72,153,.12); color:#EC4899; }
+.proj-desc { font-size:11px; color:#a89ec9; line-height:1.6; margin-bottom:8px; }
+.proj-meta { display:flex; gap:6px; flex-wrap:wrap; font-size:10px; color:#6d6489; margin-bottom:8px; }
+.proj-meta span { padding:3px 8px; background:rgba(255,255,255,.05); border-radius:8px; }
+.proj-bar { height:5px; background:rgba(255,255,255,.1); border-radius:3px; overflow:hidden; margin-bottom:8px; }
+.proj-bar-fill { height:100%; background:linear-gradient(90deg,#A855F7,#EC4899); border-radius:3px; }
+.proj-actions { display:flex; gap:6px; }
+.proj-btn { flex:1; padding:8px; text-align:center; background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px; font-size:11px; font-weight:700; color:#a89ec9; cursor:pointer; }
+.proj-btn:active { transform:scale(.96); }
+.proj-btn.go { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.add-proj { display:block; margin:16px 18px; padding:13px; text-align:center; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:20px; font-size:13px; font-weight:800; color:#fff; cursor:pointer; }
 </style>
 </head>
 <body data-tab="me">
@@ -22,89 +51,130 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">项目孵化中心</div>
-            <div class="brand-sub">09 · 从Idea到品牌</div>
+            <div class="brand-sub">09 · 从 Idea 到品牌</div>
         </div>
     </div>
-    <div class="bell">🔍</div>
+    <div class="bell" style="cursor:pointer" onclick="showPathHelp()">🗺️</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding:24px 18px 20px;text-align:center">
-        <div style="font-size:19px;font-weight:900">把你的想法<span style="color:#C084FC">变成现实</span></div>
-        <div style="font-size:11px;color:#8d82a8;margin-top:4px">从创意到融资，全流程孵化</div>
+    <div class="ic-hero">
+        <h2>🌱 项目<span style="color:#C084FC">孵化</span></h2>
+        <p>把你的想法孵化成品牌<br>验证 → 测试 → 上线 → 共创分红</p>
     </div>
 
-    <div class="orders-stats">
-        <div class="orders-stat"><div class="num">100+</div><div class="lbl">孵化项目</div></div>
-        <div class="orders-stat"><div class="num">30+</div><div class="lbl">导师团队</div></div>
-        <div class="orders-stat"><div class="num">20+</div><div class="lbl">投资机构</div></div>
+    <div class="ic-stats">
+        <div class="ic-stat"><div class="n" id="projCount">0</div><div class="l">在孵项目</div></div>
+        <div class="ic-stat"><div class="n" id="liveCount">0</div><div class="l">已上线</div></div>
+        <div class="ic-stat"><div class="n" id="coopCount">0</div><div class="l">共创中</div></div>
     </div>
 
-    <div class="section-head">
-        <div class="section-tt">🛤️ 孵化路径</div>
-    </div>
-    <div class="path-stage">
-        <div class="path-dot">💡</div><div class="path-line"></div>
-        <div class="path-dot">🔍</div><div class="path-line"></div>
-        <div class="path-dot">🛠️</div><div class="path-line"></div>
-        <div class="path-dot">📈</div><div class="path-line"></div>
-        <div class="path-dot">💰</div>
-    </div>
-    <div class="path-stage">
-        <div class="path-item"><div class="pi-name">Idea</div><div class="pi-desc">创意</div></div>
-        <div class="path-item"><div class="pi-name">验证</div><div class="pi-desc">需求</div></div>
-        <div class="path-item"><div class="pi-name">MVP</div><div class="pi-desc">产品</div></div>
-        <div class="path-item"><div class="pi-name">增长</div><div class="pi-desc">市场</div></div>
-        <div class="path-item"><div class="pi-name">融资</div><div class="pi-desc">资本</div></div>
-    </div>
+    <div class="ic-path" id="pathBar"></div>
 
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">🔥 在孵项目</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">🚀</div>
-                <div class="card-name">AI个人IP孵化</div>
-                <span class="card-tag">阶段:增长</span>
-            </div>
-            <div class="card-desc">打造个人AI IP · 已获种子轮</div>
-            <div class="card-meta">
-                <span class="meta-tag">📈 增长 45%</span>
-                <span class="meta-tag">💰 融资 500w</span>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">🛠️</div>
-                <div class="card-name">AI效率工具</div>
-                <span class="card-tag">阶段:MVP</span>
-            </div>
-            <div class="card-desc">自动生成工作周报 · MVP已上线</div>
-            <div class="card-meta">
-                <span class="meta-tag">👥 用户 1.2k</span>
-                <span class="meta-tag">📊 验证 68%</span>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">💡</div>
-                <div class="card-name">AI教育产品</div>
-                <span class="card-tag">阶段:Idea</span>
-            </div>
-            <div class="card-desc">个性化学习 · 待验证需求</div>
-            <div class="card-meta">
-                <span class="meta-tag">🔍 调研中</span>
-                <span class="meta-tag">👥 10访谈</span>
-            </div>
-        </div>
-    </div>
+    <div class="ic-list" id="projList"></div>
 
-    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:14px;border-radius:20px;display:block;margin:24px 18px;font-weight:800">🚀 提交你的项目</a>
+    <div class="add-proj" onclick="addProject()">+ 录入新项目</div>
+
+    <div class="tip" style="margin:0 18px 20px">
+        💡 每个项目走 5 个阶段<br>Idea → 验证 → 测试 → 上线 → 共创<br>验证通过可开放共创，共享分红
+    </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const STAGES = [
+    { key:'idea', label:'Idea', ico:'💡' },
+    { key:'verify', label:'验证', ico:'🔍' },
+    { key:'test', label:'测试', ico:'🧪' },
+    { key:'live', label:'上线', ico:'🚀' },
+    { key:'coop', label:'共创', ico:'🤝' }
+];
+const PROJ_KEY = 'cf_incub_projects';
+function getProjs(){ try{ return JSON.parse(localStorage.getItem(PROJ_KEY))||[] }catch(e){ return [] } }
+function setProjs(a){ localStorage.setItem(PROJ_KEY, JSON.stringify(a)) }
+
+if (!getProjs().length) {
+    setProjs([
+        { id:'p1', ico:'🛍️', name:'AI选品小助手', desc:'用AI分析电商平台数据，帮卖家选爆品，月订阅制', stage:'verify', type:'工具', cost:'¥8,000', date:'2026.07', color:'#FF6B1A' },
+        { id:'p2', ico:'📕', name:'小红书起号工具包', desc:'自动生成选题+笔记+配图，帮普通人快速起号', stage:'test', type:'课程', cost:'¥12,000', date:'2026.07', color:'#EC4899' },
+        { id:'p3', ico:'🤖', name:'本地商家AI客服', desc:'帮餐饮/美容店搭AI客服，按效果收费', stage:'live', type:'服务', cost:'¥50,000', date:'2026.06', color:'#34D399' },
+        { id:'p4', ico:'🎬', name:'AI漫剧工厂', desc:'批量生产AI漫剧短视频，平台分成+广告', stage:'coop', type:'内容', cost:'¥30,000', date:'2026.05', color:'#A855F7' },
+        { id:'p5', ico:'💼', name:'一人公司模板站', desc:'卖现成的一人公司工作台模板，一次开发重复卖', stage:'idea', type:'产品', cost:'¥5,000', date:'2026.08', color:'#22D3EE' }
+    ]);
+}
+
+function stageIdx(stage){ return STAGES.findIndex(s=>s.key===stage); }
+function renderStats(){
+    const projs = getProjs();
+    document.getElementById('projCount').textContent = projs.length;
+    document.getElementById('liveCount').textContent = projs.filter(p=>stageIdx(p.stage)>=3).length;
+    document.getElementById('coopCount').textContent = projs.filter(p=>p.stage==='coop').length;
+}
+function renderPath(){
+    const projs = getProjs();
+    document.getElementById('pathBar').innerHTML = STAGES.map((s,idx)=>{
+        const count = projs.filter(p=>stageIdx(p.stage)===idx).length;
+        return `<div class="ic-step ${count?'done':''}">
+            <div class="dot">${s.ico}</div>${s.label}<br><span style="font-size:8px">${count}个</span>
+        </div>`;
+    }).join('');
+}
+function renderProjs(){
+    const projs = getProjs();
+    const list = document.getElementById('projList');
+    renderStats(); renderPath();
+    if (!projs.length) { list.innerHTML = '<div class="empty">还没有项目<br>点上方"录入新项目"开始孵化</div>'; return; }
+    list.innerHTML = projs.map((p,i) => {
+        const idx = stageIdx(p.stage);
+        const pct = Math.round((idx+1)/STAGES.length*100);
+        const stCls = { idea:'ps-idea', verify:'ps-verify', test:'ps-test', live:'ps-live', coop:'ps-coop' };
+        return `<div class="proj-card" style="--pc:${p.color}">
+            <div class="proj-head">
+                <div class="proj-ico" style="background:${p.color}22;color:${p.color}">${p.ico}</div>
+                <div style="flex:1">
+                    <div class="proj-name">${p.name}</div>
+                    <div style="font-size:10px;color:#8d82a8">${p.type} · ${p.date}</div>
+                </div>
+                <span class="proj-stage ${stCls[p.stage]}">${STAGES[idx].ico} ${STAGES[idx].label}</span>
+            </div>
+            <div class="proj-desc">${p.desc}</div>
+            <div class="proj-meta"><span>💰 投入 ${p.cost}</span><span>📅 ${p.date}</span><span>📈 ${pct}%</span></div>
+            <div class="proj-bar"><div class="proj-bar-fill" style="width:${pct}%"></div></div>
+            <div class="proj-actions">
+                ${idx < STAGES.length-1 ? `<button class="proj-btn go" onclick="advanceProj(${i})">${STAGES[idx+1].ico} 推进到「${STAGES[idx+1].label}」</button>` : '<button class="proj-btn" style="opacity:.6">🎉 已到共创阶段</button>'}
+                <button class="proj-btn" onclick="deleteProj(${i})" style="color:#FF4757">🗑</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+function addProject(){
+    const name = prompt('项目名称：', 'AI新项目');
+    if (!name) return;
+    const desc = prompt('一句话描述：', '用AI解决一个真实痛点');
+    const type = prompt('类型（工具/课程/服务/内容/产品）：', '工具');
+    const cost = prompt('预计投入（元）：', '5000');
+    const projs = getProjs();
+    projs.push({ id:'p'+Date.now(), ico:'🌱', name, desc, type:type||'工具', cost:'¥'+(cost||'5000'), stage:'idea', date:'2026.08', color:'#A855F7' });
+    setProjs(projs); renderProjs(); toast('✅ 项目已录入孵化池');
+}
+function advanceProj(i){
+    const projs = getProjs();
+    const idx = stageIdx(projs[i].stage);
+    if (idx >= STAGES.length-1) return;
+    const next = STAGES[idx+1];
+    projs[i].stage = next.key;
+    setProjs(projs); renderProjs();
+    toast(`✅ 已推进到「${next.label}」阶段`);
+}
+function deleteProj(i){
+    if (!confirm('删除该项目？')) return;
+    const projs = getProjs(); projs.splice(i,1); setProjs(projs); renderProjs();
+}
+function showPathHelp(){
+    alert('🗺️ 孵化路径\n\n💡 Idea：想法登记\n🔍 验证：需求验证\n🧪 测试：MVP测试\n🚀 上线：正式上线\n🤝 共创：开放合作共享分红\n\n验证通过的项目可开放共创！');
+}
+renderProjs();
+</script>
 </body>
 </html>
