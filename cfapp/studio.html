@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · AI创作工坊 · 标题/文案/提示词/脚本在线生成">
+<title>AI创作工坊 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.stu-hero { padding:26px 18px 12px; text-align:center; }
+.stu-hero h2 { font-size:24px; font-weight:900; }
+.stu-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.stu-tabs { display:flex; gap:8px; padding:14px 18px 4px; overflow-x:auto; scrollbar-width:none; }
+.stu-tabs::-webkit-scrollbar { display:none; }
+.stu-tab { flex-shrink:0; padding:9px 16px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; font-weight:700; }
+.stu-tab.active { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.stu-panel { display:none; padding:14px 18px; }
+.stu-panel.show { display:block; }
+.stu-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; }
+.stu-label { font-size:12px; font-weight:800; margin-bottom:8px; }
+.stu-input { width:100%; background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px 14px; color:#fff; font-size:14px; outline:none; resize:none; font-family:inherit; min-height:64px; }
+.stu-input:focus { border-color:rgba(168,85,247,.5); }
+.stu-opt-row { display:flex; gap:8px; margin-top:10px; }
+.stu-opt { flex:1; padding:9px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:10px; text-align:center; font-size:11px; cursor:pointer; color:#a89ec9; }
+.stu-opt.active { background:rgba(168,85,247,.2); border-color:#A855F7; color:#C084FC; font-weight:700; }
+.stu-gen { display:block; width:100%; margin-top:12px; padding:13px; background:linear-gradient(135deg,#A855F7,#EC4899); border:none; border-radius:20px; color:#fff; font-size:14px; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(168,85,247,.3); }
+.stu-gen:active { transform:scale(.97); }
+.stu-result { margin-top:12px; background:rgba(0,0,0,.25); border:1px solid rgba(52,211,153,.25); border-radius:12px; padding:14px; display:none; }
+.stu-result.show { display:block; }
+.stu-result-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.stu-result-title { font-size:12px; font-weight:800; color:#34D399; }
+.stu-copy { font-size:10px; padding:4px 12px; background:rgba(52,211,153,.15); color:#34D399; border:none; border-radius:10px; cursor:pointer; font-weight:700; }
+.stu-out { font-size:13px; line-height:1.9; white-space:pre-wrap; color:#e4e6ed; }
+.stu-out .line { padding:7px 0; border-bottom:1px dashed rgba(255,255,255,.06); }
+.stu-out .line:last-child { border:none; }
+.stu-tip { font-size:10px; color:#6d6489; margin-top:10px; text-align:center; }
+.free-badge { display:inline-block; font-size:9px; padding:3px 9px; border-radius:8px; background:rgba(52,211,153,.12); color:#34D399; font-weight:700; margin-left:6px; }
+</style>
+</head>
+<body data-tab="discover">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">AI创作工坊</div>
+            <div class="brand-sub">免费在线工具 · 标题/文案/提示词/脚本</div>
+        </div>
+    </div>
+    <div class="bell" style="cursor:pointer" onclick="location.href='member.html'">💎</div>
+</div>
+
+<div class="wrap">
+    <div class="stu-hero">
+        <h2>AI<span style="color:#C084FC">创作</span>工坊</h2>
+        <p>不用注册，打开就能用<span class="free-badge">FREE</span><br>生成的内容直接复制，帮你在小红书/抖音/公众号/接单</p>
+    </div>
+
+    <div class="stu-tabs" id="stuTabs">
+        <div class="stu-tab active" data-tool="title">🔥 爆款标题</div>
+        <div class="stu-tab" data-tool="copy">📝 小红书文案</div>
+        <div class="stu-tab" data-tool="prompt">🧠 提示词优化</div>
+        <div class="stu-tab" data-tool="script">🎬 短视频脚本</div>
+    </div>
+
+    <!-- 爆款标题 -->
+    <div class="stu-panel show" id="panel-title">
+        <div class="stu-card">
+            <div class="stu-label">输入主题/产品（一句话）</div>
+            <textarea class="stu-input" id="tTitle" placeholder="例如：AI头像定制 / 考研英语 / 一家甜品店"></textarea>
+            <div class="stu-opt-row">
+                <div class="stu-opt active" data-style="通用">通用</div>
+                <div class="stu-opt" data-style="种草">种草</div>
+                <div class="stu-opt" data-style="干货">干货</div>
+                <div class="stu-opt" data-style="反差">反差</div>
+            </div>
+            <button class="stu-gen" onclick="genTitle()">🔥 生成 10 个爆款标题</button>
+            <div class="stu-result" id="rTitle">
+                <div class="stu-result-head"><div class="stu-result-title">✨ 生成结果</div><button class="stu-copy" onclick="copyOut('rTitleOut')">复制全部</button></div>
+                <div class="stu-out" id="rTitleOut"></div>
+            </div>
+            <div class="stu-tip">Pro会员可一次生成50个（会员中心开通）</div>
+        </div>
+    </div>
+
+    <!-- 小红书文案 -->
+    <div class="stu-panel" id="panel-copy">
+        <div class="stu-card">
+            <div class="stu-label">产品/主题</div>
+            <textarea class="stu-input" id="tCopy" placeholder="例如：一家主打低卡轻食的店，想发一篇开业种草"></textarea>
+            <div class="stu-opt-row">
+                <div class="stu-opt active" data-style="emoji">多Emoji</div>
+                <div class="stu-opt" data-style="clean">干净</div>
+            </div>
+            <button class="stu-gen" onclick="genCopy()">📝 生成小红书文案</button>
+            <div class="stu-result" id="rCopy">
+                <div class="stu-result-head"><div class="stu-result-title">✨ 生成结果</div><button class="stu-copy" onclick="copyOut('rCopyOut')">复制</button></div>
+                <div class="stu-out" id="rCopyOut"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示词优化 -->
+    <div class="stu-panel" id="panel-prompt">
+        <div class="stu-card">
+            <div class="stu-label">输入你的基础提示词</div>
+            <textarea class="stu-input" id="tPrompt" placeholder="例如：一只橘猫坐在窗边"></textarea>
+            <button class="stu-gen" onclick="genPrompt()">🧠 优化成专业提示词</button>
+            <div class="stu-result" id="rPrompt">
+                <div class="stu-result-head"><div class="stu-result-title">✨ 优化结果</div><button class="stu-copy" onclick="copyOut('rPromptOut')">复制</button></div>
+                <div class="stu-out" id="rPromptOut"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 短视频脚本 -->
+    <div class="stu-panel" id="panel-script">
+        <div class="stu-card">
+            <div class="stu-label">视频主题</div>
+            <textarea class="stu-input" id="tScript" placeholder="例如：30秒介绍一家新开的咖啡店"></textarea>
+            <div class="stu-opt-row">
+                <div class="stu-opt active" data-style="30秒">30秒</div>
+                <div class="stu-opt" data-style="60秒">60秒</div>
+            </div>
+            <button class="stu-gen" onclick="genScript()">🎬 生成短视频脚本</button>
+            <div class="stu-result" id="rScript">
+                <div class="stu-result-head"><div class="stu-result-title">✨ 生成结果</div><button class="stu-copy" onclick="copyOut('rScriptOut')">复制</button></div>
+                <div class="stu-out" id="rScriptOut"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip" style="margin:14px 18px 20px">
+        💡 这些工具是<b style="color:#34D399">本地模板引擎</b>（免费）<br>
+        想要更强的AI生成？加入会员解锁云端大模型版
+    </div>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+// ===== Tab切换 =====
+const tools = ['title','copy','prompt','script'];
+function switchTool(t){
+    tools.forEach(x => {
+        document.querySelector(`[data-tool="${x}"]`).classList.toggle('active', x===t);
+        document.getElementById('panel-'+x).classList.toggle('show', x===t);
+    });
+}
+document.querySelectorAll('.stu-tab').forEach(tab => tab.onclick = () => switchTool(tab.dataset.tool));
+// 选项切换
+document.querySelectorAll('.stu-opt').forEach(o => o.onclick = () => {
+    const row = o.parentElement;
+    row.querySelectorAll('.stu-opt').forEach(x => x.classList.remove('active'));
+    o.classList.add('active');
+});
+
+// ===== 工具函数 =====
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function copyOut(id){
+    const el = document.getElementById(id);
+    const text = el.innerText;
+    navigator.clipboard ? navigator.clipboard.writeText(text).then(()=>toast('✅ 已复制'), ()=>fallbackCopy(text)) : fallbackCopy(text);
+}
+function fallbackCopy(t){
+    const ta = document.createElement('textarea');
+    ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('✅ 已复制'); } catch(e) {}
+    document.body.removeChild(ta);
+}
+
+// ===== 爆款标题 =====
+const TITLE_ARR = {
+    '通用': ['{t}，真的被我发现了','终于有人把{t}讲清楚了','关于{t}，我只有这3句话','{t}的正确打开方式','别再盲目跟风{t}了','{t}避坑指南（亲测有效）','{t}新手必看，少走3年弯路','我靠{t}，一个月的变化','{t}深度测评，结论如下','被问了100遍的{t}，一次说清'],
+    '种草': ['姐妹们！这个{t}真的绝了','{t}也太好用了吧？！','用过{t}后，我回不去了','{t}真香警告⚠️','闭眼入！{t}不踩雷','{t}到底值不值？我试过了','被种草很久的{t}，终于下手了','{t}平替天花板，谁懂啊','从没见过这么懂的{t}','{t}直接封神，不接受反驳'],
+    '干货': ['{t}保姆级教程，收藏这一篇就够了','{t}从0到1，全流程拆解','{t}避坑清单：这5个坑别再踩','{t}怎么做？3步搞定','{t}底层逻辑，一次讲透','{t}实操复盘：我踩过的坑','{t}知识点总结（建议收藏）','{t}高效方法，亲测有效','{t}入门到精通，万字长文','{t}最常见的10个误区'],
+    '反差': ['都说{t}不行，我偏要试试','月薪3千也能玩的{t}','内向的人，反而更适合{t}','{t}的第1天vs第30天','别人眼里的{t} vs 真实{t}','放弃{t}的人，后来怎么样了','{t}没有想象中那么难','我劝你别轻易尝试{t}，会上瘾','{t}翻车现场，我来说点实话','没资源没背景，怎么做{t}']
+};
+function genTitle(){
+    const t = document.getElementById('tTitle').value.trim();
+    if (!t) return toast('请输入主题');
+    const style = document.querySelector('#panel-title .stu-opt.active').dataset.style;
+    const arr = TITLE_ARR[style] || TITLE_ARR['通用'];
+    const outs = [...arr].sort(()=>Math.random()-0.5).slice(0,10).map(x => `<div class="line">${x.replace('{t}', t)}</div>`).join('');
+    document.getElementById('rTitleOut').innerHTML = outs;
+    document.getElementById('rTitle').classList.add('show');
+    toast('✅ 已生成10个标题');
+}
+
+// ===== 小红书文案 =====
+const EMOJIS = ['✨','🔥','💕','⭐','🎉','😍','👏','🌟','🍀','💯'];
+const OPENERS = ['今天必须给大家安利一下','姐妹们，挖到宝了','真心分享，不吹不黑','最近发现的宝藏，忍不住想说','来交作业了！'];
+const ACTIONS = ['亲测','用了三天','回购三次','对比五家','反复测试'];
+function genCopy(){
+    const t = document.getElementById('tCopy').value.trim();
+    if (!t) return toast('请输入主题');
+    const emojiStyle = document.querySelector('#panel-copy .stu-opt.active').dataset.style === 'emoji';
+    const em = () => emojiStyle ? pick(EMOJIS)+' ' : '';
+    const out = [
+        `${em()}${pick(OPENERS)}${em()}`,
+        ``,
+        `关于「${t}」：`,
+        `${em()}${pick(ACTIONS)}，结果真的惊到我了${em()}`,
+        `${em()}先说结论：值得！而且超出预期${em()}`,
+        ``,
+        `${em()}几个关键点：`,
+        `${em()}1️⃣ 品质/体验没得说${em()}`,
+        `${em()}2️⃣ 性价比在线，不交智商税${em()}`,
+        `${em()}3️⃣ 适合大多数人，上手简单${em()}`,
+        ``,
+        `${em()}如果犹豫，可以先试试，大概率真香${em()}`,
+        `${em()}评论区聊聊你的体验呀~${em()}`,
+        ``,
+        `#${t.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g,'')} #种草 #好物分享 #真实测评 #性价比`
+    ].join('\n');
+    document.getElementById('rCopyOut').innerText = out;
+    document.getElementById('rCopy').classList.add('show');
+    toast('✅ 文案已生成');
+}
+
+// ===== 提示词优化 =====
+function genPrompt(){
+    const t = document.getElementById('tPrompt').value.trim();
+    if (!t) return toast('请输入基础提示词');
+    const styles = ['超写实摄影','3D动画','扁平插画','电影感','国风水墨','赛博朋克'];
+    const lights = ['柔和自然光','黄昏逆光','霓虹补光','棚拍柔光','清晨侧光'];
+    const cams = ['85mm f1.4 人像镜头','广角 24mm','微距特写','无人机航拍','慢门长曝光'];
+    const s = pick(styles), l = pick(lights), c = pick(cams);
+    const out = [
+        `【主体】${t}，细节丰富`,
+        `【风格】${s}，高质感，8k`,
+        `【光线】${l}，层次分明`,
+        `【构图】${c}，主体突出，留白恰当`,
+        `【氛围】电影级色调，情绪感强`,
+        `【负面】模糊、畸变、低质量、多余元素`,
+        ``,
+        `--ar 3:4 --q 2 --v 6`,
+        ``,
+        `💡 在 Midjourney/即梦/可灵 里粘贴这段即可`
+    ].join('\n');
+    document.getElementById('rPromptOut').innerText = out;
+    document.getElementById('rPrompt').classList.add('show');
+    toast('✅ 提示词已优化');
+}
+
+// ===== 短视频脚本 =====
+function genScript(){
+    const t = document.getElementById('tScript').value.trim();
+    if (!t) return toast('请输入视频主题');
+    const len = document.querySelector('#panel-script .stu-opt.active').dataset.style;
+    const shots = len === '30秒' ? 6 : 12;
+    const beats = [
+        { v:'开场钩子：前3秒抓住注意力', s:'“你一定想不到，[主题]还有这种打开方式”' },
+        { v:'场景展示：带观众进入', s:'镜头推进，展示[主题]的真实样子' },
+        { v:'痛点切入：观众共鸣', s:'“以前我也踩过坑，直到发现...”' },
+        { v:'核心干货：价值输出', s:'三个关键点，边演示边讲' },
+        { v:'结果对比：建立信任', s:'前后对比，用事实说话' },
+        { v:'结尾行动：引导互动/关注', s:'“觉得有用，点个赞收藏，评论区聊聊”' }
+    ];
+    let lines = [];
+    for (let i=0; i<shots; i++) {
+        const b = beats[i % beats.length];
+        lines.push(`【镜头${i+1}｜${Math.ceil((i+1)*30/shots)}s】`);
+        lines.push(`画面：${b.v.replace('[主题]', t)}`);
+        lines.push(`台词：${b.s.replace('[主题]', t)}`);
+        lines.push('');
+    }
+    const out = [
+        `🎬 短视频脚本 · ${t} · ${len}`,
+        ``,
+        ...lines,
+        `📌 配乐：轻快BGM · 字幕：全屏大字加粗`
+    ].join('\n');
+    document.getElementById('rScriptOut').innerText = out;
+    document.getElementById('rScript').classList.add('show');
+    toast('✅ 脚本已生成');
+}
+</script>
+</body>
+</html>
