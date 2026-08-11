@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday 疯狂星期五 · 一页纸商业计划书 · 一个人+AI就是一家公司">
+<title>Crazy Friday · 一页纸商业计划书</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+    --bg:#0d0420; --card:rgba(255,255,255,.045); --border:rgba(255,255,255,.09);
+    --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
+    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
+    --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --blue:#60A5FA; --red:#F87171;
+}
+body {
+    background:var(--bg); color:var(--text); min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse 700px 400px at 50% -5%, rgba(168,85,247,.2), transparent 60%);
+}
+.topbar { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:rgba(13,4,32,.85); backdrop-filter:blur(18px); border-bottom:1px solid var(--border); }
+.tb-l { display:flex; align-items:center; gap:10px; }
+.tb-logo { width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,var(--purple-deep),var(--pink)); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; }
+.tb-name { font-size:13px; font-weight:900; }
+.tb-sub { font-size:9px; color:var(--dim); }
+.tb-r { display:flex; gap:8px; }
+.btn { display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:20px; font-size:12px; font-weight:800; cursor:pointer; text-decoration:none; color:#fff; border:none; }
+.btn-gold { background:rgba(255,215,0,.13); border:1px solid rgba(255,215,0,.4); color:var(--gold); }
+.btn-main { background:linear-gradient(135deg,var(--purple),var(--pink)); }
+.btn-ghost { background:rgba(255,255,255,.06); border:1px solid var(--border); }
+/* A4 纸 */
+.paper { max-width:880px; margin:76px auto 30px; padding:38px 40px 34px; background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:20px; box-shadow:0 24px 60px rgba(0,0,0,.4); }
+@media print {
+    body { background:#fff; }
+    .topbar { display:none; }
+    .paper { box-shadow:none; border:none; margin:0; max-width:100%; background:#fff; }
+    .p-hd, .block h3, .pitch { color:#111 !important; -webkit-print-color-adjust:exact; }
+    .tag-live, .tag-plan { -webkit-print-color-adjust:exact; }
+}
+/* 头部 */
+.p-hd { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; border-bottom:1px solid var(--border); padding-bottom:18px; margin-bottom:16px; flex-wrap:wrap; }
+.p-brand { display:flex; align-items:center; gap:12px; }
+.p-logo { width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,var(--purple-deep),var(--pink)); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; color:#fff; box-shadow:0 6px 20px rgba(168,85,247,.45); }
+.p-title { font-size:22px; font-weight:900; letter-spacing:-.5px; }
+.p-tag { font-size:11px; color:var(--purple-light); font-weight:800; margin-top:2px; }
+.p-meta { text-align:right; font-size:10px; color:var(--mute); line-height:1.7; }
+.p-meta b { color:var(--dim); }
+/* 一句话定位 */
+.pitch { background:linear-gradient(160deg,rgba(168,85,247,.12),rgba(236,72,153,.04)); border:1px solid rgba(168,85,247,.25); border-radius:14px; padding:14px 18px; font-size:15px; font-weight:800; line-height:1.6; margin-bottom:14px; }
+.pitch .grad { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+/* 区块 */
+.block { margin-bottom:13px; }
+.block h3 { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:900; color:var(--purple-light); margin-bottom:7px; }
+.block h3 .no { width:20px; height:20px; border-radius:6px; background:rgba(168,85,247,.18); display:inline-flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:#fff; }
+.block h3 .sub { font-size:9px; color:var(--mute); font-weight:600; }
+.blk-body { font-size:11.5px; color:var(--dim); line-height:1.7; }
+.blk-body b, .blk-body strong { color:#fff; }
+/* 两列 */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.mini-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:11px 13px; }
+.mini-card .t { font-size:11px; font-weight:900; color:#fff; }
+.mini-card .d { font-size:9.5px; color:var(--dim); margin-top:3px; line-height:1.6; }
+/* 标签 */
+.tag-live { display:inline-block; font-size:8px; font-weight:900; color:var(--green); background:rgba(52,211,153,.1); border:1px solid rgba(52,211,153,.3); padding:2px 7px; border-radius:9px; vertical-align:middle; margin-left:4px; }
+.tag-plan { display:inline-block; font-size:8px; font-weight:900; color:var(--gold); background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); padding:2px 7px; border-radius:9px; vertical-align:middle; margin-left:4px; }
+/* 表格 */
+table { width:100%; border-collapse:collapse; font-size:10.5px; }
+td { padding:5px 8px; border-bottom:1px solid rgba(255,255,255,.06); color:var(--dim); line-height:1.5; vertical-align:top; }
+td:first-child { color:#fff; font-weight:800; width:90px; }
+td.num { color:var(--purple-light); font-weight:900; white-space:nowrap; }
+/* 融资 */
+.ask { display:flex; align-items:center; gap:12px; background:linear-gradient(160deg,rgba(168,85,247,.14),rgba(236,72,153,.05)); border:1px solid rgba(168,85,247,.3); border-radius:14px; padding:13px 16px; }
+.ask .num { font-size:26px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.ask .d { font-size:10px; color:var(--dim); line-height:1.6; }
+.ask .d b { color:#fff; }
+/* 团队 */
+.team { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; }
+.team .av { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; color:#fff; flex-shrink:0; }
+.team .n { font-size:12px; font-weight:900; color:#fff; }
+.team .r { font-size:9.5px; color:var(--dim); }
+/* 诚实声明 */
+.honest { margin-top:12px; font-size:9.5px; color:var(--mute); border-top:1px dashed var(--border); padding-top:10px; line-height:1.7; }
+.honest b { color:var(--gold); }
+.foot { text-align:center; padding:6px 0 30px; font-size:9px; color:var(--mute); }
+@media (max-width:640px){
+    .paper { padding:22px 16px; margin:70px 10px 20px; }
+    .grid2, .grid3 { grid-template-columns:1fr; }
+    .p-hd { flex-direction:column; }
+    .p-meta { text-align:left; }
+    .ask { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="tb-l">
+        <div class="tb-logo">CF</div>
+        <div><div class="tb-name">Crazy Friday · 商业计划书</div><div class="tb-sub">One-Pager · 2026-08</div></div>
+    </div>
+    <div class="tb-r">
+        <button class="btn btn-gold" onclick="copyBP()">一键复制 BP 全文</button>
+        <button class="btn btn-ghost" onclick="window.print()">打印 / 存 PDF</button>
+        <a class="btn btn-main" href="invest-dashboard.html">路演大屏</a>
+    </div>
+</div>
+
+<div class="paper">
+
+    <!-- 头部 -->
+    <div class="p-hd">
+        <div class="p-brand">
+            <div class="p-logo">CF</div>
+            <div>
+                <div class="p-title">Crazy Friday · 疯狂星期五</div>
+                <div class="p-tag">AI 时代的一人公司生态 · 商业计划书</div>
+            </div>
+        </div>
+        <div class="p-meta">
+            版本 V1.0 · 2026-08-12<br>
+            创始人：时铭（Shiming）<br>
+            <b>shim16506@gmail.com</b>
+        </div>
+    </div>
+
+    <!-- 定位 -->
+    <div class="pitch">
+        一句话定位：<span class="grad">一个人 + AI，就是一家公司。</span><br>
+        我们要做中国版 Fiverr / Upwork 的 AI 垂直生态——比猪八戒更轻、更聚焦一人公司，让个体用 AI 完成从获客、接单、交付到变现的全闭环。
+    </div>
+
+    <!-- 1 痛点 -->
+    <div class="block">
+        <h3><span class="no">1</span>痛点与机会 <span class="sub">为什么是现在</span></h3>
+        <div class="blk-body">
+            <b>供给侧爆发：</b>AI 工具让"一个人能干一个团队的活"成为现实，但个体缺的是——<b>去哪接单、怎么报价、用什么工具、如何交付、怎么沉淀案例</b>。<br>
+            <b>需求侧旺盛：</b>大量小微企业想要 AI 工作台/自动化/内容服务，但找不到可信、轻量的供应商。<br>
+            <b>中间层缺失：</b>平台（猪八戒/闲鱼）重、乱、压价；我们做<b>AI 垂直 + 标准交付 + 案例透明</b>的轻平台。
+        </div>
+    </div>
+
+    <!-- 2 方案 -->
+    <div class="block">
+        <h3><span class="no">2</span>解决方案 <span class="sub">一个生态、四层闭环</span></h3>
+        <div class="grid3">
+            <div class="mini-card"><div class="t">① 工具层</div><div class="d">37 款 AI 变现工具库<span class="tag-live">已上线</span><br>9 条变现玩法 SOP，零门槛到高阶</div></div>
+            <div class="mini-card"><div class="t">② 交易层</div><div class="d">接单工坊：需求大厅→报价→订单→交付<span class="tag-live">已上线</span><br>模板市集 / 工作台商店 / 会员订阅</div></div>
+            <div class="mini-card"><div class="t">③ 交付层</div><div class="d">自营交付 + 交付伙伴网络派单<br>登记表→云端→后台线索管理<span class="tag-live">已上线</span></div></div>
+            <div class="mini-card"><div class="t">④ 资产层</div><div class="d">案例广场自动沉淀 → 获客复利<span class="tag-live">已上线</span><br>项目孵化 → 共创分红</div></div>
+            <div class="mini-card"><div class="t">⑤ 生态层</div><div class="d">招商合作中心 + 路演大屏<span class="tag-live">已上线</span><br>城市合伙人（规划）</div></div>
+            <div class="mini-card"><div class="t">⑥ 数据层</div><div class="d">云端数据 + 后台看板<span class="tag-live">已上线</span><br>真实支付闭环<span class="tag-plan">建设中</span></div></div>
+        </div>
+    </div>
+
+    <!-- 3 商业模式 -->
+    <div class="block">
+        <h3><span class="no">3</span>商业模式 <span class="sub">五条收入线 · 平台+服务+订阅</span></h3>
+        <table>
+            <tr><td>① 接单派单差价</td><td>客户单→派给交付伙伴→平台留存差价，轻资产高毛利</td><td class="num">主力</td></tr>
+            <tr><td>② 工具/模板售卖</td><td>AI 工具库、提示词包、工作台模板、成品工作台直购</td><td class="num">¥29–299</td></tr>
+            <tr><td>③ 会员订阅</td><td>工具/课程/优先派单/数据看板，三档订阅制</td><td class="num">¥39–299/月</td></tr>
+            <tr><td>④ AI 定制服务</td><td>定制 AI 工作台/自动化，高客单交付</td><td class="num">¥2k–50k</td></tr>
+            <tr><td>⑤ 项目孵化分红</td><td>潜力项目验证后开放共创，平台享分红</td><td class="num">长期</td></tr>
+        </table>
+    </div>
+
+    <!-- 4 市场 -->
+    <div class="block">
+        <h3><span class="no">4</span>市场规模 <span class="sub">参考口径</span></h3>
+        <div class="blk-body">
+            中国灵活用工/零工市场规模 <b>万亿级</b>；AI 应用服务市场高速增长。我们切入的细分：<b>「个体 AI 服务」</b>——一个人 + AI 为小微企业提供数字服务，客单价中高、毛利高、复购强。<span class="tag-plan">市场数据为行业公开口径</span>
+        </div>
+    </div>
+
+    <!-- 5 数据与里程碑 -->
+    <div class="block">
+        <h3><span class="no">5</span>当前进展 <span class="sub">诚实标注：已验证 vs 规划</span></h3>
+        <div class="grid2">
+            <div class="mini-card">
+                <div class="t">已验证 · 已上线</div>
+                <div class="d" style="font-size:10px">
+                    · 16 大业务板块 / 54 页面全功能上线<br>
+                    · 37 款 AI 工具 + 9 条玩法 SOP<br>
+                    · 接单工坊 → 订单 → 交付流程可走通<br>
+                    · 登记表 → 云端 → 后台线索闭环<span class="tag-live">云端实时</span><br>
+                    · 案例广场云端同步<span class="tag-live">云端实时</span>
+                </div>
+            </div>
+            <div class="mini-card">
+                <div class="t">规划中 · 目标</div>
+                <div class="d" style="font-size:10px">
+                    · 真实支付闭环（收款→回执→证据）<br>
+                    · 5 个真实付费客户验证<br>
+                    · 月流水进入可核验记录<br>
+                    · 正式后端迁移（Supabase）<br>
+                    · 城市合伙人 / 跨城市复制
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6 融资 -->
+    <div class="block">
+        <h3><span class="no">6</span>融资需求 <span class="sub">里程碑对赌制</span></h3>
+        <div class="ask">
+            <div class="num">¥50–100 万</div>
+            <div class="d"><b>天使轮 · 出让 10–15%</b><br>资金用途：产品开发 30% / 市场获客 25% / 交付网络 20% / 品牌 15% / 运营储备 10%<br>里程碑对赌：先做「5 个真实付费客户 + 支付闭环 + 月流水可核验」，做不到不拿下一笔。</div>
+        </div>
+    </div>
+
+    <!-- 7 团队 -->
+    <div class="block">
+        <h3><span class="no">7</span>团队 <span class="sub">一人公司 + AI 员工矩阵</span></h3>
+        <div class="team">
+            <div class="av">时</div>
+            <div>
+                <div class="n">时铭（创始人）</div>
+                <div class="r">一人操盘：产品 / 运营 / 内容 / 商务 / 交付，AI 员工矩阵辅助。已用 AI 从 0 搭建 54 页完整生态，执行力已验证。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 诚实声明 -->
+    <div class="honest">
+        <b>数据诚实声明：</b>本 BP 中标注「云端实时」的数据可从云端数据库实时核验；标注「规划口径 / 目标」的为规划值，非已发生交易。我们不虚报数字——投资人的信任比一次性融资更值钱。
+    </div>
+</div>
+
+<div class="foot">Crazy Friday · 疯狂星期五 · © 2026 · 想投资/合作 → shim16506@gmail.com</div>
+
+<script>
+function copyBP(){
+    const text = [
+        '【Crazy Friday · 疯狂星期五｜一页纸商业计划书】',
+        '',
+        '一句话定位：一个人+AI就是一家公司。做中国版Fiverr/Upwork的AI垂直生态，让个体用AI完成获客、接单、交付、变现全闭环。',
+        '',
+        '痛点：AI让"一个人干一个团队的活"成为现实，但个体缺接单渠道/报价/工具/交付/案例沉淀；小微企业想要AI服务却找不到可信轻量供应商。',
+        '',
+        '方案（四层闭环）：工具库37款+9玩法 → 接单工坊交易 → 交付伙伴网络 → 案例广场复利。',
+        '',
+        '商业模式（5条收入线）：①接单派单差价(主力) ②工具/模板售卖¥29-299 ③会员订阅¥39-299/月 ④AI定制¥2k-50k ⑤项目孵化分红。',
+        '',
+        '当前进展：16板块/54页已上线；接单→订单→交付可走通；登记→云端→后台线索闭环（云端实时）；案例广场云端同步。',
+        '',
+        '规划中：真实支付闭环、5个真实付费客户验证、正式后端迁移、城市合伙人。',
+        '',
+        '融资需求：¥50-100万天使轮，出让10-15%。资金用途：产品30%/获客25%/交付网络20%/品牌15%/运营10%。里程碑对赌，先做验证。',
+        '',
+        '团队：时铭，一人公司+AI员工矩阵，AI从0搭建54页完整生态，执行力已验证。',
+        '',
+        '数据诚实：云端实时=可核验，规划口径=目标值，绝不虚报。',
+        '',
+        '联系：shim16506@gmail.com',
+        'BP在线：https://shiming-ai.github.io/shiming-workbench/bp.html',
+        '路演大屏：https://shiming-ai.github.io/shiming-workbench/invest-dashboard.html'
+    ].join('\n');
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(ok, ()=>fallback(text)); }
+    else fallback(text);
+}
+function fallback(t){
+    const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); ok(); } catch(e){}
+    document.body.removeChild(ta);
+}
+function ok(){ alert('✅ 已复制 BP 全文！粘贴到微信/邮件发给投资人'); }
+</script>
+
+</body>
+</html>
