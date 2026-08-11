@@ -4,22 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 超脑工坊 · 组建你的AI员工团队">
 <title>超脑工坊 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.ai-robot {
-    width:120px; height:120px; margin:0 auto;
-    background:radial-gradient(circle, rgba(168,85,247,.4), transparent 70%);
-    display:flex; align-items:center; justify-content:center;
-    font-size:80px; position:relative;
-}
-.ai-robot::after {
-    content:''; position:absolute; inset:0;
-    background:radial-gradient(circle, transparent 30%, rgba(168,85,247,.15) 50%, transparent 70%);
-    animation:pulse 2.5s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(1.2);opacity:1} }
-.status-dot { width:8px; height:8px; border-radius:50%; background:#34D399; box-shadow:0 0 6px #34D399; display:inline-block; }
+.br-hero { padding:24px 18px 12px; }
+.br-hero h2 { font-size:22px; font-weight:900; }
+.br-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.br-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 18px 14px; }
+.br-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 6px; text-align:center; }
+.br-stat .n { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.br-stat .l { font-size:9px; color:#6d6489; margin-top:3px; }
+.br-list { padding:0 18px; }
+.emp-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; margin-bottom:10px; position:relative; overflow:hidden; }
+.emp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--ec,#A855F7),transparent); }
+.emp-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.emp-av { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.emp-name { font-size:14px; font-weight:800; flex:1; }
+.emp-role { font-size:10px; color:#8d82a8; }
+.emp-status { font-size:9px; padding:3px 9px; border-radius:10px; font-weight:700; }
+.st-online { background:rgba(52,211,153,.12); color:#34D399; }
+.st-busy { background:rgba(245,158,11,.12); color:#F59E0B; }
+.st-idle { background:rgba(255,255,255,.08); color:#8d82a8; }
+.emp-desc { font-size:11px; color:#a89ec9; line-height:1.6; margin-bottom:8px; }
+.emp-tasks { font-size:10px; color:#6d6489; background:rgba(0,0,0,.2); border-radius:8px; padding:8px 10px; margin-bottom:8px; }
+.emp-tasks b { color:#C084FC; }
+.emp-actions { display:flex; gap:6px; }
+.emp-btn { flex:1; padding:8px; text-align:center; background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px; font-size:11px; font-weight:700; color:#a89ec9; cursor:pointer; }
+.emp-btn:active { transform:scale(.96); }
+.emp-btn.go { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.add-emp { display:block; margin:16px 18px; padding:13px; text-align:center; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:20px; font-size:13px; font-weight:800; color:#fff; cursor:pointer; box-shadow:0 8px 24px rgba(168,85,247,.35); }
+.task-overlay { position:fixed; inset:0; background:rgba(0,0,0,.9); backdrop-filter:blur(12px); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; }
+.task-card { background:#1a0d2e; border:1px solid var(--border); border-radius:18px; padding:22px; width:100%; max-width:400px; }
+.task-card h3 { font-size:17px; font-weight:900; margin-bottom:10px; }
+.task-textarea { width:100%; min-height:80px; background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:12px; color:#fff; font-size:13px; outline:none; resize:none; font-family:inherit; }
+.task-textarea:focus { border-color:rgba(168,85,247,.5); }
+.task-go { display:block; width:100%; margin-top:12px; padding:12px; background:linear-gradient(135deg,#A855F7,#EC4899); border:none; border-radius:18px; color:#fff; font-size:13px; font-weight:800; cursor:pointer; }
+.task-close { display:block; width:100%; margin-top:8px; padding:8px; background:transparent; color:#a89ec9; font-size:12px; cursor:pointer; border:none; }
+.output-box { background:rgba(0,0,0,.3); border:1px solid rgba(52,211,153,.25); border-radius:10px; padding:12px; margin-top:10px; font-size:12px; color:#34D399; line-height:1.7; white-space:pre-wrap; display:none; }
+.output-box.show { display:block; }
 </style>
 </head>
 <body data-tab="me">
@@ -29,81 +52,196 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">超脑工坊</div>
-            <div class="brand-sub">06 · AI员工</div>
+            <div class="brand-sub">06 · 组建你的AI员工团队</div>
         </div>
     </div>
-    <div class="bell">⚙️</div>
+    <div class="bell" style="cursor:pointer" onclick="showEmpHelp()">❓</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding:30px 20px 10px">
-        <div class="ai-robot">🤖</div>
-        <div class="hero-title" style="font-size:24px;text-align:center;margin:14px 0 4px">超脑工坊</div>
-        <div class="hero-sub" style="text-align:center;font-size:12px;color:#a89ec9">你的AI员工团队 · 7×24h为你工作</div>
+    <div class="br-hero">
+        <h2>🤖 超脑<span style="color:#C084FC">工坊</span></h2>
+        <p>你的 7×24h AI 员工团队<br>指派任务 → AI 自动产出 → 你只需验收</p>
     </div>
 
-    <div class="section-head">
-        <div class="section-tt">👥 我的AI员工</div>
-        <div class="section-more">1/20</div>
+    <div class="br-stats">
+        <div class="br-stat"><div class="n" id="empCount">0</div><div class="l">AI员工</div></div>
+        <div class="br-stat"><div class="n" id="taskCount">0</div><div class="l">今日任务</div></div>
+        <div class="br-stat"><div class="n" id="doneCount">0</div><div class="l">已完成</div></div>
     </div>
 
-    <div class="section">
-        <div class="card" style="border-left:3px solid #34D399">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899);font-size:24px">🤖</div>
-                <div style="flex:1">
-                    <div class="card-name">运营专家Emma</div>
-                    <div style="font-size:11px;color:#34D399;margin-top:3px;display:flex;align-items:center;gap:4px"><span class="status-dot"></span>在线</div>
-                </div>
-                <span class="card-tag" style="background:rgba(52,211,153,.15);color:#34D399">活跃</span>
-            </div>
-            <div class="card-desc">社交媒体运营 · 内容策略 · 用户增长</div>
-            <div class="card-meta">
-                <span class="meta-tag">🕐 今日 2序 23次</span>
-                <span class="meta-tag">📅 在线 18/26</span>
-                <span class="meta-tag">⚙️ 工作 18/26</span>
-            </div>
-        </div>
+    <div class="br-list" id="empList"></div>
 
-        <div class="card" style="border-left:3px solid #FFD93D">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#FFD93D,#FFA500);font-size:24px">🎨</div>
-                <div style="flex:1">
-                    <div class="card-name">设计狮Midjourney Bot</div>
-                    <div style="font-size:11px;color:#FFD93D;margin-top:3px;display:flex;align-items:center;gap:4px"><span class="status-dot" style="background:#FFD93D;box-shadow:0 0 6px #FFD93D"></span>工作中</div>
-                </div>
-                <span class="card-tag" style="background:rgba(255,217,61,.15);color:#FFD93D">繁忙</span>
-            </div>
-            <div class="card-desc">AI绘图 · 海报设计 · Logo创作</div>
-            <div class="card-meta">
-                <span class="meta-tag">🕐 今日 1序 1次</span>
-                <span class="meta-tag">📅 在线 18/26</span>
-                <span class="meta-tag">⏸ 暂停 0/20</span>
-            </div>
-        </div>
+    <div class="add-emp" onclick="addEmp()">+ 新建 AI 员工</div>
 
-        <div class="card" style="border-left:3px solid #60A5FA">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#60A5FA,#22D3EE);font-size:24px">📊</div>
-                <div style="flex:1">
-                    <div class="card-name">数据分析师Data Analyst</div>
-                    <div style="font-size:11px;color:#60A5FA;margin-top:3px;display:flex;align-items:center;gap:4px"><span class="status-dot" style="background:#60A5FA;box-shadow:0 0 6px #60A5FA"></span>学习中</div>
-                </div>
-                <span class="card-tag" style="background:rgba(96,165,250,.15);color:#60A5FA">训练</span>
-            </div>
-            <div class="card-desc">数据分析 · 报表生成 · 趋势预测</div>
-            <div class="card-meta">
-                <span class="meta-tag">🕐 今日 2序 15/20</span>
-                <span class="meta-tag">📊 9日 2序 15/20</span>
-                <span class="meta-tag">⚙️ 工作中</span>
-            </div>
-        </div>
+    <div class="tip" style="margin:0 18px 20px">
+        💡 给AI员工指派任务，它会自动产出<br>
+        文案/图片/脚本/分析——<b style="color:#34D399">你负责验收和变现</b>
     </div>
-
-    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:14px;border-radius:20px;display:block;margin:24px 18px;font-weight:800;font-size:15px">+ 添加AI员工</a>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+// ===== AI员工数据 =====
+const EMP_ROLES = [
+    { role:'文案专员', ico:'✍️', color:'#A855F7', desc:'写小红书/公众号/广告文案，批量出稿' },
+    { role:'运营助理', ico:'📊', color:'#22D3EE', desc:'数据分析、周报生成、数据复盘' },
+    { role:'设计助手', ico:'🎨', color:'#EC4899', desc:'配图、封面、海报设计辅助' },
+    { role:'视频剪辑', ico:'🎬', color:'#F59E0B', desc:'短视频脚本、字幕、剪辑提效' },
+    { role:'客服机器人', ico:'💬', color:'#34D399', desc:'接待客户、答疑、意向筛选' },
+    { role:'销售助理', ico:'📈', color:'#FF6B1A', desc:'线索跟进、报价、催收' }
+];
+const EMP_KEY = 'cf_brain_emps';
+function getEmps(){ try{ return JSON.parse(localStorage.getItem(EMP_KEY))||[] }catch(e){ return [] } }
+function setEmps(a){ localStorage.setItem(EMP_KEY, JSON.stringify(a)) }
+
+// 默认3个AI员工（示例）
+if (!getEmps().length) {
+    setEmps([
+        { id:'e1', ico:'✍️', name:'小铭·文案', role:'文案专员', status:'online', desc:'批量出稿，擅长小红书/公众号', tasks:[], done:0, color:'#A855F7' },
+        { id:'e2', ico:'📊', name:'小析·数据', role:'运营助理', status:'online', desc:'数据看板与周报生成', tasks:[], done:0, color:'#22D3EE' },
+        { id:'e3', ico:'💬', name:'小客·客服', role:'客服机器人', status:'idle', desc:'7×24接待客户', tasks:[], done:0, color:'#34D399' }
+    ]);
+}
+
+function renderStats(){
+    const emps = getEmps();
+    let tasks = 0, done = 0;
+    emps.forEach(e => { tasks += e.tasks.length; done += e.done; });
+    document.getElementById('empCount').textContent = emps.length;
+    document.getElementById('taskCount').textContent = tasks;
+    document.getElementById('doneCount').textContent = done;
+}
+
+function renderEmps(){
+    const emps = getEmps();
+    const list = document.getElementById('empList');
+    renderStats();
+    if (!emps.length) {
+        list.innerHTML = '<div class="empty">还没有AI员工<br>点上方"新建AI员工"开始组建团队</div>';
+        return;
+    }
+    list.innerHTML = emps.map((e,i) => {
+        const st = e.status==='online'?'<span class="emp-status st-online">🟢 在线</span>' : e.status==='busy'?'<span class="emp-status st-busy">🟡 忙碌</span>':'<span class="emp-status st-idle">⚪ 待命</span>';
+        const lastTask = e.tasks.length ? e.tasks[e.tasks.length-1] : null;
+        return `<div class="emp-card" style="--ec:${e.color}">
+            <div class="emp-head">
+                <div class="emp-av" style="background:${e.color}22;color:${e.color}">${e.ico}</div>
+                <div style="flex:1">
+                    <div class="emp-name">${e.name}</div>
+                    <div class="emp-role">${e.role}</div>
+                </div>
+                ${st}
+            </div>
+            <div class="emp-desc">${e.desc}</div>
+            <div class="emp-tasks">📋 待办 ${e.tasks.length} · ✅ 完成 ${e.done}${lastTask?'<br><b>最近任务</b>：'+lastTask:''}</div>
+            <div class="emp-actions">
+                <button class="emp-btn go" onclick="assignTask(${i})">⚡ 派任务</button>
+                <button class="emp-btn" onclick="toggleEmpStatus(${i})">${e.status==='online'?'🛑 暂停':'▶️ 上线'}</button>
+                <button class="emp-btn" onclick="deleteEmp(${i})" style="color:#FF4757">🗑</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function addEmp(){
+    const roleIdx = prompt('选择角色：\n1.文案专员 2.运营助理 3.设计助手 4.视频剪辑 5.客服机器人 6.销售助理', '1');
+    const r = EMP_ROLES[(parseInt(roleIdx)-1) || 0];
+    if (!r) return;
+    const name = prompt('AI员工昵称：', '小'+r.role[0]+'·'+r.role);
+    const emps = getEmps();
+    emps.push({
+        id: 'e'+Date.now(), ico:r.ico, name:name||r.role, role:r.role,
+        status:'online', desc:r.desc, tasks:[], done:0, color:r.color
+    });
+    setEmps(emps);
+    renderEmps();
+    toast('✅ AI员工已上岗');
+}
+
+function assignTask(i){
+    const emps = getEmps();
+    const e = emps[i];
+    if (!e) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'task-overlay';
+    overlay.onclick = (ev)=>{ if(ev.target===overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="task-card">
+        <h3>⚡ 派任务给 ${e.name}</h3>
+        <textarea class="task-textarea" id="taskInput" placeholder="例如：写一篇小红书种草文案，主题是低卡轻食店..."></textarea>
+        <div class="output-box" id="taskOut"></div>
+        <button class="task-go" onclick="runTask(${i}, this)">🚀 开始执行</button>
+        <button class="task-close" onclick="document.body.removeChild(this.parentElement.parentElement)">关闭</button>
+    </div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#taskInput').focus();
+}
+
+function runTask(i, btn){
+    const emps = getEmps();
+    const e = emps[i];
+    const input = document.getElementById('taskInput');
+    const task = input.value.trim();
+    if (!task) return toast('请输入任务内容');
+    btn.disabled = true;
+    btn.textContent = 'AI 执行中...';
+    e.status = 'busy';
+    setEmps(emps);
+    renderEmps();
+    const out = document.getElementById('taskOut');
+    out.classList.add('show');
+    out.textContent = '🤖 AI 正在分析任务...';
+    // 模拟AI执行
+    setTimeout(()=>{
+        const output = mockAI(e.role, task);
+        out.textContent = output;
+        // 更新数据
+        const emps2 = getEmps();
+        const e2 = emps2[i];
+        e2.tasks.push(task.slice(0,30));
+        e2.done += 1;
+        e2.status = 'online';
+        setEmps(emps2);
+        renderEmps();
+        btn.disabled = false;
+        btn.textContent = '✅ 完成，再派一个';
+        toast('✅ AI任务完成！产出已生成');
+    }, 1500);
+}
+
+function mockAI(role, task){
+    const t = task.length > 20 ? task.slice(0,20)+'...' : task;
+    if (role.includes('文案')) return `📝 【${t}】\n\n姐妹们！今天必须安利这个「${t}」✨\n\n· 亲测好用，不吹不黑\n· 性价比在线，不交智商税\n· 适合大多数人，上手简单\n\n评论区聊聊你的体验~ \n#种草 #好物分享 #真实测评`;
+    if (role.includes('运营')) return `📊 【${t}】\n\n本周数据复盘：\n· 阅读量 ↑32%（对比上周）\n· 互动率 4.8%（行业均值3.2%）\n· 新增关注 +128\n\n建议：增加发布频率到日更，主推干货类内容`;
+    if (role.includes('客服')) return `💬 【${t}】\n\n您好呀~ 关于您的问题：\n「${t}」\n\n这边为您整理了3个要点：\n1. 价格详情已发给您\n2. 交付周期约3-7天\n3. 有定制需求随时说\n\n需要我帮您登记意向吗？`;
+    if (role.includes('设计')) return `🎨 【${t}】\n\n设计方向建议：\n· 主色调：紫色渐变（品牌感）\n· 构图：居中主视觉+留白\n· 字体：大标题+细正文\n· 参考提示词：${t}，高级质感，ins风，柔光，8k`;
+    if (role.includes('视频')) return `🎬 【${t}】\n\n短视频脚本（30秒）：\n【镜头1｜0-3s】开场钩子：你一定想不到「${t}」还能这样\n【镜头2｜3-10s】场景展示+痛点切入\n【镜头3｜10-20s】核心干货3点\n【镜头4｜20-30s】结果对比+引导关注`;
+    if (role.includes('销售')) return `📈 【${t}】\n\n销售跟进建议：\n· 客户意向：中高\n· 报价策略：分3档（基础/标准/尊享）\n· 跟进节奏：2小时内回访，效果最佳\n· 话术要点：先给价值，再谈价格`;
+    return `✅ 【${t}】\n任务已记录，产出已生成`;
+}
+
+function toggleEmpStatus(i){
+    const emps = getEmps();
+    const e = emps[i];
+    e.status = e.status === 'online' ? 'idle' : 'online';
+    setEmps(emps);
+    renderEmps();
+    toast(e.status==='online'?'▶️ AI员工已上线':'🛑 已暂停');
+}
+function deleteEmp(i){
+    if (!confirm('删除该AI员工？')) return;
+    const emps = getEmps();
+    emps.splice(i,1);
+    setEmps(emps);
+    renderEmps();
+    toast('🗑 已删除');
+}
+function showEmpHelp(){
+    alert('🤖 超脑工坊怎么用？\n\n1. 创建AI员工（选角色）\n2. 派任务给它\n3. AI自动产出（文案/数据/脚本）\n4. 你验收、拿去变现\n\n提示：这里用本地模拟引擎演示，接入真实大模型后产出会更强。');
+}
+
+renderEmps();
+</script>
 </body>
 </html>
