@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f0f7fc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>MyDaily · 我的日常</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --lake: #5BC2E7;        /* 湖水蓝 */
+    --lake-deep: #3AA8D6;
+    --lake-soft: #E3F4FC;   /* 湖水蓝浅 */
+    --lake-bg: #F0F7FC;     /* 页面浅蓝底 */
+    --white: #FFFFFF;
+    --text: #3A4A58;
+    --text-dim: #7E8E9C;
+    --border: #E6EFF5;
+    --pink: #F7A8C4;
+    --mint: #8FD9C3;
+    --yellow: #FBD98A;
+    --shadow: 0 4px 16px rgba(90, 170, 220, 0.10);
+}
+body {
+    background: var(--lake-bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========== 布局 ========== */
+.app {
+    display: flex;
+    min-height: 100vh;
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--lake-bg);
+    position: relative;
+}
+
+/* ========== 侧边栏 ========== */
+.sidebar {
+    width: 220px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 50;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.sidebar-brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+.brand-icon {
+    width: 36px; height: 36px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--lake), var(--lake-deep));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px;
+    box-shadow: 0 4px 12px rgba(90, 170, 220, 0.3);
+}
+.brand-name { font-size: 15px; font-weight: 800; }
+.brand-sub { font-size: 9px; color: var(--text-dim); margin-top: 1px; }
+
+.sidebar-group { margin-bottom: 6px; }
+.sidebar-group-label {
+    font-size: 10px; color: var(--text-dim);
+    padding: 10px 12px 6px;
+    font-weight: 700; letter-spacing: 1px;
+}
+.sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    color: var(--text-dim);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 2px;
+    user-select: none;
+}
+.sidebar-item .s-ico {
+    width: 28px; height: 28px; border-radius: 9px;
+    background: var(--lake-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+    transition: all 0.2s;
+}
+.sidebar-item.active {
+    background: var(--lake-soft);
+    color: var(--lake-deep);
+    font-weight: 700;
+}
+.sidebar-item.active .s-ico { background: var(--lake); color: #fff; }
+.sidebar-item .s-count {
+    margin-left: auto; font-size: 10px;
+    background: var(--lake-soft); color: var(--lake-deep);
+    padding: 1px 7px; border-radius: 10px;
+    font-weight: 700;
+}
+.sidebar-item.active .s-count { background: var(--lake); color: #fff; }
+
+.sidebar-foot {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+.sync-status {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    font-size: 11px;
+    border-radius: 10px;
+    color: var(--text-dim);
+    background: var(--lake-soft);
+}
+.sync-status .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 8px var(--yellow);
+}
+.sync-status.synced .dot { background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+
+/* ========== 主区域 ========== */
+.main {
+    flex: 1;
+    padding: 20px 22px 60px;
+    min-width: 0;
+}
+.main-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px;
+}
+.main-title { font-size: 20px; font-weight: 800; }
+.main-title .date { font-size: 11px; color: var(--text-dim); font-weight: 500; margin-top: 2px; }
+.main-actions { display: flex; gap: 8px; }
+
+/* 通用卡片 */
+.card {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+.card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+}
+.card-title {
+    font-size: 14px; font-weight: 800;
+    display: flex; align-items: center; gap: 8px;
+}
+.card-title .ct-ico {
+    width: 26px; height: 26px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+}
+.card-more { font-size: 11px; color: var(--text-dim); cursor: pointer; }
+
+/* 进度条 */
+.progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.progress-row .pr-label { font-size: 12px; color: var(--text-dim); width: 44px; flex-shrink: 0; }
+.progress-bar {
+    flex: 1; height: 8px; border-radius: 4px;
+    background: var(--lake-soft); overflow: hidden;
+}
+.progress-fill {
+    height: 100%; border-radius: 4px;
+    background: linear-gradient(90deg, var(--lake), var(--lake-deep));
+    transition: width 0.4s;
+}
+.progress-row .pr-val { font-size: 11px; color: var(--text-dim); width: 34px; text-align: right; }
+
+/* 任务列表 */
+.task-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+}
+.task-item:last-child { border-bottom: none; }
+.task-check {
+    width: 22px; height: 22px; border-radius: 8px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 11px; color: transparent;
+    transition: all 0.2s;
+}
+.task-check:hover { border-color: var(--lake); }
+.task-check.done {
+    background: var(--lake); border-color: var(--lake);
+    color: #fff;
+}
+.task-text { font-size: 13px; flex: 1; }
+.task-text.done { color: var(--text-dim); text-decoration: line-through; }
+.task-time { font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
+.task-opt { font-size: 11px; color: var(--text-dim); padding: 2px 6px; cursor: pointer; }
+
+/* 复盘行 */
+.review-line {
+    background: var(--lake-soft);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text);
+}
+.review-line .rl-label { font-size: 10px; color: var(--text-dim); margin-bottom: 2px; font-weight: 700; }
+
+/* 历史折叠 */
+.history-section { margin-top: 20px; }
+.history-date {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 13px; font-weight: 700;
+    color: var(--text-dim);
+}
+.history-date .arrow { transition: transform 0.2s; font-size: 10px; }
+.history-date.open .arrow { transform: rotate(90deg); }
+.history-body { display: none; padding-left: 6px; }
+.history-body.open { display: block; }
+
+/* 语言学习 tab */
+.lang-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.lang-tab {
+    padding: 8px 16px; border-radius: 12px;
+    background: var(--lake-soft); color: var(--text-dim);
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: all 0.2s;
+}
+.lang-tab.active { background: var(--lake); color: #fff; }
+
+/* 输入框 */
+.input-row {
+    display: flex; gap: 8px; margin-top: 10px;
+}
+.input-field {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+.input-field:focus { border-color: var(--lake); }
+.input-btn {
+    padding: 10px 16px;
+    background: var(--lake);
+    border: none; border-radius: 12px;
+    color: #fff; font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.input-btn:active { transform: scale(0.96); }
+
+/* 占位/空状态 */
+.empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: var(--text-dim);
+    font-size: 12px;
+    line-height: 1.8;
+}
+.empty .e-emoji { font-size: 32px; margin-bottom: 8px; }
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 40px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: #fff;
+    padding: 10px 20px; border-radius: 24px;
+    font-size: 12px; opacity: 0;
+    transition: all 0.3s; pointer-events: none;
+    z-index: 100;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* 移动端：侧边栏收成抽屉 */
+.mobile-topbar {
+    display: none;
+    position: sticky; top: 0; z-index: 60;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    align-items: center; gap: 12px;
+}
+.mobile-burger {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: var(--lake-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; cursor: pointer;
+}
+.mobile-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 55;
+    background: rgba(58, 90, 110, 0.3);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+@media (max-width: 720px) {
+    .mobile-topbar { display: flex; }
+    .sidebar {
+        position: fixed; left: 0; top: 0; bottom: 0;
+        transform: translateX(-105%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 70;
+        box-shadow: 8px 0 30px rgba(58, 90, 110, 0.15);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-overlay.show { opacity: 1; pointer-events: all; }
+    .main { padding: 16px 14px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 移动端顶栏 -->
+<div class="mobile-topbar">
+    <div class="mobile-burger" onclick="toggleSidebar()">☰</div>
+    <div style="font-size:15px;font-weight:800">MyDaily <span style="font-size:10px;color:var(--text-dim)">我的日常</span></div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
+
+<div class="app">
+
+<!-- ========== 侧边栏 ========== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">M</div>
+        <div>
+            <div class="brand-name">MyDaily</div>
+            <div class="brand-sub">我的日常 · 生活工作台</div>
+        </div>
+    </div>
+
+    <div class="sidebar-group">
+        <div class="sidebar-group-label">📌 今日</div>
+        <div class="sidebar-item active" data-page="daily" onclick="switchPage('daily', this)">
+            <div class="s-ico">✅</div> 每日计划
+            <span class="s-count" id="cntDaily">0</span>
+        </div>
+        <div class="sidebar-item" data-page="events" onclick="switchPage('events', this)">
+            <div class="s-ico">📰</div> 每日大事
+        </div>
+    </div>
+
+    <div class="sidebar-group">
+        <div class="sidebar-group-label">🎨 创作</div>
+        <div class="sidebar-item" data-page="media" onclick="switchPage('media', this)">
+            <div class="s-ico">📱</div> 自媒体
+            <span class="s-count" id="cntMedia">0</span>
+        </div>
+    </div>
+
+    <div class="sidebar-group">
+        <div class="sidebar-group-label">💪 成长</div>
+        <div class="sidebar-item" data-page="sport" onclick="switchPage('sport', this)">
+            <div class="s-ico">🏃</div> 运动打卡
+        </div>
+        <div class="sidebar-item" data-page="lang" onclick="switchPage('lang', this)">
+            <div class="s-ico">🗣️</div> 语言学习
+        </div>
+        <div class="sidebar-item" data-page="podcast" onclick="switchPage('podcast', this)">
+            <div class="s-ico">🎧</div> 播客记录
+        </div>
+        <div class="sidebar-item" data-page="reading" onclick="switchPage('reading', this)">
+            <div class="s-ico">📖</div> 读书计划
+        </div>
+    </div>
+
+    <div class="sidebar-group">
+        <div class="sidebar-group-label">💰 理财</div>
+        <div class="sidebar-item" data-page="fund" onclick="switchPage('fund', this)">
+            <div class="s-ico">📈</div> 基金专区
+        </div>
+    </div>
+
+    <div class="sidebar-foot">
+        <div class="sync-status" id="syncStatus">
+            <span class="dot"></span>
+            <span id="syncLabel">本地模式 · 未连接云端</span>
+        </div>
+    </div>
+</aside>
+
+<!-- ========== 主区域 ========== -->
+<main class="main" id="mainArea">
+
+    <!-- 每日计划 -->
+    <div class="page" id="page-daily">
+        <div class="main-head">
+            <div>
+                <div class="main-title">每日计划</div>
+                <div class="date" id="todayDate"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:var(--lake-soft)">📋</span>今日任务</div>
+                <div class="card-more" id="dailyProgress">0 / 0</div>
+            </div>
+            <div id="dailyTasks"></div>
+            <div class="input-row">
+                <input class="input-field" id="dailyInput" placeholder="添加今日任务…" onkeydown="if(event.key==='Enter')addTask('daily')">
+                <button class="input-btn" onclick="addTask('daily')">+ 添加</button>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <div class="history-date" onclick="toggleHistory(this)">
+                <span class="arrow">▶</span> 历史记录（按日期）
+            </div>
+            <div class="history-body" id="dailyHistory"></div>
+        </div>
+    </div>
+
+    <!-- 自媒体 -->
+    <div class="page" id="page-media" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">自媒体</div>
+                <div class="date">选题 · 二创 · 复盘</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#FFF3D6">💡</span>选题灵感</div>
+                <div class="card-more">+ 灵感</div>
+            </div>
+            <div id="topicList"></div>
+            <div class="input-row">
+                <input class="input-field" id="topicInput" placeholder="记录一个选题灵感…">
+                <button class="input-btn" onclick="addTopic()">+ 添加</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#FDE2EC">🎬</span>爆款二创</div>
+                <div class="card-more">+ 记录</div>
+            </div>
+            <div id="reworkList"></div>
+            <div class="input-row">
+                <input class="input-field" id="reworkInput" placeholder="记录一个可二创的爆款…">
+                <button class="input-btn" onclick="addRework()">+ 添加</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#E3F4FC">📊</span>内容复盘</div>
+                <div class="card-more">复盘每次发布</div>
+            </div>
+            <div id="reviewList"></div>
+            <div class="input-row">
+                <input class="input-field" id="reviewInput" placeholder="复盘：这次内容哪好哪不好…">
+                <button class="input-btn" onclick="addReview()">+ 添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 运动打卡 -->
+    <div class="page" id="page-sport" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">运动打卡</div>
+                <div class="date">坚持就是胜利</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#E0F5EC">🏃</span>今日运动</div>
+                <div class="card-more" id="sportStreak">连续 0 天</div>
+            </div>
+            <div id="sportTasks"></div>
+            <div class="input-row">
+                <input class="input-field" id="sportInput" placeholder="运动项目（跑步/力量/瑜伽…）">
+                <button class="input-btn" onclick="addTask('sport')">+ 打卡</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 语言学习 -->
+    <div class="page" id="page-lang" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">语言学习</div>
+                <div class="date">英语 · 西语 每日任务</div>
+            </div>
+        </div>
+
+        <div class="lang-tabs">
+            <div class="lang-tab active" onclick="switchLang('en')">🇬🇧 Speak English</div>
+            <div class="lang-tab" onclick="switchLang('es')">🇪🇸 Hablar Español</div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:var(--lake-soft)">🗣️</span>每日任务</div>
+                <div class="card-more" id="langProgress">0 / 6</div>
+            </div>
+            <div id="langTasks"></div>
+        </div>
+    </div>
+
+    <!-- 播客记录 -->
+    <div class="page" id="page-podcast" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">播客记录</div>
+                <div class="date">听到的好内容</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:var(--lake-soft)">🎧</span>收听记录</div>
+                <div class="card-more">+ 记录</div>
+            </div>
+            <div id="podcastList"></div>
+            <div class="input-row">
+                <input class="input-field" id="podcastInput" placeholder="播客名 + 感想…">
+                <button class="input-btn" onclick="addPodcast()">+ 添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 读书计划 -->
+    <div class="page" id="page-reading" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">读书计划</div>
+                <div class="date">每日阅读</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#FFF3D6">📖</span>在读的书</div>
+                <div class="card-more">+ 记录</div>
+            </div>
+            <div id="bookList"></div>
+            <div class="input-row">
+                <input class="input-field" id="bookInput" placeholder="书名 + 进度…">
+                <button class="input-btn" onclick="addBook()">+ 添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 基金专区 -->
+    <div class="page" id="page-fund" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">基金专区</div>
+                <div class="date">理财记录</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#FDE2EC">📈</span>基金持仓</div>
+                <div class="card-more">+ 记录</div>
+            </div>
+            <div id="fundList"></div>
+            <div class="input-row">
+                <input class="input-field" id="fundInput" placeholder="基金名 + 金额/收益…">
+                <button class="input-btn" onclick="addFund()">+ 添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 每日大事 -->
+    <div class="page" id="page-events" style="display:none">
+        <div class="main-head">
+            <div>
+                <div class="main-title">每日大事</div>
+                <div class="date" id="eventsDate"></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <div class="card-title"><span class="ct-ico" style="background:#E3F4FC">📰</span>今天发生的大事</div>
+                <div class="card-more">+ 记录</div>
+            </div>
+            <div id="eventList"></div>
+            <div class="input-row">
+                <input class="input-field" id="eventInput" placeholder="记录今天的一件大事…">
+                <button class="input-btn" onclick="addEvent()">+ 添加</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== 工具 ==========
+const LS_PREFIX = 'mydaily_';
+function load(k, d) { try { return JSON.parse(localStorage.getItem(LS_PREFIX + k)) || d; } catch(e) { return d; } }
+function save(k, v) { localStorage.setItem(LS_PREFIX + k, JSON.stringify(v)); }
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+}
+function todayStr() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function nowTime() {
+    const d = new Date();
+    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+// 页面切换
+function switchPage(name, el) {
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    document.getElementById('page-' + name).style.display = '';
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    if (el) el.classList.add('active');
+    closeSidebar();
+}
+function toggleSidebar() {
+    const s = document.getElementById('sidebar');
+    const o = document.getElementById('mobileOverlay');
+    s.classList.toggle('open');
+    o.classList.toggle('show');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('mobileOverlay').classList.remove('show');
+}
+
+// ========== 每日计划 ==========
+function getDaily() { return load('daily', {}); }
+function getDailyTasks() {
+    const d = getDaily();
+    if (!d[todayStr()]) d[todayStr()] = [];
+    return d[todayStr()];
+}
+function renderDaily() {
+    const tasks = getDailyTasks();
+    const done = tasks.filter(t => t.done).length;
+    document.getElementById('cntDaily').textContent = tasks.length;
+    document.getElementById('dailyProgress').textContent = done + ' / ' + tasks.length;
+    const list = document.getElementById('dailyTasks');
+    if (tasks.length === 0) {
+        list.innerHTML = '<div class="empty"><div class="e-emoji">📋</div>今天还没有任务<br>先计划一件重要的事吧</div>';
+    } else {
+        list.innerHTML = tasks.map((t, i) => `
+            <div class="task-item">
+                <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleDaily(${i})">✓</div>
+                <div class="task-text ${t.done ? 'done' : ''}">${t.text}</div>
+                <div class="task-time">${t.time}</div>
+                <div class="task-opt" onclick="delDaily(${i})">✕</div>
+            </div>
+        `).join('');
+    }
+    renderDailyHistory();
+}
+function addTask(type) {
+    const id = type === 'daily' ? 'dailyInput' : 'sportInput';
+    const input = document.getElementById(id);
+    const text = input.value.trim();
+    if (!text) return toast('请输入内容');
+    if (type === 'daily') {
+        const d = getDaily();
+        d[todayStr()].push({ text, time: nowTime(), done: false });
+        save('daily', d);
+        renderDaily();
+    } else {
+        const s = load('sport', {});
+        if (!s[todayStr()]) s[todayStr()] = [];
+        s[todayStr()].push({ text, time: nowTime(), done: false });
+        save('sport', s);
+        renderSport();
+    }
+    input.value = '';
+    toast('已添加 ✓');
+}
+function toggleDaily(i) {
+    const d = getDaily();
+    d[todayStr()][i].done = !d[todayStr()][i].done;
+    save('daily', d);
+    renderDaily();
+}
+function delDaily(i) {
+    const d = getDaily();
+    d[todayStr()].splice(i, 1);
+    save('daily', d);
+    renderDaily();
+}
+function renderDailyHistory() {
+    const d = getDaily();
+    const dates = Object.keys(d).sort().reverse().filter(x => x !== todayStr());
+    const box = document.getElementById('dailyHistory');
+    if (dates.length === 0) {
+        box.innerHTML = '<div class="empty">暂无历史记录</div>';
+        return;
+    }
+    box.innerHTML = dates.map(date => `
+        <div class="history-date" onclick="toggleHistory(this)">
+            <span class="arrow">▶</span> ${date} <span style="font-size:10px;color:var(--text-dim)">(${d[date].length}条)</span>
+        </div>
+        <div class="history-body">
+            ${d[date].map(t => `<div class="task-item" style="padding:7px 0"><div class="task-check ${t.done?'done':''}" style="width:18px;height:18px">✓</div><div class="task-text ${t.done?'done':''}" style="font-size:12px">${t.text}</div></div>`).join('')}
+        </div>
+    `).join('');
+}
+function toggleHistory(el) {
+    el.classList.toggle('open');
+    const body = el.nextElementSibling;
+    if (body) body.classList.toggle('open');
+}
+
+// ========== 自媒体 ==========
+function getMedia() { return load('media', { topics: [], reworks: [], reviews: [] }); }
+function renderMedia() {
+    const m = getMedia();
+    document.getElementById('cntMedia').textContent = m.topics.length + m.reworks.length + m.reviews.length;
+    renderMediaList('topicList', m.topics, 'topic', '💡');
+    renderMediaList('reworkList', m.reworks, 'rework', '🎬');
+    renderMediaList('reviewList', m.reviews, 'review', '📊');
+}
+function renderMediaList(boxId, arr, type, emoji) {
+    const box = document.getElementById(boxId);
+    if (arr.length === 0) {
+        box.innerHTML = '<div class="empty"><div class="e-emoji">' + emoji + '</div>暂无记录<br>点击下方添加</div>';
+        return;
+    }
+    box.innerHTML = arr.map((t, i) => `
+        <div class="task-item">
+            <div class="task-text" style="font-size:12.5px">${t.text}</div>
+            <div class="task-time">${t.time}</div>
+            <div class="task-opt" onclick="delMedia('${type}',${i})">✕</div>
+        </div>
+    `).join('');
+}
+function addTopic() { addMediaItem('topic', 'topicInput'); }
+function addRework() { addMediaItem('rework', 'reworkInput'); }
+function addReview() { addMediaItem('review', 'reviewInput'); }
+function addMediaItem(type, inputId) {
+    const input = document.getElementById(inputId);
+    const text = input.value.trim();
+    if (!text) return toast('请输入内容');
+    const m = getMedia();
+    const key = type === 'topic' ? 'topics' : type === 'rework' ? 'reworks' : 'reviews';
+    m[key].push({ text, time: todayStr() + ' ' + nowTime() });
+    save('media', m);
+    renderMedia();
+    input.value = '';
+    toast('已保存 ✓');
+}
+function delMedia(type, i) {
+    const m = getMedia();
+    const key = type === 'topic' ? 'topics' : type === 'rework' ? 'reworks' : 'reviews';
+    m[key].splice(i, 1);
+    save('media', m);
+    renderMedia();
+}
+
+// ========== 运动 ==========
+function renderSport() {
+    const s = load('sport', {});
+    if (!s[todayStr()]) s[todayStr()] = [];
+    const list = document.getElementById('sportTasks');
+    if (s[todayStr()].length === 0) {
+        list.innerHTML = '<div class="empty"><div class="e-emoji">🏃</div>今天还没运动<br>打卡第一条吧</div>';
+    } else {
+        list.innerHTML = s[todayStr()].map((t, i) => `
+            <div class="task-item">
+                <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleSport(${i})">✓</div>
+                <div class="task-text ${t.done ? 'done' : ''}">${t.text}</div>
+                <div class="task-time">${t.time}</div>
+                <div class="task-opt" onclick="delSport(${i})">✕</div>
+            </div>
+        `).join('');
+    }
+    // 连续天数
+    let streak = 0;
+    const dates = Object.keys(s).sort().reverse();
+    for (const dt of dates) {
+        if (s[dt].length > 0) streak++;
+        else break;
+    }
+    document.getElementById('sportStreak').textContent = '连续 ' + streak + ' 天';
+}
+function toggleSport(i) {
+    const s = load('sport', {});
+    s[todayStr()][i].done = !s[todayStr()][i].done;
+    save('sport', s);
+    renderSport();
+}
+function delSport(i) {
+    const s = load('sport', {});
+    s[todayStr()].splice(i, 1);
+    save('sport', s);
+    renderSport();
+}
+
+// ========== 语言学习 ==========
+let currentLang = 'en';
+const LANG_TASKS = {
+    en: [
+        { icon: '📝', name: '单词复习', sub: '复习 50 个单词' },
+        { icon: '🎧', name: '听力语料库听写', sub: '精听 1 篇 + 听写' },
+        { icon: '✍️', name: '大作文', sub: '雅思 Task2 · 计时 40min' },
+        { icon: '📄', name: '小作文', sub: '雅思 Task1 · 图表题' },
+        { icon: '🗣️', name: '口语', sub: '跟读 20 分钟' },
+        { icon: '📚', name: '每日复盘', sub: '今天学到了什么' },
+    ],
+    es: [
+        { icon: '📝', name: '单词复习', sub: '复习 30 个西语词' },
+        { icon: '🎧', name: '听力语料库听写', sub: '精听 1 段西语' },
+        { icon: '✍️', name: '大作文', sub: '西语短文写作' },
+        { icon: '📄', name: '小作文', sub: '简单句练习' },
+        { icon: '🗣️', name: '口语', sub: '西语跟读 15 分钟' },
+        { icon: '📚', name: '每日复盘', sub: '今天掌握了什么' },
+    ],
+};
+function switchLang(l) {
+    currentLang = l;
+    document.querySelectorAll('.lang-tab').forEach((t, i) => t.classList.toggle('active', (l === 'en' && i === 0) || (l === 'es' && i === 1)));
+    renderLang();
+}
+function renderLang() {
+    const langKey = 'lang_' + currentLang;
+    const data = load(langKey, {});
+    const today = todayStr();
+    if (!data[today]) {
+        data[today] = LANG_TASKS[currentLang].map(t => ({ ...t, done: false, review: '' }));
+    }
+    const doneCount = data[today].filter(t => t.done).length;
+    document.getElementById('langProgress').textContent = doneCount + ' / ' + data[today].length;
+    const box = document.getElementById('langTasks');
+    box.innerHTML = data[today].map((t, i) => `
+        <div class="task-item" style="align-items:flex-start">
+            <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleLang(${i})" style="margin-top:2px">✓</div>
+            <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <span style="font-size:14px">${t.icon}</span>
+                    <span class="task-text ${t.done ? 'done' : ''}" style="font-size:13px">${t.name}</span>
+                    <span style="font-size:10px;color:var(--text-dim)">${t.sub}</span>
+                </div>
+                ${t.review ? '<div class="review-line"><div class="rl-label">复盘</div>' + t.review + '</div>' : ''}
+                <div class="input-row" style="margin-top:6px">
+                    <input class="input-field" style="padding:7px 10px;font-size:12px" placeholder="今日复盘…" onkeydown="if(event.key===\'Enter\')saveLangReview(${i},this.value)">
+                    <button class="input-btn" style="padding:7px 12px;font-size:12px" onclick="saveLangReview(${i},this.previousElementSibling.value)">保存</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+function toggleLang(i) {
+    const langKey = 'lang_' + currentLang;
+    const data = load(langKey, {});
+    const today = todayStr();
+    data[today][i].done = !data[today][i].done;
+    save(langKey, data);
+    renderLang();
+}
+function saveLangReview(i, val) {
+    const langKey = 'lang_' + currentLang;
+    const data = load(langKey, {});
+    const today = todayStr();
+    data[today][i].review = val.trim();
+    save(langKey, data);
+    renderLang();
+    toast('复盘已保存 ✓');
+}
+
+// ========== 播客 ==========
+function renderPodcast() {
+    const list = load('podcast', []);
+    const box = document.getElementById('podcastList');
+    if (list.length === 0) {
+        box.innerHTML = '<div class="empty"><div class="e-emoji">🎧</div>还没有收听记录</div>';
+        return;
+    }
+    box.innerHTML = list.map((t, i) => `
+        <div class="task-item">
+            <div class="task-text" style="font-size:12.5px">${t.text}</div>
+            <div class="task-time">${t.time}</div>
+            <div class="task-opt" onclick="delSimple('podcast',${i})">✕</div>
+        </div>
+    `).join('');
+}
+function addPodcast() { addSimple('podcast', 'podcastInput', renderPodcast); }
+function addBook() { addSimple('reading', 'bookInput', renderReading); }
+function addFund() { addSimple('fund', 'fundInput', renderFund); }
+function addEvent() { addSimple('events', 'eventInput', renderEvents); }
+function addSimple(key, inputId, renderFn) {
+    const input = document.getElementById(inputId);
+    const text = input.value.trim();
+    if (!text) return toast('请输入内容');
+    const list = load(key, []);
+    list.push({ text, time: todayStr() + ' ' + nowTime() });
+    save(key, list);
+    renderFn();
+    input.value = '';
+    toast('已保存 ✓');
+}
+function delSimple(key, i) {
+    const list = load(key, []);
+    list.splice(i, 1);
+    save(key, list);
+    renderPodcast(); renderReading(); renderFund(); renderEvents();
+}
+function renderReading() {
+    const list = load('reading', []);
+    const box = document.getElementById('bookList');
+    if (list.length === 0) {
+        box.innerHTML = '<div class="empty"><div class="e-emoji">📖</div>还没有读书记录</div>';
+        return;
+    }
+    box.innerHTML = list.map((t, i) => `
+        <div class="task-item">
+            <div class="task-text" style="font-size:12.5px">${t.text}</div>
+            <div class="task-time">${t.time}</div>
+            <div class="task-opt" onclick="delSimple('reading',${i})">✕</div>
+        </div>
+    `).join('');
+}
+function renderFund() {
+    const list = load('fund', []);
+    const box = document.getElementById('fundList');
+    if (list.length === 0) {
+        box.innerHTML = '<div class="empty"><div class="e-emoji">📈</div>还没有基金记录</div>';
+        return;
+    }
+    box.innerHTML = list.map((t, i) => `
+        <div class="task-item">
+            <div class="task-text" style="font-size:12.5px">${t.text}</div>
+            <div class="task-time">${t.time}</div>
+            <div class="task-opt" onclick="delSimple('fund',${i})">✕</div>
+        </div>
+    `).join('');
+}
+function renderEvents() {
+    const list = load('events', []);
+    const box = document.getElementById('eventList');
+    if (list.length === 0) {
+        box.innerHTML = '<div class="empty"><div class="e-emoji">📰</div>今天还没有记录大事</div>';
+        return;
+    }
+    box.innerHTML = list.map((t, i) => `
+        <div class="task-item">
+            <div class="task-text" style="font-size:12.5px">${t.text}</div>
+            <div class="task-time">${t.time}</div>
+            <div class="task-opt" onclick="delSimple('events',${i})">✕</div>
+        </div>
+    `).join('');
+}
+
+// ========== 日期 ==========
+function renderDate() {
+    const d = new Date();
+    const weeks = ['日','一','二','三','四','五','六'];
+    const str = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日 · 周' + weeks[d.getDay()];
+    document.getElementById('todayDate').textContent = str;
+    document.getElementById('eventsDate').textContent = str;
+}
+
+// ========== 初始化 ==========
+function init() {
+    renderDate();
+    renderDaily();
+    renderMedia();
+    renderSport();
+    renderLang();
+    renderPodcast();
+    renderReading();
+    renderFund();
+    renderEvents();
+}
+init();
+
+// 自动保存提示（每30秒静默确认一次，实际输入即存）
+setInterval(() => {
+    save('_heartbeat', Date.now());
+}, 30000);
+</script>
+</body>
+</html>
