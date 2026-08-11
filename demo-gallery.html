@@ -206,6 +206,54 @@ body::before {
 
 <div class="wrap">
 
+<!-- 真实成交案例（云端自动沉淀） -->
+<style>
+.real-cases { background:linear-gradient(160deg, rgba(0,217,163,.08), rgba(34,211,238,.03)); border:1px solid rgba(0,217,163,.25); border-radius:16px; padding:16px; margin-top:24px; }
+.real-cases-title { font-size:13px; font-weight:900; color:var(--green); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.real-cases-title::before { content:''; width:8px; height:8px; background:var(--green); border-radius:50%; box-shadow:0 0 8px rgba(0,217,163,.6); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.4 } }
+.real-case { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px; margin-bottom:8px; }
+.real-case:last-child { margin-bottom:0; }
+.real-case-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.real-case-title { font-size:13px; font-weight:800; flex:1; }
+.real-case-rev { font-size:12px; font-weight:900; color:var(--green); }
+.real-case-meta { font-size:10px; color:var(--text-mute); margin-bottom:4px; }
+.real-case-hl { font-size:11px; color:var(--text-dim); line-height:1.6; }
+.real-case-status { font-size:9px; padding:2px 7px; border-radius:8px; background:rgba(0,217,163,.15); color:var(--green); font-weight:700; }
+.real-empty { text-align:center; padding:16px; color:var(--text-mute); font-size:11px; }
+</style>
+<div class="real-cases" id="realCases">
+    <div class="real-cases-title">🎬 最新真实成交案例</div>
+    <div id="realCasesList">
+        <div class="real-empty">☁️ 正在从云端同步最新案例...</div>
+    </div>
+</div>
+<script>
+const DEMO_CLOUD = 'https://jsonblob.com/api/jsonBlob/019fcb49-1d75-7f71-ad3e-094c886612d7';
+function fmtRev(n) { return n >= 10000 ? (n/10000).toFixed(1)+'万' : n.toLocaleString(); }
+function loadRealCases() {
+    fetch(DEMO_CLOUD).then(r=>r.json()).then(cloud=>{
+        const cases = cloud.demo_cases || [];
+        const el = document.getElementById('realCasesList');
+        if (!cases.length) {
+            el.innerHTML = '<div class="real-empty">📝 暂无成交案例<br><span style="font-size:10px">在Crazy Friday工作台完成交付后会自动沉淀</span></div>';
+            return;
+        }
+        el.innerHTML = cases.slice(0,6).map(c => `<div class="real-case">
+            <div class="real-case-head">
+                <div class="real-case-title">${c.title||'未命名'}</div>
+                <div class="real-case-rev">¥${fmtRev(c.revenue||0)}</div>
+            </div>
+            <div class="real-case-meta">🏷️ ${c.industry||'其他'} · 📅 ${c.time||''} <span class="real-case-status" style="margin-left:6px">${c.status||'已交付'}</span></div>
+            <div class="real-case-hl">${c.highlight||''}</div>
+        </div>`).join('');
+    }).catch(()=>{
+        document.getElementById('realCasesList').innerHTML = '<div class="real-empty">☁️ 云端连接失败<br>请稍后刷新</div>';
+    });
+}
+loadRealCases();
+</script>
+
 <!-- 商务场景 · 4个2×2 -->
 <div class="scene-section">
     <div class="sec-label">💼 商务经营</div>
