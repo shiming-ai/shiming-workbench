@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 变现收款中心 · 选商品→下单→收款码→回执留痕，每笔订单可核验">
+<title>Crazy Friday · 变现收款中心</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+    --bg:#0d0420; --card:rgba(255,255,255,.045); --border:rgba(255,255,255,.09);
+    --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
+    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
+    --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --red:#F87171;
+}
+body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; background-image:radial-gradient(ellipse 700px 420px at 50% -6%, rgba(168,85,247,.2), transparent 60%), radial-gradient(ellipse 500px 360px at 100% 40%, rgba(236,72,153,.08), transparent 60%); background-attachment:fixed; }
+.wrap { max-width:720px; margin:0 auto; padding:16px 16px 60px; }
+/* 顶部 */
+.top { display:flex; align-items:center; gap:12px; padding:14px 4px 4px; }
+.top .back { width:40px; height:40px; border-radius:12px; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+.top .tt { font-size:18px; font-weight:900; }
+.top .ts { font-size:10px; color:var(--dim); }
+/* 收款横幅 */
+.banner { margin-top:14px; background:linear-gradient(160deg,rgba(168,85,247,.14),rgba(236,72,153,.04)); border:1px solid rgba(168,85,247,.3); border-radius:16px; padding:16px 18px; }
+.banner h2 { font-size:17px; font-weight:900; margin-bottom:5px; }
+.banner h2 .g { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.banner p { font-size:11.5px; color:var(--dim); line-height:1.8; }
+.banner p b { color:#fff; }
+.banner .steps { display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; }
+.banner .step { flex:1; min-width:90px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:10px; padding:8px 6px; text-align:center; font-size:9.5px; color:var(--dim); }
+.banner .step b { display:block; font-size:11px; color:#fff; margin-bottom:2px; }
+.banner .step.hl { border-color:rgba(168,85,247,.5); background:rgba(168,85,247,.12); }
+/* 区块标题 */
+.sec-hd { display:flex; align-items:center; justify-content:space-between; margin:22px 4px 10px; }
+.sec-hd h3 { font-size:15px; font-weight:900; }
+.sec-hd .note { font-size:10px; color:var(--mute); }
+/* SKU 网格 */
+.sku-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.sku { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; position:relative; cursor:pointer; transition:transform .12s, border-color .2s; }
+.sku:active { transform:scale(.97); }
+.sku:hover { border-color:rgba(168,85,247,.45); }
+.sku.hot { border-color:rgba(168,85,247,.55); background:rgba(168,85,247,.07); }
+.sku .badge { position:absolute; top:10px; right:10px; font-size:8px; font-weight:900; padding:3px 8px; border-radius:8px; }
+.sku .badge.b-hot { background:rgba(255,215,0,.15); color:var(--gold); border:1px solid rgba(255,215,0,.35); }
+.sku .badge.b-new { background:rgba(52,211,153,.12); color:var(--green); border:1px solid rgba(52,211,153,.3); }
+.sku .s-ico { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; margin-bottom:9px; }
+.sku .s-name { font-size:13px; font-weight:900; line-height:1.4; }
+.sku .s-desc { font-size:10px; color:var(--dim); margin-top:4px; line-height:1.5; }
+.sku .s-foot { display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
+.sku .s-price { font-size:17px; font-weight:900; color:var(--gold); }
+.sku .s-price small { font-size:9px; color:var(--mute); font-weight:600; }
+.sku .s-btn { font-size:11px; font-weight:900; color:#fff; background:linear-gradient(135deg,var(--purple),var(--pink)); padding:8px 14px; border-radius:16px; }
+/* 下单向导 */
+.checkout { margin-top:8px; background:var(--card); border:1px solid var(--border); border-radius:18px; padding:18px; }
+.ck-title { font-size:14px; font-weight:900; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.ck-title .no { width:22px; height:22px; border-radius:7px; background:linear-gradient(135deg,var(--purple),var(--pink)); display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; }
+/* 当前商品 */
+.ck-sel { display:flex; align-items:center; gap:12px; background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.3); border-radius:12px; padding:12px 14px; margin-bottom:12px; }
+.ck-sel .i { width:40px; height:40px; border-radius:11px; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.ck-sel .n { font-size:13px; font-weight:900; }
+.ck-sel .p { font-size:16px; font-weight:900; color:var(--gold); margin-top:1px; }
+.ck-sel .x { margin-left:auto; font-size:10px; color:var(--mute); cursor:pointer; padding:8px; }
+/* 表单 */
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:10.5px; font-weight:800; color:var(--dim); margin-bottom:5px; }
+.field input, .field textarea, .field select { width:100%; min-height:48px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:12px; color:var(--text); font-size:16px; padding:12px 14px; outline:none; font-family:inherit; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color:rgba(168,85,247,.6); }
+.field textarea { min-height:70px; resize:vertical; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+/* 按钮 */
+.btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:50px; border:none; border-radius:16px; font-size:15px; font-weight:900; color:#fff; cursor:pointer; }
+.btn-main { background:linear-gradient(135deg,var(--purple),var(--pink)); box-shadow:0 8px 24px rgba(168,85,247,.35); }
+.btn-ghost { background:rgba(255,255,255,.06); border:1px solid var(--border); }
+.btn-green { background:linear-gradient(135deg,#10B981,#34D399); }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+/* 收款码 */
+.qr-box { text-align:center; padding:16px 0 4px; }
+.qr-frame { width:210px; height:210px; margin:0 auto; border-radius:18px; border:1px dashed rgba(255,255,255,.25); background:rgba(255,255,255,.03); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+.qr-frame img { width:100%; height:100%; object-fit:contain; }
+.qr-placeholder { font-size:11px; color:var(--mute); line-height:1.8; }
+.qr-frame .set-btn { position:absolute; bottom:8px; right:8px; font-size:10px; font-weight:800; background:rgba(13,4,32,.9); border:1px solid var(--border); color:var(--cyan); padding:7px 12px; border-radius:14px; cursor:pointer; }
+.qr-hint { font-size:11px; color:var(--dim); margin-top:12px; line-height:1.8; }
+.qr-hint b { color:var(--gold); }
+.order-no { font-size:13px; font-weight:900; color:var(--cyan); background:rgba(34,211,238,.1); border:1px solid rgba(34,211,238,.3); display:inline-block; padding:7px 14px; border-radius:12px; margin:6px 0 2px; }
+/* 成功 */
+.success { text-align:center; padding:22px 0 8px; }
+.success .ring { width:72px; height:72px; margin:0 auto 14px; border-radius:50%; background:linear-gradient(135deg,rgba(52,211,153,.2),rgba(16,185,129,.1)); border:1px solid rgba(52,211,153,.4); display:flex; align-items:center; justify-content:center; }
+.success h3 { font-size:18px; font-weight:900; margin-bottom:6px; }
+.success p { font-size:11.5px; color:var(--dim); line-height:1.8; }
+.success p b { color:var(--green); }
+/* 我的订单 */
+.my-orders { margin-top:8px; }
+.ord { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:13px 14px; margin-bottom:9px; }
+.ord .r1 { display:flex; align-items:center; justify-content:space-between; }
+.ord .n { font-size:12.5px; font-weight:900; }
+.ord .p { font-size:14px; font-weight:900; color:var(--gold); }
+.ord .r2 { display:flex; align-items:center; gap:8px; margin-top:6px; font-size:10px; color:var(--mute); }
+.ord .st { font-size:9px; font-weight:800; padding:3px 9px; border-radius:9px; }
+.ord .st.paid { background:rgba(52,211,153,.12); color:var(--green); }
+.ord .st.pending { background:rgba(255,215,0,.12); color:var(--gold); }
+.ord .st.fail { background:rgba(248,113,113,.12); color:var(--red); }
+.empty { text-align:center; font-size:11px; color:var(--mute); padding:20px 0; }
+/* 设置抽屉 */
+.drawer { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.75); backdrop-filter:blur(8px); display:none; align-items:flex-end; justify-content:center; }
+.drawer.show { display:flex; }
+.drawer .panel { width:100%; max-width:720px; background:#1a0d2e; border:1px solid var(--border); border-radius:20px 20px 0 0; padding:20px 18px calc(30px + env(safe-area-inset-bottom)); }
+.drawer h3 { font-size:15px; font-weight:900; margin-bottom:12px; }
+.drawer .hint { font-size:10.5px; color:var(--dim); line-height:1.7; margin-bottom:12px; }
+.toast { position:fixed; left:50%; bottom:40px; transform:translateX(-50%); background:rgba(26,13,46,.96); border:1px solid rgba(168,85,247,.5); color:#fff; font-size:13px; font-weight:800; padding:12px 22px; border-radius:22px; z-index:300; opacity:0; pointer-events:none; transition:opacity .25s; white-space:nowrap; }
+.toast.show { opacity:1; }
+.raw-input { width:100%; min-height:48px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:12px; color:var(--text); font-size:16px; padding:12px 14px; outline:none; margin-bottom:12px; }
+.raw-input:focus { border-color:rgba(168,85,247,.6); }
+@media (max-width:520px){ .sku-grid { grid-template-columns:1fr 1fr; } .field-row { grid-template-columns:1fr; } }
+@media (max-width:360px){ .sku-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+    <!-- 顶部 -->
+    <div class="top">
+        <div class="back" onclick="goBack()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="#C084FC" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+            <div class="tt">变现收款中心</div>
+            <div class="ts">选商品 → 下单 → 收款码 → 回执留痕，每单可核验</div>
+        </div>
+    </div>
+
+    <!-- 收款横幅 -->
+    <div class="banner">
+        <h2>你的变现，从这里<span class="g">真收钱</span></h2>
+        <p>把「能卖」变成「卖出去」：<b>客户下单 → 你收款 → 填回执 → 订单进后台</b>。<br>每一笔都留痕可核验，这就是融资时拿得出手的「真实成交记录」。</p>
+        <div class="steps">
+            <div class="step hl"><b>① 选商品</b>下面 8 款即可开卖</div>
+            <div class="step"><b>② 下单</b>客户填联系方式</div>
+            <div class="step"><b>③ 收款</b>微信/支付宝收款码</div>
+            <div class="step"><b>④ 回执</b>填凭证，订单入库</div>
+        </div>
+    </div>
+
+    <!-- SKU 列表 -->
+    <div class="sec-hd">
+        <h3>能卖什么（8 款即卖 SKU）</h3>
+        <div class="note">价格可改，先跑通</div>
+    </div>
+    <div class="sku-grid" id="skuGrid"></div>
+
+    <!-- 下单向导 -->
+    <div class="sec-hd"><h3>立即下单</h3><div class="note" id="ckState">未选商品</div></div>
+    <div class="checkout" id="checkout">
+        <div id="ckBody"></div>
+    </div>
+
+    <!-- 我的订单 -->
+    <div class="sec-hd"><h3>我的订单</h3><div class="note" id="ordCount">0 单</div></div>
+    <div class="my-orders" id="orderList"><div class="empty">暂无订单 · 完成第一单后这里会实时显示</div></div>
+
+    <div style="margin-top:18px;text-align:center">
+        <button class="btn btn-ghost" style="width:auto;display:inline-flex;min-height:44px;padding:0 20px;font-size:12px" onclick="openDrawer()">设置收款码（微信/支付宝）</button>
+    </div>
+    <div style="margin-top:14px;text-align:center;font-size:10px;color:var(--mute)">Crazy Friday · 变现收款中心 · 订单云端留痕 · © 2026</div>
+</div>
+
+<!-- 收款码设置抽屉 -->
+<div class="drawer" id="drawer">
+    <div class="panel">
+        <h3>设置收款码</h3>
+        <div class="hint">上传你自己的<b style="color:#34D399">微信收款码</b>和<b style="color:#60A5FA">支付宝收款码</b>图片（自动压缩存储）。客户付款扫的就是你的码，钱直接进你账户。图片只存在你自己浏览器里，安全。</div>
+        <div class="field"><label>微信收款码图片（建议竖版 400×400）</label><input type="file" id="wxFile" accept="image/*" onchange="readQR('wx', this)"></div>
+        <div class="field"><label>支付宝收款码图片</label><input type="file" id="aliFile" accept="image/*" onchange="readQR('ali', this)"></div>
+        <div class="field"><label>或粘贴图片 URL（可选）</label><input class="raw-input" id="urlInput" placeholder="https://... 或 data:image/..."></div>
+        <div style="display:flex;gap:10px">
+            <button class="btn btn-ghost" style="flex:1;min-height:48px" onclick="applyURL()">用 URL</button>
+            <button class="btn btn-main" style="flex:1;min-height:48px" onclick="closeDrawer()">完成</button>
+        </div>
+        <div style="margin-top:10px;text-align:center;font-size:10px;color:var(--mute)" id="qrStatus">未设置收款码</div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 常量 ===== */
+const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const LS_QR = 'cf_pay_qr';
+const LS_ORDERS = 'cf_pay_orders';
+const LS_SEL = 'cf_pay_sel';
+
+/* ===== 8 款默认 SKU ===== */
+const SKUS = [
+    { id:'wb', ico:'C', name:'AI 工作台定制', desc:'按你的行业/场景定制专属工作台，含案例+交付', price:299, unit:'起', tag:'主力', hot:true, color:'linear-gradient(135deg,#7C3AED,#A855F7)' },
+    { id:'course', ico:'K', name:'AI 一人公司实战课', desc:'从0到变现的全流程实操课，含模板和社群', price:199, unit:'', tag:'新课', color:'linear-gradient(135deg,#EC4899,#F472B6)' },
+    { id:'pro', ico:'P', name:'Pro 会员（月）', desc:'解锁全部工具库/玩法库/优先派单/专属客服', price:99, unit:'/月', tag:'订阅', hot:true, color:'linear-gradient(135deg,#FFD700,#F59E0B)' },
+    { id:'sop', ico:'S', name:'变现玩法 SOP 合集', desc:'9 条赚钱路径完整步骤+话术+避坑清单', price:69, unit:'', tag:'爆款', color:'linear-gradient(135deg,#34D399,#22D3EE)' },
+    { id:'prompts', ico:'T', name:'小红书爆款提示词包', desc:'100 条实测爆款标题+正文模板，复制就能用', price:29, unit:'', tag:'低价引流', color:'linear-gradient(135deg,#60A5FA,#818CF8)' },
+    { id:'media', ico:'M', name:'AI 漫剧/短视频代工', desc:'脚本+分镜+成片一条龙，按条计费', price:999, unit:'起', tag:'高客单', color:'linear-gradient(135deg,#A855F7,#EC4899)' },
+    { id:'app', ico:'A', name:'定制 AI 应用/自动化', desc:'企业流程自动化、AI 客服、数据看板定制', price:499, unit:'起', tag:'高客单', color:'linear-gradient(135deg,#22D3EE,#34D399)' },
+    { id:'consult', ico:'Q', name:'1对1 变现咨询', desc:'你的项目怎么变现，1小时聊透出方案', price:199, unit:'/小时', tag:'轻服务', color:'linear-gradient(135deg,#F59E0B,#F87171)' },
+];
+
+/* ===== 工具 ===== */
+const $ = id => document.getElementById(id);
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+function goBack(){ history.length>1 ? history.back() : location.href='../index.html'; }
+function load(k,d){ try{ return JSON.parse(localStorage.getItem(k)) || d }catch(e){ return d } }
+function save(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+function today(){ const d=new Date(), p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function orderNo(){ const d=new Date(), p=n=>String(n).padStart(2,'0'); return 'CF'+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+Math.random().toString(36).slice(2,8).toUpperCase(); }
+
+/* ===== 渲染 SKU ===== */
+function renderSKU(){
+    $('skuGrid').innerHTML = SKUS.map(s=>`
+        <div class="sku ${s.hot?'hot':''}" onclick="pick('${s.id}')">
+            ${s.tag?`<span class="badge ${s.hot?'b-hot':'b-new'}">${s.tag}</span>`:''}
+            <div class="s-ico" style="background:${s.color}"><span style="font-size:16px;font-weight:900;color:#fff">${s.ico}</span></div>
+            <div class="s-name">${s.name}</div>
+            <div class="s-desc">${s.desc}</div>
+            <div class="s-foot"><span class="s-price">¥${s.price}<small> ${s.unit}</small></span><span class="s-btn">去下单</span></div>
+        </div>`).join('');
+}
+
+/* ===== 选中商品 ===== */
+let current = null;
+function pick(id){
+    const s = SKUS.find(x=>x.id===id); if(!s) return;
+    current = s; save(LS_SEL, s);
+    $('ckState').textContent = '已选：' + s.name + ' · ¥' + s.price;
+    renderCk();
+    document.getElementById('checkout').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function clearSel(){ current=null; localStorage.removeItem(LS_SEL); $('ckState').textContent='未选商品'; renderCk(); }
+
+/* ===== 渲染下单 ===== */
+function renderCk(){
+    const body = $('ckBody');
+    if (!current){
+        body.innerHTML = `<div class="empty" style="padding:14px">👆 点上方任意商品开始下单</div>`;
+        return;
+    }
+    body.innerHTML = `
+        <div class="ck-sel">
+            <div class="i" style="background:${current.color}"><span style="font-weight:900;color:#fff">${current.ico}</span></div>
+            <div><div class="n">${current.name}</div><div class="p">¥${current.price}${current.unit?' '+current.unit:''}</div></div>
+            <span class="x" onclick="clearSel()">换一个</span>
+        </div>
+        <div class="field"><label>客户称呼 *</label><input id="fName" placeholder="怎么称呼你" value=""></div>
+        <div class="field-row">
+            <div class="field"><label>微信号 *（用于交付联系）</label><input id="fWechat" placeholder="你的微信号" value=""></div>
+            <div class="field"><label>手机号（选填）</label><input id="fPhone" type="tel" placeholder="手机号" value=""></div>
+        </div>
+        <div class="field"><label>需求备注（选填）</label><textarea id="fNote" placeholder="想解决什么问题 / 什么时候要"></textarea></div>
+        <button class="btn btn-main" onclick="createOrder()">生成订单 · 去付款</button>
+    `;
+}
+
+/* ===== 创建订单（步骤3） ===== */
+function createOrder(){
+    const name = $('fName').value.trim(), wechat = $('fWechat').value.trim();
+    if (!name || !wechat){ toast('请填写称呼和微信号'); return; }
+    const order = {
+        _id: Date.now(), order_no: orderNo(), sku_id: current.id, sku_name: current.name,
+        price: current.price, unit: current.unit||'', name, wechat,
+        phone: $('fPhone').value.trim(), note: $('fNote').value.trim(),
+        pay_status: 'pending', time: today()
+    };
+    const orders = load(LS_ORDERS, []);
+    orders.unshift(order); save(LS_ORDERS, orders);
+    renderOrders();
+    renderPay(order);
+}
+
+/* ===== 付款页（步骤3+4） ===== */
+function renderPay(o){
+    const qr = load(LS_QR, {wx:'', ali:''});
+    const body = $('ckBody');
+    const hasQR = !!(qr.wx || qr.ali);
+    body.innerHTML = `
+        <div class="ck-sel">
+            <div class="i" style="background:${current.color}"><span style="font-weight:900;color:#fff">${current.ico}</span></div>
+            <div><div class="n">${o.sku_name}</div><div class="p">¥${o.price}${o.unit?' '+o.unit:''}</div></div>
+        </div>
+        <div style="text-align:center;margin:6px 0 2px"><span class="order-no">订单号 ${o.order_no}</span></div>
+        <div class="qr-box">
+            <div class="qr-frame" id="qrFrame">
+                ${ hasQR
+                    ? `<img src="${qr.wx||qr.ali}" alt="收款码">`
+                    : `<div class="qr-placeholder">未设置收款码<br>请点右下角「设置」上传<br>微信/支付宝收款码</div>`
+                }
+                <span class="set-btn" onclick="openDrawer()">设置收款码</span>
+            </div>
+            <div class="qr-hint">
+                ${ hasQR
+                    ? `<b>请客户扫码付款 ¥${o.price}</b><br>付款后，在下方填写支付凭证，订单即可入库可核验`
+                    : `上传你自己的收款码后，客户扫码付款<br>钱直接进你的微信/支付宝账户` }
+            </div>
+        </div>
+        <div class="field" style="margin-top:12px"><label>支付凭证（微信/支付宝 交易单号后 6 位）*</label><input id="fReceipt" placeholder="付款后填写，用于留痕" value=""></div>
+        <button class="btn btn-green" onclick="confirmPaid('${o._id}')">我已付款 · 提交回执</button>
+        <button class="btn btn-ghost" style="margin-top:8px;min-height:44px;font-size:13px" onclick="renderCk()">返回上一步</button>
+    `;
+}
+
+/* ===== 确认付款（步骤4 → 云端入库） ===== */
+function confirmPaid(id){
+    const receipt = $('fReceipt').value.trim();
+    if (!receipt){ toast('请填写支付凭证，方便对账'); return; }
+    const orders = load(LS_ORDERS, []);
+    const o = orders.find(x=>String(x._id)===String(id));
+    if (!o) return;
+    o.receipt = receipt; o.pay_time = today(); o.pay_status = 'paid';
+    save(LS_ORDERS, orders); renderOrders();
+    /* 云端入库：orders + leads（后台可见） */
+    fetch(CLOUD).then(r=>r.json()).then(cloud=>{
+        cloud.orders = cloud.orders || []; cloud.orders.unshift(o);
+        cloud.leads = cloud.leads || [];
+        cloud.leads.unshift({ _id:'ord_'+o._id, name:'[已付款] '+o.sku_name, desc:'客户：'+o.name+' · 微信：'+o.wechat+(o.note?' · 备注：'+o.note:''), price:o.price, time:o.time, source:'pay' });
+        return fetch(CLOUD, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud) });
+    }).then(()=>toast('✅ 订单已入库（云端+后台可见）')).catch(()=>toast('⚠️ 云端暂不可用，订单已存本机'));
+    /* 跨板块已购标记：让 store/mall/member 能显示"已购买" */
+    const qs = new URLSearchParams(location.search);
+    const bkey = qs.get('bkey');
+    if (bkey){
+        try{
+            const arr = JSON.parse(localStorage.getItem(bkey))||[];
+            if (!arr.find(x=>x.id===o.sku_id)){
+                arr.unshift({ id:o.sku_id, name:o.sku_name, price:o.price, time:o.time.slice(0,10), orderId:o.order_no, source:'pay' });
+                localStorage.setItem(bkey, JSON.stringify(arr));
+            }
+        }catch(e){}
+    }
+    /* 会员订单 → 自动开通会员级别（pro/biz） */
+    if (/member_|pro|biz/.test(o.sku_id)){
+        try{ localStorage.setItem('cf_member_level', o.sku_id.includes('biz') ? 'biz' : 'pro'); }catch(e){}
+    }
+    bodySuccess(o);
+}
+function bodySuccess(o){
+    const body = $('ckBody');
+    /* 数字类商品 → 自动交付；服务类 → 自动生成工单 */
+    const digital = ['prompts','sop','course'].includes(o.sku_id) || String(o.sku_id||'').startsWith('ext_');
+    const deliverCard = digital ? `
+        <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:14px;padding:14px;margin-top:14px;text-align:left">
+            <div style="font-size:12px;font-weight:900;color:#34D399;margin-bottom:6px">📦 自动交付（数字资源）</div>
+            <div style="font-size:11px;color:#d8d0f0;line-height:1.8">✅ 付款已确认，交付内容将发送到你填写的微信号：<b style="color:#fff">${esc(o.wechat)}</b><br>· 提示词包 / SOP / 课程为数字资源，秒级可达<br>· 如 10 分钟未收到，凭订单号 ${o.order_no} 联系客服补发</div>
+        </div>` : `
+        <div style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);border-radius:14px;padding:14px;margin-top:14px;text-align:left">
+            <div style="font-size:12px;font-weight:900;color:#60A5FA;margin-bottom:6px">🧾 服务工单已生成</div>
+            <div style="font-size:11px;color:#d8d0f0;line-height:1.8">✅ 已收到你的定制需求，<b style="color:#fff">24 小时内</b>通过微信 ${esc(o.wechat)} 与你联系排期<br>· 请保持微信畅通 · 备注：${esc(o.note||'无')}</div>
+        </div>`;
+    body.innerHTML = `
+        <div class="success">
+            <div class="ring"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>订单已记录</h3>
+            <p><b>${esc(o.sku_name)} · ¥${o.price}</b><br>订单号：${o.order_no}<br>凭证：${esc(o.receipt)}<br>这笔「真实成交记录」已进入你的后台，可核验。</p>
+            ${deliverCard}
+            <button class="btn btn-ghost" style="margin-top:10px;min-height:44px;font-size:12px" onclick="copyOrder('${o.order_no}','${esc(o.sku_name)}','${o.price}','${esc(o.name)}','${esc(o.wechat)}')">复制订单信息</button>
+            <button class="btn btn-main" style="margin-top:8px" onclick="renderCk()">继续接下一单</button>
+        </div>`;
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function copyOrder(no, sku, price, name, wechat){
+    const text = ['【订单信息】','订单号：'+no,'商品：'+sku,'金额：¥'+price,'客户：'+name,'微信：'+wechat,''].join('\n');
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(()=>toast('订单信息已复制'), ()=>fallbackCopy(text)); }
+    else fallbackCopy(text);
+}
+function fallbackCopy(t){
+    const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('订单信息已复制'); } catch(e){}
+    document.body.removeChild(ta);
+}
+
+/* ===== 我的订单 ===== */
+function renderOrders(){
+    const orders = load(LS_ORDERS, []);
+    $('ordCount').textContent = orders.length + ' 单';
+    if (!orders.length){ $('orderList').innerHTML = '<div class="empty">暂无订单 · 完成第一单后这里会实时显示</div>'; return; }
+    $('orderList').innerHTML = orders.map(o=>`
+        <div class="ord">
+            <div class="r1"><span class="n">${o.sku_name}</span><span class="p">¥${o.price}</span></div>
+            <div class="r2">
+                <span class="st ${o.pay_status==='paid'?'paid':o.pay_status==='pending'?'pending':'fail'}">${o.pay_status==='paid'?'已付款':o.pay_status==='pending'?'待付款':'异常'}</span>
+                <span>${o.order_no}</span><span>${o.name}</span><span>${o.time.slice(0,10)}</span>
+            </div>
+        </div>`).join('');
+}
+
+/* ===== URL 参数预选（从 store/mall/member 跳转过来） ===== */
+function handleQuery(){
+    const qs = new URLSearchParams(location.search);
+    const sku = qs.get('sku'), name = qs.get('name'), price = qs.get('price');
+    if (sku && name && price){
+        current = { id:'ext_'+sku, ico:'E', name: decodeURIComponent(name), desc:'来自外部板块', price: Number(price)||0, unit:'', color:'linear-gradient(135deg,#7C3AED,#A855F7)' };
+        $('ckState').textContent = '已选：' + current.name + ' · ¥' + current.price;
+        renderCk();
+        setTimeout(()=>document.getElementById('checkout').scrollIntoView({behavior:'smooth'}), 300);
+    }
+}
+
+/* ===== 收款码设置 ===== */
+function openDrawer(){ $('drawer').classList.add('show'); refreshQRStatus(); }
+function closeDrawer(){ $('drawer').classList.remove('show'); }
+function refreshQRStatus(){
+    const qr = load(LS_QR, {wx:'', ali:''});
+    $('qrStatus').textContent = (qr.wx?'✅ 微信已设置':'❌ 微信未设置') + ' · ' + (qr.ali?'✅ 支付宝已设置':'❌ 支付宝未设置');
+}
+function readQR(type, input){
+    const file = input.files && input.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        const img = new Image();
+        img.onload = ()=>{
+            /* 压缩到 400px 宽 */
+            const maxW = 400; const scale = Math.min(1, maxW/img.width);
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(img.width*scale); canvas.height = Math.round(img.height*scale);
+            canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+            const data = canvas.toDataURL('image/jpeg', .82);
+            const qr = load(LS_QR, {wx:'', ali:''});
+            qr[type] = data; save(LS_QR, qr);
+            toast((type==='wx'?'微信':'支付宝') + '收款码已保存');
+            refreshQRStatus();
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+function applyURL(){
+    const url = $('urlInput').value.trim(); if (!url) return;
+    const qr = load(LS_QR, {wx:'', ali:''});
+    if (!qr.wx) qr.wx = url; else if (!qr.ali) qr.ali = url; else qr.ali = url;
+    save(LS_QR, qr); toast('已应用'); refreshQRStatus(); $('urlInput').value='';
+}
+
+/* ===== init ===== */
+renderSKU();
+const saved = load(LS_SEL, null);
+if (saved){ current = saved; $('ckState').textContent='已选：'+saved.name+' · ¥'+saved.price; renderCk(); }
+renderOrders();
+handleQuery();
+</script>
+</body>
+</html>
