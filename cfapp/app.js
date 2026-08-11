@@ -1,4 +1,4 @@
-// Crazy Friday App · 共享脚本（v2 增强版）
+// Crazy Friday App · 共享脚本（v3 流畅版）
 const TABS = [
     { id:'home', icon:'🏠', label:'首页', url:'index.html' },
     { id:'discover', icon:'💎', label:'发现', url:'discover.html' },
@@ -33,8 +33,29 @@ function toast(m) {
     t._timer = setTimeout(() => t.classList.remove('show'), 1800);
 }
 
-// 页面加载时插入底部tabbar
+// 返回：有历史返回上一页，否则回首页
+function goBack() {
+    if (document.referrer && document.referrer.includes('shiming-ai.github.io')) {
+        history.back();
+    } else {
+        location.href = 'index.html';
+    }
+}
+
+// 跳转带轻过渡：防止闪白
+function navTo(url) {
+    document.body.style.opacity = '0.4';
+    document.body.style.transition = 'opacity .18s ease';
+    setTimeout(() => { location.href = url; }, 120);
+}
+
+// 页面加载：入场动画 + 底部tabbar
 document.addEventListener('DOMContentLoaded', () => {
+    // 入场动画（软滑入，避免生硬加载）
+    const wrap = document.querySelector('.wrap');
+    if (wrap) wrap.classList.add('page-enter');
+    document.body.classList.add('app-loaded');
+    // 渲染底部tabbar
     const activeId = document.body.dataset.tab || 'home';
     const tabbar = document.createElement('div');
     tabbar.innerHTML = renderTabbar(activeId);
