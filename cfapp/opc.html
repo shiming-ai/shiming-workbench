@@ -4,8 +4,47 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · OPC工场 · 项目库 · 发现好项目">
 <title>OPC工场 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.op-hero { padding:24px 18px 12px; }
+.op-hero h2 { font-size:22px; font-weight:900; }
+.op-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.search-row { padding:12px 18px 14px; }
+.search-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:11px 14px; display:flex; align-items:center; gap:8px; }
+.search-box input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:13px; }
+.cat-row { display:flex; gap:8px; padding:0 18px 14px; overflow-x:auto; scrollbar-width:none; }
+.cat-row::-webkit-scrollbar { display:none; }
+.cat-chip { flex-shrink:0; padding:8px 14px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; font-weight:700; }
+.cat-chip.active { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.op-list { padding:0 18px; }
+.op-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:15px; margin-bottom:10px; position:relative; overflow:hidden; }
+.op-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--oc,#A855F7),transparent); }
+.op-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.op-ico { width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:21px; flex-shrink:0; }
+.op-name { font-size:14px; font-weight:800; flex:1; }
+.op-star { font-size:18px; cursor:pointer; }
+.op-star.faved { filter:drop-shadow(0 0 6px rgba(255,215,0,.6)); }
+.op-tags { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:6px; }
+.op-tag { font-size:9px; padding:2px 7px; border-radius:8px; font-weight:700; }
+.ot-gh { background:rgba(255,255,255,.1); color:#a89ec9; }
+.ot-ai { background:rgba(168,85,247,.15); color:#C084FC; }
+.ot-hot { background:rgba(255,215,0,.15); color:#FFD700; }
+.ot-tool { background:rgba(52,211,153,.12); color:#34D399; }
+.op-desc { font-size:11px; color:#a89ec9; line-height:1.6; margin-bottom:8px; }
+.op-meta { display:flex; gap:6px; flex-wrap:wrap; font-size:10px; color:#6d6489; margin-bottom:8px; }
+.op-meta span { padding:3px 8px; background:rgba(255,255,255,.05); border-radius:8px; }
+.op-actions { display:flex; gap:6px; }
+.op-btn { flex:1; padding:8px; text-align:center; background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px; font-size:11px; font-weight:700; color:#a89ec9; cursor:pointer; }
+.op-btn:active { transform:scale(.96); }
+.op-btn.go { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.op-add { display:block; margin:16px 18px; padding:13px; text-align:center; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:20px; font-size:13px; font-weight:800; color:#fff; cursor:pointer; }
+.op-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 18px 14px; }
+.op-stat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 6px; text-align:center; }
+.op-stat .n { font-size:20px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.op-stat .l { font-size:9px; color:#6d6489; margin-top:3px; }
+</style>
 </head>
 <body data-tab="discover">
 
@@ -14,90 +53,133 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">OPC工场</div>
-            <div class="brand-sub">03 · 项目库</div>
+            <div class="brand-sub">03 · 项目库 · 发现好项目</div>
         </div>
     </div>
-    <div class="bell">🔍</div>
+    <div class="bell" style="cursor:pointer" onclick="showFavs()">⭐</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding:24px 18px 12px">
-        <div style="font-size:18px;font-weight:900;margin-bottom:6px">发现好项目 · <span style="color:#C084FC">验证需求</span> · 持续盈利</div>
+    <div class="op-hero">
+        <h2>📦 OPC<span style="color:#C084FC">工场</span></h2>
+        <p>一人公司的项目库<br>发现好项目 → 认领 → 赚分成</p>
     </div>
 
-    <div style="padding:0 18px 14px">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
+    <div class="search-row">
+        <div class="search-box">
             <span style="color:#8d82a8">🔍</span>
-            <input placeholder="搜索项目、行业、关键词..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
+            <input id="searchInput" placeholder="搜索项目：AI工具 / 自媒体 / 接单...">
         </div>
     </div>
 
-    <div class="orders-stats">
-        <div class="orders-stat"><div class="num">3,000+</div><div class="lbl">项目总数</div></div>
-        <div class="orders-stat"><div class="num">120+</div><div class="lbl">行业覆盖</div></div>
-        <div class="orders-stat"><div class="num">68%</div><div class="lbl">平均成功率</div></div>
+    <div class="op-stats">
+        <div class="op-stat"><div class="n" id="projNum">18</div><div class="l">项目</div></div>
+        <div class="op-stat"><div class="n" id="claimNum">0</div><div class="l">我认领</div></div>
+        <div class="op-stat"><div class="n" id="favNum">0</div><div class="l">我收藏</div></div>
     </div>
 
-    <div class="section-head" style="padding-top:8px">
-        <div class="section-tt">🔥 今日推荐项目</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section" id="projectList">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">📦</div>
-                <div class="card-name">跨境电商AI选品工具</div>
-                <span class="card-tag">已验证</span>
-            </div>
-            <div class="card-desc">AI分析海外热销品 · 智能推荐高利润SKU</div>
-            <div class="card-meta">
-                <span class="meta-tag">💰 ¥8,000/月</span>
-                <span class="meta-tag">📊 销量 12</span>
-                <span class="meta-tag">🏷️ 电商</span>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">📚</div>
-                <div class="card-name">AI教育辅导SaaS</div>
-                <span class="card-tag">热门</span>
-            </div>
-            <div class="card-desc">个性化学习路径 · 实时错题讲解</div>
-            <div class="card-meta">
-                <span class="meta-tag">💰 ¥15,000/月</span>
-                <span class="meta-tag">📊 销量 8</span>
-                <span class="meta-tag">🏷️ 教育</span>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">🎨</div>
-                <div class="card-name">AI数字人直播</div>
-                <span class="card-tag">新</span>
-            </div>
-            <div class="card-desc">7×24h无人直播 · 智能话术生成</div>
-            <div class="card-meta">
-                <span class="meta-tag">💰 ¥5,000/月</span>
-                <span class="meta-tag">📊 销量 22</span>
-                <span class="meta-tag">🏷️ 直播</span>
-            </div>
-        </div>
-    </div>
+    <div class="cat-row" id="catBar"></div>
+    <div class="op-list" id="opList"></div>
 
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">🏆 热门项目 TOP 10</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section" id="topList">
-        <div class="card" style="border-left:3px solid #FFD700"><div class="card-head"><div class="card-icon" style="background:linear-gradient(135deg,#FFD700,#FFA500)">🥇</div><div class="card-name">1. AI商业计划书生成器</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 9.9 · 月入12w</div></div></div>
-        <div class="card" style="border-left:3px solid #C0C0C0"><div class="card-head"><div class="card-icon" style="background:linear-gradient(135deg,#C0C0C0,#888)">🥈</div><div class="card-name">2. AI代码助手</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 9.8 · 月入9w</div></div></div>
-        <div class="card" style="border-left:3px solid #CD7F32"><div class="card-head"><div class="card-icon" style="background:linear-gradient(135deg,#CD7F32,#FFA500)">🥉</div><div class="card-name">3. AI数字人短视频</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 9.7 · 月入8.7w</div></div></div>
-        <div class="card"><div class="card-head"><div class="card-icon">4</div><div class="card-name">AI营销文案</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 9.6</div></div></div>
-        <div class="card"><div class="card-head"><div class="card-icon">5</div><div class="card-name">AI电商客服</div><div style="font-size:11px;color:#8d82a8;margin-top:2px">⭐ 9.5</div></div></div>
+    <div class="op-add" onclick="addProject()">+ 提交好项目</div>
+
+    <div class="tip" style="margin:0 18px 20px">
+        💡 认领项目 = 加入共创<br>项目赚钱后按贡献分成
     </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const PROJ_LIST = [
+    { id:'o1', ico:'🦾', name:'OpenClaw Agent 服务', cat:'AI工具', desc:'2026现象级开源Agent，帮企业部署做自动化，单子5千-5万', tags:['GitHub','25万星','赚钱'], star:'12.3k', color:'#A855F7', hot:true },
+    { id:'o2', ico:'🔀', name:'n8n 自动化工作流', cat:'AI工具', desc:'AI原生自动化，接单/发内容/回消息全自动，卖服务月入过万', tags:['GitHub','开源'], star:'8.9k', color:'#EA4C89', hot:true },
+    { id:'o3', ico:'💰', name:'AiToEarn 内容工厂', cat:'AI工具', desc:'自动写内容发抖音/小红书，矩阵号引流变现', tags:['开源','自动变现'], star:'5.2k', color:'#F59E0B' },
+    { id:'o4', ico:'📕', name:'小红书起号陪跑', cat:'自媒体', desc:'帮普通人7天起号，收陪跑费+带货佣金', tags:['实战','高需求'], star:'3.1k', color:'#EC4899' },
+    { id:'o5', ico:'🛍️', name:'AI选品工具站', cat:'电商', desc:'AI分析电商数据帮卖家选爆品，订阅制收费', tags:['微SaaS','订阅'], star:'2.8k', color:'#FF6B1A' },
+    { id:'o6', ico:'🤖', name:'本地商家AI客服', cat:'服务', desc:'餐饮/美容店智能客服，按效果收费', tags:['高客单'], star:'2.1k', color:'#34D399' },
+    { id:'o7', ico:'🎬', name:'AI漫剧工厂', cat:'内容', desc:'批量产AI漫剧短视频，平台分成', tags:['热门'], star:'4.5k', color:'#22D3EE', hot:true },
+    { id:'o8', ico:'💼', name:'一人公司模板站', cat:'产品', desc:'卖现成工作台模板，一次开发重复卖', tags:['复利'], star:'1.9k', color:'#8B5CF6' },
+    { id:'o9', ico:'📊', name:'AI周报生成器', cat:'工具', desc:'打工人周报神器，会员制', tags:['微SaaS'], star:'1.6k', color:'#60A5FA' },
+    { id:'o10', ico:'🗣️', name:'数字人口播矩阵', cat:'自媒体', desc:'HeyGen/剪映数字人，矩阵号带货', tags:['矩阵'], star:'2.3k', color:'#F472B6' }
+];
+const CATS = ['全部','AI工具','自媒体','电商','服务','内容','产品'];
+const CLAIM_KEY = 'cf_opc_claim';
+const FAV_KEY = 'cf_opc_favs';
+let curCat='全部', searchKw='';
+function getClaim(){ try{ return JSON.parse(localStorage.getItem(CLAIM_KEY))||[] }catch(e){ return [] } }
+function setClaim(a){ localStorage.setItem(CLAIM_KEY, JSON.stringify(a)) }
+function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY))||[] }catch(e){ return [] } }
+function setFavs(a){ localStorage.setItem(FAV_KEY, JSON.stringify(a)) }
+
+function renderCats(){
+    document.getElementById('catBar').innerHTML = CATS.map(c=>`<span class="cat-chip ${c===curCat?'active':''}" onclick="setCat('${c}')">${c}</span>`).join('');
+}
+function setCat(c){ curCat=c; renderCats(); renderList(); }
+function renderList(){
+    const claim = getClaim(), favs = getFavs();
+    document.getElementById('claimNum').textContent = claim.length;
+    document.getElementById('favNum').textContent = favs.length;
+    const arr = PROJ_LIST.filter(p => (curCat==='全部'||p.cat===curCat) && (!searchKw || (p.name+p.desc+p.cat).toLowerCase().includes(searchKw.toLowerCase())));
+    const list = document.getElementById('opList');
+    if (!arr.length) { list.innerHTML = '<div class="empty">🔍 没找到匹配项目</div>'; return; }
+    list.innerHTML = arr.map(p => {
+        const isClaim = claim.includes(p.id);
+        const isFav = favs.includes(p.id);
+        const tags = p.tags.map(t=>`<span class="op-tag ${t==='GitHub'?'ot-gh':t==='25万星'||t==='热门'?'ot-hot':t==='开源'?'ot-gh':'ot-ai'}">${t}</span>`).join('');
+        return `<div class="op-card" style="--oc:${p.color}">
+            <div class="op-head">
+                <div class="op-ico" style="background:${p.color}22;color:${p.color}">${p.ico}</div>
+                <div style="flex:1">
+                    <div class="op-name">${p.name}</div>
+                    <div class="op-tags" style="margin-top:4px">${tags}</div>
+                </div>
+                <div class="op-star ${isFav?'faved':''}" onclick="toggleFav('${p.id}')">${isFav?'⭐':'☆'}</div>
+            </div>
+            <div class="op-desc">${p.desc}</div>
+            <div class="op-meta"><span>🔥 ${p.star} 关注</span><span>🏷️ ${p.cat}</span>${p.hot?'<span style="color:#FFD700">HOT</span>':''}</div>
+            <div class="op-actions">
+                ${isClaim ? '<button class="op-btn" style="color:#34D399;border-color:rgba(52,211,153,.3)">✅ 已认领</button>' : `<button class="op-btn go" onclick="claimProject('${p.id}')">⚡ 认领项目</button>`}
+                <button class="op-btn" onclick="showProject('${p.id}')">📖 详情</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+function claimProject(id){
+    const claim = getClaim();
+    if (claim.includes(id)) return;
+    if (!confirm('确定认领这个项目？\n认领后需在孵化中心推进。')) return;
+    claim.push(id); setClaim(claim); renderList();
+    toast('✅ 已认领！去「项目孵化中心」推进');
+}
+function toggleFav(id){
+    const favs = getFavs();
+    if (favs.includes(id)) setFavs(favs.filter(x=>x!==id));
+    else { setFavs([...favs,id]); toast('⭐ 已收藏'); }
+    renderList();
+}
+function showFavs(){
+    const favs = getFavs();
+    if (!favs.length) return toast('⭐ 还没有收藏项目');
+    const names = favs.map(id=>{const p=PROJ_LIST.find(x=>x.id===id); return p?`• ${p.ico} ${p.name}`:''}).join('\n');
+    alert(`⭐ 我的收藏（${favs.length}）\n\n${names}`);
+}
+function showProject(id){
+    const p = PROJ_LIST.find(x=>x.id===id); if(!p) return;
+    alert(`📖 ${p.name}\n\n${p.desc}\n\n🔥 ${p.star} 关注 · ${p.cat}\n\n操作：认领后到「项目孵化中心」推进，赚钱后按贡献分成`);
+}
+function addProject(){
+    const name = prompt('项目名称：', 'AI新项目');
+    if (!name) return;
+    const desc = prompt('一句话描述：', '用AI解决一个痛点');
+    const cat = prompt('分类（AI工具/自媒体/电商/服务/内容/产品）：', 'AI工具');
+    PROJ_LIST.unshift({ id:'o'+Date.now(), ico:'🌱', name, cat:cat||'AI工具', desc, tags:['新'], star:'0', color:'#A855F7' });
+    renderList();
+    toast('✅ 项目已提交');
+}
+document.getElementById('searchInput').addEventListener('input', e=>{ searchKw=e.target.value; renderList(); });
+renderCats();
+renderList();
+</script>
 </body>
 </html>
