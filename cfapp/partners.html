@@ -4,75 +4,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 生态合作伙伴 · 共创未来">
 <title>生态合作伙伴 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.partner-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:0 18px; }
-.partner-cell { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:16px 8px; text-align:center; cursor:pointer; }
-.partner-cell:active { transform:scale(.97); }
-.p-logo { width:48px; height:48px; border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:#1a0d2e; margin:0 auto 8px; }
-.p-name { font-size:11px; font-weight:700; }
-.p-type { font-size:9px; color:#6d6489; margin-top:3px; }
-.coop-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:0 18px; }
-.coop-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; text-align:center; cursor:pointer; }
-.coop-ico { font-size:24px; margin-bottom:6px; }
-.coop-name { font-size:12px; font-weight:800; }
-.coop-desc { font-size:9px; color:#6d6489; margin-top:3px; }
+.pn-hero{padding:24px 18px 12px}.pn-hero h2{font-size:22px;font-weight:900}.pn-hero p{font-size:12px;color:#a89ec9;line-height:1.7;margin-top:6px}
+.pn-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 18px 14px}
+.pn-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 6px;text-align:center}
+.pn-stat .n{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pn-stat .l{font-size:9px;color:#6d6489;margin-top:3px}
+.sec-label{font-size:14px;font-weight:900;padding:20px 18px 10px;display:flex;align-items:center;gap:6px}
+.sec-label .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#EC4899);box-shadow:0 0 8px rgba(168,85,247,.5)}
+.pn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px}
+.pn-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center}
+.pn-logo{width:44px;height:44px;border-radius:12px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.08)}
+.pn-name{font-size:12px;font-weight:800}
+.pn-type{font-size:9px;color:#6d6489;margin-top:3px}
+.pn-type-tag{display:inline-block;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;margin-top:4px}
+.pt-tech{background:rgba(96,165,250,.12);color:#60A5FA}
+.pt-channel{background:rgba(52,211,153,.12);color:#34D399}
+.pt-content{background:rgba(236,72,153,.12);color:#EC4899}
+.pt-invest{background:rgba(255,215,0,.12);color:#FFD700}
+.coop-type{display:flex;gap:8px;padding:0 18px 14px;overflow-x:auto;scrollbar-width:none}
+.coop-type::-webkit-scrollbar{display:none}
+.coop-chip{flex-shrink:0;padding:9px 16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:#a89ec9;cursor:pointer;font-weight:700}
+.coop-chip.active{background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;border-color:transparent}
+.pn-cta{display:block;margin:16px 18px;padding:14px;text-align:center;background:linear-gradient(135deg,#A855F7,#EC4899);border-radius:20px;font-size:14px;font-weight:800;color:#fff;cursor:pointer;text-decoration:none}
+.pn-cta2{display:block;margin:0 18px 24px;padding:13px;text-align:center;background:rgba(255,255,255,.05);border:1px dashed rgba(168,85,247,.4);border-radius:14px;font-size:12px;color:#C084FC;cursor:pointer;text-decoration:none;font-weight:700}
 </style>
 </head>
 <body data-tab="discover">
-
-<div class="topbar">
-    <div class="brand">
-        <div class="brand-icon">CF</div>
-        <div>
-            <div class="brand-name">生态合作伙伴</div>
-            <div class="brand-sub">15 · 共创未来</div>
-        </div>
-    </div>
-    <div class="bell">🔍</div>
-</div>
-
+<div class="topbar"><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">生态合作伙伴</div><div class="brand-sub">15 · 共创未来</div></div></div><div class="bell" style="cursor:pointer" onclick="location.href='../invest.html'">💎</div></div>
 <div class="wrap">
-    <div class="hero" style="padding:24px 20px 10px;text-align:center">
-        <div style="font-size:19px;font-weight:900">与全球顶级<span style="color:#C084FC">合作伙伴</span>共创</div>
-        <div style="font-size:11px;color:#8d82a8;margin-top:4px">技术 · 平台 · 渠道 · 资本 · 全方位协同</div>
-    </div>
-
-    <div class="section-head">
-        <div class="section-tt">🤝 战略合作</div>
-    </div>
-    <div class="partner-grid">
-        <div class="partner-cell"><div class="p-logo" style="background:#fff;color:#0078D4">M</div><div class="p-name">Microsoft</div><div class="p-type">技术合作</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#FF6A00;color:#fff">ali</div><div class="p-name">阿里云</div><div class="p-type">云服务</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#76B900;color:#fff">n</div><div class="p-name">NVIDIA</div><div class="p-type">算力</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#fff;color:#FF5A00">🔥</div><div class="p-name">火山引擎</div><div class="p-type">技术</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#fff;color:#3370FF">飞</div><div class="p-name">飞书</div><div class="p-type">协作</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#10A37F;color:#fff">◮</div><div class="p-name">OpenAI</div><div class="p-type">AI模型</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#000;color:#fff">MJ</div><div class="p-name">Midjourney</div><div class="p-type">绘图</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#fff;color:#000">N</div><div class="p-name">Notion</div><div class="p-type">协作</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#fff;color:#000">R</div><div class="p-name">Runway</div><div class="p-type">视频</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#D97757;color:#fff">C</div><div class="p-name">Claude</div><div class="p-type">AI模型</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:#fff;color:#000">D</div><div class="p-name">Dify</div><div class="p-type">应用</div></div>
-        <div class="partner-cell"><div class="p-logo" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff">+</div><div class="p-name">更多</div><div class="p-type">持续加入</div></div>
-    </div>
-
-    <div class="section-head" style="padding-top:24px">
-        <div class="section-tt">🤝 合作类型</div>
-    </div>
-    <div class="coop-grid">
-        <div class="coop-card"><div class="coop-ico">💰</div><div class="coop-name">投资机构</div><div class="coop-desc">资本赋能</div></div>
-        <div class="coop-card"><div class="coop-ico">🏢</div><div class="coop-name">企业合作</div><div class="coop-desc">业务协同</div></div>
-        <div class="coop-card"><div class="coop-ico">📰</div><div class="coop-name">媒体合作</div><div class="coop-desc">传播放大</div></div>
-        <div class="coop-card"><div class="coop-ico">🎨</div><div class="coop-name">品牌合作</div><div class="coop-desc">联名共创</div></div>
-        <div class="coop-card"><div class="coop-ico">🤝</div><div class="coop-name">渠道合作</div><div class="coop-desc">流量互通</div></div>
-        <div class="coop-card" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border-color:#A855F7"><div class="coop-ico">🚀</div><div class="coop-name">加入我们</div><div class="coop-desc">共创生态</div></div>
-    </div>
-
-    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:14px;border-radius:20px;display:block;margin:24px 18px;font-weight:800">🤝 申请加入生态</a>
+  <div class="pn-hero"><h2>🌐 生态<span style="color:#C084FC">合作伙伴</span></h2><p>与优秀伙伴一起，共建AI一人公司生态<br>技术/渠道/内容/投资，开放合作</p></div>
+  <div class="pn-stats">
+    <div class="pn-stat"><div class="n">12+</div><div class="l">合作伙伴</div></div>
+    <div class="pn-stat"><div class="n">4</div><div class="l">合作类型</div></div>
+    <div class="pn-stat"><div class="n">100%</div><div class="l">开放共创</div></div>
+  </div>
+  <div class="sec-label"><span class="dot"></span>🤝 合作方式</div>
+  <div class="coop-type" id="coopBar"></div>
+  <div class="sec-label"><span class="dot"></span>🏢 合作伙伴</div>
+  <div class="pn-grid" id="pnGrid"></div>
+  <a class="pn-cta" href="../invest.html">💎 成为合作伙伴</a>
+  <a class="pn-cta2" href="../partner-form.html">📨 有交付能力？先登记接单</a>
 </div>
-
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const PARTNERS=[
+{name:'OpenClaw',logo:'🦾',type:'技术',desc:'开源AI Agent生态',color:'#A855F7'},
+{name:'n8n',logo:'🔀',type:'技术',desc:'自动化工作流',color:'#EA4C89'},
+{name:'Dify',logo:'🔧',type:'技术',desc:'AI应用平台',color:'#8B5CF6'},
+{name:'Coze',logo:'🧩',type:'技术',desc:'AI Bot平台',color:'#3B82F6'},
+{name:'DeepSeek',logo:'🐋',type:'技术',desc:'开源大模型',color:'#10B981'},
+{name:'AiToEarn',logo:'💰',type:'技术',desc:'自动变现工具',color:'#F59E0B'},
+{name:'小红书达人联盟',logo:'📕',type:'渠道',desc:'内容渠道合作',color:'#EC4899'},
+{name:'抖音创作者',logo:'🎵',type:'渠道',desc:'短视频渠道',color:'#FF4757'},
+{name:'本地商盟',logo:'🏪',type:'渠道',desc:'本地商家资源',color:'#FF6B1A'},
+{name:'AI训练营',logo:'🎓',type:'内容',desc:'课程内容共创',color:'#22D3EE'},
+{name:'天使投资人',logo:'💎',type:'投资',desc:'早期投资合作',color:'#FFD700'},
+{name:'行业KOL',logo:'📣',type:'内容',desc:'内容影响力',color:'#60A5FA'}
+];
+const COOP=['全部','技术','渠道','内容','投资'];
+let curCoop='全部';
+function renderCoop(){document.getElementById('coopBar').innerHTML=COOP.map(c=>`<span class="coop-chip ${c===curCoop?'active':''}" onclick="setCoop('${c}')">${c}</span>`).join('')}
+function setCoop(c){curCoop=c;renderCoop();renderGrid()}
+function renderGrid(){
+  const arr=PARTNERS.filter(p=>curCoop==='全部'||p.type===curCoop);
+  const tagCls={技术:'pt-tech',渠道:'pt-channel',内容:'pt-content',投资:'pt-invest'};
+  document.getElementById('pnGrid').innerHTML=arr.map(p=>`
+    <div class="pn-card">
+      <div class="pn-logo" style="background:${p.color}22">${p.logo}</div>
+      <div class="pn-name">${p.name}</div>
+      <span class="pn-type-tag ${tagCls[p.type]}">${p.type}</span>
+      <div class="pn-type">${p.desc}</div>
+    </div>`).join('');
+}
+renderCoop();renderGrid();
+</script>
 </body>
 </html>
