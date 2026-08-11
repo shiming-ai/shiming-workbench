@@ -4,75 +4,88 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 服务中心 · 找靠谱服务商">
 <title>服务中心 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.sv-hero{padding:24px 18px 12px}.sv-hero h2{font-size:22px;font-weight:900}.sv-hero p{font-size:12px;color:#a89ec9;line-height:1.7;margin-top:6px}
+.search-row{padding:12px 18px 14px}.search-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:8px}.search-box input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px}
+.cat-row{display:flex;gap:8px;padding:0 18px 14px;overflow-x:auto;scrollbar-width:none}.cat-row::-webkit-scrollbar{display:none}
+.cat-chip{flex-shrink:0;padding:8px 14px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:#a89ec9;cursor:pointer;font-weight:700}
+.cat-chip.active{background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;border-color:transparent}
+.sv-list{padding:0 18px 20px}
+.sv-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:15px;margin-bottom:10px;position:relative;overflow:hidden}
+.sv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--sc,#A855F7),transparent)}
+.sv-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sv-av{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.sv-name{font-size:14px;font-weight:800;flex:1}
+.sv-rating{font-size:12px;font-weight:900;color:#FFD700}
+.sv-cat{font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;background:rgba(168,85,247,.15);color:#C084FC}
+.sv-desc{font-size:11px;color:#a89ec9;line-height:1.6;margin-bottom:8px}
+.sv-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:10px;color:#6d6489;margin-bottom:8px}
+.sv-meta span{padding:3px 8px;background:rgba(255,255,255,.05);border-radius:8px}
+.sv-actions{display:flex;gap:6px}
+.sv-btn{flex:1;padding:8px;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:10px;font-size:11px;font-weight:700;color:#a89ec9;cursor:pointer}
+.sv-btn:active{transform:scale(.96)}
+.sv-btn.go{background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;border-color:transparent}
+.sv-apply{display:block;margin:16px 18px;padding:13px;text-align:center;background:linear-gradient(135deg,#A855F7,#EC4899);border-radius:20px;font-size:13px;font-weight:800;color:#fff;cursor:pointer}
+</style>
 </head>
 <body data-tab="discover">
-
-<div class="topbar">
-    <div class="brand">
-        <div class="brand-icon">CF</div>
-        <div>
-            <div class="brand-name">服务中心</div>
-            <div class="brand-sub">08 · 找靠谱服务商</div>
-        </div>
-    </div>
-    <div class="bell">🔍</div>
-</div>
-
+<div class="topbar"><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">服务中心</div><div class="brand-sub">08 · 找靠谱服务商</div></div></div><div class="bell" style="cursor:pointer" onclick="location.href='../partner-form.html'">📨</div></div>
 <div class="wrap">
-    <div style="padding:16px 18px 12px">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:8px">
-            <span style="color:#8d82a8">🔍</span>
-            <input placeholder="搜索服务商、服务..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px">
-        </div>
-    </div>
-
-    <div class="grid" style="padding:0 18px;margin-bottom:16px">
-        <div class="grid-card"><div class="em">📦</div><div class="tt">全部</div><div class="td">所有服务</div></div>
-        <div class="grid-card"><div class="em">💻</div><div class="tt">应用开发</div><div class="td">定制开发</div></div>
-        <div class="grid-card"><div class="em">🎬</div><div class="tt">视频创作</div><div class="td">短视频/漫剧</div></div>
-        <div class="grid-card"><div class="em">✍️</div><div class="tt">文案策划</div><div class="td">文案/BP</div></div>
-        <div class="grid-card"><div class="em">📣</div><div class="tt">运营推广</div><div class="td">引流/增长</div></div>
-        <div class="grid-card"><div class="em">⋯</div><div class="tt">更多</div><div class="td">持续更新</div></div>
-    </div>
-
-    <div class="section-head">
-        <div class="section-tt">🤝 推荐服务商</div>
-        <div class="section-more">查看更多</div>
-    </div>
-    <div class="section">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#A855F7,#EC4899)">💡</div>
-                <div class="card-name">AI陪跑</div>
-                <span class="card-tag">⭐ 4.8</span>
-            </div>
-            <div class="card-desc">1.2w人使用 · 📚 教学 · ⏰ 8h交付</div>
-            <div class="card-meta"><span class="meta-tag">🎯 全程陪跑</span><span class="meta-tag">💎 VIP专属</span></div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">📐</div>
-                <div class="card-name">星图AI工作室</div>
-                <span class="card-tag">⭐ 4.9</span>
-            </div>
-            <div class="card-desc">8.7w人 · 🕐 32小时 · 👥 6个团队</div>
-            <div class="card-meta"><span class="meta-tag">💼 企业级</span><span class="meta-tag">🏆 金牌服务商</span></div>
-        </div>
-        <div class="card">
-            <div class="card-head">
-                <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#34D399)">⚙️</div>
-                <div class="card-name">青松AI开发</div>
-                <span class="card-tag">⭐ 4.7</span>
-            </div>
-            <div class="card-desc">3.5w人 · 🕐 48小时 · 📦 300+项目</div>
-            <div class="card-meta"><span class="meta-tag">💻 全栈</span><span class="meta-tag">🤝 长期合作</span></div>
-        </div>
-    </div>
+  <div class="sv-hero"><h2>🤝 服务<span style="color:#C084FC">中心</span></h2><p>经过认证的靠谱服务商<br>AI开发/设计/文案/视频，直接联系</p></div>
+  <div class="search-row"><div class="search-box"><span style="color:#8d82a8">🔍</span><input id="searchInput" placeholder="搜索服务商/擅长..."></div></div>
+  <div class="cat-row" id="catBar"></div>
+  <div class="sv-list" id="svList"></div>
+  <div class="sv-apply" onclick="location.href='../partner-form.html'">📨 我是服务商，申请入驻</div>
 </div>
-
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const VENDORS=[
+{id:'v1',ico:'🛠️',name:'老王AI工作室',cat:'AI开发',rating:4.9,desc:'擅长AI工作台/小程序/网站开发，3年经验，交付快',tags:['AI工作台','小程序','3000-5000'],color:'#A855F7'},
+{id:'v2',ico:'🎨',name:'小鹿设计',cat:'设计',rating:4.8,desc:'AI视觉设计：海报/Logo/封面/IP形象，审美在线',tags:['海报','Logo','封面'],color:'#EC4899'},
+{id:'v3',ico:'✍️',name:'阿明文案铺',cat:'文案',rating:4.7,desc:'小红书/公众号/抖音脚本代写，爆款逻辑',tags:['小红书','文案','脚本'],color:'#34D399'},
+{id:'v4',ico:'🎬',name:'AI视频工坊',cat:'视频',rating:4.8,desc:'数字人视频/AI短视频/广告片，多平台',tags:['数字人','短视频','广告'],color:'#22D3EE'},
+{id:'v5',ico:'🤖',name:'智能体专家团',cat:'Agent',rating:4.9,desc:'Coze/Dify/OpenClaw智能体搭建，企业级',tags:['Agent','客服','自动化'],color:'#F59E0B'},
+{id:'v6',ico:'📊',name:'数据洞察',cat:'数据',rating:4.6,desc:'数据分析/报表/复盘，电商运营向',tags:['数据','报表','复盘'],color:'#60A5FA'}
+];
+const CATS=['全部','AI开发','设计','文案','视频','Agent','数据'];
+const FAV_KEY='cf_svc_favs';
+let curCat='全部',kw='';
+function getFavs(){try{return JSON.parse(localStorage.getItem(FAV_KEY))||[]}catch(e){return[]}}
+function setFavs(a){localStorage.setItem(FAV_KEY,JSON.stringify(a))}
+function renderCats(){document.getElementById('catBar').innerHTML=CATS.map(c=>`<span class="cat-chip ${c===curCat?'active':''}" onclick="setCat('${c}')">${c}</span>`).join('')}
+function setCat(c){curCat=c;renderCats();renderList()}
+function renderList(){
+  const arr=VENDORS.filter(v=>(curCat==='全部'||v.cat===curCat)&&(!kw||(v.name+v.desc+v.tags.join('')).toLowerCase().includes(kw)));
+  const favs=getFavs();
+  document.getElementById('svList').innerHTML=arr.map((v,i)=>{
+    const faved=favs.includes(v.id);
+    return `<div class="sv-card" style="--sc:${v.color}">
+      <div class="sv-head"><div class="sv-av" style="background:${v.color}22;color:${v.color}">${v.ico}</div><div style="flex:1"><div class="sv-name">${v.name}</div><span class="sv-cat">${v.cat}</span></div><div class="sv-rating">⭐ ${v.rating}</div></div>
+      <div class="sv-desc">${v.desc}</div>
+      <div class="sv-meta">${v.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+      <div class="sv-actions">
+        <button class="sv-btn go" onclick="contactSvc(${i})">📨 联系</button>
+        <button class="sv-btn" onclick="toggleFav('${v.id}')">${faved?'⭐ 已收藏':'☆ 收藏'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function contactSvc(i){
+  const v=VENDORS[i];
+  alert(`📨 联系服务商\n\n${v.name}\n擅长：${v.tags.join(' / ')}\n评分：⭐ ${v.rating}\n\n联系方式已发到你微信，或填写接单登记，我们会为你匹配`);
+}
+function toggleFav(id){
+  const favs=getFavs();
+  if(favs.includes(id))setFavs(favs.filter(x=>x!==id));
+  else{setFavs([...favs,id]);toast('⭐ 已收藏')}
+  renderList();
+}
+document.getElementById('searchInput').addEventListener('input',e=>{kw=e.target.value;renderList()});
+renderCats();renderList();
+</script>
 </body>
 </html>
