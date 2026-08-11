@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · AI工作台商店 · 12个行业成品工作台直接购买，看到案例就能买现成的">
+<title>AI工作台商店 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.st-hero { padding:26px 18px 12px; text-align:center; }
+.st-hero h2 { font-size:24px; font-weight:900; }
+.st-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:8px; }
+.st-hero .st-badge { display:inline-block; margin-top:10px; font-size:10px; padding:5px 12px; border-radius:16px; background:rgba(52,211,153,.12); color:#34D399; font-weight:700; }
+.search-row { padding:14px 18px 12px; }
+.search-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:11px 14px; display:flex; align-items:center; gap:8px; }
+.search-box input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:13px; }
+.cat-row { display:flex; gap:8px; padding:0 18px 14px; overflow-x:auto; scrollbar-width:none; }
+.cat-row::-webkit-scrollbar { display:none; }
+.cat-chip { flex-shrink:0; padding:8px 14px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:12px; color:#a89ec9; cursor:pointer; font-weight:700; }
+.cat-chip.active { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; border-color:transparent; }
+.st-list { padding:0 18px 20px; }
+.st-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:16px; margin-bottom:12px; position:relative; overflow:hidden; transition:transform .12s; cursor:pointer; }
+.st-card:active { transform:scale(.98); }
+.st-card.bought { border-color:rgba(52,211,153,.4); }
+.st-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--sc,#A855F7),transparent); }
+.st-head { display:flex; gap:12px; margin-bottom:10px; }
+.st-ico { width:60px; height:60px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:30px; flex-shrink:0; }
+.st-name { font-size:15px; font-weight:900; }
+.st-industry { font-size:10px; color:#a89ec9; margin-top:3px; }
+.st-tags { display:flex; gap:5px; margin-top:6px; flex-wrap:wrap; }
+.stag { font-size:9px; padding:2px 7px; border-radius:8px; font-weight:700; }
+.stag-sale { background:rgba(255,107,26,.15); color:#FF6B1A; }
+.stag-lim { background:rgba(255,215,0,.15); color:#FFD700; }
+.stag-hot { background:rgba(236,72,153,.15); color:#EC4899; }
+.stag-live { background:rgba(52,211,153,.12); color:#34D399; }
+.st-feats { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:10px; }
+.st-feat { font-size:10px; color:#a89ec9; background:rgba(255,255,255,.03); border-radius:8px; padding:5px 8px; }
+.st-feat b { color:#34D399; }
+.st-bottom { display:flex; align-items:center; justify-content:space-between; }
+.st-price { font-size:20px; font-weight:900; color:#FFD700; }
+.st-old { font-size:11px; color:#6d6489; text-decoration:line-through; margin-left:6px; }
+.st-sales { font-size:10px; color:#6d6489; }
+.st-actions { display:flex; gap:6px; }
+.st-btn { padding:9px 16px; border-radius:12px; font-size:11px; font-weight:800; cursor:pointer; border:none; }
+.st-buy { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; box-shadow:0 4px 14px rgba(168,85,247,.3); }
+.st-buy:active { transform:scale(.96); }
+.st-bought { background:rgba(52,211,153,.18); color:#34D399; }
+.st-view { background:rgba(255,255,255,.06); color:#a89ec9; border:1px solid var(--border); }
+.st-custom { display:block; margin:6px 18px 24px; padding:14px; text-align:center; background:rgba(255,255,255,.05); border:1px dashed rgba(168,85,247,.4); border-radius:14px; font-size:12px; color:#C084FC; text-decoration:none; font-weight:700; }
+.st-custom:active { transform:scale(.97); }
+.bought-badge { position:absolute; top:10px; right:10px; font-size:9px; padding:3px 9px; border-radius:8px; background:linear-gradient(135deg,#34D399,#10b981); color:#fff; font-weight:800; }
+.pay-overlay { position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter:blur(10px); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; }
+.pay-card { background:#1a0d2e; border:1px solid var(--border); border-radius:18px; padding:24px; max-width:380px; width:100%; max-height:85vh; overflow-y:auto; }
+.pay-card h3 { font-size:18px; font-weight:900; margin-bottom:8px; }
+.pay-desc { font-size:12px; color:#a89ec9; line-height:1.7; margin-bottom:12px; }
+.pay-price { font-size:32px; font-weight:900; color:#FFD700; margin:8px 0 14px; }
+.pay-deliver { background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.3); border-radius:10px; padding:10px 12px; font-size:11px; color:#34D399; line-height:1.7; margin-bottom:14px; }
+.pay-pay { display:block; width:100%; padding:13px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:24px; font-size:14px; font-weight:800; color:#fff; cursor:pointer; border:none; }
+.pay-close { display:block; width:100%; margin-top:8px; padding:10px; background:transparent; color:#a89ec9; font-size:12px; cursor:pointer; border:none; }
+.deliver-card { background:rgba(52,211,153,.06); border:1px solid rgba(52,211,153,.35); border-radius:14px; padding:18px; margin:0 18px 14px; }
+.deliver-card h4 { font-size:13px; color:#34D399; margin-bottom:8px; }
+.deliver-card .dl { font-size:12px; color:#a89ec9; line-height:1.8; }
+.deliver-card .dl b { color:#34D399; }
+</style>
+</head>
+<body data-tab="discover">
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-icon">CF</div>
+        <div>
+            <div class="brand-name">AI工作台商店</div>
+            <div class="brand-sub">成品直购 · 看到案例就能买现成的</div>
+        </div>
+    </div>
+    <div class="bell" style="cursor:pointer" onclick="showMyStores()">📦</div>
+</div>
+
+<div class="wrap">
+    <div class="st-hero">
+        <h2>AI<span style="color:#FFD700">工作台</span>商店</h2>
+        <p>12 个行业成品工作台，<b style="color:#34D399">买现成的 → 马上用</b><br>或定制你的专属工作台</p>
+        <div class="st-badge">🎬 案例广场看到的场景 → 这里直接买</div>
+    </div>
+
+    <div class="search-row">
+        <div class="search-box">
+            <span style="color:#8d82a8">🔍</span>
+            <input id="searchInput" placeholder="搜索：电商 / 考研 / 餐饮 / 自媒体...">
+        </div>
+    </div>
+
+    <div class="cat-row" id="catBar"></div>
+    <div id="storeList"></div>
+
+    <a href="landing.html" class="st-custom">🛠 没有合适的？定制你的专属 AI 工作台 →</a>
+</div>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+// ============ 成品工作台数据（对应案例广场12个场景） ============
+const STORES = [
+    { id:'s1', ico:'🛒', name:'电商运营工作台', industry:'电商 · 9大平台一屏管', cat:'电商', price:999, old:1999, sales:86, color:'#FF6B1A', tags:['热卖','限时'], feats:['9平台店铺管理','多店订单聚合','库存预警','数据报表'], demo:'demo-ecom.html',
+      desc:'给电商老板/运营的一站式后台：多平台店铺、订单、库存、数据全在一屏。开箱即用，改品牌即可上线。' },
+    { id:'s2', ico:'📚', name:'考研冲刺工作台', industry:'考研 · 4科进度一目了然', cat:'教育', price:599, old:1199, sales:132, color:'#8B5CF6', tags:['热卖'], feats:['考试倒计时','4科进度看板','错题本','每日打卡'], demo:'demo-study.html',
+      desc:'考研党的学习指挥系统：倒计时、进度、错题、打卡全自动。目标拆解到每天该做什么。' },
+    { id:'s3', ico:'🍱', name:'餐饮门店工作台', industry:'餐饮 · 堂食外卖小程序', cat:'餐饮', price:799, old:1599, sales:54, color:'#F59E0B', tags:['热卖'], feats:['4渠道订单','智能排班','食材预警','会员管理'], demo:'demo-food.html',
+      desc:'餐饮老板的经营大脑：订单、排班、食材、会员一个后台。降低损耗，提升翻台。' },
+    { id:'s4', ico:'📷', name:'摄影约拍工作台', industry:'摄影 · 作品与生意', cat:'摄影', price:599, old:999, sales:47, color:'#EC4899', tags:['新'], feats:['作品管理','修图进度','约拍档期','报价模板'], demo:'demo-photo.html',
+      desc:'摄影师的作品库+接单工具：展示作品、管理档期、自动报价、跟进客户。' },
+    { id:'s5', ico:'🐶', name:'宠物健康工作台', industry:'宠物 · 毛孩子管家', cat:'宠物', price:399, old:699, sales:63, color:'#34D399', tags:['热门'], feats:['多宠物管理','疫苗提醒','健康记录','成长相册'], demo:'demo-pet.html',
+      desc:'养宠家庭的健康管家：疫苗、驱虫、体检自动提醒，成长记录一键留存。' },
+    { id:'s6', ico:'🌐', name:'雅思冲刺工作台', industry:'留学 · 雅思7.0冲刺', cat:'教育', price:599, old:1199, sales:38, color:'#3B82F6', tags:['新'], feats:['词汇打卡','听力语料库','四科拆解','模考记录'], demo:'demo-english.html',
+      desc:'雅思备考系统：词汇、听力、口语、写作四科全拆解，每天任务自动生成。' },
+    { id:'s7', ico:'💪', name:'健身减脂工作台', industry:'健身 · 数据教练', cat:'生活', price:399, old:699, sales:95, color:'#10B981', tags:['热卖'], feats:['体重曲线','训练计划','饮食记录','卡路里'], demo:'demo-fitness.html',
+      desc:'减脂路上的数据教练：体重趋势、训练计划、饮食卡路里一屏掌握。' },
+    { id:'s8', ico:'🎬', name:'自媒体创作台', industry:'自媒体 · 选题到变现', cat:'自媒体', price:999, old:1999, sales:74, color:'#A855F7', tags:['热卖','爆款'], feats:['选题灵感库','爆款二创','内容复盘','多平台数据'], demo:'demo-creator.html',
+      desc:'创作者全链路引擎：选题、脚本、发布、复盘、变现一站式。日更效率提升3倍。' },
+    { id:'s9', ico:'🦸', name:'一人公司管理台', industry:'一人公司 · 全业务线', cat:'商务', price:1999, old:3999, sales:29, color:'#FF6B1A', tags:['旗舰','限量'], feats:['多业务线并行','财务/客户/订单','自动复盘','决策看板'], demo:'demo-solo.html',
+      desc:'旗舰款：一个人管理公司的全部运转。财务、客户、订单、内容、复盘全自动化。' },
+    { id:'s10', ico:'👶', name:'英语启蒙台', industry:'育儿 · 亲子启蒙', cat:'育儿', price:299, old:499, sales:118, color:'#F472B6', tags:['销量王'], feats:['每日认字','象形卡片','积分激励','家长模式'], demo:'demo-love.html',
+      desc:'亲子启蒙神器：认字、游戏闯关、积分激励，孩子爱学家长省心。' },
+    { id:'s11', ico:'💕', name:'恋爱纪念台', industry:'生活 · 仪式感工具', cat:'生活', price:299, old:499, sales:141, color:'#FF4757', tags:['销量王'], feats:['纪念日提醒','约会计划','感情温度','照片墙'], demo:'demo-love.html',
+      desc:'经营感情的仪式感工具：纪念日自动提醒、约会不重样、感情温度可视化。' },
+    { id:'s12', ico:'✈️', name:'旅行攻略台', industry:'旅行 · 说走就走', cat:'生活', price:399, old:699, sales:87, color:'#22D3EE', tags:['热门'], feats:['行程规划','预算控制','装备清单','打卡地图'], demo:'demo-travel.html',
+      desc:'旅行规划大师：行程、预算、装备、打卡一屏搞定，说走就走不抓瞎。' }
+];
+const CATS = ['全部','电商','教育','餐饮','摄影','宠物','自媒体','生活','育儿','商务'];
+const MY_KEY = 'cf_store_orders';
+let curCat='全部', searchKw='';
+
+function getMy(){ try{ return JSON.parse(localStorage.getItem(MY_KEY))||[] }catch(e){ return [] } }
+function setMy(a){ localStorage.setItem(MY_KEY, JSON.stringify(a)) }
+
+function renderCats(){
+    document.getElementById('catBar').innerHTML = CATS.map(c => `<span class="cat-chip ${c===curCat?'active':''}" onclick="setCat('${c}')">${c}</span>`).join('');
+}
+function setCat(c){ curCat=c; renderCats(); renderList(); }
+
+function renderList(){
+    const my = getMy();
+    const bought = my.map(m=>m.id);
+    let arr = STORES.filter(s => (curCat==='全部'||s.cat===curCat) && (!searchKw || (s.name+s.industry+s.feat.join('')).toLowerCase().includes(searchKw.toLowerCase())));
+    const el = document.getElementById('storeList');
+    if (!arr.length) { el.innerHTML = '<div class="empty" style="margin:20px 18px">🔍 没找到，试试「定制专属工作台」</div>'; return; }
+    el.innerHTML = arr.map(s => {
+        const isBought = bought.includes(s.id);
+        const tags = s.tags.map(t => `<span class="stag ${t==='热卖'||t==='销量王'?'stag-hot':t==='限时'?'stag-lim':'stag-sale'}">${t}</span>`).join('');
+        return `<div class="st-card ${isBought?'bought':''}" style="--sc:${s.color}" onclick="openStore('${s.id}')">
+            ${isBought?'<div class="bought-badge">✓ 已购</div>':''}
+            <div class="st-head">
+                <div class="st-ico" style="background:${s.color}22;color:${s.color}">${s.ico}</div>
+                <div style="flex:1">
+                    <div class="st-name">${s.name}</div>
+                    <div class="st-industry">${s.industry}</div>
+                    <div class="st-tags">${tags}</div>
+                </div>
+            </div>
+            <div class="st-feats">${s.feats.slice(0,4).map(f=>`<div class="st-feat">✅ ${f}</div>`).join('')}</div>
+            <div class="st-bottom">
+                <div>
+                    <span class="st-price">¥${s.price}</span><span class="st-old">¥${s.old}</span>
+                    <div class="st-sales">已售 ${s.sales}+ · 次日交付</div>
+                </div>
+                <div class="st-actions" onclick="event.stopPropagation()">
+                    ${isBought
+                        ? `<button class="st-btn st-view" onclick="openDeliver('${s.id}')">📦 交付物</button>`
+                        : `<button class="st-btn st-buy" onclick="buyStore('${s.id}')">💎 买现成的</button>`
+                    }
+                    <button class="st-btn st-view" onclick="window.open('${s.demo}','_blank')">👀 看案例</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+function openStore(id){
+    const s = STORES.find(x=>x.id===id); if(!s) return;
+    toast(`${s.name} · ¥${s.price}`);
+}
+function buyStore(id){
+    const s = STORES.find(x=>x.id===id); if(!s) return;
+    const my = getMy();
+    if (my.find(m=>m.id===id)) { toast('已购买，点「交付物」查看'); return; }
+    const overlay = document.createElement('div');
+    overlay.className = 'pay-overlay';
+    overlay.onclick = (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="pay-card">
+        <h3>${s.ico} ${s.name}</h3>
+        <div class="pay-desc">${s.desc}</div>
+        <div class="pay-price">¥${s.price}<span style="font-size:13px;color:#a89ec9">　原价 ¥${s.old}</span></div>
+        <div class="pay-deliver">📦 <b>交付方式</b>：自动发货<br>付款后立即获取：工作台链接 + 使用文档 + 品牌替换指引</div>
+        <button class="pay-pay" onclick="confirmBuy('${s.id}', this)">确认支付 ¥${s.price}</button>
+        <button class="pay-close" onclick="document.body.removeChild(this.parentElement.parentElement)">取消</button>
+    </div>`;
+    document.body.appendChild(overlay);
+}
+function confirmBuy(id, btn){
+    const s = STORES.find(x=>x.id===id);
+    btn.disabled = true; btn.textContent = '支付中...';
+    setTimeout(()=>{
+        const my = getMy();
+        my.unshift({ id, name:s.name, price:s.price, time:new Date().toISOString().slice(0,10), orderId:'ws_'+Date.now() });
+        setMy(my);
+        const overlay = btn.closest('.pay-overlay');
+        if (overlay) document.body.removeChild(overlay);
+        renderList();
+        toast('🎉 购买成功！交付物已发');
+        setTimeout(()=>openDeliver(id), 400);
+    }, 800);
+}
+function openDeliver(id){
+    const s = STORES.find(x=>x.id===id); if(!s) return;
+    const my = getMy();
+    if (!my.find(m=>m.id===id)) { toast('请先购买'); return; }
+    const overlay = document.createElement('div');
+    overlay.className = 'pay-overlay';
+    overlay.onclick = (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="pay-card">
+        <h3>📦 交付物 · ${s.name}</h3>
+        <div class="deliver-card">
+            <h4>✅ 已付款 ¥${s.price} · ${s.name}</h4>
+            <div class="dl">
+                <b>🔗 工作台链接</b><br>${window.location.origin}/shiming-workbench/${s.demo}<br><br>
+                <b>📄 使用文档</b><br>已随购买发放到你的邮箱<br><br>
+                <b>🎨 品牌替换指引</b><br>见文档第2章，改Logo/配色/名字即可上线<br><br>
+                <b>🛠 需要定制？</b><br>点「定制专属工作台」，30分钟内响应
+            </div>
+        </div>
+        <button class="pay-close" onclick="document.body.removeChild(this.parentElement.parentElement)">关闭</button>
+    </div>`;
+    document.body.appendChild(overlay);
+}
+function showMyStores(){
+    const my = getMy();
+    if (!my.length) return toast('📦 还没有购买记录');
+    alert(`📦 我的工作台（${my.length}）\n\n${my.map(m=>`• ${m.name} ¥${m.price} ${m.time}`).join('\n')}\n\n可在商店里查看交付物`);
+}
+document.getElementById('searchInput').addEventListener('input', e=>{ searchKw = e.target.value; renderList(); });
+
+renderCats();
+renderList();
+</script>
+</body>
+</html>
