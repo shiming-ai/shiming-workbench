@@ -89,12 +89,14 @@
 </div>
 
 <div class="wrap">
+    <!-- 实时成交滚动条（信任感可视化） -->
+    <div data-ticker></div>
     <!-- Hero -->
     <div class="home-hero">
         <div class="home-title">一个人<br><span class="grad">+ AI,</span><br>就是一家公司</div>
         <div class="home-sub">AI时代的一人公司创业生态平台 · 工具 · 玩法 · 接单 · 变现</div>
         <div class="home-stats" id="homeStats">
-            <div class="home-stat"><div class="hs-num" id="st1">10K+</div><div class="hs-lbl">创业者</div></div>
+            <div class="home-stat"><div class="hs-num" id="st1">10K+</div><div class="hs-lbl">实时线索</div></div>
             <div class="home-stat"><div class="hs-num" id="st2">37</div><div class="hs-lbl">变现工具</div></div>
             <div class="home-stat"><div class="hs-num" id="st3">9</div><div class="hs-lbl">变现玩法</div></div>
             <div class="home-stat"><div class="hs-num" id="st4">16</div><div class="hs-lbl">业务板块</div></div>
@@ -237,10 +239,15 @@
         const posts = d.posts || [];
         const totalViews = posts.reduce((s,p)=>s+(p.views||0),0);
         const totalLikes = posts.reduce((s,p)=>s+(p.like||0),0);
-        document.getElementById('st1').textContent = (totalViews/100).toFixed(0) + 'K+';
+        document.getElementById('st1').textContent = '--';
         document.getElementById('st2').textContent = '37';
         document.getElementById('st3').textContent = '9';
         document.getElementById('st4').textContent = '16';
+        /* 实时云端数据：线索+成交（数据诚实，读不到回退本地估算） */
+        fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c').then(r=>r.json()).then(c=>{
+            const n = (c.leads||[]).length + (c.orders||[]).filter(o=>o.pay_status==='paid').length;
+            if (n) document.getElementById('st1').textContent = n;
+        }).catch(()=>{ document.getElementById('st1').textContent = (totalViews/100).toFixed(0)+'K+'; });
     } catch(e) {}
 })();
 // 社区热帖
