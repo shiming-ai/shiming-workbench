@@ -4,22 +4,61 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 会员中心 · 月度订阅 · 解锁全部权益">
 <title>会员中心 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.member-card { border-radius:16px; padding:18px; margin-bottom:12px; cursor:pointer; text-align:center; position:relative; }
-.member-card.hot { border:2px solid #A855F7; }
+.member-hero { padding:28px 20px 12px; text-align:center; }
+.member-hero h2 { font-size:22px; font-weight:900; }
+.member-hero p { font-size:12px; color:#a89ec9; line-height:1.7; margin-top:6px; }
+.member-card { border-radius:18px; padding:20px; margin:0 18px 12px; cursor:pointer; text-align:center; position:relative; overflow:hidden; transition:transform .12s; }
+.member-card:active { transform:scale(.97); }
+.member-card.current { border:2px solid #34D399; background:rgba(52,211,153,.08) !important; }
+.member-card.current::after { content:'✓ 当前订阅'; position:absolute; top:10px; right:10px; font-size:9px; padding:3px 9px; border-radius:8px; background:linear-gradient(135deg,#34D399,#10b981); color:#fff; font-weight:800; }
+.member-card .old-price { font-size:11px; color:#6d6489; text-decoration:line-through; }
 .member-name { font-size:15px; font-weight:800; }
-.member-price { font-size:28px; font-weight:900; color:#C084FC; margin:6px 0; }
-.member-price .unit { font-size:12px; color:#8d82a8; font-weight:400; }
-.member-desc { font-size:11px; color:#a89ec9; line-height:1.7; }
-.member-badge { position:absolute; top:-10px; right:12px; background:linear-gradient(135deg,#A855F7,#EC4899); padding:3px 12px; border-radius:12px; font-size:10px; font-weight:700; }
-.compare { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; margin:0 18px; overflow:hidden; }
-.compare-row { display:flex; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.05); font-size:12px; }
+.member-price { font-size:30px; font-weight:900; color:#C084FC; margin:8px 0 4px; }
+.member-price .unit { font-size:13px; color:#8d82a8; font-weight:400; }
+.member-card.gold .member-price { color:#FFD700; }
+.member-desc { font-size:11px; color:#a89ec9; line-height:1.7; margin:8px 0 14px; }
+.member-feat { font-size:11px; color:#a89ec9; text-align:left; padding:10px 14px; background:rgba(0,0,0,.2); border-radius:10px; margin-bottom:12px; }
+.member-feat div { padding:3px 0; }
+.member-feat .ck { color:#34D399; font-weight:800; }
+.member-feat .no { color:#6d6489; }
+.member-btn { display:block; width:100%; padding:12px; border-radius:24px; font-size:13px; font-weight:800; cursor:pointer; border:none; transition:transform .12s; }
+.member-btn:active { transform:scale(.97); }
+.member-btn.buy { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; box-shadow:0 4px 14px rgba(168,85,247,.35); }
+.member-btn.gold { background:linear-gradient(135deg,#FFD700,#F59E0B); color:#1a0d2e; }
+.member-btn.renew { background:rgba(52,211,153,.18); color:#34D399; border:1px solid rgba(52,211,153,.4); }
+.member-badge { position:absolute; top:-10px; right:14px; background:linear-gradient(135deg,#A855F7,#EC4899); padding:3px 12px; border-radius:12px; font-size:10px; font-weight:700; box-shadow:0 4px 14px rgba(168,85,247,.4); }
+.compare { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; margin:0 18px 14px; overflow:hidden; }
+.compare-row { display:grid; grid-template-columns:90px 1fr 1fr 1fr; padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.05); font-size:11px; align-items:center; }
 .compare-row:last-child { border:none; }
-.compare-label { width:80px; color:#8d82a8; flex-shrink:0; }
-.compare-val { flex:1; color:#a89ec9; text-align:center; }
+.compare-row.head { background:rgba(168,85,247,.1); font-weight:800; font-size:11px; }
+.compare-label { color:#a89ec9; }
+.compare-val { color:#8d82a8; text-align:center; font-size:11px; }
 .compare-val.vip { color:#C084FC; font-weight:700; }
+.compare-val.gold { color:#FFD700; font-weight:700; }
+.subscribe-status { background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(34,211,238,.05)); border:1px solid rgba(52,211,153,.3); border-radius:14px; padding:16px; margin:0 18px 14px; }
+.subscribe-status .ss-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:12px; }
+.subscribe-status .ss-label { color:#a89ec9; }
+.subscribe-status .ss-val { color:#34D399; font-weight:800; }
+.subscribe-status .ss-bar { height:6px; background:rgba(255,255,255,.1); border-radius:3px; overflow:hidden; margin-top:8px; }
+.subscribe-status .ss-bar-fill { height:100%; background:linear-gradient(90deg,#34D399,#10b981); border-radius:3px; transition:width .3s; }
+.subscribe-status .ss-actions { display:flex; gap:8px; margin-top:12px; }
+.subscribe-status .ss-actions button { flex:1; padding:8px; background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px; font-size:11px; font-weight:700; color:#a89ec9; cursor:pointer; }
+.subscribe-status .ss-actions button:active { transform:scale(.96); }
+.pay-overlay { position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter:blur(10px); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; }
+.pay-card { background:#1a0d2e; border:1px solid var(--border); border-radius:18px; padding:24px; max-width:380px; width:100%; }
+.pay-card h3 { font-size:18px; font-weight:900; margin-bottom:6px; }
+.pay-card .pay-price { font-size:32px; font-weight:900; color:#FFD700; margin:8px 0 16px; }
+.pay-methods { display:flex; gap:8px; margin-bottom:14px; }
+.pay-method { flex:1; padding:10px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:10px; text-align:center; font-size:11px; cursor:pointer; }
+.pay-method.active { border-color:#34D399; background:rgba(52,211,153,.12); color:#34D399; }
+.pay-pay { display:block; width:100%; padding:13px; background:linear-gradient(135deg,#A855F7,#EC4899); border-radius:24px; font-size:14px; font-weight:800; color:#fff; cursor:pointer; border:none; }
+.pay-pay.gold { background:linear-gradient(135deg,#FFD700,#F59E0B); color:#1a0d2e; }
+.pay-close { display:block; margin-top:10px; padding:8px; text-align:center; background:transparent; color:#a89ec9; font-size:12px; cursor:pointer; border:none; }
+.tip-mini { font-size:11px; color:#6d6489; margin-top:6px; }
 </style>
 </head>
 <body data-tab="me">
@@ -29,52 +68,213 @@
         <div class="brand-icon">CF</div>
         <div>
             <div class="brand-name">会员中心</div>
-            <div class="brand-sub">13 · 解锁更多权益</div>
+            <div class="brand-sub">13 · 月度订阅 · 解锁全部能力</div>
         </div>
     </div>
-    <div class="bell">⚙️</div>
+    <div class="bell" style="cursor:pointer" onclick="viewSub()">📋</div>
 </div>
 
 <div class="wrap">
-    <div class="hero" style="padding:24px 20px 10px">
-        <div style="font-size:19px;font-weight:900;text-align:center">升级会员 · <span style="color:#C084FC">解锁全部能力</span></div>
+    <div class="member-hero">
+        <h2>升级会员 · <span style="color:#C084FC">解锁全部能力</span></h2>
+        <p>开通后立即解锁全部AI工具、玩法库、接单优先派单、<br>项目孵化、专属客服等权益</p>
     </div>
 
-    <div class="section" style="padding-top:8px">
-        <div class="member-card" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
-            <div class="member-name">普通会员</div>
-            <div class="member-price">¥0<span class="unit">/月</span></div>
-            <div class="member-desc">基础AI工具使用权<br>社区浏览 · 基础数据</div>
+    <!-- 当前订阅状态 -->
+    <div id="subStatus"></div>
+
+    <!-- 3档会员卡 -->
+    <div style="padding-top:24px">
+        <div class="section-head" style="padding:0 18px 14px">
+            <div class="section-tt">💎 选择套餐</div>
+            <div class="section-more">月度订阅 · 随时取消</div>
         </div>
-        <div class="member-card hot" style="background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05));border-color:#A855F7">
-            <div class="member-badge">最受欢迎</div>
-            <div class="member-name">Pro会员</div>
-            <div class="member-price">¥199<span class="unit">/月</span></div>
-            <div class="member-desc">全部AI工具 + 接单优先<br>项目孵化 + 专属客服</div>
-        </div>
-        <div class="member-card" style="background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(245,158,11,.05));border:1px solid rgba(255,215,0,.3)">
-            <div class="member-name" style="color:#FFD700">企业会员</div>
-            <div class="member-price" style="color:#FFD700">¥999<span class="unit">/月</span></div>
-            <div class="member-desc">多账号 + 团队协作<br>数据看板 + 专属经理</div>
-        </div>
+
+        <div id="memberCards"></div>
     </div>
 
-    <div class="section-head">
+    <!-- 权益对比表 -->
+    <div class="section-head" style="padding:24px 18px 12px">
         <div class="section-tt">📊 权益对比</div>
     </div>
     <div class="compare">
-        <div class="compare-row"><div class="compare-label">AI工具</div><div class="compare-val">基础</div><div class="compare-val vip">全部</div><div class="compare-val">全部</div></div>
-        <div class="compare-row"><div class="compare-label">接单优先</div><div class="compare-val">—</div><div class="compare-val vip">✅</div><div class="compare-val">✅</div></div>
-        <div class="compare-row"><div class="compare-label">项目孵化</div><div class="compare-val">—</div><div class="compare-val vip">✅</div><div class="compare-val">✅</div></div>
-        <div class="compare-row"><div class="compare-label">数据看板</div><div class="compare-val">基础</div><div class="compare-val vip">完整</div><div class="compare-val">完整</div></div>
-        <div class="compare-row"><div class="compare-label">团队协作</div><div class="compare-val">—</div><div class="compare-val">—</div><div class="compare-val vip">✅</div></div>
-        <div class="compare-row"><div class="compare-label">专属经理</div><div class="compare-val">—</div><div class="compare-val">—</div><div class="compare-val vip">✅</div></div>
+        <div class="compare-row head">
+            <div class="compare-label">权益</div>
+            <div class="compare-val">普通</div>
+            <div class="compare-val vip">Pro</div>
+            <div class="compare-val gold">企业</div>
+        </div>
+        <div class="compare-row"><div class="compare-label">AI工具库</div><div class="compare-val">基础</div><div class="compare-val vip">全部</div><div class="compare-val gold">全部</div></div>
+        <div class="compare-row"><div class="compare-label">变现玩法库</div><div class="compare-val">浏览</div><div class="compare-val vip">全部</div><div class="compare-val gold">全部</div></div>
+        <div class="compare-row"><div class="compare-label">接单优先</div><div class="compare-val no">—</div><div class="compare-val vip">✅</div><div class="compare-val gold">✅</div></div>
+        <div class="compare-row"><div class="compare-label">项目孵化</div><div class="compare-val no">—</div><div class="compare-val vip">✅</div><div class="compare-val gold">✅</div></div>
+        <div class="compare-row"><div class="compare-label">数据看板</div><div class="compare-val">基础</div><div class="compare-val vip">完整</div><div class="compare-val gold">完整</div></div>
+        <div class="compare-row"><div class="compare-label">模板市集</div><div class="compare-val no">—</div><div class="compare-val vip">8折</div><div class="compare-val gold">免费</div></div>
+        <div class="compare-row"><div class="compare-label">团队账号</div><div class="compare-val no">—</div><div class="compare-val no">—</div><div class="compare-val gold">5个</div></div>
+        <div class="compare-row"><div class="compare-label">专属经理</div><div class="compare-val no">—</div><div class="compare-val no">—</div><div class="compare-val gold">✅</div></div>
     </div>
 
-    <a class="cta" style="background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;text-align:center;padding:15px;border-radius:22px;display:block;margin:24px 18px;font-weight:800;font-size:16px">💎 立即升级 Pro</a>
+    <div class="tip" style="margin:14px 18px 20px">
+        💡 沙箱环境<b style="color:#34D399">模拟支付</b>（点确定算支付成功）<br>
+        真实接入请联系我们：shim16506@gmail.com
+    </div>
 </div>
 
 <div id="toast"></div>
 <script src="app.js"></script>
+<script>
+const PLANS = [
+    { id:'free', name:'普通会员', price:0, oldPrice:0, feat:['AI工具基础使用权','社区浏览','基础数据'], desc:'入门体验，适合先看看', color:'rgba(255,255,255,.04)', borderColor:'rgba(255,255,255,.08)', priceColor:'', btnClass:'', btnText:'免费使用' },
+    { id:'pro', name:'Pro会员', price:199, oldPrice:299, badge:'最受欢迎', feat:['全部AI工具','变现玩法库全部','接单优先派单','项目孵化参与','数据看板完整','模板市集8折','专属客服'], desc:'独立创业/副业首选', color:'linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.05))', borderColor:'#A855F7', priceColor:'', btnClass:'buy', btnText:'💎 立即开通' },
+    { id:'biz', name:'企业会员', price:999, oldPrice:1499, feat:['Pro全部权益','5个团队账号','数据看板+定制','模板市集免费','专属客户经理','优先派单保障'], desc:'团队/工作室标配', color:'linear-gradient(135deg,rgba(255,215,0,.12),rgba(245,158,11,.05))', borderColor:'rgba(255,215,0,.35)', priceColor:'gold', btnClass:'gold', btnText:'👑 升级企业版' }
+];
+const SUB_KEY = 'cf_member_sub';
+
+function getSub(){ try{ return JSON.parse(localStorage.getItem(SUB_KEY)); }catch(e){ return null; } }
+function setSub(s){ localStorage.setItem(SUB_KEY, JSON.stringify(s)); }
+
+function daysLeft(endTime){
+    return Math.max(0, Math.ceil((new Date(endTime) - new Date()) / 86400000));
+}
+function calcPct(start, end){
+    const total = new Date(end) - new Date(start);
+    const past = new Date() - new Date(start);
+    return Math.max(0, Math.min(100, Math.round(past / total * 100)));
+}
+
+function renderSubStatus(){
+    const el = document.getElementById('subStatus');
+    const sub = getSub();
+    if (!sub || sub.planId === 'free') {
+        el.innerHTML = '';
+        return;
+    }
+    const plan = PLANS.find(p => p.id === sub.planId);
+    const days = daysLeft(sub.endTime);
+    const pct = calcPct(sub.startTime, sub.endTime);
+    el.innerHTML = `<div class="subscribe-status">
+        <div class="ss-row"><div class="ss-label">当前套餐</div><div class="ss-val">${plan.name}</div></div>
+        <div class="ss-row"><div class="ss-label">到期时间</div><div class="ss-val">${sub.endTime.slice(0,10)}（剩余${days}天）</div></div>
+        <div class="ss-bar"><div class="ss-bar-fill" style="width:${pct}%"></div></div>
+        <div class="ss-actions">
+            <button onclick="renewSub()">🔄 续费</button>
+            <button onclick="cancelSub()" style="color:#FF4757;border-color:rgba(255,71,87,.3)">取消订阅</button>
+        </div>
+    </div>`;
+}
+
+function renderCards(){
+    const sub = getSub();
+    const cur = sub ? sub.planId : 'free';
+    document.getElementById('memberCards').innerHTML = PLANS.map(p => {
+        const isCur = p.id === cur;
+        return `<div class="member-card ${p.id==='pro'?'hot':''} ${p.priceColor} ${isCur?'current':''}" style="background:${p.color};border:1px solid ${p.borderColor}">
+            ${p.badge?`<div class="member-badge">${p.badge}</div>`:''}
+            <div class="member-name">${p.name}</div>
+            <div class="member-price">¥${p.price}<span class="unit">/月</span></div>
+            ${p.oldPrice?`<div class="old-price">原价 ¥${p.oldPrice}/月</div>`:''}
+            <div class="member-desc">${p.desc}</div>
+            <div class="member-feat">
+                ${p.feat.map(f => `<div class="ck">✓ ${f}</div>`).join('')}
+            </div>
+            ${isCur
+                ? `<button class="member-btn renew" onclick="manageSub()">✓ 已订阅 · 管理</button>`
+                : p.price === 0
+                    ? `<button class="member-btn" onclick="setFree()">${p.btnText}</button>`
+                    : `<button class="member-btn ${p.btnClass}" onclick="subscribe('${p.id}')">${p.btnText}</button>`
+            }
+        </div>`;
+    }).join('');
+}
+
+function subscribe(planId){
+    const plan = PLANS.find(p => p.id === planId);
+    if (!plan || plan.price === 0) return;
+    showPayModal(plan);
+}
+
+function showPayModal(plan){
+    const overlay = document.createElement('div');
+    overlay.className = 'pay-overlay';
+    overlay.onclick = (e) => { if (e.target === overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="pay-card">
+        <h3>💎 开通 ${plan.name}</h3>
+        <div class="pay-price">¥${plan.price}<span style="font-size:13px;color:#a89ec9">/月</span></div>
+        <div class="tip-mini">月度订阅 · ${plan.oldPrice?'原价 ¥'+plan.oldPrice+'，立省 ¥'+(plan.oldPrice-plan.price):'限时价'}</div>
+        <div style="margin-top:18px">
+            <div style="font-size:11px;color:#a89ec9;margin-bottom:6px">选择支付方式</div>
+            <div class="pay-methods">
+                <div class="pay-method active">💚 微信支付</div>
+                <div class="pay-method">💙 支付宝</div>
+                <div class="pay-method">💳 信用卡</div>
+            </div>
+        </div>
+        <button class="pay-pay ${plan.priceColor==='gold'?'gold':''}" onclick="confirmPay('${plan.id}', this)">确认支付 ¥${plan.price}</button>
+        <button class="pay-close" onclick="document.body.removeChild(this.parentElement.parentElement)">取消</button>
+    </div>`;
+    // 支付方式切换
+    overlay.querySelectorAll('.pay-method').forEach(m => m.onclick = () => {
+        overlay.querySelectorAll('.pay-method').forEach(x => x.classList.remove('active'));
+        m.classList.add('active');
+    });
+    document.body.appendChild(overlay);
+}
+
+function confirmPay(planId, btn){
+    const plan = PLANS.find(p => p.id === planId);
+    btn.disabled = true;
+    btn.textContent = '支付中...';
+    setTimeout(() => {
+        const now = new Date();
+        const end = new Date(now.getTime() + 30 * 86400000);
+        setSub({
+            planId, name: plan.name,
+            startTime: now.toISOString(),
+            endTime: end.toISOString(),
+            autoRenew: false
+        });
+        const overlay = btn.closest('.pay-overlay');
+        if (overlay) document.body.removeChild(overlay);
+        renderSubStatus();
+        renderCards();
+        toast('🎉 开通成功！全部权益已解锁');
+    }, 800);
+}
+
+function setFree(){
+    setSub(null);
+    renderSubStatus();
+    renderCards();
+    toast('已切换到普通会员');
+}
+function cancelSub(){
+    if (!confirm('确定取消订阅？取消后权益将失效。')) return;
+    setSub(null);
+    renderSubStatus();
+    renderCards();
+    toast('已取消订阅');
+}
+function renewSub(){
+    const sub = getSub();
+    if (!sub || sub.planId === 'free') return toast('当前没有有效订阅');
+    subscribe(sub.planId);
+}
+function manageSub(){
+    const sub = getSub();
+    if (!sub) return;
+    const days = daysLeft(sub.endTime);
+    alert(`📋 订阅管理\n\n套餐：${sub.name}\n开始：${sub.startTime.slice(0,10)}\n到期：${sub.endTime.slice(0,10)}\n剩余：${days}天`);
+}
+function viewSub(){
+    const sub = getSub();
+    if (!sub) return alert('暂无订阅');
+    const plan = PLANS.find(p => p.id === sub.planId);
+    const days = daysLeft(sub.endTime);
+    alert(`📋 当前订阅\n\n套餐：${plan.name}\n价格：¥${plan.price}/月\n到期：${sub.endTime.slice(0,10)}（剩余${days}天）\n\n权益：${(plan.feat||[]).length}项已解锁`);
+}
+
+renderSubStatus();
+renderCards();
+</script>
 </body>
 </html>
