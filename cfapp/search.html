@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 全站搜索 · 一搜即达">
+<title>全站搜索 · Crazy Friday</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.sx-hero{padding:20px 18px 10px;text-align:center}
+.sx-hero h2{font-size:22px;font-weight:900}
+.sx-hero p{font-size:11px;color:#a89ec9;margin-top:6px}
+.sx-search{padding:16px 18px 12px}
+.sx-box{background:rgba(255,255,255,.06);border:1px solid rgba(168,85,247,.4);border-radius:18px;padding:13px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(168,85,247,.15)}
+.sx-box input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px}
+.sx-box input::placeholder{color:#6d6489}
+.sx-hot{padding:0 18px 10px}
+.sx-hot-tag{display:inline-block;font-size:10px;padding:4px 12px;border-radius:14px;background:rgba(255,255,255,.05);color:#8d82a8;cursor:pointer;margin:0 4px 6px 0;font-weight:700}
+.sx-hot-tag:active{background:rgba(168,85,247,.2);color:#C084FC}
+.sx-count{padding:0 18px 8px;font-size:11px;color:#6d6489}
+.sx-group{padding:0 18px 8px;font-size:13px;font-weight:900;display:flex;align-items:center;gap:6px}
+.sx-group .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#EC4899)}
+.sx-results{padding:0 18px 20px}
+.sx-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:13px;margin-bottom:8px;cursor:pointer;text-decoration:none;color:inherit}
+.sx-item:active{transform:scale(.97)}
+.sx-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sx-name{font-size:13px;font-weight:800;flex:1}
+.sx-desc{font-size:10px;color:#6d6489;margin-top:2px}
+.sx-go{font-size:10px;color:#C084FC;font-weight:800}
+.sx-empty{text-align:center;padding:50px 20px;color:#6d6489}
+.sx-empty .em{font-size:44px;margin-bottom:12px}
+</style>
+</head>
+<body data-tab="discover">
+<div class="topbar"><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">全站搜索</div><div class="brand-sub">一搜即达 · 25个板块</div></div></div><div class="bell" style="cursor:pointer" onclick="history.back()">‹</div></div>
+<div class="wrap">
+  <div class="sx-hero"><h2>🔍 全站<span style="color:#C084FC">搜索</span></h2><p>输入关键词，找到所有相关板块</p></div>
+  <div class="sx-search">
+    <div class="sx-box">
+      <span style="color:#C084FC;font-size:16px">🔍</span>
+      <input id="sxInput" placeholder="搜工具 / 课程 / 项目 / 应用 / 模板..." autofocus>
+    </div>
+  </div>
+  <div class="sx-hot" id="hotTags"></div>
+  <div class="sx-count" id="sxCount"></div>
+  <div class="sx-results" id="sxResults">
+    <div class="sx-empty"><div class="em">✨</div>输入关键词开始搜索<br><span style="font-size:11px">试试：变现 / 接单 / 电商 / 视频 / Agent</span></div>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+// ===== 全站索引 =====
+const IDX = [
+  // 工具
+  { n:'ChatGPT', d:'AI对话/客服/写代码', i:'💬', u:'tools.html', g:'AI工具', c:'#10b981' },
+  { n:'Claude', d:'AI编程/长文本/Agent', i:'⚡', u:'tools.html', g:'AI工具', c:'#f59e0b' },
+  { n:'DeepSeek', d:'开源大模型/API成本低', i:'🐋', u:'tools.html', g:'AI工具', c:'#3b82f6' },
+  { n:'Midjourney', d:'AI绘图/接单/壁纸', i:'🎨', u:'tools.html', g:'AI工具', c:'#8b5cf6' },
+  { n:'n8n', d:'自动化工作流/自动变现', i:'🔀', u:'tools.html', g:'AI工具', c:'#ea4c89' },
+  { n:'OpenClaw', d:'AI Agent/25万星开源', i:'🦾', u:'tools.html', g:'AI工具', c:'#a855f7' },
+  { n:'Cursor', d:'AI编程/一人微SaaS', i:'💻', u:'tools.html', g:'AI工具', c:'#f59e0b' },
+  { n:'AiToEarn', d:'自动发内容赚钱', i:'💰', u:'tools.html', g:'AI工具', c:'#f59e0b' },
+  // 玩法
+  { n:'AI绘画接单', d:'零门槛变现500-8000/月', i:'🎨', u:'playbook.html', g:'变现玩法', c:'#34D399' },
+  { n:'AI内容代写', d:'小红书/公众号代写', i:'📝', u:'playbook.html', g:'变现玩法', c:'#34D399' },
+  { n:'数字人口播', d:'矩阵号带货接广告', i:'🗣️', u:'playbook.html', g:'变现玩法', c:'#34D399' },
+  { n:'内容工厂', d:'AI写AI发多平台', i:'🔄', u:'playbook.html', g:'变现玩法', c:'#F59E0B' },
+  { n:'AI Agent定制', d:'8000-80000/单', i:'🤖', u:'playbook.html', g:'变现玩法', c:'#F59E0B' },
+  { n:'一人微SaaS', d:'Marc Lou模式7天上线', i:'💻', u:'playbook.html', g:'变现玩法', c:'#F59E0B' },
+  { n:'接单派单差价', d:'核心模式月入过万', i:'📋', u:'playbook.html', g:'变现玩法', c:'#EF4444' },
+  // 课程
+  { n:'AI变现入门·7天', d:'从0到1学AI变现', i:'🎯', u:'academy.html', g:'课程', c:'#A855F7' },
+  { n:'AI工作台搭建实战', d:'财务/客户/订单模块', i:'🛠️', u:'academy.html', g:'课程', c:'#FF6B1A' },
+  { n:'接单话术与成交技巧', d:'报价/谈判/逼单', i:'💬', u:'academy.html', g:'课程', c:'#34D399' },
+  { n:'小红书AI运营', d:'起号/爆款/引流', i:'📕', u:'academy.html', g:'课程', c:'#EC4899' },
+  // 工作台商店
+  { n:'电商运营工作台', d:'9平台一屏管·¥999', i:'🛒', u:'store.html', g:'成品工作台', c:'#FF6B1A' },
+  { n:'考研冲刺工作台', d:'倒计时/错题·¥599', i:'📚', u:'store.html', g:'成品工作台', c:'#8B5CF6' },
+  { n:'餐饮门店工作台', d:'订单/排班/食材·¥799', i:'🍱', u:'store.html', g:'成品工作台', c:'#F59E0B' },
+  { n:'一人公司管理台', d:'旗舰·¥1999', i:'🦸', u:'store.html', g:'成品工作台', c:'#FF6B1A' },
+  // 模板
+  { n:'小红书爆款提示词包', d:'100条·¥99', i:'✍️', u:'mall.html', g:'模板市集', c:'#EC4899' },
+  { n:'接单派单SOP', d:'全流程·¥299', i:'📋', u:'mall.html', g:'模板市集', c:'#A855F7' },
+  { n:'Coze客服Agent模板', d:'一键导入·¥499', i:'🤖', u:'mall.html', g:'模板市集', c:'#22D3EE' },
+  // 项目
+  { n:'OpenClaw Agent 服务', d:'企业部署5千-5万', i:'🦾', u:'opc.html', g:'OPC项目', c:'#A855F7' },
+  { n:'小红书起号陪跑', d:'7天起号收陪跑费', i:'📕', u:'opc.html', g:'OPC项目', c:'#EC4899' },
+  { n:'本地商家AI客服', d:'高客单服务', i:'🤖', u:'opc.html', g:'OPC项目', c:'#34D399' },
+  // 应用
+  { n:'AI起名助手', d:'一键生成30个', i:'📝', u:'apps.html', g:'应用', c:'#A855F7' },
+  { n:'报价计算器', d:'3档报价策略', i:'🧮', u:'apps.html', g:'应用', c:'#34D399' },
+  { n:'合同模板生成', d:'法律要点标注', i:'📋', u:'apps.html', g:'应用', c:'#FF6B1A' },
+  // 服务
+  { n:'老王AI工作室', d:'AI开发/小程序', i:'🛠️', u:'services.html', g:'服务商', c:'#A855F7' },
+  { n:'智能体专家团', d:'Coze/Dify/OpenClaw', i:'🤖', u:'services.html', g:'服务商', c:'#F59E0B' },
+  // 其他
+  { n:'接单工坊', d:'需求大厅/抢单', i:'📋', u:'orders.html', g:'板块', c:'#34D399' },
+  { n:'AI变现日报', d:'每日商机/工具/玩法', i:'📰', u:'daily.html', g:'板块', c:'#FFD700' },
+  { n:'AI创作工坊', d:'标题/文案/脚本生成', i:'🎨', u:'studio.html', g:'板块', c:'#EC4899' },
+  { n:'超脑工坊', d:'AI员工团队', i:'🤖', u:'brain.html', g:'板块', c:'#A855F7' },
+  { n:'AI创业路线图', d:'从0到1全流程', i:'🗺️', u:'roadmap.html', g:'板块', c:'#22D3EE' },
+  { n:'招商合作中心', d:'投资人/合伙人入口', i:'💎', u:'../invest.html', g:'板块', c:'#FFD700' },
+  { n:'接单登记表', d:'有交付能力就登记', i:'📨', u:'../partner-form.html', g:'板块', c:'#34D399' }
+];
+const HOT = ['变现','接单','电商','视频','Agent','AI工作台','小红书','自动化'];
+const GROUP_COLOR = { 'AI工具':'#A855F7','变现玩法':'#34D399','课程':'#8B5CF6','成品工作台':'#FF6B1A','模板市集':'#EC4899','OPC项目':'#60A5FA','应用':'#22D3EE','服务商':'#F59E0B','板块':'#FFD700' };
+
+function renderHot(){
+  document.getElementById('hotTags').innerHTML = HOT.map(t=>`<span class="sx-hot-tag" onclick="search('${t}')">${t}</span>`).join('');
+}
+function search(kw){
+  const input = document.getElementById('sxInput');
+  input.value = kw;
+  doSearch();
+}
+function doSearch(){
+  const kw = document.getElementById('sxInput').value.trim().toLowerCase();
+  const results = document.getElementById('sxResults');
+  const count = document.getElementById('sxCount');
+  if (!kw) {
+    count.textContent = '';
+    results.innerHTML = '<div class="sx-empty"><div class="em">✨</div>输入关键词开始搜索<br><span style="font-size:11px">试试：变现 / 接单 / 电商 / 视频 / Agent</span></div>';
+    return;
+  }
+  const hits = IDX.filter(x => (x.n+x.d+x.g).toLowerCase().includes(kw));
+  count.textContent = `找到 ${hits.length} 个结果`;
+  if (!hits.length) {
+    results.innerHTML = `<div class="sx-empty"><div class="em">🔍</div>没找到「${kw}」<br><span style="font-size:11px">换个关键词试试</span></div>`;
+    return;
+  }
+  // 按分组
+  const groups = {};
+  hits.forEach(h => { if (!groups[h.g]) groups[h.g] = []; groups[h.g].push(h); });
+  results.innerHTML = Object.entries(groups).map(([g, items]) => `
+    <div class="sx-group"><span class="dot"></span>${g} · ${items.length}</div>
+    ${items.map(h => `<a class="sx-item" href="${h.u}">
+      <div class="sx-ico" style="background:${h.c}22;color:${h.c}">${h.i}</div>
+      <div style="flex:1"><div class="sx-name">${h.n}</div><div class="sx-desc">${h.d}</div></div>
+      <div class="sx-go">→</div>
+    </a>`).join('')}
+  `).join('');
+}
+document.getElementById('sxInput').addEventListener('input', doSearch);
+document.getElementById('sxInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+renderHot();
+</script>
+</body>
+</html>
