@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday · 资产沉淀库 · 自用模板/工作流一键标准化打包上架市集">
+<title>CF · 资产沉淀库</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+    --bg:#0d0420; --card:rgba(255,255,255,.045); --border:rgba(255,255,255,.09);
+    --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
+    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
+    --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --blue:#60A5FA; --red:#F87171;
+}
+body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; background-image:radial-gradient(ellipse 700px 420px at 50% -6%, rgba(168,85,247,.18), transparent 60%); background-attachment:fixed; }
+.wrap { max-width:760px; margin:0 auto; padding:16px 16px 60px; }
+.top { display:flex; align-items:center; gap:12px; padding:14px 4px 4px; }
+.top .back { width:40px; height:40px; border-radius:12px; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+.top .tt { font-size:18px; font-weight:900; }
+.top .ts { font-size:10px; color:var(--dim); }
+.banner { margin-top:14px; background:linear-gradient(160deg,rgba(168,85,247,.12),rgba(236,72,153,.04)); border:1px solid rgba(168,85,247,.28); border-radius:16px; padding:15px 17px; }
+.banner h3 { font-size:14px; font-weight:900; margin-bottom:5px; }
+.banner h3 .g { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.banner p { font-size:11px; color:var(--dim); line-height:1.8; }
+.banner .flow { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+.banner .fl { flex:1; min-width:90px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:10px; padding:7px 6px; text-align:center; font-size:9.5px; color:var(--dim); }
+.banner .fl b { display:block; font-size:11px; color:#fff; margin-bottom:2px; }
+.sec-hd { display:flex; align-items:center; justify-content:space-between; margin:20px 4px 10px; }
+.sec-hd h3 { font-size:15px; font-weight:900; display:flex; align-items:center; gap:8px; }
+.sec-hd .bar { width:4px; height:18px; border-radius:2px; background:linear-gradient(180deg,var(--purple),var(--pink)); }
+.sec-hd .note { font-size:10px; color:var(--mute); }
+.form { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; }
+.field { margin-bottom:11px; }
+.field label { display:block; font-size:10.5px; font-weight:800; color:var(--dim); margin-bottom:5px; }
+.field input, .field select, .field textarea { width:100%; min-height:48px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:12px; color:var(--text); font-size:16px; padding:11px 13px; outline:none; font-family:inherit; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color:rgba(168,85,247,.6); }
+.field textarea { min-height:64px; resize:vertical; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:50px; border:none; border-radius:15px; font-size:14px; font-weight:900; color:#fff; cursor:pointer; }
+.btn-main { background:linear-gradient(135deg,var(--purple),var(--pink)); box-shadow:0 8px 24px rgba(168,85,247,.35); }
+.btn-ghost { background:rgba(255,255,255,.06); border:1px solid var(--border); }
+.btn-green { background:linear-gradient(135deg,#10B981,#34D399); }
+.asset { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:13px 14px; margin-bottom:10px; }
+.asset .r1 { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.asset .nm { font-size:13px; font-weight:900; flex:1; }
+.asset .pr { font-size:15px; font-weight:900; color:var(--gold); white-space:nowrap; }
+.asset .r2 { font-size:10px; color:var(--dim); margin-top:4px; line-height:1.6; }
+.asset .r3 { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.mini-btn { font-size:11px; font-weight:800; padding:9px 14px; border-radius:14px; cursor:pointer; border:1px solid var(--border); background:rgba(255,255,255,.05); color:#fff; }
+.mini-btn.grn { border-color:rgba(52,211,153,.4); color:var(--green); }
+.mini-btn.gold { border-color:rgba(255,215,0,.4); color:var(--gold); }
+.mini-btn.red { border-color:rgba(248,113,113,.4); color:var(--red); }
+.type-tag { font-size:8.5px; font-weight:800; padding:3px 9px; border-radius:9px; }
+.t-wb { background:rgba(168,85,247,.15); color:var(--purple-light); }
+.t-pr { background:rgba(236,72,153,.15); color:#F472B6; }
+.t-sop { background:rgba(52,211,153,.15); color:var(--green); }
+.t-c { background:rgba(255,215,0,.15); color:var(--gold); }
+.t-app { background:rgba(96,165,250,.15); color:#60A5FA; }
+.empty { text-align:center; font-size:11px; color:var(--mute); padding:16px 0; }
+.pack { background:rgba(13,4,32,.6); border:1px solid rgba(168,85,247,.3); border-radius:14px; padding:14px; margin-top:10px; font-size:10.5px; color:#c9c0e0; line-height:1.7; white-space:pre-wrap; word-break:break-all; max-height:220px; overflow-y:auto; }
+.toast { position:fixed; left:50%; bottom:40px; transform:translateX(-50%); background:rgba(26,13,46,.96); border:1px solid rgba(168,85,247,.5); color:#fff; font-size:13px; font-weight:800; padding:12px 22px; border-radius:22px; z-index:300; opacity:0; pointer-events:none; transition:opacity .25s; }
+.toast.show { opacity:1; }
+.on-shelf { display:flex; align-items:center; gap:8px; background:rgba(52,211,153,.06); border:1px solid rgba(52,211,153,.2); border-radius:10px; padding:8px 12px; font-size:10.5px; color:var(--dim); margin-top:8px; }
+.on-shelf b { color:var(--green); }
+@media (max-width:520px){ .field-row { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div class="back" onclick="goBack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="#C084FC" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="tt">资产沉淀库</div><div class="ts">自用跑通 → 标准化 → 上架卖钱</div></div>
+    </div>
+
+    <div class="banner">
+        <h3>把「自用资产」变成「卖钱产品」<span class="g">一键闭环</span></h3>
+        <p>你日常跑通、验证过的 AI 模板 / 工作流 / 提示词 / SOP——标准化打包后直接上架市集对外售卖。</p>
+        <div class="flow">
+            <div class="fl"><b>① 沉淀</b>记录自用资产</div>
+            <div class="fl"><b>② 打包</b>生成标准 JSON 包</div>
+            <div class="fl"><b>③ 上架</b>写入云端市集</div>
+            <div class="fl"><b>④ 变现</b>订单回流看板</div>
+        </div>
+    </div>
+
+    <div class="sec-hd"><h3><span class="bar"></span>新增资产</h3><span class="note">自用 or 对外都可沉淀</span></div>
+    <div class="form">
+        <div class="field-row">
+            <div class="field"><label>资产名称 *</label><input id="fName" placeholder="如：小红书爆款工作流"></div>
+            <div class="field"><label>类型</label><select id="fType">
+                <option value="wb">AI 工作台</option><option value="pr">提示词包</option>
+                <option value="sop">SOP/玩法</option><option value="c">课程/教程</option><option value="app">AI 应用</option>
+            </select></div>
+        </div>
+        <div class="field"><label>一句话说明 *</label><input id="fDesc" placeholder="它解决什么问题 / 效果是什么"></div>
+        <div class="field-row">
+            <div class="field"><label>定价（¥）*</label><input id="fPrice" type="number" placeholder="29" value="29"></div>
+            <div class="field"><label>交付方式</label><select id="fDeliver">
+                <option value="digital">数字资源（自动交付）</option><option value="service">服务交付（人工）</option>
+            </select></div>
+        </div>
+        <div class="field"><label>资源链接（数字资源填，服务可留空）</label><input id="fUrl" placeholder="https://... 或 网盘链接"></div>
+        <div class="field"><label>适用标签（逗号分隔，选填）</label><input id="fTags" placeholder="爆款, 立即见效, 小红书"></div>
+        <button class="btn btn-main" onclick="addAsset()">＋ 沉淀这条资产</button>
+    </div>
+
+    <div class="sec-hd"><h3><span class="bar"></span>我的资产库</h3><span class="note" id="assetCount">0 条</span></div>
+    <div id="assetList"><div class="empty">还没有资产 · 把你跑通的东西先记下来</div></div>
+
+    <div class="sec-hd"><h3><span class="bar"></span>云端已上架</h3><span class="note" id="shelfCount">0 件</span></div>
+    <div id="shelfList"><div class="empty">加载中...</div></div>
+
+    <div class="foot" style="text-align:center;margin-top:18px;font-size:9.5px;color:var(--mute);line-height:1.8">Crazy Friday · 资产沉淀库 · 打包标准 JSON · 上架写入云端市集（products）<br>自用→商业化 闭环 · © 2026</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const LS_KEY = 'cf_assets';
+const $ = id => document.getElementById(id);
+function load(k,d){ try{ return JSON.parse(localStorage.getItem(k))||d }catch(e){ return d } }
+function save(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+function goBack(){ history.length>1 ? history.back() : location.href='index.html'; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const TYPES = { wb:['AI工作台','t-wb'], pr:['提示词包','t-pr'], sop:['SOP/玩法','t-sop'], c:['课程','t-c'], app:['AI应用','t-app'] };
+function tagHTML(t){ const x=TYPES[t]||TYPES.wb; return `<span class="type-tag ${x[1]}">${x[0]}</span>`; }
+
+function addAsset(){
+    const name = $('fName').value.trim(), desc = $('fDesc').value.trim(), price = Number($('fPrice').value)||0;
+    if (!name || !desc){ toast('请填写名称和说明'); return; }
+    const a = { id:'a'+Date.now(), name, type:$('fType').value, desc, price, deliver:$('fDeliver').value, url:$('fUrl').value.trim(), tags:($('fTags').value||'').split(/[,，]/).map(s=>s.trim()).filter(Boolean), time:new Date().toISOString().slice(0,10), shelf:false };
+    const list = load(LS_KEY, []); list.unshift(a); save(LS_KEY, list);
+    $('fName').value=''; $('fDesc').value=''; $('fUrl').value=''; $('fTags').value='';
+    renderAssets(); toast('✅ 已沉淀到资产库');
+}
+function renderAssets(){
+    const list = load(LS_KEY, []);
+    $('assetCount').textContent = list.length + ' 条';
+    if (!list.length){ $('assetList').innerHTML = '<div class="empty">还没有资产 · 把你跑通的东西先记下来</div>'; return; }
+    $('assetList').innerHTML = list.map(a=>`
+        <div class="asset">
+            <div class="r1"><span class="nm">${esc(a.name)}</span><span class="pr">¥${a.price}</span></div>
+            <div class="r2">${tagHTML(a.type)} ${esc(a.desc)}</div>
+            <div class="r2">${(a.tags||[]).map(t=>'#'+esc(t)).join(' ')} · ${a.time}</div>
+            <div class="r3">
+                <span class="mini-btn" onclick="packAsset('${a.id}')">📦 标准化打包</span>
+                ${a.shelf
+                    ? `<span class="mini-btn grn">✅ 已上架</span>`
+                    : `<span class="mini-btn gold" onclick="shelfAsset('${a.id}')">🛍️ 上架市集</span>`}
+                <span class="mini-btn red" onclick="delAsset('${a.id}')">删除</span>
+            </div>
+            ${a.pack ? `<div class="pack" id="pack_${a.id}">${esc(a.pack)}</div>` : ''}
+            ${a.onShelf ? `<div class="on-shelf"><b>已写入云端 products</b> · 市集可见 · ${a.shelfTime||''}</div>` : ''}
+        </div>`).join('');
+}
+function delAsset(id){
+    if (!confirm('删除这条资产？')) return;
+    save(LS_KEY, load(LS_KEY, []).filter(a=>a.id!==id)); renderAssets();
+}
+/* 标准化打包：输出标准 JSON schema */
+function packAsset(id){
+    const list = load(LS_KEY, []); const a = list.find(x=>x.id===id); if(!a) return;
+    const pack = JSON.stringify({
+        schema:'cf-asset-v1',
+        id:a.id, name:a.name, type:a.type, desc:a.desc,
+        price:a.price, deliver:a.deliver, url:a.url||'', tags:a.tags||[],
+        author:'Crazy Friday', created:a.time, status:'draft'
+    }, null, 2);
+    a.pack = pack; save(LS_KEY, list);
+    renderAssets();
+    toast('📦 标准包已生成，可复制');
+    setTimeout(()=>{ const el = document.getElementById('pack_'+id); if (el){ el.scrollIntoView({behavior:'smooth'}); } }, 100);
+}
+/* 上架：写入云端 products */
+function shelfAsset(id){
+    const list = load(LS_KEY, []); const a = list.find(x=>x.id===id); if(!a) return;
+    if (!a.pack) { packAsset(id); const na = load(LS_KEY, []).find(x=>x.id===id); a.pack = na.pack; }
+    const item = JSON.parse(a.pack); item.status = 'on_shelf'; item.shelf_time = new Date().toISOString().slice(0,10);
+    fetch(CLOUD).then(r=>r.json()).then(c=>{
+        c.products = c.products || [];
+        if (!c.products.find(p=>p.id===a.id)) c.products.unshift(item);
+        return fetch(CLOUD, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(c) });
+    }).then(()=>{
+        a.shelf = true; a.onShelf = true; a.shelfTime = item.shelf_time; save(LS_KEY, list);
+        renderAssets(); loadShelf(); toast('🛍️ 已上架云端市集！');
+    }).catch(()=>toast('⚠️ 云端暂不可用，稍后重试'));
+}
+/* 云端已上架列表 */
+function loadShelf(){
+    fetch(CLOUD).then(r=>r.json()).then(c=>{
+        const ps = c.products || [];
+        $('shelfCount').textContent = ps.length + ' 件';
+        $('shelfList').innerHTML = ps.length ? ps.map(p=>`
+            <div class="asset"><div class="r1"><span class="nm">${esc(p.name)}</span><span class="pr">¥${p.price}</span></div>
+            <div class="r2">${tagHTML(p.type)} ${esc(p.desc||'')}</div>
+            <div class="r2">上架：${p.shelf_time||''} · ${esc(p.deliver==='digital'?'数字自动交付':'服务交付')}</div></div>`).join('') : '<div class="empty">暂未上架 · 在资产库点「上架市集」即可</div>';
+    }).catch(()=>{ $('shelfList').innerHTML = '<div class="empty">云端连接失败</div>'; });
+}
+renderAssets();
+loadShelf();
+</script>
+</body>
+</html>
