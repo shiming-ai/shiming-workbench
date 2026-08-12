@@ -323,6 +323,43 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
   .rec6 .it{padding:9px 5px}.rec6 .n{font-size:10.5px}
   .qk{padding:11px 5px}
 }
+
+/* ===== AI 今日计划 ===== */
+.plan-card{background:linear-gradient(160deg,#FFFFFF,#F1EDFC);border:1px solid var(--line2);border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
+.plan-card::after{content:'';position:absolute;top:-50px;right:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.12),transparent 70%);pointer-events:none}
+.plan-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--primary);background:var(--primary-soft);padding:3px 10px;border-radius:10px;margin-bottom:10px}
+.plan-tag svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.plan-t{font-size:15px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.plan-sub{font-size:11px;color:var(--ink3);margin-bottom:8px}
+.plan-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.plan-row:first-of-type{border-top:none}
+.pr-ico{width:28px;height:28px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.pr-b{flex:1;min-width:0}
+.pr-t{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.pr-d{font-size:11px;color:var(--ink2);line-height:1.55;margin-top:1px}
+.pr-time{font-size:10.5px;color:var(--primary);font-weight:700;flex-shrink:0}
+.plan-shuffle{margin-top:10px;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--primary);cursor:pointer}
+.plan-shuffle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.plan-feed-row{display:flex;align-items:center;gap:8px;padding:6px 0}
+.plan-feed-row .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.plan-feed-row .tm{font-size:11.5px;font-weight:800;width:44px;color:var(--primary)}
+.plan-feed-row .it{font-size:12px;color:var(--ink2);flex:1}
+.plan-feed-row .done-btn{font-size:10px;font-weight:700;color:var(--mint);cursor:pointer}
+
+/* ===== 育儿知识库 ===== */
+.know-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:13px;margin-bottom:9px;box-shadow:var(--shadow);transition:transform .12s}
+.know-card:active{transform:scale(.99)}
+.kc-hd{display:flex;align-items:center;gap:8px}
+.kc-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.kc-t{font-size:13.5px;font-weight:800;flex:1;line-height:1.35}
+.kc-tag{font-size:9.5px;color:var(--primary);background:var(--primary-soft);padding:2px 7px;border-radius:7px;font-weight:700;flex-shrink:0}
+.kc-b{font-size:12px;color:var(--ink2);line-height:1.65;margin-top:7px}
+.kc-add{font-size:11px;color:var(--primary);font-weight:700;margin-top:8px;cursor:pointer;display:inline-flex;align-items:center;gap:3px}
+.kc-add svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round}
+.know-stage-bar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;margin-bottom:12px;scrollbar-width:none}
+.know-stage-bar::-webkit-scrollbar{display:none}
+.know-stage{flex-shrink:0;padding:8px 13px;border-radius:11px;font-size:12px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
+.know-stage.on{background:var(--primary);color:#fff;border-color:var(--primary)}
 </style>
 </head>
 <body>
@@ -376,6 +413,11 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
     <div class="sec">
       <div class="sec-hd"><h2>快捷入口</h2><span class="more">全部工具</span></div>
       <div class="quick6" id="quick6"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd"><h2>AI 今日计划</h2><span class="more" id="planStageTag" style="color:var(--primary);font-weight:700"></span></div>
+      <div class="plan-card" id="dailyPlanCard"></div>
     </div>
 
     <div class="sec">
@@ -440,6 +482,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
       <div class="row-item" onclick="goPage('page-trends')"><div class="ri-ico" style="background:linear-gradient(135deg,#A855F7,#7C3AED)"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg></div><div class="ri-body"><div class="ri-t">成长数据趋势</div><div class="ri-d">身高 / 体重 / 睡眠 / 喂养曲线</div></div><svg class="ri-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="row-item" onclick="goPage('page-milestones')"><div class="ri-ico" style="background:linear-gradient(135deg,#F472B6,#EC4899)"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div class="ri-body"><div class="ri-t">发育里程碑</div><div class="ri-d">按年龄阶段的成长对照</div></div><svg class="ri-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="row-item" onclick="goPage('page-story')"><div class="ri-ico" style="background:linear-gradient(135deg,#34D399,#10B981)"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="ri-body"><div class="ri-t">AI 成长故事</div><div class="ri-d">周小结 / 月报告 / 生日故事</div></div><svg class="ri-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      <div class="row-item" onclick="goPage('page-knowledge')"><div class="ri-ico" style="background:linear-gradient(135deg,#22C55E,#16A34A)"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="ri-body"><div class="ri-t">幼儿知识库</div><div class="ri-d">喂养 / 睡眠 / 发育 / 安全 / 早教</div></div><svg class="ri-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="row-item" onclick="goPage('page-family')"><div class="ri-ico" style="background:linear-gradient(135deg,#FB923C,#F97316)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="ri-body"><div class="ri-t">家庭共享</div><div class="ri-d">成员 / 权限 / 家庭动态</div></div><svg class="ri-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="row-item" onclick="goPage('page-reminders')"><div class="ri-ico" style="background:linear-gradient(135deg,#FBBF24,#F59E0B)"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><div class="ri-body"><div class="ri-t">提醒中心</div><div class="ri-d">疫苗 / 体检 / 生日 / 纪念日</div></div><svg class="ri-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>
@@ -504,6 +547,13 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
     <div class="card pad" id="storyOut" style="display:none;margin-top:14px"></div>
   </div>
 
+  <!-- ========== 育儿知识库 ========== -->
+  <div class="page" id="page-knowledge">
+    <div class="sub-top"><div class="sub-back" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><h2>幼儿知识库</h2><span class="more" style="font-size:11px;color:var(--ink3)">AI 自动更新</span></div>
+    <div class="know-stage-bar" id="knowStageBar"></div>
+    <div id="knowList"></div>
+  </div>
+
   <!-- ========== 家庭共享 ========== -->
   <div class="page" id="page-family">
     <div class="sub-top"><div class="sub-back" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><h2>家庭共享</h2><span class="more" onclick="openAddMember()" style="font-size:12.5px;font-weight:700;color:var(--primary);cursor:pointer">＋ 添加成员</span></div>
@@ -554,6 +604,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
   <div class="dr-sec">AI 工具</div>
   <div class="dr-item" onclick="goPage('page-ai');closeDrawer()"><span class="ico" style="background:linear-gradient(135deg,#10B981,#34D399)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></span><span class="nm">AI 育儿助手</span></div>
   <div class="dr-item" onclick="goPage('page-story');closeDrawer()"><span class="ico" style="background:linear-gradient(135deg,#F59E0B,#FBBF24)"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span class="nm">AI 成长故事</span></div>
+  <div class="dr-item" onclick="goPage('page-knowledge');closeDrawer()"><span class="ico" style="background:linear-gradient(135deg,#22C55E,#16A34A)"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span class="nm">幼儿知识库</span></div>
   <div class="dr-sec">数据</div>
   <div class="dr-item" onclick="goPage('page-trends');closeDrawer()"><span class="ico" style="background:linear-gradient(135deg,#A855F7,#7C3AED)"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg></span><span class="nm">成长数据趋势</span></div>
   <div class="dr-item" onclick="goPage('page-milestones');closeDrawer()"><span class="ico" style="background:linear-gradient(135deg,#FB923C,#F97316)"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></span><span class="nm">发育里程碑</span></div>
@@ -580,7 +631,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 
 <script>
 /* ================= 数据层 ================= */
-const K={profile:'wb_baby_profile',health:'wb_baby_health',moments:'wb_baby_moments',vaccines:'wb_baby_vaccines',daily:'wb_baby_daily',records:'wb_baby_records',members:'wb_baby_members',photos:'wb_baby_photos',reminders:'wb_baby_reminders',milestones:'wb_baby_milestones',logs:'wb_baby_logs',license:'wb_baby_license'};
+const K={profile:'wb_baby_profile',health:'wb_baby_health',moments:'wb_baby_moments',vaccines:'wb_baby_vaccines',daily:'wb_baby_daily',records:'wb_baby_records',members:'wb_baby_members',photos:'wb_baby_photos',reminders:'wb_baby_reminders',milestones:'wb_baby_milestones',logs:'wb_baby_logs',license:'wb_baby_license',feed_done:'wb_baby_feed_done'};
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -1136,6 +1187,122 @@ function copyStory(btn){
   if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>toast('✅ 已复制'))}else toast('长按选择复制');
 }
 
+/* ================= AI 今日计划 + 育儿知识库 ================= */
+const STAGES=[
+  {id:'0-3',n:'0-3个月',max:3,feeds:[{t:'07:00',it:'母乳/配方奶'},{t:'10:00',it:'母乳/配方奶'},{t:'13:00',it:'母乳/配方奶'},{t:'16:00',it:'母乳/配方奶'},{t:'19:00',it:'母乳/配方奶'},{t:'22:00',it:'睡前奶'}],foods:['纯母乳或配方奶按需喂养','喂奶后拍嗝 10-15 分钟','观察是否吐奶、观察尿量 6 次以上'],plays:['俯卧练习抬头（每次 1-2 分钟）','黑白卡追视训练','温柔抚触与哼唱'],safes:['睡眠务必仰卧、床上不放软物','抱宝宝时托住头颈','洗澡水温 37-38℃，先试水温']},
+  {id:'3-6',n:'3-6个月',max:6,feeds:[{t:'07:00',it:'母乳/配方奶'},{t:'09:30',it:'母乳/配方奶'},{t:'12:00',it:'母乳/配方奶'},{t:'15:00',it:'母乳/配方奶'},{t:'18:00',it:'母乳/配方奶'},{t:'21:00',it:'睡前奶'}],foods:['尝试引入铁强化米粉','新食物一次一种，连试 3 天','米粉从稀到稠过渡'],plays:['练习翻身（清醒时多趴）','摇铃/抓握玩具','照镜子互动'],safes:['床边加护栏防跌落','小颗粒玩具远离','注意翻身窒息风险']},
+  {id:'6-12',n:'6-12个月',max:12,feeds:[{t:'07:00',it:'奶 + 早餐'},{t:'10:00',it:'上午加餐'},{t:'12:00',it:'午餐'},{t:'15:00',it:'下午加餐'},{t:'18:00',it:'晚餐'},{t:'20:30',it:'睡前奶'}],foods:['增加蛋黄/肉泥/肝泥补铁','水果切成可抓握条状','一岁前不加盐、不加蜂蜜'],plays:['练习爬行、扶站','叠积木、撕纸游戏','读布书、玩躲猫猫'],safes:['插座加保护盖','桌角贴防撞条','药物/清洁剂放到够不到的地方']},
+  {id:'1-2',n:'1-2岁',max:24,feeds:[{t:'08:00',it:'早餐'},{t:'10:00',it:'上午加餐'},{t:'12:00',it:'午餐'},{t:'15:00',it:'下午加餐'},{t:'18:00',it:'晚餐'},{t:'20:30',it:'睡前奶/温水'}],foods:['三餐规律，奶量约 400-500ml','食物切小块防噎','鼓励自己用勺、不追喂'],plays:['练习独走、上下台阶','玩形状配对、叠杯','模仿游戏（打电话/做饭）'],safes:['窗口装防护栏','热水壶远离桌边','乘车务必使用安全座椅']},
+  {id:'2-3',n:'2-3岁',max:36,feeds:[{t:'08:00',it:'早餐'},{t:'10:30',it:'上午加餐'},{t:'12:00',it:'午餐'},{t:'15:00',it:'下午加餐'},{t:'18:00',it:'晚餐'}],foods:['三餐两点，营养均衡','鼓励吃蔬菜水果','减少高糖零食、睡前刷牙'],plays:['练习双脚跳、踢球','玩拼图、涂鸦','亲子绘本共读'],safes:['药品锁好、电器远离','小区玩耍不离开视线','教会「不可以碰」底线']},
+  {id:'3+',n:'3岁+',max:999,feeds:[{t:'08:00',it:'早餐'},{t:'10:30',it:'上午加餐'},{t:'12:00',it:'午餐'},{t:'15:00',it:'下午加餐'},{t:'18:00',it:'晚餐'}],foods:['三餐两点，均衡搭配','鼓励参与备餐','规律进食、远离屏幕时间'],plays:['跳绳/拍球锻炼','角色扮演、过家家','开始接触简单规则游戏'],safes:['过马路牵好手','不跟陌生人走','教记家长电话']}
+];
+const KNOWLEDGE={
+  '0-3':[
+    {cat:'喂养',ico:'🍼',t:'按需喂养，观察信号',b:'新生儿胃容量小，按需喂养是原则：宝宝嘴巴找、咂嘴、吸手指就是饿的信号，不用严格卡时间。每次喂完记得拍嗝，减少吐奶和胀气。',tag:'最实用'},
+    {cat:'睡眠',ico:'😴',t:'仰卧睡眠是安全底线',b:'1 岁内宝宝一律仰卧入睡，床上不放枕头、毛绒玩具和厚被子，降低婴儿猝死风险。白天小睡也保持仰卧。',tag:'安全第一'},
+    {cat:'发育',ico:'🌱',t:'俯卧时间很重要',b:'清醒时每天多次短暂俯卧，锻炼颈部力量、为翻身爬行打基础。每次 1-3 分钟，从趴一会儿就够开始。',tag:'必做'},
+    {cat:'安全',ico:'🛡️',t:'洗澡安全三要点',b:'水温 37-38℃，先用手肘试温；全程手不离宝宝；洗后立刻擦干包好防止着凉。绝不把宝宝单独留在澡盆。',tag:'牢记'},
+    {cat:'早教',ico:'🎨',t:'黑白卡与抚触',b:'视觉还没发育成熟，黑白对比强烈的卡片最吸引。洗澡后温柔抚触+哼歌，是最好的亲子交流。',tag:'轻松学'}
+  ],
+  '3-6':[
+    {cat:'喂养',ico:'🍼',t:'4-6 个月可试辅食',b:'挺舌反射消失、能靠坐、对食物感兴趣时，可引入第一口辅食：铁强化米粉，从一小勺开始，由稀到稠。',tag:'新阶段'},
+    {cat:'睡眠',ico:'😴',t:'白天小睡规律化',b:'3-4 个月后逐步形成 3 次小睡（上午/下午/傍晚），每次 1-2 小时。睡前一小时安静下来，建立仪式感。',tag:'养习惯'},
+    {cat:'发育',ico:'🌱',t:'翻身关键期',b:'多给趴着玩的机会，宝宝会从翻身开始解锁大运动。可以拿玩具引导他侧翻、翻滚，注意床边安全。',tag:'别错过'},
+    {cat:'安全',ico:'🛡️',t:'防跌落要提前',b:'宝宝会翻身后，床边就要加护栏，换尿布台永远一只手护着。小珠子、纽扣等小物品收好防误吞。',tag:'牢记'},
+    {cat:'早教',ico:'🎨',t:'摇铃与躲猫猫',b:'抓握、摇响、躲猫猫都能锻炼手眼协调和物体恒存概念。宝宝咯咯笑的时候，就是最好的学习时刻。',tag:'亲子'}
+  ],
+  '6-12':[
+    {cat:'喂养',ico:'🍼',t:'补铁很关键',b:'6 个月后母乳铁含量下降，要加铁强化米粉、肉泥、肝泥。一岁前不加盐和蜂蜜，辅食尽量多样。',tag:'营养'},
+    {cat:'睡眠',ico:'😴',t:'傍晚觉开始消失',b:'接近 1 岁，很多宝宝不再需要傍晚觉，白天 2 觉。如果晚上入睡困难，可以逐渐缩短下午觉时间。',tag:'调整期'},
+    {cat:'发育',ico:'🌱',t:'爬行与扶站',b:'爬行锻炼协调性，扶站为走路做准备。给他安全的扶物，别急着用学步车（可能影响足部发育）。',tag:'大运动'},
+    {cat:'安全',ico:'🛡️',t:'居家防护升级',b:'插座保护盖、桌角防撞条、柜门安全锁都要装好。家里的小物件、药品、清洁剂全部放到高处或锁起来。',tag:'必做'},
+    {cat:'早教',ico:'🎨',t:'布书与指认',b:'读布书、指认"眼睛/鼻子/嘴巴"，玩"把积木放进盒子"的游戏，能大大促进语言和认知发展。',tag:'好玩'}
+  ],
+  '1-2':[
+    {cat:'喂养',ico:'🍼',t:'三餐规律 + 奶 400-500ml',b:'逐步过渡到一天三餐两点，奶量 400-500ml。食物切成小块防噎，鼓励自己用勺，吃得脏一点没关系。',tag:'最重要'},
+    {cat:'睡眠',ico:'😴',t:'固定睡前仪式',b:'洗澡→抚触→读绘本→关灯，每天同一套流程，能帮宝宝快速进入睡眠状态。白天 1-2 觉。',tag:'立规矩'},
+    {cat:'发育',ico:'🌱',t:'语言爆发期前兆',b:'会指物表达需求、说单字叠词。多和他说话、描述正在做的事，他听得越多，开口越早。',tag:'多说'},
+    {cat:'安全',ico:'🛡️',t:'窗口与热水安全',b:'窗口装防护栏，热水壶、热汤放在桌边够不到的地方。乘车必须用反向安装的安全座椅。',tag:'牢记'},
+    {cat:'早教',ico:'🎨',t:'模仿游戏最有效',b:'打电话、做饭、给娃娃喂饭…模仿游戏是 1-2 岁最好的学习方式，边玩边教生活技能。',tag:'亲子'}
+  ],
+  '2-3':[
+    {cat:'喂养',ico:'🍼',t:'三餐两点 + 控糖',b:'正餐规律、两餐之间加水果/奶。高糖零食尽量少，睡前 30 分钟不进食，保护牙齿和睡眠。',tag:'营养'},
+    {cat:'睡眠',ico:'😴',t:'午睡与晚上 11h',b:'3 岁前总睡眠约 11-13h（含午睡）。午睡别太晚太长，否则晚上入睡困难。固定作息最关键。',tag:'作息'},
+    {cat:'发育',ico:'🌱',t:'如厕训练信号',b:'能说"尿尿/臭臭"、尿布能保持 2 小时干爽、对马桶好奇时，就可以开始如厕训练，别强迫。',tag:'里程碑'},
+    {cat:'安全',ico:'🛡️',t:'防走失要教',b:'外出牵好手，教宝宝记住家长名字。公共场合定好"走丢约定"（站在原地等妈妈）。',tag:'牢记'},
+    {cat:'早教',ico:'🎨',t:'拼图与涂鸦',b:'简单拼图、蜡笔涂鸦能练精细动作和专注力。每天 15 分钟高质量陪伴，比玩具多少更重要。',tag:'陪伴'}
+  ],
+  '3+':[
+    {cat:'喂养',ico:'🍼',t:'营养均衡 + 参与备餐',b:'鼓励宝宝参与洗菜、摆餐具，让他对食物有兴趣。少油少盐少糖，规律三餐两点。',tag:'好习惯'},
+    {cat:'睡眠',ico:'😴',t:'稳定作息 + 独立入睡',b:'3 岁+ 可以练习独立入睡，睡前故事+关灯是仪式。总睡眠约 10-12h，午睡可视情况保留。',tag:'成长'},
+    {cat:'发育',ico:'🌱',t:'运动与社交发展',b:'跳绳、拍球、骑平衡车锻炼协调；幼儿园集体生活促进社交。遇到冲突教他表达感受而不是打闹。',tag:'衔接'},
+    {cat:'安全',ico:'🛡️',t:'安全常识要入心',b:'过马路牵好手、不跟陌生人走、记住爸妈电话和家庭住址。这些要反复演练到形成本能。',tag:'必备'},
+    {cat:'早教',ico:'🎨',t:'规则游戏与专注',b:'棋类、指令游戏（"红灯绿灯"）培养规则意识和专注力。每天留出无屏幕的安静玩耍时间。',tag:'进阶'}
+  ]
+};
+function stageOf(birth){
+  const m=Math.floor(daysFrom(birth)/30);
+  if(m<=3)return STAGES[0];if(m<=6)return STAGES[1];if(m<=12)return STAGES[2];if(m<=24)return STAGES[3];if(m<=36)return STAGES[4];return STAGES[5];
+}
+let planSeed=0;
+function genPlan(){
+  const p=load(K.profile,{}),st=stageOf(p.birth);
+  const dl=load(K.daily,{})[todayStr()]||{};
+  planSeed++;
+  const kn=(STAGES.findIndex(s=>s.id===st.id));
+  const pool=KNOWLEDGE[st.id]||[];
+  const pick=(arr,n)=>{const o=[...arr];for(let i=o.length-1;i>0;i--){const j=(i+planSeed*7)%(i+1);[o[i],o[j]]=[o[j],o[i]]}return o.slice(0,n)};
+  const foods=pick(st.foods,2),plays=pick(st.plays,2),safes=pick(st.safes,1),knows=pick(pool,2);
+  return {st,feeds:st.feeds,foods,plays,safes,knows};
+}
+let feedDone=[];
+function renderPlan(){
+  const p=load(K.profile,{});
+  const st=stageOf(p.birth);
+  document.getElementById('planStageTag').textContent=st.n+' · AI 生成';
+  const plan=genPlan();
+  feedDone=load(K.feed_done,[])||[];
+  const today=todayStr();
+  const doneSet=feedDone.filter(d=>d.startsWith(today)).map(d=>d.split('|')[1]);
+  const feedRows=plan.feeds.map(f=>{const k=today+'|'+f.t;const done=doneSet.includes(f.t);return`<div class="plan-feed-row"><span class="dot" style="background:${done?'var(--mint)':'var(--primary)'}"></span><span class="tm">${f.t}</span><span class="it" style="${done?'text-decoration:line-through;color:var(--ink3)':''}">${f.it}</span><span class="done-btn" onclick="toggleFeedDone('${f.t}')">${done?'✓ 已吃':'记录'}</span></div>`}).join('');
+  const rowHtml=(ico,bg,t,d)=>`<div class="plan-row"><div class="pr-ico" style="background:${bg}">${ico}</div><div class="pr-b"><div class="pr-t">${t}</div><div class="pr-d">${d}</div></div></div>`;
+  document.getElementById('dailyPlanCard').innerHTML=`
+    <div class="plan-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>${st.n} · 今日自动推荐</div>
+    <div class="plan-t">${(p.name||'宝贝')}的今日计划</div>
+    <div class="plan-sub">根据宝宝年龄自动生成，可一键换一批</div>
+    <div class="plan-t" style="font-size:12.5px;margin:6px 0 2px">🍽 今日喂养时间</div>
+    ${feedRows}
+    <div style="border-top:1px solid var(--line);margin-top:6px"></div>
+    ${rowHtml('🥣','#FEF7E6','今日食谱',''+plan.foods.join('；'))}
+    ${rowHtml('🎮','#F1EDFC','今日活动',''+plan.plays.join('；'))}
+    ${rowHtml('🛡️','#E9F9F2','今日注意',plan.safes.join('；'))}
+    ${rowHtml('💡','#EBF7FE','今日知识',''+plan.knows.map(k=>k.t+'：'+k.b.slice(0,26)+'…').join('；'))}
+    <div class="plan-shuffle" onclick="renderPlan();toast('🔄 已换一批今日推荐')"><svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>换一批推荐</div>`;
+}
+function toggleFeedDone(t){
+  const today=todayStr(),key=today+'|'+t;
+  let arr=load(K.feed_done,[])||[];
+  arr=arr.filter(x=>x!==key);
+  const ex=load(K.feed_done,[])||[];
+  if(ex.includes(key)){save(K.feed_done,arr);log('我','标记喂养时间 '+t+' 未完成')}
+  else{arr=ex.concat([key]);save(K.feed_done,arr);log('我','完成 '+t+' 喂养')}
+  renderPlan();renderHome();
+}
+function renderKnowledge(){
+  const p=load(K.profile,{}),cur=stageOf(p.birth);
+  const stageIds=STAGES.map(s=>s.id);
+  document.getElementById('knowStageBar').innerHTML=[['auto','推荐']].concat(stageIds.map(id=>[id,STAGES.find(s=>s.id===id).n])).map(x=>`<div class="know-stage ${(knowStage==='auto'&&x[0]==='auto')||knowStage===x[0]?'on':''}" onclick="knowStage='${x[0]}';renderKnowledge()">${x[1]}</div>`).join('');
+  const list=(knowStage==='auto'?KNOWLEDGE[cur.id]:KNOWLEDGE[knowStage])||[];
+  document.getElementById('knowList').innerHTML=list.map((k,i)=>`<div class="know-card"><div class="kc-hd"><div class="kc-ico" style="background:${k.cat==='喂养'?'#FEF7E6':k.cat==='睡眠'?'#EBF7FE':k.cat==='发育'?'#F1EDFC':k.cat==='安全'?'#E9F9F2':'#FDF0F7'}">${k.ico}</div><div class="kc-t">${k.t}</div><span class="kc-tag">${k.cat}</span></div><div class="kc-b">${k.b}</div><div class="kc-add" onclick="addKnowToPlan('${k.t}','${k.b}','${k.cat}')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>加入今日计划</div></div>`).join('')||'<div class="empty"><div class="e-ico">📚</div>该阶段暂无内容</div>';
+}
+function addKnowToPlan(t,b,cat){
+  const dl=load(K.daily,{})[todayStr()]||{};
+  // 记录到今天，并提示
+  log('我','收藏了育儿知识「'+t+'」');
+  toast('✅ 已收藏，可在首页今日计划看到');
+}
+let knowStage='auto';
+
 /* ================= 授权 ================= */
 function renderLicense(){
   const lic=load(K.license,{});
@@ -1177,7 +1344,7 @@ function askClear(){
 /* ================= Toast & 刷新 ================= */
 let toastTimer;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
-function refreshAll(){renderHome();renderRecord();renderAI();renderGallery();renderHealth();renderTrends();renderMilestones();renderFamily();renderReminders();renderLicense();renderProfileForm()}
+function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord();renderAI();renderGallery();renderHealth();renderTrends();renderMilestones();renderFamily();renderReminders();renderLicense();renderProfileForm()}
 
 /* ================= 初始化 ================= */
 seed();
