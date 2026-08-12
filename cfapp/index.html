@@ -69,6 +69,33 @@
 .post-mini-name { font-size:11px; font-weight:700; flex:1; }
 .post-mini-title { font-size:13px; font-weight:800; margin-bottom:4px; }
 .post-mini-meta { font-size:10px; color:#6d6489; }
+
+/* ===== 首页质感增强 v2 ===== */
+.home-hero { background:
+    radial-gradient(ellipse 500px 300px at 50% -10%, rgba(168,85,247,.28), transparent 65%),
+    radial-gradient(ellipse 300px 200px at 90% 20%, rgba(236,72,153,.14), transparent 60%); }
+.home-title { text-shadow: 0 0 34px rgba(168,85,247,.4); letter-spacing:-1.5px; }
+.home-stats {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(168,85,247,.22);
+    box-shadow: 0 8px 30px rgba(124,58,237,.15), inset 0 1px 0 rgba(255,255,255,.06);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+.mod-card {
+    background: linear-gradient(160deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 4px 18px rgba(0,0,0,.25);
+}
+.mod-card::after {
+    content:''; position:absolute; top:-50%; left:-30%; width:70%; height:200%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
+    transform: rotate(18deg); pointer-events:none;
+}
+.play-card, .hot-card {
+    background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    border: 1px solid rgba(255,255,255,.10);
+}
+.today-cockpit { box-shadow: 0 10px 34px rgba(124,58,237,.16); }
 </style>
 </head>
 <body data-tab="home">
