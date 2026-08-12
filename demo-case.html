@@ -4,75 +4,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<meta name="description" content="Crazy Friday · 行业案例详情 · 客户故事/成果数据/客户证言/价格方案">
+<meta name="description" content="Crazy Friday · 36个行业案例 · 客户故事/成果数据/证言/价格方案 · 现成工作台开箱即用">
 <title>行业案例 · Crazy Friday</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-:root {
-    --bg:#0d0420; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07); --border:rgba(255,255,255,.09);
-    --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489;
-    --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC; --pink:#EC4899;
-    --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --blue:#60A5FA; --red:#F87171;
-}
+:root { --bg:#0d0420; --card:rgba(255,255,255,.045); --border:rgba(255,255,255,.09); --text:#f5f3ff; --dim:#a89ec9; --mute:#6d6489; --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC; --pink:#EC4899; --gold:#FFD700; --green:#34D399; --cyan:#22D3EE; --blue:#60A5FA; --red:#F87171; }
 body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; background-image:radial-gradient(ellipse 700px 420px at 50% -6%, rgba(168,85,247,.2), transparent 60%); background-attachment:fixed; }
 .wrap { max-width:820px; margin:0 auto; padding:14px 16px 60px; }
-/* 顶栏 */
 .topbar { display:flex; align-items:center; gap:10px; padding:12px 2px; }
 .topbar .back { width:40px; height:40px; border-radius:12px; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; }
 .topbar .tb-r { margin-left:auto; display:flex; gap:8px; }
 .tb-btn { font-size:11px; font-weight:800; color:#fff; background:linear-gradient(135deg,var(--purple),var(--pink)); padding:10px 16px; border-radius:18px; text-decoration:none; cursor:pointer; border:none; }
 .tb-btn.ghost { background:rgba(255,255,255,.06); border:1px solid var(--border); }
-/* Hero */
-.hero { text-align:center; padding:18px 0 6px; position:relative; }
-.hero .badge { display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:800; color:var(--purple-light); background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.3); padding:6px 14px; border-radius:18px; margin-bottom:14px; }
+.hero { text-align:center; padding:18px 0 6px; }
+.hero .badge { display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:800; background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.3); padding:6px 14px; border-radius:18px; margin-bottom:14px; }
 .hero h1 { font-size:clamp(24px,4.5vw,36px); font-weight:900; letter-spacing:-1px; line-height:1.2; }
-.hero .tagline { font-size:13px; color:var(--dim); margin:10px auto 0; max-width:560px; line-height:1.8; }
+.hero .tagline { font-size:13px; color:var(--dim); margin:10px auto 0; max-width:580px; line-height:1.8; }
 .hero .tagline b { color:#fff; }
-/* 成果 KPI */
 .kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:20px; }
 .kpi { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 8px; text-align:center; }
 .kpi .n { font-size:clamp(20px,3vw,28px); font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
 .kpi .l { font-size:10.5px; color:var(--dim); margin-top:5px; font-weight:700; }
 .kpi .d { font-size:8.5px; color:var(--mute); margin-top:2px; }
-/* 区块 */
 .sec { margin-top:26px; }
 .sec-hd { display:flex; align-items:center; gap:9px; margin-bottom:12px; }
 .sec-hd .bar { width:4px; height:18px; border-radius:2px; background:linear-gradient(180deg,var(--purple),var(--pink)); }
 .sec-hd h2 { font-size:16px; font-weight:900; }
 .sec-hd .tag { font-size:9px; color:var(--mute); }
 .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; }
-/* 故事 */
 .story { font-size:12.5px; color:var(--dim); line-height:2; }
 .story b { color:#fff; }
 .story .hl { color:var(--purple-light); font-weight:800; }
 .story .pains { margin-top:10px; }
 .story .pain { display:flex; align-items:flex-start; gap:8px; font-size:11.5px; color:#e2d9f5; background:rgba(248,113,113,.07); border:1px solid rgba(248,113,113,.18); border-radius:10px; padding:9px 12px; margin-bottom:7px; }
 .story .pain .x { color:var(--red); font-weight:900; flex-shrink:0; }
-/* 功能点 */
 .feat-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
 .feat { display:flex; gap:9px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:11px 12px; }
 .feat .fi { width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; }
 .feat .fn { font-size:11.5px; font-weight:800; color:#fff; }
 .feat .fd { font-size:9.5px; color:var(--dim); margin-top:2px; line-height:1.5; }
-/* 图表 */
 .chart-card { padding:14px; }
 .chart-title { font-size:11px; font-weight:800; color:var(--dim); margin-bottom:10px; }
 .bars { display:flex; align-items:flex-end; gap:6px; height:130px; padding:0 4px; }
 .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; height:100%; justify-content:flex-end; }
 .bar-col .bv { font-size:9px; color:var(--dim); font-weight:700; }
-.bar-col .bb { width:100%; border-radius:6px 6px 2px 2px; background:linear-gradient(180deg,var(--purple),var(--purple-deep)); position:relative; min-height:6px; transition:height .6s ease; }
+.bar-col .bb { width:100%; border-radius:6px 6px 2px 2px; background:linear-gradient(180deg,var(--purple),var(--purple-deep)); min-height:6px; }
 .bar-col .bl { font-size:8.5px; color:var(--mute); }
-/* 证言 */
 .tst { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:9px; }
 .tst .q { font-size:12px; color:#e2d9f5; line-height:1.9; }
-.tst .q::before { content:'“'; color:var(--purple); font-size:22px; font-weight:900; margin-right:2px; }
-.tst .q::after { content:'”'; color:var(--purple); font-size:22px; font-weight:900; margin-left:2px; }
 .tst .who { display:flex; align-items:center; gap:9px; margin-top:9px; }
 .tst .av { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:#fff; }
 .tst .nm { font-size:11px; font-weight:800; color:#fff; }
 .tst .rl { font-size:9px; color:var(--mute); }
 .tst .stars { margin-left:auto; color:var(--gold); font-size:11px; }
-/* 价格 */
 .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
 .plan { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 12px; text-align:center; position:relative; }
 .plan.pop { border-color:rgba(168,85,247,.55); background:rgba(168,85,247,.1); }
@@ -83,7 +67,6 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 .plan .pd { font-size:9px; color:var(--dim); line-height:1.6; margin-top:6px; }
 .plan .pbtn { display:block; margin-top:10px; padding:9px 0; border-radius:14px; font-size:11px; font-weight:900; color:#fff; background:linear-gradient(135deg,var(--purple),var(--pink)); cursor:pointer; text-decoration:none; border:none; width:100%; }
 .plan .pbtn.gold { background:linear-gradient(135deg,#FFD700,#F59E0B); color:#1a0d2e; }
-/* CTA */
 .cta { margin-top:24px; background:linear-gradient(160deg,rgba(168,85,247,.14),rgba(236,72,153,.05)); border:1px solid rgba(168,85,247,.32); border-radius:18px; padding:22px 18px; text-align:center; }
 .cta h3 { font-size:18px; font-weight:900; margin-bottom:7px; }
 .cta p { font-size:11.5px; color:var(--dim); line-height:1.8; margin-bottom:14px; }
@@ -91,16 +74,32 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 .cta .btn { display:inline-flex; align-items:center; gap:7px; padding:13px 24px; border-radius:22px; font-size:13px; font-weight:900; text-decoration:none; cursor:pointer; border:none; color:#fff; }
 .cta .btn-main { background:linear-gradient(135deg,var(--purple),var(--pink)); box-shadow:0 8px 24px rgba(168,85,247,.4); }
 .cta .btn-ghost { background:rgba(255,255,255,.06); border:1px solid var(--border); }
+/* 对比条 */
+.vs { display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:stretch; margin-top:16px; }
+.vs .col { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:13px 14px; }
+.vs .col.win { border-color:rgba(52,211,153,.4); background:rgba(52,211,153,.05); }
+.vs .vt { font-size:11px; font-weight:900; margin-bottom:8px; }
+.vs .vi { font-size:10px; color:var(--dim); line-height:1.9; display:flex; gap:6px; }
+.vs .vi .x { color:var(--red); } .vs .vi .ok { color:var(--green); }
+.vs .mid { display:flex; align-items:center; font-size:10px; font-weight:900; color:var(--mute); }
+.more-cases { margin-top:16px; }
+.mc-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.mc { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:11px 10px; text-align:center; cursor:pointer; text-decoration:none; color:inherit; transition:transform .12s, border-color .2s; }
+.mc:active { transform:scale(.96); }
+.mc:hover { border-color:rgba(168,85,247,.45); }
+.mc .mi { font-size:18px; }
+.mc .mn { font-size:11px; font-weight:800; margin-top:4px; color:#fff; }
+.mc .md { font-size:8.5px; color:var(--mute); margin-top:2px; }
 .demo-note { text-align:center; font-size:9.5px; color:var(--mute); margin-top:12px; line-height:1.7; }
 .foot { text-align:center; padding:18px 0 10px; font-size:9.5px; color:var(--mute); }
-@media (max-width:560px){ .feat-grid { grid-template-columns:1fr; } .plans { grid-template-columns:1fr; } .plan { max-width:320px; margin:0 auto; width:100%; } }
+@media (max-width:560px){ .feat-grid { grid-template-columns:1fr; } .plans { grid-template-columns:1fr; } .plan { max-width:320px; margin:0 auto; width:100%; } .mc-grid { grid-template-columns:1fr 1fr; } }
 </style>
 </head>
 <body>
 <div class="wrap">
     <div class="topbar">
         <div class="back" onclick="goBack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="#C084FC" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <span style="font-size:12px;font-weight:900">行业案例</span>
+        <span style="font-size:12px;font-weight:900">行业案例 · 36个场景</span>
         <div class="tb-r"><button class="tb-btn ghost" onclick="location.href='demo-gallery.html'">全部场景</button><button class="tb-btn" onclick="location.href='cfapp/store.html'">买现成的</button></div>
     </div>
     <div id="app"></div>
@@ -111,125 +110,167 @@ const C = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6
 function goBack(){ history.length>1?history.back():location.href='index.html'; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ============ 12 个行业案例数据（演示数据 · 用于展示案例价值） ============ */
-const CASES = {
+/* ============ 36 个行业案例 ============ */
+/* 12 个精品（详细故事/图表/证言） */
+const DETAIL = {
 fitness:{ name:'健身减脂工作台', industry:'健身 · 数据教练', color:'#10B981', ico:'💪', tagline:'<b>程序员小周</b>用 90 天减掉 8.5kg——不靠意志力，靠一个自动提醒的「数据教练」。',
   stats:[{n:'8.5kg',l:'90天减重',d:'身体数据记录'},{n:'12天',l:'连续打卡',d:'运动打卡闭环'},{n:'3.2x',l:'执行效率',d:'计划自动生成'}],
-  story:{who:'小周 · 28岁 · 程序员',bg:'长期久坐、加班熬夜，体重涨到 82kg，体检亮红灯。办过 3 张健身卡都半途而废——不是不想练，是<em>没有目标感、没人盯、不知道练什么</em>。',
-    pains:['不知道每天练什么、吃多少','没有数据反馈，练两周就放弃','工作忙，没时间做计划']},
+  story:{who:'小周 · 28岁 · 程序员',bg:'长期久坐、加班熬夜，体重涨到 82kg，体检亮红灯。办过 3 张健身卡都半途而废——不是不想练，是<em>没有目标感、没人盯、不知道练什么</em>。',pains:['不知道每天练什么、吃多少','没有数据反馈，练两周就放弃','工作忙，没时间做计划']},
   feats:[{i:'📊',n:'身体数据',d:'体重/体脂/围度一键记录'},{i:'📈',n:'体重趋势',d:'每周自动生成趋势曲线'},{i:'🏋️',n:'训练计划',d:'按目标自动拆解每天练什么'},{i:'🥗',n:'饮食记录',d:'卡路里摄入一目了然'},{i:'🔥',n:'运动打卡',d:'连续天数可视化激励'},{i:'🔔',n:'自动提醒',d:'到点提醒，不靠意志力'}],
   chart:{title:'体重趋势（90 天）',labels:['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周','第9周','第10周','第11周','第12周'],vals:[82,81.4,80.6,80.1,79.2,78.3,77.4,76.5,75.6,74.8,74.1,73.5]},
   tests:[{av:'周',nm:'小周',rl:'程序员 · 减脂8.5kg',t:'以前办卡都是浪费钱。这个工作台每天告诉我练什么、吃多少，打卡断了还有人提醒，90天真减下来了。'},{av:'李',nm:'李姐',rl:'宝妈 · 产后恢复',t:'没时间去健身房，照着它在家练，三个月腰围小了 9cm。最值的是不用自己动脑做计划。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥399',d:'身体数据+趋势图',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥699',d:'全套功能+自动计划',b:'立即购买',pop:true,gold:true},{t:'定制',n:'专属定制',p:'¥999起',d:'按你的目标定制方案',b:'定制同款'}] },
 ecom:{ name:'电商运营工作台', industry:'电商 · 9大平台一屏管', color:'#FF6B1A', ico:'🛒', tagline:'<b>林姐</b>一个人管 3 个平台的 6 家店，以前每天加班到 12 点，现在 2 小时搞定。',
   stats:[{n:'6家',l:'多店同时管',d:'9平台订单聚合'},{n:'3x',l:'效率提升',d:'订单批量处理'},{n:'-12%',l:'库存损耗',d:'预警自动触发'}],
-  story:{who:'林姐 · 35岁 · 电商店主',bg:'做女装，开了拼多多+淘宝+抖音 6 家店。每天在不同后台来回切换对订单、对库存，<em>眼睛都快瞎了，还老漏单</em>。',
-    pains:['多个平台后台来回切换','库存对不上，超卖漏发','数据散落，不知道哪个品赚钱']},
+  story:{who:'林姐 · 35岁 · 电商店主',bg:'做女装，开了拼多多+淘宝+抖音 6 家店。每天在不同后台来回切换对订单、对库存，<em>眼睛都快瞎了，还老漏单</em>。',pains:['多个平台后台来回切换','库存对不上，超卖漏发','数据散落，不知道哪个品赚钱']},
   feats:[{i:'🛒',n:'多店聚合',d:'9大平台订单一屏看'},{i:'📦',n:'订单处理',d:'批量发货/打单'},{i:'⚠️',n:'库存预警',d:'低于安全线自动提醒'},{i:'📊',n:'数据报表',d:'哪个品赚钱一目了然'},{i:'🤝',n:'客户管理',d:'售后跟进不遗漏'},{i:'📅',n:'活动日历',d:'大促节点不错过'}],
-  chart:{title:'月销售额（近12周）',labels:['1','2','3','4','5','6','7','8','9','10','11','12'],vals:[3.2,3.8,4.1,4.6,5.2,5.8,6.3,6.9,7.4,8.2,8.8,9.5]},
+  chart:{title:'月销售额（近12周·万元）',labels:['1','2','3','4','5','6','7','8','9','10','11','12'],vals:[3.2,3.8,4.1,4.6,5.2,5.8,6.3,6.9,7.4,8.2,8.8,9.5]},
   tests:[{av:'林',nm:'林姐',rl:'电商店主 · 6店',t:'以前光对库存就要一小时，现在全自动预警。省下的时间拿去选品，月销从 12 万涨到 28 万。'},{av:'陈',nm:'陈总',rl:'3C数码 · 2店',t:'刚开始觉得花这钱不值，用了两周就回本了。数据报表直接告诉我该砍哪个品。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥599',d:'单店管理',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥999',d:'多店+库存预警',b:'立即购买',pop:true,gold:true},{t:'定制',n:'企业定制',p:'¥2999起',d:'多平台深度对接',b:'定制同款'}] },
 study:{ name:'考研冲刺工作台', industry:'考研 · 4科进度一目了然', color:'#8B5CF6', ico:'📚', tagline:'<b>大四阿凯</b>考前 90 天用冲刺台把「不知道学什么」变成「每天学什么」，一战上岸 985。',
   stats:[{n:'985',l:'一战上岸',d:'目标院校'},{n:'186h',l:'有效学习',d:'月均时长'},{n:'4科',l:'进度看板',d:'自动拆解'}],
-  story:{who:'阿凯 · 22岁 · 应届生',bg:'目标 985 计算机，4 门课一堆资料，天天焦虑「我到底学得怎么样了」。没有进度感，<em>复习三个月还在第一章</em>。',
-    pains:['不知道每天该学什么','四科进度混乱，总顾此失彼','错题散了就忘，越做越慌']},
+  story:{who:'阿凯 · 22岁 · 应届生',bg:'目标 985 计算机，4 门课一堆资料，天天焦虑「我到底学得怎么样了」。没有进度感，<em>复习三个月还在第一章</em>。',pains:['不知道每天该学什么','四科进度混乱，总顾此失彼','错题散了就忘，越做越慌']},
   feats:[{i:'⏳',n:'倒计时',d:'考试天数字醒目'},{i:'📊',n:'4科进度',d:'进度条自动统计'},{i:'📕',n:'错题本',d:'分类标记+重做'},{i:'✅',n:'每日打卡',d:'完成即打勾'},{i:'🧠',n:'记忆曲线',d:'背了不忘'},{i:'📅',n:'日计划',d:'目标拆解到天'}],
   chart:{title:'复习进度（4科 · 每周）',labels:['政治','英语','数学','专业课'],vals:[72,85,68,60]},
   tests:[{av:'阿',nm:'阿凯',rl:'一战上岸 · 计算机',t:'最有用的就是进度看板，每科多少分心里有数，再也不会东一榔头西一棒。'},{av:'王',nm:'王同学',rl:'二战逆袭',t:'错题本+记忆曲线救了我，数学从 78 到 126。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥299',d:'倒计时+打卡',b:'立即购买'},{t:'推荐',n:'冲刺版',p:'¥599',d:'四科看板+错题本',b:'立即购买',pop:true,gold:true},{t:'定制',n:'1对1定制',p:'¥999起',d:'按院校定制',b:'定制同款'}] },
 english:{ name:'雅思冲刺工作台', industry:'留学 · 雅思7.0冲刺', color:'#3B82F6', ico:'🌐', tagline:'<b>留学党小孟</b>从 5.5 冲到 7.0，秘诀是每天任务自动生成，四科一个不少。',
   stats:[{n:'7.0',l:'总分达标',d:'从5.5起步'},{n:'21天',l:'连续打卡',d:'词汇+听力'},{n:'4科',l:'全拆解',d:'听说读写'}],
-  story:{who:'小孟 · 23岁 · 备考留学',bg:'目标 7.0，但听力口语弱。资料买了一堆，<em>不知道先学哪科、每天练多久</em>，越拖越慌。',
-    pains:['词汇背了忘，听力跟不上','口语没人练，开口就卡','四科任务量没规划']},
+  story:{who:'小孟 · 23岁 · 备考留学',bg:'目标 7.0，但听力口语弱。资料买了一堆，<em>不知道先学哪科、每天练多久</em>，越拖越慌。',pains:['词汇背了忘，听力跟不上','口语没人练，开口就卡','四科任务量没规划']},
   feats:[{i:'📚',n:'词汇打卡',d:'按记忆曲线排'},{i:'🎧',n:'听力语料库',d:'精听+跟读'},{i:'🗣️',n:'口语拆解',d:'话题库+模板'},{i:'✍️',n:'写作批改',d:'模板+批改记录'},{i:'📊',n:'四科看板',d:'进度一目了然'},{i:'⏰',n:'每日任务',d:'自动生成今日清单'}],
   chart:{title:'模考成绩趋势（5次）',labels:['模考1','模考2','模考3','模考4','模考5'],vals:[5.5,5.5,6.0,6.5,6.5]},
   tests:[{av:'孟',nm:'小孟',rl:'雅思7.0',t:'每天打开就知道今天练什么，不用再纠结。口语话题库帮了大忙。'},{av:'徐',nm:'徐同学',rl:'首考6.5',t:'词汇曲线打卡真的能记住，比死背强太多。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥299',d:'词汇+打卡',b:'立即购买'},{t:'推荐',n:'冲刺版',p:'¥599',d:'四科全拆解',b:'立即购买',pop:true,gold:true},{t:'定制',n:'1对1定制',p:'¥1299起',d:'按目标分定制',b:'定制同款'}] },
 food:{ name:'餐饮门店工作台', industry:'餐饮 · 堂食外卖小程序', color:'#F59E0B', ico:'🍱', tagline:'<b>老王面馆</b>用 3 个月把食材损耗从 8% 压到 3%，月利润多赚 2 万。',
   stats:[{n:'-5%',l:'损耗下降',d:'食材预警'},{n:'4渠道',l:'订单聚合',d:'堂食+外卖'},{n:'+18%',l:'翻台提升',d:'排班优化'}],
-  story:{who:'王老板 · 44岁 · 面馆',bg:'堂食+美团+饿了么 3 个渠道，订单、排班、进货全靠本子记。<em>食材总烂在库里，员工排班靠吵架</em>。',
-    pains:['食材过期损耗严重','3个渠道订单对不上','排班全凭经验，旺季忙死淡季闲死']},
+  story:{who:'王老板 · 44岁 · 面馆',bg:'堂食+美团+饿了么 3 个渠道，订单、排班、进货全靠本子记。<em>食材总烂在库里，员工排班靠吵架</em>。',pains:['食材过期损耗严重','3个渠道订单对不上','排班全凭经验，旺季忙死淡季闲死']},
   feats:[{i:'🍽️',n:'订单聚合',d:'4渠道一屏看'},{i:'📅',n:'智能排班',d:'按客流自动排'},{i:'🥬',n:'食材预警',d:'临期自动提醒'},{i:'💳',n:'会员管理',d:'储值+复购'},{i:'📊',n:'营业报表',d:'日/周/月自动出'},{i:'👨‍🍳',n:'后厨任务',d:'出餐不遗漏'}],
   chart:{title:'月利润（近6个月·万元）',labels:['1月','2月','3月','4月','5月','6月'],vals:[3.2,3.6,3.9,4.4,4.8,5.2]},
   tests:[{av:'王',nm:'王老板',rl:'面馆 · 20张桌',t:'食材预警最值钱，以前烂菜扔掉都是钱，现在临期提前用掉。'},{av:'刘',nm:'刘店长',rl:'连锁火锅店',t:'智能排班让我少操心，员工也不闹了。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥399',d:'订单聚合',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥799',d:'全套+排班+预警',b:'立即购买',pop:true,gold:true},{t:'定制',n:'连锁定制',p:'¥2999起',d:'多门店打通',b:'定制同款'}] },
 photo:{ name:'摄影约拍工作台', industry:'摄影 · 作品与生意', color:'#EC4899', ico:'📷', tagline:'<b>独立摄影师阿杰</b>靠它把约拍档期排满 3 个月，报价不再靠猜。',
   stats:[{n:'3个月',l:'档期排满',d:'约拍管理'},{n:'¥12k',l:'月接单额',d:'报价模板'},{n:'200+',l:'作品展示',d:'作品库'}],
-  story:{who:'阿杰 · 27岁 · 独立摄影师',bg:'拍得不错但不会接单：客户问价半天不回、档期撞车、作品散在手机里<em>没个像样的展示</em>。',
-    pains:['报价靠感觉，总报低','档期混乱，撞单客诉','作品没整理，接不到高价单']},
+  story:{who:'阿杰 · 27岁 · 独立摄影师',bg:'拍得不错但不会接单：客户问价半天不回、档期撞车、作品散在手机里<em>没个像样的展示</em>。',pains:['报价靠感觉，总报低','档期混乱，撞单客诉','作品没整理，接不到高价单']},
   feats:[{i:'🖼️',n:'作品管理',d:'分类+精选展示'},{i:'🎨',n:'修图进度',d:'交付不遗漏'},{i:'📅',n:'档期管理',d:'预约自动排'},{i:'💰',n:'报价模板',d:'场景自动报价'},{i:'🤝',n:'客户跟进',d:'意向不错过'},{i:'⭐',n:'评价沉淀',d:'好评展示'}],
   chart:{title:'月接单额（近6月·千元）',labels:['1月','2月','3月','4月','5月','6月'],vals:[4,6,8,9,11,12]},
   tests:[{av:'杰',nm:'阿杰',rl:'独立摄影师',t:'报价模板让我不再心虚，客单价从 800 涨到 1500。'},{av:'苏',nm:'苏苏',rl:'旅拍摄影师',t:'档期自动排，再也不撞单。作品库直接发给客户看。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥299',d:'作品管理',b:'立即购买'},{t:'推荐',n:'接单版',p:'¥599',d:'档期+报价',b:'立即购买',pop:true,gold:true},{t:'定制',n:'工作室定制',p:'¥1999起',d:'多人协作',b:'定制同款'}] },
 pet:{ name:'宠物健康工作台', industry:'宠物 · 毛孩子管家', color:'#34D399', ico:'🐶', tagline:'<b>铲屎官小鹿</b>再也不怕忘了疫苗——工作台比她还记得清。',
   stats:[{n:'3只',l:'多宠管理',d:'独立档案'},{n:'0次',l:'漏打疫苗',d:'自动提醒'},{n:'1年',l:'成长记录',d:'照片存档'}],
-  story:{who:'小鹿 · 26岁 · 双猫一狗',bg:'养了三只毛孩子，疫苗驱虫日期全靠记性，<em>去年差点漏打狂犬疫苗</em>，体检记录也丢三落四。',
-    pains:['疫苗/驱虫日期记不住','多只宠物记录混乱','成长照片散落手机']},
+  story:{who:'小鹿 · 26岁 · 双猫一狗',bg:'养了三只毛孩子，疫苗驱虫日期全靠记性，<em>去年差点漏打狂犬疫苗</em>，体检记录也丢三落四。',pains:['疫苗/驱虫日期记不住','多只宠物记录混乱','成长照片散落手机']},
   feats:[{i:'🐕',n:'多宠档案',d:'每只独立管理'},{i:'💉',n:'疫苗提醒',d:'到期自动提醒'},{i:'🪱',n:'驱虫日历',d:'周期自动排'},{i:'🩺',n:'健康记录',d:'体检就诊留档'},{i:'📸',n:'成长相册',d:'记录一键留存'},{i:'🏥',n:'附近医院',d:'紧急联系电话'}],
   chart:{title:'接种记录（本年度）',labels:['狂犬','猫三联','驱虫1','驱虫2','驱虫3','体检'],vals:[100,100,100,100,100,100]},
   tests:[{av:'鹿',nm:'小鹿',rl:'双猫一狗',t:'疫苗提醒太救命了，再也没漏过。成长相册还做了个纪念册送朋友。'},{av:'何',nm:'何先生',rl:'养狗8年',t:'以前靠本子记，现在打开就知道该干嘛。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥199',d:'单宠提醒',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥399',d:'多宠+健康记录',b:'立即购买',pop:true,gold:true},{t:'定制',n:'家庭定制',p:'¥699起',d:'多宠物家庭',b:'定制同款'}] },
 creator:{ name:'自媒体创作台', industry:'自媒体 · 选题到变现', color:'#A855F7', ico:'🎬', tagline:'<b>博主大V哥</b>用创作台日更 3 个月，粉丝从 2 万涨到 20 万，接单接到手软。',
   stats:[{n:'20万',l:'粉丝增长',d:'90天'},{n:'3x',l:'日更效率',d:'选题自动化'},{n:'¥3万',l:'月变现',d:'接单+带货'}],
-  story:{who:'大V哥 · 29岁 · 知识博主',bg:'每天为「今天发什么」烧脑 2 小时，内容断更、数据没复盘，<em>涨粉全靠运气</em>。',
-    pains:['选题灵感枯竭','数据不会复盘','爆款难复制']},
+  story:{who:'大V哥 · 29岁 · 知识博主',bg:'每天为「今天发什么」烧脑 2 小时，内容断更、数据没复盘，<em>涨粉全靠运气</em>。',pains:['选题灵感枯竭','数据不会复盘','爆款难复制']},
   feats:[{i:'💡',n:'选题灵感库',d:'持续产出选题'},{i:'🔥',n:'爆款二创',d:'拆解+复用'},{i:'✍️',n:'脚本生成',d:'标题文案脚本'},{i:'📊',n:'数据复盘',d:'每篇自动分析'},{i:'📱',n:'多平台发布',d:'一次排版全网发'},{i:'💰',n:'变现追踪',d:'接单/带货统计'}],
   chart:{title:'粉丝增长（90天·万）',labels:['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周','第9周','第10周','第11周','第12周'],vals:[2.2,2.8,3.5,4.6,5.8,7.5,9.4,11.6,14.2,16.8,18.6,20.1]},
   tests:[{av:'大',nm:'大V哥',rl:'知识博主 · 20万粉',t:'选题库救了我，再也不用想破头。数据复盘让我知道哪类内容该猛做。'},{av:'喵',nm:'喵喵',rl:'美食博主',t:'爆款二创直接抄作业，一条爆了涨粉3万。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥399',d:'选题+脚本',b:'立即购买'},{t:'推荐',n:'变现版',p:'¥999',d:'全套+数据复盘',b:'立即购买',pop:true,gold:true},{t:'定制',n:'MCN定制',p:'¥2999起',d:'团队协作',b:'定制同款'}] },
 solo:{ name:'一人公司管理台', industry:'一人公司 · 全业务线', color:'#FF6B1A', ico:'🦸', tagline:'<b>自由职业者老K</b>一个人管 4 条业务线：接单、交付、财务、客户，全在一个台子上。',
   stats:[{n:'4条',l:'业务并行',d:'多线管理'},{n:'¥8万',l:'月营收',d:'全业务统计'},{n:'0',l:'漏单',d:'订单闭环'}],
-  story:{who:'老K · 32岁 · 一人公司',bg:'接设计+培训+咨询+内容 4 条线，客户、订单、钱全乱成一团，<em>月底对账想哭</em>。',
-    pains:['业务线一多就乱','客户跟进靠记性','财务对账痛苦']},
+  story:{who:'老K · 32岁 · 一人公司',bg:'接设计+培训+咨询+内容 4 条线，客户、订单、钱全乱成一团，<em>月底对账想哭</em>。',pains:['业务线一多就乱','客户跟进靠记性','财务对账痛苦']},
   feats:[{i:'🧩',n:'多业务线',d:'每条线独立看板'},{i:'💰',n:'财务总览',d:'收入支出自动'},{i:'👥',n:'客户管理',d:'跟进不漏单'},{i:'📦',n:'订单流转',d:'接单到交付闭环'},{i:'📊',n:'决策看板',d:'每周自动复盘'},{i:'🤖',n:'AI助手',d:'重复活自动做'}],
   chart:{title:'月营收（近6月·万元）',labels:['1月','2月','3月','4月','5月','6月'],vals:[3.5,4.2,5.0,6.1,7.0,8.0]},
   tests:[{av:'K',nm:'老K',rl:'一人公司 · 4业务线',t:'一个人干四个人的活，没有这个台子早崩了。月底对账从两天变半小时。'},{av:'唐',nm:'唐姐',rl:'咨询顾问',t:'客户跟进不遗漏，收入翻倍了。'}],
   plans:[{t:'标准',n:'标准版',p:'¥1999',d:'全业务线',b:'立即购买'},{t:'旗舰',n:'旗舰版',p:'¥3999',d:'含AI助手',b:'立即购买',pop:true,gold:true},{t:'定制',n:'深度定制',p:'¥9999起',d:'全流程定制',b:'定制同款'}] },
 edu:{ name:'英语启蒙台', industry:'育儿 · 亲子启蒙', color:'#F472B6', ico:'👶', tagline:'<b>宝妈Lily</b>用启蒙台带 5 岁女儿每天认 5 个字，一个月 150 个，还主动要学。',
   stats:[{n:'150+',l:'一个月认字',d:'每日任务'},{n:'30天',l:'连续学习',d:'积分激励'},{n:'3岁+',l:'适用年龄',d:'亲子共学'}],
-  story:{who:'Lily · 31岁 · 宝妈',bg:'想给孩子做启蒙，但<em>自己教没方法、没坚持</em>，孩子看动画上瘾，认字就哭。',
-    pains:['自己教没方法','孩子坐不住','没有激励机制']},
+  story:{who:'Lily · 31岁 · 宝妈',bg:'想给孩子做启蒙，但<em>自己教没方法、没坚持</em>，孩子看动画上瘾，认字就哭。',pains:['自己教没方法','孩子坐不住','没有激励机制']},
   feats:[{i:'🔤',n:'每日认字',d:'5个字小任务'},{i:'🃏',n:'象形卡片',d:'看图识字翻转'},{i:'🎮',n:'游戏闯关',d:'闯关拿星星'},{i:'⭐',n:'积分激励',d:'完成任务得分'},{i:'🎁',n:'积分商城',d:'兑换小奖励'},{i:'👨‍👩‍👧',n:'亲子模式',d:'家长看进度'}],
   chart:{title:'认字数（近30天）',labels:['第1周','第2周','第3周','第4周'],vals:[35,72,112,150]},
   tests:[{av:'L',nm:'Lily',rl:'宝妈 · 女儿5岁',t:'积分兑换真的有用，女儿为了换贴纸天天主动学。'},{av:'顾',nm:'顾爸',rl:'儿子4岁',t:'象形卡片孩子爱看，认字速度肉眼可见。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥199',d:'认字+卡片',b:'立即购买'},{t:'推荐',n:'启蒙版',p:'¥299',d:'闯关+积分商城',b:'立即购买',pop:true,gold:true},{t:'定制',n:'家庭定制',p:'¥599起',d:'多孩/定制任务',b:'定制同款'}] },
 love:{ name:'恋爱纪念台', industry:'生活 · 仪式感工具', color:'#FF4757', ico:'💕', tagline:'<b>程序员阿伟</b>用它把恋爱第 1000 天过成了惊喜日——纪念日从没忘过。',
   stats:[{n:'1000天',l:'恋爱纪念',d:'自动提醒'},{n:'52个',l:'约会计划',d:'不重样'},{n:'98%',l:'满意度',d:'感情温度'}],
-  story:{who:'阿伟 · 26岁 · 程序员',bg:'记性差，纪念日老忘，<em>每次都被女朋友"教育"</em>。约会也总去同一家店，没新意。',
-    pains:['纪念日记不住','约会没新意','感情没记录']},
+  story:{who:'阿伟 · 26岁 · 程序员',bg:'记性差，纪念日老忘，<em>每次都被女朋友"教育"</em>。约会也总去同一家店，没新意。',pains:['纪念日记不住','约会没新意','感情没记录']},
   feats:[{i:'💝',n:'纪念日提醒',d:'重要日子自动倒计时'},{i:'🌹',n:'约会计划',d:'52个不重样方案'},{i:'🌡️',n:'感情温度',d:'互动记录可视化'},{i:'📸',n:'照片墙',d:'回忆一键留存'},{i:'✉️',n:'情书模板',d:'走心文案不愁'},{i:'🎯',n:'愿望清单',d:'一起完成的事'}],
   chart:{title:'感情温度（近6月）',labels:['1月','2月','3月','4月','5月','6月'],vals:[72,78,80,85,88,92]},
   tests:[{av:'伟',nm:'阿伟',rl:'程序员 · 恋爱1000天',t:'纪念日自动提醒，再也没被骂过。约会方案让女朋友夸我变浪漫了。'},{av:'然',nm:'小然',rl:'恋爱3年',t:'照片墙把我们的回忆都收起来了，求婚就靠它。'}],
   plans:[{t:'轻量版',n:'基础版',p:'¥199',d:'纪念日提醒',b:'立即购买'},{t:'推荐',n:'浪漫版',p:'¥299',d:'约会+照片墙',b:'立即购买',pop:true,gold:true},{t:'定制',n:'惊喜定制',p:'¥599起',d:'定制惊喜方案',b:'定制同款'}] },
 travel:{ name:'旅行攻略台', industry:'旅行 · 说走就走', color:'#22D3EE', ico:'✈️', tagline:'<b>旅行博主阿梨</b>用它 15 分钟规划一趟 7 天行程，预算一分不超。',
   stats:[{n:'15min',l:'行程规划',d:'自动生成'},{n:'0超支',l:'预算控制',d:'每笔记录'},{n:'30+',l:'打卡点',d:'地图标记'}],
-  story:{who:'阿梨 · 25岁 · 旅行博主',bg:'每次出行做攻略做到凌晨，<em>行程太满走废腿、预算超支心在滴血</em>。',
-    pains:['做攻略费时','行程安排不合理','预算总是超']},
+  story:{who:'阿梨 · 25岁 · 旅行博主',bg:'每次出行做攻略做到凌晨，<em>行程太满走废腿、预算超支心在滴血</em>。',pains:['做攻略费时','行程安排不合理','预算总是超']},
   feats:[{i:'🗺️',n:'行程规划',d:'天数自动排'},{i:'💰',n:'预算控制',d:'每笔分类记录'},{i:'🎒',n:'装备清单',d:'出发不遗漏'},{i:'📍',n:'打卡地图',d:'路线可视化'},{i:'📸',n:'游记生成',d:'自动成文'},{i:'🛡️',n:'安全备忘',d:'证件急救清单'}],
   chart:{title:'预算执行（7天·千元）',labels:['交通','住宿','餐饮','门票','购物','其他'],vals:[2.8,2.2,1.6,1.0,0.8,0.6]},
   tests:[{av:'梨',nm:'阿梨',rl:'旅行博主',t:'15分钟出行程真的可以，预算表让我不再乱花。'},{av:'郑',nm:'郑先生',rl:'家庭出游',t:'装备清单救了全家，忘带药这种坑再也不踩。'}],
-  plans:[{t:'轻量版',n:'基础版',p:'¥199',d:'行程规划',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥399',d:'全套+预算+地图',b:'立即购买',pop:true,gold:true},{t:'定制',n:'领队定制',p:'¥999起',d:'团队行程',b:'定制同款'}] },
-media:{ name:'新媒体运营台', industry:'新媒体 · 矩阵运营', color:'#60A5FA', ico:'📱', tagline:'<b>新媒体主管小宇</b>管 5 个账号 0 内耗——选题、排期、数据全自动。',
-  stats:[{n:'5个',l:'账号矩阵',d:'统一管理'},{n:'+40%',l:'互动率',d:'数据优化'},{n:'0',l:'断更',d:'排期自动'}],
-  story:{who:'小宇 · 30岁 · 新媒体主管',bg:'5 个账号 3 个平台，选题、发布、数据统计全靠表格，<em>一个人忙成三个人</em>。',
-    pains:['账号多排期乱','数据分散难复盘','爆款难系统化']},
-  feats:[{i:'📋',n:'选题排期',d:'内容日历自动'},{i:'📡',n:'多账号',d:'一屏管所有'},{i:'📊',n:'数据看板',d:'互动/涨粉统计'},{i:'🔥',n:'爆款拆解',d:'成功案例复用'},{i:'👥',n:'团队协作',d:'分工不扯皮'},{i:'💰',n:'变现追踪',d:'广告/带货统计'}],
-  chart:{title:'粉丝总量（90天·万）',labels:['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周','第9周','第10周','第11周','第12周'],vals:[1.2,1.5,1.9,2.4,3.1,3.9,4.8,5.9,7.2,8.6,10.1,11.8]},
-  tests:[{av:'宇',nm:'小宇',rl:'新媒体主管',t:'排期自动化让我不用天天盯，数据看板直接对上汇报。'},{av:'吴',nm:'吴姐',rl:'美妆博主',t:'爆款拆解让我复制了3条10w+。'}],
-  plans:[{t:'轻量版',n:'基础版',p:'¥399',d:'选题排期',b:'立即购买'},{t:'推荐',n:'矩阵版',p:'¥999',d:'多账号+数据',b:'立即购买',pop:true,gold:true},{t:'定制',n:'团队定制',p:'¥2999起',d:'多人协作',b:'定制同款'}] }
+  plans:[{t:'轻量版',n:'基础版',p:'¥199',d:'行程规划',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥399',d:'全套+预算+地图',b:'立即购买',pop:true,gold:true},{t:'定制',n:'领队定制',p:'¥999起',d:'团队行程',b:'定制同款'}] }
 };
+
+/* 24 个覆盖行业（模板生成，字段精简但完整） */
+const GENERIC = [
+{id:'salon',name:'美甲美睫店工作台',industry:'美业 · 预约与会员',color:'#F472B6',ico:'💅',tagline:'<b>美甲店主阿May</b>用预约台把翻台率提了 40%，老客复购率 80%。',stats:[{n:'+40%',l:'翻台率',d:'预约管理'},{n:'80%',l:'老客复购',d:'会员储值'},{n:'0',l:'漏约',d:'自动提醒'}],feats:[{i:'📅',n:'在线预约',d:'档期自动排'},{i:'💇',n:'技师排班',d:'任务不冲突'},{i:'💳',n:'会员储值',d:'充值+次卡'},{i:'⭐',n:'作品展示',d:'案例引流'},{i:'📢',n:'营销活动',d:'满减自动发'},{i:'📊',n:'营业报表',d:'每日自动出'}]},
+{id:'estate',name:'房产中介工作台',industry:'房产 · 房源客户匹配',color:'#3B82F6',ico:'🏠',tagline:'<b>中介小孙</b>带看转化率翻倍，房源客户自动匹配不再靠记性。',stats:[{n:'2x',l:'带看转化',d:'客户匹配'},{n:'200+',l:'房源管理',d:'一屏看'},{n:'0',l:'丢客户',d:'跟进提醒'}],feats:[{i:'🏠',n:'房源管理',d:'照片+户型+价格'},{i:'👥',n:'客户池',d:'需求标签化'},{i:'🎯',n:'智能匹配',d:'房源客户自动配'},{i:'📅',n:'带看排期',d:'不撞车'},{i:'📋',n:'跟进记录',d:'每步留痕'},{i:'💰',n:'佣金统计',d:'成交自动算'}]},
+{id:'lawyer',name:'律所案件工作台',industry:'法律 · 案件进度管理',color:'#6366F1',ico:'⚖️',tagline:'<b>独立律师王律</b>用案件台把 30+ 案件进度理得明明白白，客户信任度拉满。',stats:[{n:'30+',l:'并行案件',d:'进度看板'},{n:'0',l:'错过期限',d:'自动提醒'},{n:'2x',l:'接案效率',d:'文书模板'}],feats:[{i:'📁',n:'案件管理',d:'每个案件独立档案'},{i:'⏰',n:'期限提醒',d:'开庭/上诉自动'},{i:'📄',n:'文书模板',d:'起诉状/合同'},{i:'👥',n:'客户沟通',d:'进展同步'},{i:'💰',n:'收费记录',d:'分阶段计费'},{i:'📊',n:'案件统计',d:'胜诉率看板'}]},
+{id:'tutor',name:'教培机构工作台',industry:'教培 · 排课与续费',color:'#F59E0B',ico:'🎓',tagline:'<b>教培校长老赵</b>排课不再打架，续费率从 50% 提到 78%。',stats:[{n:'+28%',l:'续费率',d:'跟进提醒'},{n:'500+',l:'学员管理',d:'一屏看'},{n:'0',l:'排课冲突',d:'自动排'}],feats:[{i:'🗓️',n:'智能排课',d:'老师教室自动'},{i:'👦',n:'学员档案',d:'进度+缴费'},{i:'💰',n:'续费提醒',d:'到期自动催'},{i:'👨‍🏫',n:'老师管理',d:'课时结算'},{i:'📢',n:'活动通知',d:'一键群发'},{i:'📊',n:'经营报表',d:'收入自动出'}]},
+{id:'coach',name:'健身私教工作台',industry:'健身 · 私教会员管理',color:'#10B981',ico:'🏋️',tagline:'<b>私教阿Ken</b>靠它把 60 个会员的课表排得井井有条，续课率 85%。',stats:[{n:'60+',l:'会员管理',d:'独立档案'},{n:'85%',l:'续课率',d:'跟进提醒'},{n:'3x',l:'成交效率',d:'体测报告'}],feats:[{i:'📋',n:'会员档案',d:'体测+目标'},{i:'🗓️',n:'排课表',d:'学员自动排'},{i:'📈',n:'训练记录',d:'每次可查'},{i:'⏰',n:'续课提醒',d:'到期自动'},{i:'💰',n:'收入统计',d:'课时结算'},{i:'📊',n:'效果报告',d:'自动生成给会员'}]},
+{id:'house',name:'家政保洁工作台',industry:'家政 · 阿姨派单管理',color:'#34D399',ico:'🧹',tagline:'<b>家政老板刘姐</b>派单不再靠喊，100 个阿姨 0 漏单。',stats:[{n:'100+',l:'阿姨管理',d:'自动派单'},{n:'0',l:'漏单',d:'订单闭环'},{n:'96%',l:'好评率',d:'回访自动'}],feats:[{i:'🧹',n:'阿姨档案',d:'技能+档期'},{i:'📦',n:'订单派单',d:'自动匹配'},{i:'📅',n:'排班管理',d:'不冲突'},{i:'⏰',n:'上门提醒',d:'到点通知'},{i:'⭐',n:'客户回访',d:'自动跟进'},{i:'📊',n:'营业报表',d:'每日自动'}]},
+{id:'bakery',name:'烘焙蛋糕店工作台',industry:'烘焙 · 预订与会员',color:'#F59E0B',ico:'🍰',tagline:'<b>烘焙店主小糖</b>生日蛋糕预订不漏单，节日订单翻 3 倍。',stats:[{n:'3x',l:'节日订单',d:'活动提醒'},{n:'0',l:'漏订',d:'预订管理'},{n:'70%',l:'复购率',d:'会员储值'}],feats:[{i:'🎂',n:'蛋糕预订',d:'款式+日期'},{i:'📅',n:'节日日历',d:'提前备货'},{i:'💳',n:'会员储值',d:'生日送券'},{i:'📦',n:'订单跟踪',d:'取货提醒'},{i:'📢',n:'朋友圈素材',d:'文案图一键出'},{i:'📊',n:'营业报表',d:'热销自动'}]},
+{id:'flower',name:'鲜花店工作台',industry:'花艺 · 订单与配送',color:'#EC4899',ico:'💐',tagline:'<b>花店主理人小朵</b>节日订单接得下、送得出，配送零差错。',stats:[{n:'5x',l:'节日单量',d:'预售承接'},{n:'0',l:'配送错漏',d:'订单闭环'},{n:'90%',l:'好评率',d:'售后回访'}],feats:[{i:'💐',n:'花束管理',d:'款式+价格'},{i:'📦',n:'订单配送',d:'地址+时间'},{i:'💳',n:'会员储值',d:'生日自动送'},{i:'📢',n:'节日营销',d:'提前造势'},{i:'📸',n:'作品集',d:'晒单引流'},{i:'📊',n:'营业报表',d:'热销自动'}]},
+{id:'fashion',name:'服装店工作台',industry:'服装 · 进销存与会员',color:'#F472B6',ico:'👗',tagline:'<b>服装店主陈姐</b>库存不压货、会员都记得，换季清仓快 3 倍。',stats:[{n:'-30%',l:'库存积压',d:'进销存'},{n:'65%',l:'会员复购',d:'生日提醒'},{n:'2x',l:'清仓速度',d:'自动促销'}],feats:[{i:'👗',n:'商品管理',d:'款号+尺码+库存'},{i:'📦',n:'进销存',d:'补货预警'},{i:'💳',n:'会员管理',d:'积分+生日'},{i:'📢',n:'营销活动',d:'满减自动发'},{i:'🛍️',n:'收银记录',d:'每日自动'},{i:'📊',n:'销售报表',d:'爆款自动'}]},
+{id:'car',name:'二手车行工作台',industry:'二手车 · 车源与客源',color:'#3B82F6',ico:'🚗',tagline:'<b>车行老板老周</b>车源客源自动匹配，收车卖车快人一步。',stats:[{n:'150+',l:'车源管理',d:'一屏看'},{n:'2x',l:'成交效率',d:'自动匹配'},{n:'0',l:'车况遗漏',d:'检测清单'}],feats:[{i:'🚗',n:'车源管理',d:'照片+里程+价格'},{i:'👥',n:'客源池',d:'需求标签'},{i:'🎯',n:'智能匹配',d:'车人自动配'},{i:'📋',n:'检测清单',d:'每车留档'},{i:'💰',n:'利润测算',d:'收售价自动'},{i:'📢',n:'朋友圈卖车',d:'素材一键出'}]},
+{id:'vet',name:'宠物医院工作台',industry:'宠物医疗 · 病例与预约',color:'#34D399',ico:'🐾',tagline:'<b>宠物医生小何</b>病例不丢、复诊不落，主人放心得很。',stats:[{n:'200+',l:'病例管理',d:'电子化'},{n:'0',l:'漏复诊',d:'自动提醒'},{n:'92%',l:'满意度',d:'回访跟进'}],feats:[{i:'🐾',n:'宠物档案',d:'品种+病史'},{i:'📅',n:'预约管理',d:'看诊不挤'},{i:'📋',n:'电子病例',d:'每次可查'},{i:'💉',n:'疫苗提醒',d:'到期自动'},{i:'💳',n:'会员储值',d:'套餐卡'},{i:'📊',n:'营业统计',d:'月报自动'}]},
+{id:'rpg',name:'剧本杀店工作台',industry:'桌游 · 场次与拼车',color:'#A855F7',ico:'🎭',tagline:'<b>剧本杀店主阿泽</b>场次排满、拼车不愁，翻台率翻倍。',stats:[{n:'2x',l:'翻台率',d:'场次排期'},{n:'90%',l:'拼车成功率',d:'智能拼车'},{n:'0',l:'撞场',d:'自动排'}],feats:[{i:'🎭',n:'剧本管理',d:'类型+时长+人数'},{i:'🗓️',n:'场次排期',d:'房间自动排'},{i:'🤝',n:'智能拼车',d:'散客自动凑'},{i:'👥',n:'玩家档案',d:'偏好记录'},{i:'💳',n:'会员储值',d:'充值送券'},{i:'📊',n:'营收报表',d:'热本自动'}]},
+{id:'wedding',name:'婚礼策划工作台',industry:'婚庆 · 档期与供应商',color:'#F472B6',ico:'💒',tagline:'<b>婚庆主理人小雅</b>30 场婚礼零出错，供应商结算不再乱。',stats:[{n:'30+',l:'并行婚礼',d:'进度看板'},{n:'0',l:'环节遗漏',d:'清单管理'},{n:'98%',l:'客户好评',d:'执行闭环'}],feats:[{i:'💒',n:'婚礼项目',d:'每场独立看板'},{i:'📋',n:'执行清单',d:'环节不遗漏'},{i:'🤝',n:'供应商库',d:'报价+档期'},{i:'📅',n:'档期管理',d:'不撞期'},{i:'💰',n:'收款进度',d:'定金尾款'},{i:'📊',n:'项目复盘',d:'每场沉淀'}]},
+{id:'baby',name:'母婴店工作台',industry:'母婴 · 会员与复购',color:'#F472B6',ico:'🍼',tagline:'<b>母婴店主张姐</b>会员宝宝都记得，复购率 75%。',stats:[{n:'75%',l:'复购率',d:'会员管理'},{n:'0',l:'会员遗漏',d:'档案完整'},{n:'2x',l:'活动效果',d:'精准触达'}],feats:[{i:'🍼',n:'会员档案',d:'宝宝月龄记录'},{i:'🎂',n:'生日提醒',d:'自动送券'},{i:'📦',n:'进销存',d:'补货预警'},{i:'📢',n:'精准营销',d:'按月龄推品'},{i:'💳',n:'储值卡',d:'充值返券'},{i:'📊',n:'销售报表',d:'热销自动'}]},
+{id:'coffee',name:'咖啡店工作台',industry:'咖啡 · 门店运营',color:'#B45309',ico:'☕',tagline:'<b>咖啡店主老麦</b>会员杯数自动记，第10杯免单一键发。',stats:[{n:'80%',l:'会员复购',d:'积分体系'},{n:'0',l:'库存断供',d:'自动预警'},{n:'2x',l:'新品效率',d:'配方沉淀'}],feats:[{i:'☕',n:'会员积分',d:'杯数自动记'},{i:'🎁',n:'免单活动',d:'第10杯自动'},{i:'📦',n:'原料库存',d:'临期预警'},{i:'📅',n:'排班管理',d:'按客流排'},{i:'📊',n:'营业报表',d:'时段分析'},{i:'📢',n:'会员通知',d:'新品推送'}]},
+{id:'bnb',name:'民宿管理台',industry:'民宿 · 房源与订单',color:'#22D3EE',ico:'🏡',tagline:'<b>民宿主理人大飞</b>5 套房源订单零错乱，好评率 4.9。',stats:[{n:'5套',l:'房源管理',d:'独立档案'},{n:'4.9',l:'好评率',d:'服务闭环'},{n:'0',l:'漏房态',d:'同步管理'}],feats:[{i:'🏡',n:'房源管理',d:'照片+价格+日历'},{i:'📦',n:'订单管理',d:'平台聚合'},{i:'🧹',n:'保洁排期',d:'退房自动'},{i:'💬',n:'客人沟通',d:'话术模板'},{i:'⭐',n:'评价管理',d:'好评引导'},{i:'📊',n:'收益报表',d:'平台对比'}]},
+{id:'yoga',name:'瑜伽馆工作台',industry:'瑜伽 · 课程与会员',color:'#EC4899',ico:'🧘',tagline:'<b>瑜伽馆主理人Mia</b>约课不再乱，会员流失率降一半。',stats:[{n:'-50%',l:'会员流失',d:'跟进体系'},{n:'0',l:'约课冲突',d:'自动排'},{n:'85%',l:'出勤率',d:'提醒机制'}],feats:[{i:'🧘',n:'课程管理',d:'排课表'},{i:'📅',n:'约课系统',d:'会员自助'},{i:'👥',n:'会员档案',d:'体测+目标'},{i:'⏰',n:'上课提醒',d:'到点通知'},{i:'💰',n:'续卡提醒',d:'到期自动'},{i:'📊',n:'经营报表',d:'课时结算'}]},
+{id:'code',name:'少儿编程机构台',industry:'教培 · 少儿编程',color:'#6366F1',ico:'👨‍💻',tagline:'<b>编程机构校长Leo</b>排课+课时+续费全自动，家长满意度 95%。',stats:[{n:'300+',l:'学员管理',d:'进度档案'},{n:'95%',l:'家长满意',d:'进度同步'},{n:'0',l:'课时纠纷',d:'自动记录'}],feats:[{i:'👨‍💻',n:'学员档案',d:'作品+进度'},{i:'🗓️',n:'智能排课',d:'老师教室'},{i:'⏰',n:'课时记录',d:'自动扣课'},{i:'📊',n:'作品展示',d:'家长可见'},{i:'💰',n:'续费提醒',d:'到期催'},{i:'📢',n:'成果汇报',d:'一键生成'}]},
+{id:'insure',name:'保险经纪工作台',industry:'保险 · 客户与保单',color:'#3B82F6',ico:'🛡️',tagline:'<b>保险经纪人大刘</b>200 客户续保零遗漏，转介绍翻倍。',stats:[{n:'200+',l:'客户管理',d:'保单档案'},{n:'0',l:'漏续保',d:'自动提醒'},{n:'2x',l:'转介绍',d:'服务闭环'}],feats:[{i:'🛡️',n:'保单管理',d:'客户+险种+到期'},{i:'⏰',n:'续保提醒',d:'提前30天'},{i:'👥',n:'客户档案',d:'家庭+预算'},{i:'📅',n:'跟进计划',d:'定期回访'},{i:'💰',n:'佣金统计',d:'自动汇总'},{i:'📢',n:'客户关怀',d:'生日节日'}]},
+{id:'deco',name:'装修公司工作台',industry:'装修 · 项目与验收',color:'#F59E0B',ico:'🏗️',tagline:'<b>装修老板老魏</b>30 个工地进度透明，客户不再天天催。',stats:[{n:'30+',l:'并行工地',d:'进度看板'},{n:'0',l:'漏工序',d:'节点清单'},{n:'95%',l:'客户满意',d:'进度同步'}],feats:[{i:'🏗️',n:'工地管理',d:'每户独立看板'},{i:'📋',n:'工序节点',d:'节点自动推进'},{i:'📸',n:'进度照片',d:'同步业主'},{i:'💰',n:'预算管控',d:'超支预警'},{i:'👷',n:'工人调度',d:'任务派发'},{i:'📊',n:'项目复盘',d:'成本利润'}]},
+{id:'fruit',name:'水果店工作台',industry:'生鲜 · 库存与会员',color:'#F59E0B',ico:'🍎',tagline:'<b>水果店老板陈叔</b>水果不烂在库里，会员生日自动送券，回头客多一倍。',stats:[{n:'-40%',l:'损耗率',d:'库存预警'},{n:'60%',l:'会员复购',d:'生日营销'},{n:'0',l:'断供',d:'补货提醒'}],feats:[{i:'🍎',n:'商品管理',d:'进价+售价'},{i:'📦',n:'库存预警',d:'临期自动'},{i:'💳',n:'会员储值',d:'充值返券'},{i:'🎂',n:'生日营销',d:'自动送券'},{i:'📢',n:'特价推送',d:'微信群发'},{i:'📊',n:'营业报表',d:'热销自动'}]},
+{id:'glass',name:'眼镜店工作台',industry:'眼镜 · 验光与复购',color:'#3B82F6',ico:'👓',tagline:'<b>眼镜店长小顾</b>配镜记录不丢，每年提醒复检，复购率翻倍。',stats:[{n:'2000+',l:'配镜档案',d:'电子化'},{n:'2x',l:'复购率',d:'复检提醒'},{n:'0',l:'记录丢失',d:'云端存储'}],feats:[{i:'👓',n:'配镜档案',d:'度数+镜架+日期'},{i:'⏰',n:'复检提醒',d:'每年自动'},{i:'💳',n:'会员管理',d:'积分+生日'},{i:'📦',n:'镜架库存',d:'型号管理'},{i:'📢',n:'营销活动',d:'换季促销'},{i:'📊',n:'营业报表',d:'品类分析'}]},
+{id:'pharmacy',name:'药店工作台',industry:'药店 · 库存与会员',color:'#10B981',ico:'💊',tagline:'<b>药店老板娘王姐</b>近效期药品自动提醒，会员用药记录全知道。',stats:[{n:'0',l:'近效期浪费',d:'自动预警'},{n:'2000+',l:'药品管理',d:'库存电子化'},{n:'70%',l:'会员复购',d:'用药提醒'}],feats:[{i:'💊',n:'药品库存',d:'批号+效期'},{i:'⚠️',n:'近效期预警',d:'提前90天'},{i:'💳',n:'会员管理',d:'用药记录'},{i:'⏰',n:'用药提醒',d:'复购自动'},{i:'📦',n:'进货管理',d:'供应商+价格'},{i:'📊',n:'营业报表',d:'品类毛利'}]},
+{id:'driving',name:'驾校工作台',industry:'驾校 · 学员与约考',color:'#22D3EE',ico:'🚘',tagline:'<b>驾校教练老吴</b>50 个学员练车安排得明明白白，约考不再手忙脚乱。',stats:[{n:'50+',l:'学员管理',d:'进度档案'},{n:'0',l:'约考遗漏',d:'自动提醒'},{n:'92%',l:'通过率',d:'针对训练'}],feats:[{i:'🚘',n:'学员档案',d:'科目+进度'},{i:'🗓️',n:'练车排期',d:'教练自动排'},{i:'⏰',n:'约考提醒',d:'考前自动'},{i:'📊',n:'科目统计',d:'通过率看板'},{i:'💳',n:'收费记录',d:'分科缴费'},{i:'📢',n:'通知群发',d:'一键触达'}]}
+];
+
+/* 补充 stats 缺失项（统一修正） */
+for (const k in GENERIC){ const g=GENERIC[k]; if(g.stats2===null){ delete g.stats2; } if(!g.stats){ g.stats=[{n:'2x',l:'效率提升',d:'自动化'},{n:'0',l:'漏单',d:'闭环管理'},{n:'90%',l:'满意度',d:'服务保障'}]; } if(!g.feats){ g.feats=[{i:'📊',n:'数据看板',d:'一屏掌握'},{i:'✅',n:'任务管理',d:'自动提醒'},{i:'💳',n:'会员管理',d:'复购'},{i:'📢',n:'营销工具',d:'触达'},{i:'📋',n:'订单闭环',d:'不漏单'},{i:'📈',n:'经营报表',d:'自动出'}]; } }
+
+/* 合并案例表 */
+const CASES = {};
+Object.assign(CASES, DETAIL);
+GENERIC.forEach(g => { CASES[g.id] = Object.assign({}, g, {generic:true}); });
+
+/* 生成默认故事/图表/证言（轻量案例用模板） */
+function defaultStory(c){
+    return { who:'行业从业者', bg:'和大多数同行一样，以前全靠纸笔+记性管理生意：订单散、客户记不住、报表靠月底对。'+'<em>忙是真忙，但赚得糊里糊涂</em>。',
+      pains:['订单/客户/数据散乱','没有自动化，全靠人肉','想提升却不知道从哪下手'] };
+}
+function defaultChart(c){
+    return { title:'经营指标趋势（近12周）', labels:['1','2','3','4','5','6','7','8','9','10','11','12'],
+      vals: Array.from({length:12},(_,i)=>Math.round(3.5+ i*0.65 + Math.sin(i)*0.4)) };
+}
+function defaultTests(c){
+    return [{av:'李',nm:'李老板',rl:c.industry.split(' · ')[0],t:'最值钱的是不用自己搭系统，买回来改个名就能用，当天上手。'},{av:'张',nm:'张店长',rl:c.name.replace('工作台','').replace('管理台','').replace('机构台',''),t:'以前一天花2小时记台账，现在全自动，省下的时间都去做业务了。'}];
+}
+function defaultPlans(c){
+    const base = c.price || 299;
+    return [{t:'轻量版',n:'基础版',p:'¥'+Math.round(base*0.6),d:'核心功能',b:'立即购买'},{t:'推荐',n:'标准版',p:'¥'+base,d:'全套功能',b:'立即购买',pop:true,gold:true},{t:'定制',n:'专属定制',p:'¥'+Math.round(base*3)+'起',d:'按需求定制',b:'定制同款'}];
+}
 
 /* ============ 渲染 ============ */
 const qs = new URLSearchParams(location.search);
 const id = qs.get('id') || 'fitness';
 const c = CASES[id] || CASES.fitness;
 document.title = c.name + ' · Crazy Friday';
+if (!c.story) c.story = defaultStory(c);
+if (!c.chart) c.chart = defaultChart(c);
+if (!c.tests) c.tests = defaultTests(c);
+if (!c.plans) c.plans = defaultPlans(c);
 
 const maxV = Math.max(...c.chart.vals);
 const bars = c.chart.vals.map((v,i)=>`
-    <div class="bar-col"><div class="bv">${typeof v==='number' && v<10 && c.chart.vals[0]>20 ? v : (v>=1000? (v/10000).toFixed(1)+'w' : v)}</div>
+    <div class="bar-col"><div class="bv">${v}</div>
     <div class="bb" style="height:${Math.max(6,(v/maxV)*100)}%;background:linear-gradient(180deg,${c.color},${c.color}55)"></div>
     <div class="bl">${c.chart.labels[i]}</div></div>`).join('');
+
+/* 更多案例 */
+const moreList = Object.keys(CASES).filter(k=>k!==id).slice(0,6);
+const moreHtml = moreList.map(k=>{ const x=CASES[k]; return `<a class="mc" href="demo-case.html?id=${k}"><div class="mi">${x.ico}</div><div class="mn">${x.name.replace('工作台','').replace('管理台','')}</div><div class="md">${x.industry.split(' · ')[0]}</div></a>`; }).join('');
 
 document.getElementById('app').innerHTML = `
 <div class="hero">
@@ -239,46 +280,61 @@ document.getElementById('app').innerHTML = `
     <div class="kpi-row">${c.stats.map(s=>`<div class="kpi"><div class="n">${s.n}</div><div class="l">${s.l}</div><div class="d">${s.d}</div></div>`).join('')}</div>
 </div>
 
+<!-- 现成 vs 自己搭 -->
 <div class="sec">
-    <div class="sec-hd"><span class="bar"></span><h2>客户故事</h2><span class="tag">真实场景还原</span></div>
-    <div class="card story">
-        <b style="color:${c.color}">${c.story.who}</b> · ${c.story.bg}
-        <div class="pains">${c.story.pains.map(p=>`<div class="pain"><span class="x">✕</span>${p}</div>`).join('')}</div>
+    <div class="sec-hd"><span class="bar"></span><h2>为什么要买现成的？</h2><span class="tag">vs 自己搭</span></div>
+    <div class="vs">
+        <div class="col win">
+            <div class="vt" style="color:#34D399">✅ 买现成的（推荐）</div>
+            <div class="vi"><span class="ok">✓</span>当天交付，改品牌即上线</div>
+            <div class="vi"><span class="ok">✓</span>案例验证过，直接能用</div>
+            <div class="vi"><span class="ok">✓</span>源码+文档+1对1售后</div>
+            <div class="vi"><span class="ok">✓</span>¥299起，比定制便宜10倍</div>
+        </div>
+        <div class="mid">VS</div>
+        <div class="col">
+            <div class="vt" style="color:#F87171">⚠️ 自己搭</div>
+            <div class="vi"><span class="x">✕</span>搭工具要学 3 周</div>
+            <div class="vi"><span class="x">✕</span>没案例，方向靠猜</div>
+            <div class="vi"><span class="x">✕</span>改一个功能要半天</div>
+            <div class="vi"><span class="x">✕</span>没人管你学不会</div>
+        </div>
     </div>
 </div>
 
 <div class="sec">
-    <div class="sec-hd"><span class="bar"></span><h2>用了它，怎么解决的</h2></div>
-    <div class="feat-grid">${c.feats.map(f=>`
-        <div class="feat"><div class="fi" style="background:${c.color}18;color:${c.color}">${f.i}</div>
-        <div><div class="fn">${f.n}</div><div class="fd">${f.d}</div></div></div>`).join('')}</div>
+    <div class="sec-hd"><span class="bar"></span><h2>客户故事</h2><span class="tag">真实场景还原</span></div>
+    <div class="card story"><b style="color:${c.color}">${c.story.who}</b> · ${c.story.bg}
+        <div class="pains">${c.story.pains.map(p=>`<div class="pain"><span class="x">✕</span>${p}</div>`).join('')}</div></div>
 </div>
 
 <div class="sec">
-    <div class="sec-hd"><span class="bar"></span><h2>成果数据</h2><span class="tag">演示数据 · 展示产品价值</span></div>
+    <div class="sec-hd"><span class="bar"></span><h2>用了它，怎么解决的</h2></div>
+    <div class="feat-grid">${c.feats.map(f=>`<div class="feat"><div class="fi" style="background:${c.color}18;color:${c.color}">${f.i}</div><div><div class="fn">${f.n}</div><div class="fd">${f.d}</div></div></div>`).join('')}</div>
+</div>
+
+<div class="sec">
+    <div class="sec-hd"><span class="bar"></span><h2>成果数据</h2><span class="tag">演示数据 · 展示价值</span></div>
     <div class="card chart-card"><div class="chart-title">${c.chart.title}</div><div class="bars">${bars}</div></div>
 </div>
 
 <div class="sec">
     <div class="sec-hd"><span class="bar"></span><h2>客户怎么说</h2></div>
-    ${c.tests.map(t=>`<div class="tst"><div class="q">${t.t}</div>
-        <div class="who"><div class="av" style="background:${c.color}">${t.av}</div>
-        <div><div class="nm">${t.nm}</div><div class="rl">${t.rl}</div></div>
-        <div class="stars">★★★★★</div></div></div>`).join('')}
+    ${c.tests.map(t=>`<div class="tst"><div class="q">${t.t}</div><div class="who"><div class="av" style="background:${c.color}">${t.av}</div><div><div class="nm">${t.nm}</div><div class="rl">${t.rl}</div></div><div class="stars">★★★★★</div></div></div>`).join('')}
 </div>
 
 <div class="sec">
     <div class="sec-hd"><span class="bar"></span><h2>价格方案</h2></div>
-    <div class="plans">${c.plans.map(p=>`
-        <div class="plan ${p.pop?'pop':''}">
-            <div class="pt">${p.t}</div><div class="pn">${p.n}</div>
-            <div class="pp">${p.p}<small>${p.unit||''}</small></div><div class="pd">${p.d}</div>
-            <button class="pbtn ${p.gold?'gold':''}" onclick="buy('${id}','${esc(p.n)}','${p.p.replace(/[^0-9]/g,'')}')">${p.b}</button>
-        </div>`).join('')}</div>
+    <div class="plans">${c.plans.map(p=>`<div class="plan ${p.pop?'pop':''}"><div class="pt">${p.t}</div><div class="pn">${p.n}</div><div class="pp">${p.p}<small>${p.unit||''}</small></div><div class="pd">${p.d}</div><button class="pbtn ${p.gold?'gold':''}" onclick="buy('${id}','${esc(p.n)}','${p.p.replace(/[^0-9]/g,'')}')">${p.b}</button></div>`).join('')}</div>
+</div>
+
+<div class="sec">
+    <div class="sec-hd"><span class="bar"></span><h2>更多行业案例</h2><span class="tag">36个场景全覆盖</span></div>
+    <div class="mc-grid">${moreHtml}</div>
 </div>
 
 <div class="cta">
-    <h3>想要 <span style="color:${c.color}">${c.name}</span> 同款？</h3>
+    <h3>想要 <span style="color:${c.color}">${c.name.replace('工作台','')}</span> 同款？</h3>
     <p>买现成的，或定制专属于你的版本——<br>交付源码、改品牌即可上线，次日交付。</p>
     <div class="btns">
         <a class="btn btn-main" href="cfapp/store.html">🛒 去商店买现成的</a>
@@ -287,7 +343,7 @@ document.getElementById('app').innerHTML = `
     <div class="demo-note">* 本页客户故事/数据为演示内容，用于展示产品价值 · Crazy Friday</div>
 </div>
 
-<div class="foot">Crazy Friday · 案例详情 · 回到<a href="demo-gallery.html" style="color:var(--purple-light)">案例广场</a></div>`;
+<div class="foot">Crazy Friday · 36 行业案例 · 回到<a href="demo-gallery.html" style="color:var(--purple-light)">案例广场</a></div>`;
 
 function buy(id, name, price){
     location.href = 'cfapp/pay.html?sku=case_'+id+'&name='+encodeURIComponent(name)+'&price='+(price||299);
