@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#f5f3ff">
-<meta name="description" content="宝宝成长工作台 · 记录爱，陪伴成长 · AI 育儿助手 + 健康数据 + 珍贵瞬间永久保存">
+<meta name="description" content="宝宝成长工作台 · 记录爱，陪伴成长 · 成长记录 + 健康数据 + 喂养打卡 + 疫苗提醒 + AI 成长小结 · 数据保存在本机，永久使用">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="zh-CN">
-<title>宝宝成长工作台 · Crazy Friday · AI × CREATOR</title>
+<title>宝宝成长工作台 · Crazy Friday</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 :root {
@@ -15,9 +15,9 @@
     --text:#1a1530; --dim:#6b6280; --mute:#9b94b3;
     --purple:#A855F7; --purple-deep:#7C3AED; --purple-light:#C084FC;
     --pink:#EC4899; --orange:#FF6B1A; --green:#10B981; --cyan:#22D3EE; --gold:#FFD700;
-    --warm:#fef3e8; --warm2:#fde8d4;
+    --warm:#fef3e8; --warm2:#fde8d4; --red:#EF4444;
 }
-body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; padding-bottom:30px; background-image:radial-gradient(ellipse 800px 500px at 50% -8%, rgba(236,72,153,.10), transparent 60%), radial-gradient(ellipse 600px 400px at 100% 50%, rgba(168,85,247,.08), transparent 60%); }
+body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; padding-bottom:40px; background-image:radial-gradient(ellipse 800px 500px at 50% -8%, rgba(236,72,153,.10), transparent 60%), radial-gradient(ellipse 600px 400px at 100% 50%, rgba(168,85,247,.08), transparent 60%); }
 .wrap { max-width:480px; margin:0 auto; padding:0 16px; }
 
 /* 顶部品牌 */
@@ -32,17 +32,33 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 .brand-day b { color:var(--text); font-weight:800; }
 .case-mark { text-align:right; font-size:10px; color:var(--mute); margin-top:2px; }
 
-/* Hero */
-.hero { padding:18px 0 14px; }
-.hero .badge { display:inline-block; font-size:10px; font-weight:800; color:#EC4899; background:rgba(236,72,153,.10); border:1px solid rgba(236,72,153,.25); padding:5px 12px; border-radius:16px; margin-bottom:14px; }
-.hero h1 { font-size:24px; font-weight:900; line-height:1.35; letter-spacing:-.5px; color:var(--text); }
+/* 今日要处理 */
+.today { background:linear-gradient(150deg,#fff5f5,#fff); border:1px solid rgba(239,68,68,.18); border-radius:20px; padding:16px; margin:12px 0; box-shadow:0 8px 26px rgba(239,68,68,.08); }
+.today-hd { display:flex; align-items:center; gap:8px; font-size:14px; font-weight:900; margin-bottom:10px; color:var(--text); }
+.today-hd .ico { width:26px; height:26px; border-radius:9px; background:linear-gradient(135deg,#EF4444,#F97316); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.today-hd .n { margin-left:auto; font-size:10px; color:var(--mute); font-weight:600; }
+.today-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:#fff; border:1px solid rgba(239,68,68,.14); border-radius:14px; margin-bottom:8px; }
+.today-item:last-child { margin-bottom:0; }
+.today-item .txt { flex:1; min-width:0; }
+.today-item .t { font-size:13px; font-weight:800; }
+.today-item .d { font-size:10.5px; color:var(--dim); margin-top:1px; }
+.today-item.overdue .t { color:var(--red); }
+.today-item.overdue .d { color:#f87171; }
+.today-item .tag-over { font-size:9px; font-weight:900; color:#fff; background:var(--red); padding:2px 7px; border-radius:8px; flex-shrink:0; }
+.today-btn { min-width:52px; min-height:44px; padding:0 13px; border:none; border-radius:13px; background:linear-gradient(135deg,#EF4444,#F97316); color:#fff; font-size:12px; font-weight:800; cursor:pointer; flex-shrink:0; }
+.today-btn:active { transform:scale(.94); }
+.today-empty { font-size:12px; color:var(--green); font-weight:700; padding:6px 2px; }
+
+/* Hero 精简 */
+.hero { padding:10px 0 8px; }
+.hero h1 { font-size:21px; font-weight:900; line-height:1.4; letter-spacing:-.4px; color:var(--text); }
 .hero h1 em { font-style:normal; background:linear-gradient(135deg,#7C3AED,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .sub { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
+.hero .sub { font-size:12px; color:var(--dim); margin-top:6px; line-height:1.6; }
 
 /* 宝宝档案卡 */
 .profile { background:var(--card); border:1px solid var(--border); border-radius:24px; padding:18px; margin:14px 0; box-shadow:0 10px 40px rgba(168,85,247,.12); position:relative; overflow:hidden; }
 .profile::before { content:''; position:absolute; top:-30px; right:-30px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle, rgba(236,72,153,.18), transparent 70%); pointer-events:none; }
-.profile-head { display:flex; align-items:center; gap:13px; margin-bottom:14px; }
+.profile-head { display:flex; align-items:center; gap:13px; margin-bottom:14px; position:relative; }
 .baby-av { width:60px; height:60px; border-radius:18px; background:linear-gradient(135deg,#fde8d4,#fbcfa0); display:flex; align-items:center; justify-content:center; font-size:30px; flex-shrink:0; box-shadow:0 6px 18px rgba(251,207,160,.5); position:relative; }
 .baby-av::after { content:'♥'; position:absolute; bottom:-2px; right:-2px; width:18px; height:18px; border-radius:50%; background:#EC4899; color:#fff; font-size:10px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(236,72,153,.4); }
 .baby-info { flex:1; min-width:0; }
@@ -50,9 +66,11 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 .baby-name .heart { color:#EC4899; font-size:14px; }
 .baby-age { font-size:11px; color:var(--dim); margin-top:3px; }
 .baby-age b { color:var(--text); font-weight:800; }
-.baby-edit { font-size:11px; color:var(--mute); display:flex; align-items:center; gap:2px; }
+.baby-edit { min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--mute); cursor:pointer; border:1px solid var(--border); border-radius:12px; background:#faf8ff; flex-shrink:0; }
+.baby-edit:active { transform:scale(.95); }
 .data-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:4px; }
-.data { background:linear-gradient(160deg,#fdf4ff,#fef3e8); border:1px solid rgba(168,85,247,.12); border-radius:16px; padding:13px 8px; text-align:center; }
+.data { background:linear-gradient(160deg,#fdf4ff,#fef3e8); border:1px solid rgba(168,85,247,.12); border-radius:16px; padding:13px 8px; text-align:center; cursor:pointer; transition:transform .12s; }
+.data:active { transform:scale(.97); }
 .data .l { font-size:10px; color:var(--dim); font-weight:700; }
 .data .v { font-size:18px; font-weight:900; color:var(--text); margin:3px 0; line-height:1.1; }
 .data .v small { font-size:10px; color:var(--mute); font-weight:600; }
@@ -60,32 +78,64 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 .data .chart { display:flex; align-items:flex-end; gap:1.5px; height:14px; margin-top:6px; justify-content:center; }
 .data .chart i { width:3px; background:linear-gradient(180deg,#A855F7,#EC4899); border-radius:1.5px; display:block; }
 
-/* 9 大功能入口 */
-.func-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:14px; }
-.func { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px 6px; text-align:center; cursor:pointer; transition:transform .12s, box-shadow .2s; }
-.func:active { transform:scale(.96); }
-.func .ic { font-size:24px; margin-bottom:5px; display:block; }
-.func .n { font-size:10px; font-weight:800; color:var(--text); }
-.func.new { background:linear-gradient(160deg,#ede9fe,#fce7f3); border-color:rgba(168,85,247,.2); }
-.func.new .n { color:#7C3AED; }
+/* 功能区 Tab */
+.tabs { display:flex; gap:6px; margin:16px 0 12px; }
+.tab { flex:1; min-height:44px; display:flex; align-items:center; justify-content:center; gap:6px; background:var(--card); border:1px solid var(--border); border-radius:15px; font-size:12px; font-weight:800; color:var(--dim); cursor:pointer; transition:all .15s; }
+.tab:active { transform:scale(.97); }
+.tab.on { background:linear-gradient(135deg,#7C3AED,#EC4899); color:#fff; border-color:transparent; box-shadow:0 6px 18px rgba(168,85,247,.35); }
+.tab .cnt { font-size:9px; background:rgba(255,255,255,.25); padding:1px 6px; border-radius:8px; }
 
 /* 通用区块 */
-.sec { margin:22px 0; }
-.sec-hd { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+.sec { margin:20px 0; }
+.sec-hd { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
 .sec-hd .bar { width:4px; height:18px; border-radius:2px; background:linear-gradient(180deg,#A855F7,#EC4899); }
-.sec-hd h2 { font-size:17px; font-weight:900; letter-spacing:-.3px; }
+.sec-hd h2 { font-size:16px; font-weight:900; letter-spacing:-.3px; }
 .sec-hd .sub { font-size:10px; color:var(--mute); margin-left:auto; }
+.add-btn { min-width:44px; min-height:44px; border:none; border-radius:14px; background:linear-gradient(135deg,#7C3AED,#EC4899); color:#fff; font-size:11px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px; box-shadow:0 6px 16px rgba(168,85,247,.3); }
+.add-btn:active { transform:scale(.94); }
 
-/* 时间线（珍贵时刻） */
+/* 时间线（成长记录） */
 .timeline { position:relative; padding-left:18px; }
 .timeline::before { content:''; position:absolute; left:6px; top:6px; bottom:6px; width:1.5px; background:linear-gradient(180deg,#A855F7,#EC4899); }
-.tl-item { position:relative; padding:9px 0 9px 8px; }
+.tl-item { position:relative; padding:8px 0 8px 8px; }
 .tl-item::before { content:''; position:absolute; left:-15px; top:15px; width:11px; height:11px; border-radius:50%; background:#fff; border:2.5px solid #A855F7; box-shadow:0 0 0 3px rgba(168,85,247,.15); }
-.tl-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:11px 13px; }
-.tl-title { font-size:12.5px; font-weight:800; display:flex; align-items:center; gap:6px; }
-.tl-title .age { font-size:9.5px; color:#7C3AED; background:#ede9fe; padding:2px 7px; border-radius:8px; font-weight:700; }
+.tl-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:11px 13px; display:flex; align-items:flex-start; gap:10px; }
+.tl-emo { width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,#ede9fe,#fce7f3); display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; }
+.tl-body { flex:1; min-width:0; }
+.tl-title { font-size:13px; font-weight:800; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.tl-title .type { font-size:9px; color:#7C3AED; background:#ede9fe; padding:2px 7px; border-radius:8px; font-weight:700; }
 .tl-desc { font-size:11px; color:var(--dim); margin-top:3px; line-height:1.6; }
-.tl-date { font-size:9px; color:var(--mute); margin-top:4px; }
+.tl-date { font-size:9.5px; color:var(--mute); margin-top:5px; display:flex; gap:8px; align-items:center; }
+.tl-del { margin-left:auto; min-width:34px; min-height:34px; border:none; background:rgba(239,68,68,.08); color:var(--red); border-radius:10px; font-size:10px; cursor:pointer; flex-shrink:0; }
+.tl-del:active { transform:scale(.92); }
+
+/* 喂养打卡 */
+.feed-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.feed-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:14px; text-align:center; position:relative; overflow:hidden; }
+.feed-card .f-ico { width:42px; height:42px; border-radius:13px; margin:0 auto 7px; display:flex; align-items:center; justify-content:center; font-size:21px; }
+.feed-card .f-n { font-size:13px; font-weight:900; }
+.feed-card .f-c { font-size:26px; font-weight:900; margin:2px 0; line-height:1.2; }
+.feed-card .f-c small { font-size:11px; color:var(--mute); font-weight:600; }
+.feed-card .f-t { font-size:9.5px; color:var(--mute); min-height:14px; }
+.feed-btn { width:100%; min-height:44px; margin-top:9px; border:none; border-radius:13px; font-size:12px; font-weight:800; cursor:pointer; color:#fff; }
+.feed-btn:active { transform:scale(.96); }
+.feed-times { display:flex; flex-wrap:wrap; gap:4px; margin-top:7px; justify-content:center; }
+.ft-chip { font-size:8.5px; background:#f3eefe; color:#7C3AED; padding:2px 6px; border-radius:7px; }
+
+/* 疫苗 */
+.vac-list { display:flex; flex-direction:column; gap:9px; }
+.vac { background:var(--card); border:1px solid var(--border); border-radius:15px; padding:12px 14px; display:flex; align-items:center; gap:11px; }
+.vac.done { opacity:.62; }
+.vac .v-ico { width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; background:linear-gradient(135deg,#e0f2fe,#d1fae5); }
+.vac.done .v-ico { background:#eef2f7; }
+.vac .v-body { flex:1; min-width:0; }
+.vac .v-n { font-size:13px; font-weight:800; }
+.vac .v-d { font-size:10px; color:var(--dim); margin-top:1px; }
+.vac .v-d.urgent { color:var(--red); font-weight:800; }
+.vac-btn { min-width:52px; min-height:44px; padding:0 12px; border:none; border-radius:12px; font-size:11px; font-weight:800; cursor:pointer; flex-shrink:0; }
+.vac-btn:active { transform:scale(.94); }
+.vac-btn.go { background:linear-gradient(135deg,#EF4444,#F97316); color:#fff; }
+.vac-btn.done { background:linear-gradient(135deg,#10B981,#34D399); color:#fff; }
 
 /* AI 小结 */
 .ai-card { background:linear-gradient(135deg,#1a1530,#2d1b4e); border-radius:18px; padding:18px; color:#fff; position:relative; overflow:hidden; }
@@ -93,54 +143,63 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 .ai-label { display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:800; color:#C084FC; background:rgba(255,255,255,.08); border:1px solid rgba(168,85,247,.3); padding:4px 10px; border-radius:12px; margin-bottom:9px; }
 .ai-title { font-size:14px; font-weight:800; margin-bottom:6px; }
 .ai-title em { font-style:normal; background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.ai-body { font-size:11.5px; color:rgba(255,255,255,.8); line-height:1.85; }
+.ai-body { font-size:11.5px; color:rgba(255,255,255,.85); line-height:1.85; }
+.ai-body b { color:#C084FC; }
 .ai-actions { display:flex; gap:7px; margin-top:12px; }
-.ai-btn { flex:1; padding:9px; border-radius:12px; font-size:11.5px; font-weight:800; border:none; cursor:pointer; }
+.ai-btn { flex:1; min-height:44px; padding:0 10px; border-radius:12px; font-size:11.5px; font-weight:800; border:none; cursor:pointer; }
 .ai-btn-main { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; }
 .ai-btn-ghost { background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.18); }
 
-/* 价值 4 大卖点 */
-.val-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.val { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:16px 14px; }
-.val .ic { width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:9px; background:linear-gradient(135deg,#ede9fe,#fce7f3); }
-.val .n { font-size:13px; font-weight:900; margin-bottom:4px; }
-.val .d { font-size:10.5px; color:var(--dim); line-height:1.65; }
+/* 备份条 */
+.backup { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:14px; margin:18px 0; }
+.backup-hd { display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:900; margin-bottom:10px; }
+.backup-btns { display:flex; gap:8px; }
+.bk-btn { flex:1; min-height:44px; border-radius:13px; border:1px solid var(--border); background:#faf8ff; color:var(--text); font-size:11.5px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
+.bk-btn:active { transform:scale(.96); }
+.bk-btn.danger { color:var(--red); border-color:rgba(239,68,68,.3); background:#fff5f5; }
 
-/* 定制流程 */
-.flow { display:flex; gap:8px; align-items:stretch; margin-top:6px; }
-.flow-step { flex:1; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:13px 10px; text-align:center; position:relative; }
-.flow-step .num { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; margin:0 auto 7px; box-shadow:0 4px 12px rgba(168,85,247,.35); }
-.flow-step .n { font-size:11px; font-weight:800; line-height:1.4; }
-.flow-arrow { position:absolute; right:-10px; top:50%; transform:translateY(-50%); color:var(--mute); font-size:14px; z-index:2; }
+/* 弹窗 */
+.mask { position:fixed; inset:0; background:rgba(26,21,48,.5); backdrop-filter:blur(3px); z-index:100; display:none; align-items:flex-end; justify-content:center; }
+.mask.show { display:flex; }
+.sheet { width:100%; max-width:480px; background:#fff; border-radius:26px 26px 0 0; padding:22px 20px calc(20px + env(safe-area-inset-bottom)); animation:up .25s ease; max-height:88vh; overflow-y:auto; }
+@keyframes up { from { transform:translateY(40px); opacity:0 } to { transform:translateY(0); opacity:1 } }
+.sheet-hd { display:flex; align-items:center; margin-bottom:16px; }
+.sheet-hd h3 { font-size:17px; font-weight:900; }
+.sheet-close { margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid var(--border); background:#faf8ff; color:var(--mute); font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.sheet-close:active { transform:scale(.92); }
+.field { margin-bottom:14px; }
+.field label { display:block; font-size:11px; font-weight:800; color:var(--dim); margin-bottom:6px; }
+.field input, .field select, .field textarea { width:100%; min-height:48px; border:1.5px solid var(--border); border-radius:14px; padding:0 14px; font-size:16px; color:var(--text); background:#faf8ff; outline:none; font-family:inherit; }
+.field textarea { padding:12px 14px; resize:vertical; min-height:84px; line-height:1.6; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color:var(--purple); background:#fff; }
+.field .hint { font-size:9.5px; color:var(--mute); margin-top:4px; }
+.sheet-btn { width:100%; min-height:52px; border:none; border-radius:16px; background:linear-gradient(135deg,#7C3AED,#EC4899); color:#fff; font-size:15px; font-weight:900; cursor:pointer; box-shadow:0 8px 22px rgba(168,85,247,.35); }
+.sheet-btn:active { transform:scale(.98); }
+.sheet-btn.plain { background:linear-gradient(135deg,#10B981,#34D399); box-shadow:0 8px 22px rgba(16,185,129,.3); }
+.sheet-btn.gray { background:#eef2f7; color:var(--text); box-shadow:none; }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.avatar-pick { display:flex; gap:8px; flex-wrap:wrap; }
+.av-opt { width:46px; height:46px; border-radius:14px; border:2px solid var(--border); background:#faf8ff; font-size:23px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.av-opt.on { border-color:var(--purple); background:#ede9fe; box-shadow:0 0 0 3px rgba(168,85,247,.18); }
 
-/* 价格方案 */
-.plans { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
-.plan { background:var(--card); border:1.5px solid var(--border); border-radius:16px; padding:14px 10px; text-align:center; position:relative; }
-.plan.pop { border-color:rgba(168,85,247,.45); background:linear-gradient(160deg,#ede9fe,#fce7f3); }
-.plan .tag { position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; font-size:9px; font-weight:900; padding:3px 9px; border-radius:10px; }
-.plan .n { font-size:12px; font-weight:900; margin:4px 0; }
-.plan .p { font-size:18px; font-weight:900; color:var(--text); }
-.plan .p small { font-size:9px; color:var(--mute); font-weight:600; }
-.plan .d { font-size:9.5px; color:var(--dim); margin-top:5px; line-height:1.5; }
+/* toast */
+#toast { position:fixed; left:50%; bottom:70px; transform:translateX(-50%) translateY(20px); background:rgba(26,21,48,.92); color:#fff; font-size:13px; font-weight:700; padding:12px 20px; border-radius:14px; z-index:999; opacity:0; transition:all .3s; pointer-events:none; max-width:86vw; text-align:center; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
-/* CTA */
-.cta { background:linear-gradient(135deg,#1a1530,#2d1b4e); border-radius:22px; padding:24px 18px; text-align:center; color:#fff; position:relative; overflow:hidden; margin-top:8px; }
-.cta::before { content:''; position:absolute; top:-50px; left:50%; transform:translateX(-50%); width:280px; height:180px; border-radius:50%; background:radial-gradient(ellipse, rgba(236,72,153,.4), transparent 65%); }
-.cta h3 { font-size:18px; font-weight:900; line-height:1.4; position:relative; }
-.cta h3 em { font-style:normal; background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.cta p { font-size:12px; color:rgba(255,255,255,.75); margin-top:8px; line-height:1.7; position:relative; }
-.cta-btns { display:flex; gap:9px; margin-top:16px; position:relative; }
-.cta-btn { flex:1; padding:13px; border-radius:16px; font-size:13px; font-weight:900; text-decoration:none; cursor:pointer; border:none; }
-.cta-main { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; box-shadow:0 8px 24px rgba(168,85,247,.4); }
-.cta-ghost { background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.18); }
+/* 空状态 */
+.empty { text-align:center; padding:26px 10px; color:var(--mute); font-size:12px; line-height:1.8; }
+.empty .e-ico { font-size:30px; margin-bottom:8px; }
 
-/* 底部 */
+/* SVG 图表 */
+.chart-wrap { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; margin-top:10px; }
+.chart-tt { font-size:11px; font-weight:800; color:var(--dim); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+.chart-tt .more { font-size:9px; color:var(--purple); cursor:pointer; }
+
 .foot { text-align:center; padding:18px 0 10px; font-size:10px; color:var(--mute); line-height:1.8; }
 .foot .b { font-family:Georgia,serif; font-weight:900; color:var(--text); font-size:13px; margin-bottom:5px; }
 .foot .b .dot { display:inline-block; width:4px; height:4px; border-radius:50%; background:#FF6B1A; vertical-align:5px; margin:0 1px; }
 .foot a { color:#7C3AED; text-decoration:none; }
-
-@media (max-width:380px){ .data-row {grid-template-columns:1fr 1fr 1fr} .func-grid {gap:6px} }
+@media (max-width:380px){ .data-row {grid-template-columns:1fr 1fr 1fr} }
 </style>
 </head>
 <body>
@@ -152,161 +211,576 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
             <div class="brand-logo"><span class="crazy">Crazy</span><br><span class="crazy">Friday</span><span class="dot"></span></div>
             <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">
                 <span class="brand-tag">AI <em>×</em> CREATOR</span>
-                <span class="brand-day" style="font-size:10px">Day <b>12</b></span>
+                <span class="brand-day" id="useDays">已用 <b>1</b> 天</span>
             </div>
         </div>
-        <div class="case-mark">📅 2026年7月17日<br>｜ 案例记录</div>
+        <div class="case-mark">宝宝成长工作台<br>｜ 永久使用版</div>
+    </div>
+
+    <!-- 今天要处理 -->
+    <div class="today">
+        <div class="today-hd">
+            <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></span>
+            今天要处理
+            <span class="n" id="todayCount"></span>
+        </div>
+        <div id="todayList"></div>
     </div>
 
     <!-- Hero -->
     <div class="hero">
-        <div class="badge">✨ AI 应用实验室 · Day 12</div>
-        <h1>一个妈妈的想法<br>被我们做成了<br><em>孩子的专属成长工作台</em></h1>
-        <div class="sub">不是一个普通记录工具<br>而是属于这个家庭的成长陪伴系统 💜</div>
+        <h1><span id="heroBabyName">宝贝</span>的<br><em>专属成长工作台</em></h1>
+        <div class="sub">记录成长 · 守护健康 · 全家的爱，都在这里 💜</div>
     </div>
 
     <!-- 宝宝档案 -->
     <div class="profile">
         <div class="profile-head">
-            <div class="baby-av">👶</div>
+            <div class="baby-av" id="babyAv">👶</div>
             <div class="baby-info">
-                <div class="baby-name">小宝贝 <span class="heart">♥</span></div>
-                <div class="baby-age"><b>2岁1个月20天</b> · 2026.07.17 星期四</div>
-                <div class="baby-age" style="color:var(--mute)">"愿你健康快乐长大～"</div>
+                <div class="baby-name" id="babyName">小宝贝 <span class="heart">♥</span></div>
+                <div class="baby-age" id="babyAge"><b>--</b></div>
+                <div class="baby-age" id="babyMotto" style="color:var(--mute)">"愿你健康快乐长大～"</div>
             </div>
-            <div class="baby-edit">✎ 编辑</div>
+            <div class="baby-edit" onclick="openEditBaby()">✎ 编辑</div>
         </div>
-        <!-- 数据卡 -->
+        <!-- 健康数据卡（点击记录） -->
         <div class="data-row">
-            <div class="data"><div class="l">身高</div><div class="v">87.6<small>cm</small></div><div class="d">较上次 +1.2cm</div><div class="chart"><i style="height:40%"></i><i style="height:55%"></i><i style="height:70%"></i><i style="height:85%"></i><i style="height:100%"></i></div></div>
-            <div class="data"><div class="l">体重</div><div class="v">12.4<small>kg</small></div><div class="d">较上次 +0.3kg</div><div class="chart"><i style="height:50%"></i><i style="height:60%"></i><i style="height:72%"></i><i style="height:86%"></i><i style="height:100%"></i></div></div>
-            <div class="data"><div class="l">睡眠</div><div class="v">11.2<small>h</small></div><div class="d">较上次 +0.5h</div><div class="chart"><i style="height:60%"></i><i style="height:65%"></i><i style="height:75%"></i><i style="height:90%"></i><i style="height:100%"></i></div></div>
+            <div class="data" onclick="openHealth('height')"><div class="l">身高</div><div class="v" id="hHeight">--<small>cm</small></div><div class="d" id="dHeight">去记录</div></div>
+            <div class="data" onclick="openHealth('weight')"><div class="l">体重</div><div class="v" id="hWeight">--<small>kg</small></div><div class="d" id="dWeight">去记录</div></div>
+            <div class="data" onclick="openHealth('sleep')"><div class="l">睡眠</div><div class="v" id="hSleep">--<small>h</small></div><div class="d" id="dSleep">去记录</div></div>
         </div>
-        <!-- 9 大功能 -->
-        <div class="func-grid">
-            <div class="func"><span class="ic">📷</span><span class="n">成长记录</span></div>
-            <div class="func"><span class="ic">🏥</span><span class="n">健康管理</span></div>
-            <div class="func"><span class="ic">📝</span><span class="n">发育里程碑</span></div>
-            <div class="func new"><span class="ic">🤖</span><span class="n">AI 育儿助手</span></div>
-            <div class="func"><span class="ic">�</span><span class="n">成长相册</span></div>
-            <div class="func"><span class="ic">👨‍👩‍👧</span><span class="n">亲子互动</span></div>
-            <div class="func"><span class="ic">�</span><span class="n">疫苗提醒</span></div>
-            <div class="func"><span class="ic">📖</span><span class="n">AI 故事书</span></div>
-            <div class="func"><span class="ic">📊</span><span class="n">成长数据</span></div>
+        <div class="chart-wrap" id="trendWrap" style="display:none">
+            <div class="chart-tt"><span id="trendTitle">趋势</span><span class="more" id="trendMore" onclick="openHealth('height')">查看全部 →</span></div>
+            <div id="trendChart"></div>
         </div>
     </div>
 
-    <!-- AI 成长小结 -->
-    <div class="sec">
-        <div class="sec-hd"><span class="bar"></span><h2>本周 <em style="font-style:normal;background:linear-gradient(135deg,#7C3AED,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent">AI 成长小结</em></h2><span class="sub">✨ 智能生成</span></div>
+    <!-- Tab 切换 -->
+    <div class="tabs">
+        <div class="tab on" id="tabMoments" onclick="switchTab('moments')">成长记录<span class="cnt" id="cntMoments">0</span></div>
+        <div class="tab" id="tabFeeds" onclick="switchTab('feeds')">喂养打卡<span class="cnt" id="cntFeeds">0</span></div>
+        <div class="tab" id="tabVaccines" onclick="switchTab('vaccines')">疫苗<span class="cnt" id="cntVaccines">0</span></div>
+        <div class="tab" id="tabAI" onclick="switchTab('ai')">AI 小结</div>
+    </div>
+
+    <!-- 成长记录 -->
+    <div class="sec" id="secMoments">
+        <div class="sec-hd"><span class="bar"></span><h2>珍贵时刻</h2><span class="sub">第一次、每一天，都值得记住</span><button class="add-btn" onclick="openAddMoment()">＋ 记录</button></div>
+        <div class="timeline" id="momentsList"></div>
+    </div>
+
+    <!-- 喂养打卡 -->
+    <div class="sec" id="secFeeds" style="display:none">
+        <div class="sec-hd"><span class="bar"></span><h2>今日喂养</h2><span class="sub" id="feedDate"></span></div>
+        <div class="feed-grid" id="feedsGrid"></div>
+    </div>
+
+    <!-- 疫苗 -->
+    <div class="sec" id="secVaccines" style="display:none">
+        <div class="sec-hd"><span class="bar"></span><h2>疫苗计划</h2><span class="sub">按国家计划疫苗，到期提醒</span><button class="add-btn" onclick="openAddVaccine()">＋ 添加</button></div>
+        <div class="vac-list" id="vacList"></div>
+    </div>
+
+    <!-- AI 小结 -->
+    <div class="sec" id="secAI" style="display:none">
+        <div class="sec-hd"><span class="bar"></span><h2>AI 成长小结</h2><span class="sub">自动生成，每周更新</span></div>
         <div class="ai-card">
-            <div class="ai-label">🤖 AI · 本周小结</div>
-            <div class="ai-title">小宝贝<em>这周</em>的成长超棒！</div>
-            <div class="ai-body">这周学会了叫"爸爸妈妈"声音越来越清晰，开始用小手够远处的玩具，模仿能力变强了。辅食吃得越来越好，开始尝试小块软水果。建议周末带 TA 去公园晒太阳补 VD，注意睡眠规律保持。</div>
+            <div class="ai-label"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg> CF 育儿助手</div>
+            <div class="ai-title"><em>宝宝成长周报</em></div>
+            <div class="ai-body" id="aiBody">加载中…</div>
             <div class="ai-actions">
-                <button class="ai-btn ai-btn-main">✨ 生成成长故事</button>
-                <button class="ai-btn ai-btn-ghost">📤 分享家人</button>
+                <button class="ai-btn ai-btn-main" onclick="genAI(true)">🔄 重新生成</button>
+                <button class="ai-btn ai-btn-ghost" onclick="openAskAI()">💬 问 AI 问题</button>
             </div>
         </div>
     </div>
 
-    <!-- 珍贵时刻时间线 -->
-    <div class="sec">
-        <div class="sec-hd"><span class="bar"></span><h2>每一个第一次，都值得被记录</h2></div>
-        <div class="timeline">
-            <div class="tl-item"><div class="tl-card"><div class="tl-title">第一次自己吃饭 <span class="age">1岁2天</span></div><div class="tl-desc">小手拿着勺子，吃得津津有味～</div><div class="tl-date">2026.06.19</div></div></div>
-            <div class="tl-item"><div class="tl-card"><div class="tl-title">第一次叫妈妈 <span class="age">1岁1个月</span></div><div class="tl-desc">清晰地叫出了"妈妈"，那一刻好感动～</div><div class="tl-date">2026.05.18</div></div></div>
-            <div class="tl-item"><div class="tl-card"><div class="tl-title">第一次旅行 <span class="age">1岁6个月</span></div><div class="tl-desc">第一次去海边，看到大海好开心～</div><div class="tl-date">2026.01.10</div></div></div>
-            <div class="tl-item"><div class="tl-card"><div class="tl-title">第一次扶着站立 <span class="age">10个月</span></div><div class="tl-desc">扶着沙发站起来，迈出了重要的一步～</div><div class="tl-date">2026.02.28</div></div></div>
-            <div class="tl-item"><div class="tl-card"><div class="tl-title">满6个月啦 <span class="age">6个月</span></div><div class="tl-desc">小宝贝已经6个月了，你越来越可爱啦～</div><div class="tl-date">2025.12.17</div></div></div>
-        </div>
-    </div>
-
-    <!-- 价值主张 -->
-    <div class="sec">
-        <div class="sec-hd"><span class="bar"></span><h2>这就是专属成长工作台的价值</h2></div>
-        <div class="val-grid">
-            <div class="val"><div class="ic">📷</div><div class="n">珍贵瞬间 永久保存</div><div class="d">照片、视频、语音记录，每个成长瞬间都不再遗忘</div></div>
-            <div class="val"><div class="ic">📊</div><div class="n">成长数据 清晰查看</div><div class="d">身高/体重/睡眠/喂养，AI 根据数据提供个性化建议</div></div>
-            <div class="val"><div class="ic">🤖</div><div class="n">AI 智能 自动整理</div><div class="d">AI 自动生成成长报告、智能生成专属成长故事</div></div>
-            <div class="val"><div class="ic">👨‍👩‍👧</div><div class="n">全家共享 一起见证</div><div class="d">邀请家人一起记录，爷爷奶奶也能看见孩子成长</div></div>
-        </div>
-    </div>
-
-    <!-- 定制流程 -->
-    <div class="sec">
-        <div class="sec-hd"><span class="bar"></span><h2>如何为你家宝宝定制</h2></div>
-        <div class="flow">
-            <div class="flow-step"><div class="num">1</div><div class="n">了解需求</div><div class="d" style="font-size:9px;color:var(--mute);margin-top:3px">聊天 / 表单收集</div></div>
-            <span class="flow-arrow">›</span>
-            <div class="flow-step"><div class="num">2</div><div class="n">设计模块</div><div class="d" style="font-size:9px;color:var(--mute);margin-top:3px">匹配家庭需求</div></div>
-            <span class="flow-arrow">›</span>
-            <div class="flow-step"><div class="num">3</div><div class="n">AI 搭建</div><div class="d" style="font-size:9px;color:var(--mute);margin-top:3px">3天交付</div></div>
-            <span class="flow-arrow">›</span>
-            <div class="flow-step"><div class="num">4</div><div class="n">上线 + 升级</div><div class="d" style="font-size:9px;color:var(--mute);margin-top:3px">持续迭代</div></div>
-        </div>
-    </div>
-
-    <!-- 价格方案 -->
-    <div class="sec">
-        <div class="sec-hd"><span class="bar"></span><h2>定制价格方案</h2></div>
-        <div class="plans">
-            <div class="plan"><div class="n">基础版</div><div class="p">¥999<small>/份</small></div><div class="d">成长记录 + 健康数据 + 相册 + 里程碑</div></div>
-            <div class="plan pop"><div class="tag">最受欢迎</div><div class="n">标准版</div><div class="p">¥1999<small>/份</small></div><div class="d">基础 + AI 育儿助手 + AI 故事生成 + 全家共享</div></div>
-            <div class="plan"><div class="n">旗舰版</div><div class="p">¥3999<small>/份</small></div><div class="d">全部 + 1v1 定制 + 数据迁移 + 终身升级</div></div>
-        </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta">
-        <h3>想为你的宝宝<br>打造 <em>专属</em>成长工作台？</h3>
-        <p>一个想法 + AI 技术 = 你的专属应用<br>Crazy Friday · 1v1 定制 · 3天交付</p>
-        <div class="cta-btns">
-            <a class="cta-btn cta-main" href="mailto:shim16506@gmail.com?subject=宝宝成长工作台定制">📩 立即咨询定制</a>
-            <a class="cta-btn cta-ghost" href="demo-case.html?id=baby">🎬 看案例详情</a>
+    <!-- 备份条（首屏可见，铁律） -->
+    <div class="backup">
+        <div class="backup-hd"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 数据备份 · 换手机/清缓存前先导出</div>
+        <div class="backup-btns">
+            <button class="bk-btn" onclick="exportData()">⬇ 导出备份</button>
+            <button class="bk-btn" onclick="document.getElementById('fileImport').click()">⬆ 导入恢复</button>
+            <button class="bk-btn danger" onclick="askClear()">🗑 清空</button>
+            <input type="file" id="fileImport" accept="application/json" style="display:none" onchange="importData(this)">
         </div>
     </div>
 
     <div class="foot">
-        <div class="b">Crazy Friday<span class="dot"></span></div>
-        一个想法 <b>+</b> AI 技术 <b>=</b> 你的专属应用<br>
-        © 2026 · <a href="index.html">Crazy Friday 生态</a>
+        <div class="b">Crazy<span class="dot"></span>Friday</div>
+        宝宝成长工作台 · 数据保存在本机浏览器<br>由 <a href="demo-case.html?id=baby" target="_blank">Crazy Friday 制作</a> · 授权使用版
     </div>
 </div>
 
+<!-- 编辑宝宝弹窗 -->
+<div class="mask" id="maskBaby">
+    <div class="sheet">
+        <div class="sheet-hd"><h3>编辑宝宝档案</h3><button class="sheet-close" onclick="closeSheet('maskBaby')">×</button></div>
+        <div class="field"><label>宝宝昵称</label><input id="eName" type="text" placeholder="如：小宝贝"></div>
+        <div class="field"><label>出生日期</label><input id="eBirth" type="date"></div>
+        <div class="field"><label>头像</label><div class="avatar-pick" id="avPick"></div></div>
+        <div class="field"><label>寄语（可选）</label><input id="eMotto" type="text" placeholder="愿你健康快乐长大～"></div>
+        <button class="sheet-btn" onclick="saveBaby()">保存档案</button>
+    </div>
+</div>
+
+<!-- 添加成长记录弹窗 -->
+<div class="mask" id="maskMoment">
+    <div class="sheet">
+        <div class="sheet-hd"><h3>记录珍贵时刻</h3><button class="sheet-close" onclick="closeSheet('maskMoment')">×</button></div>
+        <div class="field"><label>类型</label><select id="mType">
+            <option value="成长">🌱 成长大事</option>
+            <option value="第一次">🎉 第一次</option>
+            <option value="日记">💌 妈妈日记</option>
+            <option value="照片">📷 照片/视频</option>
+            <option value="健康">🏥 健康记录</option>
+        </select></div>
+        <div class="field"><label>标题</label><input id="mTitle" type="text" placeholder="如：第一次翻身"></div>
+        <div class="field"><label>描述</label><textarea id="mDesc" placeholder="记录这一刻的细节、心情…"></textarea></div>
+        <div class="field"><label>日期</label><input id="mDate" type="date"></div>
+        <button class="sheet-btn" onclick="saveMoment()">保存记录</button>
+    </div>
+</div>
+
+<!-- 健康记录弹窗 -->
+<div class="mask" id="maskHealth">
+    <div class="sheet">
+        <div class="sheet-hd"><h3 id="hTitle">记录健康数据</h3><button class="sheet-close" onclick="closeSheet('maskHealth')">×</button></div>
+        <div class="row2">
+            <div class="field"><label id="hLab1">身高 (cm)</label><input id="hVal1" type="number" inputmode="decimal" placeholder="0.0"></div>
+            <div class="field"><label>记录日期</label><input id="hDate" type="date"></div>
+        </div>
+        <div class="field"><label id="hLab2">备注（可选）</label><input id="hNote" type="text" placeholder="如：儿保体检"></div>
+        <button class="sheet-btn" onclick="saveHealth()">保存</button>
+        <div class="chart-wrap" id="hTrendWrap" style="margin-top:14px">
+            <div class="chart-tt"><span id="hTrendTitle">历史趋势</span></div>
+            <div id="hTrendChart"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加疫苗弹窗 -->
+<div class="mask" id="maskVac">
+    <div class="sheet">
+        <div class="sheet-hd"><h3>添加疫苗提醒</h3><button class="sheet-close" onclick="closeSheet('maskVac')">×</button></div>
+        <div class="field"><label>疫苗名称</label><input id="vName" type="text" placeholder="如：13价肺炎"></div>
+        <div class="field"><label>应接种日期</label><input id="vDate" type="date"></div>
+        <button class="sheet-btn" onclick="saveVaccine()">添加提醒</button>
+    </div>
+</div>
+
+<!-- 问 AI 弹窗 -->
+<div class="mask" id="maskAsk">
+    <div class="sheet">
+        <div class="sheet-hd"><h3>问 CF 育儿助手</h3><button class="sheet-close" onclick="closeSheet('maskAsk')">×</button></div>
+        <div class="field"><label>你的问题（如：宝宝晚上总醒怎么办）</label><textarea id="askQ" placeholder="输入育儿问题…"></textarea></div>
+        <button class="sheet-btn" onclick="askAI()">问 AI</button>
+        <div class="chart-wrap" id="askOut" style="margin-top:14px; display:none"><div class="ai-body" id="askBody"></div></div>
+    </div>
+</div>
+
+<div id="toast"></div>
 <script>
-/* AI 成长小结：演示版（可替换为真 AI 调用） */
-document.querySelectorAll('.ai-btn-main').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    btn.textContent='✨ 生成中...';
-    setTimeout(()=>{
-      btn.textContent='📖 查看故事书';
-      btn.parentElement.parentElement.querySelector('.ai-body').innerHTML='<b>《小宝贝的第一个夏天》</b><br><br>第一章：初来乍到<br>2024.05.17，你用响亮的哭声宣布了你的到来，3800g，50cm，小小的你却有着大大的眼睛……<br><br><i style="color:rgba(255,255,255,.5)">（AI 自动生成 · 真实版含照片视频）</i>';
-    },800);
+/* ============ 数据层 ============ */
+const K = {
+  profile:'wb_baby_profile', health:'wb_baby_health', moments:'wb_baby_moments',
+  vaccines:'wb_baby_vaccines', feeds:'wb_baby_feeds', first:'wb_baby_first'
+};
+function load(k, fb){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):fb; }catch(e){ return fb; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+const now = new Date();
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fmtDate(s){ if(!s) return ''; const p=s.split('-'); if(p.length<3) return s; return p[1]+'月'+p[2]+'日'; }
+function daysFrom(s){ if(!s) return 99999; const t=new Date(s.replace(/-/g,'/')); if(isNaN(t)) return 99999; return Math.floor((new Date().setHours(0,0,0,0)-t.setHours(0,0,0,0))/86400000); }
+
+/* 预置示例数据（首次打开，可清空） */
+function seedData(){
+  if (localStorage.getItem(K.profile)) return;
+  const birth = (()=>{ const d=new Date(); d.setFullYear(d.getFullYear()-2); d.setMonth(d.getMonth()-1); d.setDate(d.getDate()-20); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })();
+  save(K.profile, { name:'小宝贝', birth, avatar:'👶', motto:'愿你健康快乐长大～' });
+  const h = [];
+  for (let i=5;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i*10); const ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); h.push({ date:ds, height:(82.2+i*0.9).toFixed(1), weight:(10.6+i*0.3).toFixed(1), sleep:(10.6+(5-i)*0.2).toFixed(1) }); }
+  save(K.health, h);
+  save(K.moments, [
+    { id:'m1', type:'第一次', title:'第一次翻身', desc:'在床上自己翻了过来，眼睛亮晶晶地看着我们，全家都欢呼了！', date: now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(Math.max(1,now.getDate()-8)).padStart(2,'0'), emoji:'🎉' },
+    { id:'m2', type:'成长', title:'长出了第一颗牙', desc:'下牙床冒出一颗小白点，啃玩具啃得特别起劲。', date: now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(Math.max(1,now.getDate()-20)).padStart(2,'0'), emoji:'🌱' },
+    { id:'m3', type:'日记', title:'会叫妈妈了', desc:'第一次发出清晰的"妈妈"音，听到的瞬间眼眶都湿了。', date: now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(Math.max(1,now.getDate()-35)).padStart(2,'0'), emoji:'💌' }
+  ]);
+  save(K.vaccines, [
+    { id:'v1', name:'13价肺炎（第3针）', date: (()=>{ const d=new Date(); d.setDate(d.getDate()-3); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })(), done:false },
+    { id:'v2', name:'水痘疫苗（第1针）', date: (()=>{ const d=new Date(); d.setDate(d.getDate()+7); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })(), done:false },
+    { id:'v3', name:'手足口疫苗', date: (()=>{ const d=new Date(); d.setDate(d.getDate()-60); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })(), done:true }
+  ]);
+  save(K.first, todayStr());
+}
+function ageText(birth){
+  if(!birth) return '--';
+  const b=new Date(birth.replace(/-/g,'/')), n=new Date();
+  let y=n.getFullYear()-b.getFullYear(), m=n.getMonth()-b.getMonth(), d=n.getDate()-b.getDate();
+  if(d<0){ m--; d+=new Date(n.getFullYear(), n.getMonth(), 0).getDate(); }
+  if(m<0){ y--; m+=12; }
+  if(y>0) return y+'岁'+m+'个月'+d+'天';
+  if(m>0) return m+'个月'+d+'天';
+  return d+'天';
+}
+
+/* ============ 渲染：今日要处理 ============ */
+function renderToday(){
+  const list=[];
+  const v=load(K.vaccines,[]);
+  v.forEach(x=>{
+    if(x.done) return;
+    const dd=daysFrom(x.date);
+    if(dd<0){ list.push({key:'vac_'+x.id, tag:'已逾期', cls:'overdue', t:x.name+' · 已逾期 '+(-dd)+' 天', d:'应接种 '+fmtDate(x.date)+'，请尽快安排', act:'去接种', fn:()=>markVac(x.id) }); }
+    else if(dd<=3){ list.push({key:'vac_'+x.id, tag:dd===0?'今天到期':'近'+dd+'天', cls:'', t:x.name+' · '+(dd===0?'今天到期':'还有 '+dd+' 天'), d:'应接种 '+fmtDate(x.date), act:'去接种', fn:()=>markVac(x.id) }); }
   });
-});
-/* 数据卡点击：演示数值波动 */
-document.querySelectorAll('.data').forEach(d=>{
-  d.style.cursor='pointer';
-  d.addEventListener('click',()=>{
-    const v=d.querySelector('.v');
-    const cur=parseFloat(v.firstChild.textContent);
-    const n=(cur+0.1).toFixed(1);
-    v.firstChild.textContent=n;
-    d.querySelector('.d').textContent='已更新 ↑';
+  const f=load(K.feeds,{});
+  const today=todayStr();
+  if(!f[today] || (!f[today].feed.length && !f[today].meal.length)){
+    list.push({key:'feed', tag:'待打卡', cls:'', t:'今日喂养还没记录', d:'记录喂奶 / 辅食，掌握宝宝规律', act:'去打卡', fn:()=>{ switchTab('feeds'); } });
+  }
+  const el=document.getElementById('todayList');
+  if(!list.length){
+    el.innerHTML='<div class="today-empty">✓ 今天没有待办，一切都在掌握中</div>';
+    document.getElementById('todayCount').textContent='0 项';
+    return;
+  }
+  document.getElementById('todayCount').textContent=list.length+' 项';
+  el.innerHTML=list.map(x=>`
+    <div class="today-item ${x.cls}">
+      <div class="txt"><div class="t">${x.t}</div><div class="d">${x.d}</div></div>
+      ${x.tag?'<span class="tag-over">'+x.tag+'</span>':''}
+      <button class="today-btn" onclick="(function(){ ${x.fn.toString()} })()">${x.act}</button>
+    </div>`).join('');
+}
+
+/* ============ 渲染：档案 + 健康 ============ */
+const AVATARS=['👶','👧','👦','🐣','🐰','🦄','🍼','🎈'];
+function renderProfile(){
+  const p=load(K.profile,{name:'小宝贝',birth:'',avatar:'👶',motto:''});
+  document.getElementById('babyAv').textContent=p.avatar||'👶';
+  document.getElementById('babyName').innerHTML=(p.name||'小宝贝')+' <span class="heart">♥</span>';
+  document.getElementById('babyAge').innerHTML='<b>'+ageText(p.birth)+'</b>'+(p.birth?' · '+fmtDate(p.birth)+' 出生':'');
+  document.getElementById('babyMotto').textContent=p.motto?('"'+p.motto+'"'):'点击 ✎ 设置宝宝档案';
+  document.getElementById('heroBabyName').textContent=p.name||'宝贝';
+  const h=load(K.health,[]);
+  const latest=h[h.length-1];
+  const prev=h[h.length-2];
+  if(latest){
+    const set=(id,v,unit)=>{ document.getElementById(id).innerHTML=(v||'--')+'<small>'+unit+'</small>'; };
+    set('hHeight',latest.height,'cm'); set('hWeight',latest.weight,'kg'); set('hSleep',latest.sleep,'h');
+    const diff=(cur,pre)=>pre!==undefined&&cur!==undefined?(cur-pre):null;
+    const dh=diff(parseFloat(latest.height),parseFloat(prev&&prev.height));
+    const dw=diff(parseFloat(latest.weight),parseFloat(prev&&prev.weight));
+    const ds=diff(parseFloat(latest.sleep),parseFloat(prev&&prev.sleep));
+    const setD=(id,v,u)=>{ document.getElementById(id).textContent = (v===null||isNaN(v)) ? '去记录' : (v>=0?'+':'')+v.toFixed(1)+u; };
+    setD('dHeight',dh,'cm'); setD('dWeight',dw,'kg'); setD('dSleep',ds,'h');
+    renderTrend(h);
+  } else {
+    document.getElementById('hHeight').innerHTML='--<small>cm</small>';
+    document.getElementById('hWeight').innerHTML='--<small>kg</small>';
+    document.getElementById('hSleep').innerHTML='--<small>h</small>';
+    document.getElementById('trendWrap').style.display='none';
+  }
+}
+function renderTrend(h){
+  if(!h || h.length<2){ document.getElementById('trendWrap').style.display='none'; return; }
+  document.getElementById('trendWrap').style.display='block';
+  document.getElementById('trendTitle').textContent='最近'+h.length+'次 · 健康趋势';
+  const last=h.slice(-6);
+  document.getElementById('trendChart').innerHTML=sparkLines(last);
+}
+function sparkLines(arr){
+  const mk=(get,color)=>{
+    const vals=arr.map(x=>parseFloat(get(x))).filter(v=>!isNaN(v));
+    if(vals.length<2) return '';
+    const w=230,h=52,min=Math.min(...vals),max=Math.max(...vals),span=(max-min)||1;
+    const pts=vals.map((v,i)=> (i*(w/(vals.length-1))).toFixed(1)+','+(h-4-((v-min)/span)*(h-10)).toFixed(1));
+    const last=pts[pts.length-1].split(',');
+    return `<svg width="100%" viewBox="0 0 ${w} ${h}" style="display:block"><polyline points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${last[0]}" cy="${last[1]}" r="3.5" fill="${color}"/></svg>`;
+  };
+  return `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+    <div style="text-align:center"><div style="font-size:9px;color:var(--mute);font-weight:700">身高 cm</div>${mk(x=>x.height,'#A855F7')}</div>
+    <div style="text-align:center"><div style="font-size:9px;color:var(--mute);font-weight:700">体重 kg</div>${mk(x=>x.weight,'#EC4899')}</div>
+    <div style="text-align:center"><div style="font-size:9px;color:var(--mute);font-weight:700">睡眠 h</div>${mk(x=>x.sleep,'#22D3EE')}</div>
+  </div>`;
+}
+
+/* ============ 渲染：成长记录 ============ */
+function renderMoments(){
+  const m=load(K.moments,[]).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  document.getElementById('cntMoments').textContent=m.length;
+  const el=document.getElementById('momentsList');
+  if(!m.length){ el.innerHTML='<div class="empty"><div class="e-ico">🌱</div>还没有记录<br>点右上角「＋ 记录」留住宝宝的第一刻</div>'; return; }
+  el.innerHTML=m.map(x=>`
+    <div class="tl-item"><div class="tl-card">
+      <div class="tl-emo">${x.emoji||'🌱'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${x.title} <span class="type">${x.type||'成长'}</span></div>
+        ${x.desc?'<div class="tl-desc">'+x.desc+'</div>':''}
+        <div class="tl-date"><span>📅 ${fmtDate(x.date)}</span><button class="tl-del" onclick="delMoment('${x.id}')">删除</button></div>
+      </div>
+    </div></div>`).join('');
+}
+
+/* ============ 渲染：喂养打卡 ============ */
+const FEED_DEFS=[
+  {key:'feed', n:'喂奶', ico:'🍼', c:'次', color:'linear-gradient(135deg,#A855F7,#C084FC)', bg:'#ede9fe'},
+  {key:'meal', n:'辅食', ico:'🥣', c:'次', color:'linear-gradient(135deg,#F59E0B,#FBBF24)', bg:'#fef3e8'},
+  {key:'sleep', n:'睡眠', ico:'😴', c:'h', color:'linear-gradient(135deg,#22D3EE,#38BDF8)', bg:'#e0f2fe'},
+  {key:'poop', n:'便便', ico:'💩', c:'次', color:'linear-gradient(135deg,#10B981,#34D399)', bg:'#d1fae5'}
+];
+function renderFeeds(){
+  const today=todayStr();
+  document.getElementById('feedDate').textContent=today+' · 今日';
+  const f=load(K.feeds,{});
+  const d=f[today]||{feed:[],meal:[],sleep:[],poop:[]};
+  document.getElementById('cntFeeds').textContent=d.feed.length+d.meal.length+d.sleep.length+d.poop.length;
+  const el=document.getElementById('feedsGrid');
+  el.innerHTML=FEED_DEFS.map(x=>{
+    const arr=d[x.key]||[];
+    const unit=x.key==='sleep';
+    const total=arr.reduce((s,t)=>s+(unit?parseFloat(t.v||0):1),0);
+    const last=arr.length?arr[arr.length-1].t:'';
+    return `<div class="feed-card">
+      <div class="f-ico" style="background:${x.bg}">${x.ico}</div>
+      <div class="f-n">${x.n}</div>
+      <div class="f-c">${unit?total.toFixed(1):total}<small> ${x.c}</small></div>
+      <div class="f-t">${arr.length?'上次 '+last:''}</div>
+      <div class="feed-times">${arr.slice(-4).map(t=>'<span class="ft-chip">'+t.t+'</span>').join('')}</div>
+      <button class="feed-btn" style="background:${x.color}" onclick="feedTap('${x.key}')">＋ ${x.n}</button>
+    </div>`;
+  }).join('');
+}
+function feedTap(key){
+  const today=todayStr(), f=load(K.feeds,{});
+  if(!f[today]) f[today]={feed:[],meal:[],sleep:[],poop:[]};
+  const d=f[today];
+  const h=new Date().getHours(), mi=new Date().getMinutes();
+  const t=String(h).padStart(2,'0')+':'+String(mi).padStart(2,'0');
+  if(key==='sleep'){ const v=prompt('本次睡眠时长（小时）','1.5'); if(v===null) return; d.sleep.push({t,v:parseFloat(v)||1.5}); }
+  else d[key].push({t});
+  save(K.feeds,f);
+  renderFeeds(); renderToday(); toast('已记录 '+t+' '+FEED_DEFS.find(x=>x.key===key).n);
+}
+
+/* ============ 渲染：疫苗 ============ */
+function renderVaccines(){
+  const v=load(K.vaccines,[]);
+  document.getElementById('cntVaccines').textContent=v.filter(x=>!x.done).length;
+  const el=document.getElementById('vacList');
+  if(!v.length){ el.innerHTML='<div class="empty"><div class="e-ico">💉</div>还没有疫苗提醒<br>点「＋ 添加」设置接种计划</div>'; return; }
+  el.innerHTML=v.sort((a,b)=>(a.done?1:0)-(b.done?1:0)).map(x=>{
+    const dd=daysFrom(x.date);
+    const urgent=!x.done && dd<=3;
+    return `<div class="vac ${x.done?'done':''}">
+      <div class="v-ico">${x.done?'✅':'💉'}</div>
+      <div class="v-body">
+        <div class="v-n">${x.name}</div>
+        <div class="v-d ${urgent?'urgent':''}">${x.done?'已接种':(dd<0?'已逾期 '+(-dd)+' 天':(dd===0?'今天应接种':'应接种 '+fmtDate(x.date)+(dd<=30?' · 剩 '+dd+' 天':'')))}</div>
+      </div>
+      <button class="vac-btn ${x.done?'done':'go'}" onclick="markVac('${x.id}')">${x.done?'已打✓':'去接种'}</button>
+    </div>`;
+  }).join('');
+}
+function markVac(id){
+  const v=load(K.vaccines,[]);
+  const x=v.find(i=>i.id===id); if(!x) return;
+  x.done=!x.done; save(K.vaccines,v);
+  renderVaccines(); renderToday(); toast(x.done?'✅ 已标记接种':'已取消标记');
+}
+
+/* ============ AI 成长小结 ============ */
+function genAI(manual){
+  const p=load(K.profile,{name:'宝贝'}), h=load(K.health,[]), m=load(K.moments,[]), v=load(K.vaccines,[]);
+  const name=p.name||'宝贝';
+  const latest=h[h.length-1], prev=h[h.length-2];
+  const today=todayStr(), f=load(K.feeds,{});
+  const feedCount=(f[today]?f[today].feed.length:0)+(f[today]?f[today].meal.length:0);
+  const recent=m.slice(-3).reverse();
+  const due=v.filter(x=>!x.done && daysFrom(x.date)<=3);
+  let s='<b>'+name+'</b> 最近的状态：';
+  if(latest){
+    s+='身高 '+latest.height+'cm、体重 '+latest.weight+'kg';
+    if(prev){ const dh=parseFloat(latest.height)-parseFloat(prev.height); const dw=parseFloat(latest.weight)-parseFloat(prev.weight); if(!isNaN(dh)&&!isNaN(dw)) s+='，较上次'+((dh>=0?'+':'')+dh.toFixed(1)+'cm、'+(dw>=0?'+':'')+dw.toFixed(1)+'kg'); }
+    s+='。';
+  } else s+='还没有健康记录，建议尽快记录一次身高体重。';
+  if(recent.length) s+='最近记下了「'+recent.map(x=>x.title).join('」「')+'」，都是值得珍藏的瞬间。';
+  if(feedCount>0) s+='今天已记录喂养 '+feedCount+' 次。';
+  if(due.length) s+='<br><br>⚠️ <b>提醒</b>：'+due.map(x=>x.name).join('、')+' 该接种了，记得预约。';
+  else if(manual) s+='<br><br>✅ 疫苗都在计划内，继续保持。';
+  s+='<br><br>给 <b>'+name+'</b> 的一封信：<b>你慢慢长大，我们慢慢记录。</b>每一个第一次都值得，每一次成长都有迹可循。';
+  if(manual) toast('AI 小结已重新生成');
+  document.getElementById('aiBody').innerHTML=s;
+}
+const AI_ANSWERS=[
+  ['晚上总醒','宝宝夜醒很常见。先排查：①白天睡眠是否过长（单次超过2小时可适当叫醒）②睡前是否吃饱 ③环境温度/尿布。建议固定睡前仪式（洗澡→抚触→喂奶→关灯），通常1-2周见效。'],
+  ['不爱吃辅食','别急，辅食接受有个过程。①先喂奶后辅食，避免太饿太饱 ②同一种食材连喂3-5天再换 ③颜色鲜艳、形状有趣更吸引。只要体重正常增长就不用担心。'],
+  ['发烧','体温<38.5℃且精神好：多喝水、物理降温、观察。≥38.5℃或精神差、反复3天：及时就医。3个月以下宝宝发烧务必直接就医。此建议不能替代医生诊断。'],
+  ['咳嗽','轻微咳嗽多是因为空气干燥或轻微感冒：保持室内湿度、少量多次喂温水。若伴随呼吸急促、喘、发烧超3天，请尽快就医。'],
+  ['出牙','出牙期宝宝会烦躁、流口水、爱咬东西。可以给牙胶、凉毛巾咬，注意口腔清洁。发烧超过38.5℃通常不是出牙引起，需就医。'],
+  ['身高体重','判断标准：出生后前3个月每月约长600-800g，之后逐渐放缓。只要生长曲线平稳上升、精神好，就不用焦虑。建议每月同一天同一时间测量记录。'],
+  ['疫苗','接种后24小时内注意观察：①局部红肿热痛正常，可冷敷 ②发烧<38.5℃物理降温 ③多休息多喝水。如有异常及时联系接种点。']
+];
+function openAskAI(){ document.getElementById('askOut').style.display='none'; closeSheet('maskBaby'); closeSheet('maskMoment'); closeSheet('maskHealth'); closeSheet('maskVac'); document.getElementById('maskAsk').classList.add('show'); }
+function askAI(){
+  const q=(document.getElementById('askQ').value||'').trim();
+  if(!q){ toast('请先输入问题'); return; }
+  const out=document.getElementById('askOut');
+  let ans='';
+  const hit=AI_ANSWERS.find(a=>q.includes(a[0])||q.includes(a[0].slice(0,2)));
+  if(hit) ans=hit[1];
+  else if(q.includes('奶')||q.includes('喂')) ans=AI_ANSWERS[0][1];
+  else if(q.includes('吃')) ans=AI_ANSWERS[1][1];
+  else if(q.includes('烧')) ans=AI_ANSWERS[2][1];
+  else if(q.includes('咳')) ans=AI_ANSWERS[3][1];
+  else if(q.includes('牙')) ans=AI_ANSWERS[4][1];
+  else if(q.includes('高')||q.includes('重')||q.includes('长')) ans=AI_ANSWERS[5][1];
+  else ans='我基于常见育儿知识回答：建议先观察宝宝精神状态。如果精神好、吃喝正常，多数不用太担心；如果持续异常，请及时咨询儿科医生。⚠️ AI 建议仅供参考，不能替代专业医疗。';
+  out.style.display='block';
+  document.getElementById('askBody').innerHTML='<b>Q：'+q+'</b><br><br>'+ans;
+}
+
+/* ============ 弹窗操作 ============ */
+function openSheet(id){ document.getElementById(id).classList.add('show'); }
+function closeSheet(id){ document.getElementById(id).classList.remove('show'); }
+function openEditBaby(){
+  const p=load(K.profile,{name:'',birth:'',avatar:'👶',motto:''});
+  document.getElementById('eName').value=p.name||'';
+  document.getElementById('eBirth').value=p.birth||'';
+  document.getElementById('eMotto').value=p.motto||'';
+  document.getElementById('avPick').innerHTML=AVATARS.map(a=>`<div class="av-opt ${a===p.avatar?'on':''}" onclick="pickAv('${a}')">${a}</div>`).join('');
+  window._av=p.avatar||'👶';
+  openSheet('maskBaby');
+}
+function pickAv(a){ window._av=a; document.querySelectorAll('.av-opt').forEach(el=>el.classList.toggle('on',el.textContent===a)); }
+function saveBaby(){
+  const p={ name:(document.getElementById('eName').value||'小宝贝').trim(), birth:document.getElementById('eBirth').value, avatar:window._av||'👶', motto:(document.getElementById('eMotto').value||'').trim() };
+  if(p.birth && isNaN(new Date(p.birth.replace(/-/g,'/')))){ toast('日期格式不正确'); return; }
+  save(K.profile,p); renderProfile(); renderToday(); closeSheet('maskBaby'); toast('✅ 档案已保存');
+}
+function openAddMoment(){ document.getElementById('mDate').value=todayStr(); document.getElementById('mTitle').value=''; document.getElementById('mDesc').value=''; openSheet('maskMoment'); }
+function saveMoment(){
+  const t=(document.getElementById('mTitle').value||'').trim();
+  const d=(document.getElementById('mDate').value||todayStr());
+  const type=document.getElementById('mType').value;
+  const desc=(document.getElementById('mDesc').value||'').trim();
+  if(!t){ toast('请填写标题'); return; }
+  const emojiMap={'第一次':'🎉','成长':'🌱','日记':'💌','照片':'📷','健康':'🏥'};
+  const m=load(K.moments,[]);
+  m.unshift({ id:'m'+Date.now(), type, title:t, desc, date:d, emoji:emojiMap[type]||'🌱' });
+  save(K.moments,m); renderMoments(); renderToday(); closeSheet('maskMoment'); toast('✅ 已记录珍贵时刻');
+}
+function delMoment(id){
+  if(!confirm('确定删除这条记录吗？')) return;
+  const m=load(K.moments,[]).filter(x=>x.id!==id);
+  save(K.moments,m); renderMoments(); renderToday(); toast('已删除');
+}
+function openHealth(kind){
+  window._hk=kind;
+  const titles={height:['记录身高','身高 (cm)','cm'],weight:['记录体重','体重 (kg)','kg'],sleep:['记录睡眠','睡眠 (h)','h']};
+  document.getElementById('hTitle').textContent=titles[kind][0];
+  document.getElementById('hLab1').textContent=titles[kind][1];
+  document.getElementById('hLab2').textContent='备注（可选）';
+  document.getElementById('hVal1').value=''; document.getElementById('hNote').value=''; document.getElementById('hDate').value=todayStr();
+  renderHTrend(kind);
+  openSheet('maskHealth');
+}
+function saveHealth(){
+  const kind=window._hk||'height';
+  const val=parseFloat(document.getElementById('hVal1').value);
+  if(isNaN(val)||val<=0){ toast('请输入有效数值'); return; }
+  const date=document.getElementById('hDate').value||todayStr();
+  const note=(document.getElementById('hNote').value||'').trim();
+  const h=load(K.health,[]);
+  const ex=h.find(x=>x.date===date);
+  const obj={ date, height:kind==='height'?val:(ex&&ex.height), weight:kind==='weight'?val:(ex&&ex.weight), sleep:kind==='sleep'?val:(ex&&ex.sleep) };
+  if(ex){ Object.assign(ex,obj); } else { h.push(obj); h.sort((a,b)=>(a.date||'').localeCompare(b.date||'')); }
+  save(K.health,h); renderProfile(); renderToday(); closeSheet('maskHealth'); toast('✅ 健康数据已保存');
+}
+function renderHTrend(kind){
+  const h=load(K.health,[]);
+  const key=kind==='height'?'height':kind==='weight'?'weight':'sleep';
+  const unit=kind==='height'?'cm':kind==='weight'?'kg':'h';
+  document.getElementById('hTrendTitle').textContent='历史趋势（'+unit+'）';
+  const vals=h.map(x=>({date:x.date,v:parseFloat(x[key])})).filter(x=>!isNaN(x.v));
+  const el=document.getElementById('hTrendChart');
+  if(vals.length<2){ el.innerHTML='<div style="font-size:10px;color:var(--mute);text-align:center;padding:8px">记录 2 次以上自动生成趋势</div>'; return; }
+  const arr=vals.slice(-8), w=300, hh=96, min=Math.min(...arr.map(x=>x.v)), max=Math.max(...arr.map(x=>x.v)), span=(max-min)||1;
+  const pts=arr.map((x,i)=> (20+i*((w-40)/(arr.length-1))).toFixed(1)+','+(hh-14-((x.v-min)/span)*(hh-34)).toFixed(1));
+  const labels=arr.map((x,i)=>{ const tx=20+i*((w-40)/(arr.length-1)); return '<text x="'+tx.toFixed(1)+'" y="'+(hh-2)+'" font-size="8" fill="#9b94b3" text-anchor="middle">'+fmtDate(x.date)+'</text>'; }).join('');
+  el.innerHTML=`<svg width="100%" viewBox="0 0 ${w} ${hh}"><polyline points="${pts.join(' ')}" fill="none" stroke="#A855F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${pts.map((p,i)=>{const c=p.split(',');return '<circle cx="'+c[0]+'" cy="'+c[1]+'" r="3" fill="#EC4899"/>';}).join('')}${labels}</svg>`;
+}
+function openAddVaccine(){ document.getElementById('vName').value=''; document.getElementById('vDate').value=todayStr(); openSheet('maskVac'); }
+function saveVaccine(){
+  const n=(document.getElementById('vName').value||'').trim();
+  if(!n){ toast('请输入疫苗名称'); return; }
+  const v=load(K.vaccines,[]);
+  v.push({ id:'v'+Date.now(), name:n, date:document.getElementById('vDate').value||todayStr(), done:false });
+  save(K.vaccines,v); renderVaccines(); renderToday(); closeSheet('maskVac'); toast('✅ 已添加疫苗提醒');
+}
+
+/* ============ Tab ============ */
+function switchTab(t){
+  ['moments','feeds','vaccines','ai'].forEach(x=>{
+    document.getElementById('tab'+x[0].toUpperCase()+x.slice(1)).classList.toggle('on',x===t);
+    document.getElementById('sec'+x[0].toUpperCase()+x.slice(1)).style.display=x===t?'block':'none';
   });
-});
-/* 功能入口点击 */
-document.querySelectorAll('.func').forEach(f=>{
-  f.addEventListener('click',()=>{
-    const n=f.querySelector('.n').textContent;
-    if(n.includes('AI')) alert('🤖 AI 育儿助手\n\n问：2岁宝宝夜里哭闹怎么办？\n\n💜 AI 建议：\n1. 检查是否过热/过冷/饥饿\n2. 保持安静昏暗的环境\n3. 轻拍或轻唱熟悉的摇篮曲\n4. 如持续超过30分钟可就医咨询');
-    else if(n.includes('记录')||n.includes('相册')) alert('📷 成长记录\n\n点击这里添加照片/视频/语音，AI 自动整理时间线。');
-    else if(n.includes('健康')) alert('🏥 健康管理\n\n记录身高/体重/睡眠/饮食，AI 分析趋势。');
-    else if(n.includes('故事')) alert('📖 AI 故事书\n\n把宝宝成长瞬间自动写成故事书，可打印珍藏。');
-    else alert(n+' · 点击进入对应模块');
-  });
-});
+}
+
+/* ============ 备份 ============ */
+function exportData(){
+  const data={ profile:load(K.profile,{}), health:load(K.health,[]), moments:load(K.moments,[]), vaccines:load(K.vaccines,[]), feeds:load(K.feeds,{}), exported:new Date().toISOString(), app:'baby-workbench-v1' };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='宝宝成长工作台备份-'+todayStr()+'.json'; a.click();
+  toast('⬇ 备份已导出，请妥善保存');
+}
+function importData(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const d=JSON.parse(reader.result);
+      if(!d.profile && !d.moments) throw new Error('格式不对');
+      if(d.profile) save(K.profile,d.profile);
+      if(d.health) save(K.health,d.health);
+      if(d.moments) save(K.moments,d.moments);
+      if(d.vaccines) save(K.vaccines,d.vaccines);
+      if(d.feeds) save(K.feeds,d.feeds);
+      refresh(); toast('✅ 数据已恢复');
+    }catch(e){ toast('⚠️ 导入失败：文件格式不正确'); }
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+function askClear(){
+  if(!confirm('⚠️ 确定清空所有数据吗？\n\n这会删除全部记录且无法恢复。\n建议先「导出备份」再清空。')) return;
+  if(!confirm('再次确认：真的要清空吗？')) return;
+  [K.profile,K.health,K.moments,K.vaccines,K.feeds].forEach(k=>localStorage.removeItem(k));
+  localStorage.removeItem(K.first);
+  seedData(); refresh(); toast('已清空，已恢复示例数据');
+}
+
+/* ============ 统一刷新 ============ */
+function refresh(){
+  renderProfile(); renderMoments(); renderFeeds(); renderVaccines(); renderToday(); genAI(false);
+}
+
+/* ============ Toast ============ */
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+/* ============ 初始化 ============ */
+seedData();
+const first=localStorage.getItem(K.first)||todayStr();
+const days=Math.max(1,Math.floor((new Date().setHours(0,0,0,0)-new Date(first.replace(/-/g,'/')).setHours(0,0,0,0))/86400000)+1);
+document.getElementById('useDays').innerHTML='已用 <b>'+days+'</b> 天';
+refresh();
 </script>
 </body>
 </html>
