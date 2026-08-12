@@ -4,49 +4,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<meta name="description" content="Crazy Friday · 生态合作伙伴 · 共创未来">
+<meta name="description" content="Crazy Friday · 生态合作伙伴 · 技术/渠道/内容/投资 开放合作 · 共建AI一人公司生态">
 <title>生态合作伙伴 · Crazy Friday</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.pn-hero{padding:24px 18px 12px}.pn-hero h2{font-size:22px;font-weight:900}.pn-hero p{font-size:12px;color:#a89ec9;line-height:1.7;margin-top:6px}
-.pn-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 18px 14px}
-.pn-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 6px;text-align:center}
+.pn-hero{padding:30px 20px 14px;text-align:center}
+.pn-hero h2{font-size:22px;font-weight:900}
+.pn-hero p{font-size:12px;color:#a89ec9;line-height:1.8;margin-top:8px}
+.pn-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 18px 0}
+.pn-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 6px;text-align:center}
 .pn-stat .n{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.pn-stat .l{font-size:9px;color:#6d6489;margin-top:3px}
-.sec-label{font-size:14px;font-weight:900;padding:20px 18px 10px;display:flex;align-items:center;gap:6px}
-.sec-label .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#EC4899);box-shadow:0 0 8px rgba(168,85,247,.5)}
-.pn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px}
-.pn-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center}
-.pn-logo{width:44px;height:44px;border-radius:12px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.08)}
-.pn-name{font-size:12px;font-weight:800}
-.pn-type{font-size:9px;color:#6d6489;margin-top:3px}
-.pn-type-tag{display:inline-block;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;margin-top:4px}
-.pt-tech{background:rgba(96,165,250,.12);color:#60A5FA}
-.pt-channel{background:rgba(52,211,153,.12);color:#34D399}
-.pt-content{background:rgba(236,72,153,.12);color:#EC4899}
-.pt-invest{background:rgba(255,215,0,.12);color:#FFD700}
-.coop-type{display:flex;gap:8px;padding:0 18px 14px;overflow-x:auto;scrollbar-width:none}
-.coop-type::-webkit-scrollbar{display:none}
-.coop-chip{flex-shrink:0;padding:9px 16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:#a89ec9;cursor:pointer;font-weight:700}
-.coop-chip.active{background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;border-color:transparent}
-.pn-cta{display:block;margin:16px 18px;padding:14px;text-align:center;background:linear-gradient(135deg,#A855F7,#EC4899);border-radius:20px;font-size:14px;font-weight:800;color:#fff;cursor:pointer;text-decoration:none}
-.pn-cta2{display:block;margin:0 18px 24px;padding:13px;text-align:center;background:rgba(255,255,255,.05);border:1px dashed rgba(168,85,247,.4);border-radius:14px;font-size:12px;color:#C084FC;cursor:pointer;text-decoration:none;font-weight:700}
+.pn-stat .l{font-size:10px;color:#a89ec9;margin-top:4px;font-weight:700}
+.sec-label{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:900;padding:20px 18px 10px}
+.sec-label .dot{width:4px;height:16px;border-radius:2px;background:linear-gradient(180deg,#A855F7,#EC4899)}
+.coop-bar{display:flex;gap:8px;padding:0 18px;overflow-x:auto;scrollbar-width:none}
+.coop-bar::-webkit-scrollbar{display:none}
+.coop-chip{flex-shrink:0;padding:8px 16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:11px;font-weight:700;color:#a89ec9;cursor:pointer}
+.coop-chip.active{background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.15));border-color:#A855F7;color:#fff}
+.pn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 18px}
+.pn-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;position:relative}
+.pn-logo{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px}
+.pn-name{font-size:13px;font-weight:800}
+.pn-type-tag{font-size:8px;padding:2px 8px;border-radius:8px;font-weight:700;margin-left:6px}
+.pt-tech{background:rgba(168,85,247,.15);color:#C084FC}.pt-channel{background:rgba(52,211,153,.15);color:#34D399}
+.pt-content{background:rgba(255,215,0,.15);color:#FFD700}.pt-invest{background:rgba(236,72,153,.15);color:#F472B6}
+.pn-type{font-size:10px;color:#a89ec9;margin-top:5px;line-height:1.5}
+.val-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px}
+.val-card{background:linear-gradient(160deg,rgba(168,85,247,.08),rgba(236,72,153,.02));border:1px solid rgba(168,85,247,.2);border-radius:16px;padding:15px}
+.val-ico{font-size:24px;margin-bottom:7px}
+.val-name{font-size:13px;font-weight:900}
+.val-desc{font-size:10px;color:#a89ec9;line-height:1.7;margin-top:5px}
+.flow{padding:0 18px}
+.flow-step{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:13px;margin-bottom:9px}
+.flow-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#EC4899);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
+.flow-name{font-size:13px;font-weight:800}
+.flow-desc{font-size:10px;color:#a89ec9;margin-top:2px;line-height:1.6}
+.rights{padding:0 18px}
+.right{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:11px 13px;margin-bottom:8px;font-size:11.5px;color:#d8d0f0}
+.right .ok{color:#34D399;font-weight:900;flex-shrink:0}
+.pn-cta{display:block;margin:16px 18px 0;padding:14px;text-align:center;background:linear-gradient(135deg,#A855F7,#EC4899);border-radius:22px;font-size:13px;font-weight:900;color:#fff;text-decoration:none}
+.pn-cta2{display:block;margin:8px 18px 0;padding:13px;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;font-size:12px;font-weight:800;color:#a89ec9;text-decoration:none}
+@media (max-width:420px){.pn-grid,.val-grid{grid-template-columns:1fr}}
 </style>
 </head>
-<body data-tab="discover">
-<div class="topbar"><div class="nav-back" onclick="goBack()">‹</div><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">生态合作伙伴</div><div class="brand-sub">15 · 共创未来</div></div></div><div class="bell" style="cursor:pointer" onclick="location.href='../invest.html'">💎</div></div>
+<body>
+<div class="topbar"><div class="nav-back" onclick="goBack()">‹</div><div class="brand"><div class="brand-icon">CF</div><div><div class="brand-name">生态合作伙伴</div><div class="brand-sub">共建 AI 一人公司生态</div></div></div></div>
 <div class="wrap">
-    <div style="margin:12px 18px 0;padding:10px 14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;font-size:11px;color:#F59E0B;line-height:1.6;display:flex;align-items:center;gap:8px"><span style="font-size:14px">⚙️</span><span><b>沙箱演示</b> · 内容为示例/教学用 · 真接AI/支付/数据后会自动升级 · <a href="../invest.html" style="color:#FFD700;font-weight:700">了解真实合作 →</a></span></div>
-  <div class="pn-hero"><h2>🌐 生态<span style="color:#C084FC">合作伙伴</span></h2><p>与优秀伙伴一起，共建AI一人公司生态<br>技术/渠道/内容/投资，开放合作</p></div>
+  <div class="pn-hero"><h2>🌐 生态<span style="color:#C084FC">合作伙伴</span></h2><p>与优秀伙伴一起，共建AI一人公司生态<br>技术 / 渠道 / 内容 / 投资，开放合作</p></div>
   <div class="pn-stats">
-    <div class="pn-stat"><div class="n">12+</div><div class="l">合作伙伴</div></div>
+    <div class="pn-stat"><div class="n">20+</div><div class="l">合作伙伴</div></div>
     <div class="pn-stat"><div class="n">4</div><div class="l">合作类型</div></div>
+    <div class="pn-stat"><div class="n">50+</div><div class="l">共享客户</div></div>
     <div class="pn-stat"><div class="n">100%</div><div class="l">开放共创</div></div>
   </div>
+
+  <div class="sec-label"><span class="dot"></span>💎 为什么合作</div>
+  <div class="val-grid">
+    <div class="val-card"><div class="val-ico">🧩</div><div class="val-name">技术共建</div><div class="val-desc">工具/模型/平台互相集成，客户共享，生态做大</div></div>
+    <div class="val-card"><div class="val-ico">📢</div><div class="val-name">渠道引流</div><div class="val-desc">互相导流，你的用户多一个变现出口</div></div>
+    <div class="val-card"><div class="val-ico">✍️</div><div class="val-name">内容共创</div><div class="val-desc">课程/教程/案例联合出品，影响力翻倍</div></div>
+    <div class="val-card"><div class="val-ico">💎</div><div class="val-name">投资共赢</div><div class="val-desc">早期介入，共享一人公司时代的增长红利</div></div>
+  </div>
+
+  <div class="sec-label"><span class="dot"></span>🎁 合作方权益</div>
+  <div class="rights">
+    <div class="right"><span class="ok">✓</span>客户互相导流，共享一人公司红利</div>
+    <div class="right"><span class="ok">✓</span>生态内联合营销，曝光加倍</div>
+    <div class="right"><span class="ok">✓</span>优先接入新工具 / 新项目</div>
+    <div class="right"><span class="ok">✓</span>联合出品内容 / 课程 / 案例</div>
+    <div class="right"><span class="ok">✓</span>投资合伙人享项目分红</div>
+  </div>
+
   <div class="sec-label"><span class="dot"></span>🤝 合作方式</div>
-  <div class="coop-type" id="coopBar"></div>
+  <div class="coop-bar" id="coopBar"></div>
   <div class="sec-label"><span class="dot"></span>🏢 合作伙伴</div>
   <div class="pn-grid" id="pnGrid"></div>
+
+  <div class="sec-label"><span class="dot"></span>📋 合作流程</div>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div><div class="flow-name">联系我们</div><div class="flow-desc">留下你的类型和资源，微信/邮件都行</div></div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div><div class="flow-name">需求对齐</div><div class="flow-desc">聊清合作方式：技术/渠道/内容/投资</div></div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div><div class="flow-name">试点合作</div><div class="flow-desc">小范围跑通，验证价值</div></div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div><div class="flow-name">长期共建</div><div class="flow-desc">正式签约，生态共享</div></div></div>
+  </div>
+
   <a class="pn-cta" href="../invest.html">💎 成为合作伙伴</a>
   <a class="pn-cta2" href="../partner-form.html">📨 有交付能力？先登记接单</a>
 </div>
@@ -54,18 +95,26 @@
 <script src="app.js"></script>
 <script>
 const PARTNERS=[
-{name:'OpenClaw',logo:'🦾',type:'技术',desc:'开源AI Agent生态',color:'#A855F7'},
-{name:'n8n',logo:'🔀',type:'技术',desc:'自动化工作流',color:'#EA4C89'},
-{name:'Dify',logo:'🔧',type:'技术',desc:'AI应用平台',color:'#8B5CF6'},
-{name:'Coze',logo:'🧩',type:'技术',desc:'AI Bot平台',color:'#3B82F6'},
-{name:'DeepSeek',logo:'🐋',type:'技术',desc:'开源大模型',color:'#10B981'},
-{name:'AiToEarn',logo:'💰',type:'技术',desc:'自动变现工具',color:'#F59E0B'},
-{name:'小红书达人联盟',logo:'📕',type:'渠道',desc:'内容渠道合作',color:'#EC4899'},
-{name:'抖音创作者',logo:'🎵',type:'渠道',desc:'短视频渠道',color:'#FF4757'},
-{name:'本地商盟',logo:'🏪',type:'渠道',desc:'本地商家资源',color:'#FF6B1A'},
-{name:'AI训练营',logo:'🎓',type:'内容',desc:'课程内容共创',color:'#22D3EE'},
-{name:'天使投资人',logo:'💎',type:'投资',desc:'早期投资合作',color:'#FFD700'},
-{name:'行业KOL',logo:'📣',type:'内容',desc:'内容影响力',color:'#60A5FA'}
+{name:'OpenClaw',logo:'🦾',type:'技术',desc:'开源AI Agent生态 · 自动化协作',color:'#A855F7'},
+{name:'n8n',logo:'🔀',type:'技术',desc:'自动化工作流 · 无代码编排',color:'#EA4C89'},
+{name:'Dify',logo:'🔧',type:'技术',desc:'AI应用平台 · 大模型落地',color:'#8B5CF6'},
+{name:'Coze',logo:'🧩',type:'技术',desc:'AI Bot平台 · 对话应用',color:'#3B82F6'},
+{name:'DeepSeek',logo:'🐋',type:'技术',desc:'开源大模型 · 高性价比推理',color:'#10B981'},
+{name:'AiToEarn',logo:'💰',type:'技术',desc:'自动变现工具 · 流量变现金',color:'#F59E0B'},
+{name:'扣子社区',logo:'🤖',type:'技术',desc:'智能体生态 · 插件市场',color:'#6366F1'},
+{name:'Stable Diffusion',logo:'🎨',type:'技术',desc:'开源绘画 · 视觉创作',color:'#EC4899'},
+{name:'小红书达人联盟',logo:'📕',type:'渠道',desc:'内容渠道合作 · 种草变现',color:'#EC4899'},
+{name:'抖音创作者',logo:'🎵',type:'渠道',desc:'短视频渠道 · 流量分发',color:'#FF4757'},
+{name:'本地商盟',logo:'🏪',type:'渠道',desc:'本地商家资源 · 实体联动',color:'#FF6B1A'},
+{name:'微信生态服务商',logo:'💬',type:'渠道',desc:'私域运营 · 小程序服务',color:'#34D399'},
+{name:'企业服务商联盟',logo:'🏢',type:'渠道',desc:'中小企业服务 · 联合交付',color:'#60A5FA'},
+{name:'AI训练营',logo:'🎓',type:'内容',desc:'课程内容共创 · 实战教学',color:'#22D3EE'},
+{name:'行业KOL',logo:'📣',type:'内容',desc:'内容影响力 · 联合发声',color:'#60A5FA'},
+{name:'知识星球主理人',logo:'🪐',type:'内容',desc:'付费社群 · 内容共建',color:'#F472B6'},
+{name:'AI资讯平台',logo:'📰',type:'内容',desc:'资讯分发 · 行业观察',color:'#A855F7'},
+{name:'天使投资人',logo:'💎',type:'投资',desc:'早期投资合作 · 增长加速',color:'#FFD700'},
+{name:'创投机构',logo:'🏦',type:'投资',desc:'融资对接 · 资源链接',color:'#F59E0B'},
+{name:'孵化器/加速器',logo:'🚀',type:'投资',desc:'项目孵化 · 场地资源',color:'#22D3EE'}
 ];
 const COOP=['全部','技术','渠道','内容','投资'];
 let curCoop='全部';
@@ -77,8 +126,7 @@ function renderGrid(){
   document.getElementById('pnGrid').innerHTML=arr.map(p=>`
     <div class="pn-card">
       <div class="pn-logo" style="background:${p.color}22">${p.logo}</div>
-      <div class="pn-name">${p.name}</div>
-      <span class="pn-type-tag ${tagCls[p.type]}">${p.type}</span>
+      <div class="pn-name">${p.name}<span class="pn-type-tag ${tagCls[p.type]}">${p.type}</span></div>
       <div class="pn-type">${p.desc}</div>
     </div>`).join('');
 }
