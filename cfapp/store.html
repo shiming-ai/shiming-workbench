@@ -81,7 +81,7 @@
 <div class="wrap">
     <div class="st-hero">
         <h2>AI<span style="color:#FFD700">工作台</span>商店</h2>
-        <p>12 个行业成品工作台，<b style="color:#34D399">买现成的 → 马上用</b><br>或定制你的专属工作台</p>
+        <p>24 个行业成品工作台，<b style="color:#34D399">买现成的 → 马上用</b><br>或定制你的专属工作台</p>
         <div class="st-badge">🎬 案例广场看到的场景 → 这里直接买</div>
         <!-- 信任保障条 -->
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;padding:0 2px">
@@ -175,10 +175,34 @@ const STORES = [
     { id:'s11', ico:'💕', name:'恋爱纪念台', industry:'生活 · 仪式感工具', cat:'生活', price:299, old:499, sales:141, color:'#FF4757', tags:['销量王'], feats:['纪念日提醒','约会计划','感情温度','照片墙'], demo:'demo-love.html',
       desc:'经营感情的仪式感工具：纪念日自动提醒、约会不重样、感情温度可视化。' },
     { id:'s12', ico:'✈️', name:'旅行攻略台', industry:'旅行 · 说走就走', cat:'生活', price:399, old:699, sales:87, color:'#22D3EE', tags:['热门'], feats:['行程规划','预算控制','装备清单','打卡地图'], demo:'demo-travel.html',
-      desc:'旅行规划大师：行程、预算、装备、打卡一屏搞定，说走就走不抓瞎。' }
+      desc:'旅行规划大师：行程、预算、装备、打卡一屏搞定，说走就走不抓瞎。' },
+    { id:'s13', ico:'💅', name:'美甲美睫店台', industry:'美业 · 预约与会员', cat:'美业', price:599, old:999, sales:66, color:'#F472B6', tags:['新'], feats:['在线预约','技师排班','会员储值','营销活动'], demo:'demo-case.html?id=salon',
+      desc:'美甲美睫店预约+会员+营销三合一：档期自动排、储值秒到账、活动一键发。' },
+    { id:'s14', ico:'🏠', name:'房产中介工作台', industry:'房产 · 房源客户匹配', cat:'商务', price:799, old:1499, sales:41, color:'#3B82F6', tags:['新'], feats:['房源管理','客户池','智能匹配','带看排期'], demo:'demo-case.html?id=estate',
+      desc:'中介的房源客户自动匹配系统：不靠记性，带看转化翻倍。' },
+    { id:'s15', ico:'⚖️', name:'律所案件工作台', industry:'法律 · 案件进度管理', cat:'商务', price:999, old:1999, sales:18, color:'#6366F1', tags:['新'], feats:['案件管理','期限提醒','文书模板','收费记录'], demo:'demo-case.html?id=lawyer',
+      desc:'律师的案件指挥系统：30+ 案件进度一屏看，期限零遗漏。' },
+    { id:'s16', ico:'🎓', name:'教培机构工作台', industry:'教培 · 排课与续费', cat:'教育', price:799, old:1499, sales:53, color:'#F59E0B', tags:['新'], feats:['智能排课','学员档案','续费提醒','经营报表'], demo:'demo-case.html?id=tutor',
+      desc:'教培校长的经营大脑：排课不打架、续费自动催、报表自动出。' },
+    { id:'s17', ico:'🏋️', name:'健身私教工作台', industry:'健身 · 私教会员管理', cat:'生活', price:599, old:999, sales:47, color:'#10B981', tags:['新'], feats:['会员档案','排课表','训练记录','续课提醒'], demo:'demo-case.html?id=coach',
+      desc:'私教的会员+课表+效果报告一站式：60 个会员排得井井有条。' },
+    { id:'s18', ico:'🧹', name:'家政保洁工作台', industry:'家政 · 阿姨派单管理', cat:'生活', price:699, old:1299, sales:35, color:'#34D399', tags:['新'], feats:['阿姨档案','自动派单','排班管理','客户回访'], demo:'demo-case.html?id=house',
+      desc:'家政老板的派单系统：100 个阿姨 0 漏单，回访自动跟。' },
+    { id:'s19', ico:'🍰', name:'烘焙蛋糕店台', industry:'烘焙 · 预订与会员', cat:'餐饮', price:599, old:999, sales:72, color:'#F59E0B', tags:['热卖'], feats:['蛋糕预订','节日日历','会员储值','朋友圈素材'], demo:'demo-case.html?id=bakery',
+      desc:'烘焙店的预订+节日营销+会员储值：节日订单翻 3 倍。' },
+    { id:'s20', ico:'💐', name:'鲜花店工作台', industry:'花艺 · 订单与配送', cat:'生活', price:399, old:699, sales:58, color:'#EC4899', tags:['新'], feats:['花束管理','订单配送','会员储值','节日营销'], demo:'demo-case.html?id=flower',
+      desc:'花店老板的节日接单神器：订单接得下、送得出，配送零差错。' },
+    { id:'s21', ico:'👗', name:'服装店工作台', industry:'服装 · 进销存与会员', cat:'电商', price:599, old:999, sales:64, color:'#F472B6', tags:['新'], feats:['商品管理','进销存','会员管理','营销活动'], demo:'demo-case.html?id=fashion',
+      desc:'服装店的进销存+会员：库存不压货、会员都记得、清仓快 3 倍。' },
+    { id:'s22', ico:'🚗', name:'二手车行工作台', industry:'二手车 · 车源与客源', cat:'商务', price:799, old:1499, sales:23, color:'#3B82F6', tags:['新'], feats:['车源管理','客源池','智能匹配','利润测算'], demo:'demo-case.html?id=car',
+      desc:'二手车行的车源客源自动匹配：收车卖车快人一步。' },
+    { id:'s23', ico:'🐾', name:'宠物医院工作台', industry:'宠物医疗 · 病例与预约', cat:'宠物', price:699, old:1199, sales:31, color:'#34D399', tags:['新'], feats:['宠物档案','预约管理','电子病例','疫苗提醒'], demo:'demo-case.html?id=vet',
+      desc:'宠物医院的病例+预约+疫苗提醒：复诊不落，主人放心。' },
+    { id:'s24', ico:'🎭', name:'剧本杀店工作台', industry:'桌游 · 场次与拼车', cat:'生活', price:699, old:1199, sales:27, color:'#A855F7', tags:['新'], feats:['剧本管理','场次排期','智能拼车','会员储值'], demo:'demo-case.html?id=rpg',
+      desc:'剧本杀店的场次+拼车系统：场次排满、拼车不愁、翻台翻倍。' }
 ];
 /* 商店商品 → 案例详情页 id 映射 */
-const CASE_MAP = { s1:'ecom', s2:'study', s3:'food', s4:'photo', s5:'pet', s6:'english', s7:'fitness', s8:'creator', s9:'solo', s10:'edu', s11:'love', s12:'travel' };
+const CASE_MAP = { s1:'ecom', s2:'study', s3:'food', s4:'photo', s5:'pet', s6:'english', s7:'fitness', s8:'creator', s9:'solo', s10:'edu', s11:'love', s12:'travel', s13:'salon', s14:'estate', s15:'lawyer', s16:'tutor', s17:'coach', s18:'house', s19:'bakery', s20:'flower', s21:'fashion', s22:'car', s23:'vet', s24:'rpg' };
 const CATS = ['全部','电商','教育','餐饮','摄影','宠物','自媒体','生活','育儿','商务'];
 const MY_KEY = 'cf_store_orders';
 let curCat='全部', searchKw='';
