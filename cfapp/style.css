@@ -428,6 +428,23 @@ body.app-loaded { transition: opacity .2s ease; }
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
+/* ===== emoji 图标升级：发光圆角容器（统一所有板块的图标质感） ===== */
+.mod-emoji, .tool-emoji, .hot-emoji, .mall-ico, .emp-card .emp-av, .cat-emoji, .sv-av {
+    display:inline-flex !important; align-items:center; justify-content:center;
+    width:54px; height:54px; border-radius:16px; margin-bottom:8px !important;
+    background:linear-gradient(135deg, rgba(168,85,247,.18), rgba(236,72,153,.08));
+    border:1px solid rgba(168,85,247,.28);
+    font-size:26px !important; line-height:1;
+    box-shadow:0 6px 18px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.08);
+    position:relative; overflow:hidden; flex-shrink:0;
+}
+.mod-emoji::before, .tool-emoji::before, .hot-emoji::before, .mall-ico::before, .emp-card .emp-av::before, .cat-emoji::before, .sv-av::before {
+    content:''; position:absolute; inset:0; border-radius:inherit;
+    background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.2), transparent 55%);
+    pointer-events:none;
+}
+.hot-emoji { width:48px; height:48px; font-size:24px !important; }
 /* 10) 通用浅色发光卡片（突出重点） */
 .glow-card {
     position: relative; overflow: hidden;
