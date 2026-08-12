@@ -361,6 +361,29 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 .know-stage{flex-shrink:0;padding:8px 13px;border-radius:11px;font-size:12px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
 .know-stage.on{background:var(--primary);color:#fff;border-color:var(--primary)}
 
+/* ===== Onboarding ===== */
+#onboard{position:fixed;inset:0;z-index:300;background:linear-gradient(170deg,#FAF9F7,#F1EDFC);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px 22px calc(24px + var(--safe-b));overflow-y:auto}
+#onboard.show{display:flex}
+.onb-inner{width:100%;max-width:400px;text-align:center;animation:onbIn .4s ease}
+@keyframes onbIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.onb-brand{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.onb-brand i{font-style:normal;color:var(--primary);font-weight:800}
+.onb-bear{margin:26px auto 18px;width:130px;height:130px;display:flex;align-items:center;justify-content:center}
+.onb-bear svg{width:100%;height:100%}
+.onb-title{font-size:24px;font-weight:900;letter-spacing:-.5px;line-height:1.35}
+.onb-title em{font-style:normal;background:linear-gradient(135deg,var(--primary),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.onb-sub{font-size:13.5px;color:var(--ink2);line-height:1.8;margin-top:10px}
+.onb-step{font-size:11px;font-weight:700;color:var(--primary);background:var(--primary-soft);display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:11px;margin-bottom:14px;letter-spacing:.5px}
+.onb-dots{display:flex;gap:6px;justify-content:center;margin-top:16px}
+.onb-dot{width:7px;height:7px;border-radius:50%;background:var(--line2);transition:all .2s}
+.onb-dot.on{width:20px;border-radius:4px;background:var(--primary)}
+.onb-actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.onb-skip{font-size:12px;color:var(--ink3);text-decoration:underline;cursor:pointer}
+
+/* ===== IP 小熊容器 ===== */
+.bear-float{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.bear-float svg{width:100%;height:100%}
+
 /* ===== 我的页重构 ===== */
 .me-hero{background:linear-gradient(160deg,#FFFFFF,#F1EDFC);border:1px solid var(--line2);border-radius:24px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .me-hero::after{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.14),transparent 70%);pointer-events:none}
@@ -435,6 +458,17 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 </head>
 <body>
 
+<!-- Onboarding 首次引导 -->
+<div id="onboard">
+  <div class="onb-inner" id="onbInner">
+    <div class="onb-brand">Crazy <i>Friday.</i></div>
+    <div class="onb-bear" id="onbBear"></div>
+    <div id="onbBody"></div>
+    <div class="onb-dots" id="onbDots"></div>
+    <div class="onb-actions"><button class="btn" id="onbNextBtn" onclick="onbNext()">开始</button><span class="onb-skip" id="onbSkip" onclick="onbSkip()">稍后再说</span></div>
+  </div>
+</div>
+
 <!-- 顶部栏 -->
 <div class="topbar"><div class="topbar-in">
   <div class="tb-menu" onclick="openDrawer()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
@@ -452,6 +486,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 
   <!-- ========== 首页 ========== -->
   <div class="page on" id="page-home">
+    <!-- ① 问候 + 宝宝身份 -->
     <div class="greet">
       <div class="g1"><span id="greetHello">Hi</span>，<span id="greetRole">妈妈</span> 👋</div>
       <div class="g2">今天是陪伴<b id="greetName">小宝贝</b>成长的第 <b id="greetDays">--</b> 天</div>
@@ -467,8 +502,10 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
         <div class="baby-mood">今日心情 <span class="m" id="homeMood">· 开心</span></div>
       </div>
       <div class="baby-edit" onclick="goPage('page-profile')"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+      <div class="bear-float" style="width:56px;height:56px;align-self:flex-end;margin-left:2px" id="homeBear" title="成长陪伴官"></div>
     </div>
 
+    <!-- ② 核心数据 -->
     <div class="kpi-row">
       <div class="kpi" onclick="goPage('page-trends')"><div class="l"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg>身高</div><div class="v"><span id="kHeight">--</span><small>cm</small></div><div class="d" id="kHeightD">点击查看</div><div class="spark" id="spHeight"></div></div>
       <div class="kpi" onclick="goPage('page-trends')"><div class="l"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>体重</div><div class="v"><span id="kWeight">--</span><small>kg</small></div><div class="d" id="kWeightD">点击查看</div><div class="spark" id="spWeight"></div></div>
@@ -476,29 +513,40 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
       <div class="kpi" onclick="goPage('page-trends')"><div class="l"><svg viewBox="0 0 24 24"><path d="M12 2v20M5 9l7-7 7 7"/></svg>喂养</div><div class="v"><span id="kFeed">--</span><small>次</small></div><div class="d" id="kFeedD">今日</div><div class="spark" id="spFeed"></div></div>
     </div>
 
+    <!-- ③ 今日记录 -->
     <div class="sec" style="margin-top:22px">
       <div class="sec-hd"><h2>今日记录</h2><span class="more" onclick="goPage('page-record')">全部记录 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div>
       <div class="rec6" id="todayRec6"></div>
     </div>
 
+    <!-- ④ AI 今日观察 -->
+    <div class="sec">
+      <div class="sec-hd"><h2>AI 今日观察</h2><span class="more" onclick="goPage('page-ai')">问 AI <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+      <div class="ai-card" id="aiHomeCard"></div>
+    </div>
+
+    <!-- ⑤ 最近成长 -->
+    <div class="sec">
+      <div class="sec-hd"><h2>最近成长</h2><span class="more" onclick="goPage('page-record')">全部 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+      <div id="homeRecentList"></div>
+    </div>
+
+    <!-- ⑥ 时光回忆 -->
+    <div class="sec">
+      <div class="sec-hd"><h2>时光回忆</h2><span class="more" onclick="goPage('page-gallery')">时光 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+      <div id="timeRecall"></div>
+    </div>
+
+    <!-- ⑦ 快捷入口 -->
     <div class="sec">
       <div class="sec-hd"><h2>快捷入口</h2><span class="more">全部工具</span></div>
       <div class="quick6" id="quick6"></div>
     </div>
 
+    <!-- ⑧ AI 今日计划（完整） -->
     <div class="sec">
       <div class="sec-hd"><h2>AI 今日计划</h2><span class="more" id="planStageTag" style="color:var(--primary);font-weight:700"></span></div>
       <div class="plan-card" id="dailyPlanCard"></div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-hd"><h2>AI 成长建议</h2></div>
-      <div class="ai-card" id="aiHomeCard"></div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-hd"><h2>最近成长</h2><span class="more" onclick="goPage('page-record')">全部 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div>
-      <div id="homeRecentList"></div>
     </div>
   </div>
 
@@ -696,10 +744,10 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 <!-- 底部导航 -->
 <div class="bottom-nav">
   <div class="bn-item on" id="bn-home" onclick="goPage('page-home')"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></div><div class="lb">首页</div></div>
-  <div class="bn-item" id="bn-record" onclick="goPage('page-record')"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="lb">记录</div></div>
+  <div class="bn-item" id="bn-record" onclick="goPage('page-record')"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="lb">成长</div></div>
   <div class="bn-add" onclick="openQuickAdd()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
   <div class="bn-item" id="bn-ai" onclick="goPage('page-ai')"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5M9 9h.01M15 9h.01"/></svg></div><div class="lb">AI育儿</div></div>
-  <div class="bn-item" id="bn-gallery" onclick="goPage('page-gallery')"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="lb">相册</div></div>
+  <div class="bn-item" id="bn-gallery" onclick="goPage('page-gallery')"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="lb">时光</div></div>
   <div class="bn-item" id="bn-me" onclick="goPage('page-me')"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="lb">我的</div></div>
 </div>
 
@@ -743,7 +791,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 
 <script>
 /* ================= 数据层 ================= */
-const K={profile:'wb_baby_profile',health:'wb_baby_health',moments:'wb_baby_moments',vaccines:'wb_baby_vaccines',daily:'wb_baby_daily',records:'wb_baby_records',members:'wb_baby_members',photos:'wb_baby_photos',reminders:'wb_baby_reminders',milestones:'wb_baby_milestones',logs:'wb_baby_logs',license:'wb_baby_license',feed_done:'wb_baby_feed_done'};
+const K={profile:'wb_baby_profile',health:'wb_baby_health',moments:'wb_baby_moments',vaccines:'wb_baby_vaccines',daily:'wb_baby_daily',records:'wb_baby_records',members:'wb_baby_members',photos:'wb_baby_photos',reminders:'wb_baby_reminders',milestones:'wb_baby_milestones',logs:'wb_baby_logs',license:'wb_baby_license',feed_done:'wb_baby_feed_done',version:'wb_baby_version',onboard:'wb_baby_onboard',firsts:'wb_baby_firsts',reports:'wb_baby_reports',demo:'wb_baby_demo'};
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -789,9 +837,13 @@ function pickImage(key){
 
 /* ================= 预置示例 ================= */
 function seed(){
-  if(localStorage.getItem(K.profile))return;
+  save(K.version,'v4.0');
+  if(localStorage.getItem(K.profile))return; // 已有档案（老用户/已建档案）绝不覆盖
+  if(!localStorage.getItem(K.demo))return;   // 非演示：首次走 Onboarding，不预填
+  const fid='f_'+Date.now(),bid='b_'+Date.now();
   const now=new Date(),birth=(()=>{const d=new Date();d.setFullYear(d.getFullYear()-2);d.setMonth(d.getMonth()-1);d.setDate(d.getDate()-20);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
-  save(K.profile,{name:'小宝贝',birth,avatar:'👶',mood:'开心',role:'妈妈',motto:'愿你健康快乐长大～'});
+  save(K.profile,{familyId:fid,babyId:bid,name:'小宝贝',birth,avatar:'👶',gender:'',relation:'妈妈',mood:'开心',role:'妈妈',motto:'愿你健康快乐长大～',onboard:true});
+  save(K.onboard,'done');
   const h=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i*7);const ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');h.push({date:ds,height:(82+i*0.8).toFixed(1),weight:(10.4+i*0.25).toFixed(1)})}
   save(K.health,h);
   const mk=(d,title,type,desc,emo)=>{const x=new Date();x.setDate(x.getDate()-d);return{id:uid('m'),type,title,desc,emo,date:x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}};
@@ -871,6 +923,7 @@ function renderHome(){
   document.getElementById('greetName').textContent=name;
   document.getElementById('greetDays').textContent=daysFrom(p.birth)>=99999?'--':daysFrom(p.birth);
   document.getElementById('homeAv').textContent=p.avatar||'👶';
+  document.getElementById('homeBear').innerHTML=bear('home');
   document.getElementById('tbAv').textContent=p.avatar||'👶';
   document.getElementById('homeName').innerHTML=(name)+' <span style="color:var(--pink)">♥</span>';
   document.getElementById('homeAge').textContent=ageText(p.birth)+(p.birth?' · '+fmtDate(p.birth):'');
@@ -918,9 +971,11 @@ function renderHome(){
   document.getElementById('quick6').innerHTML=qs.map(q=>`<div class="qk" onclick="goPage('${q.g}')"><div class="q-ico" style="background:linear-gradient(135deg,${q.c},${q.c}dd)"><svg viewBox="0 0 24 24">${q.svg}</svg></div><div class="n">${q.n}</div></div>`).join('');
   // AI 建议
   renderAIHome();
-  // 最近成长
+  // 最近成长（时间轴 + 记录人 + 宝宝当时年龄）
   const m=load(K.moments,[]).slice(0,3);
-  document.getElementById('homeRecentList').innerHTML=m.length?m.map(x=>`<div class="tl-item"><div class="tl-card" style="padding:11px">${x.img?`<img class="tl-thumb" src="${x.img}" alt="">`:`<div class="tl-emo" style="background:var(--pink-soft)">${x.emo||'🌱'}</div>`}<div class="tl-body"><div class="tl-title">${esc(x.title)} <span class="type">${x.type||'成长'}</span></div>${x.desc?`<div class="tl-desc">${esc(x.desc)}</div>`:''}<div class="tl-meta">${fmtDate(x.date)}</div></div></div></div>`).join(''):'<div class="empty"><div class="e-ico">🌱</div>还没有记录，点右下「+」记录第一刻</div>';
+  document.getElementById('homeRecentList').innerHTML=m.length?m.map(x=>`<div class="tl-item"><div class="tl-card" style="padding:11px">${x.img?`<img class="tl-thumb" src="${x.img}" alt="">`:`<div class="tl-emo" style="background:var(--pink-soft)">${x.emo||'🌱'}</div>`}<div class="tl-body"><div class="tl-title">${esc(x.title)} <span class="type">${x.type||'成长'}</span></div>${x.desc?`<div class="tl-desc">${esc(x.desc)}</div>`:''}<div class="tl-meta"><span>${fmtDate(x.date)}</span><span>· ${x.by||p.role||'妈妈'}记录</span><span>· ${ageAt(x.date)}</span></div></div></div></div>`).join(''):emptyState('','第一份成长记录，会是什么呢？','照片、日记、每一个第一次，都值得被记住','记录这一刻','openQuickAdd()','photo');
+  // 时光回忆
+  renderTimeRecall();
   // 提醒条
   renderRemindBar();
   // 抽屉计数
@@ -943,16 +998,56 @@ function renderRemindBar(){
   const txt=it.dd<0?`<b>${it.name}</b> 已逾期 ${-it.dd} 天`:it.dd===0?`<b>${it.name}</b> 今天到期`:it.dd===1?`<b>${it.name}</b> 明天到期`:it.dd<=7?`<b>${it.name}</b> 还有 ${it.dd} 天`:it.dd<=30?`<b>${it.name}</b> 还有 ${it.dd} 天`:``;
   bar.innerHTML=`<div class="remind-bar"><div class="r-ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><div class="r-t">${txt}</div><div class="r-btn" onclick="goPage('page-reminders')">查看</div></div>`;
 }
+function ageAt(date){
+  const b=load(K.profile,{}).birth;if(!b||!date)return'';
+  const x=new Date(date.replace(/-/g,'/')),y=new Date(b.replace(/-/g,'/'));
+  let m=(x.getFullYear()-y.getFullYear())*12+(x.getMonth()-y.getMonth());if(m<0)return'';
+  if(m<1)return'出生';
+  if(m<12)return m+'个月';
+  if(m<24)return'1岁'+Math.floor((m-12))+'个月';
+  return Math.floor(m/12)+'岁'+(m%12)+'个月';
+}
+function renderTimeRecall(){
+  const p=load(K.profile,{}),m=load(K.moments,[]),ph=load(K.photos,[]);
+  const el=document.getElementById('timeRecall');if(!el)return;
+  const now=new Date();
+  const y1=new Date();y1.setFullYear(y1.getFullYear()-1);
+  const yStr=y1.getFullYear()+'-'+String(y1.getMonth()+1).padStart(2,'0')+'-'+String(y1.getDate()).padStart(2,'0');
+  const y1mom=m.filter(x=>x.date===yStr),y1ph=ph.filter(x=>x.date===yStr);
+  const lm=new Date();lm.setMonth(lm.getMonth()-1);
+  const lmPrefix=lm.getFullYear()+'-'+String(lm.getMonth()+1).padStart(2,'0');
+  const lmCount=m.filter(x=>(x.date||'').startsWith(lmPrefix)).length;
+  const days=daysFrom(p.birth);
+  let html='';
+  if(y1mom.length||y1ph.length){
+    const item=y1mom[0]||y1ph[0];
+    html+=`<div class="remind-bar" style="background:var(--primary-soft);border-color:var(--border2)"><div class="r-ico" style="background:#fff"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="r-t"><b>一年前的今天</b> · ${yStr}<br>TA 留下了「${esc(item.title)}」</div><div class="r-btn" style="background:var(--primary)" onclick="goPage('page-gallery')">看看</div></div>`;
+  } else if(m.length){
+    html+=`<div class="remind-bar" style="background:var(--primary-soft);border-color:var(--border2)"><div class="r-ico" style="background:#fff"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="r-t"><b>一年前的今天</b> · ${yStr}<br>${m.length} 条成长记录，正在变成你的家族记忆</div><div class="r-btn" style="background:var(--primary)" onclick="goPage('page-record')">记录</div></div>`;
+  }
+  if(lmCount>0){
+    html+=`<div class="remind-bar" style="background:#fff;border-color:var(--line)"><div class="r-ico" style="background:var(--card2)">📖</div><div class="r-t"><b>上个月</b> · 记录了 ${lmCount} 条成长瞬间</div><div class="r-btn" style="background:var(--ink3)" onclick="goPage('page-record')">回顾</div></div>`;
+  }
+  if(days>=365){
+    html+=`<div class="remind-bar" style="background:var(--yellow-soft);border-color:rgba(245,158,11,.2)"><div class="r-ico" style="background:#fff">🎂</div><div class="r-t"><b>陪伴 ${Math.floor(days/365)} 年</b> · ${p.name||'宝贝'}的成长档案</div><div class="r-btn" style="background:var(--yellow)" onclick="goPage('page-story')">生成年报</div></div>`;
+  } else if(days>=100){
+    html+=`<div class="remind-bar" style="background:var(--yellow-soft);border-color:rgba(245,158,11,.2)"><div class="r-ico" style="background:#fff">🎉</div><div class="r-t"><b>已陪伴 ${days} 天</b> · 每个瞬间都算数</div><div class="r-btn" style="background:var(--yellow)" onclick="goPage('page-story')">写故事</div></div>`;
+  }
+  if(!html)html=emptyState('','时光正在积累','记录更多瞬间，这里会出现「一年前的今天」和成长故事','记录这一刻','openQuickAdd()','empty');
+  el.innerHTML=html;
+}
 function renderAIHome(){
-  const p=load(K.profile,{}),h=load(K.health,[]),m=load(K.moments,[]),dl=load(K.daily,{})[todayStr()]||{};
-  const sleep=dl.sleep||{},feed=dl.feed||{},recent=m.slice(-3).reverse();
+  const p=load(K.profile,{}),h=load(K.health,[]),m=load(K.moments,[]),dlAll=load(K.daily,{});
+  const dl=dlAll[todayStr()]||{},sleep=dl.sleep||{},feed=dl.feed||{};
+  const recent=m.slice(-3).reverse();
+  const recCount=m.length+Object.keys(dlAll).length+h.length;
   let s='';
   const name=p.name||'宝贝';
-  if(sleep.total!=null&&sleep.total<10)s=`<b>${name}</b> 最近睡眠 ${sleep.total}h，比理想略短，建议今晚提前 <b>15 分钟</b>进入睡前流程。`;
-  else if(feed.count&&feed.count<3)s=`<b>${name}</b> 今天已喂养 ${feed.count} 次，间隔略长，建议增加一次加餐/奶。`;
-  else if(recent.length)s=`<b>${name}</b> 最近记下了「${recent.map(x=>x.title).slice(-2).join('」「')}」，都是值得珍藏的瞬间，继续保持记录。`;
-  else s=`<b>${name}</b> 的数据正在积累中，记录越多，AI 建议越贴心。`;
-  document.getElementById('aiHomeCard').innerHTML=`<div class="ai-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>AI 成长建议</div><div class="ai-t">基于最近 7 天数据</div><div class="ai-b">${s}</div><div class="ai-more" onclick="goPage('page-ai')">查看详细建议 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>`;
+  if(sleep.total!=null&&sleep.total<10)s=`<b>${name}</b> 最近睡眠 ${sleep.total}h，比理想略短，建议今晚提前 <b>15 分钟</b>进入睡前流程，观察是否更容易入睡。`;
+  else if(feed.count&&feed.count<3)s=`<b>${name}</b> 今天已喂养 ${feed.count} 次，间隔略长，建议增加一次加餐或奶，保持能量稳定。`;
+  else if(recent.length)s=`<b>${name}</b> 最近记下了「${recent.map(x=>x.title).slice(-2).join('」「')}」，这些瞬间都是成长的重要信号，继续保持记录。`;
+  else s=`<b>${name}</b> 的数据正在积累中，记录越多，我越了解 TA 的节奏，建议从今晚的睡眠开始记录。`;
+  document.getElementById('aiHomeCard').innerHTML=`<div class="ai-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>AI 今日观察</div><div class="ai-t">基于最近 ${recCount} 条记录生成</div><div class="ai-b">${s}</div><div class="ai-more" onclick="goPage('page-ai')">查看详细分析 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>`;
 }
 
 /* ================= 记录页 ================= */
@@ -1457,6 +1552,103 @@ function askClear(){
   seed();refreshAll();toast('已清空并恢复示例');
 }
 
+/* ================= IP 小熊（成长陪伴官） ================= */
+function bear(state){
+  state=state||'home';
+  const acc={
+    feed:'<g transform="translate(66,52)"><rect x="0" y="4" width="16" height="22" rx="6" fill="#fff" stroke="#E5E0D8" stroke-width="2"/><rect x="4" y="2" width="8" height="7" rx="3" fill="#C7BFAF"/><rect x="6" y="20" width="4" height="4" fill="#7C3AED"/></g>',
+    sleep:'<path d="M62 20 q3 -10 16 -10 l-4 8 h-8 z" fill="#A78BFA"/><circle cx="66" cy="21" r="2" fill="#fff"/>',
+    ai:'<g transform="translate(46,40)"><rect x="0" y="0" width="30" height="18" rx="7" fill="none" stroke="#7C3AED" stroke-width="2"/><line x1="0" y1="9" x2="30" y2="9" stroke="#7C3AED" stroke-width="2"/><line x1="9" y1="0" x2="9" y2="9" stroke="#7C3AED" stroke-width="2"/></g>',
+    photo:'<g transform="translate(62,44)"><rect x="0" y="0" width="20" height="16" rx="4" fill="#7C3AED"/><circle cx="6" cy="6" r="2.5" fill="#fff"/><path d="M2 16l6 -5 4 3 6 -4v6z" fill="#fff" opacity=".9"/></g>',
+    first:'<g transform="translate(34,38)"><path d="M26 10l-2 8-6-6z" fill="#F472B6"/><path d="M22 18l4 2-4 2 3-2z" fill="#FBBF24"/><path d="M30 6l1 7-6-4z" fill="#38BDF8"/><path d="M18 14l5-1-3 5z" fill="#10B981"/></g>',
+    medal:'<g transform="translate(64,42)"><circle cx="8" cy="8" r="7" fill="#FBBF24" stroke="#F59E0B" stroke-width="2"/><path d="M8 5l1 2 2 0-1.5 1.5.5 2L8 9.5 6.5 10.5l.5-2L5.5 7l2 0z" fill="#fff"/></g>',
+    empty:''
+  }[state]||'';
+  return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="106" rx="26" ry="5" fill="#00000012"/>
+    <circle cx="41" cy="38" r="15" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/><circle cx="79" cy="38" r="15" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/>
+    <circle cx="41" cy="38" r="6" fill="#F6C7E2"/><circle cx="79" cy="38" r="6" fill="#F6C7E2"/>
+    <path d="M60 30 q12 0 16 12 q-16 -8 -32 0 q4 -12 16 -12z" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/>
+    <ellipse cx="60" cy="62" rx="32" ry="28" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/>
+    <ellipse cx="60" cy="92" rx="22" ry="12" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/>
+    <path d="M30 62 q-8 14 6 26 l14 6 q-2 -16 -20 -32z" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/>
+    <path d="M90 62 q8 14 -6 26 l-14 6 q2 -16 20 -32z" fill="#FFF9F2" stroke="#E8DCCB" stroke-width="2"/>
+    <circle cx="50" cy="62" r="3" fill="#3A2E26"/><circle cx="70" cy="62" r="3" fill="#3A2E26"/>
+    <circle cx="51.5" cy="63.5" r="1" fill="#fff"/><circle cx="71.5" cy="63.5" r="1" fill="#fff"/>
+    <ellipse cx="60" cy="70" rx="4.5" ry="3" fill="#F0A8B8"/>
+    <path d="M55 74 q5 3 10 0" stroke="#8A7A66" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M36 55 q14 8 48 0 l4 12 q-2 10 -26 8 q-22 2 -26 -8z" fill="#7C3AED"/>
+    <path d="M60 56 l5 5 -5 4z" fill="#8B5CF6"/>${acc}</svg>`;
+}
+
+/* ================= Onboarding 首次引导 ================= */
+let onbStep=0,onbFocus=[];
+const ONB_TOPICS=['成长记录','睡眠','喂养','健康','科学育儿','成长相册','里程碑'];
+function showOnboard(){
+  document.getElementById('onboard').classList.add('show');
+  onbStep=0;onbFocus=[];renderOnb();
+}
+function renderOnb(){
+  const dots=[0,1,2,3].map(i=>`<div class="onb-dot ${i===onbStep?'on':''}"></div>`).join('');
+  document.getElementById('onbDots').innerHTML=dots;
+  const btn=document.getElementById('onbNextBtn');
+  const skip=document.getElementById('onbSkip');
+  const body=document.getElementById('onbBody');
+  const be=document.getElementById('onbBear');
+  if(onbStep===0){
+    skip.style.display='none';
+    be.innerHTML=bear('home');
+    btn.textContent='开始创建';
+    body.innerHTML=`<div class="onb-title">为宝宝建立<br><em>专属成长空间</em></div><div class="onb-sub">记录每一个第一次 · 科学育儿 · AI 陪伴每一步<br>属于你们家的长期数字空间</div>`;
+  } else if(onbStep===1){
+    skip.style.display='inline';
+    be.innerHTML=bear('home');
+    btn.textContent='下一步';
+    body.innerHTML=`<div class="onb-step">STEP 02 · 创建宝宝档案</div><div class="field" style="text-align:left"><label>宝宝昵称</label><input id="onbName" type="text" placeholder="如：小宝贝"></div>
+    <div class="field" style="text-align:left"><label>出生日期</label><input id="onbBirth" type="date"></div>
+    <div class="field" style="text-align:left"><label>头像</label><div class="av-pick" id="onbAv" style="justify-content:center">${AVATARS.slice(0,8).map(a=>`<div class="av-opt ${a==='👶'?'on':''}" onclick="onbPickAv('${a}')">${a}</div>`).join('')}</div></div>
+    <div class="field" style="text-align:left"><label>你与宝宝的关系</label><div class="chips" id="onbRel" style="justify-content:center">${ROLES.slice(0,4).map(r=>`<span class="chip ${r==='妈妈'?'on':''}" onclick="onbPickRel('${r}')">${r}</span>`).join('')}</div></div>`;
+    window._onbAv='👶';window._onbRel='妈妈';
+  } else if(onbStep===2){
+    skip.style.display='inline';
+    be.innerHTML=bear('home');
+    btn.textContent='进入工作台';
+    body.innerHTML=`<div class="onb-step">STEP 03 · 你最关心什么</div><div class="onb-sub" style="margin-bottom:10px">选几个最关心的，我会优先为你推荐</div><div class="chips" style="justify-content:center;gap:9px">${ONB_TOPICS.map(t=>`<span class="chip" onclick="onbToggleTopic('${t}',this)" style="padding:10px 15px;font-size:13px">${t}</span>`).join('')}</div>`;
+    document.querySelectorAll('#onbBody .chip').forEach(c=>c.classList.add('on'));onbFocus=[...ONB_TOPICS];
+  } else if(onbStep===3){
+    skip.style.display='none';
+    be.innerHTML=bear('first');
+    btn.textContent='开始记录';
+    body.innerHTML=`<div class="onb-step">STEP 04 · 准备好了</div><div class="onb-title" style="font-size:21px">你好呀，<em>${window._onbName||'小宝贝'}</em> 👋</div><div class="onb-sub">从今天开始，我陪你一起<br>记录 TA 的每一次成长</div>`;
+  }
+}
+function onbPickAv(a){window._onbAv=a;document.querySelectorAll('#onbAv .av-opt').forEach(e=>e.classList.toggle('on',e.textContent===a))}
+function onbPickRel(r){window._onbRel=r;document.querySelectorAll('#onbRel .chip').forEach(e=>e.classList.toggle('on',e.textContent===r))}
+function onbToggleTopic(t,el){el.classList.toggle('on');const i=onbFocus.indexOf(t);if(i>=0)onbFocus.splice(i,1);else onbFocus.push(t)}
+function onbNext(){
+  if(onbStep===1){
+    const name=(document.getElementById('onbName').value||'小宝贝').trim();
+    const birth=document.getElementById('onbBirth').value||todayStr();
+    window._onbName=name;window._onbBirth=birth;
+    onbStep++;renderOnb();return;
+  }
+  if(onbStep===3){finishOnboard();return}
+  onbStep++;renderOnb();
+}
+function onbSkip(){finishOnboard()}
+function finishOnboard(){
+  const fid='f_'+Date.now(),bid='b_'+Date.now();
+  const name=window._onbName||'小宝贝';
+  const p={familyId:fid,babyId:bid,name,birth:window._onbBirth||todayStr(),avatar:window._onbAv||'👶',gender:'',relation:window._onbRel||'妈妈',mood:'开心',role:window._onbRel||'妈妈',motto:'愿你健康快乐长大～',onboard:true,topics:onbFocus};
+  save(K.profile,p);save(K.onboard,'done');save(K.license,{start:todayStr()});save(K.members,[{id:uid('f'),name:p.relation||'妈妈',role:p.relation||'妈妈',perm:'管理员',av:p.relation==='爸爸'?'👨':'👩',color:'#F472B6'}]);
+  document.getElementById('onboard').classList.remove('show');
+  refreshAll();toast('🎉 欢迎来到你的家庭成长空间');log(p.role||'我','创建了宝贝档案');
+}
+
+/* ================= 空状态统一组件 ================= */
+function emptyState(emo,title,sub,btnTxt,btnFn,bState){
+  return `<div class="empty" style="padding:36px 14px"><div style="width:86px;height:86px;margin:0 auto 12px" class="bear-float">${bear(bState||'empty')}</div><div style="font-size:15px;font-weight:800;color:var(--ink)">${title}</div><div style="font-size:12px;color:var(--ink3);margin-top:5px;line-height:1.7">${sub}</div>${btnTxt?`<button class="btn soft" style="width:auto;padding:0 22px;margin-top:14px" onclick="${btnFn}">${btnTxt}</button>`:''}</div>`;
+}
+
 /* ================= Toast & 刷新 ================= */
 let toastTimer;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
@@ -1464,7 +1656,7 @@ function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord()
 
 /* ================= 初始化 ================= */
 seed();
-refreshAll();
+if(!localStorage.getItem(K.profile)){showOnboard();}else{refreshAll();}
 </script>
 </body>
 </html>
