@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <rect width="240" height="240" rx="36" fill="#0a0a0a"/>
+  <circle cx="200" cy="40" r="5" fill="#FF6B1A"/>
+  <text x="120" y="92" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="900" text-anchor="middle" fill="#fff" letter-spacing="-1">Crazy</text>
+  <text x="120" y="132" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="900" text-anchor="middle" fill="#fff" letter-spacing="-1">Friday</text>
+  <line x1="44" y1="152" x2="196" y2="152" stroke="#FF6B1A" stroke-width="1.5"/>
+  <text x="120" y="176" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="#b8aed1" letter-spacing="8">疯 狂 星 期 五</text>
+  <text x="120" y="208" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="9" font-weight="800" text-anchor="middle" fill="#FFD700" letter-spacing="3">AI × CREATOR</text>
+</svg>
