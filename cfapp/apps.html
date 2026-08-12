@@ -48,9 +48,23 @@ const APPS=[
 {id:'a7',ico:'📊',name:'周报生成器',cat:'办公',desc:'输入数据自动出周报/日报',color:'#60A5FA'},
 {id:'a8',ico:'🔗',name:'短链接生成',cat:'办公',desc:'长链接变短链，支持统计点击',color:'#F59E0B'},
 {id:'a9',ico:'🗣️',name:'AI配音',cat:'创作',desc:'文字转语音，多音色',color:'#10B981'},
-{id:'a10',ico:'📚',name:'知识库问答',cat:'实用',desc:'上传文档自动建知识库，问答即答',color:'#8B5CF6'}
+{id:'a10',ico:'📚',name:'知识库问答',cat:'实用',desc:'上传文档自动建知识库，问答即答',color:'#8B5CF6'},
+{id:'a11',ico:'💡',name:'头脑风暴机',cat:'创作',desc:'输入主题，AI 帮你发散 50 个创意',color:'#A855F7'},
+{id:'a12',ico:'✍️',name:'文案改写器',cat:'创作',desc:'一句话变 10 种风格：正式/活泼/卖货',color:'#EC4899'},
+{id:'a13',ico:'📄',name:'简历优化器',cat:'求职',desc:'输入经历自动生成简历+关键词优化',color:'#60A5FA'},
+{id:'a14',ico:'🎤',name:'面试模拟器',cat:'求职',desc:'AI 当面试官，模拟问答+评分',color:'#22D3EE'},
+{id:'a15',ico:'🧾',name:'记账助手',cat:'财务',desc:'语音记账，月度报表自动出',color:'#34D399'},
+{id:'a16',ico:'🗂️',name:'发票整理',cat:'财务',desc:'拍照识别发票，报销自动归类',color:'#F59E0B'},
+{id:'a17',ico:'👥',name:'社群裂变工具',cat:'运营',desc:'拼团/砍价/分销玩法一键生成',color:'#FF6B1A'},
+{id:'a18',ico:'🖼️',name:'活动海报',cat:'营销',desc:'促销/上新/活动海报模板直接套',color:'#F472B6'},
+{id:'a19',ico:'🐕',name:'宠物管家',cat:'生活',desc:'喂食/疫苗/驱虫计划自动提醒',color:'#34D399'},
+{id:'a20',ico:'🏋️',name:'健身计划生成',cat:'健康',desc:'按目标生成每周训练+饮食计划',color:'#10B981'},
+{id:'a21',ico:'🍽️',name:'菜单生成器',cat:'餐饮',desc:'餐厅菜单/外卖分类一键排版',color:'#F59E0B'},
+{id:'a22',ico:'📦',name:'库存预警',cat:'电商',desc:'商品库存低于安全线自动提醒',color:'#FF6B1A'},
+{id:'a23',ico:'📝',name:'会议纪要',cat:'办公',desc:'录音转文字，自动整理待办',color:'#60A5FA'},
+{id:'a24',ico:'🌐',name:'翻译助手',cat:'办公',desc:'中英日韩多语互译+润色',color:'#22D3EE'}
 ];
-const CATS=['全部','实用','接单','创作','办公'];
+const CATS=['全部','实用','接单','创作','办公','求职','财务','运营','营销','生活','健康','餐饮','电商'];
 const INS_KEY='cf_apps_installed';
 let curCat='全部',kw='';
 function getIns(){try{return JSON.parse(localStorage.getItem(INS_KEY))||[]}catch(e){return[]}}
