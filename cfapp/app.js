@@ -62,7 +62,122 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(tabbar.firstElementChild);
     // 成交滚动条（页面放 <div data-ticker></div> 即自动渲染）
     cfTicker();
+    // 全局 AI 助手悬浮球
+    cfAssistant();
 });
+
+/* ===== 全局 AI 助手（悬浮球 · 会回答 · 会引导） ===== */
+function cfAssistant(){
+    if (document.getElementById('cfAssist')) return;
+    const st = document.createElement('style'); st.textContent = `
+#cfAssist{position:fixed;right:16px;bottom:88px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#EC4899);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 8px 28px rgba(168,85,247,.5);animation:cfAssistPulse 2.6s infinite;transition:transform .15s}
+#cfAssist:active{transform:scale(.9)}
+@keyframes cfAssistPulse{0%,100%{box-shadow:0 8px 28px rgba(168,85,247,.5)}50%{box-shadow:0 8px 36px rgba(236,72,153,.65)}}
+#cfAssistPanel{position:fixed;right:12px;bottom:150px;z-index:999;width:min(320px,calc(100vw - 24px));background:linear-gradient(170deg,#1a0d2e,#140a26);border:1px solid rgba(168,85,247,.35);border-radius:20px;overflow:hidden;display:none;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+#cfAssistPanel.show{display:block;animation:cfPanelIn .25s ease}
+@keyframes cfPanelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.cfa-head{padding:14px 16px;background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.1));display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(255,255,255,.08)}
+.cfa-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#EC4899);display:flex;align-items:center;justify-content:center;font-size:13px}
+.cfa-name{font-size:13px;font-weight:900}
+.cfa-sub{font-size:9px;color:#a89ec9}
+.cfa-body{padding:12px;max-height:300px;overflow-y:auto}
+.cfa-q{font-size:10px;color:#8d82a8;padding:8px 0 4px;font-weight:700}
+.cfa-a{font-size:11px;color:#e2d9f5;line-height:1.8;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px 11px;margin-bottom:6px}
+.cfa-a b{color:#C084FC}
+.cfa-input{display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.cfa-input input{flex:1;min-height:40px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-size:15px;padding:0 12px;outline:none}
+.cfa-input input:focus{border-color:rgba(168,85,247,.6)}
+.cfa-send{min-width:52px;border:none;border-radius:12px;background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;font-weight:900;cursor:pointer;font-size:12px}`;
+    document.head.appendChild(st);
+    const fab = document.createElement('div');
+    fab.id = 'cfAssist'; fab.innerHTML = '🤖';
+    const panel = document.createElement('div');
+    panel.id = 'cfAssistPanel';
+    panel.innerHTML = `
+        <div class="cfa-head"><div class="cfa-av">CF</div><div><div class="cfa-name">CF 智能助理</div><div class="cfa-sub">问问变现 / 价格 / 定制 / 合作</div></div></div>
+        <div class="cfa-body" id="cfaBody">
+            <div class="cfa-q">你好，我是 Crazy Friday 的 AI 助理 👋</div>
+            <div class="cfa-a">想了解什么？可以直接问我：<br>· <b>卖什么</b> · <b>怎么下单</b> · <b>多少钱</b><br>· <b>能定制吗</b> · <b>怎么接单</b> · <b>合作/投资</b></div>
+        </div>
+        <div class="cfa-input"><input id="cfaInput" placeholder="输入你的问题..." enterkeyhint="send"><button class="cfa-send" onclick="cfAsk()">➤</button></div>`;
+    document.body.appendChild(fab); document.body.appendChild(panel);
+    fab.onclick = () => panel.classList.toggle('show');
+    document.getElementById('cfaInput').addEventListener('keydown', e => { if (e.key === 'Enter') cfAsk(); });
+}
+window.cfAsk = function(){
+    const q = (document.getElementById('cfaInput').value || '').trim();
+    if (!q) return;
+    const body = document.getElementById('cfaBody');
+    const askHtml = `<div class="cfa-q">你问：${q}</div>`;
+    const answer = cfAnswer(q);
+    body.innerHTML += askHtml + `<div class="cfa-a">${answer.html}</div>`;
+    document.getElementById('cfaInput').value = '';
+    body.scrollTop = body.scrollHeight;
+};
+function cfAnswer(q){
+    const s = q.toLowerCase();
+    const rules = [
+        { k:['卖','产品','有什么','做什么'], html:'我们在卖 <b>36 个行业的成品 AI 工作台</b>（¥199-1999）+ AI 工具/模板/会员订阅，还提供接单派单和定制服务。👉 <a href="store.html" style="color:#C084FC">去商店看看</a>' },
+        { k:['买','下单','怎么买','购买','付款'], html:'点商品 → 进 <b>收款中心</b> → 扫码付款 → 填回执，订单自动入库。👉 <a href="../pay.html" style="color:#C084FC">去下单</a>' },
+        { k:['价格','多少','钱','贵'], html:'工作台 <b>¥199 起</b>（健身/宠物/启蒙 ¥399 内），旗舰一人公司 ¥1999，定制 ¥999 起。👉 <a href="store.html" style="color:#C084FC">看价格</a>' },
+        { k:['定制','专属','定制同款'], html:'可以！把需求告诉我，<b>按你的行业/场景定制</b>，交付源码、改品牌即上线。👉 <a href="../landing.html" style="color:#C084FC">去定制</a>' },
+        { k:['接单','交付','干活','派单'], html:'你有交付能力（AI开发/设计/文案/视频）？<b>登记进交付网络</b>，有单派给你。👉 <a href="../partner-form.html" style="color:#C084FC">去登记</a>' },
+        { k:['合作','投资','融资','招商'], html:'我们在找 <b>技术/渠道/内容/投资</b> 合作方，欢迎聊。👉 <a href="../invest.html" style="color:#C084FC">看招商中心</a>' },
+        { k:['案例','效果','成果','靠谱'], html:'36 个行业案例，每个都有<b>客户故事+成果数据+证言</b>。👉 <a href="../demo-gallery.html" style="color:#C084FC">看案例</a>' },
+        { k:['会员','权益','pro'], html:'Pro ¥99/月、企业 ¥999/月，解锁全部工具/玩法/优先派单。👉 <a href="member.html" style="color:#C084FC">看会员</a>' },
+        { k:['联系','微信','电话','找谁'], html:'商务联系：<b>shim16506@gmail.com</b>，或从招商中心直接对接。' },
+        { k:['模板','素材','提示词'], html:'市集有提示词包/SOP/模板，数字资源<b>自动交付</b>。👉 <a href="mall.html" style="color:#C084FC">逛市集</a>' }
+    ];
+    for (const r of rules) { if (r.k.some(x => s.includes(x))) return r; }
+    return { html:'这个我还得查一下～你可以试试问我 <b>卖什么 / 怎么下单 / 多少钱 / 能定制吗</b>，或者 <a href="store.html" style="color:#C084FC">直接逛商店</a>。' };
+}
+
+/* ===== PWA 化：可安装到手机桌面（像真 APP） ===== */
+function cfPWA(){
+    // manifest（内联，免外部文件）
+    if (!document.querySelector('link[rel="manifest"]')) {
+        const manifest = {
+            name: 'Crazy Friday · 一人公司生态',
+            short_name: 'Crazy Friday',
+            description: 'AI 一人公司创业生态：工具/接单/变现/案例',
+            start_url: 'index.html',
+            display: 'standalone',
+            background_color: '#0d0420',
+            theme_color: '#0d0420',
+            icons: [{ src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#7C3AED"/><text x="50" y="62" font-size="42" font-weight="900" text-anchor="middle" fill="#fff" font-family="sans-serif">CF</text></svg>'), sizes: 'any', type: 'image/svg+xml', purpose: 'any' }]
+        };
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(manifest));
+        document.head.appendChild(link);
+    }
+    // iOS 全屏 meta
+    if (!document.querySelector('meta[name="apple-mobile-web-app-capable"]')) {
+        const m = document.createElement('meta'); m.name = 'apple-mobile-web-app-capable'; m.content = 'yes';
+        const s = document.createElement('meta'); s.name = 'apple-mobile-web-app-status-bar-style'; s.content = 'black-translucent';
+        document.head.appendChild(m); document.head.appendChild(s);
+    }
+    // 首次访问：引导添加到主屏幕（一次性）
+    try {
+        if (!localStorage.getItem('cf_pwa_tip')) {
+            localStorage.setItem('cf_pwa_tip', '1');
+            setTimeout(() => {
+                const tip = document.createElement('div');
+                tip.style.cssText = 'position:fixed;left:12px;right:12px;bottom:90px;z-index:998;background:linear-gradient(160deg,#1a0d2e,#140a26);border:1px solid rgba(168,85,247,.4);border-radius:16px;padding:13px 15px;font-size:11px;line-height:1.7;box-shadow:0 12px 40px rgba(0,0,0,.5);color:#d8d0f0';
+                tip.innerHTML = '📱 <b>想当 APP 用？</b><br>浏览器菜单 → <b>添加到主屏幕</b>，就能像 APP 一样打开。';
+                const btn = document.createElement('span');
+                btn.style.cssText = 'display:inline-block;margin-top:8px;padding:7px 16px;border-radius:14px;background:linear-gradient(135deg,#A855F7,#EC4899);color:#fff;font-weight:900;font-size:11px';
+                btn.textContent = '知道了';
+                btn.onclick = () => tip.remove();
+                tip.appendChild(document.createElement('br'));
+                tip.appendChild(btn);
+                document.body.appendChild(tip);
+                setTimeout(() => { try { tip.remove(); } catch(e){} }, 8000);
+            }, 2500);
+        }
+    } catch(e) {}
+}
+document.addEventListener('DOMContentLoaded', cfPWA);
 
 /* ===== 全局数据层 & 权限体系（自动化盈利系统 v1） ===== */
 const CF_CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
