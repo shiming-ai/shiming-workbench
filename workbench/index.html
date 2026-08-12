@@ -1147,6 +1147,16 @@ body {
 <!-- ===== 页面1: 今日 ===== -->
 <div id="page-today">
 
+    <!-- 品牌横幅（对外展示 · 打开工作台就看见） -->
+    <div style="margin:14px 18px 0;padding:16px 18px;border-radius:18px;background:linear-gradient(160deg,rgba(168,85,247,.16),rgba(236,72,153,.05));border:1px solid rgba(168,85,247,.3);display:flex;align-items:center;gap:13px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(124,58,237,.12)">
+        <img src="../cfapp/logo-avatar.svg" alt="Crazy Friday" style="width:52px;height:52px;border-radius:14px;flex-shrink:0;box-shadow:0 6px 18px rgba(168,85,247,.35)">
+        <div style="flex:1;min-width:0">
+            <div style="font-size:20px;font-weight:900;letter-spacing:-.5px;line-height:1.2;background:linear-gradient(135deg,#fff 20%,#C084FC 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Crazy Friday</div>
+            <div style="font-size:12px;font-weight:800;color:#a89ec9;margin-top:2px">疯狂星期五 · AI × CREATOR</div>
+        </div>
+        <div style="text-align:right;font-size:9.5px;color:#6d6489;line-height:1.7">一个人 + AI<br>= 一家公司</div>
+    </div>
+
     <!-- 今日聚焦 -->
     <div class="section card-featured">
         <div class="sec-header">
@@ -2643,9 +2653,16 @@ body {
 <!-- 侧边栏 -->
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.5px;line-height:1.15;background:linear-gradient(135deg,#fff 20%,#C084FC 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 24px rgba(168,85,247,.3)">Crazy Friday</div>
-        <div style="font-size:14px;font-weight:800;color:#a89ec9;margin-top:3px;letter-spacing:2px">｜ 疯狂星期五</div>
-        <div class="sidebar-sub" style="margin-top:7px;color:#6d6489">MVP验证中 · Day 5 / 300</div>
+        <!-- 品牌区（新增 · 给客户/投资人看） -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+            <img src="../cfapp/logo-avatar.svg" alt="" style="width:38px;height:38px;border-radius:11px;flex-shrink:0;box-shadow:0 4px 14px rgba(168,85,247,.4)">
+            <div>
+                <div style="font-size:17px;font-weight:900;letter-spacing:-.4px;line-height:1.2;background:linear-gradient(135deg,#fff 20%,#C084FC 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Crazy Friday</div>
+                <div style="font-size:10px;font-weight:700;color:#a89ec9;letter-spacing:1px;margin-top:2px">疯狂星期五 · AI × CREATOR</div>
+            </div>
+        </div>
+        <div class="sidebar-logo"><span>时铭</span> · AI一人公司</div>
+        <div class="sidebar-sub">MVP验证中 · Day 5 / 300</div>
     </div>
 
     <div class="sidebar-section">
