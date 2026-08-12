@@ -170,19 +170,37 @@ function renderToday(){
         </div>`).join('');
 }
 
+/* ===== 往期真实日报（可展开查看） ===== */
+const HISTORY = [
+    { date:'8月9日', money:['AI配音服务需求涨，短视频/有声书都在用，按条计费30-200元','本地餐饮店AI点餐/会员系统，一套3000-15000元'], tool:'n8n接单流水线：自动接单→通知→派单，卖自动化服务', play:'「AI代运营」玩法：帮本地商家做抖音+小红书，月费2000-8000', case:'美甲店预约工作台 ¥5,000 · 翻台率+40%' },
+    { date:'8月10日', money:['AI简历优化服务热，求职季单价50-200元','企业AI培训需求涨，一场3000-20000元'], tool:'Coze免费搭知识库Bot，给商家做智能客服', play:'「AI咨询师」：梳理一人公司变现路径，按小时收费', case:'律所案件工作台 ¥8,000 · 30+案件零遗漏' },
+    { date:'8月11日', money:['AI头像/宠物头像定制，单价30-100元，模板化量产','跨境电商AI选品工具需求涨'], tool:'OpenClaw Agent野路子：自动化运营多账号', play:'「内容工厂」：AI写→AI发→多平台矩阵', case:'自媒体创作台 ¥6,000 · 90天粉丝2万→20万' }
+];
+
 function renderHistory(){
-    // 最近7天历史（用日期偏移生成）
-    const days = [];
-    for (let i=1; i<=6; i++) {
-        const d = new Date(now.getTime() - i*86400000);
-        const ds = d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
-        days.push({ date: ds, count: 5 + (i*3)%4 });
-    }
-    document.getElementById('historyList').innerHTML = days.map(d => `
-        <div class="history-item" onclick="toast('📅 ' + '${d.date}' + '日报：商机' + ${d.count} + '条 · 工具' + ${d.count-2} + '条')">
+    const list = document.getElementById('historyList');
+    if (!list) return;
+    list.innerHTML = HISTORY.map((d, i) => `
+        <div class="history-item" onclick="showHistory(${i})">
             <div class="hi-date">📅 ${d.date}</div>
-            <div class="hi-count">${d.count}条内容 →</div>
+            <div class="hi-count">${d.money.length+2}条内容 →</div>
         </div>`).join('');
+}
+function showHistory(i){
+    const d = HISTORY[i];
+    if (!d) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'pay-overlay';
+    overlay.onclick = (e) => { if (e.target === overlay) document.body.removeChild(overlay); };
+    overlay.innerHTML = `<div class="pay-card" style="max-height:80vh;overflow-y:auto">
+        <h3>📅 AI变现日报 · ${d.date}</h3>
+        <div style="margin:8px 0">${d.money.map(m=>'<div class="news-desc" style="margin-bottom:6px">💰 '+m+'</div>').join('')}</div>
+        <div class="news-desc" style="margin-bottom:6px">🔧 ${d.tool}</div>
+        <div class="news-desc" style="margin-bottom:6px">🎮 ${d.play}</div>
+        <div class="news-desc" style="margin-bottom:10px">🎬 ${d.case}</div>
+        <button class="dl-subs-btn" style="width:100%;border:none;cursor:pointer" onclick="document.body.removeChild(this.parentElement.parentElement)">收下这期商机</button>
+    </div>`;
+    document.body.appendChild(overlay);
 }
 
 function renderSubBtn(){
