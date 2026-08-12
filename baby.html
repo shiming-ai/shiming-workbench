@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#f8f5ff">
-<meta name="description" content="宝宝成长工作台 · 记录爱，陪伴成长 · Crazy Friday AI × CREATOR 制作">
+<meta name="description" content="宝宝成长工作台 · 记录爱，陪伴成长 · AI 智能育儿平台">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="zh-CN">
-<title>宝宝成长工作台 · Crazy Friday</title>
+<title>宝宝成长工作台 · AI 智能平台</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 :root {
@@ -40,8 +40,8 @@ body {
 .menu-btn:active { transform: scale(.92); }
 .menu-btn svg { width: 18px; height: 18px; stroke: var(--text); }
 .brand { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; }
-.brand-logo { font-family: Georgia, 'Times New Roman', serif; font-size: 17px; font-weight: 900; line-height: 1.05; letter-spacing: -.5px; color: var(--text); flex-shrink: 0; }
-.brand-logo .o { color: var(--orange); font-size: 20px; vertical-align: 2px; }
+.brand-logo { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 15.5px; font-weight: 900; line-height: 1.1; letter-spacing: -.4px; color: var(--text); flex-shrink: 0; }
+.brand-logo .o { color: var(--purple); font-size: 17px; vertical-align: 2px; }
 .brand-tag { font-size: 10px; font-weight: 800; color: var(--purple); background: linear-gradient(135deg, rgba(168,85,247,.12), rgba(236,72,153,.08));
  border: 1px solid var(--border2); padding: 4px 10px; border-radius: 12px; letter-spacing: .5px; display: flex; align-items: center; gap: 4px; }
 .brand-tag .ai { background: linear-gradient(135deg, var(--purple), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
@@ -252,8 +252,8 @@ body {
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </div>
     <div class="brand">
-        <div class="brand-logo">Crazy<span class="o">.</span>Friday</div>
-        <span class="brand-tag">AI <span class="ai">×</span> CREATOR</span>
+        <div class="brand-logo">宝宝成长<span class="o">.</span>工作台</div>
+        <span class="brand-tag">AI 智能平台</span>
     </div>
     <div class="top-day"><b id="topDays">Day 1</b><span>已用 1 天</span></div>
     <div class="top-av" onclick="goPage('me')" id="topAv">👶</div>
@@ -261,8 +261,6 @@ body {
 
 <div class="drawer-mask" id="drawerMask" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
-    <div class="drawer-logo">Crazy<span class="o">.</span>Friday</div>
-    <div class="drawer-sub">AI × CREATOR · 宝宝成长工作台</div>
     <div class="drawer-profile">
         <div class="av" id="drwAv">👶</div>
         <div class="info">
@@ -270,19 +268,20 @@ body {
             <div class="ag" id="drwAge">--</div>
         </div>
     </div>
-    <div class="drawer-sec">主要功能</div>
-    <div class="drawer-item" onclick="goPage('home');closeDrawer()"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span><span class="nm">首页</span></div>
+    <div class="drawer-sec">工作台</div>
+    <div class="drawer-item" onclick="goPage('home');closeDrawer()"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span><span class="nm">首页驾驶舱</span></div>
     <div class="drawer-item" onclick="goPage('record');closeDrawer()"><span class="ico pink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></span><span class="nm">成长记录</span><span class="cnt" id="drwCntMoments">0</span></div>
     <div class="drawer-item" onclick="goPage('feed');closeDrawer()"><span class="ico orange"><svg viewBox="0 0 24 24"><path d="M12 2v20M5 9l7-7 7 7"/></svg></span><span class="nm">今日喂养</span><span class="cnt" id="drwCntFeeds">0</span></div>
-    <div class="drawer-item" onclick="goPage('ai');closeDrawer()"><span class="ico green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5M9 9h.01M15 9h.01"/></svg></span><span class="nm">AI 小结</span></div>
-    <div class="drawer-item" onclick="goPage('me');closeDrawer()"><span class="ico cyan"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="nm">我的</span></div>
+    <div class="drawer-item" onclick="goPage('me');closeDrawer()"><span class="ico cyan"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v6c0 5-3.5 8.5-9 9-5.5-.5-9-4-9-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="nm">疫苗与健康</span><span class="cnt" id="drwCntVaccines">0</span></div>
+    <div class="drawer-sec">AI 工具</div>
+    <div class="drawer-item" onclick="goPage('ai');closeDrawer()"><span class="ico green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5M9 9h.01M15 9h.01"/></svg></span><span class="nm">AI 成长小结</span></div>
+    <div class="drawer-item" onclick="openAskAI();closeDrawer()"><span class="ico gold"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><span class="nm">问 AI 育儿助手</span></div>
     <div class="drawer-sec">快捷操作</div>
     <div class="drawer-item" onclick="openAddMoment();closeDrawer()"><span class="ico"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span class="nm">添加成长记录</span></div>
     <div class="drawer-item" onclick="openHealth('height');closeDrawer()"><span class="ico pink"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg></span><span class="nm">记录健康数据</span></div>
     <div class="drawer-item" onclick="openAddVaccine();closeDrawer()"><span class="ico gold"><svg viewBox="0 0 24 24"><path d="M12 2v6M9 5l3-3 3 3M5 22h14M7 22V11h10v11"/></svg></span><span class="nm">添加疫苗提醒</span></div>
     <div class="drawer-foot">
-        <div class="b">Crazy<span class="o">.</span>Friday</div>
-        <div class="d">宝宝成长工作台 v2.0<br>由 Crazy Friday 制作 · 永久使用版</div>
+        <div class="d">宝宝成长工作台 v2.0 · 授权使用版<br>数据存你手机本地，永远是你的<br><span style="opacity:.5">技术支持 · Crazy Friday</span></div>
     </div>
 </div>
 
@@ -395,9 +394,9 @@ body {
             </div>
         </div>
         <div class="sec" style="text-align:center; padding: 18px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 20px;">
-            <div style="font-family:Georgia,serif; font-size: 16px; font-weight: 900; color: var(--text); letter-spacing: -.5px; margin-bottom: 4px;">Crazy<span style="color:var(--orange);font-size:18px;vertical-align:2px">.</span>Friday</div>
-            <div style="font-size:10px; font-weight: 800; color: var(--purple); letter-spacing: .5px; margin-bottom: 10px;">AI × CREATOR</div>
-            <div style="font-size: 11px; color: var(--mute); line-height: 1.7;">宝宝成长工作台 v2.0<br>由 <span style="color:var(--purple); font-weight: 800;">Crazy Friday</span> 制作 · 永久使用版<br>数据存你手机本地，永远是你的</div>
+            <div style="font-size: 13px; font-weight: 900; color: var(--text); letter-spacing: -.3px; margin-bottom: 4px;">宝宝成长工作台</div>
+            <div style="font-size: 10px; color: var(--purple); font-weight: 800; letter-spacing: .5px; margin-bottom: 10px;">AI 智能平台 · 永久使用版</div>
+            <div style="font-size: 11px; color: var(--mute); line-height: 1.7;">v2.0 · 数据存你手机本地，永远是你的<br><span style="opacity:.6">技术支持 · Crazy Friday</span></div>
         </div>
     </div>
 </div>
@@ -564,6 +563,9 @@ function feedTap(key){
 function defsN(k){ return {feed:'喂奶',meal:'辅食',sleep:'睡眠',poop:'便便'}[k]; }
 function renderVaccines(){
     const v=load(K.vaccines,[]);
+    const undone=v.filter(x=>!x.done).length;
+    const drwCnt=document.getElementById('drwCntVaccines');
+    if(drwCnt) drwCnt.textContent=undone;
     const el=document.getElementById('vacList');
     if(!v.length){ el.innerHTML='<div class="empty"><div class="e-ico">💉</div>还没有疫苗提醒<br>点「＋ 添加」设置接种计划</div>'; return; }
     el.innerHTML=v.sort((a,b)=>(a.done?1:0)-(b.done?1:0)).map(x=>{
