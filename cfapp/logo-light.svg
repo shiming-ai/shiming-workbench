@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="bg" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f1f5f9"/></linearGradient>
+    <linearGradient id="textG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7C3AED"/><stop offset="50%" stop-color="#A855F7"/><stop offset="100%" stop-color="#EC4899"/></linearGradient>
+    <linearGradient id="cn" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C084FC"/><stop offset="100%" stop-color="#A855F7"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%"><stop offset="0%" stop-color="#C084FC" stop-opacity=".35"/><stop offset="100%" stop-color="#A855F7" stop-opacity="0"/></radialGradient>
+  </defs>
+
+  <!-- 外层柔光晕 -->
+  <rect width="240" height="240" rx="40" fill="url(#glow)" transform="scale(1.1)" transform-origin="center"/>
+
+  <!-- 卡片本体（白底 + 圆角 + 阴影） -->
+  <rect x="14" y="14" width="212" height="212" rx="32" fill="url(#bg)"/>
+  <!-- 顶部光带 -->
+  <rect x="14" y="14" width="212" height="40" rx="32" fill="#ffffff" opacity=".7"/>
+  <ellipse cx="120" cy="20" rx="80" ry="10" fill="#ffffff" opacity=".9"/>
+  <!-- 边缘细金属线（双层：外圈深/内圈白高光） -->
+  <rect x="14" y="14" width="212" height="212" rx="32" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+  <rect x="16" y="16" width="208" height="208" rx="30" fill="none" stroke="#ffffff" stroke-width="1"/>
+
+  <!-- 右上小橙点 -->
+  <circle cx="200" cy="40" r="6" fill="#FF6B1A"/>
+  <circle cx="199" cy="38" r="2" fill="#FFD700" opacity=".9"/>
+
+  <!-- 主字 Crazy Friday（大字 · 紫粉渐变） -->
+  <text x="120" y="86" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="900" text-anchor="middle" fill="url(#textG)" letter-spacing="-1">Crazy</text>
+  <text x="120" y="124" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="900" text-anchor="middle" fill="url(#textG)" letter-spacing="-1">Friday</text>
+
+  <!-- 文字辉光 -->
+  <text x="120" y="86" font-family="Georgia, serif" font-size="38" font-weight="900" text-anchor="middle" fill="url(#textG)" opacity=".18" letter-spacing="-1" filter="url(#blur1)">Crazy</text>
+
+  <!-- 分隔线 -->
+  <line x1="44" y1="142" x2="196" y2="142" stroke="#FF6B1A" stroke-width="2"/>
+  <line x1="44" y1="146" x2="196" y2="146" stroke="#FFD700" stroke-width=".5" opacity=".5"/>
+
+  <!-- 副字 疯狂星期五 -->
+  <text x="120" y="170" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="url(#cn)" letter-spacing="8">疯 狂 星 期 五</text>
+
+  <!-- 底部标签 AI × CREATOR -->
+  <rect x="78" y="188" width="84" height="20" rx="10" fill="#FFFBEB"/>
+  <rect x="78" y="188" width="84" height="20" rx="10" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+  <text x="120" y="202" font-family="-apple-system, sans-serif" font-size="10" font-weight="900" text-anchor="middle" fill="#B45309" letter-spacing="3">AI × CREATOR</text>
+</svg>
