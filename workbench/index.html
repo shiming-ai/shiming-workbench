@@ -2630,15 +2630,6 @@ body {
     </div>
 </div>
 
-<!-- ===== 页面: Crazy Friday App（内嵌） ===== -->
-<div id="page-cfapp" class="hidden">
-    <div style="position:sticky;top:50px;z-index:80;background:var(--card);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:8px">
-        <button onclick="switchPage('today', document.querySelectorAll('.sidebar-item')[0])" style="background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:16px;padding:5px 12px;font-size:11px;cursor:pointer">← 返回工作台</button>
-        <span style="font-size:12px;color:var(--purple);font-weight:700">🌐 Crazy Friday App</span>
-    </div>
-    <iframe src="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html" style="width:100%;height:calc(100vh - 100px);border:none;display:block;background:var(--bg)"></iframe>
-</div>
-
 <!-- 顶部导航栏 -->
 <div class="top-nav">
     <div class="menu-btn" onclick="toggleSidebar()">≡</div>
@@ -2728,26 +2719,6 @@ body {
         </div>
         <div class="sidebar-item" onclick="switchPage('share', this)">
             <span class="sidebar-item-icon">🔗</span> 授权给别人
-        </div>
-    </div>
-
-    <div class="sidebar-section">
-        <div class="sidebar-section-title">📦 接单工坊</div>
-        <div class="sidebar-item" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/order-workbench.html#orders'">
-            <span class="sidebar-item-icon">📋</span> 订单池
-        </div>
-        <div class="sidebar-item" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/order-workbench.html#partners'">
-            <span class="sidebar-item-icon">🤝</span> 合作商
-        </div>
-        <div class="sidebar-item" onclick="location.href='https://shiming-ai.github.io/shiming-workbench/order-workbench.html#market'">
-            <span class="sidebar-item-icon">🛒</span> 商品市集
-        </div>
-        <div class="sidebar-item" onclick="window.open('https://shiming-ai.github.io/shiming-workbench/partner-form.html','_blank')">
-            <span class="sidebar-item-icon">📨</span> 发给接单人
-        </div>
-        <div class="sidebar-item" onclick="switchPage('cfapp', this)" style="border-left:2px solid var(--purple)">
-            <span class="sidebar-item-icon">🌐</span> Crazy Friday App
-            <span style="font-size:8px;padding:1px 5px;background:var(--purple);color:#fff;border-radius:4px;margin-left:auto">新</span>
         </div>
     </div>
 
@@ -5153,7 +5124,7 @@ function renderDeliveryTracking() {
                 <div style="height:100%;width:${pct}%;background:${stage.color};border-radius:3px;transition:width 0.4s"></div>
             </div>
             <div style="display:flex;gap:4px">
-                ${stageIdx < DELIVERY_STAGES.length - 1 ? `<button onclick="advanceDeliveryItem(${i})" style="flex:1;font-size:10px;padding:5px;border:1px solid ${stage.color};color:${stage.color};border-radius:6px;background:transparent;cursor:pointer">→ ${DELIVERY_STAGES[stageIdx+1].label}</button>` : ''}
+                ${stageIdx < DELIVERY_STAGES.length - 1 ? `<button onclick="advanceDelivery(${i})" style="flex:1;font-size:10px;padding:5px;border:1px solid ${stage.color};color:${stage.color};border-radius:6px;background:transparent;cursor:pointer">→ ${DELIVERY_STAGES[stageIdx+1].label}</button>` : ''}
                 <button onclick="copyDeliveryInfo(${i})" style="font-size:10px;padding:5px 8px;border:1px solid var(--border);color:var(--text-dim);border-radius:6px;background:transparent;cursor:pointer">📋</button>
                 <button onclick="delDelivery(${i})" style="font-size:10px;padding:5px 8px;border:1px solid var(--border);color:var(--text-mute);border-radius:6px;background:transparent;cursor:pointer">×</button>
             </div>
@@ -5177,18 +5148,13 @@ function addDelivery() {
     toast('交付项目已添加');
 }
 
-function advanceDeliveryItem(i) {
+function advanceDelivery(i) {
     const items = load('deliveries', []);
     const idx = DELIVERY_STAGES.findIndex(s => s.key === items[i].stage);
     if (idx < DELIVERY_STAGES.length - 1) {
-        const nextStage = DELIVERY_STAGES[idx + 1].key;
-        items[i].stage = nextStage;
+        items[i].stage = DELIVERY_STAGES[idx + 1].key;
         save('deliveries', items);
         renderDeliveryTracking();
-        // 到"已交付"时，弹窗生成对外案例（沉淀到案例广场）
-        if (nextStage === 'done') {
-            setTimeout(() => promptGenerateCase(items[i]), 400);
-        }
         // 如果到已回款，自动记一笔收入
         if (items[i].stage === 'paid') {
             const incomes = load('incomes', []);
@@ -5207,60 +5173,6 @@ function delDelivery(i) {
     items.splice(i, 1);
     save('deliveries', items);
     renderDeliveryTracking();
-}
-
-// ========== 案例自动沉淀（接单交付 → 公开案例广场） ==========
-const DEMO_CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
-function promptGenerateCase(d) {
-    const name = d.name || d.client || '未命名项目';
-    if (!confirm('🎬 项目"' + name + '" 已交付！\n\n是否生成对外案例（公开案例广场可展示）？')) return;
-    const title = prompt('案例标题（客户看到的）：', d.name || 'AI工作台定制');
-    if (!title) return;
-    const industry = prompt('行业分类：', d.industry || 'AI工作台') || 'AI工作台';
-    const highlight = prompt('亮点/解决什么问题（一句话）：', d.highlight || '为客户定制了完整的AI管理系统') || '';
-    const revenue = parseInt(prompt('收益金额（元）：', String(d.amount || 3000))) || 0;
-    const caseItem = {
-        _id: Date.now(),
-        type: 'case',
-        title, industry, highlight, revenue,
-        client: d.client || '',
-        status: '已交付',
-        time: new Date().toISOString().slice(0,10)
-    };
-    // 存本地
-    const cases = JSON.parse(localStorage.getItem('cf_demo_cases') || '[]');
-    cases.unshift(caseItem);
-    localStorage.setItem('cf_demo_cases', JSON.stringify(cases));
-    // 同步到云端（jsonblob），公开案例广场可拉取
-    syncCaseToCloud(caseItem);
-    toast('✅ 案例已生成 → 公开案例广场已同步');
-}
-function syncCaseToCloud(caseItem) {
-    fetch(DEMO_CLOUD_URL).then(r=>r.json()).then(cloud=>{
-        if (!cloud.demo_cases) cloud.demo_cases = [];
-        // 去重：同title+time不重复
-        const exists = cloud.demo_cases.some(x => x.title===caseItem.title && x.time===caseItem.time);
-        if (exists) { toast('☁️ 案例已存在云端，无需重复同步'); return Promise.resolve(); }
-        cloud.demo_cases.unshift(caseItem);
-        return fetch(DEMO_CLOUD_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud)});
-    }).then(r=>{
-        if (r && r.ok) toast('☁️ 案例已同步到云端 → 客户可看');
-    }).catch(()=>toast('⚠️ 云端同步失败，本地已保存'));
-}
-// 手动同步所有本地案例到云端
-function syncAllLocalCasesToCloud() {
-    const cases = JSON.parse(localStorage.getItem('cf_demo_cases') || '[]');
-    if (!cases.length) return toast('本地暂无案例');
-    if (!confirm('将 ' + cases.length + ' 条本地案例同步到云端？')) return;
-    fetch(DEMO_CLOUD_URL).then(r=>r.json()).then(cloud=>{
-        if (!cloud.demo_cases) cloud.demo_cases = [];
-        cases.forEach(c => {
-            if (!cloud.demo_cases.some(x => x.title===c.title && x.time===c.time)) {
-                cloud.demo_cases.unshift(c);
-            }
-        });
-        return fetch(DEMO_CLOUD_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud)});
-    }).then(r=>{ if (r && r.ok) toast('☁️ 已批量同步'); }).catch(()=>toast('同步失败'));
 }
 
 function copyDeliveryInfo(i) {
@@ -5521,7 +5433,7 @@ function renderDeliveryBoard() {
             </div>
             <div style="display:flex;gap:6px">
                 ${stage < deliveryStages.length - 1 ?
-                    `<button onclick="advanceCrmDelivery(${crmList.indexOf(d)})" style="flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">→ 进入「${deliveryStages[stage+1]}」</button>` :
+                    `<button onclick="advanceDelivery(${crmList.indexOf(d)})" style="flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer">→ 进入「${deliveryStages[stage+1]}」</button>` :
                     '<div style="flex:1;text-align:center;padding:8px;color:var(--green);font-size:12px">✅ 已完成</div>'
                 }
                 <button onclick="switchPage('crm', document.querySelectorAll('.sidebar-item')[2])" style="padding:8px 12px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;cursor:pointer">详情</button>
@@ -5530,7 +5442,7 @@ function renderDeliveryBoard() {
     }).join('');
 }
 
-function advanceCrmDelivery(crmIdx) {
+function advanceDelivery(crmIdx) {
     const crmList = load('crmList', []);
     if (!crmList[crmIdx]) return;
     crmList[crmIdx].deliveryStage = (crmList[crmIdx].deliveryStage || 0) + 1;
