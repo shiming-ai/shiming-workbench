@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0420">
+<meta name="description" content="Crazy Friday 疯狂星期五 · AI × CREATOR · 一个人+AI就是一家公司">
+<title>Crazy Friday · 疯狂星期五</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { min-height:100vh; background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; display:flex; align-items:center; justify-content:center; padding:24px; overflow-x:hidden; background-image:radial-gradient(ellipse 700px 450px at 50% -5%, rgba(168,85,247,.28), transparent 60%), radial-gradient(ellipse 500px 350px at 100% 80%, rgba(236,72,153,.12), transparent 60%); background-attachment:fixed; }
+.card { width:100%; max-width:430px; text-align:center; padding:36px 24px 28px; background:rgba(255,255,255,.04); border:1px solid rgba(168,85,247,.25); border-radius:28px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 70px rgba(0,0,0,.5); position:relative; overflow:hidden; }
+.card::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:260px; height:260px; border-radius:50%; background:radial-gradient(ellipse, rgba(168,85,247,.3), transparent 70%); pointer-events:none; filter:blur(20px); }
+.logo { width:104px; height:104px; border-radius:26px; margin:0 auto 18px; box-shadow:0 12px 40px rgba(168,85,247,.5); }
+.brand { font-family:Georgia,'Times New Roman',serif; font-size:38px; font-weight:900; letter-spacing:-1px; line-height:1.1; background:linear-gradient(135deg,#fff 20%,#C084FC 80%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.cn { font-size:19px; font-weight:900; letter-spacing:6px; margin-top:8px; color:#d8d0f0; }
+.tag { display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-size:11px; font-weight:800; color:#FFD700; background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); padding:6px 16px; border-radius:20px; letter-spacing:2px; }
+.slogan { margin-top:22px; font-size:15px; font-weight:800; line-height:1.8; color:#fff; }
+.slogan .grad { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.desc { margin-top:10px; font-size:12px; color:#a89ec9; line-height:1.9; }
+.line { width:70px; height:2px; margin:22px auto; background:linear-gradient(90deg,transparent,#FF6B1A,transparent); }
+.ctas { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+.btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:22px; font-size:14px; font-weight:900; text-decoration:none; cursor:pointer; border:none; }
+.btn-main { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; box-shadow:0 10px 30px rgba(168,85,247,.4); }
+.btn-ghost { background:rgba(255,255,255,.06); color:#d8d0f0; border:1px solid rgba(255,255,255,.12); }
+.foot { margin-top:20px; font-size:10px; color:#6d6489; line-height:1.7; }
+@media (max-width:360px){ .brand{font-size:32px} .cn{letter-spacing:4px;font-size:17px} }
+</style>
+</head>
+<body>
+<div class="card">
+    <img class="logo" src="cfapp/logo-avatar.svg" alt="Crazy Friday">
+    <div class="brand">Crazy Friday</div>
+    <div class="cn">疯狂星期五</div>
+    <div class="tag">AI × CREATOR</div>
+    <div class="slogan">一个人 <span class="grad">+ AI</span>，就是一家公司</div>
+    <div class="desc">AI 时代的一人公司创业生态<br>工具 · 玩法 · 接单 · 变现 · 案例，一套闭环</div>
+    <div class="line"></div>
+    <div class="ctas">
+        <a class="btn btn-main" href="cfapp/index.html">🚀 进入 Crazy Friday 生态</a>
+        <a class="btn btn-ghost" href="demo-gallery.html">🎬 看 36 个行业案例</a>
+        <a class="btn btn-ghost" href="cfapp/store.html">🛒 逛成品工作台商店</a>
+    </div>
+    <div class="foot">Crazy Friday · 疯狂星期五 · © 2026</div>
+</div>
+</body>
+</html>
