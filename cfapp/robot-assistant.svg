@@ -1,0 +1,111 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="48%" r="62%"><stop offset="0%" stop-color="#f0fdfa"/><stop offset="60%" stop-color="#e0f2fe"/><stop offset="100%" stop-color="#cffafe" stop-opacity=".3"/></radialGradient>
+    <linearGradient id="bodyG" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#cbd5e1"/></linearGradient>
+    <linearGradient id="headG" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e2e8f0"/></linearGradient>
+    <linearGradient id="screenG" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#ecfeff"/><stop offset="100%" stop-color="#a7f3d0"/></linearGradient>
+    <radialGradient id="eyeG" cx="50%" cy="40%"><stop offset="0%" stop-color="#5eead4"/><stop offset="60%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#0f766e"/></radialGradient>
+    <radialGradient id="cheek" cx="50%" cy="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity=".45"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+    <linearGradient id="tabletG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ccfbf1" stop-opacity=".92"/><stop offset="100%" stop-color="#67e8f9" stop-opacity=".85"/></linearGradient>
+    <linearGradient id="chipG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#0d9488"/></linearGradient>
+    <radialGradient id="bodyShadow" cx="50%" cy="50%"><stop offset="0%" stop-color="#0f172a" stop-opacity=".25"/><stop offset="100%" stop-color="#0f172a" stop-opacity="0"/></radialGradient>
+  </defs>
+
+  <!-- 背景圆 -->
+  <circle cx="100" cy="100" r="98" fill="url(#bg)"/>
+
+  <!-- 地面阴影 -->
+  <ellipse cx="100" cy="184" rx="58" ry="6" fill="url(#bodyShadow)"/>
+
+  <!-- 身体（圆润椭圆 + 阴影） -->
+  <ellipse cx="100" cy="138" rx="46" ry="42" fill="url(#bodyShadow)" opacity=".4"/>
+  <ellipse cx="100" cy="136" rx="44" ry="40" fill="url(#bodyG)"/>
+  <!-- 身体高光 -->
+  <ellipse cx="82" cy="114" rx="20" ry="12" fill="#ffffff" opacity=".7"/>
+  <ellipse cx="76" cy="108" rx="8" ry="5" fill="#ffffff" opacity=".9"/>
+  <!-- 身体底部阴影 -->
+  <ellipse cx="100" cy="168" rx="34" ry="5" fill="#94a3b8" opacity=".25"/>
+
+  <!-- 胸前芯片 -->
+  <rect x="86" y="124" width="28" height="26" rx="7" fill="url(#chipG)"/>
+  <rect x="88" y="126" width="24" height="22" rx="5" fill="#0d9488"/>
+  <!-- 芯片闪电符号（白色） -->
+  <path d="M 102 130 L 95 140 L 100 140 L 96 148" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 芯片周边发光圈 -->
+  <circle cx="100" cy="137" r="20" fill="none" stroke="#5eead4" stroke-width=".5" opacity=".4"/>
+
+  <!-- 头部阴影投射 -->
+  <ellipse cx="100" cy="106" rx="42" ry="5" fill="#0f172a" opacity=".12"/>
+
+  <!-- 头部外框（圆角方形） -->
+  <rect x="44" y="46" width="112" height="72" rx="28" fill="url(#headG)"/>
+  <!-- 头部顶部高光 -->
+  <rect x="48" y="50" width="104" height="24" rx="18" fill="#ffffff" opacity=".55"/>
+  <ellipse cx="100" cy="52" rx="38" ry="8" fill="#ffffff" opacity=".8"/>
+  <!-- 头部边缘金属线 -->
+  <rect x="44" y="46" width="112" height="72" rx="28" fill="none" stroke="#94a3b8" stroke-width="1.2" opacity=".55"/>
+  <rect x="46" y="48" width="108" height="68" rx="26" fill="none" stroke="#ffffff" stroke-width=".8" opacity=".6"/>
+
+  <!-- 屏幕内区域（浅蓝绿渐变） -->
+  <rect x="54" y="56" width="92" height="54" rx="18" fill="url(#screenG)"/>
+  <rect x="54" y="56" width="92" height="20" rx="14" fill="#ffffff" opacity=".4"/>
+
+  <!-- 弧形眉毛（友好微笑上扬） -->
+  <path d="M 66 68 Q 76 60 86 67" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M 114 67 Q 124 60 134 68" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- 眼睛（圆角矩形 + 蓝绿发光渐变） -->
+  <rect x="68" y="74" width="15" height="22" rx="7.5" fill="url(#eyeG)"/>
+  <rect x="117" y="74" width="15" height="22" rx="7.5" fill="url(#eyeG)"/>
+  <!-- 眼睛高光 -->
+  <ellipse cx="72" cy="79" rx="3.5" ry="2.8" fill="#ffffff" opacity=".95"/>
+  <ellipse cx="121" cy="79" rx="3.5" ry="2.8" fill="#ffffff" opacity=".95"/>
+  <circle cx="76" cy="86" r="1.2" fill="#ffffff" opacity=".7"/>
+  <circle cx="125" cy="86" r="1.2" fill="#ffffff" opacity=".7"/>
+
+  <!-- 嘴巴（友好微笑小弧） -->
+  <path d="M 90 100 Q 100 108 110 100" stroke="#475569" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+
+  <!-- 腮红（淡蓝绿光晕） -->
+  <circle cx="62" cy="92" r="6" fill="url(#cheek)"/>
+  <circle cx="138" cy="92" r="6" fill="url(#cheek)"/>
+
+  <!-- 头顶天线（两根 + 蓝绿小球） -->
+  <line x1="82" y1="48" x2="80" y2="34" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="118" y1="48" x2="120" y2="34" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- 左天线小球 -->
+  <circle cx="80" cy="32" r="5" fill="#14b8a6"/>
+  <circle cx="80" cy="32" r="3" fill="#5eead4"/>
+  <circle cx="79" cy="30" r="1.5" fill="#ffffff"/>
+  <!-- 右天线小球 -->
+  <circle cx="120" cy="32" r="5" fill="#14b8a6"/>
+  <circle cx="120" cy="32" r="3" fill="#5eead4"/>
+  <circle cx="119" cy="30" r="1.5" fill="#ffffff"/>
+  <!-- 天线小球底部连接环 -->
+  <circle cx="80" cy="32" r="6.5" fill="none" stroke="#5eead4" stroke-width=".8" opacity=".35"/>
+  <circle cx="120" cy="32" r="6.5" fill="none" stroke="#5eead4" stroke-width=".8" opacity=".35"/>
+
+  <!-- 手臂（抱平板） -->
+  <!-- 左臂 -->
+  <ellipse cx="64" cy="142" rx="9" ry="11" fill="url(#bodyG)" transform="rotate(-18 64 142)"/>
+  <ellipse cx="62" cy="138" rx="4" ry="5" fill="#ffffff" opacity=".5" transform="rotate(-18 62 138)"/>
+  <!-- 右臂 -->
+  <ellipse cx="136" cy="142" rx="9" ry="11" fill="url(#bodyG)" transform="rotate(18 136 142)"/>
+  <ellipse cx="138" cy="138" rx="4" ry="5" fill="#ffffff" opacity=".5" transform="rotate(18 138 138)"/>
+
+  <!-- 透明平板（订单/工具面板） -->
+  <g>
+    <rect x="58" y="122" width="84" height="52" rx="7" fill="url(#tabletG)"/>
+    <rect x="58" y="122" width="84" height="52" rx="7" fill="none" stroke="#5eead4" stroke-width="1.6" opacity=".85"/>
+    <!-- 平板顶部反光 -->
+    <rect x="58" y="122" width="84" height="14" rx="7" fill="#ffffff" opacity=".4"/>
+    <!-- 平板内容：订单卡片 -->
+    <rect x="64" y="130" width="56" height="5" rx="2" fill="#0d9488"/>
+    <rect x="64" y="140" width="42" height="3" rx="1.5" fill="#5eead4" opacity=".85"/>
+    <rect x="64" y="146" width="50" height="3" rx="1.5" fill="#5eead4" opacity=".85"/>
+    <rect x="64" y="152" width="36" height="3" rx="1.5" fill="#5eead4" opacity=".85"/>
+    <!-- 平板右下：绿色 ✓ 圈 -->
+    <circle cx="128" cy="163" r="7" fill="#14b8a6"/>
+    <path d="M 124 163 L 127 166 L 132 160" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
