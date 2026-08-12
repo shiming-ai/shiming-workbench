@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="40%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#g)"/>
+  <circle cx="155" cy="40" r="6" fill="#FF6B1A"/>
+  <text x="100" y="78" font-family="Georgia, serif" font-size="32" font-weight="900" text-anchor="middle" fill="#fff" letter-spacing="-1">Crazy</text>
+  <text x="100" y="112" font-family="Georgia, serif" font-size="32" font-weight="900" text-anchor="middle" fill="#fff" letter-spacing="-1">Friday</text>
+  <line x1="35" y1="130" x2="165" y2="130" stroke="#FF6B1A" stroke-width="1.5"/>
+  <text x="100" y="152" font-family="-apple-system,'PingFang SC',sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#b8aed1" letter-spacing="6">疯 狂 星 期 五</text>
+  <text x="100" y="178" font-family="-apple-system,sans-serif" font-size="9" font-weight="800" text-anchor="middle" fill="#FFD700" letter-spacing="2">AI × CREATOR</text>
+</svg>
