@@ -50,9 +50,19 @@ const VENDORS=[
 {id:'v3',ico:'✍️',name:'阿明文案铺',cat:'文案',rating:4.7,desc:'小红书/公众号/抖音脚本代写，爆款逻辑',tags:['小红书','文案','脚本'],color:'#34D399'},
 {id:'v4',ico:'🎬',name:'AI视频工坊',cat:'视频',rating:4.8,desc:'数字人视频/AI短视频/广告片，多平台',tags:['数字人','短视频','广告'],color:'#22D3EE'},
 {id:'v5',ico:'🤖',name:'智能体专家团',cat:'Agent',rating:4.9,desc:'Coze/Dify/OpenClaw智能体搭建，企业级',tags:['Agent','客服','自动化'],color:'#F59E0B'},
-{id:'v6',ico:'📊',name:'数据洞察',cat:'数据',rating:4.6,desc:'数据分析/报表/复盘，电商运营向',tags:['数据','报表','复盘'],color:'#60A5FA'}
+{id:'v6',ico:'📊',name:'数据洞察',cat:'数据',rating:4.6,desc:'数据分析/报表/复盘，电商运营向',tags:['数据','报表','复盘'],color:'#60A5FA'},
+{id:'v7',ico:'🌐',name:'双语翻译社',cat:'翻译',rating:4.8,desc:'中英日韩翻译+本地化润色，专业审校',tags:['翻译','润色','本地化'],color:'#22D3EE'},
+{id:'v8',ico:'💼',name:'商业咨询',cat:'咨询',rating:4.9,desc:'一人公司/副业咨询，帮你梳理变现路径',tags:['商业模式','变现','定位'],color:'#A855F7'},
+{id:'v9',ico:'📈',name:'电商代运营',cat:'运营',rating:4.7,desc:'店铺诊断/优化/活动策划，多平台',tags:['电商','店铺','活动'],color:'#FF6B1A'},
+{id:'v10',ico:'📸',name:'产品摄影',cat:'摄影',rating:4.8,desc:'电商产品图/白底图/场景图拍摄',tags:['产品图','白底','场景'],color:'#F472B6'},
+{id:'v11',ico:'🎞️',name:'短视频代剪',cat:'视频',rating:4.6,desc:'口播/带货/剧情视频剪辑，日更3条',tags:['剪辑','口播','带货'],color:'#EC4899'},
+{id:'v12',ico:'📑',name:'PPT美化',cat:'办公',rating:4.8,desc:'路演/汇报/招商PPT，一键美化排版',tags:['PPT','路演','汇报'],color:'#F59E0B'},
+{id:'v13',ico:'📊',name:'Excel自动化',cat:'办公',rating:4.7,desc:'数据表自动化/公式/模板，告别手工',tags:['Excel','公式','模板'],color:'#34D399'},
+{id:'v14',ico:'🎙️',name:'AI语音客服',cat:'Agent',rating:4.9,desc:'智能语音接待/外呼，7×24在线',tags:['语音','客服','外呼'],color:'#22D3EE'},
+{id:'v15',ico:'🛒',name:'店铺装修设计',cat:'设计',rating:4.7,desc:'淘宝/拼多多/抖音店铺首页装修',tags:['店铺','装修','首页'],color:'#EC4899'},
+{id:'v16',ico:'🧠',name:'AI培训内训',cat:'咨询',rating:4.8,desc:'企业/团队AI提效培训，实操为主',tags:['培训','内训','AI提效'],color:'#A855F7'}
 ];
-const CATS=['全部','AI开发','设计','文案','视频','Agent','数据'];
+const CATS=['全部','AI开发','设计','文案','视频','Agent','数据','翻译','咨询','运营','摄影','办公'];
 const FAV_KEY='cf_svc_favs';
 let curCat='全部',kw='';
 function getFavs(){try{return JSON.parse(localStorage.getItem(FAV_KEY))||[]}catch(e){return[]}}
