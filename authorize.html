@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#7C3AED">
-<meta name="description" content="Crazy Friday 授权管理中心 · 名额管理 · 客户专属链接与二维码">
-<title>Crazy Friday · 授权管理中心</title>
+<meta name="description" content="Crazy Friday 授权管理中心 · 多产品工作台统一管理 · 名额管理 · 客户专属链接与邀请卡">
+<title>Crazy Friday · 授权总台</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
@@ -15,7 +15,7 @@
   --safe-b:env(safe-area-inset-bottom);--safe-t:env(safe-area-inset-top);
 }
 body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh}
-.wrap{max-width:760px;margin:0 auto;padding:20px 16px calc(40px + var(--safe-b))}
+.wrap{max-width:820px;margin:0 auto;padding:20px 16px calc(40px + var(--safe-b))}
 /* 顶栏 */
 .top{display:flex;align-items:center;gap:12px;padding:14px 4px 18px}
 .top .logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:15px;box-shadow:0 8px 24px rgba(124,58,237,.35);flex-shrink:0}
@@ -27,30 +27,65 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .sec-hd h2{font-size:15px;font-weight:800}
 .sec-hd .sub{font-size:10.5px;color:var(--ink3);margin-left:auto}
-/* 产品卡 */
-.prod{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:linear-gradient(135deg,#F1EDFC,#FDF0F7);border:1px solid rgba(124,58,237,.15)}
-.prod .pi{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#EC4899,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 6px 16px rgba(236,72,153,.3)}
-.prod .pn{font-size:14.5px;font-weight:900}
-.prod .pd{font-size:10.5px;color:var(--ink2);margin-top:2px}
-.prod .pp{margin-left:auto;text-align:right}
-.prod .pp .v{font-size:16px;font-weight:900;color:var(--primary)}
-.prod .pp .u{font-size:9px;color:var(--ink3)}
-/* 名额 */
-.quota{display:flex;gap:10px;margin-top:12px}
+/* 总览 */
+.quota{display:flex;gap:10px}
 .q-card{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
 .q-card .n{font-size:20px;font-weight:900;color:var(--primary)}
 .q-card .n.g{color:var(--green)}
 .q-card .n.r{color:var(--red)}
 .q-card .l{font-size:9.5px;color:var(--ink3);margin-top:2px}
+/* 产品网格 */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prod-card{position:relative;background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:15px 14px;cursor:pointer;overflow:hidden;transition:transform .12s,box-shadow .12s}
+.prod-card:active{transform:scale(.97)}
+.prod-card .pc-top{display:flex;align-items:center;gap:10px}
+.prod-card .pc-ico{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;box-shadow:0 5px 14px rgba(0,0,0,.12)}
+.prod-card .pc-n{font-size:14px;font-weight:900;line-height:1.2}
+.prod-card .pc-p{font-size:9.5px;color:var(--ink3);margin-top:2px}
+.prod-card .pc-badge{position:absolute;top:12px;right:12px;font-size:8.5px;font-weight:800;padding:3px 8px;border-radius:8px}
+.prod-card .pc-badge.ok{background:var(--green-soft);color:var(--green)}
+.prod-card .pc-badge.full{background:var(--red-soft);color:var(--red)}
+.prod-card .pc-bar{margin-top:13px;height:6px;border-radius:4px;background:var(--bg);overflow:hidden}
+.prod-card .pc-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--pink))}
+.prod-card .pc-meta{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:9.5px;color:var(--ink2)}
+.prod-card .pc-meta .cnt{margin-left:auto;font-weight:800;color:var(--primary)}
+.prod-card .pc-del{position:absolute;bottom:12px;right:12px;width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;color:var(--red);cursor:pointer;font-size:13px;line-height:1}
+/* 新增按钮 */
+.add-prod{width:100%;min-height:48px;border:1.5px dashed var(--line);border-radius:16px;background:#FAF9FD;color:var(--primary);font-size:13px;font-weight:800;cursor:pointer;margin-top:10px}
+.add-prod:active{transform:scale(.98)}
 /* 表单 */
 .f-row{display:flex;gap:8px;margin:12px 0 4px}
 .f-row input{flex:1;min-height:46px;border:1.5px solid var(--line);border-radius:13px;padding:0 14px;font-size:16px;outline:none;background:#FAF9FD;color:var(--ink)}
 .f-row input:focus{border-color:var(--primary)}
+.f-field{margin-top:10px}
+.f-field label{display:block;font-size:10.5px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+.f-field input{width:100%;min-height:46px;border:1.5px solid var(--line);border-radius:13px;padding:0 14px;font-size:16px;outline:none;background:#FAF9FD;color:var(--ink)}
+.f-field input:focus{border-color:var(--primary)}
+.f-field select{width:100%;min-height:46px;border:1.5px solid var(--line);border-radius:13px;padding:0 12px;font-size:15px;outline:none;background:#FAF9FD;color:var(--ink)}
 .btn{min-height:46px;padding:0 18px;border:none;border-radius:13px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap}
 .btn:active{transform:scale(.96)}
 .btn.gray{background:var(--ink3)}
 .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink2)}
 .btn.small{min-height:34px;padding:0 11px;font-size:11.5px;border-radius:10px}
+/* 返回 */
+.back-row{display:flex;align-items:center;gap:8px;padding:4px 0 12px}
+.back-row .back-btn{min-height:38px;padding:0 14px;border:none;border-radius:11px;background:#fff;border:1.5px solid var(--line);color:var(--ink2);font-size:12.5px;font-weight:800;cursor:pointer}
+.back-row .back-btn:active{transform:scale(.95)}
+.back-row .bb-title{font-size:13px;font-weight:800;color:var(--ink3)}
+.back-row .demo-btn{margin-left:auto;min-height:38px;padding:0 14px;border:none;border-radius:11px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800;cursor:pointer}
+/* 产品头 */
+.prod{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:linear-gradient(135deg,#F1EDFC,#FDF0F7);border:1px solid rgba(124,58,237,.15)}
+.prod .pi{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 6px 16px rgba(0,0,0,.14)}
+.prod .pn{font-size:14.5px;font-weight:900}
+.prod .pd{font-size:10.5px;color:var(--ink2);margin-top:2px}
+.prod .pp{margin-left:auto;text-align:right}
+.prod .pp .v{font-size:16px;font-weight:900;color:var(--primary)}
+.prod .pp .u{font-size:9px;color:var(--ink3)}
+/* 步骤 */
+.steps{display:flex;gap:8px;margin-top:12px}
+.step{flex:1;text-align:center;padding:10px 6px;background:var(--card);border:1px solid var(--line);border-radius:13px}
+.step .sn{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:5px}
+.step .st{font-size:9.5px;color:var(--ink2);line-height:1.4}
 /* 客户列表 */
 .client{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;background:#FDFCFF}
 .client .av{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#F1EDFC,#FDF0F7);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
@@ -71,6 +106,8 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
 .sheet h3{font-size:16px;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .sheet .close{margin-left:auto;width:28px;height:28px;border-radius:50%;background:var(--bg);border:none;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.sheet .actions{display:flex;gap:8px;margin-top:14px}
+.sheet .actions .btn{flex:1}
 /* 邀请卡 */
 .inv-card{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 6px 20px rgba(31,36,48,.08)}
 .inv-head{background:linear-gradient(135deg,#7C3AED,#A855F7 60%,#EC4899);padding:22px 18px 18px;color:#fff;position:relative}
@@ -88,16 +125,12 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .inv-steps .is .n{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:10.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:5px}
 .inv-steps .is .t{font-size:9.5px;color:var(--ink2);line-height:1.4}
 .inv-priv{padding:11px 14px;background:#F1EDFC;font-size:10px;color:var(--primary);line-height:1.6;text-align:center}
-.sheet .actions{display:flex;gap:8px;margin-top:12px}
-.sheet .actions .btn{flex:1}
 /* 说明 */
 .note{background:#FDFBF4;border:1px solid #F3EBD3;border-radius:14px;padding:12px 14px;font-size:11px;color:#8A7B4A;line-height:1.8;margin-top:4px}
+.note.green{background:var(--green-soft);border-color:#C6EFDC;color:#0B7A4B}
 .toast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(20,12,40,.92);color:#fff;font-size:12.5px;padding:11px 18px;border-radius:12px;z-index:300;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
 .toast.show{opacity:1}
-.steps{display:flex;gap:8px;margin-top:10px}
-.step{flex:1;text-align:center;padding:10px 6px;background:var(--card);border:1px solid var(--line);border-radius:13px}
-.step .sn{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:5px}
-.step .st{font-size:9.5px;color:var(--ink2);line-height:1.4}
+@media(max-width:560px){.prod-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -107,60 +140,112 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
     <div class="logo">CF</div>
     <div>
       <div class="t1">Crazy Friday.</div>
-      <div class="t2">AUTHORIZATION CENTER · 授权管理中心</div>
+      <div class="t2">AUTHORIZATION CENTER · 授权总台</div>
     </div>
-    <div class="badge">🛡️ 品牌锁定</div>
+    <div class="badge">🛡️ 多产品管理</div>
   </div>
 
-  <!-- 产品 -->
-  <div class="card">
-    <div class="prod">
-      <div class="pi">👶</div>
-      <div>
-        <div class="pn">宝贝成长工作台</div>
-        <div class="pd">独立数据空间 · AI 育儿 · 视频相册 · 添加主屏幕</div>
+  <!-- ===== 总台视图 ===== -->
+  <div id="homeView">
+    <!-- 总览 -->
+    <div class="card">
+      <div class="sec-hd"><h2>全部工作台名额</h2><span class="sub">所有产品合计</span></div>
+      <div class="quota">
+        <div class="q-card"><div class="n" id="qTotal">0</div><div class="l">总名额</div></div>
+        <div class="q-card"><div class="n" id="qUsed">0</div><div class="l">已分配</div></div>
+        <div class="q-card"><div class="n g" id="qLeft">0</div><div class="l">剩余可卖</div></div>
       </div>
-      <div class="pp"><div class="v">¥599</div><div class="u">/ 年 · 年度使用版</div></div>
     </div>
+
+    <!-- 产品列表 -->
+    <div class="card">
+      <div class="sec-hd"><h2>我的工作台产品</h2><span class="sub" id="prodCount">0 个</span></div>
+      <div class="prod-grid" id="prodGrid"></div>
+      <button class="add-prod" onclick="openAddProd()">＋ 新增工作台产品</button>
+    </div>
+
+    <div class="note green" style="margin-top:2px">✅ 每个产品独立名额与客户，客户专属链接对应独立数据空间，互不可见。未来开发的每个工作台，都在这里统一授权管理。</div>
+    <div class="note" style="margin-top:10px">🔒 你自己留的演示/自用链接：<button class="btn ghost small" style="min-height:30px;padding:0 10px;font-size:10.5px;margin-left:6px" onclick="copyDemo()">复制自用链接</button></div>
   </div>
 
-  <!-- 名额 -->
-  <div class="card">
-    <div class="sec-hd"><h2>我的授权名额</h2><span class="sub">可授权客户总数</span></div>
-    <div class="quota">
-      <div class="q-card"><div class="n" id="qTotal">20</div><div class="l">总名额</div></div>
-      <div class="q-card"><div class="n" id="qUsed">0</div><div class="l">已分配</div></div>
-      <div class="q-card"><div class="n g" id="qLeft">20</div><div class="l">剩余可卖</div></div>
+  <!-- ===== 产品详情视图 ===== -->
+  <div id="detailView" style="display:none">
+    <div class="back-row">
+      <button class="back-btn" onclick="goHome()">← 返回总台</button>
+      <span class="bb-title" id="detailTitle">产品详情</span>
+      <button class="demo-btn" onclick="copyProdDemo()">📋 复制自用链接</button>
     </div>
-    <div class="steps">
-      <div class="step"><div class="sn">1</div><div class="st">客户付款 ¥599/年<br>你填客户名生成专属链接</div></div>
-      <div class="step"><div class="sn">2</div><div class="st">发链接或二维码<br>客户扫码进入专属空间</div></div>
-      <div class="step"><div class="sn">3</div><div class="st">到期自动提示续费<br>客户无法转授他人</div></div>
-    </div>
-  </div>
 
-  <!-- 生成新客户 -->
-  <div class="card">
-    <div class="sec-hd"><h2>生成客户授权</h2><span class="sub">一个客户 = 一个独立空间</span></div>
-    <div class="f-row">
-      <input id="newName" type="text" placeholder="客户昵称，如：小雨的宝宝" maxlength="20">
-      <button class="btn" onclick="addClient()">生成专属链接</button>
+    <!-- 产品头 -->
+    <div class="card">
+      <div class="prod" id="prodHead"></div>
     </div>
-    <div class="note">⚡ 每个客户生成的链接/二维码<strong>独立且数据隔离</strong>；客户可设访问密码，即使转发链接他人也无法进入。品牌 Crazy Friday 锁定不可改。</div>
-  </div>
 
-  <!-- 客户列表 -->
-  <div class="card">
-    <div class="sec-hd"><h2>已授权客户</h2><span class="sub" id="listCount">0 个</span></div>
-    <div id="clientList"></div>
+    <!-- 名额 -->
+    <div class="card">
+      <div class="sec-hd"><h2>我的授权名额</h2><span class="sub">可授权客户总数</span></div>
+      <div class="quota">
+        <div class="q-card"><div class="n" id="dTotal">0</div><div class="l">总名额</div></div>
+        <div class="q-card"><div class="n" id="dUsed">0</div><div class="l">已分配</div></div>
+        <div class="q-card"><div class="n g" id="dLeft">0</div><div class="l">剩余可卖</div></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><div class="st">客户付款<br>生成专属链接</div></div>
+        <div class="step"><div class="sn">2</div><div class="st">发链接或邀请卡<br>客户扫码进入专属空间</div></div>
+        <div class="step"><div class="sn">3</div><div class="st">到期自动提示续费<br>客户无法转授他人</div></div>
+      </div>
+    </div>
+
+    <!-- 生成新客户 -->
+    <div class="card">
+      <div class="sec-hd"><h2>生成客户授权</h2><span class="sub">一个客户 = 一个独立空间</span></div>
+      <div class="f-row">
+        <input id="newName" type="text" placeholder="客户昵称，如：小雨的宝宝" maxlength="20">
+        <button class="btn" onclick="addClient()">生成专属链接</button>
+      </div>
+      <div class="note" style="margin-top:10px">⚡ 每个客户生成的链接/二维码<strong>独立且数据隔离</strong>；客户可设访问密码，即使转发链接他人也无法进入。品牌 Crazy Friday 锁定不可改。</div>
+    </div>
+
+    <!-- 客户列表 -->
+    <div class="card">
+      <div class="sec-hd"><h2>已授权客户</h2><span class="sub" id="listCount">0 个</span></div>
+      <div id="clientList"></div>
+    </div>
   </div>
 
 </div>
 
-<!-- 二维码弹窗 -->
+<!-- 新增产品弹窗 -->
+<div class="mask" id="addMask">
+  <div class="sheet">
+    <h3>新增工作台产品 <button class="close" onclick="closeAdd()">×</button></h3>
+    <div class="f-field">
+      <label>产品模板（可改）</label>
+      <select id="npTpl" onchange="tplFill()">
+        <option value="baby">宝贝成长工作台 👶 ¥599/年</option>
+        <option value="love">恋爱工作台 💞 ¥599/年</option>
+        <option value="fitness">减脂健身台 💪 ¥599/年</option>
+        <option value="money">记账理财台 💰 ¥599/年</option>
+        <option value="study">学习备考台 📚 ¥599/年</option>
+        <option value="custom">自定义 ✨</option>
+      </select>
+    </div>
+    <div class="f-field"><label>产品名称</label><input id="npName" type="text" placeholder="如：宝贝成长工作台" maxlength="20"></div>
+    <div class="f-field"><label>图标（1个字符）</label><input id="npEmo" type="text" placeholder="👶" maxlength="2" style="font-size:20px"></div>
+    <div class="f-field"><label>价格</label><input id="npPrice" type="text" value="¥599/年" maxlength="12"></div>
+    <div class="f-field"><label>页面文件名（部署后与链接对应）</label><input id="npFile" type="text" placeholder="baby.html" maxlength="30"></div>
+    <div class="f-field"><label>授权名额总数</label><input id="npTotal" type="number" value="20" min="1" max="999"></div>
+    <div class="actions">
+      <button class="btn gray" onclick="closeAdd()">取消</button>
+      <button class="btn" onclick="addProd()">创建产品</button>
+    </div>
+  </div>
+</div>
+
+<!-- 二维码邀请卡弹窗 -->
 <div class="mask" id="qrMask">
   <div class="sheet">
-    <h3>🎯 客户授权二维码 <button class="close" onclick="closeQr()">×</button></h3>
+    <h3>🎯 客户授权邀请卡 <button class="close" onclick="closeQr()">×</button></h3>
     <div id="qrBody"></div>
   </div>
 </div>
@@ -169,35 +254,127 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 
 <script>
 /* ================= 数据 ================= */
-const AUTH_KEY='wb_auth_clients';
-const AUTH_TOTAL='wb_auth_total';
+const PROD_KEY='wb_auth_products';
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 let toastT;
 function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2400)}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function uid(){return 'c'+Date.now()+Math.floor(Math.random()*999)}
+function genFid(){return 'f'+Date.now().toString(36)+Math.floor(Math.random()*46656).toString(36)}
 
-/* ================= 渲染 ================= */
-function baseUrl(){return location.origin + location.pathname.replace(/authorize\.html$/,'') + 'baby.html'}
-function clientUrl(fid){return baseUrl() + '?fid=' + fid}
-function renderQuota(){
-  const total=parseInt(load(AUTH_TOTAL,20))||20;
-  const list=load(AUTH_KEY,[]);
-  const used=list.length;
+/* 老数据迁移：wb_auth_clients / wb_auth_total → baby 产品 */
+function migrate(){
+  const oldClients=load('wb_auth_clients',null);
+  if(oldClients===null) return; // 无老数据
+  const oldTotal=parseInt(load('wb_auth_total',20))||20;
+  const products=getProducts();
+  if(!products.some(p=>p.id==='baby')){
+    products.unshift({
+      id:'baby', name:'宝贝成长工作台', emo:'👶', price:'¥599/年', file:'baby.html',
+      color1:'#EC4899', color2:'#7C3AED', total:oldTotal, clients:Array.isArray(oldClients)?oldClients:[]
+    });
+    save(PROD_KEY,products);
+  }
+}
+function getProducts(){ return load(PROD_KEY,[]) }
+function saveProducts(list){ save(PROD_KEY,list) }
+function findProd(id){ return getProducts().find(p=>p.id===id) }
+
+/* 默认模板 */
+const TEMPLATES={
+  baby:{name:'宝贝成长工作台',emo:'👶',price:'¥599/年',file:'baby.html',c1:'#EC4899',c2:'#7C3AED'},
+  love:{name:'恋爱工作台',emo:'💞',price:'¥599/年',file:'love.html',c1:'#F43F5E',c2:'#EC4899'},
+  fitness:{name:'减脂健身台',emo:'💪',price:'¥599/年',file:'fitness.html',c1:'#10B981',c2:'#22D3EE'},
+  money:{name:'记账理财台',emo:'💰',price:'¥599/年',file:'money.html',c1:'#F59E0B',c2:'#F97316'},
+  study:{name:'学习备考台',emo:'📚',price:'¥599/年',file:'study.html',c1:'#38BDF8',c2:'#6366F1'},
+  custom:{name:'自定义工作台',emo:'✨',price:'¥599/年',file:'custom.html',c1:'#8B5CF6',c2:'#6D28D9'}
+};
+
+/* ================= 状态 ================= */
+let cur=null; // 当前产品 id
+
+function baseUrl(){ return location.origin + location.pathname.replace(/authorize\.html$/,'') }
+function clientUrl(p,c){ return baseUrl() + (p.file||'baby.html') + '?fid=' + c.fid }
+function demoUrl(p){ return baseUrl() + (p.file||'baby.html') }
+
+/* ================= 总台渲染 ================= */
+function renderHome(){
+  const list=getProducts();
+  const total=list.reduce((s,p)=>s+(parseInt(p.total)||0),0);
+  const used=list.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
   document.getElementById('qTotal').textContent=total;
   document.getElementById('qUsed').textContent=used;
   document.getElementById('qLeft').textContent=Math.max(0,total-used);
   document.getElementById('qLeft').className='n '+(total-used>0?'g':'r');
+  document.getElementById('prodCount').textContent=list.length+' 个';
+
+  const grid=document.getElementById('prodGrid');
+  if(!list.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--ink3);font-size:12px;padding:24px 0">还没有工作台产品<br><span style="font-size:10.5px">点下方「新增工作台产品」开始</span></div>';
+    return;
+  }
+  grid.innerHTML=list.map(p=>{
+    const usedN=p.clients?p.clients.length:0;
+    const totalN=parseInt(p.total)||20;
+    const pct=totalN>0?Math.min(100,Math.round(usedN/totalN*100)):0;
+    const full=usedN>=totalN;
+    return `<div class="prod-card" onclick="goDetail('${p.id}')">
+      <div class="pc-top">
+        <div class="pc-ico" style="background:linear-gradient(135deg,${p.color1||'#EC4899'},${p.color2||'#7C3AED'})">${p.emo||'✨'}</div>
+        <div>
+          <div class="pc-n">${esc(p.name)}</div>
+          <div class="pc-p">${esc(p.price||'¥599/年')} · ${esc(p.file||'')}</div>
+        </div>
+      </div>
+      <div class="pc-bar"><i style="width:${pct}%"></i></div>
+      <div class="pc-meta"><span>${usedN}/${totalN} 已分配</span><span class="cnt">${pct}%</span></div>
+      <span class="pc-badge ${full?'full':'ok'}">${full?'满员':'可卖'}</span>
+      <button class="pc-del" onclick="event.stopPropagation();delProd('${p.id}')" title="删除产品">×</button>
+    </div>`;
+  }).join('');
+}
+
+function goHome(){ cur=null; document.getElementById('homeView').style.display=''; document.getElementById('detailView').style.display='none'; renderHome(); }
+
+/* ================= 产品详情 ================= */
+function goDetail(id){
+  const p=findProd(id); if(!p) return;
+  cur=id;
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('detailView').style.display='';
+  document.getElementById('detailTitle').textContent=p.name;
+  document.getElementById('prodHead').innerHTML=`
+    <div class="pi" style="background:linear-gradient(135deg,${p.color1||'#EC4899'},${p.color2||'#7C3AED'})">${p.emo||'✨'}</div>
+    <div>
+      <div class="pn">${esc(p.name)}</div>
+      <div class="pd">${esc(p.file||'')} · 独立数据空间 · 专属链接</div>
+    </div>
+    <div class="pp"><div class="v">${esc(p.price||'¥599/年')}</div><div class="u">年度使用版</div></div>`;
+  renderDetail();
+}
+function curProd(){ return findProd(cur) }
+function renderDetail(){
+  const p=curProd(); if(!p) return;
+  const used=p.clients?p.clients.length:0;
+  const totalN=parseInt(p.total)||20;
+  document.getElementById('dTotal').textContent=totalN;
+  document.getElementById('dUsed').textContent=used;
+  document.getElementById('dLeft').textContent=Math.max(0,totalN-used);
+  document.getElementById('dLeft').className='n '+(totalN-used>0?'g':'r');
   document.getElementById('listCount').textContent=used+' 个';
+  renderList();
 }
 function fmtDate(s){if(!s)return'--';const p=s.split('-');return p[0]+'.'+p[1]+'.'+p[2]}
 function statusOf(c){
+  if(!c || !c.end) return 'on';
   const end=new Date(c.end.replace(/-/g,'/'));
   const expired=end.getTime() < new Date().setHours(0,0,0,0);
   return expired?'off':'on';
 }
 function renderList(){
-  const list=load(AUTH_KEY,[]);
+  const p=curProd(); if(!p) return;
+  const list=p.clients||[];
   const el=document.getElementById('clientList');
   if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--ink3);font-size:12px;padding:24px 0">还没有客户授权<br><span style="font-size:10.5px">填客户名，点「生成专属链接」开始</span></div>';return}
   el.innerHTML=list.map(c=>{
@@ -206,12 +383,12 @@ function renderList(){
       <div class="av">${c.emo||'👶'}</div>
       <div class="ci">
         <div class="cn">${esc(c.name||'未命名客户')}</div>
-        <div class="cf">空间 ${(c.fid||'').slice(0,8).toUpperCase()} · 授权至 ${fmtDate(c.end)}</div>
+        <div class="cf">${esc(p.file||'baby.html')}?fid=${(c.fid||'').slice(0,8).toUpperCase()} · 授权至 ${fmtDate(c.end)}</div>
       </div>
       <span class="cs ${on?'on':'off'}">${on?'使用中':'已到期'}</span>
       <div class="ca">
-        <button class="icon-btn" title="复制链接" onclick="copyUrl('${c.fid}')"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></button>
-        <button class="icon-btn" title="二维码" onclick="openQr('${c.id}')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M17 17h4"/></svg></button>
+        <button class="icon-btn" title="复制链接" onclick="copyUrl('${c.id}')"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></button>
+        <button class="icon-btn" title="邀请卡" onclick="openQr('${c.id}')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M17 17h4"/></svg></button>
         <button class="icon-btn" title="续期1年" onclick="renew('${c.id}')"><svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9L1 10"/></svg></button>
         <button class="icon-btn" title="删除" style="color:var(--red)" onclick="delClient('${c.id}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
       </div>
@@ -220,41 +397,83 @@ function renderList(){
 }
 
 /* ================= 操作 ================= */
-function genFid(){return 'f'+Date.now().toString(36)+Math.floor(Math.random()*46656).toString(36)}
 function addClient(){
   const name=(document.getElementById('newName').value||'').trim();
-  const total=parseInt(load(AUTH_TOTAL,20))||20;
-  const list=load(AUTH_KEY,[]);
-  if(list.length>=total){toast('⚠️ 名额已用完，扩容请联系升级');return}
+  const list=getProducts(); const p=list.find(x=>x.id===cur); if(!p) return;
+  const totalN=parseInt(p.total)||20;
+  const used=p.clients?p.clients.length:0;
+  if(used>=totalN){toast('⚠️ 名额已用完，扩容请联系升级');return}
   const fid=genFid();
   const start=new Date();const end=new Date();end.setDate(end.getDate()+365);
   const fs=start.getFullYear()+'-'+String(start.getMonth()+1).padStart(2,'0')+'-'+String(start.getDate()).padStart(2,'0');
   const es=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');
-  const c={id:uid(),fid,name:name||'客户'+(list.length+1),emo:'👶',start:fs,end:es};
-  list.unshift(c);save(AUTH_KEY,list);
+  const c={id:uid(),fid,name:name||'客户'+(used+1),emo:'👶',start:fs,end:es};
+  if(!p.clients) p.clients=[];
+  p.clients.unshift(c);saveProducts(list);
   document.getElementById('newName').value='';
-  renderQuota();renderList();
-  toast('✅ 已生成，打开二维码发给客户');
+  renderDetail(); renderHome();
+  toast('✅ 已生成，打开邀请卡发给客户');
   openQr(c.id);
 }
-function uid(){return 'c'+Date.now()+Math.floor(Math.random()*999)}
-function renew(id){const list=load(AUTH_KEY,[]);const c=list.find(x=>x.id===id);if(!c)return;const end=new Date(c.end.replace(/-/g,'/'));end.setDate(end.getDate()+365);c.end=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');save(AUTH_KEY,list);renderList();toast('✅ 已续期 1 年')}
-function delClient(id){if(!confirm('删除该客户授权？其专属空间数据仍在，只是不再管理'))return;save(AUTH_KEY,load(AUTH_KEY,[]).filter(x=>x.id!==id));renderQuota();renderList();toast('已删除')}
-function copyUrl(fid){
-  const url=clientUrl(fid);
+function renew(id){const list=getProducts();const p=list.find(x=>x.id===cur);if(!p)return;const c=(p.clients||[]).find(x=>x.id===id);if(!c)return;const end=new Date(c.end.replace(/-/g,'/'));end.setDate(end.getDate()+365);c.end=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');saveProducts(list);renderList();renderHome();toast('✅ 已续期 1 年')}
+function delClient(id){if(!confirm('删除该客户授权？其专属空间数据仍在，只是不再管理'))return;const list=getProducts();const p=list.find(x=>x.id===cur);if(!p)return;p.clients=(p.clients||[]).filter(x=>x.id!==id);saveProducts(list);renderDetail();renderHome();toast('已删除')}
+function delProd(id){
+  if(!confirm('删除该产品？其客户授权记录将一并删除（客户空间数据仍在）。\n如只想暂停，可把名额改为0。'))return;
+  saveProducts(getProducts().filter(p=>p.id!==id));
+  if(cur===id) goHome(); else renderHome();
+  toast('已删除产品');
+}
+function copyUrl(id){
+  const p=curProd(); const c=(p.clients||[]).find(x=>x.id===id); if(!c) return;
+  const url=clientUrl(p,c);
   navigator.clipboard.writeText(url).then(()=>toast('✅ 专属链接已复制，可发给客户')).catch(()=>toast(url));
 }
+function copyDemo(){ navigator.clipboard.writeText(baseUrl()+'baby.html').then(()=>toast('✅ 自用/演示链接已复制（无 fid，共享空间）')).catch(()=>toast(baseUrl()+'baby.html')) }
+function copyProdDemo(){
+  const p=curProd(); if(!p) return;
+  navigator.clipboard.writeText(demoUrl(p)).then(()=>toast('✅ 已复制「'+p.name+'」自用链接（无 fid）')).catch(()=>toast(demoUrl(p)));
+}
+
+/* ================= 新增产品 ================= */
+function openAddProd(){ document.getElementById('addMask').classList.add('show'); tplFill(); }
+function closeAdd(){ document.getElementById('addMask').classList.remove('show') }
+function tplFill(){
+  const t=TEMPLATES[document.getElementById('npTpl').value]||TEMPLATES.custom;
+  document.getElementById('npName').value=t.name;
+  document.getElementById('npEmo').value=t.emo;
+  document.getElementById('npPrice').value=t.price;
+  document.getElementById('npFile').value=t.file;
+}
+function addProd(){
+  const name=(document.getElementById('npName').value||'').trim();
+  const emo=(document.getElementById('npEmo').value||'✨').trim();
+  const price=(document.getElementById('npPrice').value||'¥599/年').trim();
+  const file=(document.getElementById('npFile').value||'').trim().replace(/^\/+/,'');
+  if(!name){toast('请填写产品名称');return}
+  if(!/\.html$/i.test(file)){toast('文件名需以 .html 结尾，如 baby.html');return}
+  const total=parseInt(document.getElementById('npTotal').value)||20;
+  const id=file.replace(/\.html$/i,'').replace(/[^a-zA-Z0-9_-]/g,'')||('p'+Date.now().toString(36));
+  const list=getProducts();
+  if(list.some(p=>p.id===id)){toast('该文件名已存在产品');return}
+  const t=TEMPLATES[document.getElementById('npTpl').value]||TEMPLATES.custom;
+  list.push({id,name,emo,price,file,total,color1:t.c1,color2:t.c2,clients:[]});
+  saveProducts(list); closeAdd();
+  renderHome();
+  toast('✅ 已创建「'+name+'」，点击卡片进入管理');
+}
+
+/* ================= 邀请卡 ================= */
 function openQr(id){
-  const c=load(AUTH_KEY,[]).find(x=>x.id===id);if(!c)return;
-  const url=clientUrl(c.fid);
+  const p=curProd(); const c=(p.clients||[]).find(x=>x.id===id); if(!c) return;
+  const url=clientUrl(p,c);
   const qrSrc='https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data='+encodeURIComponent(url);
   document.getElementById('qrBody').innerHTML=`
     <div class="inv-card">
       <div class="inv-head">
         <div class="ih-logo">Crazy Friday.</div>
-        <div class="ih-bear">${c.emo||'👶'}</div>
-        <div class="ih-name">${esc(c.name||'客户')} · 宝贝成长空间</div>
-        <div class="ih-sub">AI工作台年度使用版 · 专属家庭空间</div>
+        <div class="ih-bear">${c.emo||p.emo||'👶'}</div>
+        <div class="ih-name">${esc(c.name||'客户')} · ${esc(p.name)}</div>
+        <div class="ih-sub">AI工作台年度使用版 · 专属空间</div>
         <div class="ih-meta">🛡️ 授权至 ${fmtDate(c.end)} · 空间 ${c.fid.slice(0,6).toUpperCase()}</div>
       </div>
       <div class="inv-qr">
@@ -270,37 +489,32 @@ function openQr(id){
       <div class="inv-priv">🔒 该链接对应独立空间，数据互不可见 · 客户可设访问密码防转发</div>
     </div>
     <div class="actions">
-      <button class="btn gray" onclick="copyUrl('${c.fid}')">📋 复制链接</button>
+      <button class="btn gray" onclick="copyUrl('${c.id}')">📋 复制链接</button>
       <button class="btn" onclick="downloadQr('${c.id}')">💾 下载邀请卡</button>
     </div>`;
   document.getElementById('qrMask').classList.add('show');
 }
-function closeQr(){document.getElementById('qrMask').classList.remove('show')}
+function closeQr(){ document.getElementById('qrMask').classList.remove('show') }
 document.getElementById('qrMask').addEventListener('click',function(e){if(e.target===this)closeQr()});
+document.getElementById('addMask').addEventListener('click',function(e){if(e.target===this)closeAdd()});
 function downloadQr(id){
-  const c=load(AUTH_KEY,[]).find(x=>x.id===id||x.fid===id);if(!c)return;
-  const url=clientUrl(c.fid);
+  const p=curProd(); const c=(p.clients||[]).find(x=>x.id===id||x.fid===id); if(!c) return;
+  const url=clientUrl(p,c);
   const img=new Image();
   img.crossOrigin='anonymous';
   img.onload=function(){
     const W=620,H=820;
     const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext('2d');
-    // 背景
     const bgGrad=ctx.createLinearGradient(0,0,0,H);bgGrad.addColorStop(0,'#F6F4FB');bgGrad.addColorStop(1,'#FFFFFF');
     ctx.fillStyle=bgGrad;ctx.fillRect(0,0,W,H);
-    // 顶部渐变头
-    const hdGrad=ctx.createLinearGradient(0,0,W,0);hdGrad.addColorStop(0,'#7C3AED');hdGrad.addColorStop(.6,'#A855F7');hdGrad.addColorStop(1,'#EC4899');
+    const hdGrad=ctx.createLinearGradient(0,0,W,0);hdGrad.addColorStop(0,p.color1||'#7C3AED');hdGrad.addColorStop(.6,p.color2||'#A855F7');hdGrad.addColorStop(1,'#EC4899');
     ctx.fillStyle=hdGrad;ctx.fillRect(0,0,W,200);
-    // logo
     ctx.fillStyle='rgba(255,255,255,.95)';ctx.font='bold 22px Georgia, serif';ctx.textAlign='left';
     ctx.fillText('Crazy Friday.',40,55);
-    // 客户名
-    ctx.font='bold 30px sans-serif';ctx.fillText((c.name||'客户')+' · 宝贝成长空间',40,110);
-    // 副标题
+    ctx.font='bold 30px sans-serif';ctx.fillText((c.name||'客户')+' · '+p.name,40,110);
     ctx.fillStyle='rgba(255,255,255,.85)';ctx.font='14px sans-serif';
-    ctx.fillText('AI工作台年度使用版 · 专属家庭空间',40,138);
-    // 授权信息
+    ctx.fillText('AI工作台年度使用版 · 专属空间',40,138);
     ctx.font='bold 13px sans-serif';
     const meta='🛡️ 授权至 '+fmtDate(c.end)+' · 空间 '+c.fid.slice(0,6).toUpperCase();
     const metaW=ctx.measureText(meta).width;
@@ -309,30 +523,25 @@ function downloadQr(id){
     ctx.moveTo(mx+mr,my);ctx.arcTo(mx+mw,my,mx+mw,my+mh,mr);ctx.arcTo(mx+mw,my+mh,mx,my+mh,mr);ctx.arcTo(mx,my+mh,mx,my,mr);ctx.arcTo(mx,my,mx+mw,my,mr);ctx.fill();
     ctx.fillStyle='#fff';ctx.textAlign='center';
     ctx.fillText(meta,mx+mw/2,my+18);
-    // 二维码白底卡
     const qrSize=380,qx=(W-qrSize)/2,qy=240;
     ctx.fillStyle='#fff';ctx.fillRect(qx-12,qy-12,qrSize+24,qrSize+24);
     ctx.drawImage(img,qx,qy,qrSize,qrSize);
-    // 扫码提示
-    ctx.fillStyle='#7C3AED';ctx.font='bold 16px sans-serif';ctx.textAlign='center';
+    ctx.fillStyle=p.color1||'#7C3AED';ctx.font='bold 16px sans-serif';ctx.textAlign='center';
     ctx.fillText('📱 扫码进入「'+(c.name||'客户')+'」的专属空间',W/2,qy+qrSize+40);
-    // URL
     ctx.fillStyle='#9AA1AF';ctx.font='11px ui-monospace, Menlo, monospace';
     ctx.fillText(url,W/2,qy+qrSize+62);
-    // 三步指引
     const sy=qy+qrSize+90;
     const steps=[['1','微信扫码'],['2','添加到主屏幕'],['3','像 APP 独立记录']];
     steps.forEach((s,i)=>{
       const sx=W/2-150+i*150;
-      ctx.fillStyle='#7C3AED';ctx.beginPath();ctx.arc(sx,sy,13,0,7);ctx.fill();
+      ctx.fillStyle=p.color1||'#7C3AED';ctx.beginPath();ctx.arc(sx,sy,13,0,7);ctx.fill();
       ctx.fillStyle='#fff';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(s[0],sx,sy);ctx.textBaseline='alphabetic';
       ctx.fillStyle='#5A6272';ctx.font='11px sans-serif';
       ctx.fillText(s[1],sx,sy+26);
     });
-    // 底部隐私条
     ctx.fillStyle='#F1EDFC';ctx.fillRect(0,H-50,W,50);
-    ctx.fillStyle='#7C3AED';ctx.font='12px sans-serif';ctx.textAlign='center';
+    ctx.fillStyle=p.color1||'#7C3AED';ctx.font='12px sans-serif';ctx.textAlign='center';
     ctx.fillText('🔒 该链接对应独立空间，数据互不可见 · 可设访问密码防转发',W/2,H-20);
     const a=document.createElement('a');
     a.download=(c.name||'client')+'-邀请卡.png';
@@ -344,8 +553,8 @@ function downloadQr(id){
 }
 
 /* ================= 初始化 ================= */
-renderQuota();
-renderList();
+migrate();
+renderHome();
 </script>
 </body>
 </html>
