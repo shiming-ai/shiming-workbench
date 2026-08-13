@@ -270,6 +270,22 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 .sheet-hd{display:flex;align-items:center;margin-bottom:16px}
 .sheet-hd h3{font-size:17px}
 .sheet-close{margin-left:auto;width:32px;height:32px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--ink2)}
+/* 邀请卡 */
+.inv-card{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 6px 20px rgba(31,36,48,.08)}
+.inv-head{background:linear-gradient(135deg,#7C3AED,#A855F7 60%,#EC4899);padding:20px 18px 16px;color:#fff;position:relative}
+.inv-head .ih-logo{font-family:Georgia,serif;font-size:16px;font-weight:900;letter-spacing:-.3px;opacity:.95}
+.inv-head .ih-name{font-size:20px;font-weight:900;margin-top:8px;line-height:1.2}
+.inv-head .ih-sub{font-size:10.5px;opacity:.85;margin-top:4px;letter-spacing:.3px}
+.inv-head .ih-bear{position:absolute;top:14px;right:16px;width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px}
+.inv-qr{background:#fff;padding:18px;display:flex;flex-direction:column;align-items:center}
+.inv-qr img{width:200px;height:200px;border-radius:10px}
+.inv-qr .iq-tip{font-size:11px;color:var(--primary);font-weight:700;margin-top:10px;text-align:center}
+.inv-qr .iq-url{font-size:9.5px;color:var(--ink3);word-break:break-all;margin-top:6px;text-align:center;max-width:240px;line-height:1.5;font-family:ui-monospace,Menlo,monospace}
+.inv-steps{background:#FAF9FD;padding:12px 14px;display:flex;gap:8px;border-top:1px solid var(--line)}
+.inv-steps .is{flex:1;text-align:center}
+.inv-steps .is .n{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px}
+.inv-steps .is .t{font-size:9px;color:var(--ink2);line-height:1.4}
+.inv-priv{padding:10px 14px;background:#F1EDFC;font-size:10px;color:var(--primary);line-height:1.6;text-align:center}
 .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .quick{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:13px 10px;display:flex;align-items:center;gap:10px;cursor:pointer}
 .quick:active{transform:scale(.97)}
@@ -390,8 +406,10 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 .me-link .ml-tt{font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:6px}
 .me-link .ml-tag{font-size:8.5px;font-weight:800;padding:2px 6px;border-radius:6px;background:var(--primary);color:#fff}
 .me-link .ml-d{font-size:9.5px;color:var(--ink3);margin-top:1px;line-height:1.4}
+.me-link .ml-btns{display:flex;gap:6px;flex-shrink:0}
 .me-link .ml-btn{flex-shrink:0;height:34px;padding:0 13px;border:none;border-radius:10px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:11.5px;font-weight:800;cursor:pointer}
 .me-link .ml-btn:active{transform:scale(.94)}
+.me-link .ml-btn.ghost{background:transparent;border:1.5px solid rgba(124,58,237,.3);color:var(--primary)}
 
 /* ===== PWA 启动画面（iOS 启动时短暂出现，避免白屏） ===== */
 #pwa-splash{position:fixed;inset:0;z-index:500;background:linear-gradient(170deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;color:#fff;transition:opacity .4s}
@@ -500,6 +518,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 .pin-pad button{min-height:54px;border-radius:16px;border:none;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:700;cursor:pointer;transition:transform .1s}
 .pin-pad button:active{transform:scale(.92);background:rgba(255,255,255,.25)}
 .pin-err{color:#FECACA;font-size:11px;min-height:16px;margin-top:10px;font-weight:600}
+.pin-priv{font-size:10px;opacity:.75;margin-top:8px;line-height:1.5;background:rgba(255,255,255,.08);padding:6px 10px;border-radius:8px}
 .pin-forgot{font-size:10px;opacity:.7;margin-top:12px;text-decoration:underline;cursor:pointer}
 
 /* ===== 顶部栏精细化 ===== */
@@ -535,10 +554,11 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
     <div class="pb-bear">🐻</div>
     <div class="pb-t" id="pinName">宝贝成长空间</div>
     <div class="pb-d">输入访问密码进入<br>这是<span style="font-weight:800">专属家庭空间</span>，密码保护您的记录</div>
-    <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i></div>
     <div class="pin-pad" id="pinPad"></div>
     <div class="pin-err" id="pinErr"></div>
-    <div class="pin-forgot" onclick="pinForgot()">忘记密码？联系技术支持</div>
+    <div class="pin-priv">🔒 密码仅存于本机 · Crazy Friday 团队无法查看</div>
+    <div class="pin-forgot" onclick="pinForgot()">忘记密码？</div>
   </div>
 </div>
 
@@ -698,7 +718,10 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
           <div class="ml-tt">我的专属链接 <span class="ml-tag" id="fidTag"></span></div>
           <div class="ml-d">发给家人/客户，各自数据完全隔离</div>
         </div>
-        <button class="ml-btn" onclick="copyLink()">复制链接</button>
+        <div class="ml-btns">
+          <button class="ml-btn ghost" onclick="shareQr()">二维码</button>
+          <button class="ml-btn" onclick="copyLink()">复制链接</button>
+        </div>
       </div>
     </div>
 
@@ -739,6 +762,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
       <div class="me-row" onclick="exportData()"><div class="mr-ico" style="background:linear-gradient(135deg,#94A3B8,#64748B)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="mr-body"><div class="mr-t">导出备份</div><div class="mr-d">下载完整数据 JSON</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="me-row" onclick="document.getElementById('fileImport').click()"><div class="mr-ico" style="background:linear-gradient(135deg,#A8B29F,#7A8B6F)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="mr-body"><div class="mr-t">导入恢复</div><div class="mr-d">从备份恢复数据</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="me-row" onclick="askClear()"><div class="mr-ico" style="background:linear-gradient(135deg,#F87171,#EF4444)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div><div class="mr-body"><div class="mr-t">清空数据</div><div class="mr-d">删除全部记录（二次确认）</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      <div class="me-row" onclick="goPage('page-about')"><div class="mr-ico" style="background:linear-gradient(135deg,#10B981,#34D399)"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="mr-body"><div class="mr-t">隐私与安全</div><div class="mr-d">数据存本机 · 团队无法查看</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="me-row" onclick="pinMenu()"><div class="mr-ico" style="background:linear-gradient(135deg,#8B5CF6,#7C3AED)"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="mr-body"><div class="mr-t">访问密码 <span id="pinStatus" style="font-size:9px;font-weight:800;color:var(--ink3)">未开启</span></div><div class="mr-d">开启后需密码进入，转发链接也无法查看</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <input type="file" id="fileImport" accept="application/json" style="display:none" onchange="importData(this)">
     </div>
@@ -752,7 +776,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
       <div class="me-row" onclick="goPage('page-about')"><div class="mr-ico" style="background:linear-gradient(135deg,#7C3AED,#6D28D9)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg></div><div class="mr-body"><div class="mr-t">关于 Crazy Friday</div><div class="mr-d">产品信息与技术</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>
 
-    <div style="text-align:center;font-size:11px;color:var(--ink3);line-height:1.8;padding:12px 0 20px">Crazy Friday · 宝贝成长工作台 v3.2<br>AI工作台年度使用版 · 数据存于本机</div>
+    <div style="text-align:center;font-size:11px;color:var(--ink3);line-height:1.8;padding:12px 0 20px">Crazy Friday · 宝贝成长工作台 <span id="meFootVer">v4.0</span><br>AI工作台年度使用版 · 数据存于本机</div>
   </div>
   <!-- ========== 宝贝详情 ========== -->
   <div class="page" id="page-profile">
@@ -828,8 +852,31 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
     <div class="card pad" style="text-align:center;padding:28px 18px">
       <div style="font-family:Georgia,serif;font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.5px">Crazy <span style="color:var(--primary)">Friday.</span></div>
       <div style="font-size:11px;color:var(--ink3);margin-top:3px;letter-spacing:.5px">AI × CREATOR · 让每个个体成为一家公司</div>
-      <div style="font-size:12.5px;color:var(--ink2);line-height:1.8;margin-top:16px">宝贝成长工作台 v3.0 · AI工作台年度使用版<br>记录成长 · 科学育儿 · AI陪伴每一步</div>
-      <div style="font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.7">技术支持 · Crazy Friday<br>数据存于你手机本机</div>
+      <div style="font-size:12.5px;color:var(--ink2);line-height:1.8;margin-top:16px">宝贝成长工作台 <span id="aboutVer">v4.0</span> · AI工作台年度使用版<br>记录成长 · 科学育儿 · AI陪伴每一步</div>
+    </div>
+
+    <!-- 数据隐私保护 -->
+    <div class="card pad" style="padding:16px 18px">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px">
+        <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#10B981,#34D399);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><div style="font-size:14px;font-weight:900">数据隐私保护</div><div style="font-size:10px;color:var(--ink3)">你的记录只属于你</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--ink2);line-height:1.9">
+        <div style="display:flex;gap:9px;margin-bottom:9px"><span style="color:var(--green);font-weight:800;flex-shrink:0">①</span><span><strong>数据存在你手机本机</strong>（浏览器本地存储），不上传任何服务器。Crazy Friday 团队<strong>无法查看</strong>你的成长记录、照片、健康数据。</span></div>
+        <div style="display:flex;gap:9px;margin-bottom:9px"><span style="color:var(--green);font-weight:800;flex-shrink:0">②</span><span><strong>独立空间隔离</strong>：每个专属链接（?fid=xxx）对应独立存储，不同客户/家庭的数据互不可见。</span></div>
+        <div style="display:flex;gap:9px;margin-bottom:9px"><span style="color:var(--green);font-weight:800;flex-shrink:0">③</span><span><strong>访问密码只存本机</strong>：开启后每次进入需输密码，密码本身也只存在你手机，团队无法获取或重置。</span></div>
+        <div style="display:flex;gap:9px"><span style="color:var(--green);font-weight:800;flex-shrink:0">④</span><span><strong>你随时掌控</strong>：可随时「导出备份」带走全部数据，或「清空数据」彻底删除，没有任何残留。</span></div>
+      </div>
+      <div style="margin-top:12px;padding:10px 12px;background:var(--primary-soft,#F1EDFC);border-radius:10px;font-size:10.5px;color:var(--primary);line-height:1.6;font-weight:600">
+        💡 建议定期「导出备份」到本地或网盘，换手机时用「导入恢复」迁移数据。
+      </div>
+    </div>
+
+    <!-- 技术信息 -->
+    <div class="card pad" style="padding:14px 18px;font-size:11px;color:var(--ink3);line-height:1.8">
+      <div style="display:flex;justify-content:space-between"><span>当前空间</span><span id="aboutFid" style="font-family:ui-monospace,Menlo,monospace;color:var(--ink2)">--</span></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px"><span>数据版本</span><span style="color:var(--ink2)" id="aboutDataVer">--</span></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px"><span>技术支持</span><span style="color:var(--ink2)">Crazy Friday</span></div>
     </div>
   </div>
 
@@ -879,6 +926,12 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 <div class="mask" id="maskForm"><div class="sheet">
   <div class="sheet-hd"><h3 id="formTitle">添加</h3><button class="sheet-close" onclick="closeSheet('maskForm')">×</button></div>
   <div id="formBody"></div>
+</div></div>
+
+<!-- 分享邀请卡 Sheet -->
+<div class="mask" id="maskShare"><div class="sheet">
+  <div class="sheet-hd"><h3>分享专属空间</h3><button class="sheet-close" onclick="closeSheet('maskShare')">×</button></div>
+  <div id="shareBody"></div>
 </div></div>
 
 <div id="toast"></div>
@@ -1727,6 +1780,12 @@ function renderLicense(){
   // 专属链接 fid 标签
   const tag=document.getElementById('fidTag');
   if(tag) tag.textContent = FID ? '空间 ' + FID.slice(0,6).toUpperCase() : '共享空间';
+  // 关于页：版本号 / 空间 / 数据版本
+  const av=document.getElementById('aboutVer'); if(av) av.textContent='v'+APP_VERSION;
+  const af=document.getElementById('aboutFid'); if(af) af.textContent = FID ? FID.slice(0,10).toUpperCase() : '共享空间（无 fid）';
+  const adv=document.getElementById('aboutDataVer'); if(adv) adv.textContent='v'+DATA_VERSION;
+  // 我的页底部版本号
+  const mv=document.getElementById('meFootVer'); if(mv) mv.textContent='v'+APP_VERSION;
 }
 /* 复制专属链接：无 fid 时自动生成一个（本机专属空间），带 fid 直接复制当前链接 */
 function copyLink(){
@@ -1745,6 +1804,52 @@ function copyLink(){
       toast('链接：' + url);
     });
   }catch(e){ toast('复制失败，请长按地址栏复制'); }
+}
+/* 分享邀请卡（二维码）：无 fid 自动生成 */
+function shareQr(){
+  let url = location.href.split('#')[0];
+  const sep = url.indexOf('?') >= 0 ? '&' : '?';
+  let fid = FID;
+  if(!fid){
+    fid = 'f' + Date.now().toString(36) + Math.floor(Math.random()*999).toString(36);
+    url = url + sep + 'fid=' + fid;
+  } else {
+    url = url + sep + 'fid=' + fid;
+  }
+  const p = load(K.profile,{});
+  const name = (p.wbName || p.name || '宝贝成长空间');
+  const qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=' + encodeURIComponent(url);
+  document.getElementById('shareBody').innerHTML =
+    '<div class="inv-card">' +
+      '<div class="inv-head">' +
+        '<div class="ih-logo">Crazy Friday.</div>' +
+        '<div class="ih-bear">👶</div>' +
+        '<div class="ih-name">' + esc(name) + '</div>' +
+        '<div class="ih-sub">AI工作台年度使用版 · 专属家庭空间</div>' +
+      '</div>' +
+      '<div class="inv-qr">' +
+        '<img src="' + qrSrc + '" alt="专属空间二维码">' +
+        '<div class="iq-tip">📱 扫码进入「' + esc(name) + '」</div>' +
+        '<div class="iq-url">' + esc(url) + '</div>' +
+      '</div>' +
+      '<div class="inv-steps">' +
+        '<div class="is"><div class="n">1</div><div class="t">微信扫码<br>浏览器打开</div></div>' +
+        '<div class="is"><div class="n">2</div><div class="t">浏览器菜单<br>添加到主屏幕</div></div>' +
+        '<div class="is"><div class="n">3</div><div class="t">像 APP 一样<br>独立记录</div></div>' +
+      '</div>' +
+      '<div class="inv-priv">🔒 该链接对应独立空间，数据互不可见 · 可设访问密码防转发</div>' +
+    '</div>' +
+    '<div style="display:flex;gap:8px;margin-top:14px">' +
+      '<button class="btn ghost" style="flex:1" onclick="copyShareUrl(\'' + fid + '\')">📋 复制链接</button>' +
+      '<button class="btn" style="flex:1" onclick="toast(\'长按上方二维码可保存图片\')">💾 保存图片</button>' +
+    '</div>';
+  openSheet('maskShare');
+}
+function copyShareUrl(fid){
+  let url = location.href.split('#')[0];
+  const sep = url.indexOf('?') >= 0 ? '&' : '?';
+  url = url + sep + 'fid=' + fid;
+  navigator.clipboard.writeText(url).then(function(){ toast('✅ 专属链接已复制'); }).catch(function(){ toast('链接：' + url); });
 }
 
 /* ================= 数据备份 ================= */
@@ -1897,7 +2002,7 @@ function pinKey(k){
   const err = document.getElementById('pinErr');
   if (err) err.textContent = '';
   if (k === 'back') { _pinInput = _pinInput.slice(0,-1); pinDots(); return; }
-  if (_pinInput.length >= 6) return;
+  if (_pinInput.length >= 4) return;
   _pinInput += k; pinDots();
   if (_pinInput.length === 4 && _pinMode === 'set2') {
     // 确认第二次输入
@@ -1924,7 +2029,26 @@ function pinKey(k){
     }
   }
 }
-function pinForgot(){ toast('请联系 Crazy Friday 客服重置访问密码'); }
+function pinForgot(){
+  if (!pinEnabled()) { toast('尚未设置访问密码'); return; }
+  // 兜底：清空本空间全部数据后重置密码（会丢失所有记录，强烈警示）
+  const ok = confirm('⚠️ 忘记密码重置\n\n这将清空当前空间的【全部数据】（成长记录、照片、健康数据等）后重置密码，操作不可恢复。\n\n如果你近期导出过备份，可在重置后用「导入恢复」找回数据。\n\n确认要清空并重置吗？');
+  if (!ok) return;
+  const ok2 = confirm('再次确认：清空全部数据并重置密码？\n\n此操作不可撤销。');
+  if (!ok2) return;
+  // 清空本空间所有 key
+  try {
+    const toDel = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf(PREFIX) === 0) toDel.push(k);
+    }
+    toDel.forEach(k => localStorage.removeItem(k));
+    sessionStorage.removeItem('wb_baby_pin_ok');
+  } catch(e){}
+  toast('已重置，正在重新初始化…');
+  setTimeout(function(){ location.reload(); }, 1200);
+}
 function pinMenu(){
   if (pinEnabled()) {
     if (confirm('关闭访问密码？（之后进入无需密码）')) {
@@ -1932,7 +2056,7 @@ function pinMenu(){
       toast('已关闭访问密码'); pinStatus();
     }
   } else {
-    openPin('set1', '设置访问密码', '设置 4 位数字密码\n之后每次进入本空间都需要输入');
+    openPin('set1', '设置访问密码', '设置 4 位数字密码\n之后每次进入本空间都需要输入\n密码仅存于本机，团队无法查看');
   }
 }
 function openPin(mode, title, sub){
