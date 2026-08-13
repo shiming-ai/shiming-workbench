@@ -263,19 +263,21 @@ function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'
 function uid(){return 'c'+Date.now()+Math.floor(Math.random()*999)}
 function genFid(){return 'f'+Date.now().toString(36)+Math.floor(Math.random()*46656).toString(36)}
 
-/* 老数据迁移：wb_auth_clients / wb_auth_total → baby 产品 */
+/* 老数据迁移：wb_auth_clients / wb_auth_total → baby 产品；无老数据时预置 baby 默认产品 */
 function migrate(){
-  const oldClients=load('wb_auth_clients',null);
-  if(oldClients===null) return; // 无老数据
-  const oldTotal=parseInt(load('wb_auth_total',20))||20;
   const products=getProducts();
-  if(!products.some(p=>p.id==='baby')){
-    products.unshift({
-      id:'baby', name:'宝贝成长工作台', emo:'👶', price:'¥599/年', file:'baby.html',
-      color1:'#EC4899', color2:'#7C3AED', total:oldTotal, clients:Array.isArray(oldClients)?oldClients:[]
-    });
-    save(PROD_KEY,products);
-  }
+  if(products.length) return; // 已有产品
+  const oldClients=load('wb_auth_clients',null);
+  const oldTotal=parseInt(load('wb_auth_total',20))||20;
+  const hasOld=oldClients!==null;
+  // 有老数据 → 用老数据；无老数据 → 预置空 baby（首次打开不空白）
+  const baby={
+    id:'baby', name:'宝贝成长工作台', emo:'👶', price:'¥599/年', file:'baby.html',
+    color1:'#EC4899', color2:'#7C3AED', total:hasOld?oldTotal:20,
+    clients:hasOld?(Array.isArray(oldClients)?oldClients:[]):[]
+  };
+  products.unshift(baby);
+  save(PROD_KEY,products);
 }
 function getProducts(){ return load(PROD_KEY,[]) }
 function saveProducts(list){ save(PROD_KEY,list) }
