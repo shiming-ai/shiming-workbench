@@ -71,10 +71,23 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
 .sheet h3{font-size:16px;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .sheet .close{margin-left:auto;width:28px;height:28px;border-radius:50%;background:var(--bg);border:none;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
-.qr-box{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:center}
-.qr-box img{width:230px;height:230px;border-radius:8px}
-.qr-url{font-size:10px;color:var(--ink3);word-break:break-all;margin-top:10px;line-height:1.5;text-align:center;max-width:260px}
-.qr-tip{font-size:10.5px;color:var(--primary);font-weight:700;margin-top:8px;text-align:center}
+/* 邀请卡 */
+.inv-card{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 6px 20px rgba(31,36,48,.08)}
+.inv-head{background:linear-gradient(135deg,#7C3AED,#A855F7 60%,#EC4899);padding:22px 18px 18px;color:#fff;position:relative}
+.inv-head .ih-logo{font-family:Georgia,serif;font-size:15px;font-weight:900;letter-spacing:-.3px;opacity:.95}
+.inv-head .ih-name{font-size:21px;font-weight:900;margin-top:8px;line-height:1.2}
+.inv-head .ih-sub{font-size:10.5px;opacity:.85;margin-top:5px;letter-spacing:.3px}
+.inv-head .ih-meta{display:inline-flex;align-items:center;gap:5px;margin-top:9px;background:rgba(255,255,255,.18);padding:4px 9px;border-radius:8px;font-size:10px;font-weight:700}
+.inv-head .ih-bear{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:23px}
+.inv-qr{background:#fff;padding:18px;display:flex;flex-direction:column;align-items:center}
+.inv-qr img{width:210px;height:210px;border-radius:10px}
+.inv-qr .iq-tip{font-size:11.5px;color:var(--primary);font-weight:700;margin-top:10px;text-align:center}
+.inv-qr .iq-url{font-size:9.5px;color:var(--ink3);word-break:break-all;margin-top:6px;text-align:center;max-width:250px;line-height:1.5;font-family:ui-monospace,Menlo,monospace}
+.inv-steps{background:#FAF9FD;padding:13px 14px;display:flex;gap:8px;border-top:1px solid var(--line)}
+.inv-steps .is{flex:1;text-align:center}
+.inv-steps .is .n{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:10.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:5px}
+.inv-steps .is .t{font-size:9.5px;color:var(--ink2);line-height:1.4}
+.inv-priv{padding:11px 14px;background:#F1EDFC;font-size:10px;color:var(--primary);line-height:1.6;text-align:center}
 .sheet .actions{display:flex;gap:8px;margin-top:12px}
 .sheet .actions .btn{flex:1}
 /* 说明 */
@@ -234,45 +247,100 @@ function copyUrl(fid){
 function openQr(id){
   const c=load(AUTH_KEY,[]).find(x=>x.id===id);if(!c)return;
   const url=clientUrl(c.fid);
+  const qrSrc='https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data='+encodeURIComponent(url);
   document.getElementById('qrBody').innerHTML=`
-    <div class="qr-box">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=${encodeURIComponent(url)}" alt="客户二维码" crossOrigin="anonymous">
-      <div class="qr-tip">👶 ${esc(c.name)} · 授权至 ${fmtDate(c.end)}</div>
-      <div class="qr-url">${esc(url)}</div>
+    <div class="inv-card">
+      <div class="inv-head">
+        <div class="ih-logo">Crazy Friday.</div>
+        <div class="ih-bear">${c.emo||'👶'}</div>
+        <div class="ih-name">${esc(c.name||'客户')} · 宝贝成长空间</div>
+        <div class="ih-sub">AI工作台年度使用版 · 专属家庭空间</div>
+        <div class="ih-meta">🛡️ 授权至 ${fmtDate(c.end)} · 空间 ${c.fid.slice(0,6).toUpperCase()}</div>
+      </div>
+      <div class="inv-qr">
+        <img src="${qrSrc}" alt="客户专属二维码">
+        <div class="iq-tip">📱 扫码进入「${esc(c.name||'客户')}」的专属空间</div>
+        <div class="iq-url">${esc(url)}</div>
+      </div>
+      <div class="inv-steps">
+        <div class="is"><div class="n">1</div><div class="t">微信扫码<br>浏览器打开</div></div>
+        <div class="is"><div class="n">2</div><div class="t">浏览器菜单<br>添加到主屏幕</div></div>
+        <div class="is"><div class="n">3</div><div class="t">像 APP 一样<br>独立记录</div></div>
+      </div>
+      <div class="inv-priv">🔒 该链接对应独立空间，数据互不可见 · 客户可设访问密码防转发</div>
     </div>
     <div class="actions">
       <button class="btn gray" onclick="copyUrl('${c.fid}')">📋 复制链接</button>
-      <button class="btn" onclick="downloadQr('${c.fid}')">⬇ 下载二维码</button>
-    </div>
-    <div class="note" style="margin-top:10px">客户手机扫码 → 进入自己的专属成长空间 → 浏览器菜单「添加到主屏幕」当 APP 用。客户可自行设置访问密码，链接即使被转发，无密码也无法进入。</div>`;
+      <button class="btn" onclick="downloadQr('${c.id}')">💾 下载邀请卡</button>
+    </div>`;
   document.getElementById('qrMask').classList.add('show');
 }
 function closeQr(){document.getElementById('qrMask').classList.remove('show')}
 document.getElementById('qrMask').addEventListener('click',function(e){if(e.target===this)closeQr()});
-function downloadQr(fid){
-  const c=load(AUTH_KEY,[]).find(x=>x.id===fid||x.fid===fid);if(!c)return;
+function downloadQr(id){
+  const c=load(AUTH_KEY,[]).find(x=>x.id===id||x.fid===id);if(!c)return;
   const url=clientUrl(c.fid);
   const img=new Image();
   img.crossOrigin='anonymous';
   img.onload=function(){
-    const canvas=document.createElement('canvas');canvas.width=560;canvas.height=620;
+    const W=620,H=820;
+    const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext('2d');
-    ctx.fillStyle='#fff';ctx.fillRect(0,0,560,620);
-    // 二维码
-    const qrSize=480;ctx.drawImage(img,40,20,qrSize,qrSize);
-    // 底部文字
-    ctx.fillStyle='#1F2430';ctx.font='bold 24px sans-serif';ctx.textAlign='center';
-    ctx.fillText((c.name||'客户')+' · 宝贝成长空间',280,540);
-    ctx.fillStyle='#9AA1AF';ctx.font='16px sans-serif';
-    ctx.fillText('Crazy Friday · 年度使用版',280,572);
-    ctx.fillText('扫码进入 · 数据独立',280,598);
+    // 背景
+    const bgGrad=ctx.createLinearGradient(0,0,0,H);bgGrad.addColorStop(0,'#F6F4FB');bgGrad.addColorStop(1,'#FFFFFF');
+    ctx.fillStyle=bgGrad;ctx.fillRect(0,0,W,H);
+    // 顶部渐变头
+    const hdGrad=ctx.createLinearGradient(0,0,W,0);hdGrad.addColorStop(0,'#7C3AED');hdGrad.addColorStop(.6,'#A855F7');hdGrad.addColorStop(1,'#EC4899');
+    ctx.fillStyle=hdGrad;ctx.fillRect(0,0,W,200);
+    // logo
+    ctx.fillStyle='rgba(255,255,255,.95)';ctx.font='bold 22px Georgia, serif';ctx.textAlign='left';
+    ctx.fillText('Crazy Friday.',40,55);
+    // 客户名
+    ctx.font='bold 30px sans-serif';ctx.fillText((c.name||'客户')+' · 宝贝成长空间',40,110);
+    // 副标题
+    ctx.fillStyle='rgba(255,255,255,.85)';ctx.font='14px sans-serif';
+    ctx.fillText('AI工作台年度使用版 · 专属家庭空间',40,138);
+    // 授权信息
+    ctx.font='bold 13px sans-serif';
+    const meta='🛡️ 授权至 '+fmtDate(c.end)+' · 空间 '+c.fid.slice(0,6).toUpperCase();
+    const metaW=ctx.measureText(meta).width;
+    ctx.fillStyle='rgba(255,255,255,.18)';ctx.beginPath();
+    const mx=40,my=155,mw=metaW+24,mh=26,mr=8;
+    ctx.moveTo(mx+mr,my);ctx.arcTo(mx+mw,my,mx+mw,my+mh,mr);ctx.arcTo(mx+mw,my+mh,mx,my+mh,mr);ctx.arcTo(mx,my+mh,mx,my,mr);ctx.arcTo(mx,my,mx+mw,my,mr);ctx.fill();
+    ctx.fillStyle='#fff';ctx.textAlign='center';
+    ctx.fillText(meta,mx+mw/2,my+18);
+    // 二维码白底卡
+    const qrSize=380,qx=(W-qrSize)/2,qy=240;
+    ctx.fillStyle='#fff';ctx.fillRect(qx-12,qy-12,qrSize+24,qrSize+24);
+    ctx.drawImage(img,qx,qy,qrSize,qrSize);
+    // 扫码提示
+    ctx.fillStyle='#7C3AED';ctx.font='bold 16px sans-serif';ctx.textAlign='center';
+    ctx.fillText('📱 扫码进入「'+(c.name||'客户')+'」的专属空间',W/2,qy+qrSize+40);
+    // URL
+    ctx.fillStyle='#9AA1AF';ctx.font='11px ui-monospace, Menlo, monospace';
+    ctx.fillText(url,W/2,qy+qrSize+62);
+    // 三步指引
+    const sy=qy+qrSize+90;
+    const steps=[['1','微信扫码'],['2','添加到主屏幕'],['3','像 APP 独立记录']];
+    steps.forEach((s,i)=>{
+      const sx=W/2-150+i*150;
+      ctx.fillStyle='#7C3AED';ctx.beginPath();ctx.arc(sx,sy,13,0,7);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(s[0],sx,sy);ctx.textBaseline='alphabetic';
+      ctx.fillStyle='#5A6272';ctx.font='11px sans-serif';
+      ctx.fillText(s[1],sx,sy+26);
+    });
+    // 底部隐私条
+    ctx.fillStyle='#F1EDFC';ctx.fillRect(0,H-50,W,50);
+    ctx.fillStyle='#7C3AED';ctx.font='12px sans-serif';ctx.textAlign='center';
+    ctx.fillText('🔒 该链接对应独立空间，数据互不可见 · 可设访问密码防转发',W/2,H-20);
     const a=document.createElement('a');
-    a.download=(c.name||'client')+'-qr.png';
+    a.download=(c.name||'client')+'-邀请卡.png';
     a.href=canvas.toDataURL('image/png');
     a.click();
   };
   img.onerror=function(){toast('生成失败，请用「复制链接」')};
-  img.src='https://api.qrserver.com/v1/create-qr-code/?size=480x480&margin=8&data='+encodeURIComponent(url);
+  img.src='https://api.qrserver.com/v1/create-qr-code/?size=380x380&margin=8&data='+encodeURIComponent(url);
 }
 
 /* ================= 初始化 ================= */
