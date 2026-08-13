@@ -486,6 +486,22 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
   .me-hd .nm{font-size:17px}
 }
 
+/* ===== 访问密码（防转发：只有本人能进入） ===== */
+#pinMask{position:fixed;inset:0;z-index:400;background:linear-gradient(170deg,#7C3AED,#A855F7);display:none;align-items:center;justify-content:center;flex-direction:column;padding:28px;color:#fff}
+#pinMask.show{display:flex}
+.pin-box{width:100%;max-width:320px;text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:24px;padding:30px 24px;backdrop-filter:blur(10px)}
+.pin-box .pb-bear{width:64px;height:64px;background:#fff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 14px;box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.pin-box .pb-t{font-size:17px;font-weight:900}
+.pin-box .pb-d{font-size:11px;opacity:.8;margin:6px 0 18px;line-height:1.6}
+.pin-dots{display:flex;gap:14px;justify-content:center;margin-bottom:18px}
+.pin-dots i{width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.5);transition:all .15s}
+.pin-dots i.on{background:#fff;border-color:#fff;transform:scale(1.15)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pin-pad button{min-height:54px;border-radius:16px;border:none;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:700;cursor:pointer;transition:transform .1s}
+.pin-pad button:active{transform:scale(.92);background:rgba(255,255,255,.25)}
+.pin-err{color:#FECACA;font-size:11px;min-height:16px;margin-top:10px;font-weight:600}
+.pin-forgot{font-size:10px;opacity:.7;margin-top:12px;text-decoration:underline;cursor:pointer}
+
 /* ===== 顶部栏精细化 ===== */
 .topbar{box-shadow:0 1px 0 rgba(168,85,247,.04)}
 .tb-brand .en{font-size:11.5px;letter-spacing:.3px}
@@ -510,6 +526,19 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
     <div class="ps-ico">🐻</div>
     <div class="ps-nm">宝贝成长</div>
     <div class="ps-en">CRAZY FRIDAY · FAMILY</div>
+  </div>
+</div>
+
+<!-- 访问密码（客户开启后，无密码无法进入 · 防止转发） -->
+<div id="pinMask">
+  <div class="pin-box">
+    <div class="pb-bear">🐻</div>
+    <div class="pb-t" id="pinName">宝贝成长空间</div>
+    <div class="pb-d">输入访问密码进入<br>这是<span style="font-weight:800">专属家庭空间</span>，密码保护您的记录</div>
+    <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="pin-pad" id="pinPad"></div>
+    <div class="pin-err" id="pinErr"></div>
+    <div class="pin-forgot" onclick="pinForgot()">忘记密码？联系技术支持</div>
   </div>
 </div>
 
@@ -710,6 +739,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
       <div class="me-row" onclick="exportData()"><div class="mr-ico" style="background:linear-gradient(135deg,#94A3B8,#64748B)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="mr-body"><div class="mr-t">导出备份</div><div class="mr-d">下载完整数据 JSON</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="me-row" onclick="document.getElementById('fileImport').click()"><div class="mr-ico" style="background:linear-gradient(135deg,#A8B29F,#7A8B6F)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="mr-body"><div class="mr-t">导入恢复</div><div class="mr-d">从备份恢复数据</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <div class="me-row" onclick="askClear()"><div class="mr-ico" style="background:linear-gradient(135deg,#F87171,#EF4444)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div><div class="mr-body"><div class="mr-t">清空数据</div><div class="mr-d">删除全部记录（二次确认）</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      <div class="me-row" onclick="pinMenu()"><div class="mr-ico" style="background:linear-gradient(135deg,#8B5CF6,#7C3AED)"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="mr-body"><div class="mr-t">访问密码 <span id="pinStatus" style="font-size:9px;font-weight:800;color:var(--ink3)">未开启</span></div><div class="mr-d">开启后需密码进入，转发链接也无法查看</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       <input type="file" id="fileImport" accept="application/json" style="display:none" onchange="importData(this)">
     </div>
 
@@ -1841,8 +1871,89 @@ function emptyState(emo,title,sub,btnTxt,btnFn,bState){
 
 /* ================= PWA / 升级 / 数据安全 ================= */
 // 当前产品版本（升级时改这里 + 跑升级兼容测试）
-const APP_VERSION = '4.0.1';
+const APP_VERSION = '4.0.2';
 const DATA_VERSION = '4';
+
+/* ===== 访问密码（防转发：只有本人能进入） ===== */
+const PIN_KEY = PREFIX + 'pin';
+let _pinInput = '', _pinMode = 'check', _pinCb = null;
+function pinEnabled(){ return !!(localStorage.getItem(PIN_KEY)); }
+function pinStatus(){
+  const el = document.getElementById('pinStatus');
+  if (el) { el.textContent = pinEnabled() ? '已开启' : '未开启'; el.style.color = pinEnabled() ? 'var(--green)' : 'var(--ink3)'; }
+}
+/* 渲染数字键盘 */
+function pinBuildPad(){
+  const pad = document.getElementById('pinPad');
+  const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫'];
+  pad.innerHTML = keys.map(k => k === '' ? '<button style="visibility:hidden"></button>' : `<button onclick="pinKey('${k==='⌫'?'back':k}')">${k==='⌫'?'⌫':k}</button>`).join('');
+}
+/* 刷新圆点 */
+function pinDots(){
+  const dots = document.querySelectorAll('#pinDots i');
+  dots.forEach((d,i) => d.classList.toggle('on', i < _pinInput.length));
+}
+function pinKey(k){
+  const err = document.getElementById('pinErr');
+  if (err) err.textContent = '';
+  if (k === 'back') { _pinInput = _pinInput.slice(0,-1); pinDots(); return; }
+  if (_pinInput.length >= 6) return;
+  _pinInput += k; pinDots();
+  if (_pinInput.length === 4 && _pinMode === 'set2') {
+    // 确认第二次输入
+    const v = _pinInput;
+    localStorage.setItem(PIN_KEY, v);
+    _pinInput = ''; pinDots();
+    closePin(); toast('✅ 访问密码已开启');
+    if (_pinCb) { const cb=_pinCb; _pinCb=null; cb(); }
+    return;
+  }
+  if (_pinInput.length === 4 && _pinMode === 'set1') {
+    _pinMode = 'set2'; _pinInput = '';
+    document.getElementById('pinName').textContent = '再输一次确认';
+    pinDots(); return;
+  }
+  if (_pinInput.length === 4 && _pinMode === 'check') {
+    const ok = _pinInput === localStorage.getItem(PIN_KEY);
+    if (ok) {
+      try { sessionStorage.setItem('wb_baby_pin_ok', PREFIX || 'shared'); } catch(e){}
+      closePin();
+    } else {
+      document.getElementById('pinErr').textContent = '密码错误，请重试';
+      _pinInput = ''; pinDots();
+    }
+  }
+}
+function pinForgot(){ toast('请联系 Crazy Friday 客服重置访问密码'); }
+function pinMenu(){
+  if (pinEnabled()) {
+    if (confirm('关闭访问密码？（之后进入无需密码）')) {
+      localStorage.removeItem(PIN_KEY);
+      toast('已关闭访问密码'); pinStatus();
+    }
+  } else {
+    openPin('set1', '设置访问密码', '设置 4 位数字密码\n之后每次进入本空间都需要输入');
+  }
+}
+function openPin(mode, title, sub){
+  _pinMode = mode; _pinInput = '';
+  document.getElementById('pinName').textContent = title || '输入访问密码';
+  const d = document.querySelector('.pin-box .pb-d');
+  if (d && sub) d.innerHTML = sub.replace(/\n/g,'<br>');
+  pinBuildPad(); pinDots();
+  document.getElementById('pinErr').textContent = '';
+  document.getElementById('pinMask').classList.add('show');
+}
+function closePin(){ document.getElementById('pinMask').classList.remove('show'); _pinInput=''; }
+/* boot：有密码且未验证 → 弹密码 */
+(function checkPin(){
+  try {
+    const ok = sessionStorage.getItem('wb_baby_pin_ok') === (PREFIX || 'shared');
+    if (pinEnabled() && !ok) {
+      setTimeout(function(){ openPin('check','宝贝成长空间','输入访问密码进入<br>这是专属家庭空间'); }, 450);
+    }
+  } catch(e){}
+})();
 
 // 1) 隐藏 PWA 启动画面（仅 PWA 模式显示 0.5s 后淡出）
 (function hidePwaSplash(){
@@ -1896,7 +2007,7 @@ const DATA_VERSION = '4';
 
 let toastTimer;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
-function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord();renderAI();renderGallery();renderHealth();renderTrends();renderMilestones();renderFamily();renderReminders();renderLicense();renderProfileForm()}
+function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord();renderAI();renderGallery();renderHealth();renderTrends();renderMilestones();renderFamily();renderReminders();renderLicense();renderProfileForm();pinStatus()}
 
 /* ================= 初始化 ================= */
 seed();
