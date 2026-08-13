@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#FAF8F6">
+<meta name="theme-color" content="#7C3AED">
 <meta name="description" content="宝贝成长工作台 · 记录成长 · 科学育儿 · AI陪伴每一步">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="zh-CN">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="宝贝成长">
 <title>宝贝成长工作台 · AI 成长空间</title>
-<link rel="apple-touch-icon" href="cfapp/logo-avatar.svg">
+<link rel="manifest" href="baby-manifest.json">
+<link rel="apple-touch-icon" href="baby-icon-180.svg">
+<link rel="icon" type="image/svg+xml" href="baby-icon-180.svg">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
@@ -361,6 +364,28 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 .know-stage{flex-shrink:0;padding:8px 13px;border-radius:11px;font-size:12px;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
 .know-stage.on{background:var(--primary);color:#fff;border-color:var(--primary)}
 
+/* ===== 升级不丢数据提示条（首屏可关闭） ===== */
+.upgrade-toast{position:fixed;left:14px;right:14px;top:calc(60px + var(--safe-t));z-index:240;background:linear-gradient(135deg,rgba(168,85,247,.97),rgba(124,58,237,.97));color:#fff;border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 10px 30px rgba(124,58,237,.35);font-size:12.5px;font-weight:600;animation:utIn .4s cubic-bezier(.22,.61,.36,1)}
+.upgrade-toast .ut-ico{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:15px}
+.upgrade-toast .ut-t{flex:1;line-height:1.45}
+.upgrade-toast .ut-t b{display:block;font-size:13.5px;margin-bottom:1px}
+.upgrade-toast .ut-close{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;line-height:1}
+@keyframes utIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PWA 启动画面（iOS 启动时短暂出现，避免白屏） ===== */
+#pwa-splash{position:fixed;inset:0;z-index:500;background:linear-gradient(170deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;color:#fff;transition:opacity .4s}
+#pwa-splash.hide{opacity:0;pointer-events:none}
+#pwa-splash .ps-ico{width:96px;height:96px;background:#fff;border-radius:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 50px rgba(0,0,0,.25);font-size:48px;margin-bottom:18px;animation:psBounce 1.2s ease infinite}
+#pwa-splash .ps-nm{font-family:Georgia,serif;font-size:22px;font-weight:900;letter-spacing:-.5px}
+#pwa-splash .ps-en{font-size:10px;font-weight:700;letter-spacing:3px;margin-top:4px;opacity:.7}
+@keyframes psBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ===== iOS 顶部状态栏适配（已添加到主屏幕时） ===== */
+@supports (padding-top: env(safe-area-inset-top)){
+  .topbar{padding-top:max(env(safe-area-inset-top), 14px)}
+  #pwa-splash{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+}
+
 /* ===== Onboarding ===== */
 #onboard{position:fixed;inset:0;z-index:300;background:linear-gradient(170deg,#FAF9F7,#F1EDFC);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px 22px calc(24px + var(--safe-b));overflow-y:auto}
 #onboard.show{display:flex}
@@ -457,6 +482,15 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 </style>
 </head>
 <body>
+
+<!-- PWA 启动画面（iOS Safari 添加到主屏幕后启动时短暂出现） -->
+<div id="pwa-splash">
+  <div style="text-align:center">
+    <div class="ps-ico">🐻</div>
+    <div class="ps-nm">宝贝成长</div>
+    <div class="ps-en">CRAZY FRIDAY · FAMILY</div>
+  </div>
+</div>
 
 <!-- Onboarding 首次引导 -->
 <div id="onboard">
@@ -1649,7 +1683,61 @@ function emptyState(emo,title,sub,btnTxt,btnFn,bState){
   return `<div class="empty" style="padding:36px 14px"><div style="width:86px;height:86px;margin:0 auto 12px" class="bear-float">${bear(bState||'empty')}</div><div style="font-size:15px;font-weight:800;color:var(--ink)">${title}</div><div style="font-size:12px;color:var(--ink3);margin-top:5px;line-height:1.7">${sub}</div>${btnTxt?`<button class="btn soft" style="width:auto;padding:0 22px;margin-top:14px" onclick="${btnFn}">${btnTxt}</button>`:''}</div>`;
 }
 
-/* ================= Toast & 刷新 ================= */
+/* ================= PWA / 升级 / 数据安全 ================= */
+// 当前产品版本（升级时改这里 + 跑升级兼容测试）
+const APP_VERSION = '4.0.1';
+const DATA_VERSION = '4';
+
+// 1) 隐藏 PWA 启动画面（仅 PWA 模式显示 0.5s 后淡出）
+(function hidePwaSplash(){
+  const splash = document.getElementById('pwa-splash');
+  if (!splash) return;
+  // 判断是否 PWA 模式（standalone / fullscreen / minimal-ui）
+  const isPwa = window.matchMedia('(display-mode: standalone)').matches
+    || window.matchMedia('(display-mode: fullscreen)').matches
+    || window.navigator.standalone === true; // iOS Safari
+  if (isPwa) {
+    setTimeout(() => { splash.classList.add('hide'); setTimeout(() => splash.remove(), 500); }, 350);
+  } else {
+    splash.remove(); // 普通浏览器不显示 splash
+  }
+})();
+
+// 2) 升级不丢数据检测 + 友好提示条
+(function checkUpgrade(){
+  const storedVer = localStorage.getItem('wb_baby_app_ver');
+  const storedDataVer = localStorage.getItem('wb_baby_data_ver');
+  const hasData = localStorage.getItem('wb_baby_profile');
+
+  // 2.1 首次（无任何数据）→ 走 Onboarding（已有逻辑处理）
+  if (!hasData) {
+    localStorage.setItem('wb_baby_app_ver', APP_VERSION);
+    localStorage.setItem('wb_baby_data_ver', DATA_VERSION);
+    return;
+  }
+
+  // 2.2 升级提示（同一会话内只显示一次，可关闭）
+  if (storedVer !== APP_VERSION && !sessionStorage.getItem('wb_baby_ut_shown')) {
+    sessionStorage.setItem('wb_baby_ut_shown', '1');
+    const isMajor = !storedVer || parseInt(storedVer) < parseInt(APP_VERSION);
+    const msg = isMajor
+      ? '<b>🎉 工作台已升级到 v' + APP_VERSION + '</b>你的数据已自动保留'
+      : '<b>✨ 已更新到 v' + APP_VERSION + '</b>已为你保留全部记录';
+    const html = '<div class="upgrade-toast" id="upgradeToast">' +
+      '<div class="ut-ico">🛡️</div>' +
+      '<div class="ut-t">' + msg + '<span style="opacity:.85;font-weight:500">数据存于本机，永远是你的</span></div>' +
+      '<div class="ut-close" onclick="document.getElementById(\'upgradeToast\').remove()">×</div>' +
+    '</div>';
+    setTimeout(() => { document.body.insertAdjacentHTML('beforeend', html); }, 800);
+    setTimeout(() => { const el = document.getElementById('upgradeToast'); if (el) el.remove(); }, 6000);
+  }
+
+  // 2.3 数据版本兼容：仅写标记，不动用户数据
+  localStorage.setItem('wb_baby_app_ver', APP_VERSION);
+  localStorage.setItem('wb_baby_data_ver', DATA_VERSION);
+})();
+
+
 let toastTimer;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
 function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord();renderAI();renderGallery();renderHealth();renderTrends();renderMilestones();renderFamily();renderReminders();renderLicense();renderProfileForm()}
