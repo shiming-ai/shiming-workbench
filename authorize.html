@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7C3AED">
+<meta name="description" content="Crazy Friday 授权管理中心 · 名额管理 · 客户专属链接与二维码">
+<title>Crazy Friday · 授权管理中心</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F6F4FB;--card:#FFFFFF;--ink:#1F2430;--ink2:#5A6272;--ink3:#9AA1AF;
+  --line:#ECE8F5;--primary:#7C3AED;--primary2:#A855F7;--pink:#EC4899;
+  --green:#10B981;--green-soft:#E9F9F2;--amber:#F59E0B;--red:#EF4444;--red-soft:#FEF2F2;
+  --safe-b:env(safe-area-inset-bottom);--safe-t:env(safe-area-inset-top);
+}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px calc(40px + var(--safe-b))}
+/* 顶栏 */
+.top{display:flex;align-items:center;gap:12px;padding:14px 4px 18px}
+.top .logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:15px;box-shadow:0 8px 24px rgba(124,58,237,.35);flex-shrink:0}
+.top .t1{font-family:Georgia,serif;font-size:19px;font-weight:900;letter-spacing:-.4px}
+.top .t2{font-size:10.5px;color:var(--ink3);margin-top:2px;letter-spacing:1px}
+.top .badge{margin-left:auto;font-size:10px;font-weight:800;color:var(--primary);background:var(--primary-soft,#F1EDFC);padding:6px 10px;border-radius:10px;flex-shrink:0}
+/* 卡片 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(31,36,48,.03)}
+.sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sec-hd h2{font-size:15px;font-weight:800}
+.sec-hd .sub{font-size:10.5px;color:var(--ink3);margin-left:auto}
+/* 产品卡 */
+.prod{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:linear-gradient(135deg,#F1EDFC,#FDF0F7);border:1px solid rgba(124,58,237,.15)}
+.prod .pi{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#EC4899,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 6px 16px rgba(236,72,153,.3)}
+.prod .pn{font-size:14.5px;font-weight:900}
+.prod .pd{font-size:10.5px;color:var(--ink2);margin-top:2px}
+.prod .pp{margin-left:auto;text-align:right}
+.prod .pp .v{font-size:16px;font-weight:900;color:var(--primary)}
+.prod .pp .u{font-size:9px;color:var(--ink3)}
+/* 名额 */
+.quota{display:flex;gap:10px;margin-top:12px}
+.q-card{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.q-card .n{font-size:20px;font-weight:900;color:var(--primary)}
+.q-card .n.g{color:var(--green)}
+.q-card .n.r{color:var(--red)}
+.q-card .l{font-size:9.5px;color:var(--ink3);margin-top:2px}
+/* 表单 */
+.f-row{display:flex;gap:8px;margin:12px 0 4px}
+.f-row input{flex:1;min-height:46px;border:1.5px solid var(--line);border-radius:13px;padding:0 14px;font-size:16px;outline:none;background:#FAF9FD;color:var(--ink)}
+.f-row input:focus{border-color:var(--primary)}
+.btn{min-height:46px;padding:0 18px;border:none;border-radius:13px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.btn.gray{background:var(--ink3)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink2)}
+.btn.small{min-height:34px;padding:0 11px;font-size:11.5px;border-radius:10px}
+/* 客户列表 */
+.client{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;background:#FDFCFF}
+.client .av{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#F1EDFC,#FDF0F7);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.client .ci{flex:1;min-width:0}
+.client .cn{font-size:13px;font-weight:800}
+.client .cf{font-size:9.5px;color:var(--ink3);margin-top:2px;font-family:ui-monospace,Menlo,monospace}
+.client .cs{font-size:9px;font-weight:800;padding:3px 8px;border-radius:8px;flex-shrink:0}
+.client .cs.on{background:var(--green-soft);color:var(--green)}
+.client .cs.off{background:var(--red-soft);color:var(--red)}
+.client .ca{display:flex;gap:5px;flex-shrink:0}
+.icon-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2)}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* 弹窗 */
+.mask{position:fixed;inset:0;z-index:200;background:rgba(20,12,40,.5);display:none;align-items:flex-end;justify-content:center}
+.mask.show{display:flex}
+.sheet{width:100%;max-width:560px;background:#fff;border-radius:22px 22px 0 0;padding:20px 18px calc(22px + var(--safe-b));max-height:88vh;overflow-y:auto;animation:up .3s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.sheet h3{font-size:16px;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sheet .close{margin-left:auto;width:28px;height:28px;border-radius:50%;background:var(--bg);border:none;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.qr-box{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:center}
+.qr-box img{width:230px;height:230px;border-radius:8px}
+.qr-url{font-size:10px;color:var(--ink3);word-break:break-all;margin-top:10px;line-height:1.5;text-align:center;max-width:260px}
+.qr-tip{font-size:10.5px;color:var(--primary);font-weight:700;margin-top:8px;text-align:center}
+.sheet .actions{display:flex;gap:8px;margin-top:12px}
+.sheet .actions .btn{flex:1}
+/* 说明 */
+.note{background:#FDFBF4;border:1px solid #F3EBD3;border-radius:14px;padding:12px 14px;font-size:11px;color:#8A7B4A;line-height:1.8;margin-top:4px}
+.toast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(20,12,40,.92);color:#fff;font-size:12.5px;padding:11px 18px;border-radius:12px;z-index:300;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.show{opacity:1}
+.steps{display:flex;gap:8px;margin-top:10px}
+.step{flex:1;text-align:center;padding:10px 6px;background:var(--card);border:1px solid var(--line);border-radius:13px}
+.step .sn{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:5px}
+.step .st{font-size:9.5px;color:var(--ink2);line-height:1.4}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="logo">CF</div>
+    <div>
+      <div class="t1">Crazy Friday.</div>
+      <div class="t2">AUTHORIZATION CENTER · 授权管理中心</div>
+    </div>
+    <div class="badge">🛡️ 品牌锁定</div>
+  </div>
+
+  <!-- 产品 -->
+  <div class="card">
+    <div class="prod">
+      <div class="pi">👶</div>
+      <div>
+        <div class="pn">宝贝成长工作台</div>
+        <div class="pd">独立数据空间 · AI 育儿 · 视频相册 · 添加主屏幕</div>
+      </div>
+      <div class="pp"><div class="v">¥599</div><div class="u">/ 年 · 年度使用版</div></div>
+    </div>
+  </div>
+
+  <!-- 名额 -->
+  <div class="card">
+    <div class="sec-hd"><h2>我的授权名额</h2><span class="sub">可授权客户总数</span></div>
+    <div class="quota">
+      <div class="q-card"><div class="n" id="qTotal">20</div><div class="l">总名额</div></div>
+      <div class="q-card"><div class="n" id="qUsed">0</div><div class="l">已分配</div></div>
+      <div class="q-card"><div class="n g" id="qLeft">20</div><div class="l">剩余可卖</div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="st">客户付款 ¥599/年<br>你填客户名生成专属链接</div></div>
+      <div class="step"><div class="sn">2</div><div class="st">发链接或二维码<br>客户扫码进入专属空间</div></div>
+      <div class="step"><div class="sn">3</div><div class="st">到期自动提示续费<br>客户无法转授他人</div></div>
+    </div>
+  </div>
+
+  <!-- 生成新客户 -->
+  <div class="card">
+    <div class="sec-hd"><h2>生成客户授权</h2><span class="sub">一个客户 = 一个独立空间</span></div>
+    <div class="f-row">
+      <input id="newName" type="text" placeholder="客户昵称，如：小雨的宝宝" maxlength="20">
+      <button class="btn" onclick="addClient()">生成专属链接</button>
+    </div>
+    <div class="note">⚡ 每个客户生成的链接/二维码<strong>独立且数据隔离</strong>；客户可设访问密码，即使转发链接他人也无法进入。品牌 Crazy Friday 锁定不可改。</div>
+  </div>
+
+  <!-- 客户列表 -->
+  <div class="card">
+    <div class="sec-hd"><h2>已授权客户</h2><span class="sub" id="listCount">0 个</span></div>
+    <div id="clientList"></div>
+  </div>
+
+</div>
+
+<!-- 二维码弹窗 -->
+<div class="mask" id="qrMask">
+  <div class="sheet">
+    <h3>🎯 客户授权二维码 <button class="close" onclick="closeQr()">×</button></h3>
+    <div id="qrBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= 数据 ================= */
+const AUTH_KEY='wb_auth_clients';
+const AUTH_TOTAL='wb_auth_total';
+function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let toastT;
+function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2400)}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+/* ================= 渲染 ================= */
+function baseUrl(){return location.origin + location.pathname.replace(/authorize\.html$/,'') + 'baby.html'}
+function clientUrl(fid){return baseUrl() + '?fid=' + fid}
+function renderQuota(){
+  const total=parseInt(load(AUTH_TOTAL,20))||20;
+  const list=load(AUTH_KEY,[]);
+  const used=list.length;
+  document.getElementById('qTotal').textContent=total;
+  document.getElementById('qUsed').textContent=used;
+  document.getElementById('qLeft').textContent=Math.max(0,total-used);
+  document.getElementById('qLeft').className='n '+(total-used>0?'g':'r');
+  document.getElementById('listCount').textContent=used+' 个';
+}
+function fmtDate(s){if(!s)return'--';const p=s.split('-');return p[0]+'.'+p[1]+'.'+p[2]}
+function statusOf(c){
+  const end=new Date(c.end.replace(/-/g,'/'));
+  const expired=end.getTime() < new Date().setHours(0,0,0,0);
+  return expired?'off':'on';
+}
+function renderList(){
+  const list=load(AUTH_KEY,[]);
+  const el=document.getElementById('clientList');
+  if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--ink3);font-size:12px;padding:24px 0">还没有客户授权<br><span style="font-size:10.5px">填客户名，点「生成专属链接」开始</span></div>';return}
+  el.innerHTML=list.map(c=>{
+    const on=statusOf(c)==='on';
+    return `<div class="client">
+      <div class="av">${c.emo||'👶'}</div>
+      <div class="ci">
+        <div class="cn">${esc(c.name||'未命名客户')}</div>
+        <div class="cf">空间 ${(c.fid||'').slice(0,8).toUpperCase()} · 授权至 ${fmtDate(c.end)}</div>
+      </div>
+      <span class="cs ${on?'on':'off'}">${on?'使用中':'已到期'}</span>
+      <div class="ca">
+        <button class="icon-btn" title="复制链接" onclick="copyUrl('${c.fid}')"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></button>
+        <button class="icon-btn" title="二维码" onclick="openQr('${c.id}')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M17 17h4"/></svg></button>
+        <button class="icon-btn" title="续期1年" onclick="renew('${c.id}')"><svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9L1 10"/></svg></button>
+        <button class="icon-btn" title="删除" style="color:var(--red)" onclick="delClient('${c.id}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ================= 操作 ================= */
+function genFid(){return 'f'+Date.now().toString(36)+Math.floor(Math.random()*46656).toString(36)}
+function addClient(){
+  const name=(document.getElementById('newName').value||'').trim();
+  const total=parseInt(load(AUTH_TOTAL,20))||20;
+  const list=load(AUTH_KEY,[]);
+  if(list.length>=total){toast('⚠️ 名额已用完，扩容请联系升级');return}
+  const fid=genFid();
+  const start=new Date();const end=new Date();end.setDate(end.getDate()+365);
+  const fs=start.getFullYear()+'-'+String(start.getMonth()+1).padStart(2,'0')+'-'+String(start.getDate()).padStart(2,'0');
+  const es=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');
+  const c={id:uid(),fid,name:name||'客户'+(list.length+1),emo:'👶',start:fs,end:es};
+  list.unshift(c);save(AUTH_KEY,list);
+  document.getElementById('newName').value='';
+  renderQuota();renderList();
+  toast('✅ 已生成，打开二维码发给客户');
+  openQr(c.id);
+}
+function uid(){return 'c'+Date.now()+Math.floor(Math.random()*999)}
+function renew(id){const list=load(AUTH_KEY,[]);const c=list.find(x=>x.id===id);if(!c)return;const end=new Date(c.end.replace(/-/g,'/'));end.setDate(end.getDate()+365);c.end=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');save(AUTH_KEY,list);renderList();toast('✅ 已续期 1 年')}
+function delClient(id){if(!confirm('删除该客户授权？其专属空间数据仍在，只是不再管理'))return;save(AUTH_KEY,load(AUTH_KEY,[]).filter(x=>x.id!==id));renderQuota();renderList();toast('已删除')}
+function copyUrl(fid){
+  const url=clientUrl(fid);
+  navigator.clipboard.writeText(url).then(()=>toast('✅ 专属链接已复制，可发给客户')).catch(()=>toast(url));
+}
+function openQr(id){
+  const c=load(AUTH_KEY,[]).find(x=>x.id===id);if(!c)return;
+  const url=clientUrl(c.fid);
+  document.getElementById('qrBody').innerHTML=`
+    <div class="qr-box">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=${encodeURIComponent(url)}" alt="客户二维码" crossOrigin="anonymous">
+      <div class="qr-tip">👶 ${esc(c.name)} · 授权至 ${fmtDate(c.end)}</div>
+      <div class="qr-url">${esc(url)}</div>
+    </div>
+    <div class="actions">
+      <button class="btn gray" onclick="copyUrl('${c.fid}')">📋 复制链接</button>
+      <button class="btn" onclick="downloadQr('${c.fid}')">⬇ 下载二维码</button>
+    </div>
+    <div class="note" style="margin-top:10px">客户手机扫码 → 进入自己的专属成长空间 → 浏览器菜单「添加到主屏幕」当 APP 用。客户可自行设置访问密码，链接即使被转发，无密码也无法进入。</div>`;
+  document.getElementById('qrMask').classList.add('show');
+}
+function closeQr(){document.getElementById('qrMask').classList.remove('show')}
+document.getElementById('qrMask').addEventListener('click',function(e){if(e.target===this)closeQr()});
+function downloadQr(fid){
+  const c=load(AUTH_KEY,[]).find(x=>x.id===fid||x.fid===fid);if(!c)return;
+  const url=clientUrl(c.fid);
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=function(){
+    const canvas=document.createElement('canvas');canvas.width=560;canvas.height=620;
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='#fff';ctx.fillRect(0,0,560,620);
+    // 二维码
+    const qrSize=480;ctx.drawImage(img,40,20,qrSize,qrSize);
+    // 底部文字
+    ctx.fillStyle='#1F2430';ctx.font='bold 24px sans-serif';ctx.textAlign='center';
+    ctx.fillText((c.name||'客户')+' · 宝贝成长空间',280,540);
+    ctx.fillStyle='#9AA1AF';ctx.font='16px sans-serif';
+    ctx.fillText('Crazy Friday · 年度使用版',280,572);
+    ctx.fillText('扫码进入 · 数据独立',280,598);
+    const a=document.createElement('a');
+    a.download=(c.name||'client')+'-qr.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+  };
+  img.onerror=function(){toast('生成失败，请用「复制链接」')};
+  img.src='https://api.qrserver.com/v1/create-qr-code/?size=480x480&margin=8&data='+encodeURIComponent(url);
+}
+
+/* ================= 初始化 ================= */
+renderQuota();
+renderList();
+</script>
+</body>
+</html>
