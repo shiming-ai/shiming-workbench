@@ -1,0 +1,17 @@
+{
+  "name": "宝贝成长工作台 · Crazy Friday",
+  "short_name": "宝贝成长",
+  "description": "一个家庭专属的宝宝数字成长空间 · 记录成长 · 科学育儿 · AI 陪伴每一步",
+  "start_url": "./baby.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF8F6",
+  "theme_color": "#7C3AED",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "baby-icon-180.svg", "sizes": "180x180", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "baby-icon-180.svg", "sizes": "180x180", "type": "image/svg+xml", "purpose": "apple-touch-icon" },
+    { "src": "baby-icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
