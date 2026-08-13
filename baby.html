@@ -372,6 +372,27 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 .upgrade-toast .ut-close{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;line-height:1}
 @keyframes utIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 
+/* ===== 视频上传与展示 ===== */
+.vid-prev video{max-height:220px;background:#000}
+.img-pick:active{transform:scale(.98)}
+.tl-vid{position:relative;border-radius:14px;overflow:hidden;background:#000;margin-bottom:4px}
+.tl-vid video{width:100%;max-height:260px;display:block;background:#000}
+.tl-vid-badge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;font-weight:800;padding:4px 8px;border-radius:8px;display:flex;align-items:center;gap:4px}
+.tl-vid-badge svg{width:10px;height:10px;fill:#fff;stroke:none}
+.vid-badge{position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+.vid-badge svg{width:12px;height:12px;fill:#fff;stroke:none}
+.g-video-card{width:100%;border-radius:14px;overflow:hidden;background:#000;position:relative;margin-bottom:4px}
+.g-video-card video{width:100%;max-height:300px;display:block;background:#000}
+.me-link{display:flex;align-items:center;gap:10px;margin-top:12px;padding:11px 12px;background:linear-gradient(135deg,rgba(168,85,247,.1),rgba(236,72,153,.06));border:1px solid rgba(168,85,247,.2);border-radius:14px}
+.me-link .ml-ico{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#8B5CF6,#EC4899);display:flex;align-items:center;justify-content:center}
+.me-link .ml-ico svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.me-link .ml-t{flex:1;min-width:0}
+.me-link .ml-tt{font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:6px}
+.me-link .ml-tag{font-size:8.5px;font-weight:800;padding:2px 6px;border-radius:6px;background:var(--primary);color:#fff}
+.me-link .ml-d{font-size:9.5px;color:var(--ink3);margin-top:1px;line-height:1.4}
+.me-link .ml-btn{flex-shrink:0;height:34px;padding:0 13px;border:none;border-radius:10px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:11.5px;font-weight:800;cursor:pointer}
+.me-link .ml-btn:active{transform:scale(.94)}
+
 /* ===== PWA 启动画面（iOS 启动时短暂出现，避免白屏） ===== */
 #pwa-splash{position:fixed;inset:0;z-index:500;background:linear-gradient(170deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;color:#fff;transition:opacity .4s}
 #pwa-splash.hide{opacity:0;pointer-events:none}
@@ -508,7 +529,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
   <div class="tb-menu" onclick="openDrawer()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
   <div class="tb-brand">
     <div class="en">Crazy <i>Friday.</i></div>
-    <div class="cn">宝贝成长工作台</div>
+    <div class="cn" id="tbWbName">宝贝成长工作台</div>
     <div class="sub">记录成长 · 科学育儿 · AI陪伴每一步</div>
   </div>
   <div class="tb-ic" onclick="goPage('page-reminders')"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="bellDot" style="display:none"></span></div>
@@ -642,6 +663,14 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
           <div class="lic-d" id="licInfo">使用周期：12 个月</div>
         </div>
       </div>
+      <div class="me-link">
+        <div class="ml-ico"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div>
+        <div class="ml-t">
+          <div class="ml-tt">我的专属链接 <span class="ml-tag" id="fidTag"></span></div>
+          <div class="ml-d">发给家人/客户，各自数据完全隔离</div>
+        </div>
+        <button class="ml-btn" onclick="copyLink()">复制链接</button>
+      </div>
     </div>
 
     <!-- 成长管理：2×2 彩色大卡 -->
@@ -699,6 +728,7 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
   <div class="page" id="page-profile">
     <div class="sub-top"><div class="sub-back" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><h2>宝贝资料</h2></div>
     <div class="card pad">
+      <div class="field"><label>工作台名称（可自定义，品牌名保持不变）</label><input id="eWbName" type="text" placeholder="如：糖糖的成长台"></div>
       <div class="field"><label>宝宝昵称</label><input id="eName" type="text" placeholder="如：小宝贝"></div>
       <div class="field"><label>出生日期</label><input id="eBirth" type="date"></div>
       <div class="field"><label>头像</label><div class="av-pick" id="avPick"></div></div>
@@ -824,8 +854,45 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
 <div id="toast"></div>
 
 <script>
-/* ================= 数据层 ================= */
-const K={profile:'wb_baby_profile',health:'wb_baby_health',moments:'wb_baby_moments',vaccines:'wb_baby_vaccines',daily:'wb_baby_daily',records:'wb_baby_records',members:'wb_baby_members',photos:'wb_baby_photos',reminders:'wb_baby_reminders',milestones:'wb_baby_milestones',logs:'wb_baby_logs',license:'wb_baby_license',feed_done:'wb_baby_feed_done',version:'wb_baby_version',onboard:'wb_baby_onboard',firsts:'wb_baby_firsts',reports:'wb_baby_reports',demo:'wb_baby_demo'};
+/* ============ 客户空间隔离（fid） ============
+   同一个链接发给多个客户时，数据必须互相隔离。
+   方案：URL ?fid=xxx → 所有存储 key 自动带 fid 前缀。
+   - 无 fid（老客户/演示）→ 用旧 key（wb_baby_xxx），数据完全兼容
+   - 有 fid（专属链接）→ 用 wb_baby_{fid}_xxx，与其他客户彻底隔离
+   老客户拿到专属链接首次打开会自动把旧数据迁移进自己的空间。
+   ============================================= */
+let FID = (function(){
+  try{
+    const q = new URLSearchParams(location.search);
+    let f = (q.get('fid') || q.get('uid') || '').trim();
+    f = f.replace(/[^a-zA-Z0-9_-]/g,'');
+    return f;
+  }catch(e){ return ''; }
+})();
+const PREFIX = FID ? 'wb_baby_' + FID + '_' : 'wb_baby_';
+// K 改为惰性 getter：K.profile 每次读取都返回当前空间对应的 key（现有代码零改动）
+const K = {};
+['profile','health','moments','vaccines','daily','records','members','photos','reminders','milestones','logs','license','feed_done','version','onboard','firsts','reports','demo','workbench'].forEach(function(n){
+  Object.defineProperty(K, n, { get(){ return PREFIX + n; } });
+});
+// 老数据迁移：带 fid 打开时，若新空间无数据但旧空间有数据 → 迁移到新空间
+(function migrate(){
+  if (!FID) return;
+  try{
+    if (localStorage.getItem(K.profile)) return; // 新空间已有数据
+    if (!localStorage.getItem('wb_baby_profile')) return; // 旧空间也无数据
+    const KEYS=['profile','health','moments','vaccines','daily','records','members','photos','reminders','milestones','logs','license','feed_done','version','onboard','firsts','reports','demo','workbench'];
+    let migrated=0;
+    KEYS.forEach(function(n){
+      const oldV = localStorage.getItem('wb_baby_' + n);
+      if (oldV !== null && !localStorage.getItem(K[n])) {
+        localStorage.setItem(K[n], oldV);
+        migrated++;
+      }
+    });
+    if (migrated > 0) console.log('[CF] 已迁移 ' + migrated + ' 组数据到专属空间 ' + FID);
+  }catch(e){}
+})();
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -836,6 +903,38 @@ function daysFrom(s){if(!s)return 99999;const t=new Date(s.replace(/-/g,'/'));if
 function ageText(b){if(!b)return'--';const x=new Date(b.replace(/-/g,'/')),n=new Date();let y=n.getFullYear()-x.getFullYear(),m=n.getMonth()-x.getMonth(),d=n.getDate()-x.getDate();if(d<0){m--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0){y--;m+=12}if(y>0)return y+'岁'+m+'个月'+d+'天';if(m>0)return m+'个月'+d+'天';return d+'天'}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function uid(p){return(p||'id')+Date.now()+Math.floor(Math.random()*999)}
+/* ===== 媒体库（IndexedDB：视频 / 大图，localStorage 只存小数据） =====
+   客户可传视频，视频 base64 太大（5MB 上限装不下），用 IndexedDB 存 Blob。
+   记录里存 mediaId 引用，渲染时按需取回（不一次性加载，保证首页轻量）。 */
+let _mediaDB=null;
+function openMediaDB(){return new Promise(function(res,rej){
+  if(_mediaDB)return res(_mediaDB);
+  try{
+    const rq=indexedDB.open('cf_baby_media',1);
+    rq.onupgradeneeded=function(e){const db=e.target.result;if(!db.objectStoreNames.contains('media'))db.createObjectStore('media');};
+    rq.onsuccess=function(e){_mediaDB=e.target.result;res(_mediaDB);};
+    rq.onerror=function(){rej(rq.error);};
+  }catch(e){rej(e);}
+});}
+function mediaPut(id,blob){return openMediaDB().then(function(db){return new Promise(function(res,rej){try{const tx=db.transaction('media','readwrite');tx.objectStore('media').put(blob,id);tx.oncomplete=function(){res()};tx.onerror=function(){rej(tx.error)};}catch(e){rej(e)}})});}
+function mediaGet(id){return openMediaDB().then(function(db){return new Promise(function(res,rej){try{const tx=db.transaction('media','readonly');const rq=tx.objectStore('media').get(id);rq.onsuccess=function(){res(rq.result)};rq.onerror=function(){rej(rq.error)};}catch(e){rej(e)}})});}
+function mediaDel(id){return openMediaDB().then(function(db){return new Promise(function(res,rej){try{const tx=db.transaction('media','readwrite');tx.objectStore('media').delete(id);tx.oncomplete=function(){res()};tx.onerror=function(){rej(tx.error)};}catch(e){rej(e)}})});}
+/* 上传视频 → 存 IndexedDB，返回 mediaId（限 40MB，避免撑爆） */
+function saveVideoFile(file, cb){
+  if(file.size > 40*1024*1024){ toast('视频过大，请压缩到 40MB 内'); return; }
+  const id = 'v' + Date.now() + Math.floor(Math.random()*999);
+  mediaPut(id, file).then(function(){ cb(id); }).catch(function(e){ toast('保存视频失败，请重试'); });
+}
+/* 记录/相册渲染时：把 mediaId 换成可播放地址（异步懒加载） */
+function attachMedia(el, mediaId){
+  if(!mediaId || !el) return;
+  mediaGet(mediaId).then(function(blob){
+    if(!blob) return;
+    const url = URL.createObjectURL(blob);
+    if(el.tagName === 'VIDEO'){ el.src = url; }
+    else if(el.querySelector){ const v = el.querySelector('video'); if(v) v.src = url; }
+  }).catch(function(){});
+}
 /* 图片压缩：上传自动压到 900px 宽、JPEG 72%，存本机 localStorage */
 function compressImage(file,maxW,cb){
   const reader=new FileReader();
@@ -917,6 +1016,7 @@ function openForm(title,fields,cb){
   document.getElementById('formTitle').textContent=title;
   document.getElementById('formBody').innerHTML=fields.map(f=>{
     if(f.type==='file')return`<div class="field"><label>${f.label}</label><div class="img-pick" onclick="pickImage('${f.key}')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>选择照片</div><img class="img-prev" id="imgprev_${f.key}" alt="预览"></div>`;
+    if(f.type==='video')return`<div class="field"><label>${f.label}</label><div class="img-pick" onclick="pickVideo('${f.key}')"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20"/></svg>选择视频</div><div class="vid-prev" id="vidprev_${f.key}"><video id="vidprevvideo_${f.key}" controls style="display:none;width:100%;border-radius:12px;margin-top:8px"></video></div></div>`;
     if(f.type==='select')return`<div class="field"><label>${f.label}</label><select id="f_${f.key}">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`;
     if(f.type==='chips')return`<div class="field"><label>${f.label}</label><div class="chips" id="f_${f.key}">${(f.options||[]).map(o=>`<span class="chip" onclick="pickChip(this,'${f.key}','${o}')">${o}</span>`).join('')}</div></div>`;
     if(f.type==='textarea')return`<div class="field"><label>${f.label}</label><textarea id="f_${f.key}" placeholder="${f.ph||''}"></textarea></div>`;
@@ -924,8 +1024,24 @@ function openForm(title,fields,cb){
   }).join('')+`<button class="btn" onclick="submitForm()">保存</button>`;
   formCb=cb;
   window._fileKeys=fields.filter(f=>f.type==='file').map(f=>f.key);
+  window._vidKeys=fields.filter(f=>f.type==='video').map(f=>f.key);
   fields.forEach(f=>{if(f.type==='file')window['_img_'+f.key]=''});
+  fields.forEach(f=>{if(f.type==='video')window['_vid_'+f.key]=''});
   openSheet('maskForm');
+}
+/* 选视频：暂存 file → 预览 → 保存时写入 mediaId */
+function pickVideo(key){
+  const input=document.createElement('input');
+  input.type='file'; input.accept='video/*';
+  input.onchange=function(){
+    const f=input.files[0]; if(!f)return;
+    if(f.size>40*1024*1024){toast('视频过大，请压缩到 40MB 内');return}
+    const url=URL.createObjectURL(f);
+    const v=document.getElementById('vidprevvideo_'+key);
+    if(v){v.src=url;v.style.display='block'}
+    saveVideoFile(f,function(mediaId){window['_vid_'+key]=mediaId;toast('✅ 视频已就绪，保存后生效')});
+  };
+  input.click();
 }
 function pickChip(el,key,val){
   el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
@@ -945,12 +1061,16 @@ function submitForm(){
     else vals[key]=el.value.trim();
   });
   (window._fileKeys||[]).forEach(k=>{vals[k]=window['_img_'+k]||''});
+  (window._vidKeys||[]).forEach(k=>{vals[k] = window['_vid_'+k] || ''; vals[k==='video'?'mediaId':'mediaId']=window['_vid_'+k]||''});
   formCb(vals);closeSheet('maskForm');
 }
 
 /* ================= 首页 ================= */
 function renderHome(){
   const p=load(K.profile,{}),name=p.name||'小宝贝';
+  // 工作台名称（客户可自定义，品牌 Crazy Friday 固定）
+  const wbn=document.getElementById('tbWbName');
+  if(wbn) wbn.textContent = p.workbenchName || '宝贝成长工作台';
   const hr=new Date().getHours();
   document.getElementById('greetHello').textContent=hr<5?'夜深了':hr<9?'早上好':hr<12?'上午好':hr<14?'中午好':hr<18?'下午好':'晚上好';
   document.getElementById('greetRole').textContent=p.role||'妈妈';
@@ -1093,7 +1213,8 @@ function renderRecord(){
   if(recFilter!=='全部')m=m.filter(x=>x.type===recFilter);
   const el=document.getElementById('recordList');
   if(!m.length){el.innerHTML=`<div class="empty"><div class="e-ico">📝</div>还没有${recFilter==='全部'?'':recFilter}记录<br>点右上「＋ 添加记录」</div>`;return}
-  el.innerHTML=m.map(x=>`<div class="tl-item"><div class="tl-card">${x.img?`<img class="tl-thumb" src="${x.img}" alt="">`:`<div class="tl-emo" style="background:${typeBg(x.type)}">${x.emo||'🌱'}</div>`}<div class="tl-body"><div class="tl-title">${esc(x.title)} <span class="type">${x.type||'成长'}</span></div>${x.desc?`<div class="tl-desc">${esc(x.desc)}</div>`:''}<div class="tl-meta"><span>${fmtDate(x.date)}</span>${x.tag?`<span># ${esc(x.tag)}</span>`:''}<button class="tl-del" onclick="delMoment('${x.id}')">删</button></div></div></div></div>`).join('');
+  el.innerHTML=m.map(x=>`<div class="tl-item"><div class="tl-card">${x.img?`<img class="tl-thumb" src="${x.img}" alt="">`:x.mediaId?`<div class="tl-vid"><video id="tlv_${x.id}" controls preload="metadata" playsinline></video><div class="tl-vid-badge"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20"/></svg>视频</div></div>`:`<div class="tl-emo" style="background:${typeBg(x.type)}">${x.emo||'🌱'}</div>`}<div class="tl-body"><div class="tl-title">${esc(x.title)} <span class="type">${x.type||'成长'}</span></div>${x.desc?`<div class="tl-desc">${esc(x.desc)}</div>`:''}<div class="tl-meta"><span>${fmtDate(x.date)}</span>${x.tag?`<span># ${esc(x.tag)}</span>`:''}<button class="tl-del" onclick="delMoment('${x.id}')">删</button></div></div></div></div>`).join('');
+  m.forEach(function(x){ if(x.mediaId){ const v=document.getElementById('tlv_'+x.id); if(v) attachMedia(v, x.mediaId); } });
 }
 function typeBg(t){return t==='照片'?'#EBF7FE':t==='日记'?'#FDF0F7':t==='里程碑'?'#FEF7E6':'#F1EDFC'}
 function delMoment(id){if(!confirm('确定删除这条记录吗？'))return;save(K.moments,load(K.moments,[]).filter(x=>x.id!==id));renderRecord();renderHome();log('我','删除了一条记录');toast('已删除')}
@@ -1229,17 +1350,28 @@ function renderGallery(){
   document.getElementById('galTitle').textContent=galCat==='全部'?'全部照片':galCat+' · '+cnt(galCat)+' 张';
   const list=galCat==='全部'?ph:ph.filter(x=>x.cat===galCat);
   document.getElementById('galleryGrid').innerHTML=list.map(x=>x.img
-    ?`<div class="photo has-img" style="background-image:url('${x.img}')"><div class="p-cap">${esc(x.title)}<br><span style="font-size:8px;opacity:.8">${fmtDate(x.date)}</span></div><button class="p-del" onclick="delPhoto('${x.id}')">×</button></div>`
+    ?`<div class="photo has-img" style="background-image:url('${x.img}')">${x.mediaId?`<span class="vid-badge"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20"/></svg></span>`:''}<div class="p-cap">${esc(x.title)}<br><span style="font-size:8px;opacity:.8">${fmtDate(x.date)}</span></div><button class="p-del" onclick="delPhoto('${x.id}')">×</button></div>`
     :`<div class="photo"><div class="p-emo">${x.emo||'📷'}</div><div class="p-t">${esc(x.title)}</div><div class="p-date">${fmtDate(x.date)}</div><button class="p-del" onclick="delPhoto('${x.id}')">×</button></div>`).join('')+`<div class="photo add" onclick="openAddPhoto()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>`;
+  // 视频懒加载：把 mediaId 换成可播放地址
+  list.forEach(function(x){ if(x.mediaId){ const els=document.querySelectorAll('.photo[data-mid="'+x.mediaId+'"] video'); } });
 }
 function catBg(c){return c==='第一次'?'#FDF0F7':c==='旅行'?'#EBF7FE':c==='生日'?'#FEF7E6':c==='家庭'?'#F1EDFC':c==='日常'?'#E9F9F2':'#FEF2F2'}
 function catEmo(c){return c==='第一次'?'🎉':c==='旅行'?'✈️':c==='生日'?'🎂':c==='家庭'?'👨‍👩‍👧':c==='日常'?'☀️':'🏅'}
 function openAddPhoto(){
-  openForm('添加照片',[{key:'img',label:'选择照片（可不上传，仅记录）',type:'file'},{key:'title',label:'标题',type:'text',ph:'如 第一次去动物园'},{key:'cat',label:'分类',type:'select',options:GALCATS},{key:'date',label:'日期',type:'date'},{key:'note',label:'描述（可选）',type:'textarea',ph:'这一刻的故事…'}],v=>{
+  openForm('添加照片',[
+    {key:'img',label:'选择照片（可不上传）',type:'file'},
+    {key:'video',label:'选择视频（可选，MP4 40MB内）',type:'video'},
+    {key:'title',label:'标题',type:'text',ph:'如 第一次去动物园'},
+    {key:'cat',label:'分类',type:'select',options:GALCATS},
+    {key:'date',label:'日期',type:'date'},
+    {key:'note',label:'描述（可选）',type:'textarea',ph:'这一刻的故事…'}
+  ],v=>{
     if(!v.title)return toast('请填写标题');
-    const ph=load(K.photos,[]);ph.unshift({id:uid('p'),cat:v.cat||'日常',emo:catEmo(v.cat||'日常'),title:v.title,date:v.date||todayStr(),note:v.note,img:v.img||''});save(K.photos,ph);
-    const m=load(K.moments,[]);m.unshift({id:uid('m'),type:'照片',title:v.title,desc:v.note,emo:'📷',date:v.date||todayStr(),img:v.img||''});save(K.moments,m);
-    refreshAll();log('我','上传照片「'+v.title+'」');toast('✅ 已添加');
+    const ph=load(K.photos,[]);
+    const photo={id:uid('p'),cat:v.cat||'日常',emo:catEmo(v.cat||'日常'),title:v.title,date:v.date||todayStr(),note:v.note,img:v.img||'',mediaId:v.mediaId||''};
+    ph.unshift(photo);save(K.photos,ph);
+    const m=load(K.moments,[]);m.unshift({id:uid('m'),type:v.mediaId?'视频':'照片',title:v.title,desc:v.note,emo:v.mediaId?'🎬':'📷',date:v.date||todayStr(),img:v.img||'',mediaId:v.mediaId||''});save(K.moments,m);
+    refreshAll();log('我','上传'+(v.mediaId?'视频':'照片')+'「'+v.title+'」');toast('✅ 已添加');
   });
 }
 function delPhoto(id){if(!confirm('删除这张照片吗？'))return;save(K.photos,load(K.photos,[]).filter(x=>x.id!==id));renderGallery();renderHome();toast('已删除')}
@@ -1251,6 +1383,7 @@ const ROLES=['妈妈','爸爸','奶奶','爷爷','外婆','外公','阿姨','其
 let _av='👶',_mood='开心',_role='妈妈';
 function renderProfileForm(){
   const p=load(K.profile,{});
+  document.getElementById('eWbName').value=p.workbenchName||'';
   document.getElementById('eName').value=p.name||'';
   document.getElementById('eBirth').value=p.birth||'';
   document.getElementById('eMotto').value=p.motto||'';
@@ -1262,7 +1395,9 @@ function renderProfileForm(){
 function saveProfile(){
   const name=(document.getElementById('eName').value||'小宝贝').trim();
   const birth=document.getElementById('eBirth').value;
-  save(K.profile,{name,birth,avatar:_av,mood:_mood,role:_role,motto:(document.getElementById('eMotto').value||'').trim()});
+  const wbName=(document.getElementById('eWbName').value||'').trim();
+  const old=load(K.profile,{});
+  save(K.profile,Object.assign({},old,{name,birth,avatar:_av,mood:_mood,role:_role,motto:(document.getElementById('eMotto').value||'').trim(),workbenchName:wbName}));
   refreshAll();toast('✅ 资料已保存');log('我','更新了宝贝资料');
 }
 
@@ -1559,6 +1694,27 @@ function renderLicense(){
   st.textContent=expired?'授权已到期，联系续费':'授权使用中';
   st.classList.toggle('expired',expired);
   document.getElementById('licInfo').innerHTML=`授权期：${fmtDate(lic.start)} 至 ${fmtDate(endStr)}<br>使用周期：12 个月 · AI工作台年度使用版`;
+  // 专属链接 fid 标签
+  const tag=document.getElementById('fidTag');
+  if(tag) tag.textContent = FID ? '空间 ' + FID.slice(0,6).toUpperCase() : '共享空间';
+}
+/* 复制专属链接：无 fid 时自动生成一个（本机专属空间），带 fid 直接复制当前链接 */
+function copyLink(){
+  try{
+    let url = location.href.split('#')[0];
+    const sep = url.indexOf('?') >= 0 ? '&' : '?';
+    if(!FID){
+      const newFid = 'f' + Date.now().toString(36) + Math.floor(Math.random()*999).toString(36);
+      url = url + sep + 'fid=' + newFid;
+      toast('已生成专属空间，复制此链接发给客户/家人');
+    } else {
+      url = url + sep + 'fid=' + FID;
+    }
+    navigator.clipboard.writeText(url).then(function(){ toast('✅ 专属链接已复制，对方数据独立'); }).catch(function(){
+      // 降级：提示复制
+      toast('链接：' + url);
+    });
+  }catch(e){ toast('复制失败，请长按地址栏复制'); }
 }
 
 /* ================= 数据备份 ================= */
