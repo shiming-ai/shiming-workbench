@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D9488">
+<meta name="description" content="Crazy Friday · AI工作台引擎 · 36个行业场景 · 开箱即用">
+<title>AI工作台 · Crazy Friday</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F5F7FA;--card:#FFFFFF;--ink:#14181F;--ink2:#5A6472;--ink3:#9AA4B2;
+  --line:#E7EBF0;--primary:#0D9488;--primary2:#14B8A6;--pink:#F472B6;--amber:#F59E0B;
+  --red:#EF4444;--green:#10B981;--blue:#3B82F6;--purple:#8B5CF6;
+  --red-soft:#FEF2F2;--green-soft:#E9F9F2;--amber-soft:#FEF7E6;--blue-soft:#EBF5FE;
+  --purple-soft:#F1EDFC;--pink-soft:#FDF0F7;
+  --safe-b:env(safe-area-inset-bottom);--safe-t:env(safe-area-inset-top);
+  --theme:#0D9488;--theme2:#14B8A6;--theme-soft:#E9F9F2;
+}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px calc(30px + var(--safe-b))}
+/* ===== 顶栏 ===== */
+.top{display:flex;align-items:center;gap:11px;padding:14px 2px 12px;position:sticky;top:0;z-index:90;background:rgba(245,247,250,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:0 0 18px 18px}
+.top .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--theme),var(--theme2));display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 8px 22px var(--theme-shadow,rgba(13,148,136,.35));transition:all .3s}
+.top .logo svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top .t1{font-size:16.5px;font-weight:900;letter-spacing:-.3px;display:flex;align-items:center;gap:6px}
+.top .t2{font-size:9.5px;color:var(--ink3);margin-top:1px}
+.top .sku-badge{font-size:8.5px;font-weight:800;padding:2.5px 8px;border-radius:7px;background:var(--theme-soft);color:var(--theme);letter-spacing:.5px}
+.top .pin{margin-left:auto;flex-shrink:0}
+.pin-btn{display:flex;align-items:center;gap:5px;min-height:38px;padding:0 12px;border:none;border-radius:11px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800;cursor:pointer}
+.pin-btn.on{background:var(--red-soft);color:var(--red)}
+/* ===== Hero ===== */
+.hero{border-radius:22px;padding:20px 18px;color:#fff;position:relative;overflow:hidden;margin-bottom:14px;background:linear-gradient(135deg,var(--theme),var(--theme2));box-shadow:0 14px 40px var(--theme-shadow,rgba(13,148,136,.28))}
+.hero::before{content:'';position:absolute;top:-50px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.hero .h-badge{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:800;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:9px;letter-spacing:.5px;position:relative;z-index:1}
+.hero .h-title{font-size:22px;font-weight:900;letter-spacing:-.5px;margin-top:8px;position:relative;z-index:1}
+.hero .h-sub{font-size:11px;opacity:.9;margin-top:3px;position:relative;z-index:1}
+.hero .h-today{margin-top:14px;position:relative;z-index:1}
+.hero .ht-item{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:9px;backdrop-filter:blur(4px)}
+.hero .ht-item:last-child{margin-bottom:0}
+.hero .ht-item .ti-ic{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.hero .ht-item .ti-t{flex:1;min-width:0}
+.hero .ht-item .ti-n{font-size:12px;font-weight:800;line-height:1.3}
+.hero .ht-item .ti-d{font-size:9px;opacity:.85;margin-top:1px}
+.hero .ht-item .ti-btn{flex-shrink:0;min-height:32px;padding:0 11px;border:none;border-radius:9px;background:#fff;color:var(--theme);font-size:10.5px;font-weight:800;cursor:pointer}
+.hero .ht-item .ti-btn:active{transform:scale(.94)}
+.hero .ht-empty{text-align:center;font-size:10.5px;opacity:.9;padding:8px 0}
+/* ===== 统计 ===== */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 8px;text-align:center;box-shadow:0 2px 10px rgba(20,24,31,.03)}
+.stat .n{font-size:21px;font-weight:900;color:var(--theme);line-height:1.1}
+.stat .l{font-size:9px;color:var(--ink3);margin-top:4px;font-weight:700}
+/* ===== 卡片 ===== */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:13px;box-shadow:0 2px 10px rgba(20,24,31,.03)}
+.sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sec-hd h2{font-size:15px;font-weight:900}
+.sec-hd .more{font-size:11.5px;font-weight:800;color:var(--theme);margin-left:auto;cursor:pointer;padding:6px 10px;border-radius:9px;background:var(--theme-soft)}
+.sec-hd .more:active{transform:scale(.95)}
+/* ===== 记录 ===== */
+.rec{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;background:#fff;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.rec .rc-ic{width:38px;height:38px;border-radius:11px;background:var(--theme-soft);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.rec .rc-body{flex:1;min-width:0}
+.rec .rc-n{font-size:13px;font-weight:800}
+.rec .rc-d{font-size:9.5px;color:var(--ink3);margin-top:2px;line-height:1.5}
+.rec .rc-tag{font-size:8px;font-weight:800;padding:2px 7px;border-radius:6px;background:var(--theme-soft);color:var(--theme);flex-shrink:0}
+.rec .rc-actions{display:flex;gap:5px;flex-shrink:0}
+.icon-btn{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2)}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.empty{text-align:center;padding:28px 0;color:var(--ink3);font-size:12px}
+.empty .e-ic{font-size:32px;margin-bottom:6px}
+/* ===== 图表 ===== */
+.chart-card{padding:15px}
+.chart-title{font-size:11px;font-weight:800;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.chart-title .now{font-size:16px;font-weight:900;color:var(--theme)}
+.chart-svg{width:100%;height:150px;display:block}
+.chart-legend{display:flex;gap:14px;justify-content:center;margin-top:8px;font-size:9px;color:var(--ink3)}
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.metric{background:#F8FAFC;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.metric .n{font-size:16px;font-weight:900;color:var(--theme)}
+.metric .l{font-size:8.5px;color:var(--ink3);margin-top:2px}
+/* ===== AI 建议 ===== */
+.ai-tip{display:flex;gap:10px;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:8px;background:#fff}
+.ai-tip .ai-ic{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--theme),var(--theme2));display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;font-size:13px}
+.ai-tip .ai-t{font-size:12px;color:var(--ink2);line-height:1.7}
+.ai-tip .ai-t b{color:var(--ink)}
+/* ===== 表单 ===== */
+.f-field{margin-top:10px}
+.f-field label{display:block;font-size:10.5px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+.f-field input,.f-field select,.f-field textarea{width:100%;min-height:44px;border:1.5px solid var(--line);border-radius:12px;padding:0 13px;font-size:16px;outline:none;background:#FAFBFC;color:var(--ink);font-family:inherit;transition:border-color .2s}
+.f-field textarea{min-height:60px;padding:10px 13px;resize:vertical}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{border-color:var(--theme)}
+.btn{min-height:44px;padding:0 16px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--theme),var(--theme2));color:#fff;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap;box-shadow:0 6px 16px var(--theme-shadow,rgba(13,148,136,.25))}
+.btn:active{transform:scale(.96)}
+.btn.gray{background:var(--ink3);box-shadow:none}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink2);box-shadow:none}
+/* ===== 弹窗 ===== */
+.mask{position:fixed;inset:0;z-index:200;background:rgba(20,24,31,.5);display:none;align-items:flex-end;justify-content:center}
+.mask.show{display:flex}
+.sheet{width:100%;max-width:560px;background:#fff;border-radius:22px 22px 0 0;padding:20px 18px calc(22px + var(--safe-b));max-height:88vh;overflow-y:auto;animation:up .3s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.sheet h3{font-size:16px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sheet .sub{font-size:10.5px;color:var(--ink3);margin-bottom:10px}
+.sheet .close{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.sheet .actions{display:flex;gap:8px;margin-top:14px}
+.sheet .actions .btn{flex:1}
+/* ===== 我的 ===== */
+.me-row{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:8px;background:#fff;cursor:pointer}
+.me-row:active{transform:scale(.98)}
+.me-row .mr-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.me-row .mr-ic svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.me-row .mr-t{font-size:12.5px;font-weight:800}
+.me-row .mr-d{font-size:9.5px;color:var(--ink3);margin-top:1px}
+.me-row .mr-arrow{margin-left:auto;width:16px;height:16px;stroke:var(--ink3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+/* ===== 底部导航 ===== */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 20px rgba(20,24,31,.04)}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 7px;cursor:pointer;color:var(--ink3);font-size:9.5px;font-weight:700;transition:color .2s}
+.bn-item .ic{width:24px;height:24px;position:relative}
+.bn-item .ic svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bn-item.on{color:var(--theme)}
+.bn-item.on .ic::after{content:'';position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:14px;height:3px;border-radius:2px;background:var(--theme)}
+.page{display:none}
+.page.show{display:block;animation:pageIn .25s ease}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.tabs{display:flex;gap:7px;margin-bottom:13px;overflow-x:auto;padding-bottom:2px}
+.tab{flex-shrink:0;min-height:36px;padding:0 15px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--ink2);font-size:12px;font-weight:800;cursor:pointer}
+.tab.on{background:var(--theme);color:#fff;border-color:var(--theme)}
+.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:rgba(20,24,31,.92);color:#fff;font-size:12.5px;padding:11px 18px;border-radius:12px;z-index:300;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.show{opacity:1}
+.demo-note{text-align:center;font-size:9px;color:var(--ink3);line-height:1.6;padding:10px 0 4px}
+@media(min-width:640px){.wrap{max-width:820px}.stat-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo" id="topLogo"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+    <div>
+      <div class="t1"><span id="topName">AI 工作台</span> <span class="sku-badge" id="skuBadge">年度使用版</span></div>
+      <div class="t2" id="topSub">Crazy Friday · AI工作台引擎</div>
+    </div>
+    <div class="pin"><button class="pin-btn" id="pinBtn" onclick="pinToggle()">🔒 未加锁</button></div>
+  </div>
+
+  <!-- Hero 今日 -->
+  <div class="hero">
+    <div class="h-badge" id="heroBadge">✨ 今日聚焦</div>
+    <div class="h-title" id="heroTitle">早上好，开工！</div>
+    <div class="h-sub" id="heroSub">今天也要元气满满</div>
+    <div class="h-today" id="todayList"></div>
+  </div>
+
+  <!-- 统计 -->
+  <div class="stat-grid">
+    <div class="stat"><div class="n" id="stCount">0</div><div class="l" id="stCountL">记录</div></div>
+    <div class="stat"><div class="n" id="stDays">0</div><div class="l">连续打卡</div></div>
+    <div class="stat"><div class="n" id="stTotal">0</div><div class="l" id="stTotalL">今日</div></div>
+  </div>
+
+  <!-- ===== 今日 ===== -->
+  <div class="page show" id="page-today">
+    <div class="sec-hd"><h2>📌 待办事项</h2><span class="more" onclick="openTodoForm()">＋ 添加</span></div>
+    <div id="todoList"></div>
+  </div>
+
+  <!-- ===== 记录 ===== -->
+  <div class="page" id="page-record">
+    <div class="sec-hd"><h2>📝 记录</h2><span class="more" onclick="openRecForm()">＋ 记一笔</span></div>
+    <div class="tabs" id="recTabs"></div>
+    <div id="recList"></div>
+  </div>
+
+  <!-- ===== 数据 ===== -->
+  <div class="page" id="page-data">
+    <div class="sec-hd"><h2>📊 数据趋势</h2></div>
+    <div class="metric-row" id="metricRow"></div>
+    <div class="card chart-card">
+      <div class="chart-title"><span id="chartName">趋势</span><span class="now" id="chartNow">--</span></div>
+      <svg class="chart-svg" id="chartSvg" viewBox="0 0 340 150" preserveAspectRatio="none"></svg>
+    </div>
+  </div>
+
+  <!-- ===== AI ===== -->
+  <div class="page" id="page-ai">
+    <div class="sec-hd"><h2>🤖 AI 建议</h2><span class="more" onclick="genAi()">换一批</span></div>
+    <div class="card" style="padding:12px 15px;font-size:11px;color:var(--ink2);line-height:1.7">基于你的行业与记录，为你生成可执行建议。涉及医疗/财务等专业问题请咨询专业人士。</div>
+    <div id="aiList"></div>
+  </div>
+
+  <!-- ===== 我的 ===== -->
+  <div class="page" id="page-me">
+    <div class="sec-hd"><h2>⚙️ 数据管理</h2></div>
+    <div class="me-row" onclick="exportData()"><div class="mr-ic" style="background:linear-gradient(135deg,#64748B,#475569)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="mr-body"><div class="mr-t">导出备份</div><div class="mr-d">下载完整数据 JSON</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="me-row" onclick="document.getElementById('fileImport').click()"><div class="mr-ic" style="background:linear-gradient(135deg,#A8B29F,#7A8B6F)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="mr-body"><div class="mr-t">导入恢复</div><div class="mr-d">从备份恢复数据</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="me-row" onclick="askClear()"><div class="mr-ic" style="background:linear-gradient(135deg,#F87171,#EF4444)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div><div class="mr-body"><div class="mr-t">清空数据</div><div class="mr-d">删除全部记录（二次确认）</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <input type="file" id="fileImport" accept="application/json" style="display:none" onchange="importData(this)">
+    <div class="sec-hd" style="margin-top:16px"><h2>🛡️ 隐私与安全</h2></div>
+    <div class="card" style="padding:13px 15px;font-size:11px;color:var(--ink2);line-height:1.9">
+      ① 数据存在你手机本机，不上传服务器，Crazy Friday 团队无法查看。<br>
+      ② 每个专属链接对应独立空间，不同客户数据互不可见。<br>
+      ③ 可随时导出备份带走全部数据，或清空彻底删除。
+    </div>
+    <div style="text-align:center;font-size:10px;color:var(--ink3);line-height:1.8;padding:12px 0 18px" id="footVer">Crazy Friday · AI工作台 v1.0 · 数据存于本机</div>
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <div class="bn-item on" id="bn-today" onclick="goPage('today',this)"><div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>今日</div>
+  <div class="bn-item" id="bn-record" onclick="goPage('record',this)"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/></svg></div>记录</div>
+  <div class="bn-item" id="bn-data" onclick="goPage('data',this)"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg></div>数据</div>
+  <div class="bn-item" id="bn-ai" onclick="goPage('ai',this)"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div>AI</div>
+  <div class="bn-item" id="bn-me" onclick="goPage('me',this)"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>我的</div>
+</div>
+
+<!-- 记录表单 -->
+<div class="mask" id="maskRec"><div class="sheet">
+  <h3>记一笔 <button class="close" onclick="closeSheet('maskRec')">×</button></h3>
+  <div class="sub" id="recFormSub">添加一条记录</div>
+  <div id="recFormBody"></div>
+  <div class="actions"><button class="btn gray" onclick="closeSheet('maskRec')">取消</button><button class="btn" onclick="saveRec()">保存</button></div>
+</div></div>
+
+<!-- 待办表单 -->
+<div class="mask" id="maskTodo"><div class="sheet">
+  <h3>添加待办 <button class="close" onclick="closeSheet('maskTodo')">×</button></h3>
+  <div class="sub">加入今日待办，完成打勾</div>
+  <div class="f-field"><label>事项</label><input id="tdName" type="text" placeholder="今天要做什么" maxlength="30"></div>
+  <div class="actions"><button class="btn gray" onclick="closeSheet('maskTodo')">取消</button><button class="btn" onclick="saveTodo()">添加</button></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ 空间隔离（fid + sku） ============ */
+let FID = (function(){
+  try{ const q = new URLSearchParams(location.search); let f = (q.get('fid')||q.get('uid')||'').trim(); return f.replace(/[^a-zA-Z0-9_-]/g,''); }catch(e){ return ''; }
+})();
+let SKU = (function(){
+  try{ const q = new URLSearchParams(location.search); return (q.get('sku')||q.get('id')||'life').trim().replace(/[^a-zA-Z0-9_-]/g,''); }catch(e){ return 'life'; }
+})();
+const PREFIX = 'wb_eng_' + (FID ? FID + '_' : '') + SKU + '_';
+const K = {};
+['records','todos','chart','pin','onboard','streak'].forEach(function(n){ K[n] = PREFIX + n; });
+
+function load(k, fb){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+let toastT;
+function toast(m){ const el=document.getElementById('toast'); el.textContent=m; el.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'), 2200); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function goPage(p, el){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));
+  document.getElementById('page-'+p).classList.add('show');
+  document.querySelectorAll('.bn-item').forEach(x=>x.classList.remove('on'));
+  if(el) el.classList.add('on');
+  window.scrollTo(0,0);
+}
+function openSheet(id){ document.getElementById(id).classList.add('show'); }
+function closeSheet(id){ document.getElementById(id).classList.remove('show'); }
+
+/* ============ 36 行业配置 ============ */
+const SKUS = {
+love:{name:'恋爱工作台',emo:'💞',tag:'恋爱 · 仪式感',c:'#F43F5E',c2:'#FB7185',soft:'#FDF0F7',shadow:'rgba(244,63,94,.3)',
+  recLabel:'记录',fields:[{k:'title',label:'事项',type:'text',ph:'如：第一次约会'},{k:'mood',label:'心情',type:'select',opts:['超甜','开心','平淡','小情绪']},{k:'cost',label:'花费(元)',type:'number',ph:'0'}],
+  recIcons:['💞','🌹','📸','✉️'],chartName:'感情温度',unit:'分',chartUnit:100,metricL:'甜蜜值',
+  todos:['准备一个小惊喜','安排一次约会','写一封小情书'],ai:['纪念日前一周开始准备惊喜，仪式感要提前','日常记录照片和心情，年底生成年度回忆','每周安排一次"不重样约会"，保持新鲜感','多记录对方的喜好，送礼不再踩雷','偶尔把记录翻给TA看，感情升温最快']},
+fitness:{name:'健身减脂台',emo:'💪',tag:'健身 · 数据教练',c:'#10B981',c2:'#34D399',soft:'#E9F9F2',shadow:'rgba(16,185,129,.3)',
+  recLabel:'训练',fields:[{k:'title',label:'训练项目',type:'text',ph:'如：深蹲 4x12'},{k:'type',label:'类型',type:'select',opts:['力量','有氧','拉伸','饮食']},{k:'kcal',label:'消耗(千卡)',type:'number',ph:'0'}],
+  recIcons:['🏋️','🏃','🥗','🔥'],chartName:'运动量',unit:'千卡',chartUnit:800,metricL:'今日消耗',
+  todos:['完成今日训练计划','记录饮食热量','喝够 2L 水'],ai:['训练后 30 分钟内补充蛋白质，效果更好','每周安排 1-2 天休息，肌肉在休息中生长','体重不要天天看，一周看一次趋势更准','深蹲/硬拉/卧推三大项打基础','记录每次重量，逐步加重才能突破']},
+money:{name:'记账理财台',emo:'💰',tag:'记账 · 理财',c:'#F59E0B',c2:'#FBBF24',soft:'#FEF7E6',shadow:'rgba(245,158,11,.3)',
+  recLabel:'记账',fields:[{k:'title',label:'项目',type:'text',ph:'如：午餐'},{k:'type',label:'类型',type:'select',opts:['餐饮','交通','购物','娱乐','收入','其他']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🍜','🚗','🛍️','💵'],chartName:'支出趋势',unit:'元',chartUnit:500,metricL:'本月支出',
+  todos:['记录今日每一笔收支','复盘本周消费','存一笔钱'],ai:['每天花 2 分钟记账，月底复盘才知道钱去哪了','固定支出（房租/保险）先预留，再分配消费','购物前问自己：真的需要吗？还是想要？','设置每月预算，超支自动提醒','收入的 10% 先存起来，再谈消费']},
+study:{name:'学习备考台',emo:'📚',tag:'考研 · 学习',c:'#8B5CF6',c2:'#A78BFA',soft:'#F1EDFC',shadow:'rgba(139,92,246,.3)',
+  recLabel:'学习',fields:[{k:'title',label:'科目/任务',type:'text',ph:'如：高数第三章'},{k:'type',label:'科目',type:'select',opts:['政治','英语','数学','专业课']},{k:'hour',label:'时长(小时)',type:'number',ph:'0'}],
+  recIcons:['📕','📗','📘','📙'],chartName:'学习时长',unit:'小时',chartUnit:8,metricL:'今日学习',
+  todos:['复习昨日内容','完成今日计划','整理错题'],ai:['每天先做最难的事，大脑清晨效率最高','学 45 分钟休息 10 分钟，比连续 3 小时更有效','错题本比刷题更重要，定期重做错题','睡前复习 10 分钟，记忆效果最好','每周留半天复盘，调整下周计划']},
+english:{name:'雅思冲刺台',emo:'🌐',tag:'英语 · 雅思',c:'#3B82F6',c2:'#60A5FA',soft:'#EBF5FE',shadow:'rgba(59,130,246,.3)',
+  recLabel:'练习',fields:[{k:'title',label:'练习内容',type:'text',ph:'如：听力精听'},{k:'type',label:'科目',type:'select',opts:['听力','口语','阅读','写作','词汇']},{k:'hour',label:'时长(小时)',type:'number',ph:'0'}],
+  recIcons:['🎧','🗣️','📖','✍️'],chartName:'学习时长',unit:'小时',chartUnit:6,metricL:'今日学习',
+  todos:['背 50 个单词','精听 1 篇听力','开口练口语 15 分钟'],ai:['词汇用记忆曲线打卡，比死记硬背记得牢','听力用精听法：听-写-对-再听，进步最快','口语每天开口 15 分钟，录音回放找问题','写作先背模板框架，再填内容','每周做一次模考，记录成绩趋势']},
+baby:{name:'宝宝成长台',emo:'👶',tag:'育儿 · 成长',c:'#EC4899',c2:'#F472B6',soft:'#FDF0F7',shadow:'rgba(236,72,153,.3)',
+  recLabel:'记录',fields:[{k:'title',label:'成长记录',type:'text',ph:'如：今天会叫妈妈了'},{k:'type',label:'类型',type:'select',opts:['发育','健康','饮食','睡眠','趣事']},{k:'age',label:'月龄',type:'number',ph:'如 24'}],
+  recIcons:['🌱','🩺','🍼','😊'],chartName:'健康指数',unit:'分',chartUnit:100,metricL:'成长值',
+  todos:['记录宝宝今日成长','检查疫苗接种时间','拍一张照片存档'],ai:['0-3 岁是大脑发育黄金期，多互动多说话','疫苗按时打，错过要补种','睡前 1 小时别让宝宝看屏幕','每天户外活动至少 1 小时','定期测量身高体重，画生长曲线']},
+food:{name:'餐饮门店台',emo:'🍱',tag:'餐饮 · 门店',c:'#F59E0B',c2:'#FBBF24',soft:'#FEF7E6',shadow:'rgba(245,158,11,.3)',
+  recLabel:'营业',fields:[{k:'title',label:'事项',type:'text',ph:'如：午餐高峰期'},{k:'type',label:'类型',type:'select',opts:['营业额','进货','排班','外卖']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🍽️','📦','👨‍🍳','💳'],chartName:'营业额',unit:'元',chartUnit:2000,metricL:'今日营业',
+  todos:['核对今日进货','检查食材临期','确认排班'],ai:['食材先进先出，临期优先用，降低损耗','高峰期提前备料，减少出餐等待','每日对账，堂食+外卖分开记','收集好评，差评当天回复','每周复盘热销菜品，调整菜单']},
+pet:{name:'宠物健康台',emo:'🐶',tag:'宠物 · 管家',c:'#34D399',c2:'#6EE7B7',soft:'#E9F9F2',shadow:'rgba(52,211,153,.3)',
+  recLabel:'记录',fields:[{k:'title',label:'事项',type:'text',ph:'如：打疫苗'},{k:'type',label:'类型',type:'select',opts:['疫苗','驱虫','体检','饮食','趣事']},{k:'age',label:'宠物年龄',type:'number',ph:'岁'}],
+  recIcons:['💉','🪱','🩺','🍖'],chartName:'健康指数',unit:'分',chartUnit:100,metricL:'健康值',
+  todos:['检查疫苗/驱虫时间','记录今日喂食','陪玩 20 分钟'],ai:['疫苗和驱虫按时做，别漏','不同季节注意皮肤病/掉毛','喂食定时定量，别溺爱','定期称体重，关注体型变化','记录就诊历史，换医生也能用']},
+photo:{name:'摄影约拍台',emo:'📷',tag:'摄影 · 约拍',c:'#EC4899',c2:'#F472B6',soft:'#FDF0F7',shadow:'rgba(236,72,153,.3)',
+  recLabel:'接单',fields:[{k:'title',label:'项目',type:'text',ph:'如：旅拍跟拍'},{k:'type',label:'类型',type:'select',opts:['人像','风光','婚礼','商拍']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['📸','🎨','💼','⭐'],chartName:'接单额',unit:'元',chartUnit:1000,metricL:'本月接单',
+  todos:['整理作品集','回复客户咨询','确认档期'],ai:['作品集持续更新，接单底气足','报价前先看客户需求，别急着报','档期用日历管，别撞单','交付后请客户好评，沉淀案例','每月复盘客单价，逐步涨价']},
+travel:{name:'旅行规划台',emo:'✈️',tag:'旅行 · 攻略',c:'#22D3EE',c2:'#67E8F9',soft:'#EBF5FE',shadow:'rgba(34,211,238,.3)',
+  recLabel:'行程',fields:[{k:'title',label:'行程',type:'text',ph:'如：故宫半日游'},{k:'type',label:'类型',type:'select',opts:['交通','住宿','餐饮','门票','购物']},{k:'amount',label:'花费(元)',type:'number',ph:'0'}],
+  recIcons:['🗺️','🏨','🍜','🎫'],chartName:'旅行花费',unit:'元',chartUnit:800,metricL:'今日花费',
+  todos:['确认预订信息','打包必需品','规划明日行程'],ai:['行程别排太满，留缓冲时间','重要证件提前备份电子版','每天睡前确认次日行程和预订','当地特色美食提前做功课','预算分类记，超支一目了然']},
+creator:{name:'自媒体创作台',emo:'🎬',tag:'自媒体 · 创作',c:'#A855F7',c2:'#C084FC',soft:'#F1EDFC',shadow:'rgba(168,85,247,.3)',
+  recLabel:'创作',fields:[{k:'title',label:'作品',type:'text',ph:'如：小红书笔记'},{k:'type',label:'类型',type:'select',opts:['图文','视频','直播','数据']},{k:'amount',label:'数据(播放/收益)',type:'number',ph:'0'}],
+  recIcons:['💡','✍️','📹','📊'],chartName:'创作数据',unit:'播放',chartUnit:1000,metricL:'今日播放',
+  todos:['写 1 条内容','拆解 1 篇爆款','复盘数据'],ai:['选题决定下限，先找好选题再动笔','爆款二创：拆解框架再填充自己的内容','固定更新时间，培养粉丝习惯','每条内容复盘：完播率/互动率','数据好就追更，形成系列']},
+solo:{name:'一人公司台',emo:'🦸',tag:'一人公司 · 全业务',c:'#FF6B1A',c2:'#FF8E53',soft:'#FFF1E6',shadow:'rgba(255,107,26,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：客户报价'},{k:'type',label:'类型',type:'select',opts:['收入','支出','客户','订单']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['💼','💰','👥','📦'],chartName:'营收',unit:'元',chartUnit:1000,metricL:'本月营收',
+  todos:['跟进 3 个客户','处理订单','复盘今日'],ai:['业务线别铺太开，先打透一条','客户跟进用表管，别靠记性','月底对账是底线，别拖','每天留 1 小时思考，别只埋头干活','把重复工作做成 SOP，交给 AI']},
+edu:{name:'英语启蒙台',emo:'🧒',tag:'亲子 · 启蒙',c:'#F472B6',c2:'#F9A8D4',soft:'#FDF0F7',shadow:'rgba(244,114,182,.3)',
+  recLabel:'启蒙',fields:[{k:'title',label:'学习内容',type:'text',ph:'如：认字 5 个'},{k:'type',label:'类型',type:'select',opts:['认字','英语','数学','习惯']},{k:'num',label:'完成数',type:'number',ph:'0'}],
+  recIcons:['🔤','🃏','🎮','⭐'],chartName:'学习量',unit:'个',chartUnit:20,metricL:'今日学习',
+  todos:['完成今日启蒙任务','亲子共读 15 分钟','记录孩子兴趣'],ai:['3-6 岁以兴趣为主，别强迫','认字结合象形卡片，记得牢','闯关+积分激励，孩子主动学','每天固定 20 分钟，养成习惯','多鼓励具体行为，少说"你真棒"']},
+ecom:{name:'电商运营台',emo:'🛒',tag:'电商 · 多店',c:'#FF6B1A',c2:'#FF8E53',soft:'#FFF1E6',shadow:'rgba(255,107,26,.3)',
+  recLabel:'运营',fields:[{k:'title',label:'事项',type:'text',ph:'如：上新'},{k:'type',label:'类型',type:'select',opts:['订单','上架','售后','推广']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['📦','🏷️','🔁','📢'],chartName:'销售额',unit:'元',chartUnit:2000,metricL:'今日销售',
+  todos:['处理未发货订单','检查库存预警','回复售后'],ai:['多平台订单聚合看，不漏单','库存低于安全线自动补货','每日对账，防超卖漏发','大促节点提前备货','复盘哪个品赚钱，砍掉亏钱款']},
+salon:{name:'美甲美睫台',emo:'💅',tag:'美业 · 预约',c:'#F472B6',c2:'#F9A8D4',soft:'#FDF0F7',shadow:'rgba(244,114,182,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'项目',type:'text',ph:'如：美甲套餐'},{k:'type',label:'类型',type:'select',opts:['预约','收入','会员','进货']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['📅','💅','💳','⭐'],chartName:'营业额',unit:'元',chartUnit:1000,metricL:'今日营业',
+  todos:['确认今日预约','补货检查','回访老客'],ai:['预约用日历管，不撞车','会员储值提升复购','作品集引流，晒图有奖励','每日对账，业绩透明','老客生日送券，锁客']},
+estate:{name:'房产中介台',emo:'🏠',tag:'房产 · 中介',c:'#3B82F6',c2:'#60A5FA',soft:'#EBF5FE',shadow:'rgba(59,130,246,.3)',
+  recLabel:'跟进',fields:[{k:'title',label:'事项',type:'text',ph:'如：带看房源'},{k:'type',label:'类型',type:'select',opts:['房源','客户','带看','成交']},{k:'amount',label:'金额(万)',type:'number',ph:'0'}],
+  recIcons:['🏠','👥','🗓️','💰'],chartName:'带看量',unit:'次',chartUnit:10,metricL:'本月带看',
+  todos:['跟进意向客户','录入新房源','确认带看排期'],ai:['房源客户标签化，自动匹配','带看后当天回访，趁热打铁','客户需求记细，匹配才准','成交记录沉淀，佣金透明','每周复盘带看转化率']},
+lawyer:{name:'律所案件台',emo:'⚖️',tag:'法律 · 案件',c:'#6366F1',c2:'#818CF8',soft:'#F1EDFC',shadow:'rgba(99,102,241,.3)',
+  recLabel:'案件',fields:[{k:'title',label:'案件',type:'text',ph:'如：合同纠纷'},{k:'type',label:'类型',type:'select',opts:['立案','开庭','上诉','结案']},{k:'num',label:'进度%',type:'number',ph:'0-100'}],
+  recIcons:['📁','⏰','📄','⚖️'],chartName:'案件进度',unit:'%',chartUnit:100,metricL:'进行中',
+  todos:['检查开庭/上诉期限','更新案件进度','整理证据材料'],ai:['期限是生命线，提前设提醒','每个案件独立档案，进度可查','开庭前 3 天准备清单过一遍','结案后复盘，沉淀经验','客户沟通留痕，责任清晰']},
+tutor:{name:'教培机构台',emo:'🎓',tag:'教培 · 排课',c:'#F59E0B',c2:'#FBBF24',soft:'#FEF7E6',shadow:'rgba(245,158,11,.3)',
+  recLabel:'教学',fields:[{k:'title',label:'事项',type:'text',ph:'如：周末班'},{k:'type',label:'类型',type:'select',opts:['排课','学员','续费','活动']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🗓️','👦','💰','📢'],chartName:'续费率',unit:'%',chartUnit:100,metricL:'续费中',
+  todos:['确认今日课程','跟进续费学员','发布活动通知'],ai:['排课不撞车，自动检查','续费提前 30 天提醒','学员进度同步家长，信任度高','活动提前一周预热','每周复盘到课率']},
+coach:{name:'健身私教台',emo:'🏋️',tag:'私教 · 会员',c:'#10B981',c2:'#34D399',soft:'#E9F9F2',shadow:'rgba(16,185,129,.3)',
+  recLabel:'教学',fields:[{k:'title',label:'课程',type:'text',ph:'如：力量训练课'},{k:'type',label:'类型',type:'select',opts:['排课','训练','续课','体测']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['📋','🗓️','📈','💰'],chartName:'课消',unit:'节',chartUnit:10,metricL:'本月课消',
+  todos:['确认今日课表','跟进续课会员','记录会员训练'],ai:['会员体测+目标建档','训练记录可查，效果说话','续课提前提醒，别流失','每月出效果报告给会员','老客转介绍有奖励']},
+house:{name:'家政保洁台',emo:'🧹',tag:'家政 · 派单',c:'#34D399',c2:'#6EE7B7',soft:'#E9F9F2',shadow:'rgba(52,211,153,.3)',
+  recLabel:'派单',fields:[{k:'title',label:'订单',type:'text',ph:'如：3小时保洁'},{k:'type',label:'类型',type:'select',opts:['派单','完工','售后','收入']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🧹','📦','⏰','⭐'],chartName:'订单量',unit:'单',chartUnit:15,metricL:'今日订单',
+  todos:['确认今日派单','回访昨日客户','检查阿姨档期'],ai:['阿姨技能+档期建档，自动派单','完工后 24 小时回访','客户好评收集，口碑裂变','每日对账，收入透明','旺季提前储备阿姨']},
+bakery:{name:'烘焙蛋糕台',emo:'🍰',tag:'烘焙 · 预订',c:'#F59E0B',c2:'#FBBF24',soft:'#FEF7E6',shadow:'rgba(245,158,11,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'订单',type:'text',ph:'如：生日蛋糕'},{k:'type',label:'类型',type:'select',opts:['预订','收入','进货','活动']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🎂','📅','💳','📢'],chartName:'营业额',unit:'元',chartUnit:800,metricL:'今日营业',
+  todos:['确认蛋糕预订','备货检查','发布节日素材'],ai:['节日提前 7 天预热预订','会员生日自动送券','朋友圈素材提前备好','订单取货时间别记错','热销款做招牌，带动复购']},
+flower:{name:'鲜花店台',emo:'💐',tag:'花艺 · 配送',c:'#EC4899',c2:'#F472B6',soft:'#FDF0F7',shadow:'rgba(236,72,153,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'订单',type:'text',ph:'如：99朵玫瑰'},{k:'type',label:'类型',type:'select',opts:['订单','配送','进货','会员']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['💐','📦','💳','📸'],chartName:'营业额',unit:'元',chartUnit:800,metricL:'今日营业',
+  todos:['确认今日配送','补货鲜花','更新作品集'],ai:['节日单量大，提前备花接预售','配送地址+时间双确认','会员生日送花券','晒单引流，拍好看点','花材损耗控制，别囤太多']},
+fashion:{name:'服装店台',emo:'👗',tag:'服装 · 进销存',c:'#F472B6',c2:'#F9A8D4',soft:'#FDF0F7',shadow:'rgba(244,114,182,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：新款上架'},{k:'type',label:'类型',type:'select',opts:['进货','销售','库存','活动']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['👗','📦','💳','📢'],chartName:'销售额',unit:'元',chartUnit:1000,metricL:'今日销售',
+  todos:['核对今日销售','检查库存','发布新品'],ai:['进销存台账，补货不压货','会员生日提醒，复购率高','换季清仓提前 2 周启动','爆款追单，滞销快处理','每日对账']},
+car:{name:'二手车行台',emo:'🚗',tag:'二手车 · 车源',c:'#3B82F6',c2:'#60A5FA',soft:'#EBF5FE',shadow:'rgba(59,130,246,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：收车'},{k:'type',label:'类型',type:'select',opts:['收车','卖车','检测','客户']},{k:'amount',label:'金额(万)',type:'number',ph:'0'}],
+  recIcons:['🚗','👥','📋','💰'],chartName:'成交量',unit:'台',chartUnit:10,metricL:'本月成交',
+  todos:['更新车源信息','跟进意向客户','确认检测'],ai:['车源+客源标签化自动匹配','检测清单每车留档','利润测算：收售价自动算','朋友圈素材一键出','成交沉淀，口碑转介绍']},
+vet:{name:'宠物医院台',emo:'🐾',tag:'宠物医疗',c:'#34D399',c2:'#6EE7B7',soft:'#E9F9F2',shadow:'rgba(52,211,153,.3)',
+  recLabel:'诊疗',fields:[{k:'title',label:'病例',type:'text',ph:'如：犬瘟复诊'},{k:'type',label:'类型',type:'select',opts:['初诊','复诊','手术','疫苗']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🐾','📅','📋','💉'],chartName:'接诊量',unit:'例',chartUnit:20,metricL:'今日接诊',
+  todos:['确认今日预约','整理病例','跟进复诊'],ai:['病例电子化，复诊不落','疫苗提醒主人，增信任','预约排班不挤','回访术后主人','月度统计科室营收']},
+rpg:{name:'剧本杀店台',emo:'🎭',tag:'桌游 · 场次',c:'#A855F7',c2:'#C084FC',soft:'#F1EDFC',shadow:'rgba(168,85,247,.3)',
+  recLabel:'场次',fields:[{k:'title',label:'场次',type:'text',ph:'如：恐怖本满车'},{k:'type',label:'类型',type:'select',opts:['排场','拼车','收入','进货']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🎭','🗓️','🤝','📊'],chartName:'场次',unit:'场',chartUnit:15,metricL:'今日场次',
+  todos:['确认今日场次','补拼散客','检查道具'],ai:['房间剧本自动排场','散客智能拼车','玩家偏好建档','热本优先排','每场复盘好评']},
+wedding:{name:'婚礼策划台',emo:'💒',tag:'婚庆 · 执行',c:'#F472B6',c2:'#F9A8D4',soft:'#FDF0F7',shadow:'rgba(244,114,182,.3)',
+  recLabel:'项目',fields:[{k:'title',label:'项目',type:'text',ph:'如：草坪婚礼'},{k:'type',label:'类型',type:'select',opts:['谈单','执行','供应商','收款']},{k:'amount',label:'金额(万)',type:'number',ph:'0'}],
+  recIcons:['💒','📋','🤝','💰'],chartName:'项目进度',unit:'%',chartUnit:100,metricL:'执行中',
+  todos:['确认供应商档期','过一遍执行清单','跟进收款'],ai:['每场婚礼独立清单，环节不漏','供应商报价+档期建档','收款分阶段，定金尾款清楚','婚礼前 3 天全流程彩排','每场复盘，沉淀模板']},
+babycare:{name:'母婴店台',emo:'🍼',tag:'母婴 · 会员',c:'#F472B6',c2:'#F9A8D4',soft:'#FDF0F7',shadow:'rgba(244,114,182,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：新品到货'},{k:'type',label:'类型',type:'select',opts:['进货','销售','会员','活动']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🍼','📦','💳','📢'],chartName:'销售额',unit:'元',chartUnit:1000,metricL:'今日销售',
+  todos:['核对库存','跟进会员','准备活动'],ai:['会员按宝宝月龄建档','按月龄精准推品','生日/成长节点送券','库存补货预警','热销品榜单分析']},
+coffee:{name:'咖啡店台',emo:'☕',tag:'咖啡 · 门店',c:'#B45309',c2:'#D97706',soft:'#FEF7E6',shadow:'rgba(180,83,9,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：新品测试'},{k:'type',label:'类型',type:'select',opts:['销售','进货','会员','活动']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['☕','📦','💳','📊'],chartName:'营业额',unit:'元',chartUnit:800,metricL:'今日营业',
+  todos:['核对原料库存','检查设备','记录今日销售'],ai:['会员杯数自动记，第10杯免单','原料临期预警','高峰时段排班','新品试饮收集反馈','时段分析优化备料']},
+bnb:{name:'民宿管理台',emo:'🏡',tag:'民宿 · 房源',c:'#22D3EE',c2:'#67E8F9',soft:'#EBF5FE',shadow:'rgba(34,211,238,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：退房清洁'},{k:'type',label:'类型',type:'select',opts:['订单','清洁','评价','收入']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🏡','📦','🧹','⭐'],chartName:'订单量',unit:'单',chartUnit:10,metricL:'本月订单',
+  todos:['确认今日房态','安排清洁','回复咨询'],ai:['多平台房态同步，别超卖','退房自动派清洁','好评引导：入住提醒+退房问候','收益按平台对比','旺季提前调价']},
+yoga:{name:'瑜伽馆台',emo:'🧘',tag:'瑜伽 · 课程',c:'#EC4899',c2:'#F472B6',soft:'#FDF0F7',shadow:'rgba(236,72,153,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'课程',type:'text',ph:'如：流瑜伽'},{k:'type',label:'类型',type:'select',opts:['排课','约课','会员','续卡']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🧘','📅','👥','💰'],chartName:'出勤',unit:'人',chartUnit:30,metricL:'今日出勤',
+  todos:['确认今日课程','跟进会员续卡','记录约课'],ai:['约课自动排，不冲突','上课提醒降低缺席','会员体测+目标建档','续卡提前提醒','月度出勤率复盘']},
+code:{name:'少儿编程台',emo:'👨‍💻',tag:'教培 · 编程',c:'#6366F1',c2:'#818CF8',soft:'#F1EDFC',shadow:'rgba(99,102,241,.3)',
+  recLabel:'教学',fields:[{k:'title',label:'课程',type:'text',ph:'如：Scratch 第3课'},{k:'type',label:'类型',type:'select',opts:['排课','课时','作品','续费']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['👨‍💻','🗓️','⏰','📊'],chartName:'课时',unit:'节',chartUnit:15,metricL:'本月课消',
+  todos:['确认今日课程','记录课时','跟进家长反馈'],ai:['学员作品建档，家长看得见','课时自动扣，无纠纷','续费提前 30 天提醒','成果汇报一键生成','排课不撞老师']},
+insure:{name:'保险经纪台',emo:'🛡️',tag:'保险 · 客户',c:'#3B82F6',c2:'#60A5FA',soft:'#EBF5FE',shadow:'rgba(59,130,246,.3)',
+  recLabel:'客户',fields:[{k:'title',label:'事项',type:'text',ph:'如：车险续保'},{k:'type',label:'类型',type:'select',opts:['新单','续保','理赔','回访']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🛡️','⏰','👥','💰'],chartName:'续保率',unit:'%',chartUnit:100,metricL:'跟进中',
+  todos:['跟进续保客户','整理保单','安排回访'],ai:['保单到期前 30 天提醒','客户家庭+预算建档','生日节日关怀','佣金自动汇总','转介绍激励']},
+deco:{name:'装修公司台',emo:'🏗️',tag:'装修 · 项目',c:'#F59E0B',c2:'#FBBF24',soft:'#FEF7E6',shadow:'rgba(245,158,11,.3)',
+  recLabel:'项目',fields:[{k:'title',label:'工地',type:'text',ph:'如：3号楼装修'},{k:'type',label:'类型',type:'select',opts:['进场','水电','验收','收款']},{k:'amount',label:'金额(万)',type:'number',ph:'0'}],
+  recIcons:['🏗️','📋','📸','💰'],chartName:'项目进度',unit:'%',chartUnit:100,metricL:'进行中',
+  todos:['巡工地','上传进度照片','确认收款'],ai:['工序节点自动推进','进度照片同步业主','预算超支预警','工人任务派发','完工复盘成本利润']},
+fruit:{name:'水果店台',emo:'🍎',tag:'生鲜 · 库存',c:'#F59E0B',c2:'#FBBF24',soft:'#FEF7E6',shadow:'rgba(245,158,11,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：进货西瓜'},{k:'type',label:'类型',type:'select',opts:['进货','销售','损耗','会员']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🍎','📦','⚠️','💳'],chartName:'营业额',unit:'元',chartUnit:600,metricL:'今日营业',
+  todos:['检查临期水果','核对库存','准备特价'],ai:['临期水果提前促销','损耗率每周复盘','会员生日送券','补货预警不断供','热销榜单调整进货']},
+glass:{name:'眼镜店台',emo:'👓',tag:'眼镜 · 复购',c:'#3B82F6',c2:'#60A5FA',soft:'#EBF5FE',shadow:'rgba(59,130,246,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'配镜',type:'text',ph:'如：近视镜配镜'},{k:'type',label:'类型',type:'select',opts:['配镜','复检','销售','进货']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['👓','⏰','💳','📦'],chartName:'营业额',unit:'元',chartUnit:800,metricL:'今日营业',
+  todos:['确认配镜订单','安排复检提醒','核对库存'],ai:['配镜档案电子化不丢','每年复检提醒，复购翻倍','镜架库存型号管理','会员积分+生日','换季促销']},
+pharmacy:{name:'药店经营台',emo:'💊',tag:'药店 · 库存',c:'#10B981',c2:'#34D399',soft:'#E9F9F2',shadow:'rgba(16,185,129,.3)',
+  recLabel:'经营',fields:[{k:'title',label:'事项',type:'text',ph:'如：补货感冒药'},{k:'type',label:'类型',type:'select',opts:['进货','销售','近效期','会员']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['💊','⚠️','💳','📦'],chartName:'营业额',unit:'元',chartUnit:800,metricL:'今日营业',
+  todos:['检查近效期药品','核对库存','跟进会员'],ai:['近效期药品提前 90 天预警','批号效期电子化','会员用药记录','用药复购提醒','品类毛利分析']},
+driving:{name:'驾校教练台',emo:'🚘',tag:'驾校 · 学员',c:'#22D3EE',c2:'#67E8F9',soft:'#EBF5FE',shadow:'rgba(34,211,238,.3)',
+  recLabel:'教学',fields:[{k:'title',label:'学员',type:'text',ph:'如：科目二练习'},{k:'type',label:'类型',type:'select',opts:['练车','约考','收费','通过']},{k:'amount',label:'金额(元)',type:'number',ph:'0'}],
+  recIcons:['🚘','🗓️','⏰','📊'],chartName:'通过率',unit:'%',chartUnit:100,metricL:'在训学员',
+  todos:['确认今日练车','提醒约考','记录进度'],ai:['学员科目进度建档','练车排期不冲突','约考提前提醒','针对薄弱项训练','通知一键群发']},
+life:{name:'生活管家台',emo:'🌟',tag:'生活 · 全能',c:'#0D9488',c2:'#14B8A6',soft:'#E9F9F2',shadow:'rgba(13,148,136,.3)',
+  recLabel:'记录',fields:[{k:'title',label:'事项',type:'text',ph:'如：今天值得记的事'},{k:'type',label:'类型',type:'select',opts:['日常','健康','心情','目标']},{k:'num',label:'数值',type:'number',ph:'0'}],
+  recIcons:['📝','💡','❤️','🎯'],chartName:'状态指数',unit:'分',chartUnit:100,metricL:'今日状态',
+  todos:['写今日感恩 3 件','完成一个小目标','运动 20 分钟'],ai:['每天记录 3 件感恩的事，幸福感提升','小目标拆成每日行动，才不焦虑','睡前放下手机，睡眠质量更高','定期断舍离，房间清爽心情好','多和喜欢的人聊天，情绪价值高']}
+};
+
+/* ============ 当前 SKU ============ */
+let SKUCFG = SKUS[SKU] || SKUS.life;
+SKU = SKUCFG === SKUS.life && !SKUS[SKU] ? 'life' : SKU;
+
+function applyTheme(){
+  const r = document.documentElement.style;
+  r.setProperty('--theme', SKUCFG.c);
+  r.setProperty('--theme2', SKUCFG.c2);
+  r.setProperty('--theme-soft', SKUCFG.soft);
+  r.setProperty('--theme-shadow', SKUCFG.shadow);
+  document.getElementById('topName').textContent = SKUCFG.name;
+  document.getElementById('topSub').textContent = SKUCFG.tag + ' · Crazy Friday';
+  document.getElementById('skuBadge').textContent = '年度使用版';
+  document.title = SKUCFG.name + ' · Crazy Friday';
+  document.getElementById('heroBadge').textContent = SKUCFG.emo + ' ' + SKUCFG.tag;
+  document.getElementById('stCountL').textContent = SKUCFG.recLabel;
+  document.getElementById('stTotalL').textContent = '连续' + SKUCFG.metricL;
+}
+
+/* ============ 记录 ============ */
+function getRecs(){ return load(K.records, []); }
+function setRecs(arr){ save(K.records, arr); }
+function getTodos(){ return load(K.todos, []); }
+function setTodos(arr){ save(K.todos, arr); }
+
+function renderStats(){
+  const recs = getRecs();
+  document.getElementById('stCount').textContent = recs.length;
+  // 连续打卡：按日期算 streak
+  const days = new Set(recs.map(r=>r.date).filter(Boolean));
+  document.getElementById('stDays').textContent = days.size;
+  const today = todayStr();
+  const todayRecs = recs.filter(r=>r.date===today);
+  const sum = todayRecs.reduce((s,r)=>s+(parseFloat(r.amount)||parseFloat(r.kcal)||parseFloat(r.hour)||parseFloat(r.num)||0),0);
+  document.getElementById('stTotal').textContent = sum;
+}
+
+function recFieldVal(r, f){
+  return r[f.k] != null && r[f.k] !== '' ? r[f.k] : '';
+}
+
+function renderRecs(){
+  const recs = getRecs();
+  const el = document.getElementById('recList');
+  if(!recs.length){ el.innerHTML = '<div class="empty"><div class="e-ic">📝</div>还没有记录<br><span style="font-size:10.5px">点「＋ 记一笔」开始</span></div>'; return; }
+  el.innerHTML = recs.slice(0,50).map((r,i)=>{
+    const idx = recs.indexOf(r);
+    const icon = SKUCFG.recIcons[(i%SKUCFG.recIcons.length)];
+    const flds = SKUCFG.fields.map(f=>{
+      const v = recFieldVal(r, f);
+      return v ? `<span>${esc(f.label)}：${esc(v)}</span>` : '';
+    }).join(' · ');
+    return `<div class="rec">
+      <div class="rc-ic">${icon}</div>
+      <div class="rc-body">
+        <div class="rc-n">${esc(r.title||'记录')}</div>
+        <div class="rc-d">${flds || esc(r.note||'')}</div>
+      </div>
+      <span class="rc-tag">${esc((r.date||'').slice(5))}</span>
+      <div class="rc-actions">
+        <button class="icon-btn" style="color:var(--red)" onclick="delRec(${idx})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function delRec(i){
+  if(!confirm('删除这条记录？')) return;
+  const recs = getRecs(); recs.splice(i,1); setRecs(recs);
+  renderAll(); toast('已删除');
+}
+
+function openRecForm(){
+  const body = document.getElementById('recFormBody');
+  body.innerHTML = SKUCFG.fields.map(f=>`
+    <div class="f-field"><label>${esc(f.label)}</label>
+    ${f.type==='select'
+      ? `<select id="rf_${f.k}">${f.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`
+      : f.type==='textarea'
+        ? `<textarea id="rf_${f.k}" placeholder="${esc(f.ph||'')}"></textarea>`
+        : `<input id="rf_${f.k}" type="${f.type==='number'?'number':'text'}" placeholder="${esc(f.ph||'')}">`}
+    </div>`).join('') +
+    `<div class="f-field"><label>日期</label><input id="rf_date" type="date" value="${todayStr()}"></div>`;
+  document.getElementById('recFormSub').textContent = '添加一条' + SKUCFG.recLabel;
+  openSheet('maskRec');
+}
+function saveRec(){
+  const r = { date: document.getElementById('rf_date').value || todayStr() };
+  SKUCFG.fields.forEach(f=>{
+    const el = document.getElementById('rf_' + f.k);
+    if(el) r[f.k] = el.value.trim();
+  });
+  if(!r.title){ toast('请填写' + SKUCFG.fields[0].label); return; }
+  const recs = getRecs(); recs.unshift(r); setRecs(recs);
+  closeSheet('maskRec'); renderAll(); toast('✅ 已记录');
+}
+
+/* ============ 待办 ============ */
+function renderTodos(){
+  const todos = getTodos();
+  const el = document.getElementById('todoList');
+  const todayEl = document.getElementById('todayList');
+  if(!todos.length){
+    el.innerHTML = '<div class="empty"><div class="e-ic">📌</div>暂无待办<br><span style="font-size:10.5px">点「＋ 添加」或直接用行业推荐</span></div>';
+    todayEl.innerHTML = '<div class="ht-empty">🎉 今天没有待办，全部搞定！</div>';
+    return;
+  }
+  el.innerHTML = todos.map((t,i)=>{
+    const done = t.done ? 'style="opacity:.5;text-decoration:line-through"' : '';
+    return `<div class="rec" ${done}>
+      <div class="rc-ic" style="background:${t.done?'#F1F5F4':'var(--theme-soft)'}">${t.done?'✅':SKUCFG.emo}</div>
+      <div class="rc-body"><div class="rc-n">${esc(t.name)}</div><div class="rc-d">${t.done?'已完成':'待办'}</div></div>
+      <div class="rc-actions">
+        <button class="icon-btn" style="color:var(--green)" onclick="toggleTodo(${i})"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></button>
+        <button class="icon-btn" style="color:var(--red)" onclick="delTodo(${i})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+      </div>
+    </div>`;
+  }).join('');
+  const undone = todos.filter(t=>!t.done);
+  todayEl.innerHTML = undone.slice(0,4).map((t,i)=>{
+    const idx = todos.indexOf(t);
+    return `<div class="ht-item">
+      <div class="ti-ic">${SKUCFG.emo}</div>
+      <div class="ti-t"><div class="ti-n">${esc(t.name)}</div><div class="ti-d">今日待办 · 点击完成</div></div>
+      <button class="ti-btn" onclick="toggleTodo(${idx})">完成</button>
+    </div>`;
+  }).join('') || '<div class="ht-empty">🎉 今日待办全部完成！</div>';
+}
+function toggleTodo(i){
+  const todos = getTodos(); todos[i].done = !todos[i].done; setTodos(todos);
+  renderTodos(); toast(todos[i].done?'✅ 完成':'↩ 恢复');
+}
+function delTodo(i){
+  const todos = getTodos(); todos.splice(i,1); setTodos(todos);
+  renderTodos(); toast('已删除');
+}
+function openTodoForm(){ document.getElementById('tdName').value=''; openSheet('maskTodo'); }
+function saveTodo(){
+  const name = document.getElementById('tdName').value.trim();
+  if(!name){ toast('请填写事项'); return; }
+  const todos = getTodos(); todos.push({name, done:false}); setTodos(todos);
+  closeSheet('maskTodo'); renderTodos(); toast('✅ 已添加');
+}
+
+/* ============ 数据趋势 ============ */
+function renderChart(){
+  const recs = getRecs();
+  const metricRow = document.getElementById('metricRow');
+  // 计算汇总
+  const sum = recs.reduce((s,r)=>s+(parseFloat(r.amount)||parseFloat(r.kcal)||parseFloat(r.hour)||parseFloat(r.num)||0),0);
+  const count = recs.length;
+  const avg = count ? Math.round(sum/count) : 0;
+  metricRow.innerHTML = `
+    <div class="metric"><div class="n">${count}</div><div class="l">总记录</div></div>
+    <div class="metric"><div class="n">${sum}</div><div class="l">累计</div></div>
+    <div class="metric"><div class="n">${avg}</div><div class="l">均值</div></div>`;
+  document.getElementById('chartName').textContent = SKUCFG.chartName;
+  // 折线图：按日期聚合
+  const byDate = {};
+  recs.forEach(r=>{
+    if(!r.date) return;
+    const v = parseFloat(r.amount)||parseFloat(r.kcal)||parseFloat(r.hour)||parseFloat(r.num)||0;
+    byDate[r.date] = (byDate[r.date]||0) + v;
+  });
+  const dates = Object.keys(byDate).sort().slice(-14);
+  const vals = dates.map(d=>byDate[d]);
+  const maxV = Math.max(...vals, 1);
+  const now = vals.length ? vals[vals.length-1] : 0;
+  document.getElementById('chartNow').textContent = now + (SKUCFG.unit||'');
+  const svg = document.getElementById('chartSvg');
+  if(!dates.length){
+    svg.innerHTML = '';
+    return;
+  }
+  const W=340,H=150,pad=16;
+  const pts = vals.map((v,i)=>{
+    const x = pad + i*(W-2*pad)/Math.max(1,vals.length-1);
+    const y = H-pad - (v/maxV)*(H-2*pad);
+    return [x,y];
+  });
+  let path = 'M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+  let area = path + ' L'+pts[pts.length-1][0].toFixed(1)+','+(H-pad)+' L'+pts[0][0].toFixed(1)+','+(H-pad)+' Z';
+  svg.innerHTML = `
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${SKUCFG.c}" stop-opacity=".3"/><stop offset="100%" stop-color="${SKUCFG.c}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${area}" fill="url(#g)"/>
+    <path d="${path}" fill="none" stroke="${SKUCFG.c}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i===pts.length-1?4:2.5}" fill="${i===pts.length-1?'#fff':SKUCFG.c}" stroke="${SKUCFG.c}" stroke-width="2"/>`).join('')}`;
+}
+
+/* ============ AI 建议 ============ */
+let aiIdx = 0;
+function renderAi(){
+  const tips = SKUCFG.ai || [];
+  document.getElementById('aiList').innerHTML = tips.map((t,i)=>`
+    <div class="ai-tip">
+      <div class="ai-ic">${SKUCFG.emo}</div>
+      <div class="ai-t">${esc(t)}</div>
+    </div>`).join('');
+}
+function genAi(){
+  aiIdx = (aiIdx+1) % Math.max(1,(SKUCFG.ai||[]).length);
+  const tips = SKUCFG.ai || [];
+  document.getElementById('aiList').innerHTML = tips.slice(aiIdx).concat(tips.slice(0,aiIdx)).map(t=>`
+    <div class="ai-tip"><div class="ai-ic">${SKUCFG.emo}</div><div class="ai-t">${esc(t)}</div></div>`).join('');
+  toast('🤖 已为你换一批建议');
+}
+
+/* ============ 访问密码 ============ */
+function pinEnabled(){ return !!(localStorage.getItem(K.pin)); }
+function pinToggle(){
+  if(pinEnabled()){
+    if(confirm('关闭访问密码？（之后无需密码进入）')){ localStorage.removeItem(K.pin); renderPin(); toast('已关闭'); }
+  } else {
+    const p = prompt('设置 4 位访问密码（仅存本机，防止链接被转发后他人进入）：');
+    if(p && /^\d{4}$/.test(p)){ localStorage.setItem(K.pin, p); renderPin(); toast('✅ 已开启，下次进入需密码'); }
+    else if(p) toast('请输入 4 位数字密码');
+  }
+}
+function renderPin(){
+  const el = document.getElementById('pinBtn');
+  el.textContent = pinEnabled() ? '🔒 已加锁' : '🔒 未加锁';
+  el.classList.toggle('on', pinEnabled());
+}
+(function checkPinBoot(){
+  try{
+    const ok = sessionStorage.getItem('wb_eng_pin_ok') === (PREFIX||'shared');
+    if(pinEnabled() && !ok){
+      const p = prompt('🔒 输入访问密码进入：');
+      if(p === localStorage.getItem(K.pin)){
+        try{ sessionStorage.setItem('wb_eng_pin_ok', PREFIX||'shared'); }catch(e){}
+      } else if(p !== null){ alert('密码错误'); setTimeout(()=>location.reload(), 500); }
+    }
+  }catch(e){}
+})();
+
+/* ============ 备份 ============ */
+function exportData(){
+  const data = { records:getRecs(), todos:getTodos(), sku:SKU, exported:new Date().toISOString(), app:'engine-v1' };
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = SKUCFG.name+'-备份-'+todayStr()+'.json'; a.click();
+  toast('⬇ 备份已导出');
+}
+function importData(input){
+  const file = input.files && input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(){
+    try{
+      const d = JSON.parse(reader.result);
+      if(d.records) setRecs(d.records);
+      if(d.todos) setTodos(d.todos);
+      toast('✅ 数据已恢复'); renderAll();
+    }catch(e){ toast('导入失败：文件格式不正确'); }
+  };
+  reader.readAsText(file); input.value='';
+}
+function askClear(){
+  if(!confirm('⚠️ 清空全部数据？\n\n将删除本空间所有记录与待办，不可恢复。\n建议先「导出备份」。')) return;
+  if(!confirm('再次确认清空？')) return;
+  setRecs([]); setTodos([]); renderAll(); toast('已清空');
+}
+
+/* ============ 示例数据（首次） ============ */
+function seedDemo(){
+  if(load(K.onboard, false)) return;
+  if(getRecs().length || getTodos().length){ save(K.onboard, true); return; }
+  const today = todayStr();
+  const d = new Date();
+  const back = n => { const t = new Date(d - n*86400000); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); };
+  // 待办示例
+  const todos = (SKUCFG.todos||[]).slice(0,3).map(name=>({name, done:false}));
+  setTodos(todos);
+  // 记录示例（近几天）
+  const samples = (SKUCFG.sample || []).map(s=>Object.assign({date:back(s.days||0)}, s));
+  const recs = samples.map(s=>{
+    delete s.days; return s;
+  });
+  setRecs(recs);
+  save(K.onboard, true);
+}
+
+/* 通用示例生成器（无 sample 时按字段生成） */
+function genSample(){
+  const f = SKUCFG.fields;
+  const list = [];
+  const base = (v, n) => f.reduce((o,ff,i)=>{
+    if(ff.k==='title') o[ff.k] = v;
+    else if(ff.type==='select') o[ff.k] = ff.opts[Math.min(i,ff.opts.length-1)];
+    else if(ff.type==='number') o[ff.k] = n;
+    return o;
+  },{});
+  [['第一次体验', 12],['日常坚持', 18],['持续进步', 15]].forEach((p,i)=>{
+    list.push(Object.assign(base(p[0], p[1]), {days: i*1+1}));
+  });
+  return list;
+}
+
+function renderAll(){
+  applyTheme();
+  renderStats(); renderRecs(); renderTodos(); renderChart(); renderAi(); renderPin();
+  const hour = new Date().getHours();
+  const greet = hour<6?'夜深了，注意休息':hour<12?'早上好，开工！':hour<18?'下午好，继续加油！':'晚上好，辛苦了！';
+  document.getElementById('heroTitle').textContent = SKUCFG.emo + ' ' + greet;
+  document.getElementById('heroSub').textContent = SKUCFG.name + ' · 今天也要元气满满';
+  document.getElementById('footVer').textContent = 'Crazy Friday · ' + SKUCFG.name + ' v1.0 · 数据存于本机';
+}
+
+/* ============ 初始化 ============ */
+// 确保 SKUCFG.sample 存在
+if(!SKUCFG.sample) SKUCFG.sample = genSample();
+seedDemo();
+renderAll();
+</script>
+</body>
+</html>
