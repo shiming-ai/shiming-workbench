@@ -4,51 +4,92 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0420">
-<meta name="description" content="Crazy Friday 疯狂星期五 · AI × CREATOR · 一个人+AI就是一家公司">
+<meta name="description" content="Crazy Friday 疯狂星期五 · AI × CREATOR · 一个人+AI就是一家公司 · AI工作台定制/成品/授权">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="zh-CN">
 <title>Crazy Friday · 疯狂星期五</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-body { min-height:100vh; background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; display:flex; align-items:center; justify-content:center; padding:24px; overflow-x:hidden; background-image:radial-gradient(ellipse 700px 450px at 50% -5%, rgba(168,85,247,.28), transparent 60%), radial-gradient(ellipse 500px 350px at 100% 80%, rgba(236,72,153,.12), transparent 60%); background-attachment:fixed; }
-.card { width:100%; max-width:430px; text-align:center; padding:44px 24px 32px; background:rgba(255,255,255,.04); border:1px solid rgba(168,85,247,.25); border-radius:28px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 70px rgba(0,0,0,.5); position:relative; overflow:hidden; }
+body { min-height:100vh; background:#0d0420; color:#f5f3ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; padding:24px 16px 40px; overflow-x:hidden; background-image:radial-gradient(ellipse 700px 450px at 50% -5%, rgba(168,85,247,.28), transparent 60%), radial-gradient(ellipse 500px 350px at 100% 80%, rgba(236,72,153,.12), transparent 60%); background-attachment:fixed; }
+.card { width:100%; max-width:460px; margin:0 auto; text-align:center; padding:40px 22px 30px; background:rgba(255,255,255,.04); border:1px solid rgba(168,85,247,.25); border-radius:28px; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 70px rgba(0,0,0,.5); position:relative; overflow:hidden; }
 .card::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:260px; height:260px; border-radius:50%; background:radial-gradient(ellipse, rgba(168,85,247,.3), transparent 70%); pointer-events:none; filter:blur(20px); }
-/* 顶部极简图形装饰：两个发光小圆点 + 细线（不用 logo 图） */
-.brand-mark { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:22px; }
+.brand-mark { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:20px; position:relative; z-index:1; }
 .brand-mark .dot { width:8px; height:8px; border-radius:50%; background:#FF6B1A; box-shadow:0 0 12px rgba(255,107,26,.7); }
 .brand-mark .dd { width:8px; height:8px; border-radius:50%; background:#2DD4BF; box-shadow:0 0 12px rgba(45,212,191,.7); }
 .brand-mark .ln { width:52px; height:1.5px; background:linear-gradient(90deg,transparent,rgba(168,85,247,.7),transparent); }
-.brand { font-family:Georgia,'Times New Roman',serif; font-size:44px; font-weight:900; letter-spacing:-1.5px; line-height:1.08; background:linear-gradient(135deg,#fff 15%,#C084FC 85%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 40px rgba(168,85,247,.35); }
-.cn { font-size:19px; font-weight:900; letter-spacing:6px; margin-top:9px; color:#d8d0f0; }
-.tag { display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-size:11px; font-weight:800; color:#FFD700; background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); padding:6px 16px; border-radius:20px; letter-spacing:2px; }
-.slogan { margin-top:22px; font-size:15px; font-weight:800; line-height:1.8; color:#fff; }
+.brand { font-family:Georgia,'Times New Roman',serif; font-size:44px; font-weight:900; letter-spacing:-1.5px; line-height:1.08; background:linear-gradient(135deg,#fff 15%,#C084FC 85%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 40px rgba(168,85,247,.35); position:relative; z-index:1; }
+.cn { font-size:18px; font-weight:900; letter-spacing:6px; margin-top:8px; color:#d8d0f0; position:relative; z-index:1; }
+.tag { display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-size:10.5px; font-weight:800; color:#FFD700; background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); padding:5px 15px; border-radius:20px; letter-spacing:2px; position:relative; z-index:1; }
+.slogan { margin-top:18px; font-size:14.5px; font-weight:800; line-height:1.8; color:#fff; position:relative; z-index:1; }
 .slogan .grad { background:linear-gradient(135deg,#C084FC,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.desc { margin-top:10px; font-size:12px; color:#a89ec9; line-height:1.9; }
-.line { width:70px; height:2px; margin:22px auto; background:linear-gradient(90deg,transparent,#FF6B1A,transparent); }
-.ctas { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
-.btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:22px; font-size:14px; font-weight:900; text-decoration:none; cursor:pointer; border:none; }
+.desc { margin-top:8px; font-size:11.5px; color:#a89ec9; line-height:1.9; position:relative; z-index:1; }
+/* 数据统计 */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:20px; position:relative; z-index:1; }
+.stat { background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:11px 4px; }
+.stat .n { font-size:17px; font-weight:900; background:linear-gradient(135deg,#fff,#C084FC); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+.stat .l { font-size:8.5px; color:#a89ec9; margin-top:4px; font-weight:700; letter-spacing:.3px; }
+.line { width:70px; height:2px; margin:20px auto; background:linear-gradient(90deg,transparent,#FF6B1A,transparent); position:relative; z-index:1; }
+/* 产品卡 */
+.sec-t { font-size:11px; font-weight:900; color:#FFD700; letter-spacing:1.5px; margin-bottom:10px; position:relative; z-index:1; }
+.prods { display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px; position:relative; z-index:1; }
+.prod { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:12px 8px; text-decoration:none; color:inherit; transition:transform .12s, border-color .2s; display:block; }
+.prod:active { transform:scale(.95); }
+.prod.pop { border-color:rgba(168,85,247,.55); background:rgba(168,85,247,.1); }
+.prod .p-ic { font-size:18px; line-height:1; }
+.prod .p-n { font-size:10.5px; font-weight:800; margin-top:6px; color:#fff; line-height:1.3; }
+.prod .p-p { font-size:11px; font-weight:900; color:#FFD700; margin-top:3px; }
+.prod .p-d { font-size:8px; color:#a89ec9; margin-top:2px; line-height:1.4; }
+.ctas { display:flex; flex-direction:column; gap:9px; margin-top:18px; position:relative; z-index:1; }
+.btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:22px; font-size:13.5px; font-weight:900; text-decoration:none; cursor:pointer; border:none; }
 .btn-main { background:linear-gradient(135deg,#A855F7,#EC4899); color:#fff; box-shadow:0 10px 30px rgba(168,85,247,.4); }
 .btn-ghost { background:rgba(255,255,255,.06); color:#d8d0f0; border:1px solid rgba(255,255,255,.12); }
-.foot { margin-top:20px; font-size:10px; color:#6d6489; line-height:1.7; }
-@media (max-width:360px){ .brand{font-size:32px} .cn{letter-spacing:4px;font-size:17px} }
+.btn-row { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.foot { margin-top:18px; font-size:9.5px; color:#6d6489; line-height:1.7; position:relative; z-index:1; }
+@media (max-width:380px){ .brand{font-size:34px} .cn{letter-spacing:4px;font-size:16px} .stats{grid-template-columns:repeat(2,1fr)} .prods{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
 <div class="card">
-    <!-- 极简装饰：橙点 + 细线 + 蓝绿点（替代 logo 图） -->
     <div class="brand-mark"><span class="ln"></span><span class="dot"></span><span class="dd"></span><span class="ln"></span></div>
     <div class="brand">Crazy Friday</div>
     <div class="cn">疯狂星期五</div>
     <div class="tag">AI × CREATOR</div>
     <div class="slogan">一个人 <span class="grad">+ AI</span>，就是一家公司</div>
     <div class="desc">AI 时代的一人公司创业生态<br>工具 · 玩法 · 接单 · 变现 · 案例，一套闭环</div>
+
+    <div class="stats">
+        <div class="stat"><div class="n">7</div><div class="l">业务线</div></div>
+        <div class="stat"><div class="n">36+</div><div class="l">行业案例</div></div>
+        <div class="stat"><div class="n">¥599</div><div class="l">成品起</div></div>
+        <div class="stat"><div class="n">1-5天</div><div class="l">交付</div></div>
+    </div>
+
     <div class="line"></div>
+    <div class="sec-t">AI 工作台 · 三档选择</div>
+    <div class="prods">
+        <a class="prod pop" href="cfapp/store.html">
+            <div class="p-ic">🎁</div><div class="p-n">年度使用版</div><div class="p-p">¥599/年</div><div class="p-d">开箱即用 · 独立空间</div>
+        </a>
+        <a class="prod" href="landing.html">
+            <div class="p-ic">🛠️</div><div class="p-n">轻定制</div><div class="p-p">¥999起</div><div class="p-d">调模块 · 改界面</div>
+        </a>
+        <a class="prod" href="landing.html">
+            <div class="p-ic">🧠</div><div class="p-n">深度定制</div><div class="p-p">¥1999起</div><div class="p-d">全流程专属打造</div>
+        </a>
+    </div>
+
     <div class="ctas">
         <a class="btn btn-main" href="cfapp/index.html">🚀 进入 Crazy Friday 生态</a>
-        <a class="btn btn-ghost" href="demo-gallery.html">🎬 看 36 个行业案例</a>
-        <a class="btn btn-ghost" href="cfapp/store.html">🛒 逛成品工作台商店</a>
+        <div class="btn-row">
+            <a class="btn btn-ghost" href="demo-gallery.html">🎬 看 36 个案例</a>
+            <a class="btn btn-ghost" href="authorize.html">🛡️ 授权合作</a>
+        </div>
+        <div class="btn-row">
+            <a class="btn btn-ghost" href="index.html">🏛️ 母系统官网</a>
+            <a class="btn btn-ghost" href="hub.html">🧭 生态入口</a>
+        </div>
     </div>
-    <div class="foot">Crazy Friday · 疯狂星期五 · © 2026</div>
+    <div class="foot">Crazy Friday · 疯狂星期五 · © 2026 · AI时代的一人公司生态</div>
 </div>
 </body>
 </html>
