@@ -310,6 +310,9 @@ let HUB_FID = (function(){
   try{ const q = new URLSearchParams(location.search); let f = (q.get('fid')||'').trim(); return f.replace(/[^a-zA-Z0-9_-]/g,''); }catch(e){ return ''; }
 })();
 
+/* ============ HTML 转义 ============ */
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
 /* ============ 36 行业（按类分组） ============ */
 const INDUSTRIES = [
   {id:'love',emo:'💞',n:'恋爱工作台',cat:'life'},
