@@ -521,46 +521,55 @@ function renderOverview(){
       </div>
     </div>
 
-    <!-- KPI 4 卡 -->
-    <div class="kpi-grid">
-      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
-        <div class="kpi-head">
-          <div class="kpi-ic" style="background:linear-gradient(135deg,#A855F7,#7C3AED)"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
-          <div class="kpi-tag">产品</div>
-        </div>
-        <div class="kpi-n">${totalProds}</div>
-        <div class="kpi-trend">${miniTrend(trendSales, '#A855F7')}</div>
-        <div class="kpi-foot"><span>授权产品总数</span></div>
+    <!-- 业务产品矩阵（产品门户） -->
+    <div class="ov-sec-hd" style="margin-top:24px">🏢 业务产品</div>
+    <div class="cat-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+      <div class="cat-card purple" onclick="navigate('wb-engine.html?sku=life','全家桶版','业务产品')" style="cursor:pointer">
+        <div class="ct-hd"><div class="ct-ic">🎁</div><div><div class="ct-t">全家桶 · 36 行业</div><div class="ct-s">¥1999/年 · 一次买通</div></div></div>
+        <div class="cat-mini"><div class="cat-mini-item">💞 恋爱 / 💪 健身 / 💰 记账 / 📚 学习</div><div class="cat-mini-item">🌐 雅思 / 🍱 餐饮 / 🐶 宠物 / ✈️ 旅行</div></div>
       </div>
-      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
-        <div class="kpi-head">
-          <div class="kpi-ic" style="background:linear-gradient(135deg,#EC4899,#F472B6)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-          <div class="kpi-tag">客户</div>
-        </div>
-        <div class="kpi-n">${totalUsed}</div>
-        <div class="kpi-trend">${miniTrend(trendSales, '#EC4899')}</div>
-        <div class="kpi-foot"><span class="ch">已售 / ${totalQuota} 总额</span></div>
+      <div class="cat-card pink" onclick="navigate('baby.html','宝贝成长旗舰','业务产品')" style="cursor:pointer">
+        <div class="ct-hd"><div class="ct-ic">👶</div><div><div class="ct-t">宝贝成长旗舰</div><div class="ct-s">¥599/年 · 12页+AI+PWA</div></div></div>
+        <div class="cat-mini"><div class="cat-mini-item">📷 照片/视频 · 📊 健康数据 · 🤖 AI育儿</div><div class="cat-mini-item">📖 成长故事 · 👨‍👩‍👧 全家共享</div></div>
       </div>
-      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
-        <div class="kpi-head">
-          <div class="kpi-ic" style="background:linear-gradient(135deg,#10B981,#34D399)"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-          <div class="kpi-tag">营收</div>
-        </div>
-        <div class="kpi-n">¥${(totalRev/1000).toFixed(1)}k</div>
-        <div class="kpi-trend">${miniTrend(trendRev, '#10B981')}</div>
-        <div class="kpi-foot"><span class="ch">+${salesRate}% ↑ 同比</span></div>
+      <div class="cat-card cyan" onclick="navigate('automation.html','AI自动化运营台','业务产品')" style="cursor:pointer">
+        <div class="ct-hd"><div class="ct-ic">⚡</div><div><div class="ct-t">AI自动化运营台</div><div class="ct-s">¥599/年 · Skill+智能体</div></div></div>
+        <div class="cat-mini"><div class="cat-mini-item">🛠 技能库 · 🤖 智能体编排</div><div class="cat-mini-item">⚡ 自动化任务 · 📜 运行日志</div></div>
       </div>
-      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
-        <div class="kpi-head">
-          <div class="kpi-ic" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-          <div class="kpi-tag">到期</div>
-        </div>
-        <div class="kpi-n">${expList.length}</div>
-        <div class="kpi-trend">${miniTrend(trendRate, '#F59E0B')}</div>
-        <div class="kpi-foot"><span class="ch ${expList.length>0?'':'flat'}">30天内到期</span></div>
+      <div class="cat-card purple" onclick="document.getElementById('industriesToggle').click()" style="cursor:pointer">
+        <div class="ct-hd"><div class="ct-ic">🧩</div><div><div class="ct-t">36 行业工作台</div><div class="ct-s">39 个行业 · 引擎驱动</div></div></div>
+        <div class="cat-mini"><div class="cat-mini-item">💞 恋爱 / 💪 健身 / 💰 记账 / ⚖️ 律所</div><div class="cat-mini-item">☕ 咖啡 / 🍰 烘焙 / 💐 鲜花 / 👨‍💻 编程</div></div>
       </div>
     </div>
 
+    <!-- 双栏：数据后台入口 + 状态概览（精简） -->
+    <div class="dual-col" style="margin-top:16px">
+      <div class="glass-card">
+        <div class="gc-hd">
+          <div class="gc-ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg></div>
+          <div class="gc-t">数据后台</div>
+          <div class="gc-s">${totalProds} 产品 · ${totalUsed}/${totalQuota}</div>
+        </div>
+        <div style="font-size:11.5px;color:var(--ink2);line-height:1.8;padding:6px 0">
+          📊 KPI · 📋 各产品销售明细<br>⏰ 30 天到期 · 📈 12 月营收趋势
+        </div>
+        <button class="btn" style="margin-top:10px" onclick="navigate('authorize.html','授权管理中心','变现生态')">📊 进入数据后台</button>
+      </div>
+      <div class="glass-card">
+        <div class="gc-hd">
+          <div class="gc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="gc-t">待办提醒</div>
+          <div class="gc-s">${expList.length} 个</div>
+        </div>
+        <div class="exp-list">
+          ${expList.length === 0 ? '<div class="exp-empty">✅ 暂无即将到期客户<br><span style="font-size:9.5px">所有客户授权都在有效期内</span></div>' : expList.slice(0,5).map(({p,c,d})=>`<div class="exp-item ${d<=7?'urgent':d<=15?'warn':''}">
+            <div class="e-ic">${p.emo||'👤'}</div>
+            <div class="e-t"><div class="e-n">${esc(c.name||'客户')}</div><div class="e-d">${esc(p.name)} · ${esc(c.end)}</div></div>
+            <span class="e-tag">${d<=7?'紧急':d<=15?'临近':d+'天'}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
     <!-- 双栏 -->
     <div class="dual-col">
       <div class="glass-card">
