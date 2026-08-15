@@ -37,6 +37,9 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .sb-mark::after{content:'';position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:#10B981;box-shadow:0 0 8px rgba(16,185,129,.8);border:2px solid var(--bg)}
 .sb-t1{font-family:Georgia,serif;font-size:16px;font-weight:900;letter-spacing:-.4px;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .sb-t2{font-size:9px;color:var(--ink3);margin-top:2px;letter-spacing:.5px}
+.sb-close{display:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid var(--line2);cursor:pointer;align-items:center;justify-content:center;color:var(--ink2);flex-shrink:0;margin-left:auto}
+.sb-close:active{transform:scale(.9)}
+.sb-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
 .sb-body{flex:1;overflow-y:auto;padding:12px 0;position:relative;z-index:1}
 .sb-sec{margin-bottom:6px}
 .sb-sec-t{padding:10px 18px 5px;font-size:9.5px;font-weight:900;color:var(--ink3);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px}
@@ -208,6 +211,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
   .sidebar.open{transform:translateX(0)}
   .main{margin-left:0}
   .topbar .menu-btn{display:inline-flex}
+  .sb-close{display:inline-flex}
   .iframe-wrap{min-height:calc(100vh - 64px)}
   .overview{padding:14px 14px 24px}
   .ov-hero{padding:18px 16px;border-radius:18px}
@@ -229,6 +233,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
         <div class="sb-t1">Crazy Friday</div>
         <div class="sb-t2">疯狂星期五 · 总工作台</div>
       </div>
+      <button class="sb-close" onclick="toggleSidebar()" title="关闭菜单"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="sb-body">
       <div class="sb-sec">
@@ -279,7 +284,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
   </aside>
 
   <!-- ===== 右侧 ===== -->
-  <div class="main">
+  <div class="main" onclick="if(window.innerWidth<=768)closeSidebarMobile()">
     <div class="topbar">
       <button class="menu-btn" onclick="toggleSidebar()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <div class="crumb">
@@ -666,9 +671,19 @@ document.getElementById('contentFrame').addEventListener('load', function(){
 
 function reloadFrame(){ if(curUrl){ document.getElementById('contentFrame').src = curUrl; document.getElementById('loading').classList.remove('hide'); } }
 function openNewTab(){ if(curUrl){ window.open(curUrl, '_blank'); } else { showOverview(); } }
+let _sideTipShown = false;
 function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
+  const open = document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('mask').classList.toggle('show');
+  if(open && window.innerWidth<=768 && !_sideTipShown){
+    _sideTipShown = true;
+    setTimeout(()=>{
+      const t=document.getElementById('toast');
+      t.textContent='👆 点击右侧任意位置或 X 关闭抽屉';
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 2500);
+    }, 300);
+  }
 }
 function closeSidebarMobile(){
   document.getElementById('sidebar').classList.remove('open');
