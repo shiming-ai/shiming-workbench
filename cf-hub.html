@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D9488">
+<meta name="description" content="Crazy Friday · 疯狂星期五 · 总工作台 · 所有业务/官网/变现一站式管理">
+<title>Crazy Friday · 总工作台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F5F7FA;--card:#FFFFFF;--ink:#14181F;--ink2:#5A6472;--ink3:#9AA4B2;
+  --line:#E7EBF0;--primary:#0D9488;--primary2:#14B8A6;--pink:#F472B6;
+  --amber:#F59E0B;--red:#EF4444;--green:#10B981;--blue:#3B82F6;--purple:#8B5CF6;
+  --red-soft:#FEF2F2;--green-soft:#E9F9F2;--amber-soft:#FEF7E6;--blue-soft:#EBF5FE;
+  --purple-soft:#F1EDFC;--pink-soft:#FDF0F7;
+  --safe-b:env(safe-area-inset-bottom);
+  --sidebar-w:248px;
+}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden}
+.layout{display:flex;min-height:100vh}
+/* ===== 左侧导航 ===== */
+.sidebar{width:var(--sidebar-w);background:#0a0e17;color:#d8d0f0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s ease;border-right:1px solid rgba(255,255,255,.08)}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+.sb-head{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,rgba(124,58,237,.15),transparent)}
+.sb-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#7C3AED,#EC4899);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:13px;box-shadow:0 6px 16px rgba(124,58,237,.4);flex-shrink:0}
+.sb-t1{font-family:Georgia,serif;font-size:15px;font-weight:900;letter-spacing:-.3px;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sb-t2{font-size:9.5px;color:#8b8f9e;margin-top:1px}
+.sb-body{flex:1;overflow-y:auto;padding:10px 0}
+.sb-sec{margin-bottom:8px}
+.sb-sec-t{padding:8px 18px 5px;font-size:9.5px;font-weight:900;color:#5A6472;letter-spacing:1.5px;text-transform:uppercase}
+.sb-item{display:flex;align-items:center;gap:9px;padding:9px 18px;cursor:pointer;color:#a8b1c4;font-size:12.5px;font-weight:600;border-left:3px solid transparent;transition:all .15s}
+.sb-item:hover{background:rgba(255,255,255,.04);color:#fff}
+.sb-item.on{background:linear-gradient(90deg,rgba(124,58,237,.18),rgba(236,72,153,.06));color:#fff;border-left-color:#A855F7}
+.sb-item .ico{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.sb-item .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-item .badge{margin-left:auto;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:6px;background:rgba(124,58,237,.3);color:#C084FC;flex-shrink:0}
+.sb-subitem{display:flex;align-items:center;gap:7px;padding:6px 18px 6px 41px;cursor:pointer;color:#6d7388;font-size:11.5px;font-weight:600;border-left:3px solid transparent;transition:all .15s}
+.sb-subitem:hover{background:rgba(255,255,255,.04);color:#fff}
+.sb-subitem.on{background:rgba(124,58,237,.1);color:#fff;border-left-color:#7C3AED}
+.sb-subitem .ico{font-size:12px}
+.sb-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:#5A6472;line-height:1.6}
+.sb-foot .ver{font-family:ui-monospace,Menlo,monospace;color:#9AA4B2;font-size:9.5px;margin-top:2px}
+/* ===== 右侧主区 ===== */
+.main{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:54px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 16px;gap:10px;position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)}
+.topbar .menu-btn{display:none;width:38px;height:38px;border-radius:10px;background:var(--bg);border:1px solid var(--line);cursor:pointer;align-items:center;justify-content:center;color:var(--ink2)}
+.topbar .menu-btn:active{transform:scale(.95)}
+.topbar .crumb{font-size:12px;color:var(--ink3);display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.topbar .crumb .b-now{font-size:13.5px;font-weight:900;color:var(--ink)}
+.topbar .crumb .b-sep{opacity:.4}
+.topbar .crumb .b-prev{color:var(--ink2)}
+.topbar .actions{display:flex;gap:6px}
+.icon-btn2{height:36px;padding:0 12px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--ink2);font-size:11.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.icon-btn2:active{transform:scale(.95)}
+.icon-btn2 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.content{flex:1;background:#F5F7FA;position:relative;overflow:auto}
+.iframe-wrap{width:100%;height:100%;min-height:calc(100vh - 54px);position:relative}
+#contentFrame{width:100%;height:100%;border:none;background:#fff;display:block}
+/* ===== 总览（默认） ===== */
+.overview{padding:24px;max-width:1200px;margin:0 auto}
+.ov-hero{background:linear-gradient(135deg,#7C3AED,#EC4899);border-radius:24px;padding:24px 26px;color:#fff;position:relative;overflow:hidden;margin-bottom:20px}
+.ov-hero::before{content:'';position:absolute;top:-60px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.1);pointer-events:none}
+.ov-hero .h-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;background:rgba(255,255,255,.18);padding:4px 11px;border-radius:9px;letter-spacing:.5px;position:relative;z-index:1}
+.ov-hero h1{font-size:24px;font-weight:900;letter-spacing:-.5px;margin-top:10px;position:relative;z-index:1}
+.ov-hero .h-sub{font-size:12px;opacity:.92;margin-top:4px;position:relative;z-index:1}
+.ov-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:11px;margin-bottom:22px}
+.ov-stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 12px;text-align:center;box-shadow:0 2px 10px rgba(20,24,31,.03);transition:transform .15s,border-color .15s;cursor:pointer}
+.ov-stat:hover{transform:translateY(-2px);border-color:var(--primary)}
+.ov-stat .ic{font-size:22px;margin-bottom:6px}
+.ov-stat .n{font-size:22px;font-weight:900;color:var(--primary)}
+.ov-stat .l{font-size:10px;color:var(--ink3);margin-top:3px;font-weight:700}
+.ov-sec-hd{font-size:13px;font-weight:900;color:var(--ink);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+.ov-sec-hd::before{content:'';width:4px;height:16px;background:linear-gradient(180deg,var(--primary),var(--pink));border-radius:2px}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}
+.ov-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:transform .15s,border-color .15s}
+.ov-card:hover{transform:translateY(-2px);border-color:var(--primary)}
+.ov-card:active{transform:scale(.98)}
+.ov-card .ic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 5px 14px rgba(0,0,0,.08)}
+.ov-card .t{font-size:13px;font-weight:900;line-height:1.2}
+.ov-card .d{font-size:10px;color:var(--ink3);margin-top:3px;line-height:1.4}
+.ov-card .arrow{margin-left:auto;color:var(--ink3);flex-shrink:0}
+/* ===== 加载指示器 ===== */
+.loading{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:2;opacity:1;transition:opacity .2s}
+.loading.hide{opacity:0;pointer-events:none}
+.spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* ===== 抽屉遮罩 ===== */
+.mask{position:fixed;inset:0;background:rgba(10,14,23,.55);z-index:90;display:none}
+.mask.show{display:block}
+/* ===== 移动端 ===== */
+@media (max-width:768px){
+  :root{--sidebar-w:280px}
+  .sidebar{transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.3)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .topbar .menu-btn{display:inline-flex}
+  .iframe-wrap{min-height:calc(100vh - 54px)}
+  .overview{padding:14px}
+  .ov-hero{padding:18px 16px;border-radius:18px}
+  .ov-hero h1{font-size:19px}
+  .ov-grid{grid-template-columns:1fr 1fr}
+  .ov-card .d{display:none}
+  .ov-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:380px){.ov-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ===== 左侧导航 ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-mark">CF</div>
+      <div>
+        <div class="sb-t1">Crazy Friday</div>
+        <div class="sb-t2">疯狂星期五 · 总工作台</div>
+      </div>
+    </div>
+    <div class="sb-body">
+      <div class="sb-sec">
+        <div class="sb-item" data-url="overview"><span class="ico">🏠</span><span class="nm">总览</span></div>
+      </div>
+      <div class="sb-sec">
+        <div class="sb-sec-t">🏢 业务产品</div>
+        <div class="sb-item" data-url="baby.html"><span class="ico">👶</span><span class="nm">宝贝成长(旗舰)</span></div>
+        <div class="sb-item" data-url="automation.html"><span class="ico">⚡</span><span class="nm">AI自动化运营台</span></div>
+        <div class="sb-item" id="industriesToggle"><span class="ico">🧩</span><span class="nm">36 行业工作台</span><span class="badge">39</span></div>
+        <div id="industriesSub" style="display:none"></div>
+        <div class="sb-item" data-url="wb-engine.html?sku=life"><span class="ico">🎁</span><span class="nm">全家桶版</span><span class="badge">¥1999</span></div>
+      </div>
+      <div class="sb-sec">
+        <div class="sb-sec-t">🌐 官网与展示</div>
+        <div class="sb-item" data-url="index.html"><span class="ico">🏛️</span><span class="nm">母系统官网</span></div>
+        <div class="sb-item" data-url="brand.html"><span class="ico">🏷️</span><span class="nm">品牌名片页</span></div>
+        <div class="sb-item" data-url="demo-gallery.html"><span class="ico">🎬</span><span class="nm">案例广场(36行业)</span></div>
+        <div class="sb-item" data-url="demo-case.html?id=fitness"><span class="ico">🎬</span><span class="nm">案例详情(示例)</span></div>
+        <div class="sb-item" data-url="cf.html"><span class="ico">🌐</span><span class="nm">AI时代生态蓝图</span></div>
+      </div>
+      <div class="sb-sec">
+        <div class="sb-sec-t">🛒 变现生态</div>
+        <div class="sb-item" data-url="authorize.html"><span class="ico">🛡️</span><span class="nm">授权管理中心</span><span class="badge" id="authBadge">42</span></div>
+        <div class="sb-item" data-url="cfapp/store.html"><span class="ico">🛒</span><span class="nm">AI工作台商店</span></div>
+        <div class="sb-item" data-url="invest-dashboard.html"><span class="ico">📊</span><span class="nm">经营看板</span></div>
+        <div class="sb-item" data-url="partner.html"><span class="ico">🤝</span><span class="nm">招商合作</span></div>
+        <div class="sb-item" data-url="invest.html"><span class="ico">🖥️</span><span class="nm">路演大屏</span></div>
+        <div class="sb-item" data-url="bp.html"><span class="ico">📄</span><span class="nm">商业计划书 BP</span></div>
+        <div class="sb-item" data-url="pay.html"><span class="ico">💳</span><span class="nm">变现收款中心</span></div>
+        <div class="sb-item" data-url="cfapp/index.html"><span class="ico">📱</span><span class="nm">Crazy Friday App</span></div>
+      </div>
+      <div class="sb-sec">
+        <div class="sb-sec-t">📦 资源沉淀</div>
+        <div class="sb-item" data-url="order-workbench.html"><span class="ico">📋</span><span class="nm">订单池 / 合作商</span></div>
+        <div class="sb-item" data-url="landing.html"><span class="ico">🎯</span><span class="nm">定制落地页</span></div>
+        <div class="sb-item" data-url="hub.html"><span class="ico">🧭</span><span class="nm">生态入口 hub</span></div>
+      </div>
+      <div class="sb-sec">
+        <div class="sb-sec-t">🧑 我的</div>
+        <div class="sb-item" data-url="workbench/index.html"><span class="ico">🦞</span><span class="nm">时铭工作台(个人)</span></div>
+      </div>
+    </div>
+    <div class="sb-foot">
+      <div>AI × Creator · 一人公司生态</div>
+      <div class="ver" id="cfHubVer">v1.0</div>
+    </div>
+  </aside>
+
+  <!-- ===== 右侧 ===== -->
+  <div class="main">
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="crumb">
+        <span class="b-prev">Crazy Friday</span>
+        <span class="b-sep">›</span>
+        <span class="b-prev" id="crumbSec">总工作台</span>
+        <span class="b-sep">›</span>
+        <span class="b-now" id="crumbNow">总览</span>
+      </div>
+      <div class="actions">
+        <button class="icon-btn2" id="newTabBtn" onclick="openNewTab()" title="在新窗口打开"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+        <button class="icon-btn2" onclick="reloadFrame()" title="刷新"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="iframe-wrap" id="iframeWrap">
+        <div class="loading" id="loading"><div class="spinner"></div></div>
+        <iframe id="contentFrame" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 抽屉遮罩（移动端） -->
+<div class="mask" id="mask" onclick="toggleSidebar()"></div>
+
+<script>
+/* ============ URL 标识（可选 fid） ============ */
+let HUB_FID = (function(){
+  try{ const q = new URLSearchParams(location.search); let f = (q.get('fid')||'').trim(); return f.replace(/[^a-zA-Z0-9_-]/g,''); }catch(e){ return ''; }
+})();
+
+/* ============ 36 行业列表 ============ */
+const INDUSTRIES = [
+  {id:'love',emo:'💞',n:'恋爱工作台'},{id:'fitness',emo:'💪',n:'健身减脂台'},{id:'money',emo:'💰',n:'记账理财台'},
+  {id:'study',emo:'📚',n:'学习备考台'},{id:'english',emo:'🌐',n:'雅思冲刺台'},{id:'baby',emo:'👶',n:'宝宝成长台'},
+  {id:'food',emo:'🍱',n:'餐饮门店台'},{id:'pet',emo:'🐶',n:'宠物健康台'},{id:'photo',emo:'📷',n:'摄影约拍台'},
+  {id:'travel',emo:'✈️',n:'旅行规划台'},{id:'creator',emo:'🎬',n:'自媒体创作台'},{id:'solo',emo:'🦸',n:'一人公司台'},
+  {id:'edu',emo:'🧒',n:'英语启蒙台'},{id:'ecom',emo:'🛒',n:'电商运营台'},{id:'salon',emo:'💅',n:'美甲美睫台'},
+  {id:'estate',emo:'🏠',n:'房产中介台'},{id:'lawyer',emo:'⚖️',n:'律所案件台'},{id:'tutor',emo:'🎓',n:'教培机构台'},
+  {id:'coach',emo:'🏋️',n:'健身私教台'},{id:'house',emo:'🧹',n:'家政保洁台'},{id:'bakery',emo:'🍰',n:'烘焙蛋糕台'},
+  {id:'flower',emo:'💐',n:'鲜花店台'},{id:'fashion',emo:'👗',n:'服装店台'},{id:'car',emo:'🚗',n:'二手车行台'},
+  {id:'vet',emo:'🐾',n:'宠物医院台'},{id:'rpg',emo:'🎭',n:'剧本杀店台'},{id:'wedding',emo:'💒',n:'婚礼策划台'},
+  {id:'babycare',emo:'🍼',n:'母婴店台'},{id:'coffee',emo:'☕',n:'咖啡店台'},{id:'bnb',emo:'🏡',n:'民宿管理台'},
+  {id:'yoga',emo:'🧘',n:'瑜伽馆台'},{id:'code',emo:'👨‍💻',n:'少儿编程台'},{id:'insure',emo:'🛡️',n:'保险经纪台'},
+  {id:'deco',emo:'🏗️',n:'装修公司台'},{id:'fruit',emo:'🍎',n:'水果店台'},{id:'glass',emo:'👓',n:'眼镜店台'},
+  {id:'pharmacy',emo:'💊',n:'药店经营台'},{id:'driving',emo:'🚘',n:'驾校教练台'},{id:'life',emo:'🌟',n:'生活管家台'}
+];
+
+/* ============ 子菜单展开 ============ */
+function toggleIndustries(){
+  const sub = document.getElementById('industriesSub');
+  const isOpen = sub.style.display === 'block';
+  sub.style.display = isOpen ? 'none' : 'block';
+  sub.innerHTML = isOpen ? '' : INDUSTRIES.map(s=>`<div class="sb-subitem" data-url="wb-engine.html?sku=${s.id}"><span class="ico">${s.emo}</span><span class="nm">${s.n}</span></div>`).join('');
+  // 绑定点击
+  sub.querySelectorAll('.sb-subitem').forEach(el=>{
+    el.addEventListener('click', function(){ navigate(this.getAttribute('data-url')); closeSidebarMobile(); });
+  });
+}
+document.getElementById('industriesToggle').addEventListener('click', toggleIndustries);
+
+/* ============ 导航 ============ */
+let curUrl = '';
+let curName = '';
+let curSec = '总工作台';
+
+function navigate(url, name, sec){
+  if(url === 'overview'){
+    showOverview(); return;
+  }
+  curUrl = buildUrl(url);
+  curName = name || url.split('?')[0];
+  curSec = sec || guessSec(curName);
+  document.getElementById('crumbNow').textContent = curName;
+  document.getElementById('crumbSec').textContent = curSec;
+  document.getElementById('contentFrame').src = curUrl;
+  document.getElementById('loading').classList.remove('hide');
+  // 高亮
+  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>{
+    if(el.getAttribute('data-url') === url) el.classList.add('on');
+  });
+  closeSidebarMobile();
+}
+
+/* URL 拼接：加 fid 参数保持客户空间 */
+function buildUrl(url){
+  if(!url || url.startsWith('about:') || url.indexOf('javascript:') === 0) return url;
+  // 已经是绝对或完整路径
+  if(url.indexOf('http') === 0) return url;
+  // 相对路径：加上 origin + 当前路径前缀
+  const base = location.origin + location.pathname.replace(/cf-hub\.html$/, '');
+  // 处理 ? 和 &
+  const sep = url.indexOf('?') >= 0 ? '&' : '?';
+  // 如果当前 HUB_FID 有，且 url 不含 fid
+  if(HUB_FID && url.indexOf('fid=') < 0){
+    return base + url + sep + 'fid=' + HUB_FID;
+  }
+  return base + url;
+}
+
+function guessSec(name){
+  if(name.indexOf('时铭') >= 0) return '个人';
+  if(name.indexOf('宝贝') >= 0 || name.indexOf('自动化') >= 0 || name.indexOf('全家桶') >= 0) return '业务产品';
+  if(name.indexOf('官网') >= 0 || name.indexOf('品牌') >= 0 || name.indexOf('案例') >= 0 || name.indexOf('生态') >= 0 || name.indexOf('蓝图') >= 0) return '官网与展示';
+  if(name.indexOf('授权') >= 0 || name.indexOf('商店') >= 0 || name.indexOf('招商') >= 0 || name.indexOf('BP') >= 0 || name.indexOf('路演') >= 0 || name.indexOf('看板') >= 0 || name.indexOf('收款') >= 0 || name.indexOf('App') >= 0) return '变现生态';
+  if(name.indexOf('订单') >= 0 || name.indexOf('定制') >= 0 || name.indexOf('落地') >= 0 || name.indexOf('hub') >= 0 || name.indexOf('入口') >= 0) return '资源沉淀';
+  return '总工作台';
+}
+
+/* 绑定主菜单点击 */
+document.querySelectorAll('.sb-item[data-url]').forEach(el=>{
+  el.addEventListener('click', function(){
+    const url = this.getAttribute('data-url');
+    const name = this.querySelector('.nm')?.textContent || url;
+    navigate(url, name);
+  });
+});
+
+/* ============ 总览 ============ */
+function showOverview(){
+  document.getElementById('contentFrame').style.display = 'none';
+  document.getElementById('iframeWrap').style.display = 'none';
+  // 用现有 main 内容显示总览
+  let ov = document.getElementById('overviewHost');
+  if(!ov){
+    ov = document.createElement('div');
+    ov.id = 'overviewHost';
+    ov.className = 'overview';
+    document.querySelector('.content').appendChild(ov);
+  }
+  ov.style.display = '';
+  renderOverview();
+  // 高亮
+  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>el.classList.remove('on'));
+  document.querySelector('[data-url="overview"]').classList.add('on');
+  document.getElementById('crumbNow').textContent = '总览';
+  document.getElementById('crumbSec').textContent = '总工作台';
+  curUrl = '';
+  closeSidebarMobile();
+}
+
+function hideOverview(){
+  const ov = document.getElementById('overviewHost');
+  if(ov) ov.style.display = 'none';
+  document.getElementById('iframeWrap').style.display = '';
+  document.getElementById('contentFrame').style.display = '';
+}
+
+/* 重写 navigate 让 overview 也用 iframe */
+const _origNav = navigate;
+navigate = function(url, name, sec){
+  if(url === 'overview'){ showOverview(); return; }
+  hideOverview();
+  // 高亮 + iframe 加载
+  document.getElementById('loading').classList.remove('hide');
+  curUrl = buildUrl(url);
+  curName = name || url.split('?')[0];
+  curSec = sec || guessSec(curName);
+  document.getElementById('crumbNow').textContent = curName;
+  document.getElementById('crumbSec').textContent = curSec;
+  document.getElementById('contentFrame').src = curUrl;
+  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>{
+    if(el.getAttribute('data-url') === url) el.classList.add('on');
+  });
+  closeSidebarMobile();
+};
+
+/* ============ 总览数据（读 localStorage 共享） ============ */
+function loadLS(k, fb){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):fb; }catch(e){ return fb; } }
+
+function renderOverview(){
+  const ov = document.getElementById('overviewHost');
+  const products = loadLS('wb_auth_products', []);
+  const totalProds = products.length;
+  const totalQuota = products.reduce((s,p)=>s+(parseInt(p.total)||0),0);
+  const usedQuota = products.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
+  const totalRev = products.reduce((s,p)=>{
+    const priceNum = parseInt(String(p.price||'0').replace(/[^0-9]/g,''))||0;
+    const used = p.clients?p.clients.length:0;
+    return s + priceNum * used;
+  }, 0);
+  const expiring = products.reduce((s,p)=>{
+    const cs = (p.clients||[]).filter(c=>{
+      if(!c.end) return false;
+      const end = new Date(c.end.replace(/-/g,'/'));
+      const days = (end - new Date()) / 86400000;
+      return days >= 0 && days <= 30;
+    });
+    return s + cs.length;
+  }, 0);
+
+  ov.innerHTML = `
+    <div class="ov-hero">
+      <div class="h-badge">✨ 总工作台 · 数据后台</div>
+      <h1>Crazy Friday · 欢迎回来</h1>
+      <div class="h-sub">统一管理所有业务产品、官网展示、变现生态 · 39 个工作台 + 42 个授权产品</div>
+    </div>
+
+    <div class="ov-stats">
+      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">📦</div><div class="n">${totalProds}</div><div class="l">产品总数</div></div>
+      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">🎫</div><div class="n">${totalQuota}</div><div class="l">总名额</div></div>
+      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">👥</div><div class="n">${usedQuota}</div><div class="l">已售客户</div></div>
+      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">💰</div><div class="n">¥${totalRev.toLocaleString()}</div><div class="l">累计营收(估)</div></div>
+      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')" style="${expiring>0?'border-color:var(--amber)':''}"><div class="ic">⏰</div><div class="n" style="${expiring>0?'color:var(--amber)':''}">${expiring}</div><div class="l">30天内到期</div></div>
+    </div>
+
+    <div class="ov-sec-hd">🏢 业务产品</div>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="navigate('baby.html','宝贝成长(旗舰)','业务产品')"><div class="ic" style="background:linear-gradient(135deg,#EC4899,#7C3AED)">👶</div><div><div class="t">宝贝成长工作台</div><div class="d">旗舰独立产品 · 12页+AI</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('automation.html','AI自动化运营台','业务产品')"><div class="ic" style="background:linear-gradient(135deg,#0D9488,#14B8A6)">⚡</div><div><div class="t">AI自动化运营台</div><div class="d">Skill技能库 · 智能体编排</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="document.getElementById('industriesToggle').click()"><div class="ic" style="background:linear-gradient(135deg,#7C3AED,#A855F7)">🧩</div><div><div class="t">36 行业工作台</div><div class="d">恋爱/健身/餐饮/律所等</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('wb-engine.html?sku=life','全家桶版','业务产品')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#A855F7)">🎁</div><div><div class="t">全家桶版</div><div class="d">¥1999/年 · 36 行业通吃</div></div><span class="arrow">›</span></div>
+    </div>
+
+    <div class="ov-sec-hd">🌐 官网与展示</div>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="navigate('index.html','母系统官网','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#A855F7)">🏛️</div><div><div class="t">母系统官网</div><div class="d">AI一人公司母系统介绍</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('brand.html','品牌名片页','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#A855F7,#EC4899)">🏷️</div><div><div class="t">品牌名片页</div><div class="d">Crazy Friday 品牌生态入口</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('demo-gallery.html','案例广场(36行业)','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#FF8E53)">🎬</div><div><div class="t">案例广场</div><div class="d">36 行业真实案例</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('cf.html','AI时代生态蓝图','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#22D3EE,#0D9488)">🌐</div><div><div class="t">AI时代生态蓝图</div><div class="d">8 大平台 · 3 年路线</div></div><span class="arrow">›</span></div>
+    </div>
+
+    <div class="ov-sec-hd">🛒 变现生态</div>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#7C3AED,#A855F7)">🛡️</div><div><div class="t">授权管理中心</div><div class="d">${totalProds} 个产品 · ${usedQuota} 客户 · ${totalQuota-usedQuota} 余</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('cfapp/store.html','AI工作台商店','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#10B981,#34D399)">🛒</div><div><div class="t">AI工作台商店</div><div class="d">成品工作台 · 开箱即用</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('invest-dashboard.html','经营看板','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#3B82F6,#60A5FA)">📊</div><div><div class="t">经营看板</div><div class="d">实时数据 · 投资人视角</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('partner.html','招商合作','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#F472B6,#EC4899)">🤝</div><div><div class="t">招商合作</div><div class="d">合伙人 · 共创 · 投资</div></div><span class="arrow">›</span></div>
+    </div>
+
+    <div class="ov-sec-hd">📦 资源沉淀</div>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="navigate('order-workbench.html','订单池 / 合作商','资源沉淀')"><div class="ic" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">📋</div><div><div class="t">订单池 / 合作商</div><div class="d">接单工坊 · 案例沉淀</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('landing.html','定制落地页','资源沉淀')"><div class="ic" style="background:linear-gradient(135deg,#F59E0B,#FBBF24)">🎯</div><div><div class="t">定制落地页</div><div class="d">客户转化 · 服务详情</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('hub.html','生态入口 hub','资源沉淀')"><div class="ic" style="background:linear-gradient(135deg,#EC4899,#F472B6)">🧭</div><div><div class="t">生态入口 hub</div><div class="d">所有页面导航汇总</div></div><span class="arrow">›</span></div>
+      <div class="ov-card" onclick="navigate('workbench/index.html','时铭工作台(个人)','个人')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#F59E0B)">🦞</div><div><div class="t">时铭工作台</div><div class="d">个人运营工作台（独立）</div></div><span class="arrow">›</span></div>
+    </div>
+
+    <div style="text-align:center;font-size:10px;color:var(--ink3);margin-top:30px;line-height:1.7;padding:14px">
+      Crazy Friday · 疯狂星期五 · 总工作台 v1.0<br>
+      一站式管理所有业务 · 左侧导航切换 · 数据后台实时汇总
+    </div>`;
+}
+
+/* ============ iframe 加载完成 ============ */
+document.getElementById('contentFrame').addEventListener('load', function(){
+  document.getElementById('loading').classList.add('hide');
+});
+
+/* ============ 操作 ============ */
+function reloadFrame(){ if(curUrl){ document.getElementById('contentFrame').src = curUrl; document.getElementById('loading').classList.remove('hide'); } }
+function openNewTab(){ if(curUrl){ window.open(curUrl, '_blank'); } else { toast('请先选择一个页面'); } }
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('mask').classList.toggle('show');
+}
+function closeSidebarMobile(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mask').classList.remove('show');
+}
+
+/* ============ 初始化 ============ */
+(function init(){
+  // 绑定 36 行业子菜单展开事件
+  const indSub = document.getElementById('industriesSub');
+  indSub.innerHTML = INDUSTRIES.map(s=>`<div class="sb-subitem" data-url="wb-engine.html?sku=${s.id}"><span class="ico">${s.emo}</span><span class="nm">${s.n}</span></div>`).join('');
+  indSub.style.display = 'none';
+  indSub.querySelectorAll('.sb-subitem').forEach(el=>{
+    el.addEventListener('click', function(){
+      const url = this.getAttribute('data-url');
+      const name = this.querySelector('.nm').textContent;
+      navigate(url, name, '业务产品');
+    });
+  });
+
+  // 动态更新授权徽章
+  try{
+    const products = loadLS('wb_auth_products', []);
+    const badge = document.getElementById('authBadge');
+    if(badge && products.length) badge.textContent = products.length;
+  }catch(e){}
+
+  // 默认进总览
+  showOverview();
+})();
+</script>
+</body>
+</html>
