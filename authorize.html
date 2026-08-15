@@ -223,6 +223,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
       <label>产品模板（可改）</label>
       <select id="npTpl" onchange="tplFill()">
         <option value="baby">宝贝成长工作台 👶 ¥599/年</option>
+        <option value="automation">AI自动化运营台 ⚡ ¥599/年</option>
         <option value="love">恋爱工作台 💞 ¥599/年</option>
         <option value="fitness">减脂健身台 💪 ¥599/年</option>
         <option value="money">记账理财台 💰 ¥599/年</option>
@@ -270,13 +271,17 @@ function migrate(){
   const oldClients=load('wb_auth_clients',null);
   const oldTotal=parseInt(load('wb_auth_total',20))||20;
   const hasOld=oldClients!==null;
-  // 有老数据 → 用老数据；无老数据 → 预置空 baby（首次打开不空白）
+  // 有老数据 → 用老数据；无老数据 → 预置默认产品（首次打开不空白）
   const baby={
     id:'baby', name:'宝贝成长工作台', emo:'👶', price:'¥599/年', file:'baby.html',
     color1:'#EC4899', color2:'#7C3AED', total:hasOld?oldTotal:20,
     clients:hasOld?(Array.isArray(oldClients)?oldClients:[]):[]
   };
-  products.unshift(baby);
+  const automation={
+    id:'automation', name:'AI自动化运营台', emo:'⚡', price:'¥599/年', file:'automation.html',
+    color1:'#0D9488', color2:'#14B8A6', total:20, clients:[]
+  };
+  products.unshift(baby, automation);
   save(PROD_KEY,products);
 }
 function getProducts(){ return load(PROD_KEY,[]) }
@@ -286,6 +291,7 @@ function findProd(id){ return getProducts().find(p=>p.id===id) }
 /* 默认模板 */
 const TEMPLATES={
   baby:{name:'宝贝成长工作台',emo:'👶',price:'¥599/年',file:'baby.html',c1:'#EC4899',c2:'#7C3AED'},
+  automation:{name:'AI自动化运营台',emo:'⚡',price:'¥599/年',file:'automation.html',c1:'#0D9488',c2:'#14B8A6'},
   love:{name:'恋爱工作台',emo:'💞',price:'¥599/年',file:'love.html',c1:'#F43F5E',c2:'#EC4899'},
   fitness:{name:'减脂健身台',emo:'💪',price:'¥599/年',file:'fitness.html',c1:'#10B981',c2:'#22D3EE'},
   money:{name:'记账理财台',emo:'💰',price:'¥599/年',file:'money.html',c1:'#F59E0B',c2:'#F97316'},
