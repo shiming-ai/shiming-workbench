@@ -130,6 +130,33 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .note.green{background:var(--green-soft);border-color:#C6EFDC;color:#0B7A4B}
 .toast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(20,12,40,.92);color:#fff;font-size:12.5px;padding:11px 18px;border-radius:12px;z-index:300;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
 .toast.show{opacity:1}
+/* 顶部视图切换 */
+.top-tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px;box-shadow:0 2px 10px rgba(31,36,48,.03)}
+.tab-btn{flex:1;min-height:42px;border:none;border-radius:10px;background:transparent;color:var(--ink2);font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.tab-btn:hover{background:rgba(13,148,136,.05)}
+.tab-btn.on{background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;box-shadow:0 6px 16px rgba(124,58,237,.3)}
+/* 数据后台 */
+.dash-hero{background:linear-gradient(135deg,#7C3AED,#EC4899);border-radius:18px;padding:18px 20px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.dash-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.1);pointer-events:none}
+.dash-hero h2{font-size:18px;font-weight:900;letter-spacing:-.3px;position:relative;z-index:1}
+.dash-hero .sub{font-size:11px;opacity:.92;margin-top:4px;position:relative;z-index:1}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:14px}
+.dash-stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 2px 10px rgba(31,36,48,.03)}
+.dash-stat .n{font-size:18px;font-weight:900;color:var(--primary);line-height:1.1}
+.dash-stat .l{font-size:9.5px;color:var(--ink3);margin-top:3px;font-weight:700}
+.dash-stat .n.a{color:var(--green)}
+.dash-stat .n.r{color:var(--red)}
+.dash-stat .n.w{color:var(--amber)}
+.prod-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.prod-table th{background:var(--bg);padding:8px 10px;text-align:left;font-size:10px;color:var(--ink3);font-weight:800;border-bottom:1px solid var(--line)}
+.prod-table td{padding:10px;border-bottom:1px solid var(--line)}
+.prod-table .p-bar{height:6px;border-radius:3px;background:var(--bg);overflow:hidden;margin-top:5px}
+.prod-table .p-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--primary),var(--pink))}
+.expiring-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:7px;background:#fff}
+.expiring-item .e-ic{width:30px;height:30px;border-radius:8px;background:var(--amber-soft);display:flex;align-items:center;justify-content:center;color:var(--amber);flex-shrink:0}
+.expiring-item .e-n{font-size:12px;font-weight:800}
+.expiring-item .e-d{font-size:10px;color:var(--ink3);margin-top:1px}
+.expiring-item .e-tag{margin-left:auto;font-size:9px;font-weight:800;padding:3px 8px;border-radius:7px;background:var(--amber-soft);color:var(--amber);flex-shrink:0}
 @media(max-width:560px){.prod-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -143,6 +170,12 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
       <div class="t2">AUTHORIZATION CENTER · 授权总台</div>
     </div>
     <div class="badge">🛡️ 多产品管理</div>
+  </div>
+
+  <!-- ===== 顶部视图切换 ===== -->
+  <div class="top-tabs">
+    <button class="tab-btn on" id="tabHome" onclick="switchView('home')">🏢 产品</button>
+    <button class="tab-btn" id="tabData" onclick="switchView('data')">📊 数据后台</button>
   </div>
 
   <!-- ===== 总台视图 ===== -->
@@ -166,6 +199,30 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 
     <div class="note green" style="margin-top:2px">✅ 每个产品独立名额与客户，客户专属链接对应独立数据空间，互不可见。未来开发的每个工作台，都在这里统一授权管理。</div>
     <div class="note" style="margin-top:10px">🔒 你自己留的演示/自用链接：<button class="btn ghost small" style="min-height:30px;padding:0 10px;font-size:10.5px;margin-left:6px" onclick="copyDemo()">复制自用链接</button></div>
+  </div>
+
+  <!-- ===== 数据后台视图 ===== -->
+  <div id="dataView" style="display:none">
+    <div class="dash-hero">
+      <h2>📊 数据后台</h2>
+      <div class="sub">所有产品的销售、营收、续费、即将到期一览</div>
+    </div>
+    <div class="dash-stats" id="dashStats"></div>
+    <div class="card">
+      <div class="sec-hd"><h2>📋 各产品销售明细</h2><span class="sub">实时同步</span></div>
+      <table class="prod-table" id="prodTable">
+        <thead><tr><th>产品</th><th>价格</th><th>已售/总额</th><th>营收</th><th>到期数</th><th>进度</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="sec-hd"><h2>⏰ 30 天内即将到期</h2><span class="sub">请及时提醒续费</span></div>
+      <div id="expiringList"></div>
+    </div>
+    <div class="card">
+      <div class="sec-hd"><h2>💼 按月份营收趋势</h2><span class="sub">近 12 月（演示）</span></div>
+      <div id="revenueChart" style="padding:10px 0"></div>
+    </div>
   </div>
 
   <!-- ===== 产品详情视图 ===== -->
@@ -618,6 +675,118 @@ function downloadQr(id){
   };
   img.onerror=function(){toast('生成失败，请用「复制链接」')};
   img.src='https://api.qrserver.com/v1/create-qr-code/?size=380x380&margin=8&data='+encodeURIComponent(url);
+}
+
+/* ================= 视图切换 ================= */
+let curView = 'home';
+function switchView(v){
+  curView = v;
+  document.getElementById('homeView').style.display = (v === 'home' ? '' : 'none');
+  document.getElementById('dataView').style.display = (v === 'data' ? '' : 'none');
+  document.getElementById('detailView').style.display = 'none';
+  document.getElementById('tabHome').classList.toggle('on', v === 'home');
+  document.getElementById('tabData').classList.toggle('on', v === 'data');
+  if(v === 'data') renderDashboard();
+}
+
+/* ================= 数据后台 ================= */
+function priceNum(p){ return parseInt(String(p.price||'0').replace(/[^0-9]/g,''))||0; }
+function endDays(end){
+  if(!end) return 999;
+  const e = new Date(end.replace(/-/g,'/'));
+  return Math.floor((e - new Date()) / 86400000);
+}
+function renderDashboard(){
+  const list = getProducts();
+  const totalProds = list.length;
+  const totalQuota = list.reduce((s,p)=>s+(parseInt(p.total)||0),0);
+  const totalUsed = list.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
+  const totalRev = list.reduce((s,p)=>s + priceNum(p) * (p.clients?p.clients.length:0), 0);
+  const totalLeft = Math.max(0, totalQuota - totalUsed);
+  // 即将到期（30 天内）
+  let expiringList = [];
+  list.forEach(p=>{
+    (p.clients||[]).forEach(c=>{
+      const d = endDays(c.end);
+      if(d >= 0 && d <= 30) expiringList.push({p, c, d});
+    });
+  });
+  expiringList.sort((a,b)=>a.d - b.d);
+  const expiredCount = list.reduce((s,p)=>s + (p.clients||[]).filter(c=>endDays(c.end)<0).length, 0);
+
+  // 大数据卡
+  document.getElementById('dashStats').innerHTML = `
+    <div class="dash-stat"><div class="n">${totalProds}</div><div class="l">产品</div></div>
+    <div class="dash-stat"><div class="n">${totalQuota}</div><div class="l">总名额</div></div>
+    <div class="dash-stat"><div class="n a">${totalUsed}</div><div class="l">已售</div></div>
+    <div class="dash-stat"><div class="n">${totalLeft}</div><div class="l">剩余</div></div>
+    <div class="dash-stat"><div class="n" style="color:var(--primary)">¥${totalRev.toLocaleString()}</div><div class="l">总营收</div></div>
+    <div class="dash-stat"><div class="n w">${expiringList.length}</div><div class="l">30天到期</div></div>
+    <div class="dash-stat"><div class="n r">${expiredCount}</div><div class="l">已过期</div></div>
+    <div class="dash-stat"><div class="n">${totalQuota>0?Math.round(totalUsed/totalQuota*100):0}%</div><div class="l">销售率</div></div>`;
+
+  // 各产品销售明细
+  const tbody = document.querySelector('#prodTable tbody');
+  if(!list.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--ink3);padding:18px">暂无产品</td></tr>';
+  } else {
+    tbody.innerHTML = list.map(p=>{
+      const used = p.clients?p.clients.length:0;
+      const total = parseInt(p.total)||0;
+      const pct = total>0?Math.min(100,Math.round(used/total*100)):0;
+      const rev = priceNum(p) * used;
+      const exp = (p.clients||[]).filter(c=>{const d=endDays(c.end); return d>=0&&d<=30;}).length;
+      return `<tr>
+        <td><div style="display:flex;align-items:center;gap:7px"><span style="font-size:15px">${p.emo||'✨'}</span><strong>${esc(p.name)}</strong></div></td>
+        <td>${esc(p.price||'¥0')}</td>
+        <td><strong>${used}</strong> / ${total}<div class="p-bar"><i style="width:${pct}%"></i></div></td>
+        <td style="color:var(--green);font-weight:800">¥${rev.toLocaleString()}</td>
+        <td style="color:${exp>0?'var(--amber)':'var(--ink3)'};font-weight:${exp>0?'800':'500'}">${exp}</td>
+        <td style="color:var(--primary);font-weight:800">${pct}%</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // 即将到期列表
+  const exp = document.getElementById('expiringList');
+  if(!expiringList.length){
+    exp.innerHTML = '<div style="text-align:center;color:var(--green);font-size:12px;padding:14px 0">✅ 没有 30 天内即将到期的客户</div>';
+  } else {
+    exp.innerHTML = expiringList.map(({p, c, d})=>`<div class="expiring-item">
+      <div class="e-ic">⏰</div>
+      <div><div class="e-n">${esc(c.name||'客户')} · ${esc(p.name)}</div><div class="e-d">到期 ${esc(c.end)} · 还有 ${d} 天</div></div>
+      <span class="e-tag">${d<=7?'紧急':d<=15?'临近':'提醒'}</span>
+    </div>`).join('');
+  }
+
+  // 营收趋势（演示图表 - 用累计已售客户的月份分布模拟）
+  const months = [];
+  const now = new Date();
+  for(let i=11;i>=0;i--){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    months.push({label:(d.getMonth()+1)+'月', est: 0});
+  }
+  // 按客户端时间分布近似估算
+  let totalCount = 0;
+  list.forEach(p=>{
+    (p.clients||[]).forEach(c=>{
+      if(c.start){
+        const s = new Date(c.start.replace(/-/g,'/'));
+        const diff = (now.getFullYear()-s.getFullYear())*12 + (now.getMonth()-s.getMonth());
+        if(diff >= 0 && diff < 12) months[11-diff].est += priceNum(p);
+      }
+    });
+  });
+  const max = Math.max.apply(null, months.map(m=>m.est).concat([1]));
+  document.getElementById('revenueChart').innerHTML = `
+    <div style="display:flex;align-items:flex-end;gap:6px;height:140px;padding:0 4px">
+      ${months.map(m=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+        <div style="font-size:9px;color:var(--ink3);font-weight:700">${m.est>0?'¥'+(m.est/1000).toFixed(1)+'k':'--'}</div>
+        <div style="width:100%;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#7C3AED,#A855F7);height:${Math.max(4,(m.est/max)*100)}%"></div>
+        <div style="font-size:8.5px;color:var(--ink3)">${m.label}</div>
+      </div>`).join('')}
+    </div>
+    <div style="text-align:center;font-size:10px;color:var(--ink3);margin-top:8px">按客户授权日期近似统计 · 共 <strong style="color:var(--primary)">¥${totalRev.toLocaleString()}</strong> 累计</div>`;
 }
 
 /* ================= 初始化 ================= */
