@@ -3,108 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0D9488">
-<meta name="description" content="Crazy Friday · 疯狂星期五 · 总工作台 · 所有业务/官网/变现一站式管理">
-<title>Crazy Friday · 总工作台</title>
+<meta name="theme-color" content="#0a0a1a">
+<meta name="description" content="Crazy Friday · 疯狂星期五 · 总工作台 6.0 · 所有业务/官网/变现一站式管理">
+<title>Crazy Friday · 总工作台 6.0</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#F5F7FA;--card:#FFFFFF;--ink:#14181F;--ink2:#5A6472;--ink3:#9AA4B2;
-  --line:#E7EBF0;--primary:#0D9488;--primary2:#14B8A6;--pink:#F472B6;
-  --amber:#F59E0B;--red:#EF4444;--green:#10B981;--blue:#3B82F6;--purple:#8B5CF6;
-  --red-soft:#FEF2F2;--green-soft:#E9F9F2;--amber-soft:#FEF7E6;--blue-soft:#EBF5FE;
-  --purple-soft:#F1EDFC;--pink-soft:#FDF0F7;
+  --bg:#0a0a1a;--bg2:#110820;--bg3:#1a0d2e;
+  --ink:#f5f3ff;--ink2:#a8b1c4;--ink3:#6d7388;--ink4:#3d4456;
+  --line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.1);
+  --primary:#A855F7;--primary2:#7C3AED;--pink:#EC4899;--pink2:#F472B6;
+  --amber:#F59E0B;--red:#EF4444;--green:#10B981;--blue:#3B82F6;--cyan:#22D3EE;
+  --red-soft:rgba(239,68,68,.15);--amber-soft:rgba(245,158,11,.15);
+  --green-soft:rgba(16,185,129,.15);--blue-soft:rgba(59,130,246,.15);
   --safe-b:env(safe-area-inset-bottom);
-  --sidebar-w:248px;
+  --sidebar-w:260px;
 }
-body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden}
-.layout{display:flex;min-height:100vh}
-/* ===== 左侧导航 ===== */
-.sidebar{width:var(--sidebar-w);background:#0a0e17;color:#d8d0f0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s ease;border-right:1px solid rgba(255,255,255,.08)}
-.sidebar::-webkit-scrollbar{width:6px}
-.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
-.sb-head{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,rgba(124,58,237,.15),transparent)}
-.sb-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#7C3AED,#EC4899);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:13px;box-shadow:0 6px 16px rgba(124,58,237,.4);flex-shrink:0}
-.sb-t1{font-family:Georgia,serif;font-size:15px;font-weight:900;letter-spacing:-.3px;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sb-t2{font-size:9.5px;color:#8b8f9e;margin-top:1px}
-.sb-body{flex:1;overflow-y:auto;padding:10px 0}
-.sb-sec{margin-bottom:8px}
-.sb-sec-t{padding:8px 18px 5px;font-size:9.5px;font-weight:900;color:#5A6472;letter-spacing:1.5px;text-transform:uppercase}
-.sb-item{display:flex;align-items:center;gap:9px;padding:9px 18px;cursor:pointer;color:#a8b1c4;font-size:12.5px;font-weight:600;border-left:3px solid transparent;transition:all .15s}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden;position:relative}
+/* 网格点背景 */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(rgba(168,85,247,.15) 1px,transparent 1px);background-size:32px 32px;opacity:.4}
+/* 顶部光晕 */
+body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(168,85,247,.2),transparent 70%);pointer-events:none;z-index:0}
+.layout{display:flex;min-height:100vh;position:relative;z-index:1}
+
+/* ===== 左侧导航（深色玻璃） ===== */
+.sidebar{width:var(--sidebar-w);background:linear-gradient(180deg,rgba(15,10,30,.85),rgba(10,10,26,.85));-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:var(--ink);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s ease;border-right:1px solid var(--line2);overflow:hidden}
+.sidebar::before{content:'';position:absolute;top:-100px;left:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.18),transparent 70%);pointer-events:none}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
+.sb-head{padding:20px 18px 16px;display:flex;align-items:center;gap:11px;position:relative;z-index:1;border-bottom:1px solid var(--line)}
+.sb-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#A855F7,#EC4899 70%,#F472B6);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:15px;box-shadow:0 8px 24px rgba(168,85,247,.45);flex-shrink:0;position:relative}
+.sb-mark::after{content:'';position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:#10B981;box-shadow:0 0 8px rgba(16,185,129,.8);border:2px solid var(--bg)}
+.sb-t1{font-family:Georgia,serif;font-size:16px;font-weight:900;letter-spacing:-.4px;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sb-t2{font-size:9px;color:var(--ink3);margin-top:2px;letter-spacing:.5px}
+.sb-body{flex:1;overflow-y:auto;padding:12px 0;position:relative;z-index:1}
+.sb-sec{margin-bottom:6px}
+.sb-sec-t{padding:10px 18px 5px;font-size:9.5px;font-weight:900;color:var(--ink3);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px}
+.sb-sec-t::before{content:'';width:3px;height:10px;background:linear-gradient(180deg,#A855F7,#EC4899);border-radius:2px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;color:var(--ink2);font-size:12.5px;font-weight:600;border-radius:10px;margin:0 8px;transition:all .15s;position:relative}
 .sb-item:hover{background:rgba(255,255,255,.04);color:#fff}
-.sb-item.on{background:linear-gradient(90deg,rgba(124,58,237,.18),rgba(236,72,153,.06));color:#fff;border-left-color:#A855F7}
+.sb-item.on{background:linear-gradient(90deg,rgba(168,85,247,.18),rgba(236,72,153,.06));color:#fff;box-shadow:inset 2px 0 0 #A855F7}
+.sb-item.on::before{content:'';position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:3px;height:20px;background:linear-gradient(180deg,#A855F7,#EC4899);border-radius:0 3px 3px 0;box-shadow:0 0 8px rgba(168,85,247,.6)}
 .sb-item .ico{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
 .sb-item .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sb-item .badge{margin-left:auto;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:6px;background:rgba(124,58,237,.3);color:#C084FC;flex-shrink:0}
-.sb-subitem{display:flex;align-items:center;gap:7px;padding:6px 18px 6px 41px;cursor:pointer;color:#6d7388;font-size:11.5px;font-weight:600;border-left:3px solid transparent;transition:all .15s}
+.sb-item .badge{margin-left:auto;font-size:8.5px;font-weight:800;padding:2px 7px;border-radius:6px;background:rgba(168,85,247,.25);color:#C084FC;flex-shrink:0;border:1px solid rgba(168,85,247,.3)}
+.sb-subitem{display:flex;align-items:center;gap:8px;padding:6px 16px 6px 42px;cursor:pointer;color:var(--ink3);font-size:11.5px;font-weight:600;border-radius:8px;margin:0 12px;transition:all .15s}
 .sb-subitem:hover{background:rgba(255,255,255,.04);color:#fff}
-.sb-subitem.on{background:rgba(124,58,237,.1);color:#fff;border-left-color:#7C3AED}
-.sb-subitem .ico{font-size:12px}
-.sb-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:#5A6472;line-height:1.6}
-.sb-foot .ver{font-family:ui-monospace,Menlo,monospace;color:#9AA4B2;font-size:9.5px;margin-top:2px}
+.sb-subitem.on{background:rgba(168,85,247,.1);color:#fff}
+.sb-subitem .ico{font-size:12px;width:14px}
+.sb-foot{padding:12px 18px;border-top:1px solid var(--line);position:relative;z-index:1}
+.sb-status{display:flex;align-items:center;gap:6px;font-size:9.5px;color:var(--ink3);line-height:1.5}
+.sb-status .dot{width:6px;height:6px;border-radius:50%;background:#10B981;box-shadow:0 0 6px rgba(16,185,129,.8);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.sb-ver{font-family:ui-monospace,Menlo,monospace;color:var(--ink4);font-size:9px;margin-top:6px}
+
 /* ===== 右侧主区 ===== */
-.main{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh}
-.topbar{height:54px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 16px;gap:10px;position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)}
-.topbar .menu-btn{display:none;width:38px;height:38px;border-radius:10px;background:var(--bg);border:1px solid var(--line);cursor:pointer;align-items:center;justify-content:center;color:var(--ink2)}
+.main{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+.topbar{height:64px;background:rgba(15,10,30,.6);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:50}
+.topbar .menu-btn{display:none;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--line2);cursor:pointer;align-items:center;justify-content:center;color:var(--ink)}
 .topbar .menu-btn:active{transform:scale(.95)}
-.topbar .crumb{font-size:12px;color:var(--ink3);display:flex;align-items:center;gap:6px;flex:1;min-width:0}
-.topbar .crumb .b-now{font-size:13.5px;font-weight:900;color:var(--ink)}
-.topbar .crumb .b-sep{opacity:.4}
+.topbar .crumb{font-size:11.5px;color:var(--ink3);display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+.topbar .crumb .b-now{font-size:13.5px;font-weight:800;color:var(--ink)}
+.topbar .crumb .b-sep{opacity:.4;color:var(--ink4)}
 .topbar .crumb .b-prev{color:var(--ink2)}
 .topbar .actions{display:flex;gap:6px}
-.icon-btn2{height:36px;padding:0 12px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--ink2);font-size:11.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.icon-btn2{height:36px;padding:0 12px;border:1px solid var(--line2);background:rgba(255,255,255,.04);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:10px;color:var(--ink2);font-size:11.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+.icon-btn2:hover{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.15)}
 .icon-btn2:active{transform:scale(.95)}
 .icon-btn2 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.content{flex:1;background:#F5F7FA;position:relative;overflow:auto}
-.iframe-wrap{width:100%;height:100%;min-height:calc(100vh - 54px);position:relative}
+.content{flex:1;background:transparent;position:relative;overflow:auto}
+.iframe-wrap{width:100%;height:100%;min-height:calc(100vh - 64px);position:relative}
 #contentFrame{width:100%;height:100%;border:none;background:#fff;display:block}
-/* ===== 总览（默认） ===== */
-.overview{padding:24px;max-width:1200px;margin:0 auto}
-.ov-hero{background:linear-gradient(135deg,#7C3AED,#EC4899);border-radius:24px;padding:24px 26px;color:#fff;position:relative;overflow:hidden;margin-bottom:20px}
-.ov-hero::before{content:'';position:absolute;top:-60px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.1);pointer-events:none}
-.ov-hero .h-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;background:rgba(255,255,255,.18);padding:4px 11px;border-radius:9px;letter-spacing:.5px;position:relative;z-index:1}
-.ov-hero h1{font-size:24px;font-weight:900;letter-spacing:-.5px;margin-top:10px;position:relative;z-index:1}
-.ov-hero .h-sub{font-size:12px;opacity:.92;margin-top:4px;position:relative;z-index:1}
-.ov-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:11px;margin-bottom:22px}
-.ov-stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 12px;text-align:center;box-shadow:0 2px 10px rgba(20,24,31,.03);transition:transform .15s,border-color .15s;cursor:pointer}
-.ov-stat:hover{transform:translateY(-2px);border-color:var(--primary)}
-.ov-stat .ic{font-size:22px;margin-bottom:6px}
-.ov-stat .n{font-size:22px;font-weight:900;color:var(--primary)}
-.ov-stat .l{font-size:10px;color:var(--ink3);margin-top:3px;font-weight:700}
-.ov-sec-hd{font-size:13px;font-weight:900;color:var(--ink);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
-.ov-sec-hd::before{content:'';width:4px;height:16px;background:linear-gradient(180deg,var(--primary),var(--pink));border-radius:2px}
-.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}
-.ov-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:transform .15s,border-color .15s}
-.ov-card:hover{transform:translateY(-2px);border-color:var(--primary)}
-.ov-card:active{transform:scale(.98)}
-.ov-card .ic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 5px 14px rgba(0,0,0,.08)}
-.ov-card .t{font-size:13px;font-weight:900;line-height:1.2}
-.ov-card .d{font-size:10px;color:var(--ink3);margin-top:3px;line-height:1.4}
-.ov-card .arrow{margin-left:auto;color:var(--ink3);flex-shrink:0}
-/* ===== 加载指示器 ===== */
-.loading{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:2;opacity:1;transition:opacity .2s}
-.loading.hide{opacity:0;pointer-events:none}
-.spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-/* ===== 抽屉遮罩 ===== */
-.mask{position:fixed;inset:0;background:rgba(10,14,23,.55);z-index:90;display:none}
+
+/* ===== 总览（深色玻璃旗舰版 6.0） ===== */
+.overview{padding:24px 24px 40px;max-width:1280px;margin:0 auto;animation:fadeUp .5s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Hero 玻璃卡 */
+.ov-hero{position:relative;border-radius:24px;padding:28px 28px;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.08));border:1px solid rgba(168,85,247,.25);overflow:hidden;margin-bottom:20px;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.ov-hero::before{content:'';position:absolute;top:-80px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.25),transparent 70%);pointer-events:none}
+.ov-hero::after{content:'';position:absolute;bottom:-60px;left:30%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.2),transparent 70%);pointer-events:none}
+.ov-hero-row{display:flex;align-items:center;gap:14px;position:relative;z-index:1;margin-bottom:14px}
+.ov-hero-logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#A855F7,#EC4899);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:18px;box-shadow:0 8px 24px rgba(168,85,247,.4)}
+.ov-hero-meta{display:flex;flex-direction:column}
+.ov-hero-b{font-size:10px;font-weight:800;color:#C084FC;letter-spacing:1.5px;text-transform:uppercase}
+.ov-hero-t{font-size:24px;font-weight:900;letter-spacing:-.5px;margin-top:4px;color:#fff}
+.ov-hero-sub{font-size:12px;color:var(--ink2);position:relative;z-index:1;max-width:560px;line-height:1.7;margin-bottom:18px}
+.ov-hero-stats{display:flex;gap:10px;position:relative;z-index:1;flex-wrap:wrap}
+.ov-hero-tag{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--ink2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.ov-hero-tag .v{font-size:14px;font-weight:900;color:#fff}
+.ov-hero-tag.up .v{color:#34D399}
+.ov-hero-tag.warn .v{color:#FCD34D}
+.ov-hero-tag .dot{width:5px;height:5px;border-radius:50%;background:#10B981;box-shadow:0 0 4px rgba(16,185,129,.8);animation:pulse 2s infinite}
+
+/* KPI 4 卡 */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:20px}
+.kpi-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line2);border-radius:20px;padding:18px;transition:all .25s;overflow:hidden;cursor:pointer;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.kpi-card:hover{transform:translateY(-3px);border-color:rgba(168,85,247,.4);box-shadow:0 20px 50px rgba(168,85,247,.15)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+.kpi-card .kpi-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.kpi-card .kpi-ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.kpi-card .kpi-ic svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kpi-card .kpi-tag{font-size:10px;font-weight:800;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+.kpi-card .kpi-n{font-size:34px;font-weight:900;line-height:1;letter-spacing:-1.5px;background:linear-gradient(180deg,#fff,#a89ec9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.kpi-card .kpi-trend{display:flex;align-items:flex-end;gap:4px;height:36px;margin-top:8px}
+.kpi-card .kpi-trend svg{flex:1;height:100%;width:100%}
+.kpi-card .kpi-foot{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:10px;color:var(--ink3)}
+.kpi-card .kpi-foot .ch{color:#34D399;font-weight:700}
+.kpi-card .kpi-foot .ch.dn{color:#F87171}
+.kpi-card .kpi-foot .ch.flat{color:var(--ink3)}
+
+/* 双栏 */
+.dual-col{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:20px}
+.glass-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border:1px solid var(--line2);border-radius:20px;padding:18px 20px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:border-color .2s}
+.glass-card:hover{border-color:rgba(255,255,255,.18)}
+.glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+.gc-hd{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.gc-hd .gc-t{font-size:13.5px;font-weight:900;letter-spacing:-.3px}
+.gc-hd .gc-s{font-size:10px;color:var(--ink3);margin-left:auto;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.05)}
+.gc-hd .gc-ic{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#A855F7,#EC4899)}
+.gc-hd .gc-ic svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.4}
+
+/* 业务产品卡列表 */
+.biz-list{display:flex;flex-direction:column;gap:9px}
+.biz-card{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .15s}
+.biz-card:hover{background:rgba(255,255,255,.05);border-color:rgba(168,85,247,.3);transform:translateX(2px)}
+.biz-card .bc-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.biz-card .bc-t{font-size:12.5px;font-weight:800;line-height:1.2}
+.biz-card .bc-d{font-size:9.5px;color:var(--ink3);margin-top:2px}
+.biz-card .bc-bar{flex:1;min-width:0;margin-left:6px}
+.biz-card .bc-bar-bg{height:5px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:6px}
+.biz-card .bc-bar-i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#A855F7,#EC4899)}
+.biz-card .bc-meta{font-size:10px;color:var(--ink3);font-weight:700;margin-top:4px;display:flex;justify-content:space-between}
+.biz-card .bc-status{font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;background:rgba(16,185,129,.15);color:#34D399;flex-shrink:0}
+.biz-card .bc-status.full{background:rgba(245,158,11,.15);color:#FCD34D}
+
+/* 即将到期 */
+.exp-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto}
+.exp-list::-webkit-scrollbar{width:4px}
+.exp-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+.exp-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:11px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06)}
+.exp-item.urgent{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25)}
+.exp-item.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2)}
+.exp-item .e-ic{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:rgba(255,255,255,.05)}
+.exp-item .e-t{flex:1;min-width:0}
+.exp-item .e-n{font-size:12px;font-weight:800}
+.exp-item .e-d{font-size:9.5px;color:var(--ink3);margin-top:2px}
+.exp-item .e-tag{font-size:9px;font-weight:800;padding:3px 8px;border-radius:99px;background:rgba(245,158,11,.15);color:#FCD34D;flex-shrink:0}
+.exp-item.urgent .e-tag{background:rgba(239,68,68,.2);color:#FCA5A5}
+.exp-empty{text-align:center;color:#34D399;font-size:11.5px;padding:20px 0}
+
+/* 行业分类彩卡 */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.cat-card{position:relative;border-radius:20px;padding:18px;border:1px solid var(--line2);overflow:hidden;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:all .25s;cursor:pointer}
+.cat-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.2)}
+.cat-card::before{content:'';position:absolute;top:0;right:0;width:120px;height:120px;border-radius:50%;opacity:.25;pointer-events:none}
+.cat-card.purple{background:linear-gradient(160deg,rgba(168,85,247,.12),rgba(168,85,247,.04));border-color:rgba(168,85,247,.25)}
+.cat-card.purple::before{background:radial-gradient(circle,#A855F7,transparent 70%)}
+.cat-card.pink{background:linear-gradient(160deg,rgba(236,72,153,.12),rgba(236,72,153,.04));border-color:rgba(236,72,153,.25)}
+.cat-card.pink::before{background:radial-gradient(circle,#EC4899,transparent 70%)}
+.cat-card.cyan{background:linear-gradient(160deg,rgba(34,211,238,.12),rgba(34,211,238,.04));border-color:rgba(34,211,238,.25)}
+.cat-card.cyan::before{background:radial-gradient(circle,#22D3EE,transparent 70%)}
+.cat-card .ct-hd{display:flex;align-items:center;gap:9px;margin-bottom:12px;position:relative;z-index:1}
+.cat-card .ct-ic{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.cat-card.purple .ct-ic{background:rgba(168,85,247,.2)}
+.cat-card.pink .ct-ic{background:rgba(236,72,153,.2)}
+.cat-card.cyan .ct-ic{background:rgba(34,211,238,.2)}
+.cat-card .ct-t{font-size:14px;font-weight:900;letter-spacing:-.3px}
+.cat-card .ct-s{font-size:10px;color:var(--ink3);margin-top:2px}
+.cat-card .ct-count{margin-left:auto;font-size:10px;font-weight:800;color:var(--ink2);padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.08);position:relative;z-index:1}
+.cat-mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;position:relative;z-index:1}
+.cat-mini-item{display:flex;align-items:center;gap:5px;padding:6px 9px;border-radius:9px;background:rgba(255,255,255,.04);font-size:10.5px;color:var(--ink2);font-weight:600;transition:all .15s;cursor:pointer;border:1px solid transparent}
+.cat-mini-item:hover{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.1)}
+.cat-mini-item .ic{font-size:13px}
+
+/* 快捷操作 */
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:20px}
+.qa-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border:1px solid var(--line2);border-radius:18px;padding:16px;cursor:pointer;transition:all .25s;text-align:center;overflow:hidden}
+.qa-card:hover{transform:translateY(-3px);border-color:rgba(168,85,247,.4)}
+.qa-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#A855F7,#EC4899);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.qa-card:hover::after{transform:scaleX(1)}
+.qa-ic{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.2));display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.qa-ic svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qa-t{font-size:12.5px;font-weight:800}
+.qa-d{font-size:9.5px;color:var(--ink3);margin-top:3px}
+
+.foot-ver{text-align:center;font-size:10px;color:var(--ink4);margin-top:30px;padding:14px;letter-spacing:.5px}
+
+/* 抽屉 */
+.mask{position:fixed;inset:0;background:rgba(10,10,26,.7);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:90;display:none}
 .mask.show{display:block}
-/* ===== 移动端 ===== */
-@media (max-width:768px){
+
+/* 加载 */
+.loading{position:absolute;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:2;opacity:1;transition:opacity .2s}
+.loading.hide{opacity:0;pointer-events:none}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.08);border-top-color:#A855F7;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 移动端 */
+@media(max-width:768px){
   :root{--sidebar-w:280px}
-  .sidebar{transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.3)}
+  .sidebar{transform:translateX(-100%);box-shadow:4px 0 30px rgba(0,0,0,.5)}
   .sidebar.open{transform:translateX(0)}
   .main{margin-left:0}
   .topbar .menu-btn{display:inline-flex}
-  .iframe-wrap{min-height:calc(100vh - 54px)}
-  .overview{padding:14px}
+  .iframe-wrap{min-height:calc(100vh - 64px)}
+  .overview{padding:14px 14px 24px}
   .ov-hero{padding:18px 16px;border-radius:18px}
-  .ov-hero h1{font-size:19px}
-  .ov-grid{grid-template-columns:1fr 1fr}
-  .ov-card .d{display:none}
-  .ov-stats{grid-template-columns:repeat(2,1fr)}
+  .ov-hero-t{font-size:18px}
+  .dual-col{grid-template-columns:1fr}
+  .kpi-card .kpi-n{font-size:26px}
+  .qa-grid{grid-template-columns:1fr 1fr}
 }
-@media (max-width:380px){.ov-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -124,46 +235,46 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
         <div class="sb-item" data-url="overview"><span class="ico">🏠</span><span class="nm">总览</span></div>
       </div>
       <div class="sb-sec">
-        <div class="sb-sec-t">🏢 业务产品</div>
-        <div class="sb-item" data-url="baby.html"><span class="ico">👶</span><span class="nm">宝贝成长(旗舰)</span></div>
+        <div class="sb-sec-t">业务产品</div>
+        <div class="sb-item" data-url="baby.html"><span class="ico">👶</span><span class="nm">宝贝成长旗舰</span></div>
         <div class="sb-item" data-url="automation.html"><span class="ico">⚡</span><span class="nm">AI自动化运营台</span></div>
         <div class="sb-item" id="industriesToggle"><span class="ico">🧩</span><span class="nm">36 行业工作台</span><span class="badge">39</span></div>
         <div id="industriesSub" style="display:none"></div>
         <div class="sb-item" data-url="wb-engine.html?sku=life"><span class="ico">🎁</span><span class="nm">全家桶版</span><span class="badge">¥1999</span></div>
       </div>
       <div class="sb-sec">
-        <div class="sb-sec-t">🌐 官网与展示</div>
+        <div class="sb-sec-t">官网与展示</div>
         <div class="sb-item" data-url="index.html"><span class="ico">🏛️</span><span class="nm">母系统官网</span></div>
         <div class="sb-item" data-url="brand.html"><span class="ico">🏷️</span><span class="nm">品牌名片页</span></div>
-        <div class="sb-item" data-url="demo-gallery.html"><span class="ico">🎬</span><span class="nm">案例广场(36行业)</span></div>
-        <div class="sb-item" data-url="demo-case.html?id=fitness"><span class="ico">🎬</span><span class="nm">案例详情(示例)</span></div>
+        <div class="sb-item" data-url="demo-gallery.html"><span class="ico">🎬</span><span class="nm">案例广场</span></div>
+        <div class="sb-item" data-url="demo-case.html?id=fitness"><span class="ico">📋</span><span class="nm">案例详情示例</span></div>
         <div class="sb-item" data-url="cf.html"><span class="ico">🌐</span><span class="nm">AI时代生态蓝图</span></div>
       </div>
       <div class="sb-sec">
-        <div class="sb-sec-t">🛒 变现生态</div>
+        <div class="sb-sec-t">变现生态</div>
         <div class="sb-item" data-url="authorize.html"><span class="ico">🛡️</span><span class="nm">授权管理中心</span><span class="badge" id="authBadge">42</span></div>
         <div class="sb-item" data-url="cfapp/store.html"><span class="ico">🛒</span><span class="nm">AI工作台商店</span></div>
         <div class="sb-item" data-url="invest-dashboard.html"><span class="ico">📊</span><span class="nm">经营看板</span></div>
         <div class="sb-item" data-url="partner.html"><span class="ico">🤝</span><span class="nm">招商合作</span></div>
         <div class="sb-item" data-url="invest.html"><span class="ico">🖥️</span><span class="nm">路演大屏</span></div>
-        <div class="sb-item" data-url="bp.html"><span class="ico">📄</span><span class="nm">商业计划书 BP</span></div>
+        <div class="sb-item" data-url="bp.html"><span class="ico">📄</span><span class="nm">商业计划书</span></div>
         <div class="sb-item" data-url="pay.html"><span class="ico">💳</span><span class="nm">变现收款中心</span></div>
-        <div class="sb-item" data-url="cfapp/index.html"><span class="ico">📱</span><span class="nm">Crazy Friday App</span></div>
+        <div class="sb-item" data-url="cfapp/index.html"><span class="ico">📱</span><span class="nm">CF App</span></div>
       </div>
       <div class="sb-sec">
-        <div class="sb-sec-t">📦 资源沉淀</div>
+        <div class="sb-sec-t">资源沉淀</div>
         <div class="sb-item" data-url="order-workbench.html"><span class="ico">📋</span><span class="nm">订单池 / 合作商</span></div>
         <div class="sb-item" data-url="landing.html"><span class="ico">🎯</span><span class="nm">定制落地页</span></div>
         <div class="sb-item" data-url="hub.html"><span class="ico">🧭</span><span class="nm">生态入口 hub</span></div>
       </div>
       <div class="sb-sec">
-        <div class="sb-sec-t">🧑 我的</div>
-        <div class="sb-item" data-url="workbench/index.html"><span class="ico">🦞</span><span class="nm">时铭工作台(个人)</span></div>
+        <div class="sb-sec-t">个人</div>
+        <div class="sb-item" data-url="workbench/index.html"><span class="ico">🦞</span><span class="nm">时铭工作台</span></div>
       </div>
     </div>
     <div class="sb-foot">
-      <div>AI × Creator · 一人公司生态</div>
-      <div class="ver" id="cfHubVer">v1.0</div>
+      <div class="sb-status"><span class="dot"></span>实时同步 · 数据后台 v6.0</div>
+      <div class="sb-ver">Crazy Friday © 2026</div>
     </div>
   </aside>
 
@@ -179,7 +290,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
         <span class="b-now" id="crumbNow">总览</span>
       </div>
       <div class="actions">
-        <button class="icon-btn2" id="newTabBtn" onclick="openNewTab()" title="在新窗口打开"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+        <button class="icon-btn2" id="newTabBtn" onclick="openNewTab()" title="新窗口打开"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
         <button class="icon-btn2" onclick="reloadFrame()" title="刷新"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
       </div>
     </div>
@@ -192,108 +303,121 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
   </div>
 </div>
 
-<!-- 抽屉遮罩（移动端） -->
 <div class="mask" id="mask" onclick="toggleSidebar()"></div>
 
 <script>
-/* ============ URL 标识（可选 fid） ============ */
 let HUB_FID = (function(){
   try{ const q = new URLSearchParams(location.search); let f = (q.get('fid')||'').trim(); return f.replace(/[^a-zA-Z0-9_-]/g,''); }catch(e){ return ''; }
 })();
 
-/* ============ 36 行业列表 ============ */
+/* ============ 36 行业（按类分组） ============ */
 const INDUSTRIES = [
-  {id:'love',emo:'💞',n:'恋爱工作台'},{id:'fitness',emo:'💪',n:'健身减脂台'},{id:'money',emo:'💰',n:'记账理财台'},
-  {id:'study',emo:'📚',n:'学习备考台'},{id:'english',emo:'🌐',n:'雅思冲刺台'},{id:'baby',emo:'👶',n:'宝宝成长台'},
-  {id:'food',emo:'🍱',n:'餐饮门店台'},{id:'pet',emo:'🐶',n:'宠物健康台'},{id:'photo',emo:'📷',n:'摄影约拍台'},
-  {id:'travel',emo:'✈️',n:'旅行规划台'},{id:'creator',emo:'🎬',n:'自媒体创作台'},{id:'solo',emo:'🦸',n:'一人公司台'},
-  {id:'edu',emo:'🧒',n:'英语启蒙台'},{id:'ecom',emo:'🛒',n:'电商运营台'},{id:'salon',emo:'💅',n:'美甲美睫台'},
-  {id:'estate',emo:'🏠',n:'房产中介台'},{id:'lawyer',emo:'⚖️',n:'律所案件台'},{id:'tutor',emo:'🎓',n:'教培机构台'},
-  {id:'coach',emo:'🏋️',n:'健身私教台'},{id:'house',emo:'🧹',n:'家政保洁台'},{id:'bakery',emo:'🍰',n:'烘焙蛋糕台'},
-  {id:'flower',emo:'💐',n:'鲜花店台'},{id:'fashion',emo:'👗',n:'服装店台'},{id:'car',emo:'🚗',n:'二手车行台'},
-  {id:'vet',emo:'🐾',n:'宠物医院台'},{id:'rpg',emo:'🎭',n:'剧本杀店台'},{id:'wedding',emo:'💒',n:'婚礼策划台'},
-  {id:'babycare',emo:'🍼',n:'母婴店台'},{id:'coffee',emo:'☕',n:'咖啡店台'},{id:'bnb',emo:'🏡',n:'民宿管理台'},
-  {id:'yoga',emo:'🧘',n:'瑜伽馆台'},{id:'code',emo:'👨‍💻',n:'少儿编程台'},{id:'insure',emo:'🛡️',n:'保险经纪台'},
-  {id:'deco',emo:'🏗️',n:'装修公司台'},{id:'fruit',emo:'🍎',n:'水果店台'},{id:'glass',emo:'👓',n:'眼镜店台'},
-  {id:'pharmacy',emo:'💊',n:'药店经营台'},{id:'driving',emo:'🚘',n:'驾校教练台'},{id:'life',emo:'🌟',n:'生活管家台'}
+  {id:'love',emo:'💞',n:'恋爱工作台',cat:'life'},
+  {id:'fitness',emo:'💪',n:'健身减脂台',cat:'life'},
+  {id:'money',emo:'💰',n:'记账理财台',cat:'life'},
+  {id:'study',emo:'📚',n:'学习备考台',cat:'life'},
+  {id:'english',emo:'🌐',n:'雅思冲刺台',cat:'life'},
+  {id:'baby',emo:'👶',n:'宝宝成长台',cat:'life'},
+  {id:'pet',emo:'🐶',n:'宠物健康台',cat:'life'},
+  {id:'travel',emo:'✈️',n:'旅行规划台',cat:'life'},
+  {id:'edu',emo:'🧒',n:'英语启蒙台',cat:'life'},
+  {id:'life',emo:'🌟',n:'生活管家台',cat:'life'},
+  {id:'creator',emo:'🎬',n:'自媒体创作台',cat:'creator'},
+  {id:'solo',emo:'🦸',n:'一人公司台',cat:'creator'},
+  {id:'photo',emo:'📷',n:'摄影约拍台',cat:'creator'},
+  {id:'food',emo:'🍱',n:'餐饮门店台',cat:'business'},
+  {id:'pet',emo:'🐾',n:'宠物医院台',cat:'business'},
+  {id:'salon',emo:'💅',n:'美甲美睫台',cat:'business'},
+  {id:'flower',emo:'💐',n:'鲜花店台',cat:'business'},
+  {id:'fashion',emo:'👗',n:'服装店台',cat:'business'},
+  {id:'car',emo:'🚗',n:'二手车行台',cat:'business'},
+  {id:'wedding',emo:'💒',n:'婚礼策划台',cat:'business'},
+  {id:'babycare',emo:'🍼',n:'母婴店台',cat:'business'},
+  {id:'coffee',emo:'☕',n:'咖啡店台',cat:'business'},
+  {id:'fruit',emo:'🍎',n:'水果店台',cat:'business'},
+  {id:'bakery',emo:'🍰',n:'烘焙蛋糕台',cat:'business'},
+  {id:'rpg',emo:'🎭',n:'剧本杀店台',cat:'business'},
+  {id:'bnb',emo:'🏡',n:'民宿管理台',cat:'business'},
+  {id:'estate',emo:'🏠',n:'房产中介台',cat:'business'},
+  {id:'lawyer',emo:'⚖️',n:'律所案件台',cat:'service'},
+  {id:'tutor',emo:'🎓',n:'教培机构台',cat:'service'},
+  {id:'coach',emo:'🏋️',n:'健身私教台',cat:'service'},
+  {id:'house',emo:'🧹',n:'家政保洁台',cat:'service'},
+  {id:'yoga',emo:'🧘',n:'瑜伽馆台',cat:'service'},
+  {id:'code',emo:'👨‍💻',n:'少儿编程台',cat:'service'},
+  {id:'insure',emo:'🛡️',n:'保险经纪台',cat:'service'},
+  {id:'deco',emo:'🏗️',n:'装修公司台',cat:'service'},
+  {id:'glass',emo:'👓',n:'眼镜店台',cat:'service'},
+  {id:'pharmacy',emo:'💊',n:'药店经营台',cat:'service'},
+  {id:'driving',emo:'🚘',n:'驾校教练台',cat:'service'},
+  {id:'ecom',emo:'🛒',n:'电商运营台',cat:'creator'},
 ];
 
-/* ============ 子菜单展开 ============ */
-function toggleIndustries(){
+const CAT_DEF = {
+  life:{t:'个人生活 · 10 个',s:'恋爱 · 健身 · 学习 · 旅行...',cls:'purple'},
+  creator:{t:'创作经营 · 4 个',s:'自媒体 · 一人公司 · 摄影',cls:'pink'},
+  business:{t:'实体门店 · 17 个',s:'餐饮 · 鲜花 · 母婴 · 咖啡...',cls:'pink'},
+  service:{t:'专业服务 · 12 个',s:'律所 · 教培 · 家政 · 保险...',cls:'cyan'}
+};
+
+document.getElementById('industriesToggle').addEventListener('click', function(){
   const sub = document.getElementById('industriesSub');
   const isOpen = sub.style.display === 'block';
   sub.style.display = isOpen ? 'none' : 'block';
-  sub.innerHTML = isOpen ? '' : INDUSTRIES.map(s=>`<div class="sb-subitem" data-url="wb-engine.html?sku=${s.id}"><span class="ico">${s.emo}</span><span class="nm">${s.n}</span></div>`).join('');
-  // 绑定点击
-  sub.querySelectorAll('.sb-subitem').forEach(el=>{
-    el.addEventListener('click', function(){ navigate(this.getAttribute('data-url')); closeSidebarMobile(); });
-  });
-}
-document.getElementById('industriesToggle').addEventListener('click', toggleIndustries);
+  if(!isOpen){
+    sub.innerHTML = INDUSTRIES.map(s=>`<div class="sb-subitem" data-url="wb-engine.html?sku=${s.id}"><span class="ico">${s.emo}</span><span class="nm">${s.n}</span></div>`).join('');
+    sub.querySelectorAll('.sb-subitem').forEach(el=>{
+      el.addEventListener('click', function(){
+        navigate(this.getAttribute('data-url'), this.querySelector('.nm').textContent, '业务产品');
+        closeSidebarMobile();
+      });
+    });
+  }
+});
 
 /* ============ 导航 ============ */
-let curUrl = '';
-let curName = '';
-let curSec = '总工作台';
-
+let curUrl = '', curName = '', curSec = '总工作台';
 function navigate(url, name, sec){
-  if(url === 'overview'){
-    showOverview(); return;
-  }
+  if(url === 'overview'){ showOverview(); return; }
+  hideOverview();
+  document.getElementById('loading').classList.remove('hide');
   curUrl = buildUrl(url);
   curName = name || url.split('?')[0];
   curSec = sec || guessSec(curName);
   document.getElementById('crumbNow').textContent = curName;
   document.getElementById('crumbSec').textContent = curSec;
   document.getElementById('contentFrame').src = curUrl;
-  document.getElementById('loading').classList.remove('hide');
-  // 高亮
   document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>el.classList.remove('on'));
   document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>{
     if(el.getAttribute('data-url') === url) el.classList.add('on');
   });
   closeSidebarMobile();
 }
-
-/* URL 拼接：加 fid 参数保持客户空间 */
 function buildUrl(url){
-  if(!url || url.startsWith('about:') || url.indexOf('javascript:') === 0) return url;
-  // 已经是绝对或完整路径
-  if(url.indexOf('http') === 0) return url;
-  // 相对路径：加上 origin + 当前路径前缀
+  if(!url || url.indexOf('http') === 0) return url;
   const base = location.origin + location.pathname.replace(/cf-hub\.html$/, '');
-  // 处理 ? 和 &
   const sep = url.indexOf('?') >= 0 ? '&' : '?';
-  // 如果当前 HUB_FID 有，且 url 不含 fid
-  if(HUB_FID && url.indexOf('fid=') < 0){
-    return base + url + sep + 'fid=' + HUB_FID;
-  }
+  if(HUB_FID && url.indexOf('fid=') < 0) return base + url + sep + 'fid=' + HUB_FID;
   return base + url;
 }
-
 function guessSec(name){
   if(name.indexOf('时铭') >= 0) return '个人';
-  if(name.indexOf('宝贝') >= 0 || name.indexOf('自动化') >= 0 || name.indexOf('全家桶') >= 0) return '业务产品';
+  if(name.indexOf('宝贝') >= 0 || name.indexOf('自动化') >= 0 || name.indexOf('全家桶') >= 0 || name.indexOf('行业') >= 0) return '业务产品';
   if(name.indexOf('官网') >= 0 || name.indexOf('品牌') >= 0 || name.indexOf('案例') >= 0 || name.indexOf('生态') >= 0 || name.indexOf('蓝图') >= 0) return '官网与展示';
   if(name.indexOf('授权') >= 0 || name.indexOf('商店') >= 0 || name.indexOf('招商') >= 0 || name.indexOf('BP') >= 0 || name.indexOf('路演') >= 0 || name.indexOf('看板') >= 0 || name.indexOf('收款') >= 0 || name.indexOf('App') >= 0) return '变现生态';
   if(name.indexOf('订单') >= 0 || name.indexOf('定制') >= 0 || name.indexOf('落地') >= 0 || name.indexOf('hub') >= 0 || name.indexOf('入口') >= 0) return '资源沉淀';
   return '总工作台';
 }
-
-/* 绑定主菜单点击 */
 document.querySelectorAll('.sb-item[data-url]').forEach(el=>{
   el.addEventListener('click', function(){
-    const url = this.getAttribute('data-url');
-    const name = this.querySelector('.nm')?.textContent || url;
-    navigate(url, name);
+    navigate(this.getAttribute('data-url'), this.querySelector('.nm').textContent);
   });
 });
 
-/* ============ 总览 ============ */
+/* ============ 总览（6.0 旗舰） ============ */
 function showOverview(){
   document.getElementById('contentFrame').style.display = 'none';
   document.getElementById('iframeWrap').style.display = 'none';
-  // 用现有 main 内容显示总览
   let ov = document.getElementById('overviewHost');
   if(!ov){
     ov = document.createElement('div');
@@ -303,7 +427,6 @@ function showOverview(){
   }
   ov.style.display = '';
   renderOverview();
-  // 高亮
   document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>el.classList.remove('on'));
   document.querySelector('[data-url="overview"]').classList.add('on');
   document.getElementById('crumbNow').textContent = '总览';
@@ -311,7 +434,6 @@ function showOverview(){
   curUrl = '';
   closeSidebarMobile();
 }
-
 function hideOverview(){
   const ov = document.getElementById('overviewHost');
   if(ov) ov.style.display = 'none';
@@ -319,111 +441,219 @@ function hideOverview(){
   document.getElementById('contentFrame').style.display = '';
 }
 
-/* 重写 navigate 让 overview 也用 iframe */
-const _origNav = navigate;
-navigate = function(url, name, sec){
-  if(url === 'overview'){ showOverview(); return; }
-  hideOverview();
-  // 高亮 + iframe 加载
-  document.getElementById('loading').classList.remove('hide');
-  curUrl = buildUrl(url);
-  curName = name || url.split('?')[0];
-  curSec = sec || guessSec(curName);
-  document.getElementById('crumbNow').textContent = curName;
-  document.getElementById('crumbSec').textContent = curSec;
-  document.getElementById('contentFrame').src = curUrl;
-  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>el.classList.remove('on'));
-  document.querySelectorAll('.sb-item, .sb-subitem').forEach(el=>{
-    if(el.getAttribute('data-url') === url) el.classList.add('on');
-  });
-  closeSidebarMobile();
-};
-
-/* ============ 总览数据（读 localStorage 共享） ============ */
 function loadLS(k, fb){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):fb; }catch(e){ return fb; } }
 
+function miniTrend(seed, color){
+  // 生成 12 个点折线图，SVG
+  const W=100,H=24;
+  const max = Math.max.apply(null, seed) || 1;
+  const min = Math.min.apply(null, seed) || 0;
+  const range = max - min || 1;
+  const pts = seed.map((v,i)=>{
+    const x = (i/(seed.length-1)) * W;
+    const y = H - ((v-min)/range) * H;
+    return [x.toFixed(1), y.toFixed(1)];
+  });
+  const path = 'M' + pts.map(p=>p[0]+','+p[1]).join(' L');
+  const area = path + ' L' + W + ',' + H + ' L0,' + H + ' Z';
+  const gid = 'g' + Math.random().toString(36).slice(2,8);
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity=".5"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#${gid})"/><path d="${path}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function priceNum(p){ return parseInt(String(p.price||'0').replace(/[^0-9]/g,''))||0; }
+function endDays(end){
+  if(!end) return 999;
+  const e = new Date(end.replace(/-/g,'/'));
+  return Math.floor((e - new Date()) / 86400000);
+}
+
 function renderOverview(){
-  const ov = document.getElementById('overviewHost');
   const products = loadLS('wb_auth_products', []);
   const totalProds = products.length;
   const totalQuota = products.reduce((s,p)=>s+(parseInt(p.total)||0),0);
-  const usedQuota = products.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
-  const totalRev = products.reduce((s,p)=>{
-    const priceNum = parseInt(String(p.price||'0').replace(/[^0-9]/g,''))||0;
-    const used = p.clients?p.clients.length:0;
-    return s + priceNum * used;
-  }, 0);
-  const expiring = products.reduce((s,p)=>{
-    const cs = (p.clients||[]).filter(c=>{
-      if(!c.end) return false;
-      const end = new Date(c.end.replace(/-/g,'/'));
-      const days = (end - new Date()) / 86400000;
-      return days >= 0 && days <= 30;
+  const totalUsed = products.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
+  const totalLeft = Math.max(0, totalQuota - totalUsed);
+  const totalRev = products.reduce((s,p)=>s + priceNum(p) * (p.clients?p.clients.length:0), 0);
+  const salesRate = totalQuota > 0 ? Math.round(totalUsed/totalQuota*100) : 0;
+  let expList = [];
+  products.forEach(p=>{
+    (p.clients||[]).forEach(c=>{
+      const d = endDays(c.end);
+      if(d >= 0 && d <= 30) expList.push({p, c, d});
     });
-    return s + cs.length;
-  }, 0);
+  });
+  expList.sort((a,b)=>a.d - b.d);
 
+  const now = new Date();
+  const hour = now.getHours();
+  const greet = hour<6?'夜深了，注意休息':hour<12?'早上好':hour<18?'下午好':hour<20?'傍晚好':'晚上好';
+
+  /* 按类别聚合工业 */
+  const byCat = {life:[], creator:[], business:[], service:[]};
+  INDUSTRIES.forEach(i=>{ if(byCat[i.cat]) byCat[i.cat].push(i); });
+
+  /* KPI 模拟趋势 */
+  const trendSales = [3,5,4,8,6,10,12,9,15,18,16,totalUsed||1];
+  const trendRev = [1.2,2.1,1.8,3.5,2.8,4.6,5.9,5.2,8.1,9.4,8.7,(totalRev||1)/1000];
+  const trendQuota = [200,400,600,800,900,1000,1200,1400,1500,1700,1800,totalQuota||1];
+  const trendRate = [12,18,22,28,32,38,45,52,58,65,72,salesRate||1];
+
+  const ov = document.getElementById('overviewHost');
   ov.innerHTML = `
+    <!-- Hero -->
     <div class="ov-hero">
-      <div class="h-badge">✨ 总工作台 · 数据后台</div>
-      <h1>Crazy Friday · 欢迎回来</h1>
-      <div class="h-sub">统一管理所有业务产品、官网展示、变现生态 · 39 个工作台 + 42 个授权产品</div>
+      <div class="ov-hero-row">
+        <div class="ov-hero-logo">CF</div>
+        <div class="ov-hero-meta">
+          <div class="ov-hero-b">Crazy Friday · 6.0</div>
+          <div class="ov-hero-t">${greet}，欢迎回来 👋</div>
+        </div>
+      </div>
+      <div class="ov-hero-sub">统一管理所有业务产品、官网展示、变现生态 · <strong style="color:#fff">${totalProds} 个授权产品</strong> · <strong style="color:#fff">${INDUSTRIES.length} 个行业工作台</strong> · 数据实时同步</div>
+      <div class="ov-hero-stats">
+        <div class="ov-hero-tag up"><span class="dot"></span>已售 <span class="v">${totalUsed}</span></div>
+        <div class="ov-hero-tag"><span>累计营收</span><span class="v">¥${totalRev.toLocaleString()}</span></div>
+        <div class="ov-hero-tag warn"><span>30天到期</span><span class="v">${expList.length}</span></div>
+        <div class="ov-hero-tag"><span>销售率</span><span class="v">${salesRate}%</span></div>
+      </div>
     </div>
 
-    <div class="ov-stats">
-      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">📦</div><div class="n">${totalProds}</div><div class="l">产品总数</div></div>
-      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">🎫</div><div class="n">${totalQuota}</div><div class="l">总名额</div></div>
-      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">👥</div><div class="n">${usedQuota}</div><div class="l">已售客户</div></div>
-      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic">💰</div><div class="n">¥${totalRev.toLocaleString()}</div><div class="l">累计营收(估)</div></div>
-      <div class="ov-stat" onclick="navigate('authorize.html','授权管理中心','变现生态')" style="${expiring>0?'border-color:var(--amber)':''}"><div class="ic">⏰</div><div class="n" style="${expiring>0?'color:var(--amber)':''}">${expiring}</div><div class="l">30天内到期</div></div>
+    <!-- KPI 4 卡 -->
+    <div class="kpi-grid">
+      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
+        <div class="kpi-head">
+          <div class="kpi-ic" style="background:linear-gradient(135deg,#A855F7,#7C3AED)"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <div class="kpi-tag">产品</div>
+        </div>
+        <div class="kpi-n">${totalProds}</div>
+        <div class="kpi-trend">${miniTrend(trendSales, '#A855F7')}</div>
+        <div class="kpi-foot"><span>授权产品总数</span></div>
+      </div>
+      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
+        <div class="kpi-head">
+          <div class="kpi-ic" style="background:linear-gradient(135deg,#EC4899,#F472B6)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="kpi-tag">客户</div>
+        </div>
+        <div class="kpi-n">${totalUsed}</div>
+        <div class="kpi-trend">${miniTrend(trendSales, '#EC4899')}</div>
+        <div class="kpi-foot"><span class="ch">已售 / ${totalQuota} 总额</span></div>
+      </div>
+      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
+        <div class="kpi-head">
+          <div class="kpi-ic" style="background:linear-gradient(135deg,#10B981,#34D399)"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="kpi-tag">营收</div>
+        </div>
+        <div class="kpi-n">¥${(totalRev/1000).toFixed(1)}k</div>
+        <div class="kpi-trend">${miniTrend(trendRev, '#10B981')}</div>
+        <div class="kpi-foot"><span class="ch">+${salesRate}% ↑ 同比</span></div>
+      </div>
+      <div class="kpi-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
+        <div class="kpi-head">
+          <div class="kpi-ic" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="kpi-tag">到期</div>
+        </div>
+        <div class="kpi-n">${expList.length}</div>
+        <div class="kpi-trend">${miniTrend(trendRate, '#F59E0B')}</div>
+        <div class="kpi-foot"><span class="ch ${expList.length>0?'':'flat'}">30天内到期</span></div>
+      </div>
     </div>
 
-    <div class="ov-sec-hd">🏢 业务产品</div>
-    <div class="ov-grid">
-      <div class="ov-card" onclick="navigate('baby.html','宝贝成长(旗舰)','业务产品')"><div class="ic" style="background:linear-gradient(135deg,#EC4899,#7C3AED)">👶</div><div><div class="t">宝贝成长工作台</div><div class="d">旗舰独立产品 · 12页+AI</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('automation.html','AI自动化运营台','业务产品')"><div class="ic" style="background:linear-gradient(135deg,#0D9488,#14B8A6)">⚡</div><div><div class="t">AI自动化运营台</div><div class="d">Skill技能库 · 智能体编排</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="document.getElementById('industriesToggle').click()"><div class="ic" style="background:linear-gradient(135deg,#7C3AED,#A855F7)">🧩</div><div><div class="t">36 行业工作台</div><div class="d">恋爱/健身/餐饮/律所等</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('wb-engine.html?sku=life','全家桶版','业务产品')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#A855F7)">🎁</div><div><div class="t">全家桶版</div><div class="d">¥1999/年 · 36 行业通吃</div></div><span class="arrow">›</span></div>
+    <!-- 双栏 -->
+    <div class="dual-col">
+      <div class="glass-card">
+        <div class="gc-hd">
+          <div class="gc-ic"><svg viewBox="0 0 24 24"><path d="M20 7h-4V4a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/></svg></div>
+          <div class="gc-t">业务产品状态</div>
+          <div class="gc-s">${products.length} 个产品</div>
+        </div>
+        <div class="biz-list">
+          ${products.slice(0,6).map(p=>{
+            const used = p.clients?p.clients.length:0;
+            const total = parseInt(p.total)||20;
+            const pct = total>0?Math.min(100,Math.round(used/total*100)):0;
+            const full = used>=total;
+            return `<div class="biz-card" onclick="navigate('${p.file||'wb-engine.html?sku='+p.id}','${esc(p.name)}','${guessSec(p.name)}')">
+              <div class="bc-ic" style="background:linear-gradient(135deg,${p.color1||'#A855F7'},${p.color2||'#EC4899'})">${p.emo||'✨'}</div>
+              <div class="bc-t">${esc(p.name)}</div>
+              <div class="bc-bar">
+                <div class="bc-meta"><span>${used}/${total}</span><span>${pct}%</span></div>
+                <div class="bc-bar-bg"><div class="bc-bar-i" style="width:${pct}%"></div></div>
+              </div>
+              <span class="bc-status ${full?'full':''}">${full?'满员':'在售'}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="glass-card">
+        <div class="gc-hd">
+          <div class="gc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="gc-t">30 天内到期</div>
+          <div class="gc-s">${expList.length} 个</div>
+        </div>
+        <div class="exp-list">
+          ${expList.length === 0 ? '<div class="exp-empty">✅ 暂无即将到期的客户</div>' : expList.slice(0,8).map(({p,c,d})=>`<div class="exp-item ${d<=7?'urgent':d<=15?'warn':''}">
+            <div class="e-ic">${p.emo||'👤'}</div>
+            <div class="e-t">
+              <div class="e-n">${esc(c.name||'客户')}</div>
+              <div class="e-d">${esc(p.name)} · ${esc(c.end)}</div>
+            </div>
+            <span class="e-tag">${d<=7?'紧急':d<=15?'临近':d+'天'}</span>
+          </div>`).join('')}
+        </div>
+      </div>
     </div>
 
-    <div class="ov-sec-hd">🌐 官网与展示</div>
-    <div class="ov-grid">
-      <div class="ov-card" onclick="navigate('index.html','母系统官网','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#A855F7)">🏛️</div><div><div class="t">母系统官网</div><div class="d">AI一人公司母系统介绍</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('brand.html','品牌名片页','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#A855F7,#EC4899)">🏷️</div><div><div class="t">品牌名片页</div><div class="d">Crazy Friday 品牌生态入口</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('demo-gallery.html','案例广场(36行业)','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#FF8E53)">🎬</div><div><div class="t">案例广场</div><div class="d">36 行业真实案例</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('cf.html','AI时代生态蓝图','官网与展示')"><div class="ic" style="background:linear-gradient(135deg,#22D3EE,#0D9488)">🌐</div><div><div class="t">AI时代生态蓝图</div><div class="d">8 大平台 · 3 年路线</div></div><span class="arrow">›</span></div>
+    <!-- 行业分类 -->
+    <div class="cat-grid">
+      ${Object.keys(CAT_DEF).map(cat=>{
+        const def = CAT_DEF[cat];
+        const list = byCat[cat] || [];
+        return `<div class="cat-card ${def.cls}" onclick="document.getElementById('industriesToggle').click()">
+          <div class="ct-hd">
+            <div class="ct-ic">${cat==='life'?'🌟':cat==='creator'?'🎬':cat==='business'?'🏪':'⚖️'}</div>
+            <div><div class="ct-t">${def.t}</div><div class="ct-s">${def.s}</div></div>
+            <div class="ct-count">${list.length}</div>
+          </div>
+          <div class="cat-mini">
+            ${list.slice(0,8).map(i=>`<div class="cat-mini-item" onclick="event.stopPropagation();navigate('wb-engine.html?sku=${i.id}','${esc(i.n)}','业务产品')"><span class="ic">${i.emo}</span>${esc(i.n.replace('工作台','').replace('台',''))}</div>`).join('')}
+          </div>
+        </div>`;
+      }).join('')}
     </div>
 
-    <div class="ov-sec-hd">🛒 变现生态</div>
-    <div class="ov-grid">
-      <div class="ov-card" onclick="navigate('authorize.html','授权管理中心','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#7C3AED,#A855F7)">🛡️</div><div><div class="t">授权管理中心</div><div class="d">${totalProds} 个产品 · ${usedQuota} 客户 · ${totalQuota-usedQuota} 余</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('cfapp/store.html','AI工作台商店','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#10B981,#34D399)">🛒</div><div><div class="t">AI工作台商店</div><div class="d">成品工作台 · 开箱即用</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('invest-dashboard.html','经营看板','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#3B82F6,#60A5FA)">📊</div><div><div class="t">经营看板</div><div class="d">实时数据 · 投资人视角</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('partner.html','招商合作','变现生态')"><div class="ic" style="background:linear-gradient(135deg,#F472B6,#EC4899)">🤝</div><div><div class="t">招商合作</div><div class="d">合伙人 · 共创 · 投资</div></div><span class="arrow">›</span></div>
+    <!-- 快捷操作 -->
+    <div class="qa-grid">
+      <div class="qa-card" onclick="navigate('authorize.html','授权管理中心','变现生态')">
+        <div class="qa-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="qa-t">授权管理</div>
+        <div class="qa-d">生成专属链接 / 邀请卡</div>
+      </div>
+      <div class="qa-card" onclick="navigate('cfapp/store.html','AI工作台商店','变现生态')">
+        <div class="qa-ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+        <div class="qa-t">商店</div>
+        <div class="qa-d">成品工作台直购</div>
+      </div>
+      <div class="qa-card" onclick="navigate('invest-dashboard.html','经营看板','变现生态')">
+        <div class="qa-ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 19 8"/></svg></div>
+        <div class="qa-t">经营看板</div>
+        <div class="qa-d">实时数据 / 趋势</div>
+      </div>
+      <div class="qa-card" onclick="navigate('partner.html','招商合作','变现生态')">
+        <div class="qa-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div class="qa-t">招商合作</div>
+        <div class="qa-d">合伙人 / 共创</div>
+      </div>
     </div>
 
-    <div class="ov-sec-hd">📦 资源沉淀</div>
-    <div class="ov-grid">
-      <div class="ov-card" onclick="navigate('order-workbench.html','订单池 / 合作商','资源沉淀')"><div class="ic" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">📋</div><div><div class="t">订单池 / 合作商</div><div class="d">接单工坊 · 案例沉淀</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('landing.html','定制落地页','资源沉淀')"><div class="ic" style="background:linear-gradient(135deg,#F59E0B,#FBBF24)">🎯</div><div><div class="t">定制落地页</div><div class="d">客户转化 · 服务详情</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('hub.html','生态入口 hub','资源沉淀')"><div class="ic" style="background:linear-gradient(135deg,#EC4899,#F472B6)">🧭</div><div><div class="t">生态入口 hub</div><div class="d">所有页面导航汇总</div></div><span class="arrow">›</span></div>
-      <div class="ov-card" onclick="navigate('workbench/index.html','时铭工作台(个人)','个人')"><div class="ic" style="background:linear-gradient(135deg,#FF6B1A,#F59E0B)">🦞</div><div><div class="t">时铭工作台</div><div class="d">个人运营工作台（独立）</div></div><span class="arrow">›</span></div>
-    </div>
-
-    <div style="text-align:center;font-size:10px;color:var(--ink3);margin-top:30px;line-height:1.7;padding:14px">
-      Crazy Friday · 疯狂星期五 · 总工作台 v1.0<br>
-      一站式管理所有业务 · 左侧导航切换 · 数据后台实时汇总
-    </div>`;
+    <div class="foot-ver">Crazy Friday · 疯狂星期五 · 总工作台 v6.0 · 2024 现代玻璃拟态旗舰版</div>`;
 }
 
-/* ============ iframe 加载完成 ============ */
 document.getElementById('contentFrame').addEventListener('load', function(){
   document.getElementById('loading').classList.add('hide');
 });
 
-/* ============ 操作 ============ */
 function reloadFrame(){ if(curUrl){ document.getElementById('contentFrame').src = curUrl; document.getElementById('loading').classList.remove('hide'); } }
-function openNewTab(){ if(curUrl){ window.open(curUrl, '_blank'); } else { toast('请先选择一个页面'); } }
+function openNewTab(){ if(curUrl){ window.open(curUrl, '_blank'); } else { showOverview(); } }
 function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('mask').classList.toggle('show');
@@ -433,28 +663,14 @@ function closeSidebarMobile(){
   document.getElementById('mask').classList.remove('show');
 }
 
-/* ============ 初始化 ============ */
 (function init(){
-  // 绑定 36 行业子菜单展开事件
   const indSub = document.getElementById('industriesSub');
-  indSub.innerHTML = INDUSTRIES.map(s=>`<div class="sb-subitem" data-url="wb-engine.html?sku=${s.id}"><span class="ico">${s.emo}</span><span class="nm">${s.n}</span></div>`).join('');
   indSub.style.display = 'none';
-  indSub.querySelectorAll('.sb-subitem').forEach(el=>{
-    el.addEventListener('click', function(){
-      const url = this.getAttribute('data-url');
-      const name = this.querySelector('.nm').textContent;
-      navigate(url, name, '业务产品');
-    });
-  });
-
-  // 动态更新授权徽章
   try{
     const products = loadLS('wb_auth_products', []);
     const badge = document.getElementById('authBadge');
     if(badge && products.length) badge.textContent = products.length;
   }catch(e){}
-
-  // 默认进总览
   showOverview();
 })();
 </script>
