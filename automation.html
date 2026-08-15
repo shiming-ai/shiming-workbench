@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D9488">
+<meta name="description" content="AI 自动化运营台 · 技能库Skill · 智能体编排 · 自动化任务 · Crazy Friday">
+<title>AI 自动化运营台 · Crazy Friday</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F4FAF9;--card:#FFFFFF;--ink:#14201F;--ink2:#556763;--ink3:#93A5A1;
+  --line:#E3EFED;--primary:#0D9488;--primary2:#14B8A6;--deep:#0F766E;
+  --pink:#F472B6;--amber:#F59E0B;--red:#EF4444;--green:#10B981;--blue:#3B82F6;--purple:#8B5CF6;
+  --red-soft:#FEF2F2;--green-soft:#E9F9F2;--amber-soft:#FEF7E6;--blue-soft:#EBF5FE;--purple-soft:#F1EDFC;
+  --safe-b:env(safe-area-inset-bottom);--safe-t:env(safe-area-inset-top);
+}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:16px 14px calc(30px + var(--safe-b))}
+/* 顶栏 */
+.top{display:flex;align-items:center;gap:11px;padding:12px 2px 16px}
+.top .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#0D9488,#14B8A6);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 8px 22px rgba(13,148,136,.35)}
+.top .logo svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top .t1{font-size:16.5px;font-weight:900;letter-spacing:-.3px}
+.top .t2{font-size:10px;color:var(--ink3);margin-top:1px}
+.top .pin{margin-left:auto;flex-shrink:0}
+.pin-btn{display:flex;align-items:center;gap:5px;min-height:38px;padding:0 12px;border:none;border-radius:11px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800;cursor:pointer}
+.pin-btn.on{background:var(--red-soft);color:var(--red)}
+/* 卡片 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:13px;box-shadow:0 2px 10px rgba(20,32,31,.03)}
+.sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sec-hd h2{font-size:15px;font-weight:900}
+.sec-hd .more{font-size:11.5px;font-weight:800;color:var(--primary);margin-left:auto;cursor:pointer;padding:6px 10px;border-radius:9px;background:var(--green-soft)}
+.sec-hd .more:active{transform:scale(.95)}
+/* 今日要处理 */
+.today{background:linear-gradient(135deg,#0D9488,#14B8A6);border:none;color:#fff;border-radius:20px;padding:16px}
+.today .tt{font-size:12px;font-weight:800;opacity:.9;display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.today .tt svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.today-item{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:13px;padding:11px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.today-item:last-child{margin-bottom:0}
+.today-item .ti-ic{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.today-item .ti-t{flex:1;min-width:0}
+.today-item .ti-n{font-size:12.5px;font-weight:800;line-height:1.3}
+.today-item .ti-d{font-size:9.5px;opacity:.85;margin-top:1px}
+.today-item .ti-btn{flex-shrink:0;min-height:34px;padding:0 12px;border:none;border-radius:10px;background:#fff;color:var(--deep);font-size:11px;font-weight:800;cursor:pointer}
+.today-item .ti-btn:active{transform:scale(.94)}
+.today-empty{text-align:center;font-size:11px;opacity:.85;padding:10px 0}
+/* 任务 */
+.task{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;background:#fff}
+.task .tk-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.task .tk-body{flex:1;min-width:0}
+.task .tk-n{font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px}
+.task .tk-d{font-size:10px;color:var(--ink3);margin-top:2px}
+.task .tk-meta{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.tag{font-size:8.5px;font-weight:800;padding:2.5px 7px;border-radius:7px}
+.tag.green{background:var(--green-soft);color:var(--green)}
+.tag.amber{background:var(--amber-soft);color:var(--amber)}
+.tag.blue{background:var(--blue-soft);color:var(--blue)}
+.tag.purple{background:var(--purple-soft);color:var(--purple)}
+.tag.gray{background:#F1F5F4;color:var(--ink3)}
+.task .tk-actions{display:flex;gap:5px;flex-shrink:0}
+.icon-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2)}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn.run{color:var(--green)}
+.icon-btn.off{color:var(--red)}
+/* 开关 */
+.switch{position:relative;width:42px;height:24px;border-radius:12px;background:#E2EAE8;cursor:pointer;transition:background .2s;flex-shrink:0}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s}
+.switch.on{background:var(--green)}
+.switch.on::after{left:21px}
+/* 技能 */
+.skill{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;margin-bottom:8px;background:#fff}
+.skill .sk-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.skill .sk-t{flex:1;min-width:0}
+.skill .sk-n{font-size:12.5px;font-weight:800}
+.skill .sk-d{font-size:9.5px;color:var(--ink3);margin-top:1px;line-height:1.4}
+.skill .sk-add{flex-shrink:0;min-height:32px;padding:0 11px;border:none;border-radius:9px;background:var(--green-soft);color:var(--green);font-size:10.5px;font-weight:800;cursor:pointer}
+/* 智能体 */
+.agent{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:9px}
+.agent .ag-hd{display:flex;align-items:center;gap:10px}
+.agent .ag-ic{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0D9488,#14B8A6);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 5px 14px rgba(13,148,136,.25)}
+.agent .ag-n{font-size:13.5px;font-weight:900}
+.agent .ag-d{font-size:10px;color:var(--ink3);margin-top:1px}
+.agent .ag-status{margin-left:auto;font-size:9px;font-weight:800;padding:3px 9px;border-radius:8px;background:var(--green-soft);color:var(--green);flex-shrink:0}
+.agent .ag-status.off{background:#F1F5F4;color:var(--ink3)}
+.agent .ag-flow{margin-top:10px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;background:#F7FBFA;border-radius:11px;padding:9px 10px}
+.agent .ag-flow .af{font-size:9.5px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:8px;padding:4px 8px;color:var(--ink2)}
+.agent .ag-flow .af-arrow{font-size:10px;color:var(--primary);font-weight:900}
+.agent .ag-run{margin-top:9px;display:flex;gap:6px}
+.agent .ag-run .btn{flex:1}
+/* 日志 */
+.log{display:flex;align-items:flex-start;gap:9px;padding:10px 11px;border:1px solid var(--line);border-radius:12px;margin-bottom:7px;background:#fff}
+.log .lg-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.log .lg-t{flex:1;min-width:0}
+.log .lg-n{font-size:11.5px;font-weight:800;line-height:1.4}
+.log .lg-d{font-size:9px;color:var(--ink3);margin-top:2px}
+.log .lg-time{flex-shrink:0;font-size:8.5px;color:var(--ink3)}
+/* 表单 */
+.f-field{margin-top:10px}
+.f-field label{display:block;font-size:10.5px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+.f-field input,.f-field select,.f-field textarea{width:100%;min-height:44px;border:1.5px solid var(--line);border-radius:12px;padding:0 13px;font-size:16px;outline:none;background:#FAFDFC;color:var(--ink);font-family:inherit}
+.f-field textarea{min-height:60px;padding:10px 13px;resize:vertical}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{border-color:var(--primary)}
+.btn{min-height:44px;padding:0 16px;border:none;border-radius:12px;background:linear-gradient(135deg,#0D9488,#14B8A6);color:#fff;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.btn.gray{background:var(--ink3)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink2)}
+.btn.small{min-height:32px;padding:0 11px;font-size:11px;border-radius:9px}
+/* 弹窗 */
+.mask{position:fixed;inset:0;z-index:200;background:rgba(13,32,30,.5);display:none;align-items:flex-end;justify-content:center}
+.mask.show{display:flex}
+.sheet{width:100%;max-width:560px;background:#fff;border-radius:22px 22px 0 0;padding:20px 18px calc(22px + var(--safe-b));max-height:88vh;overflow-y:auto;animation:up .3s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.sheet h3{font-size:16px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sheet .sub{font-size:10.5px;color:var(--ink3);margin-bottom:10px}
+.sheet .close{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.sheet .actions{display:flex;gap:8px;margin-top:14px}
+.sheet .actions .btn{flex:1}
+/* 数据管理 / 关于 */
+.me-row{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:8px;background:#fff;cursor:pointer}
+.me-row:active{transform:scale(.98)}
+.me-row .mr-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.me-row .mr-ic svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.me-row .mr-t{font-size:12.5px;font-weight:800}
+.me-row .mr-d{font-size:9.5px;color:var(--ink3);margin-top:1px}
+.me-row .mr-arrow{margin-left:auto;width:16px;height:16px;stroke:var(--ink3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+/* 底部导航 */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 7px;cursor:pointer;color:var(--ink3);font-size:9.5px;font-weight:700}
+.bn-item .ic{width:24px;height:24px}
+.bn-item .ic svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bn-item.on{color:var(--primary)}
+.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:rgba(20,32,31,.92);color:#fff;font-size:12.5px;padding:11px 18px;border-radius:12px;z-index:300;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.show{opacity:1}
+.tabs{display:flex;gap:7px;margin-bottom:13px;overflow-x:auto;padding-bottom:2px}
+.tab{flex-shrink:0;min-height:36px;padding:0 15px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--ink2);font-size:12px;font-weight:800;cursor:pointer}
+.tab.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.empty{text-align:center;padding:26px 0;color:var(--ink3);font-size:12px}
+.empty .e-ic{font-size:30px;margin-bottom:6px}
+.page{display:none}
+.page.show{display:block}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 8px;text-align:center}
+.stat .n{font-size:20px;font-weight:900;color:var(--primary)}
+.stat .l{font-size:9px;color:var(--ink3);margin-top:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 顶栏 -->
+  <div class="top">
+    <div class="logo"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+    <div>
+      <div class="t1">AI 自动化运营台</div>
+      <div class="t2">技能库 Skill · 智能体编排 · 自动执行 · Crazy Friday</div>
+    </div>
+    <div class="pin"><button class="pin-btn" id="pinBtn" onclick="pinToggle()">🔒 未加锁</button></div>
+  </div>
+
+  <!-- 今日要处理 -->
+  <div class="card today">
+    <div class="tt"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>今天要处理</div>
+    <div id="todayList"></div>
+  </div>
+
+  <!-- 统计 -->
+  <div class="stat-grid">
+    <div class="stat"><div class="n" id="stTask">0</div><div class="l">自动化任务</div></div>
+    <div class="stat"><div class="n" id="stSkill">0</div><div class="l">技能 Skill</div></div>
+    <div class="stat"><div class="n" id="stAgent">0</div><div class="l">智能体</div></div>
+  </div>
+
+  <!-- ===== 页1 自动化任务 ===== -->
+  <div class="page show" id="page-tasks">
+    <div class="sec-hd"><h2>⚡ 自动化任务</h2><span class="more" onclick="openTaskForm()">＋ 新建任务</span></div>
+    <div class="tabs" id="taskTabs"></div>
+    <div id="taskList"></div>
+  </div>
+
+  <!-- ===== 页2 技能库 ===== -->
+  <div class="page" id="page-skills">
+    <div class="sec-hd"><h2>🛠️ 技能库 Skill</h2><span class="more" onclick="openSkillForm()">＋ 添加技能</span></div>
+    <div class="card" style="padding:11px 14px;font-size:11px;color:var(--ink2);line-height:1.7">技能 = 智能体可调用的最小功能单元。<br>例：「查询订单」「发送通知」「生成报告」。技能越多，智能体越强。</div>
+    <div class="sec-hd" style="margin-top:4px"><h2 style="font-size:13px">📦 已添加技能</h2><span class="more" id="skillCnt">0个</span></div>
+    <div id="skillList"></div>
+    <div class="sec-hd" style="margin-top:8px"><h2 style="font-size:13px">🌟 官方推荐技能</h2></div>
+    <div id="officialSkillList"></div>
+  </div>
+
+  <!-- ===== 页3 智能体 ===== -->
+  <div class="page" id="page-agents">
+    <div class="sec-hd"><h2>🤖 智能体编排</h2><span class="more" onclick="openAgentForm()">＋ 新建智能体</span></div>
+    <div class="card" style="padding:11px 14px;font-size:11px;color:var(--ink2);line-height:1.7">智能体 = 把多个技能串成一条自动化流程。<br>例：每天早上「查询订单 → 生成报告 → 发送通知」。</div>
+    <div class="sec-hd" style="margin-top:4px"><h2 style="font-size:13px">我的智能体</h2></div>
+    <div id="agentList"></div>
+  </div>
+
+  <!-- ===== 页4 运行日志 ===== -->
+  <div class="page" id="page-logs">
+    <div class="sec-hd"><h2>📜 运行日志</h2><span class="more" onclick="clearLogs()">清空</span></div>
+    <div id="logList"></div>
+  </div>
+
+  <!-- ===== 页5 我的 ===== -->
+  <div class="page" id="page-me">
+    <div class="sec-hd"><h2>⚙️ 数据管理</h2></div>
+    <div class="me-row" onclick="exportData()"><div class="mr-ic" style="background:linear-gradient(135deg,#64748B,#475569)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="mr-body"><div class="mr-t">导出备份</div><div class="mr-d">下载完整数据 JSON</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="me-row" onclick="document.getElementById('fileImport').click()"><div class="mr-ic" style="background:linear-gradient(135deg,#A8B29F,#7A8B6F)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="mr-body"><div class="mr-t">导入恢复</div><div class="mr-d">从备份恢复数据</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="me-row" onclick="askClear()"><div class="mr-ic" style="background:linear-gradient(135deg,#F87171,#EF4444)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div><div class="mr-body"><div class="mr-t">清空数据</div><div class="mr-d">删除全部记录（二次确认）</div></div><svg class="mr-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <input type="file" id="fileImport" accept="application/json" style="display:none" onchange="importData(this)">
+    <div class="sec-hd" style="margin-top:16px"><h2>🛡️ 隐私与安全</h2></div>
+    <div class="card" style="padding:13px 15px;font-size:11px;color:var(--ink2);line-height:1.9">
+      ① 数据存在你手机本机，不上传服务器，Crazy Friday 团队无法查看。<br>
+      ② 每个专属链接对应独立空间，不同客户数据互不可见。<br>
+      ③ 可随时导出备份带走全部数据，或清空彻底删除。
+    </div>
+    <div style="text-align:center;font-size:10px;color:var(--ink3);line-height:1.8;padding:12px 0 18px">Crazy Friday · AI 自动化运营台 v1.0<br>AI工作台年度使用版 · 数据存于本机</div>
+  </div>
+
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <div class="bn-item on" id="bn-tasks" onclick="goPage('tasks',this)"><div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>任务</div>
+  <div class="bn-item" id="bn-skills" onclick="goPage('skills',this)"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>技能</div>
+  <div class="bn-item" id="bn-agents" onclick="goPage('agents',this)"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 12h6M12 9v6"/></svg></div>智能体</div>
+  <div class="bn-item" id="bn-logs" onclick="goPage('logs',this)"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>日志</div>
+  <div class="bn-item" id="bn-me" onclick="goPage('me',this)"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>我的</div>
+</div>
+
+<!-- 任务表单 -->
+<div class="mask" id="maskTask"><div class="sheet">
+  <h3>新建自动化任务 <button class="close" onclick="closeSheet('maskTask')">×</button></h3>
+  <div class="sub">设定触发频率与要调用的技能，到点自动执行</div>
+  <div class="f-field"><label>任务名称</label><input id="fName" type="text" placeholder="如：每日营收汇总" maxlength="20"></div>
+  <div class="f-field"><label>触发频率</label><select id="fFreq"><option value="daily">每天</option><option value="weekly">每周</option><option value="monthly">每月</option><option value="manual">手动触发</option></select></div>
+  <div class="f-field"><label>调用技能（可多选，Ctrl/长按）</label><select id="fSkills" multiple style="min-height:96px"><option value="查询数据">📊 查询数据</option><option value="生成报告">📋 生成报告</option><option value="发送通知">🔔 发送通知</option><option value="发布内容">📣 发布内容</option><option value="财务记账">💰 财务记账</option></select></div>
+  <div class="f-field"><label>描述</label><input id="fDesc" type="text" placeholder="这个任务做什么" maxlength="40"></div>
+  <div class="actions"><button class="btn gray" onclick="closeSheet('maskTask')">取消</button><button class="btn" onclick="saveTask()">创建任务</button></div>
+</div></div>
+
+<!-- 技能表单 -->
+<div class="mask" id="maskSkill"><div class="sheet">
+  <h3>添加技能 Skill <button class="close" onclick="closeSheet('maskSkill')">×</button></h3>
+  <div class="sub">技能 = 智能体可调用的最小功能单元</div>
+  <div class="f-field"><label>技能名称</label><input id="sName" type="text" placeholder="如：查询订单" maxlength="16"></div>
+  <div class="f-field"><label>图标（emoji）</label><input id="sIco" type="text" placeholder="📦" maxlength="4" style="font-size:20px"></div>
+  <div class="f-field"><label>功能描述</label><input id="sDesc" type="text" placeholder="获取订单列表与详情" maxlength="30"></div>
+  <div class="actions"><button class="btn gray" onclick="closeSheet('maskSkill')">取消</button><button class="btn" onclick="saveSkill()">添加技能</button></div>
+</div></div>
+
+<!-- 智能体表单 -->
+<div class="mask" id="maskAgent"><div class="sheet">
+  <h3>新建智能体 <button class="close" onclick="closeSheet('maskAgent')">×</button></h3>
+  <div class="sub">把多个技能串成一条自动化流程</div>
+  <div class="f-field"><label>智能体名称</label><input id="aName" type="text" placeholder="如：每日自动运营" maxlength="20"></div>
+  <div class="f-field"><label>流程（依次执行，用 → 分隔）</label><input id="aFlow" type="text" placeholder="如：查询数据 → 生成报告 → 发送通知" maxlength="60"></div>
+  <div class="f-field"><label>描述</label><input id="aDesc" type="text" placeholder="它做什么" maxlength="30"></div>
+  <div class="actions"><button class="btn gray" onclick="closeSheet('maskAgent')">取消</button><button class="btn" onclick="saveAgent()">创建智能体</button></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ 客户空间隔离（fid） ============ */
+let FID = (function(){
+  try{ const q = new URLSearchParams(location.search); let f = (q.get('fid')||q.get('uid')||'').trim(); return f.replace(/[^a-zA-Z0-9_-]/g,''); }catch(e){ return ''; }
+})();
+const PREFIX = FID ? 'wb_auto_' + FID + '_' : 'wb_auto_';
+const K = {};
+['tasks','skills','agents','logs','pin','onboard'].forEach(function(n){ K[n] = PREFIX + n; });
+
+function load(k, fb){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+let toastT;
+function toast(m){ const el=document.getElementById('toast'); el.textContent=m; el.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'), 2200); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function goPage(p, el){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('show'));
+  document.getElementById('page-'+p).classList.add('show');
+  document.querySelectorAll('.bn-item').forEach(x=>x.classList.remove('on'));
+  if(el) el.classList.add('on');
+  window.scrollTo(0,0);
+}
+function openSheet(id){ document.getElementById(id).classList.add('show'); }
+function closeSheet(id){ document.getElementById(id).classList.remove('show'); }
+
+/* ============ 官方技能 ============ */
+const OFFICIAL_SKILLS = [
+  { name:'查询数据', icon:'📊', desc:'获取订单/客户/营收数据' },
+  { name:'生成报告', icon:'📋', desc:'自动汇总数据生成日报/周报' },
+  { name:'发送通知', icon:'🔔', desc:'推送消息到微信/邮件' },
+  { name:'发布内容', icon:'📣', desc:'一键发布到多平台' },
+  { name:'财务记账', icon:'💰', desc:'自动分类记录收支' },
+  { name:'创建任务', icon:'✅', desc:'创建任务和提醒' },
+  { name:'数据复盘', icon:'📈', desc:'分析数据生成洞察' },
+  { name:'客户跟进', icon:'👥', desc:'提醒最佳跟进时机' },
+];
+
+/* ============ 自动化任务 ============ */
+let taskFilter = 'all';
+function getTasks(){ return load(K.tasks, []); }
+function setTasks(arr){ save(K.tasks, arr); }
+function renderStats(){
+  document.getElementById('stTask').textContent = getTasks().length;
+  document.getElementById('stSkill').textContent = getSkills().length;
+  document.getElementById('stAgent').textContent = getAgents().length;
+}
+function renderTaskTabs(){
+  const tabs = [['all','全部'],['on','运行中'],['off','已停用']];
+  document.getElementById('taskTabs').innerHTML = tabs.map(t=>`<button class="tab ${taskFilter===t[0]?'on':''}" onclick="taskFilter='${t[0]}';renderTaskTabs();renderTasks()">${t[1]}</button>`).join('');
+}
+function renderTasks(){
+  const list = getTasks();
+  let arr = list;
+  if(taskFilter==='on') arr = list.filter(t=>t.status!=='off');
+  if(taskFilter==='off') arr = list.filter(t=>t.status==='off');
+  const el = document.getElementById('taskList');
+  if(!arr.length){ el.innerHTML = '<div class="empty"><div class="e-ic">⚡</div>暂无任务<br><span style="font-size:10.5px">点右上「新建任务」开始自动化</span></div>'; return; }
+  el.innerHTML = arr.map((t,i)=>{
+    const idx = list.indexOf(t);
+    const freqTag = t.freq==='daily'?'<span class="tag green">每天</span>':t.freq==='weekly'?'<span class="tag blue">每周</span>':t.freq==='monthly'?'<span class="tag purple">每月</span>':'<span class="tag gray">手动</span>';
+    return `<div class="task">
+      <div class="tk-ic" style="background:linear-gradient(135deg,${t.color1||'#E9F9F2'},${t.color2||'#F1EDFC'})">${t.icon||'⚡'}</div>
+      <div class="tk-body">
+        <div class="tk-n">${esc(t.name)} ${t.status==='off'?'<span class="tag gray">已停用</span>':''}</div>
+        <div class="tk-d">${esc(t.desc||'')}</div>
+        <div class="tk-meta">${freqTag}<span class="tag gray">🛠 ${(t.skills||[]).length} 技能</span><span class="tag gray">▶ ${t.runs||0} 次</span></div>
+      </div>
+      <div class="tk-actions">
+        <button class="icon-btn run" title="立即运行" onclick="runTask(${idx})"><svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg></button>
+        <div class="switch ${t.status==='off'?'':'on'}" onclick="toggleTask(${idx})"></div>
+        <button class="icon-btn" title="删除" style="color:var(--red)" onclick="delTask(${idx})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleTask(i){
+  const list = getTasks();
+  list[i].status = list[i].status==='off'?'active':'off';
+  setTasks(list); renderTasks(); renderToday(); renderStats();
+  toast(list[i].status==='off'?'已停用':'✅ 已启用');
+}
+function delTask(i){
+  if(!confirm('删除该自动化任务？')) return;
+  const list = getTasks(); list.splice(i,1); setTasks(list);
+  renderTasks(); renderToday(); renderStats(); toast('已删除');
+}
+function openTaskForm(){ document.getElementById('fName').value=''; document.getElementById('fDesc').value=''; document.getElementById('fSkills').selectedIndex=-1; openSheet('maskTask'); }
+function saveTask(){
+  const name = document.getElementById('fName').value.trim();
+  if(!name){ toast('请填写任务名称'); return; }
+  const freq = document.getElementById('fFreq').value;
+  const skills = Array.from(document.getElementById('fSkills').selectedOptions).map(o=>o.value);
+  const desc = document.getElementById('fDesc').value.trim();
+  const list = getTasks();
+  list.unshift({ name, freq, skills, desc, icon:'⚡', status:'active', runs:0, color1:'#E9F9F2', color2:'#F1EDFC', created:todayStr() });
+  setTasks(list); closeSheet('maskTask');
+  renderTasks(); renderToday(); renderStats(); toast('✅ 已创建自动化任务');
+}
+function runTask(i){
+  const list = getTasks(); const t = list[i];
+  t.runs = (t.runs||0)+1; setTasks(list);
+  addLog('task', t.name, (t.skills||[]).join(' → '), '成功');
+  renderTasks(); renderLogs(); renderToday();
+  toast('⚡「'+t.name+'」已执行（'+(t.skills||[]).join(' → ')+'）');
+}
+
+/* ============ 技能库 ============ */
+function getSkills(){ return load(K.skills, []); }
+function setSkills(arr){ save(K.skills, arr); }
+function renderSkills(){
+  const list = getSkills();
+  document.getElementById('skillCnt').textContent = list.length + '个';
+  const el = document.getElementById('skillList');
+  if(!list.length){ el.innerHTML = '<div class="empty">还没有技能<br><span style="font-size:10.5px">点右上「添加技能」或下方官方推荐</span></div>'; }
+  else {
+    el.innerHTML = list.map((s,i)=>`<div class="skill">
+      <div class="sk-ico" style="background:var(--green-soft)">${s.icon}</div>
+      <div class="sk-t"><div class="sk-n">${esc(s.name)}</div><div class="sk-d">${esc(s.desc||'')}</div></div>
+      <button class="sk-add" style="background:var(--red-soft);color:var(--red)" onclick="delSkill(${i})">移除</button>
+    </div>`).join('');
+  }
+  document.getElementById('officialSkillList').innerHTML = OFFICIAL_SKILLS.map(s=>{
+    const has = list.some(x=>x.name===s.name);
+    return `<div class="skill">
+      <div class="sk-ico" style="background:var(--blue-soft)">${s.icon}</div>
+      <div class="sk-t"><div class="sk-n">${s.name}</div><div class="sk-d">${s.desc}</div></div>
+      <button class="sk-add" ${has?'style="background:#F1F5F4;color:var(--ink3)" disabled':'onclick="addSkill(\''+s.name+'\',\''+s.icon+'\',\''+s.desc+'\')"'}>${has?'已添加':'＋ 添加'}</button>
+    </div>`;
+  }).join('');
+}
+function addSkill(name, icon, desc){
+  const list = getSkills();
+  if(list.some(s=>s.name===name)){ toast('已存在'); return; }
+  list.push({name, icon, desc}); setSkills(list);
+  renderSkills(); renderStats(); toast('✅ 已添加技能：'+name);
+}
+function delSkill(i){
+  const list = getSkills(); list.splice(i,1); setSkills(list);
+  renderSkills(); renderStats(); toast('已移除');
+}
+function openSkillForm(){ document.getElementById('sName').value=''; document.getElementById('sIco').value=''; document.getElementById('sDesc').value=''; openSheet('maskSkill'); }
+function saveSkill(){
+  const name = document.getElementById('sName').value.trim();
+  if(!name){ toast('请填写技能名称'); return; }
+  const icon = document.getElementById('sIco').value.trim() || '⚡';
+  const desc = document.getElementById('sDesc').value.trim();
+  addSkill(name, icon, desc); closeSheet('maskSkill');
+}
+
+/* ============ 智能体 ============ */
+function getAgents(){ return load(K.agents, []); }
+function setAgents(arr){ save(K.agents, arr); }
+function renderAgents(){
+  const list = getAgents();
+  const el = document.getElementById('agentList');
+  if(!list.length){ el.innerHTML = '<div class="empty"><div class="e-ic">🤖</div>还没有智能体<br><span style="font-size:10.5px">点右上「新建智能体」把技能串成流程</span></div>'; return; }
+  el.innerHTML = list.map((a,i)=>`<div class="agent">
+    <div class="ag-hd">
+      <div class="ag-ic">${a.icon||'🤖'}</div>
+      <div><div class="ag-n">${esc(a.name)}</div><div class="ag-d">${esc(a.desc||'')}</div></div>
+      <div class="ag-status ${a.status==='off'?'off':''}">${a.status==='off'?'已停用':'运行中'}</div>
+    </div>
+    <div class="ag-flow">${(a.flow||[]).map((f,fi)=>`<span class="af">${esc(f)}</span>${fi<(a.flow||[]).length-1?'<span class="af-arrow">→</span>':''}`).join('')}</div>
+    <div class="ag-run">
+      <button class="btn small" onclick="runAgent(${i})">▶ 立即执行</button>
+      <button class="btn small ghost" onclick="toggleAgent(${i})">${a.status==='off'?'启用':'停用'}</button>
+      <button class="btn small ghost" style="color:var(--red)" onclick="delAgent(${i})">删除</button>
+    </div>
+  </div>`).join('');
+}
+function toggleAgent(i){
+  const list = getAgents();
+  list[i].status = list[i].status==='off'?'active':'off';
+  setAgents(list); renderAgents(); toast(list[i].status==='off'?'已停用':'✅ 已启用');
+}
+function delAgent(i){
+  if(!confirm('删除该智能体？')) return;
+  const list = getAgents(); list.splice(i,1); setAgents(list);
+  renderAgents(); renderStats(); toast('已删除');
+}
+function runAgent(i){
+  const list = getAgents(); const a = list[i];
+  a.runs = (a.runs||0)+1; setAgents(list);
+  addLog('agent', a.name, (a.flow||[]).join(' → '), '成功');
+  renderAgents(); renderLogs();
+  toast('🤖「'+a.name+'」流程已执行');
+}
+function openAgentForm(){
+  document.getElementById('aName').value=''; document.getElementById('aFlow').value=''; document.getElementById('aDesc').value='';
+  openSheet('maskAgent');
+}
+function saveAgent(){
+  const name = document.getElementById('aName').value.trim();
+  if(!name){ toast('请填写智能体名称'); return; }
+  const flow = document.getElementById('aFlow').value.split('→').map(s=>s.trim()).filter(Boolean);
+  if(!flow.length){ toast('请填写流程（用→分隔）'); return; }
+  const desc = document.getElementById('aDesc').value.trim();
+  const list = getAgents();
+  list.unshift({ name, flow, desc, icon:'🤖', status:'active', runs:0, created:todayStr() });
+  setAgents(list); closeSheet('maskAgent');
+  renderAgents(); renderStats(); toast('✅ 智能体已创建');
+}
+
+/* ============ 日志 ============ */
+function getLogs(){ return load(K.logs, []); }
+function setLogs(arr){ save(K.logs, arr); }
+function addLog(type, name, detail, status){
+  const list = getLogs();
+  list.unshift({ type, name, detail, status, time: new Date().toLocaleString('zh-CN') });
+  if(list.length > 200) list.length = 200;
+  setLogs(list);
+}
+function renderLogs(){
+  const list = getLogs();
+  const el = document.getElementById('logList');
+  if(!list.length){ el.innerHTML = '<div class="empty"><div class="e-ic">📜</div>暂无运行记录<br><span style="font-size:10.5px">执行任务或智能体后，这里会记录</span></div>'; return; }
+  el.innerHTML = list.map(l=>`<div class="log">
+    <div class="lg-ic" style="background:${l.status==='成功'?'var(--green-soft)':'var(--red-soft)'}">${l.type==='agent'?'🤖':'⚡'}</div>
+    <div class="lg-t">
+      <div class="lg-n">${esc(l.name)} <span class="tag ${l.status==='成功'?'green':'red'}">${esc(l.status)}</span></div>
+      <div class="lg-d">${esc(l.detail||'')}</div>
+    </div>
+    <div class="lg-time">${esc((l.time||'').slice(5,-3))}</div>
+  </div>`).join('');
+}
+function clearLogs(){
+  if(!confirm('清空全部运行日志？')) return;
+  setLogs([]); renderLogs(); toast('已清空');
+}
+
+/* ============ 今日要处理 ============ */
+function renderToday(){
+  const list = getTasks();
+  const due = list.filter(t=>t.status!=='off');
+  const el = document.getElementById('todayList');
+  if(!due.length){ el.innerHTML = '<div class="today-empty">🎉 没有待处理任务，全部自动化运行中</div>'; return; }
+  el.innerHTML = due.slice(0,4).map((t,i)=>{
+    const idx = list.indexOf(t);
+    return `<div class="today-item">
+      <div class="ti-ic">${t.icon||'⚡'}</div>
+      <div class="ti-t"><div class="ti-n">${esc(t.name)}</div><div class="ti-d">${t.freq==='daily'?'每天自动执行':t.freq==='weekly'?'每周自动执行':t.freq==='monthly'?'每月自动执行':'手动触发'} · ${(t.skills||[]).join(' → ')||'无技能'}</div></div>
+      <button class="ti-btn" onclick="runTask(${idx})">执行</button>
+    </div>`;
+  }).join('');
+}
+
+/* ============ 访问密码（防转发） ============ */
+function pinEnabled(){ return !!(localStorage.getItem(K.pin)); }
+function pinToggle(){
+  if(pinEnabled()){
+    if(confirm('关闭访问密码？（之后无需密码进入）')){ localStorage.removeItem(K.pin); renderPin(); toast('已关闭'); }
+  } else {
+    const p = prompt('设置 4 位访问密码（仅存本机，防止链接被转发后他人进入）：');
+    if(p && /^\d{4}$/.test(p)){ localStorage.setItem(K.pin, p); renderPin(); toast('✅ 已开启，下次进入需密码'); }
+    else if(p) toast('请输入 4 位数字密码');
+  }
+}
+function renderPin(){
+  const el = document.getElementById('pinBtn');
+  el.textContent = pinEnabled() ? '🔒 已加锁' : '🔒 未加锁';
+  el.classList.toggle('on', pinEnabled());
+}
+(function checkPinBoot(){
+  try{
+    const ok = sessionStorage.getItem('wb_auto_pin_ok') === (PREFIX||'shared');
+    if(pinEnabled() && !ok){
+      const p = prompt('🔒 输入访问密码进入：');
+      if(p === localStorage.getItem(K.pin)){
+        try{ sessionStorage.setItem('wb_auto_pin_ok', PREFIX||'shared'); }catch(e){}
+      } else if(p !== null){ alert('密码错误'); setTimeout(()=>location.reload(), 500); }
+    }
+  }catch(e){}
+})();
+
+/* ============ 数据备份 ============ */
+function exportData(){
+  const data = { tasks:getTasks(), skills:getSkills(), agents:getAgents(), logs:getLogs(), exported:new Date().toISOString(), app:'auto-workbench-v1' };
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '自动化运营台备份-'+todayStr()+'.json'; a.click();
+  toast('⬇ 备份已导出');
+}
+function importData(input){
+  const file = input.files && input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(){
+    try{
+      const d = JSON.parse(reader.result);
+      if(d.tasks) setTasks(d.tasks);
+      if(d.skills) setSkills(d.skills);
+      if(d.agents) setAgents(d.agents);
+      if(d.logs) setLogs(d.logs);
+      toast('✅ 数据已恢复');
+      renderAll();
+    }catch(e){ toast('导入失败：文件格式不正确'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+function askClear(){
+  if(!confirm('⚠️ 清空全部数据？\n\n将删除本空间所有任务/技能/智能体/日志，不可恢复。\n建议先「导出备份」。')) return;
+  if(!confirm('再次确认清空？')) return;
+  setTasks([]); setSkills([]); setAgents([]); setLogs([]);
+  renderAll(); toast('已清空');
+}
+function renderAll(){
+  renderStats(); renderTaskTabs(); renderTasks(); renderSkills(); renderAgents(); renderLogs(); renderToday(); renderPin();
+}
+
+/* ============ 示例数据（首次） ============ */
+function seedDemo(){
+  if(load(K.onboard, false)) return;
+  const hasData = getTasks().length || getSkills().length || getAgents().length;
+  if(hasData){ save(K.onboard, true); return; }
+  const now = new Date();
+  const skills = [
+    { name:'查询数据', icon:'📊', desc:'获取订单/客户/营收数据' },
+    { name:'生成报告', icon:'📋', desc:'自动汇总数据生成日报' },
+    { name:'发送通知', icon:'🔔', desc:'推送消息到微信/邮件' },
+  ];
+  setSkills(skills);
+  setTasks([
+    { name:'每日营收汇总', freq:'daily', skills:['查询数据','生成报告'], desc:'每天18点自动汇总当日营收', icon:'💰', status:'active', runs:12, color1:'#E9F9F2', color2:'#F1EDFC', created:todayStr() },
+    { name:'客户跟进提醒', freq:'daily', skills:['客户跟进','发送通知'], desc:'提醒未跟进的客户', icon:'👥', status:'active', runs:8, color1:'#EBF5FE', color2:'#F1EDFC', created:todayStr() },
+    { name:'周报自动生成', freq:'weekly', skills:['数据复盘','生成报告'], desc:'每周日生成经营周报', icon:'📈', status:'active', runs:3, color1:'#FEF7E6', color2:'#F1EDFC', created:todayStr() },
+  ]);
+  setAgents([
+    { name:'每日自动运营', flow:['查询数据','生成报告','发送通知'], desc:'每天自动跑完整运营闭环', icon:'🤖', status:'active', runs:10, created:todayStr() },
+  ]);
+  setLogs([
+    { type:'task', name:'每日营收汇总', detail:'查询数据 → 生成报告', status:'成功', time: now.toLocaleString('zh-CN') },
+    { type:'agent', name:'每日自动运营', detail:'查询数据 → 生成报告 → 发送通知', status:'成功', time: new Date(now-3600000).toLocaleString('zh-CN') },
+  ]);
+  save(K.onboard, true);
+}
+
+/* ============ 初始化 ============ */
+seedDemo();
+renderAll();
+</script>
+</body>
+</html>
