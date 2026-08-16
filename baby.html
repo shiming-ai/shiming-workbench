@@ -16,6 +16,9 @@
 <link rel="apple-touch-icon" href="baby-icon-180.svg">
 <link rel="icon" type="image/svg+xml" href="baby-icon-180.svg">
 <style>
+/* 展示期暴力隐藏：PIN 弹窗 + Onboarding 引导（防 CDN 缓存） */
+#pinMask,#pinMask.show,#onboard{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;z-index:-9999!important}
+
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#0a0a1a;--bg2:#110820;--card:rgba(255,255,255,.04);--card2:rgba(255,255,255,.025);
