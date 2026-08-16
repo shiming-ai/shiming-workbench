@@ -1545,7 +1545,9 @@ const DATA_VERSION = '4';
 /* ===== 访问密码（防转发：只有本人能进入） ===== */
 const PIN_KEY = PREFIX + 'pin';
 let _pinInput = '', _pinMode = 'check', _pinCb = null;
-function pinEnabled(){ return !!FID && !!(localStorage.getItem(PIN_KEY)); }
+/* 展示期全解锁：PIN_MODE=false 时所有页面无锁（含客户链接） */
+const PIN_MODE = false; /* 后续要给客户开锁时改 true */
+function pinEnabled(){ return PIN_MODE && !!FID && !!(localStorage.getItem(PIN_KEY)); }
 function pinStatus(){
   const el = document.getElementById('pinStatus');
   if (el) { el.textContent = pinEnabled() ? '已开启' : '未开启'; el.style.color = pinEnabled() ? 'var(--green)' : 'var(--ink3)'; }
