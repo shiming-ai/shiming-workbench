@@ -629,6 +629,12 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.02em}
       <div class="ai-card" id="aiHomeCard"></div>
     </div>
 
+    <!-- ④.5 今日育儿贴士 -->
+    <div class="sec">
+      <div class="sec-hd"><h2>💡 今日育儿贴士</h2><span class="more" id="tipRefresh" onclick="renderHomeTip()">换一条 <svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9L1 10"/></svg></span></div>
+      <div class="ai-card tip-card" id="homeTipCard"></div>
+    </div>
+
     <!-- ⑤ 最近成长 -->
     <div class="sec">
       <div class="sec-hd"><h2>最近成长</h2><span class="more" onclick="goPage('page-record')">全部 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div>
@@ -1221,6 +1227,7 @@ function renderHome(){
   document.getElementById('drCntVac').textContent=load(K.vaccines,[]).filter(x=>!x.done).length;
   document.getElementById('drCntFamily').textContent=load(K.members,[]).length;
   document.getElementById('drCntRemind').textContent=load(K.reminders,[]).filter(x=>!x.done).length;
+  renderHomeTip();
 }
 function renderRemindBar(){
   const r=load(K.reminders,[]).filter(x=>!x.done);
@@ -1285,6 +1292,23 @@ function renderAIHome(){
   else if(recent.length)s=`<b>${name}</b> 最近记下了「${recent.map(x=>x.title).slice(-2).join('」「')}」，这些瞬间都是成长的重要信号，继续保持记录。`;
   else s=`<b>${name}</b> 的数据正在积累中，记录越多，我越了解 TA 的节奏，建议从今晚的睡眠开始记录。`;
   document.getElementById('aiHomeCard').innerHTML=`<div class="ai-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>AI 今日观察</div><div class="ai-t">基于最近 ${recCount} 条记录生成</div><div class="ai-b">${s}</div><div class="ai-more" onclick="goPage('page-ai')">查看详细分析 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>`;
+}
+
+/* ================= 今日育儿贴士 ================= */
+let _tipIdx = {};
+function renderHomeTip(){
+  const p=load(K.profile,{}),cur=stageOf(p.birth);
+  const pool=KNOWLEDGE[cur.id]||[];
+  if(!pool.length){ const el=document.getElementById('homeTipCard'); if(el) el.innerHTML='<div class="ai-t">暂无可推荐贴士，先去知识库逛逛～</div>'; return; }
+  const idx=_tipIdx[cur.id]||0;
+  _tipIdx[cur.id]=(idx+1)%pool.length;
+  const k=pool[idx];
+  const el=document.getElementById('homeTipCard');
+  if(!el) return;
+  el.innerHTML=`<div class="ai-tag" style="color:var(--primary);background:var(--primary-soft,#F1EDFC)"><svg viewBox="0 0 24 24" style="width:13px;height:13px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>${esc(k.cat||'育儿')} · ${esc(cur.n)}期</div>
+    <div class="ai-b" style="margin-top:8px;font-weight:800">${esc(k.t)}</div>
+    <div class="ai-b" style="font-size:11.5px;color:var(--ink2);margin-top:4px">${esc(k.b||'')}</div>
+    <div class="ai-more" onclick="goPage('page-knowledge')">去知识库看更多 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>`;
 }
 
 /* ================= 记录页 ================= */
@@ -1976,7 +2000,7 @@ function emptyState(emo,title,sub,btnTxt,btnFn,bState){
 
 /* ================= PWA / 升级 / 数据安全 ================= */
 // 当前产品版本（升级时改这里 + 跑升级兼容测试）
-const APP_VERSION = '4.0.3';
+const APP_VERSION = '4.1.0';
 const DATA_VERSION = '4';
 
 /* ===== 访问密码（防转发：只有本人能进入） ===== */
