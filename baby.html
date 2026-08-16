@@ -1634,15 +1634,9 @@ function openPin(mode, title, sub){
   document.getElementById('pinMask').classList.add('show');
 }
 function closePin(){ document.getElementById('pinMask').classList.remove('show'); _pinInput=''; }
-/* boot：有密码且未验证 → 弹密码 */
-(function checkPin(){
-  try {
-    const ok = sessionStorage.getItem('wb_baby_pin_ok') === (PREFIX || 'shared');
-    if (pinEnabled() && !ok) {
-      setTimeout(function(){ openPin('check','宝贝成长空间','输入访问密码进入<br>这是专属家庭空间'); }, 450);
-    }
-  } catch(e){}
-})();
+/* 展示期全解锁：彻底禁用 checkPin 函数 */
+// checkPin 已禁用 — 所有页面直接打开
+(function checkPin(){ /* DISABLED for demo */ })();
 
 // 1) 隐藏 PWA 启动画面（仅 PWA 模式显示 0.5s 后淡出）
 (function hidePwaSplash(){
