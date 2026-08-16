@@ -125,8 +125,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary)!important}
   </div>
 </div>
 
-<!-- Onboarding 首次引导 -->
-<div id="onboard">
+<!-- Onboarding 首次引导 [展示期全锁定：display:none] -->
+<div id="onboard" style="display:none!important">
   <div class="onb-inner" id="onbInner">
     <div class="onb-brand">Crazy <i>Friday.</i></div>
     <div class="onb-bear" id="onbBear"></div>
@@ -1694,7 +1694,8 @@ function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord()
 
 /* ================= 初始化 ================= */
 seed();
-if(!localStorage.getItem(K.profile)){showOnboard();}else{refreshAll();}
+/* 展示期全解锁：自动用 demo 数据初始化，永远不走 onboarding 引导 */
+seedDemo(); refreshAll();
 </script>
 </body>
 </html>
