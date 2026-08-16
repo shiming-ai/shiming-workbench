@@ -2136,7 +2136,8 @@ function refreshAll(){renderHome();renderPlan();renderKnowledge();renderRecord()
 
 /* ================= 初始化 ================= */
 seed();
-if(!localStorage.getItem(K.profile)){showOnboard();}else{refreshAll();}
+/* 展示期：首次访问直接用 demo 数据初始化，跳过 Onboarding 引导 */
+seedDemo(); refreshAll();
 </script>
 </body>
 </html>
