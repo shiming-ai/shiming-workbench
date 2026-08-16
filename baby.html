@@ -1545,7 +1545,7 @@ const DATA_VERSION = '4';
 /* ===== 访问密码（防转发：只有本人能进入） ===== */
 const PIN_KEY = PREFIX + 'pin';
 let _pinInput = '', _pinMode = 'check', _pinCb = null;
-function pinEnabled(){ return !!(localStorage.getItem(PIN_KEY)); }
+function pinEnabled(){ return !!FID && !!(localStorage.getItem(PIN_KEY)); }
 function pinStatus(){
   const el = document.getElementById('pinStatus');
   if (el) { el.textContent = pinEnabled() ? '已开启' : '未开启'; el.style.color = pinEnabled() ? 'var(--green)' : 'var(--ink3)'; }
