@@ -455,7 +455,7 @@ function renderToday(){
 }
 
 /* ============ 访问密码（防转发） ============ */
-function pinEnabled(){ return !!(localStorage.getItem(K.pin)); }
+function pinEnabled(){ return !!FID && !!(localStorage.getItem(K.pin)); }
 function pinToggle(){
   if(pinEnabled()){
     if(confirm('关闭访问密码？（之后无需密码进入）')){ localStorage.removeItem(K.pin); renderPin(); toast('已关闭'); }
