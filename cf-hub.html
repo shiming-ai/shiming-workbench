@@ -37,6 +37,9 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .sb-mark::after{content:'';position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:#10B981;box-shadow:0 0 8px rgba(16,185,129,.8);border:2px solid var(--bg)}
 .sb-t1{font-family:Georgia,serif;font-size:16px;font-weight:900;letter-spacing:-.4px;color:#fff;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .sb-t2{font-size:9px;color:var(--ink3);margin-top:2px;letter-spacing:.5px}
+
+.mobile-fab{display:none;position:fixed;top:14px;left:316px;z-index:250;width:38px;height:38px;border-radius:10px;background:rgba(15,10,30,.92);border:1px solid var(--line2);color:#fff;cursor:pointer;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.mobile-fab:active{transform:scale(.92)}
 .sb-close{display:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid var(--line2);cursor:pointer;align-items:center;justify-content:center;color:var(--ink2);flex-shrink:0;margin-left:auto}
 .sb-close:active{transform:scale(.9)}
 .sb-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
@@ -206,20 +209,21 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 
 /* 移动端 */
 @media(max-width:768px){
+  /* 对外品牌总台：移动端默认展开侧栏，所有业务一目了然 */
   :root{--sidebar-w:280px}
-  .sidebar{transform:translateX(-100%);box-shadow:4px 0 30px rgba(0,0,0,.5)}
+  .sidebar{transform:translateX(0);box-shadow:4px 0 30px rgba(0,0,0,.5);width:300px;z-index:200}
   .sidebar.open{transform:translateX(0)}
   .main{margin-left:0}
-  .topbar .menu-btn{display:inline-flex}
-  .sb-close{display:inline-flex}
-  .iframe-wrap{min-height:calc(100vh - 64px)}
+  .main::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,26,.7);z-index:150;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .3s}
+  .sidebar:not(.open)~.main::before{opacity:0;pointer-events:none}
+  .sb-close{display:inline-flex !important}
+  .menu-btn{display:none !important}
+  .topbar{display:none}
+  .content{padding:14px 14px 14px 314px}
+  .mobile-fab{display:flex !important}
+  .iframe-wrap{min-height:calc(100vh - 0px)}
   .overview{padding:14px 14px 24px}
   .ov-hero{padding:18px 16px;border-radius:18px}
-  .ov-hero-t{font-size:18px}
-  .dual-col{grid-template-columns:1fr}
-  .kpi-card .kpi-n{font-size:26px}
-  .qa-grid{grid-template-columns:1fr 1fr}
-}
 </style>
 </head>
 <body>
@@ -233,7 +237,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
         <div class="sb-t1">Crazy Friday</div>
         <div class="sb-t2">疯狂星期五 · 一人公司 AI 生态</div>
       </div>
-      <button class="sb-close" onclick="toggleSidebar()" title="关闭菜单"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="sb-body">
       <div class="sb-sec">
@@ -290,6 +294,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 
   <!-- ===== 右侧 ===== -->
   <div class="main" onclick="if(window.innerWidth<=768)closeSidebarMobile()">
+    <button class="mobile-fab" onclick="toggleSidebar()" title="折叠菜单"><svg viewBox="0 0 24 24" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div class="topbar">
       <button class="menu-btn" onclick="toggleSidebar()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <div class="crumb">
