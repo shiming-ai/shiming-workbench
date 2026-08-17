@@ -32,15 +32,15 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 .sidebar::before{content:'';position:absolute;top:-100px;left:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.18),transparent 70%);pointer-events:none}
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
-.sb-head{padding:20px 18px 16px;display:flex;align-items:center;gap:11px;position:relative;z-index:1;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
-.sb-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#A855F7,#EC4899 70%,#F472B6);display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:15px;box-shadow:0 8px 24px rgba(168,85,247,.45);flex-shrink:0;position:relative}
+.sb-head{padding:22px 18px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:relative;z-index:1;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
+.sb-mark{display:none}
 .sb-mark::after{content:'';position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:#10B981;box-shadow:0 0 8px rgba(16,185,129,.8);border:2px solid var(--bg)}
-.sb-t1{font-family:Georgia,serif;font-size:16px;font-weight:900;letter-spacing:-.4px;color:#fff;background:linear-gradient(135deg,#fff,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sb-t2{font-size:9px;color:var(--ink3);margin-top:2px;letter-spacing:.5px}
+.sb-t1{font-family:Georgia,serif;font-size:22px;font-weight:900;letter-spacing:-.8px;color:#fff;background:linear-gradient(135deg,#fff,#C084FC 60%,#F472B6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.sb-t2{font-size:11px;color:#d8dae8;margin-top:2px;letter-spacing:.5px;font-weight:600}
 
 .mobile-fab{display:none;position:fixed;top:14px;left:316px;z-index:250;width:38px;height:38px;border-radius:10px;background:rgba(15,10,30,.92);border:1px solid var(--line2);color:#fff;cursor:pointer;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .mobile-fab:active{transform:scale(.92)}
-.sb-close{display:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid var(--line2);cursor:pointer;align-items:center;justify-content:center;color:var(--ink2);flex-shrink:0;margin-left:auto}
+.sb-close{display:none;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid var(--line2);cursor:pointer;align-items:center;justify-content:center;color:#fff;flex-shrink:0;position:absolute;top:14px;right:14px;z-index:2}
 .sb-close:active{transform:scale(.9)}
 .sb-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
 .sb-body{flex:1;overflow-y:auto;padding:12px 0;position:relative;z-index:1}
@@ -209,21 +209,20 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
 
 /* 移动端 */
 @media(max-width:768px){
-  /* 对外品牌总台：移动端默认展开侧栏，所有业务一目了然 */
-  :root{--sidebar-w:280px}
-  .sidebar{transform:translateX(0);box-shadow:4px 0 30px rgba(0,0,0,.5);width:300px;z-index:200}
+  /* 对外品牌总台：移动端侧栏全屏覆盖（不再挤压主区） */
+  :root{--sidebar-w:100vw}
+  .sidebar{transform:translateX(0);box-shadow:none;width:100vw;max-width:100vw;z-index:200;background:linear-gradient(180deg,#1a0d2e,#0a0a1a)}
   .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .main::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,26,.7);z-index:150;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .3s}
-  .sidebar:not(.open)~.main::before{opacity:0;pointer-events:none}
+  .main{margin-left:0;width:100vw}
   .sb-close{display:inline-flex !important}
   .menu-btn{display:none !important}
   .topbar{display:none}
-  .content{padding:14px 14px 14px 314px}
-  .mobile-fab{display:flex !important}
-  .iframe-wrap{min-height:calc(100vh - 0px)}
+  .content{padding:14px}
   .overview{padding:14px 14px 24px}
   .ov-hero{padding:18px 16px;border-radius:18px}
+  .mobile-fab{display:flex !important;left:14px}
+  .iframe-wrap{min-height:calc(100vh - 0px)}
+}
 </style>
 </head>
 <body>
@@ -235,7 +234,7 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
       <div class="sb-mark">CF</div>
       <div>
         <div class="sb-t1">Crazy Friday</div>
-        <div class="sb-t2">疯狂星期五 · 一人公司 AI 生态</div>
+        <div class="sb-t2">疯狂星期五 ｜ 一人公司 AI 生态</div>
       </div>
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
