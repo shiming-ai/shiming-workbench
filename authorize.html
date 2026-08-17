@@ -35,7 +35,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary)!important}
 .btn{box-shadow:0 6px 16px rgba(124,58,237,.3)!important}
 .btn.ghost{background:transparent!important;border-color:var(--line)!important;color:var(--ink2)!important;box-shadow:none!important}
 /* 顶栏 */
-.top{background:linear-gradient(180deg,rgba(15,10,30,.6),rgba(10,10,26,.6))!important;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)!important;color:var(--ink)}
+.wrap{max-width:760px;margin:0 auto;padding:14px 12px 40px;position:relative;z-index:1}
+.top{display:flex;align-items:center;gap:12px;padding:14px 4px 16px}
+.top .logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:900;font-family:Georgia,serif;flex-shrink:0;box-shadow:0 8px 22px rgba(124,58,237,.4)}
+.top .t1{font-size:17px;font-weight:900;color:#fff;letter-spacing:-.3px}
+.top .t2{font-size:9.5px;color:var(--ink3);margin-top:1px;letter-spacing:1px}
+.top .badge{margin-left:auto;font-size:10px;font-weight:800;padding:5px 12px;border-radius:9px;background:rgba(124,58,237,.2);color:#C084FC;border:1px solid rgba(124,58,237,.3);flex-shrink:0}
 .top .t2{color:var(--ink3)!important}
 .top .badge{background:rgba(124,58,237,.2)!important;color:#C084FC!important;border:1px solid rgba(124,58,237,.3)}
 /* 产品卡 */
