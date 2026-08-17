@@ -231,13 +231,20 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
       <div class="sb-mark">CF</div>
       <div>
         <div class="sb-t1">Crazy Friday</div>
-        <div class="sb-t2">疯狂星期五 · 总工作台</div>
+        <div class="sb-t2">疯狂星期五 · 一人公司 AI 生态</div>
       </div>
       <button class="sb-close" onclick="toggleSidebar()" title="关闭菜单"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="sb-body">
       <div class="sb-sec">
         <div class="sb-item" data-url="overview"><span class="ico">🏠</span><span class="nm">总览</span></div>
+      </div>
+      <div class="sb-sec">
+        <div class="sb-sec-t">品牌与愿景</div>
+        <div class="sb-item" data-url="brand.html"><span class="ico">🏷️</span><span class="nm">品牌名片</span><span class="badge">对外</span></div>
+        <div class="sb-item" data-url="cf.html"><span class="ico">🌐</span><span class="nm">AI时代生态蓝图</span></div>
+        <div class="sb-item" data-url="invest.html"><span class="ico">🖥️</span><span class="nm">路演大屏</span><span class="badge">融资</span></div>
+        <div class="sb-item" data-url="bp.html"><span class="ico">📄</span><span class="nm">商业计划书</span><span class="badge">BP</span></div>
       </div>
       <div class="sb-sec">
         <div class="sb-sec-t">业务产品</div>
@@ -272,12 +279,10 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
         <div class="sb-item" data-url="landing.html"><span class="ico">🎯</span><span class="nm">定制落地页</span></div>
         <div class="sb-item" data-url="hub.html"><span class="ico">🧭</span><span class="nm">生态入口 hub</span></div>
       </div>
-      <div class="sb-sec">
-        <div class="sb-sec-t">个人</div>
-        <div class="sb-item" data-url="workbench/index.html"><span class="ico">🦞</span><span class="nm">时铭工作台</span></div>
-      </div>
+      <!-- 对外品牌总台：不显示实名个人工作台 -->
     </div>
     <div class="sb-foot">
+      <div style="display:flex;align-items:center;gap:6px;font-size:9px;color:#8b93aa;margin-bottom:6px"><span class="sb-status-dot" style="width:6px;height:6px;border-radius:50%;background:#10B981;box-shadow:0 0 6px rgba(16,185,129,.8);display:inline-block"></span>Crazy Friday · 品牌总台 · 对外展示版</div>
       <div class="sb-status"><span class="dot"></span>实时同步 · 数据后台 v6.0</div>
       <div class="sb-ver">Crazy Friday © 2026</div>
     </div>
@@ -513,11 +518,17 @@ function renderOverview(){
       <div class="ov-hero-row">
         <div class="ov-hero-logo">CF</div>
         <div class="ov-hero-meta">
-          <div class="ov-hero-b">Crazy Friday · 6.0</div>
-          <div class="ov-hero-t">${greet}，欢迎回来 👋</div>
+          <div class="ov-hero-b">CRAZY FRIDAY · 一人公司 AI 生态</div>
+          <div class="ov-hero-t">一个人 + AI，就是一家公司</div>
         </div>
       </div>
       <div class="ov-hero-sub">统一管理所有业务产品、官网展示、变现生态 · <strong style="color:#fff">${totalProds} 个授权产品</strong> · <strong style="color:#fff">${INDUSTRIES.length} 个行业工作台</strong> · 数据实时同步</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1;margin-bottom:16px">
+        <span style="font-size:10px;font-weight:800;padding:5px 12px;border-radius:20px;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.35);color:#34D399">🚀 已上线产品</span>
+        <span style="font-size:10px;font-weight:800;padding:5px 12px;border-radius:20px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.35);color:#C084FC">🧩 36+ 行业模板</span>
+        <span style="font-size:10px;font-weight:800;padding:5px 12px;border-radius:20px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#FBBF24">⚡ 授权卖名额模式</span>
+        <span style="font-size:10px;font-weight:800;padding:5px 12px;border-radius:20px;background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.35);color:#F472B6">💰 变现闭环</span>
+      </div>
       <div class="ov-hero-stats">
         <div class="ov-hero-tag up"><span class="dot"></span>已售 <span class="v">${totalUsed}</span></div>
         <div class="ov-hero-tag"><span>累计营收</span><span class="v">¥${totalRev.toLocaleString()}</span></div>
