@@ -3,21 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0a1a">
+<meta name="theme-color" content="#F7F8FB">
 <meta name="description" content="Crazy Friday Skill Store · 把技能变成收入 · 你的知识就是产品">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="zh-CN">
 <title>Skill Store · 技能商店</title>
 <style>
+/* ===== Light Theme Override ===== */
+html,body{background:#F7F8FB !important;color:#1A1D29 !important}
+body::before{background-image:radial-gradient(rgba(91,91,214,.06) 1px,transparent 1px) !important;background-size:30px 30px !important;opacity:.5 !important}
+body::after{background:radial-gradient(ellipse,rgba(91,91,214,.08),transparent 70%) !important}
+
+.topbar{background:rgba(255,255,255,.95) !important;border-color:#E8EAEF !important}
+.back-btn{background:#fff !important;border-color:#E8EAEF !important;color:#5A6072 !important;box-shadow:var(--shadow) !important}
+.back-btn:active{background:#F7F8FB !important}
+.top-title h1{background:linear-gradient(135deg,#1A1D29,#5B5BD6 60%,#EC4899) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important}
+
+.hero{background:linear-gradient(140deg,rgba(91,91,214,.1),rgba(236,72,153,.05)) !important;border:1px solid #E8EAEF !important;box-shadow:var(--shadow-md) !important}
+.hero::before{background:rgba(91,91,214,.1) !important}
+.hero::after{background:rgba(236,72,153,.12) !important}
+.hero-tag{background:rgba(91,91,214,.08) !important;border-color:rgba(91,91,214,.25) !important;color:#5B5BD6 !important}
+.hero h2 em{color:#5B5BD6 !important;text-shadow:none !important}
+.hero-sub{color:#5A6072 !important}
+.kpi{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.kpi .num{color:#1A1D29 !important}
+.kpi .lbl{color:#5A6072 !important}
+
+.tabs{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.tab.active{box-shadow:0 4px 16px rgba(91,91,214,.3) !important}
+
+.card{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.card:hover{border-color:rgba(91,91,214,.35) !important;box-shadow:var(--shadow-md) !important}
+.card-icon{background:linear-gradient(140deg,rgba(91,91,214,.12),rgba(236,72,153,.12)) !important;border-color:rgba(91,91,214,.25) !important}
+.tag{background:rgba(91,91,214,.08) !important;color:#5B5BD6 !important;border-color:rgba(91,91,214,.25) !important}
+.tag.green{background:rgba(16,185,129,.08) !important;color:#059669 !important;border-color:rgba(16,185,129,.25) !important}
+.tag.pink{background:rgba(236,72,153,.08) !important;color:#DB2777 !important;border-color:rgba(236,72,153,.25) !important}
+.tag.amber{background:rgba(245,158,11,.08) !important;color:#B45309 !important;border-color:rgba(245,158,11,.25) !important}
+.price{background:linear-gradient(135deg,#EC4899,#5B5BD6) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important}
+.buy-btn{box-shadow:0 4px 14px rgba(91,91,214,.3) !important}
+.buy-btn.sold{background:#F7F8FB !important;color:#C5C9D4 !important}
+
+.add-btn{background:rgba(91,91,214,.08) !important;border-color:rgba(91,91,214,.3) !important;color:#5B5BD6 !important}
+.add-btn:active{background:rgba(91,91,214,.15) !important}
+.empty-box{border-color:#DFE2E9 !important;background:#fff !important}
+.empty-box p{color:#9298AB !important}
+.mine-item{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.mine-item .mi-icon{background:rgba(91,91,214,.1) !important}
+.mine-item .mi-price{color:#DB2777 !important}
+
+.sheet{background:#fff !important;color:#1A1D29 !important;border-color:#DFE2E9 !important}
+.sheet-handle{background:#DFE2E9 !important}
+.sheet-item{background:#F7F8FB !important;border-color:#E8EAEF !important}
+.sheet-item .si-icon{background:linear-gradient(140deg,rgba(91,91,214,.12),rgba(236,72,153,.12)) !important}
+.sheet-item .si-price{background:linear-gradient(135deg,#EC4899,#5B5BD6) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important}
+.cancel-btn{background:#F7F8FB !important;color:#5A6072 !important;border-color:#DFE2E9 !important}
+.form-row input,.form-row textarea,.form-row select{background:#F7F8FB !important;border-color:#E8EAEF !important;color:#1A1D29 !important}
+.form-row input:focus,.form-row textarea:focus{border-color:rgba(91,91,214,.5) !important;background:#fff !important}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0a0a1a;--bg2:#110820;--bg3:#1a0d2e;
-  --ink:#fff;--ink2:#d8dae8;--ink3:#a0a4b8;--ink4:#6d7088;
-  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
-  --primary:#7C3AED;--primary2:#A855F7;--purple:#C084FC;
-  --pink:#EC4899;--pink2:#F472B6;--teal:#5EEAD4;
+  --bg:#F7F8FB;--bg2:#EEF0F5;--bg3:#EEF0F5;
+  --ink:#1A1D29;--ink2:#5A6072;--ink3:#9298AB;--ink4:#C5C9D4;
+  --line:#E8EAEF;--line2:#DFE2E9;
+  --primary:#5B5BD6;--primary2:#7C6FF0;--purple:#8B5CF6;
+  --pink:#EC4899;--pink2:#EC4899;--teal:#0D9488;
   --amber:#F59E0B;--green:#10B981;
-  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+  --grad:linear-gradient(135deg,#5B5BD6,#8B5CF6 50%,#EC4899);
   --safe-t:env(safe-area-inset-top);--safe-b:env(safe-area-inset-bottom);
 }
 html,body{background:var(--bg);color:var(--ink);overflow-x:hidden}
