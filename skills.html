@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a1a">
+<meta name="description" content="Crazy Friday Skill Store · 把技能变成收入 · 你的知识就是产品">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="zh-CN">
+<title>Skill Store · 技能商店</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0a1a;--bg2:#110820;--bg3:#1a0d2e;
+  --ink:#fff;--ink2:#d8dae8;--ink3:#a0a4b8;--ink4:#6d7088;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --primary:#7C3AED;--primary2:#A855F7;--purple:#C084FC;
+  --pink:#EC4899;--pink2:#F472B6;--teal:#5EEAD4;
+  --amber:#F59E0B;--green:#10B981;
+  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+  --safe-t:env(safe-area-inset-top);--safe-b:env(safe-area-inset-bottom);
+}
+html,body{background:var(--bg);color:var(--ink);overflow-x:hidden}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"PingFang SC","Microsoft YaHei","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;position:relative;
+}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(rgba(168,85,247,.13) 1px,transparent 1px);background-size:30px 30px;opacity:.5}
+body::after{content:'';position:fixed;top:-220px;left:50%;transform:translateX(-50%);width:780px;height:560px;border-radius:50%;background:radial-gradient(ellipse,rgba(168,85,247,.3),transparent 70%);pointer-events:none;z-index:0}
+
+.page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 18px calc(40px + var(--safe-b));padding-top:var(--safe-t)}
+
+/* ============ 顶栏 ============ */
+.topbar{
+  position:sticky;top:0;z-index:30;margin:0 -18px;padding:14px 18px;
+  background:rgba(10,10,26,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;
+}
+.back-btn{
+  width:38px;height:38px;border-radius:12px;flex-shrink:0;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:16px;
+  transition:background .15s,transform .15s;
+}
+.back-btn:active{transform:scale(.92);background:rgba(255,255,255,.12)}
+.top-title{flex:1;min-width:0}
+.top-title h1{font-family:Georgia,"Times New Roman",serif;font-size:18px;font-weight:900;letter-spacing:-.3px;background:linear-gradient(135deg,#fff,#C084FC 60%,#F472B6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-title p{font-size:11px;color:var(--ink3);letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;overflow:hidden;border-radius:22px;margin-top:18px;
+  background:linear-gradient(140deg,rgba(124,58,237,.9),rgba(236,72,153,.85));
+  padding:26px 22px 22px;box-shadow:0 12px 40px rgba(124,58,237,.35);
+}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.14);filter:blur(40px)}
+.hero::after{content:'';position:absolute;bottom:-70px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(236,72,153,.4);filter:blur(46px)}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;position:relative;z-index:1;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;padding:4px 12px;font-size:11px;font-weight:700;color:#fff;letter-spacing:.5px;
+}
+.hero h2{
+  position:relative;z-index:1;font-family:Georgia,"Times New Roman",serif;
+  font-size:24px;font-weight:900;line-height:1.25;margin-top:12px;letter-spacing:-.5px;
+}
+.hero h2 em{font-style:normal;color:#ffe9f5;text-shadow:0 2px 14px rgba(255,255,255,.35)}
+.hero-sub{position:relative;z-index:1;margin-top:6px;font-size:12.5px;color:rgba(255,255,255,.85)}
+
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;position:relative;z-index:1}
+.kpi{background:rgba(10,10,26,.32);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:10px 8px;text-align:center;backdrop-filter:blur(8px)}
+.kpi .num{font-family:Georgia,serif;font-size:20px;font-weight:900;color:#fff;line-height:1.1}
+.kpi .lbl{font-size:10.5px;color:rgba(255,255,255,.78);margin-top:3px;letter-spacing:.4px}
+
+/* ============ Tabs ============ */
+.tabs{display:flex;gap:8px;margin:20px 0 16px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:5px}
+.tab{
+  flex:1;min-height:44px;border-radius:10px;border:none;background:transparent;cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:600;color:var(--ink3);
+  display:flex;align-items:center;justify-content:center;gap:6px;transition:all .18s;
+}
+.tab.active{background:var(--grad);color:#fff;box-shadow:0 4px 16px rgba(168,85,247,.4)}
+.tab:active{transform:scale(.97)}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:2px 0 12px}
+.section-title h3{font-family:Georgia,serif;font-size:15px;font-weight:800;color:var(--ink)}
+.section-title span{font-size:11.5px;color:var(--ink3)}
+
+/* ============ 技能卡片 ============ */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{
+  position:relative;border-radius:18px;padding:16px;cursor:pointer;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.028));
+  border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:transform .16s,border-color .16s,box-shadow .16s;
+}
+.card:hover{transform:translateY(-2px);border-color:rgba(168,85,247,.45);box-shadow:0 10px 30px rgba(124,58,237,.22)}
+.card:active{transform:scale(.97)}
+.card-icon{
+  width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;
+  background:linear-gradient(140deg,rgba(124,58,237,.25),rgba(236,72,153,.25));border:1px solid rgba(168,85,247,.35);
+}
+.card h4{font-family:Georgia,serif;font-size:15px;font-weight:800;margin-top:11px;line-height:1.3}
+.card .desc{font-size:12px;color:var(--ink3);margin-top:5px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px}
+.card-meta{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:700;letter-spacing:.4px;padding:3px 9px;border-radius:999px;background:rgba(168,85,247,.14);color:var(--purple);border:1px solid rgba(168,85,247,.3)}
+.tag.green{background:rgba(16,185,129,.12);color:var(--teal);border-color:rgba(94,234,212,.3)}
+.tag.pink{background:rgba(236,72,153,.12);color:var(--pink2);border-color:rgba(236,72,153,.3)}
+.tag.amber{background:rgba(245,158,11,.12);color:var(--amber);border-color:rgba(245,158,11,.3)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+.price{font-family:Georgia,serif;font-size:17px;font-weight:900;background:linear-gradient(135deg,#F472B6,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.price small{font-size:11px;font-weight:600;-webkit-text-fill-color:var(--ink3);margin-right:2px}
+.sales{font-size:10.5px;color:var(--ink4)}
+.buy-btn{
+  min-height:38px;padding:0 14px;border-radius:11px;border:none;cursor:pointer;
+  background:var(--grad);color:#fff;font-family:inherit;font-size:12.5px;font-weight:700;
+  box-shadow:0 4px 14px rgba(168,85,247,.4);transition:transform .15s,box-shadow .15s;
+}
+.buy-btn:active{transform:scale(.94)}
+.buy-btn.sold{background:rgba(255,255,255,.08);color:var(--ink4);box-shadow:none;cursor:default}
+
+/* ============ 我的上架 ============ */
+.mine-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mine-head span{font-size:12px;color:var(--ink3)}
+.add-btn{
+  min-height:44px;padding:0 16px;border-radius:12px;border:none;cursor:pointer;
+  background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.4);color:var(--purple);
+  font-family:inherit;font-size:13px;font-weight:700;transition:all .15s;
+}
+.add-btn:active{transform:scale(.95);background:rgba(168,85,247,.28)}
+.empty-box{
+  border:1px dashed rgba(255,255,255,.18);border-radius:18px;padding:38px 20px;text-align:center;
+  background:rgba(255,255,255,.02);
+}
+.empty-box .e-emoji{font-size:38px;line-height:1}
+.empty-box p{font-size:13px;color:var(--ink3);margin-top:12px}
+.mine-item{
+  display:flex;align-items:center;gap:12px;border-radius:16px;padding:13px 14px;margin-bottom:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid var(--line);backdrop-filter:blur(10px);
+}
+.mine-item .mi-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;background:rgba(124,58,237,.16);flex-shrink:0}
+.mine-item .mi-body{flex:1;min-width:0}
+.mine-item .mi-body h5{font-size:13.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mine-item .mi-body p{font-size:11px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mine-item .mi-right{text-align:right;flex-shrink:0}
+.mine-item .mi-price{font-family:Georgia,serif;font-size:14.5px;font-weight:900;color:var(--pink2)}
+.mine-item .mi-sales{font-size:10.5px;color:var(--ink4);margin-top:2px}
+
+/* ============ Sheet & Toast ============ */
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(5,5,15,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .22s}
+.overlay.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;max-width:480px;margin:0 auto;
+  background:linear-gradient(180deg,#17102e,#110820);border:1px solid var(--line2);border-bottom:none;
+  border-radius:24px 24px 0 0;padding:12px 20px calc(22px + var(--safe-b));
+  transform:translateY(105%);transition:transform .28s cubic-bezier(.32,.72,.3,1);
+  box-shadow:0 -16px 60px rgba(0,0,0,.6);
+}
+.sheet.show{transform:translateY(0)}
+.sheet-handle{width:44px;height:5px;border-radius:99px;background:rgba(255,255,255,.2);margin:0 auto 16px}
+.sheet h3{font-family:Georgia,serif;font-size:17px;font-weight:900;text-align:center}
+.sheet-sub{text-align:center;font-size:12px;color:var(--ink3);margin-top:4px}
+.sheet-item{display:flex;gap:12px;align-items:center;margin-top:16px;padding:13px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.sheet-item .si-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:linear-gradient(140deg,rgba(124,58,237,.28),rgba(236,72,153,.28));flex-shrink:0}
+.sheet-item .si-name{font-size:14px;font-weight:800}
+.sheet-item .si-desc{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.sheet-item .si-price{margin-left:auto;font-family:Georgia,serif;font-size:18px;font-weight:900;background:linear-gradient(135deg,#F472B6,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0}
+.sheet-btns{display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-top:18px}
+.sheet-btns button{min-height:48px;border-radius:14px;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;transition:transform .15s}
+.sheet-btns button:active{transform:scale(.96)}
+.cancel-btn{background:rgba(255,255,255,.08);color:var(--ink2);border:1px solid var(--line2)!important}
+.confirm-btn{background:var(--grad);color:#fff;box-shadow:0 6px 20px rgba(168,85,247,.45)}
+
+/* 表单 sheet */
+.form-row{margin-top:14px}
+.form-row label{display:block;font-size:11px;color:var(--ink3);font-weight:700;letter-spacing:.5px;margin-bottom:6px}
+.form-row input,.form-row textarea,.form-row select{
+  width:100%;min-height:46px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid var(--line2);
+  color:var(--ink);font-family:inherit;font-size:14px;padding:0 14px;outline:none;transition:border-color .15s;
+}
+.form-row textarea{min-height:84px;padding:12px 14px;resize:none;line-height:1.55}
+.form-row input:focus,.form-row textarea:focus{border-color:rgba(168,85,247,.6);background:rgba(124,58,237,.08)}
+.form-row .char-hint{font-size:10px;color:var(--ink4);text-align:right;margin-top:4px}
+.form-grid{display:grid;grid-template-columns:56px 1fr;gap:10px}
+.form-grid select{text-align:center}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(30px + var(--safe-b));transform:translateX(-50%) translateY(20px);
+  z-index:90;background:rgba(16,16,40,.94);border:1px solid var(--line2);color:var(--ink);
+  padding:12px 20px;border-radius:999px;font-size:13px;font-weight:600;
+  box-shadow:0 10px 34px rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:all .25s;max-width:86vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.green{border-color:rgba(16,185,129,.5)}
+
+/* ============ 响应式 ============ */
+@media (max-width:380px){
+  .grid{grid-template-columns:1fr}
+  .kpis{gap:8px}
+  .kpi .num{font-size:17px}
+  .hero{padding:22px 18px 18px}
+  .hero h2{font-size:21px}
+}
+@media (min-width:760px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 顶栏 -->
+  <div class="topbar">
+    <button class="back-btn" onclick="history.back()" aria-label="返回">←</button>
+    <div class="top-title">
+      <h1>✨ Skill Store</h1>
+      <p>技能 · 课程 · 模板商城</p>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">💎 Crazy Friday 技能商店</div>
+    <h2>把技能变成收入<br><em>你的知识就是产品</em></h2>
+    <p class="hero-sub">上架你的技能 → 用户购买 → 收入入账</p>
+    <div class="kpis">
+      <div class="kpi"><div class="num" id="kpiTotal">0</div><div class="lbl">全部技能</div></div>
+      <div class="kpi"><div class="num" id="kpiSold">0</div><div class="lbl">已售</div></div>
+      <div class="kpi"><div class="num" id="kpiRevenue">¥0</div><div class="lbl">累计收入</div></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" id="tabShop" onclick="switchTab('shop')">🛍️ 全部技能</button>
+    <button class="tab" id="tabMine" onclick="switchTab('mine')">📤 我的上架</button>
+  </div>
+
+  <!-- 全部技能 -->
+  <div id="viewShop">
+    <div class="section-title"><h3>全部技能</h3><span id="shopCount"></span></div>
+    <div class="grid" id="skillGrid"></div>
+  </div>
+
+  <!-- 我的上架 -->
+  <div id="viewMine" style="display:none">
+    <div class="mine-head">
+      <span>我上架了 <b id="mineCount">0</b> 个技能</span>
+      <button class="add-btn" onclick="openForm()">＋ 上架新技能</button>
+    </div>
+    <div id="mineList"></div>
+  </div>
+
+</div>
+
+<!-- 购买确认 sheet -->
+<div class="overlay" id="overlayBuy" onclick="closeSheet('sheetBuy')"></div>
+<div class="sheet" id="sheetBuy">
+  <div class="sheet-handle"></div>
+  <h3>确认购买</h3>
+  <p class="sheet-sub">购买后技能即刻生效，可在订单中查看</p>
+  <div class="sheet-item" id="buyPreview"></div>
+  <div class="sheet-btns">
+    <button class="cancel-btn" onclick="closeSheet('sheetBuy')">取消</button>
+    <button class="confirm-btn" onclick="confirmBuy()">确认支付</button>
+  </div>
+</div>
+
+<!-- 上架表单 sheet -->
+<div class="overlay" id="overlayForm" onclick="closeSheet('sheetForm')"></div>
+<div class="sheet" id="sheetForm">
+  <div class="sheet-handle"></div>
+  <h3>📤 上架新技能</h3>
+  <p class="sheet-sub">让更多人买到你的知识</p>
+  <div class="form-row">
+    <label>技能名称</label>
+    <input id="fName" maxlength="24" placeholder="例如：ChatGPT 提示词大师课">
+  </div>
+  <div class="form-row">
+    <label>一句话描述</label>
+    <textarea id="fDesc" maxlength="60" placeholder="用一句话讲清楚这个技能能帮买家解决什么问题"></textarea>
+    <div class="char-hint"><span id="fDescCount">0</span>/60</div>
+  </div>
+  <div class="form-row">
+    <label>价格 & 标签</label>
+    <div class="form-grid">
+      <input id="fPrice" type="number" min="1" max="99999" placeholder="¥" inputmode="numeric">
+      <select id="fTag">
+        <option value="Prompt">🧠 Prompt</option>
+        <option value="自动化">⚙️ 自动化</option>
+        <option value="设计">🎨 设计</option>
+        <option value="写作">✍️ 写作</option>
+        <option value="课程">📚 课程</option>
+        <option value="模板">📄 模板</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <label>图标（任选一个 emoji）</label>
+    <input id="fIcon" maxlength="4" placeholder="如 🚀 💡 🧩 🛠️">
+  </div>
+  <div class="sheet-btns">
+    <button class="cancel-btn" onclick="closeSheet('sheetForm')">取消</button>
+    <button class="confirm-btn" onclick="submitSkill()">确认上架</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==================== 数据层 ==================== */
+const LS_SKILLS='cf_skills';
+const LS_PURCHASES='cf_purchases';
+
+const SEED=[
+  {id:'s1',name:'Prompt 提示词工程',desc:'100 个拿来即用的高转化提示词模板，覆盖文案、运营、营销全场景',price:19.9,icon:'🧠',tag:'Prompt',sales:128,created:Date.now()-8.64e7*30},
+  {id:'s2',name:'小红书爆款标题库',desc:'7 大热门赛道 × 300 条爆款标题公式，轻松写出高点击标题',price:9.9,icon:'🔥',tag:'写作',sales:256,created:Date.now()-8.64e7*27},
+  {id:'s3',name:'AI 自动化工作流',desc:'n8n / 微信机器人 / 定时任务全套搭建教程，一个人干一个团队的活',price:39.9,icon:'⚙️',tag:'自动化',sales:64,created:Date.now()-8.64e7*24},
+  {id:'s4',name:'朋友圈人设朋友圈模板',desc:'30 天朋友圈运营日历 + 文案模板，打造有信任感的人设',price:15.9,icon:'✍️',tag:'写作',sales:189,created:Date.now()-8.64e7*21},
+  {id:'s5',name:'AI 海报设计速成',desc:'用 AI 工具 10 分钟做出专业级海报，附 50 个设计关键词',price:29.9,icon:'🎨',tag:'设计',sales:42,created:Date.now()-8.64e7*18},
+  {id:'s6',name:'个人 IP 定位课',desc:'从 0 找到你的变现方向：定位 → 产品 → 流量 → 转化全链路',price:59.9,icon:'🚀',tag:'课程',sales:31,created:Date.now()-8.64e7*15},
+  {id:'s7',name:'电商详情页文案模板',desc:'高转化商品详情页写作框架 + 20 个行业案例拆解',price:12.9,icon:'🛒',tag:'模板',sales:97,created:Date.now()-8.64e7*12},
+  {id:'s8',name:'数字人直播起号手册',desc:'从选品到话术到排班，一套数字人直播完整起号 SOP',price:49.9,icon:'📺',tag:'课程',sales:18,created:Date.now()-8.64e7*9}
+];
+
+function loadSkills(){
+  try{
+    const raw=localStorage.getItem(LS_SKILLS);
+    if(raw){const arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length)return arr;}
+  }catch(e){}
+  localStorage.setItem(LS_SKILLS,JSON.stringify(SEED));
+  return SEED.slice();
+}
+function saveSkills(list){localStorage.setItem(LS_SKILLS,JSON.stringify(list))}
+function loadPurchases(){
+  try{
+    const raw=localStorage.getItem(LS_PURCHASES);
+    if(raw){const arr=JSON.parse(raw);if(Array.isArray(arr))return arr;}
+  }catch(e){}
+  return [];
+}
+function savePurchases(list){localStorage.setItem(LS_PURCHASES,JSON.stringify(list))}
+
+/* ==================== 状态 ==================== */
+let skills=loadSkills();
+let purchases=loadPurchases();
+let pendingSkill=null;   // 待购买的技能
+const TAG_CLASS={Prompt:'',自动化:'green',设计:'pink',写作:'amber',课程:'',模板:''};
+
+/* ==================== 渲染 ==================== */
+function money(n){return '¥'+Number(n).toFixed(2).replace(/\.00$/,'')}
+
+function renderKpis(){
+  const total=skills.length;
+  const sold=skills.reduce((a,s)=>a+(s.sales||0),0);
+  const revenue=skills.reduce((a,s)=>a+((s.sales||0)*Number(s.price||0)),0);
+  document.getElementById('kpiTotal').textContent=total;
+  document.getElementById('kpiSold').textContent=sold;
+  document.getElementById('kpiRevenue').textContent='¥'+Math.round(revenue);
+}
+
+function skillCard(s){
+  const tc=TAG_CLASS[s.tag]||'';
+  return `<div class="card" onclick="openBuy('${s.id}')">
+    <div class="card-icon">${s.icon||'💎'}</div>
+    <h4>${escapeHtml(s.name)}</h4>
+    <p class="desc">${escapeHtml(s.desc)}</p>
+    <div class="card-meta">
+      <span class="tag ${tc}">${escapeHtml(s.tag||'技能')}</span>
+      <span class="sales">🔥 已售 ${s.sales||0}</span>
+    </div>
+    <div class="card-foot">
+      <div class="price"><small>¥</small>${Number(s.price).toFixed(2).replace(/\.00$/,'')}</div>
+      <button class="buy-btn" onclick="event.stopPropagation();openBuy('${s.id}')">购买</button>
+    </div>
+  </div>`;
+}
+
+function renderShop(){
+  document.getElementById('shopCount').textContent='共 '+skills.length+' 个技能';
+  document.getElementById('skillGrid').innerHTML=skills.length?skills.map(skillCard).join(''):'<div class="empty-box"><div class="e-emoji">🛒</div><p>还没有技能上架</p></div>';
+}
+
+function renderMine(){
+  document.getElementById('mineCount').textContent=skills.length;
+  const el=document.getElementById('mineList');
+  if(!skills.length){
+    el.innerHTML='<div class="empty-box"><div class="e-emoji">📤</div><p>还没有上架技能，点击右上角开始吧</p></div>';
+    return;
+  }
+  el.innerHTML=skills.map(s=>`<div class="mine-item">
+    <div class="mi-icon">${s.icon||'💎'}</div>
+    <div class="mi-body">
+      <h5>${escapeHtml(s.name)}</h5>
+      <p>${escapeHtml(s.desc)}</p>
+    </div>
+    <div class="mi-right">
+      <div class="mi-price">${money(s.price)}</div>
+      <div class="mi-sales">已售 ${s.sales||0}</div>
+    </div>
+  </div>`).join('');
+}
+
+function renderAll(){renderKpis();renderShop();renderMine()}
+
+function escapeHtml(str){
+  return String(str==null?'':str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ==================== 购买流程 ==================== */
+function openBuy(id){
+  const s=skills.find(x=>x.id===id);
+  if(!s)return;
+  pendingSkill=s;
+  document.getElementById('buyPreview').innerHTML=`
+    <div class="si-icon">${s.icon||'💎'}</div>
+    <div style="min-width:0">
+      <div class="si-name">${escapeHtml(s.name)}</div>
+      <div class="si-desc">${escapeHtml(s.desc)}</div>
+    </div>
+    <div class="si-price">${money(s.price)}</div>`;
+  showSheet('sheetBuy');
+}
+
+function confirmBuy(){
+  if(!pendingSkill)return;
+  const s=pendingSkill;
+  s.sales=(s.sales||0)+1;
+  purchases.unshift({
+    id:'p'+Date.now(),
+    skillId:s.id,
+    name:s.name,
+    price:Number(s.price),
+    time:Date.now()
+  });
+  saveSkills(skills);savePurchases(purchases);
+  pendingSkill=null;
+  closeSheet('sheetBuy');
+  renderAll();
+  toast('✅ 购买成功，已存入订单！','green');
+}
+
+/* ==================== 我的上架 ==================== */
+function openForm(){
+  document.getElementById('fName').value='';
+  document.getElementById('fDesc').value='';
+  document.getElementById('fPrice').value='';
+  document.getElementById('fTag').value='Prompt';
+  document.getElementById('fIcon').value='💡';
+  document.getElementById('fDescCount').textContent='0';
+  showSheet('sheetForm');
+}
+
+function submitSkill(){
+  const name=document.getElementById('fName').value.trim();
+  const desc=document.getElementById('fDesc').value.trim();
+  const price=parseFloat(document.getElementById('fPrice').value);
+  const tag=document.getElementById('fTag').value;
+  const icon=document.getElementById('fIcon').value.trim()||'💡';
+
+  if(!name){toast('⚠️ 请填写技能名称');return}
+  if(!desc){toast('⚠️ 请填写技能描述');return}
+  if(!price||isNaN(price)||price<=0){toast('⚠️ 请输入有效价格');return}
+
+  skills.unshift({
+    id:'s'+Date.now(),
+    name:name.slice(0,24),
+    desc:desc.slice(0,60),
+    price:Math.round(price*100)/100,
+    icon:icon,
+    tag:tag,
+    sales:0,
+    created:Date.now()
+  });
+  saveSkills(skills);
+  closeSheet('sheetForm');
+  renderAll();
+  toast('🎉 技能已上架！','green');
+}
+
+/* ==================== Tab / Sheet / Toast ==================== */
+function switchTab(tab){
+  const isShop=tab==='shop';
+  document.getElementById('tabShop').className='tab'+(isShop?' active':'');
+  document.getElementById('tabMine').className='tab'+(isShop?'':' active');
+  document.getElementById('viewShop').style.display=isShop?'':'none';
+  document.getElementById('viewMine').style.display=isShop?'none':'';
+}
+
+function showSheet(id){
+  const overlay=id==='sheetBuy'?'overlayBuy':'overlayForm';
+  document.getElementById(id).classList.add('show');
+  document.getElementById(overlay).classList.add('show');
+}
+function closeSheet(id){
+  const overlay=id==='sheetBuy'?'overlayBuy':'overlayForm';
+  document.getElementById(id).classList.remove('show');
+  document.getElementById(overlay).classList.remove('show');
+}
+
+let toastTimer=null;
+function toast(msg,type){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className='toast show'+(type==='green'?' green':'');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+/* 描述字数提示 */
+document.getElementById('fDesc').addEventListener('input',function(){
+  document.getElementById('fDescCount').textContent=this.value.length;
+});
+
+renderAll();
+</script>
+</body>
+</html>
