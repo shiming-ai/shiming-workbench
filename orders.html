@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a1a">
+<meta name="description" content="Crazy Friday · 接单工坊 · 接外包订单赚钱">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="zh-CN">
+<title>🤝 接单工坊 · Crazy Friday</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0a1a;
+  --card:rgba(255,255,255,.05);
+  --bd:rgba(255,255,255,.09);
+  --bd2:rgba(255,255,255,.14);
+  --text:#f4f1ff;
+  --muted:#9d94c0;
+  --pur:#7C3AED;
+  --pink:#EC4899;
+  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+  --green:#10B981;
+  --amber:#F59E0B;
+  --red:#EF4444;
+  --safe-t:env(safe-area-inset-top);
+  --safe-b:env(safe-area-inset-bottom);
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(rgba(124,58,237,.26) 1.5px,transparent 1.5px);
+  background-size:26px 26px;
+  color:var(--text);
+  font-family:Georgia,"Songti SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  min-height:100vh;
+  padding:var(--safe-t) 16px calc(var(--safe-b) + 44px);
+  position:relative;
+  line-height:1.6;
+}
+/* 顶部紫色光晕 + 左下粉光 */
+body::before{
+  content:'';position:fixed;top:-220px;left:50%;transform:translateX(-50%);
+  width:760px;height:460px;
+  background:radial-gradient(ellipse at center,rgba(124,58,237,.38),transparent 65%);
+  filter:blur(34px);pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;bottom:-260px;right:-180px;
+  width:560px;height:420px;
+  background:radial-gradient(ellipse at center,rgba(236,72,153,.18),transparent 65%);
+  filter:blur(40px);pointer-events:none;z-index:0;
+}
+main{max-width:900px;margin:0 auto;position:relative;z-index:1}
+
+/* ===== 顶栏 ===== */
+.topbar{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:22px 4px 10px;position:relative;z-index:1}
+.back{
+  background:rgba(255,255,255,.06);border:1px solid var(--bd);color:var(--text);
+  padding:9px 15px;border-radius:999px;font-size:14px;cursor:pointer;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:.2s;font-family:inherit;flex:none;
+}
+.back:hover{background:rgba(255,255,255,.12);transform:translateX(-2px)}
+.title-wrap{flex:1;min-width:0}
+.logo{
+  font-size:26px;font-weight:700;letter-spacing:.5px;
+  background:linear-gradient(120deg,#c4b5fd,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{font-size:13px;color:var(--muted);margin-top:2px}
+.tag{
+  font-size:12px;color:#c4b5fd;border:1px solid rgba(196,181,253,.4);
+  padding:3px 10px;border-radius:999px;background:rgba(124,58,237,.15);flex:none;
+}
+
+/* ===== Hero ===== */
+.hero{
+  background:linear-gradient(150deg,rgba(124,58,237,.34),rgba(236,72,153,.16));
+  border-radius:26px;padding:30px 26px 24px;border:1px solid var(--bd);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  position:relative;overflow:hidden;animation:rise .5s ease both;
+}
+.hero::before{
+  content:'';position:absolute;top:0;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+}
+.hero-label{font-size:13px;color:#c8bff2;letter-spacing:1px}
+.hero-title{
+  font-size:30px;font-weight:700;line-height:1.25;margin:6px 0 4px;
+  font-family:Georgia,serif;
+  background:linear-gradient(135deg,#fff,#d8b4fe 45%,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.kpi{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:14px 12px;text-align:center;min-width:0;
+}
+.kpi-ic{
+  width:36px;height:36px;border-radius:12px;margin:0 auto 8px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--grad);
+  box-shadow:0 4px 14px rgba(168,85,247,.35);
+}
+.kpi b{
+  display:block;font-size:20px;font-family:Georgia,serif;
+  background:linear-gradient(120deg,#f0e9ff,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.kpi span{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+
+/* ===== Tabs ===== */
+.tabs{
+  display:flex;gap:8px;margin:20px 0 14px;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd);
+  border-radius:16px;padding:5px;position:sticky;top:10px;z-index:20;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.tab{
+  flex:1;border:none;background:transparent;color:var(--muted);
+  font-size:14px;font-weight:600;font-family:inherit;
+  padding:11px 8px;border-radius:12px;cursor:pointer;transition:.2s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  min-height:44px;
+}
+.tab.on{
+  background:var(--grad);color:#fff;
+  box-shadow:0 4px 16px rgba(168,85,247,.4);
+}
+
+/* ===== 需求卡片 ===== */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.oc{
+  position:relative;background:var(--card);border:1px solid var(--bd);
+  border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .15s,border-color .15s;animation:rise .45s ease both;
+}
+.oc::before{
+  content:'';position:absolute;top:0;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+}
+.oc:active{transform:scale(.985)}
+.oc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tag-badge{
+  font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;flex:none;
+  border:1px solid rgba(196,181,253,.4);background:rgba(124,58,237,.15);color:#c4b5fd;
+}
+.tag-badge.t-dev{background:rgba(59,130,246,.16);border-color:rgba(96,165,250,.4);color:#93c5fd}
+.tag-badge.t-video{background:rgba(236,72,153,.16);border-color:rgba(249,168,212,.4);color:#f9a8d4}
+.tag-badge.t-design{background:rgba(245,158,11,.14);border-color:rgba(251,191,36,.4);color:#fcd34d}
+.tag-badge.t-copy{background:rgba(16,185,129,.14);border-color:rgba(110,231,183,.4);color:#6ee7b7}
+.oc-id{font-size:10.5px;color:var(--muted);letter-spacing:.4px}
+.oc-title{font-size:16px;font-weight:700;line-height:1.35;font-family:Georgia,serif}
+.oc-desc{
+  font-size:12.5px;color:var(--muted);line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.oc-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.oc-budget{
+  font-size:15px;font-weight:700;font-family:Georgia,serif;
+  background:linear-gradient(120deg,#f0e9ff,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.oc-btn{
+  margin-top:2px;width:100%;min-height:44px;border:none;border-radius:13px;cursor:pointer;
+  background:var(--grad);color:#fff;font-size:14px;font-weight:600;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 4px 16px rgba(168,85,247,.35);
+  transition:transform .15s,opacity .2s;
+}
+.oc-btn:hover{transform:translateY(-1px)}
+.oc-btn:active{transform:scale(.97)}
+.oc-btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+.oc-btn.done{background:rgba(16,185,129,.16);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;box-shadow:none}
+.oc-btn.wait{background:rgba(245,158,11,.14);border:1px solid rgba(251,191,36,.4);color:#fcd34d;box-shadow:none}
+
+/* ===== 我的接单 ===== */
+.filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.fbtn{
+  border:1px solid var(--bd);background:rgba(255,255,255,.04);color:var(--muted);
+  font-size:12.5px;font-family:inherit;padding:8px 14px;border-radius:999px;cursor:pointer;transition:.2s;min-height:40px;
+}
+.fbtn.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(168,85,247,.35)}
+.my-list{display:flex;flex-direction:column;gap:12px}
+.my-oc{
+  background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;gap:10px;animation:rise .4s ease both;
+}
+.my-oc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.my-oc-title{font-size:15px;font-weight:700;font-family:Georgia,serif;line-height:1.35}
+.st-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;flex:none;white-space:nowrap}
+.st-accepted{background:rgba(245,158,11,.14);border:1px solid rgba(251,191,36,.4);color:#fcd34d}
+.st-done{background:rgba(16,185,129,.14);border:1px solid rgba(110,231,183,.4);color:#6ee7b7}
+.st-cancelled{background:rgba(239,68,68,.12);border:1px solid rgba(248,113,113,.4);color:#fca5a5}
+.my-oc-meta{display:flex;gap:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.my-oc-meta b{color:#f0e9ff;font-family:Georgia,serif}
+.progress{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.progress i{display:block;height:100%;border-radius:99px;background:var(--grad);transition:width .4s ease}
+.my-oc-actions{display:flex;gap:8px;margin-top:2px}
+.act-btn{
+  flex:1;min-height:44px;border-radius:12px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:5px;transition:.15s;border:1px solid var(--bd2);
+}
+.act-btn:active{transform:scale(.97)}
+.act-done{background:rgba(16,185,129,.14);color:#6ee7b7;border-color:rgba(16,185,129,.4)}
+.act-done:hover{background:rgba(16,185,129,.24)}
+.act-cancel{background:rgba(239,68,68,.1);color:#fca5a5;border-color:rgba(248,113,113,.35)}
+.act-cancel:hover{background:rgba(239,68,68,.2)}
+
+/* ===== Sheet ===== */
+.sheet-mask{
+  position:fixed;inset:0;background:rgba(4,4,16,.66);z-index:60;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.sheet-mask.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:linear-gradient(180deg,#17102e,#0d0a20);
+  border-top:1px solid var(--bd2);border-radius:24px 24px 0 0;
+  padding:14px 20px calc(var(--safe-b) + 22px);
+  transform:translateY(105%);transition:transform .3s cubic-bezier(.32,.72,.3,1);
+  max-height:84vh;overflow-y:auto;
+}
+.sheet.show{transform:none}
+.sheet-grab{width:40px;height:4px;border-radius:99px;background:rgba(255,255,255,.22);margin:0 auto 16px}
+.sheet-title{font-size:19px;font-weight:700;font-family:Georgia,serif;margin-bottom:4px}
+.sheet-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.sheet-info{
+  background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px;
+  display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);
+}
+.sheet-info b{color:#f0e9ff;font-family:Georgia,serif}
+.sheet-field{font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.sheet-field b{color:var(--text)}
+.sheet input[type=number],.sheet select{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid var(--bd2);
+  border-radius:12px;padding:13px 14px;color:var(--text);font-size:15px;font-family:inherit;
+  outline:none;transition:.2s;min-height:46px;
+}
+.sheet input:focus,.sheet select:focus{border-color:rgba(168,85,247,.6);background:rgba(124,58,237,.07)}
+.sheet input::placeholder{color:rgba(157,148,192,.7)}
+.sheet-actions{display:flex;gap:10px;margin-top:16px}
+.sheet-btn{
+  flex:1;min-height:48px;border-radius:14px;border:none;cursor:pointer;
+  font-size:15px;font-weight:600;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s;
+}
+.sheet-btn:active{transform:scale(.97)}
+.sheet-cancel{background:rgba(255,255,255,.07);border:1px solid var(--bd2);color:var(--muted)}
+.sheet-confirm{background:var(--grad);color:#fff;box-shadow:0 4px 18px rgba(168,85,247,.4)}
+
+/* ===== Toast ===== */
+#toast{
+  position:fixed;left:50%;bottom:calc(var(--safe-b) + 26px);transform:translateX(-50%) translateY(16px);
+  background:rgba(20,14,40,.95);border:1px solid var(--bd2);color:var(--text);
+  padding:12px 20px;border-radius:999px;font-size:13.5px;z-index:90;
+  opacity:0;pointer-events:none;transition:.3s;white-space:nowrap;max-width:92vw;
+  text-overflow:ellipsis;overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{border-color:rgba(248,113,113,.5);color:#fca5a5}
+
+.empty{
+  background:var(--card);border:1px dashed var(--bd2);border-radius:18px;
+  padding:36px 20px;text-align:center;color:var(--muted);font-size:13px;
+}
+.empty span{font-size:34px;display:block;margin-bottom:10px}
+.empty b{color:#c4b5fd;font-weight:600}
+
+footer.foot{max-width:900px;margin:26px auto 0;text-align:center;font-size:11.5px;color:#6d6a85;position:relative;z-index:1}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ===== 响应式 ===== */
+@media(max-width:760px){
+  .grid{grid-template-columns:1fr 1fr}
+  .hero-title{font-size:26px}
+}
+@media(max-width:380px){
+  .grid{grid-template-columns:1fr}
+  .hero{padding:24px 18px}
+  .hero-title{font-size:23px}
+  .kpis{gap:8px}
+  .kpi b{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="back" onclick="history.back()">‹ 返回</button>
+  <div class="title-wrap">
+    <h1 class="logo">🤝 接单工坊</h1>
+    <p class="sub">Crazy Friday · 把能力变成收入</p>
+  </div>
+  <span class="tag">v1</span>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-label">Crazy Friday · 接单赚钱</p>
+    <h2 class="hero-title">接单赚钱 · 把能力变成收入</h2>
+    <p class="hero-sub">挑选你擅长的需求，报出你的价格与交付周期</p>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-ic">📋</div>
+        <b id="kpiOpen">0</b>
+        <span>可接单</span>
+      </div>
+      <div class="kpi">
+        <div class="kpi-ic">✅</div>
+        <b id="kpiMine">0</b>
+        <span>已接单</span>
+      </div>
+      <div class="kpi">
+        <div class="kpi-ic">💰</div>
+        <b id="kpiIncome">¥0</b>
+        <span>累计收入</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <nav class="tabs">
+    <button class="tab on" data-tab="market" id="tabMarket">📋 需求市场</button>
+    <button class="tab" data-tab="mine" id="tabMine">✅ 我的接单</button>
+  </nav>
+
+  <!-- 需求市场 -->
+  <section id="view-market">
+    <div class="grid" id="marketGrid"></div>
+  </section>
+
+  <!-- 我的接单 -->
+  <section id="view-mine" style="display:none">
+    <div class="filter-row" id="filterRow">
+      <button class="fbtn on" data-f="all">全部</button>
+      <button class="fbtn" data-f="accepted">进行中</button>
+      <button class="fbtn" data-f="done">已完成</button>
+      <button class="fbtn" data-f="cancelled">已取消</button>
+    </div>
+    <div class="my-list" id="myList"></div>
+  </section>
+</main>
+
+<footer class="foot">Order Workshop · 接单数据实时同步自 localStorage</footer>
+
+<!-- 接单 Sheet -->
+<div class="sheet-mask" id="sheetMask"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-grab"></div>
+  <h3 class="sheet-title">📮 确认接单</h3>
+  <p class="sheet-sub">确认交付周期后即可接下此需求</p>
+  <div class="sheet-info" id="sheetInfo"></div>
+  <label class="sheet-field" for="deadlineInput"><b>交付周期</b>（天，预计 1-30 天）</label>
+  <input type="number" id="deadlineInput" min="1" max="30" placeholder="例如：3" value="3">
+  <div class="sheet-actions">
+    <button class="sheet-btn sheet-cancel" id="sheetCancel">再想想</button>
+    <button class="sheet-btn sheet-confirm" id="sheetConfirm">🤝 确认接单</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+var KEY='cf_orders';
+
+/* ---------- 工具 ---------- */
+function $(id){return document.getElementById(id)}
+function ls(key,d){try{var v=localStorage.getItem(key);return v?JSON.parse(v):d}catch(e){return d}}
+function save(list){try{localStorage.setItem(KEY,JSON.stringify(list))}catch(e){}}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+function num(v){var n=Number(v);return isFinite(n)&&n>=0?n:0}
+function uid(){return 'o'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function fmtMoney(n){n=num(n);return '¥'+n.toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:2})}
+function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function daysFrom(n){var d=new Date();d.setDate(d.getDate()+num(n));return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+
+function seed(){
+  var now=Date.now();
+  return [
+    {id:uid(),title:'小红书「疯狂星期五」IP 文案打磨',desc:'为 IP 账号打磨 10 条高转化笔记文案，含标题与话题标签，可直接发布。',budget:800,time:'7 天内',tag:'文案',status:'open',created:now},
+    {id:uid(),title:'一人公司官网首页设计稿',desc:'一页式品牌官网首页，深色高级感风格，需输出桌面与移动两版设计稿。',budget:1500,time:'10 天内',tag:'设计',status:'open',created:now},
+    {id:uid(),title:'接单小程序前端开发（H5）',desc:'需求列表 + 接单 + 订单管理页，适配手机端，数据本地存储即可。',budget:3000,time:'14 天内',tag:'开发',status:'open',created:now},
+    {id:uid(),title:'30 秒产品短视频混剪',desc:'提供素材，产出 30 秒竖屏宣传短视频，含字幕、BGM 与转场。',budget:600,time:'5 天内',tag:'视频',status:'open',created:now},
+    {id:uid(),title:'电商详情页长图文案',desc:'为一款 AI 工具课程撰写 2000 字转化型详情页文案，突出痛点与卖点。',budget:1200,time:'7 天内',tag:'文案',status:'open',created:now},
+    {id:uid(),title:'知识付费封面海报一套',desc:'一套 12 张竖版封面海报，统一视觉风格，可复用模板化输出。',budget:900,time:'6 天内',tag:'设计',status:'open',created:now},
+    {id:uid(),title:'爬虫 + 数据清洗脚本',desc:'采集公开商品信息并按规则清洗去重，输出结构化表格数据。',budget:2000,time:'9 天内',tag:'开发',status:'open',created:now},
+    {id:uid(),title:'口播视频剪辑 + 字幕优化',desc:'10 条口播素材精剪，智能字幕校对，输出成品可直接发布。',budget:750,time:'4 天内',tag:'视频',status:'open',created:now}
+  ];
+}
+
+/* ---------- 数据 ---------- */
+function load(){
+  var list=ls(KEY,null);
+  if(!Array.isArray(list)){
+    list=seed();
+    save(list);
+  }
+  return list;
+}
+var orders=load();
+
+function saveAll(){save(orders)}
+
+function renderAll(){
+  renderKpis();
+  renderMarket();
+  renderMine();
+}
+
+/* ---------- KPI ---------- */
+function renderKpis(){
+  var open=orders.filter(function(o){return o.status==='open'}).length;
+  var mine=orders.filter(function(o){return o.status==='accepted'}).length;
+  var income=orders.filter(function(o){return o.status==='done'}).reduce(function(s,o){return s+num(o.budget)},0);
+  $('kpiOpen').textContent=open;
+  $('kpiMine').textContent=mine;
+  $('kpiIncome').textContent=fmtMoney(income);
+}
+
+/* ---------- 需求市场 ---------- */
+function tagClass(t){
+  var map={'文案':'t-copy','设计':'t-design','开发':'t-dev','视频':'t-video'};
+  return map[t]||'';
+}
+function btnFor(o){
+  if(o.status==='accepted')return '<button class="oc-btn wait" disabled>⏳ 已接单</button>';
+  if(o.status==='done')return '<button class="oc-btn done" disabled>✅ 已完成</button>';
+  if(o.status==='cancelled')return '<button class="oc-btn done" disabled>🚫 已取消</button>';
+  return '<button class="oc-btn" data-id="'+o.id+'">✋ 我要接单</button>';
+}
+function renderMarket(){
+  var grid=$('marketGrid');
+  var open=orders.filter(function(o){return o.status==='open'});
+  if(!open.length){
+    grid.innerHTML='<div class="empty" style="grid-column:1/-1"><span>🎉</span><p>所有需求都已被接下，<b>可接单 0 条</b><br>欢迎联系平台发布新需求</p></div>';
+    return;
+  }
+  grid.innerHTML=open.map(function(o){
+    return '<article class="oc">'+
+      '<div class="oc-top"><span class="tag-badge '+tagClass(o.tag)+'">'+esc(o.tag)+'</span><span class="oc-id">#'+esc(o.id.slice(-6)).toUpperCase()+'</span></div>'+
+      '<h3 class="oc-title">'+esc(o.title)+'</h3>'+
+      '<p class="oc-desc">'+esc(o.desc)+'</p>'+
+      '<div class="oc-meta"><span class="oc-budget">'+fmtMoney(o.budget)+'</span><span>⏱ '+esc(o.time)+'</span></div>'+
+      btnFor(o)+
+    '</article>';
+  }).join('');
+}
+
+/* ---------- 我的接单 ---------- */
+var curFilter='all';
+function statusText(s){
+  return {accepted:'进行中',done:'已完成',cancelled:'已取消'}[s]||s;
+}
+function stClass(s){
+  return {accepted:'st-accepted',done:'st-done',cancelled:'st-cancelled'}[s]||'';
+}
+function progressOf(o){
+  if(o.status==='done')return 100;
+  if(o.status==='cancelled')return 0;
+  return 40;
+}
+function actionsFor(o){
+  if(o.status==='accepted'){
+    return '<button class="act-btn act-done" data-id="'+o.id+'" data-act="done">✅ 标记完成</button>'+
+           '<button class="act-btn act-cancel" data-id="'+o.id+'" data-act="cancel">✖ 取消</button>';
+  }
+  return '<button class="act-btn" style="opacity:.45;cursor:default;min-height:44px" disabled>'+
+    (o.status==='done'?'🏆 已完成':'🕳 已取消')+'</button>';
+}
+function renderMine(){
+  var list=$('myList');
+  var mine=orders.filter(function(o){
+    if(o.status==='open')return false;
+    return curFilter==='all'||o.status===curFilter;
+  });
+  if(!mine.length){
+    list.innerHTML='<div class="empty"><span>'+(curFilter==='all'?'🤝':'🗂')+'</span><p>'+((curFilter==='all')?'还没有接下任何订单<br>去<b>需求市场</b>挑选一条吧':'该状态下暂无订单')+'</p></div>';
+    return;
+  }
+  mine=mine.slice().reverse();
+  list.innerHTML=mine.map(function(o){
+    return '<article class="my-oc">'+
+      '<div class="my-oc-top">'+
+        '<div style="min-width:0"><h4 class="my-oc-title">'+esc(o.title)+'</h4>'+
+        '<div class="my-oc-meta"><span>💰 <b>'+fmtMoney(o.budget)+'</b></span><span>⏱ 交付 <b>'+esc(o.deadline)+' 天</b></span><span>📅 '+esc(o.created)+'</span></div></div>'+
+        '<span class="st-badge '+stClass(o.status)+'">'+statusText(o.status)+'</span>'+
+      '</div>'+
+      '<div class="progress"><i style="width:'+progressOf(o)+'%"></i></div>'+
+      '<div class="my-oc-actions">'+actionsFor(o)+'</div>'+
+    '</article>';
+  }).join('');
+}
+
+/* ---------- Toast ---------- */
+var toastTimer=null;
+function toast(msg,err){
+  var t=$('toast');
+  t.textContent=msg;
+  t.classList.toggle('err',!!err);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show')},2200);
+}
+
+/* ---------- Sheet ---------- */
+var current=null;
+function openSheet(id){
+  var o=orders.find(function(x){return x.id===id});
+  if(!o||o.status!=='open')return;
+  current=o;
+  $('sheetInfo').innerHTML=
+    '<div><b>需求：</b>'+esc(o.title)+'</div>'+
+    '<div><b>预算：</b>'+fmtMoney(o.budget)+'</div>'+
+    '<div><b>标签：</b>'+esc(o.tag)+' · <b>时间：</b>'+esc(o.time)+'</div>';
+  $('deadlineInput').value=3;
+  $('sheetMask').classList.add('show');
+  $('sheet').classList.add('show');
+}
+function closeSheet(){
+  current=null;
+  $('sheetMask').classList.remove('show');
+  $('sheet').classList.remove('show');
+}
+function confirmSheet(){
+  if(!current)return;
+  var dl=Math.round(Number($('deadlineInput').value));
+  if(!dl||dl<1||dl>30){
+    toast('交付周期请填写 1-30 天',true);
+    return;
+  }
+  var o=orders.find(function(x){return x.id===current.id});
+  if(!o||o.status!=='open'){
+    closeSheet();toast('该需求已被其他人接下',true);renderAll();return;
+  }
+  o.status='accepted';
+  o.deadline=dl;
+  o.created=today();
+  saveAll();
+  closeSheet();
+  renderAll();
+  switchTab('mine');
+  toast('🎉 接单成功！请在「我的接单」中跟进交付');
+}
+
+/* ---------- 事件 ---------- */
+$('tabMarket').addEventListener('click',function(){switchTab('market')});
+$('tabMine').addEventListener('click',function(){switchTab('mine')});
+
+function switchTab(tab){
+  var market=tab==='market';
+  $('tabMarket').classList.toggle('on',market);
+  $('tabMine').classList.toggle('on',!market);
+  $('view-market').style.display=market?'':'none';
+  $('view-mine').style.display=market?'none':'';
+}
+
+$('marketGrid').addEventListener('click',function(e){
+  var btn=e.target.closest('.oc-btn[data-id]');
+  if(!btn)return;
+  openSheet(btn.getAttribute('data-id'));
+});
+
+$('myList').addEventListener('click',function(e){
+  var btn=e.target.closest('.act-btn[data-act]');
+  if(!btn)return;
+  var id=btn.getAttribute('data-id'),act=btn.getAttribute('data-act');
+  var o=orders.find(function(x){return x.id===id});
+  if(!o)return;
+  if(act==='done'){
+    if(o.status!=='accepted')return;
+    o.status='done';
+    saveAll();renderAll();
+    toast('✅ 已标记完成，收入 '+fmtMoney(o.budget)+' 已计入累计收入');
+  }else if(act==='cancel'){
+    if(o.status!=='accepted')return;
+    o.status='cancelled';
+    saveAll();renderAll();
+    toast('已取消该订单',true);
+  }
+});
+
+$('filterRow').addEventListener('click',function(e){
+  var b=e.target.closest('.fbtn');
+  if(!b)return;
+  curFilter=b.getAttribute('data-f');
+  Array.prototype.forEach.call($('filterRow').children,function(x){x.classList.toggle('on',x===b)});
+  renderMine();
+});
+
+$('sheetMask').addEventListener('click',closeSheet);
+$('sheetCancel').addEventListener('click',closeSheet);
+$('sheetConfirm').addEventListener('click',confirmSheet);
+
+/* 初始化 */
+renderAll();
+})();
+</script>
+</body>
+</html>
