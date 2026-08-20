@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>👑 Crazy Friday Pro 会员</title>
+<style>
+:root{
+  --bg:#0a0a1a;
+  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+  --gold:#FBBF24;
+  --glass:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.12);
+  --text:#f4f4ff;
+  --muted:#9a9ab8;
+  --ok:#34d399;
+  --no:#565678;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Segoe UI","Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  background:
+    radial-gradient(rgba(124,58,237,.16) 1px, transparent 1px),
+    var(--bg);
+  background-size:26px 26px,cover;
+  color:var(--text);
+  min-height:100vh;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
+  overflow-x:hidden;
+}
+.glow{
+  position:fixed;top:-220px;left:50%;transform:translateX(-50%);
+  width:720px;height:420px;pointer-events:none;z-index:0;
+  background:radial-gradient(closest-side,rgba(124,58,237,.38),rgba(236,72,153,.12) 60%,transparent);
+  filter:blur(46px);
+}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:16px 20px calc(40px + env(safe-area-inset-bottom))}
+
+/* ── 顶栏 ─────────────────────────── */
+.topbar{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.back{
+  flex:none;width:44px;height:44px;border-radius:14px;cursor:pointer;
+  background:var(--glass);border:1px solid var(--border);color:var(--text);
+  font-size:20px;display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:.2s;
+}
+.back:active{transform:scale(.92);opacity:.7}
+.head-title{font-family:Georgia,"Songti SC",serif;font-size:26px;font-weight:700;letter-spacing:.5px;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.head-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ── 状态卡 ───────────────────────── */
+.status-card{
+  position:relative;overflow:hidden;border-radius:22px;padding:24px 22px;margin-bottom:26px;
+  background:linear-gradient(135deg,rgba(124,58,237,.55),rgba(236,72,153,.45));
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 10px 40px rgba(124,58,237,.35);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.status-card::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(251,191,36,.35),transparent);
+  pointer-events:none;
+}
+.status-label{font-size:12px;letter-spacing:2px;color:rgba(255,255,255,.75);text-transform:uppercase}
+.status-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 14px;flex-wrap:wrap}
+.status-now{display:flex;align-items:center;gap:12px}
+.status-badge{
+  font-size:34px;line-height:1;
+  background:radial-gradient(closest-side,rgba(255,255,255,.28),transparent);
+  width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.status-name{font-family:Georgia,"Songti SC",serif;font-size:26px;font-weight:700}
+.status-chip{
+  display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;
+  background:rgba(251,191,36,.18);border:1px solid rgba(251,191,36,.55);color:var(--gold);
+  font-size:12px;font-weight:700;
+}
+.status-meta{font-size:12.5px;color:rgba(255,255,255,.8)}
+.status-meta b{color:#fff}
+.progress-head{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.85);margin-bottom:7px}
+.progress-track{height:9px;border-radius:99px;background:rgba(0,0,0,.3);overflow:hidden}
+.progress-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--gold),#fde68a);transition:width .8s cubic-bezier(.22,1,.36,1)}
+.progress-note{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:7px}
+
+/* ── 计费切换 ─────────────────────── */
+.billing{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 18px}
+.bill-switch{display:flex;padding:5px;border-radius:99px;background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(14px)}
+.bill-btn{
+  padding:9px 22px;border:none;border-radius:99px;cursor:pointer;font-size:13.5px;font-weight:600;
+  background:transparent;color:var(--muted);transition:.25s;min-height:44px;
+}
+.bill-btn.active{background:var(--grad);color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.45)}
+.bill-save{font-size:12px;color:var(--gold);font-weight:600}
+
+/* ── 会员卡 ───────────────────────── */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px;align-items:stretch}
+.plan-card{
+  position:relative;display:flex;flex-direction:column;gap:14px;
+  padding:22px 18px;border-radius:20px;
+  background:var(--glass);border:1px solid var(--border);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  transition:transform .25s,box-shadow .25s;
+}
+.plan-card:hover{transform:translateY(-4px)}
+.plan-tag{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  padding:5px 14px;border-radius:99px;font-size:11.5px;font-weight:800;letter-spacing:1px;
+  background:var(--grad);color:#fff;box-shadow:0 4px 14px rgba(236,72,153,.5);white-space:nowrap;
+}
+.plan-card.hot{
+  background:linear-gradient(160deg,rgba(124,58,237,.32),rgba(236,72,153,.20)),var(--glass);
+  border:1.5px solid rgba(168,85,247,.7);
+  box-shadow:0 0 0 1px rgba(168,85,247,.25),0 12px 44px rgba(124,58,237,.4);
+  transform:scale(1.035);
+}
+.plan-card.hot:hover{transform:scale(1.035) translateY(-4px)}
+.plan-icon{font-size:34px;line-height:1;text-align:center}
+.plan-name{font-family:Georgia,"Songti SC",serif;text-align:center;font-size:19px;font-weight:700}
+.plan-sub{text-align:center;font-size:11.5px;color:var(--muted)}
+.plan-price{text-align:center;margin-top:2px}
+.plan-amount{font-size:30px;font-weight:800;font-family:Georgia,serif}
+.plan-amount small{font-size:14px;font-weight:600;color:var(--muted)}
+.plan-period{font-size:11.5px;color:var(--muted);margin-top:2px}
+.plan-per{display:inline-block;margin-top:7px;font-size:10.5px;font-weight:700;color:var(--gold);
+  background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);padding:3px 9px;border-radius:99px}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:8px;margin:4px 0 2px;flex:1}
+.plan-feats li{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.5;color:rgba(244,244,255,.85)}
+.plan-feats .no{color:var(--no)}
+.plan-btn{
+  width:100%;min-height:46px;border:none;border-radius:14px;cursor:pointer;
+  font-size:14.5px;font-weight:700;color:#fff;background:var(--grad);
+  box-shadow:0 6px 20px rgba(124,58,237,.4);transition:.2s;
+}
+.plan-btn:active{transform:scale(.96)}
+.plan-btn.ghost{background:rgba(255,255,255,.1);border:1px solid var(--border);box-shadow:none;color:var(--text)}
+.plan-btn:disabled{background:#26263c;color:#6b6b88;box-shadow:none;cursor:default}
+
+/* ── 对比表 ───────────────────────── */
+.section-title{font-family:Georgia,"Songti SC",serif;font-size:21px;font-weight:700;margin-bottom:4px}
+.section-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.cmp-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--border);background:var(--glass);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);margin-bottom:30px}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:13px 16px;font-size:13px;text-align:center}
+thead th{font-size:12px;letter-spacing:1px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+thead th.col-hot{background:rgba(124,58,237,.22)}
+tbody tr{border-top:1px solid rgba(255,255,255,.06)}
+tbody tr:first-child{border-top:none}
+td:first-child{text-align:left;font-weight:600;color:rgba(244,244,255,.9)}
+td.yes{color:var(--ok);font-weight:700}
+td.no{color:var(--no)}
+td.hot{background:rgba(124,58,237,.14)}
+td small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}
+
+/* ── FAQ ──────────────────────────── */
+.faq{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.faq-item{border-radius:16px;border:1px solid var(--border);background:var(--glass);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:16px 18px;background:none;border:none;color:var(--text);cursor:pointer;
+  font-size:14px;font-weight:600;text-align:left;min-height:48px}
+.faq-q .arr{transition:transform .25s;color:var(--gold);font-size:13px}
+.faq-item.open .arr{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;font-size:13px;color:var(--muted);line-height:1.7;padding:0 18px}
+.faq-item.open .faq-a{max-height:200px;padding:0 18px 16px}
+
+/* ── Sheet ────────────────────────── */
+.sheet-mask{position:fixed;inset:0;z-index:50;background:rgba(5,5,15,.6);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .28s}
+.sheet-mask.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:51;margin:0 auto;max-width:520px;
+  padding:10px 22px calc(24px + env(safe-area-inset-bottom));
+  border-radius:26px 26px 0 0;border:1px solid var(--border);border-bottom:none;
+  background:linear-gradient(180deg,#14142e,#0d0d22);
+  transform:translateY(110%);transition:transform .32s cubic-bezier(.22,1,.36,1);
+}
+.sheet.show{transform:translateY(0)}
+.sheet-grab{width:44px;height:5px;border-radius:99px;background:rgba(255,255,255,.2);margin:4px auto 18px}
+.sheet-title{font-family:Georgia,"Songti SC",serif;font-size:20px;font-weight:700;margin-bottom:4px}
+.sheet-line{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-top:1px solid rgba(255,255,255,.07);font-size:13.5px}
+.sheet-line .k{color:var(--muted)}
+.sheet-line .v{font-weight:700;text-align:right}
+.sheet-line .v .gold{color:var(--gold)}
+.sheet-price-box{margin:16px 0;padding:16px;border-radius:16px;text-align:center;
+  background:rgba(124,58,237,.16);border:1px solid rgba(168,85,247,.5)}
+.sheet-amount{font-size:34px;font-weight:800;font-family:Georgia,serif;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sheet-amount small{font-size:15px;-webkit-text-fill-color:var(--muted)}
+.btn{
+  width:100%;min-height:48px;border-radius:15px;border:none;cursor:pointer;font-size:15px;font-weight:700;
+  color:#fff;background:var(--grad);box-shadow:0 8px 24px rgba(124,58,237,.45);transition:.2s;margin-top:6px;
+}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:rgba(255,255,255,.07);border:1px solid var(--border);box-shadow:none;color:var(--muted);margin-top:10px}
+
+/* ── Toast ────────────────────────── */
+.toast{
+  position:fixed;left:50%;bottom:calc(40px + env(safe-area-inset-bottom));transform:translate(-50%,20px);
+  z-index:99;display:flex;align-items:center;gap:9px;max-width:88%;padding:13px 20px;border-radius:14px;
+  background:rgba(18,18,40,.92);border:1px solid rgba(251,191,36,.45);color:var(--text);
+  font-size:13.5px;font-weight:600;box-shadow:0 10px 34px rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.22,1,.36,1);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ── 响应式 ───────────────────────── */
+@media (max-width:860px){
+  .plan-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+  .plan-card{padding:20px 12px}
+}
+@media (max-width:380px){
+  .plan-grid{grid-template-columns:1fr}
+  .plan-card.hot{transform:none}
+  .plan-card.hot:hover{transform:translateY(-4px)}
+  .status-name{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+  <!-- 顶栏 -->
+  <header class="topbar">
+    <button class="back" aria-label="返回">←</button>
+    <div>
+      <div class="head-title">👑 Pro 会员</div>
+      <div class="head-sub">解锁 Crazy Friday 全部能力 · 订阅即用</div>
+    </div>
+  </header>
+
+  <!-- 状态卡 -->
+  <section class="status-card">
+    <div class="status-label">会员状态</div>
+    <div class="status-row">
+      <div class="status-now">
+        <div class="status-badge" id="stBadge">🎁</div>
+        <div>
+          <div class="status-name" id="stName">免费版</div>
+          <div class="status-meta">到期时间 <b id="stExp">—</b> · <span id="stPlan">免费</span></div>
+        </div>
+      </div>
+      <span class="status-chip" id="stChip">FREE</span>
+    </div>
+    <div class="progress-head"><span>Pro 权益解锁</span><span id="stPct">15%</span></div>
+    <div class="progress-track"><div class="progress-fill" id="stFill" style="width:15%"></div></div>
+    <div class="progress-note" id="stNote">升级解锁 AI 工作台、接单配额与专属支持</div>
+  </section>
+
+  <!-- 计费切换 -->
+  <div class="billing">
+    <div class="bill-switch">
+      <button class="bill-btn active" data-bill="monthly" id="btnMonthly">月付</button>
+      <button class="bill-btn" data-bill="yearly" id="btnYearly">年付</button>
+    </div>
+    <span class="bill-save" id="billSave">年付省 ¥589</span>
+  </div>
+
+  <!-- 三档会员卡 -->
+  <section class="plan-grid" id="planGrid"></section>
+
+  <!-- 权益对比表 -->
+  <section style="margin-bottom:30px">
+    <div class="section-title">权益对比</div>
+    <div class="section-sub">三档能力一目了然，随时升级</div>
+    <div class="cmp-wrap">
+      <table>
+        <thead>
+          <tr><th style="text-align:left">权益项</th><th>免费版</th><th class="col-hot">👑 Pro</th><th>💎 Pro+</th></tr>
+        </thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="section-title">常见问题</div>
+    <div class="section-sub" style="margin-bottom:12px">关于订阅你想知道的都在这里</div>
+
+    <div class="faq-item">
+      <button class="faq-q">订阅后多久生效？<span class="arr">▼</span></button>
+      <div class="faq-a">支付（模拟）成功后立即生效，权益无需手动开通，刷新页面即可在状态卡看到最新等级。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">可以随时取消或降级吗？<span class="arr">▼</span></button>
+      <div class="faq-a">可以。到期后未续费将自动回到免费版，已购买的周期内权益保持不变，无违约金。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">月付和年付有什么区别？<span class="arr">▼</span></button>
+      <div class="faq-a">年付相当于享受 6 折优惠：Pro 年付 ¥599（月付一年 ¥1188），Pro+ 年付 ¥1999（月付一年 ¥3588）。续费同样按年付价格计算。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Pro 升级到 Pro+ 会怎样？<span class="arr">▼</span></button>
+      <div class="faq-a">升级后按 Pro+ 生效，剩余 Pro 时长会折算进新周期，接单配额与数据分析能力即刻提升到 Pro+ 档位。</div>
+    </div>
+  </section>
+
+</div>
+
+<!-- 确认 Sheet -->
+<div class="sheet-mask" id="sheetMask"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-grab"></div>
+  <div id="sheetBody"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var KEY = "cf_pro";
+  var LEVELS = {
+    free:    { name:"免费版", icon:"🎁", chip:"FREE",   monthly:0,   yearly:0,   unlock:15,
+               per:"基本功能 · 永久免费" },
+    pro:     { name:"Crazy Friday Pro",  icon:"👑", chip:"PRO",    monthly:99,  yearly:599, unlock:75,
+               per:"热门 · 效率翻倍" },
+    proplus: { name:"Crazy Friday Pro+", icon:"💎", chip:"PRO+",   monthly:299, yearly:1999,unlock:100,
+               per:"尊享 · 全部能力" }
+  };
+
+  var FEATURES = [
+    { name:"AI 工作台数",          free:"1 个",          pro:"5 个",         proplus:"不限量",   desc:"并行的 AI 任务工作区" },
+    { name:"接单配额",             free:"✗",            pro:"20 单/月",      proplus:"无限 + 优先接单", desc:"每月可承接的客户订单数" },
+    { name:"Skill 技能折扣",       free:"—",             pro:"8 折",          proplus:"5 折",     desc:"Skill 商店所有技能" },
+    { name:"高级数据分析",         free:"✗",             pro:"✓ 基础分析",    proplus:"✓ 高级模型", desc:"报表 / 洞察 / 预测" },
+    { name:"优先技术支持",         free:"✗",             pro:"✓ 优先",        proplus:"✓ 7×24 专属", desc:"工单排队与响应速度" },
+    { name:"Pro 身份徽章",         free:"✗",             pro:"✓ 金色徽章",    proplus:"✓ Pro+ 皇冠徽章", desc:"个人主页专属标识" }
+  ];
+
+  var state, billing = "monthly", pending = null;
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var s = JSON.parse(raw);
+        if(s && (s.level==="free"||s.level==="pro"||s.level==="proplus")) return s;
+      }
+    }catch(e){}
+    return { level:"free", expires:"", plan:"monthly" };
+  }
+
+  function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+
+  function normalize(s){
+    var lvl = s.level;
+    if(lvl !== "free" && s.expires){
+      var today = new Date(); today.setHours(0,0,0,0);
+      var exp = new Date(s.expires);
+      if(exp.getTime() < today.getTime()) lvl = "free";
+    }
+    if(lvl !== s.level){
+      s = { level:"free", expires:"", plan:"monthly" };
+      save(s);
+    }
+    return s;
+  }
+
+  function calcExpires(level, plan){
+    var base = new Date();
+    if(state.level === level && state.expires){
+      var cur = new Date(state.expires); cur.setHours(0,0,0,0);
+      var today = new Date(); today.setHours(0,0,0,0);
+      if(cur.getTime() >= today.getTime()) base = cur;
+    }
+    base.setDate(base.getDate() + (plan==="yearly" ? 365 : 30));
+    return base.toISOString().slice(0,10);
+  }
+
+  function fmtDate(d){
+    if(!d) return "—";
+    var p = d.split("-");
+    return p[0] + " 年 " + (+p[1]) + " 月 " + (+p[2]) + " 日";
+  }
+
+  /* ── 渲染：状态卡 ── */
+  function renderStatus(){
+    var l = LEVELS[state.level];
+    document.getElementById("stBadge").textContent = l.icon;
+    document.getElementById("stName").textContent = l.name;
+    document.getElementById("stChip").textContent = l.chip;
+    document.getElementById("stExp").textContent = state.level==="free" ? "长期有效" : fmtDate(state.expires);
+    document.getElementById("stPlan").textContent = state.level==="free"
+      ? "免费方案" : (state.plan==="yearly" ? "年付" : "月付");
+    var pct = l.unlock;
+    document.getElementById("stPct").textContent = pct + "%";
+    document.getElementById("stFill").style.width = pct + "%";
+    var note = state.level==="free"
+      ? "升级解锁 AI 工作台、接单配额与专属支持"
+      : (state.level==="pro"
+          ? "再进一步即可解锁无限接单、高级分析与专属支持"
+          : "已解锁全部能力，尽情使用 Crazy Friday 全功能");
+    document.getElementById("stNote").textContent = note;
+  }
+
+  /* ── 渲染：会员卡 ── */
+  function price(l, plan){
+    return plan==="yearly" ? l.yearly : l.monthly;
+  }
+  function periodLabel(plan){
+    return plan==="yearly" ? "/年" : "/月";
+  }
+
+  function cardFeats(lvl){
+    var list;
+    if(lvl==="free") list = ["1 个 AI 工作台","基础技能可用","社区支持"];
+    else if(lvl==="pro") list = ["5 个 AI 工作台","每月 20 单接单配额","Skill 商店 8 折","基础数据分析","优先技术支持","金色 Pro 徽章"];
+    else list = ["不限量 AI 工作台","无限接单 · 优先派单","Skill 商店 5 折","高级数据分析","7×24 专属支持","Pro+ 皇冠徽章"];
+    return list;
+  }
+
+  function renderPlans(){
+    var grid = document.getElementById("planGrid");
+    var order = ["free","pro","proplus"];
+    grid.innerHTML = order.map(function(lvl){
+      var l = LEVELS[lvl];
+      var amt = price(l, billing);
+      var per = periodLabel(billing);
+      var hot = lvl==="pro";
+      var perBadge = lvl==="free" ? "" : (billing==="yearly" ? "年付 · 约 " + Math.round(amt/12) + "/月" : "随时可升级");
+      var feats = cardFeats(lvl).map(function(f){
+        return '<li>✓ ' + f + '</li>';
+      }).join("");
+      var btn;
+      if(state.level === lvl){
+        btn = '<button class="plan-btn ghost" disabled>当前方案</button>';
+      } else if(state.level !== "free" && lvl === "free"){
+        btn = '<button class="plan-btn ghost" disabled>已订阅更高级</button>';
+      } else {
+        var label = lvl==="free" ? "免费使用" : "立即订阅";
+        btn = '<button class="plan-btn" data-buy="' + lvl + '">' + label + '</button>';
+      }
+      return (
+        '<div class="plan-card' + (hot ? ' hot' : '') + '">' +
+          (hot ? '<div class="plan-tag">🔥 热门</div>' : '') +
+          '<div class="plan-icon">' + l.icon + '</div>' +
+          '<div class="plan-name">' + (lvl==="free" ? "免费版" : (lvl==="pro" ? "Pro" : "Pro+")) + '</div>' +
+          '<div class="plan-sub">' + l.per + '</div>' +
+          '<div class="plan-price"><span class="plan-amount">¥' + amt + '<small>' + per + '</small></span></div>' +
+          '<div class="plan-period">' + (lvl==="free" ? "终身免费" : (billing==="yearly" ? "年付 · 超值优惠" : "按月订阅，随时取消")) + '</div>' +
+          (perBadge ? '<span class="plan-per">' + perBadge + '</span>' : '') +
+          '<ul class="plan-feats">' + feats + '</ul>' +
+          btn +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  /* ── 渲染：对比表 ── */
+  function renderCompare(){
+    var tbody = document.getElementById("cmpBody");
+    tbody.innerHTML = FEATURES.map(function(f){
+      return (
+        '<tr>' +
+          '<td>' + f.name + '<small>' + f.desc + '</small></td>' +
+          '<td class="' + (f.free.indexOf("✗")===0||f.free==="—" ? 'no' : 'yes') + '">' + f.free + '</td>' +
+          '<td class="hot ' + (f.pro.indexOf("✗")===0||f.pro==="—" ? 'no' : 'yes') + '">' + f.pro + '</td>' +
+          '<td class="' + (f.proplus.indexOf("✗")===0||f.proplus==="—" ? 'no' : 'yes') + '">' + f.proplus + '</td>' +
+        '</tr>'
+      );
+    }).join("");
+  }
+
+  /* ── Sheet ── */
+  function openSheet(lvl){
+    var l = LEVELS[lvl];
+    var amt = price(l, billing);
+    var per = billing==="yearly" ? "年付" : "月付";
+    var saveTxt = billing==="yearly"
+      ? ("省 ¥" + ((l.monthly*12 - l.yearly) > 0 ? (l.monthly*12 - l.yearly) : 0))
+      : "";
+    var feats = cardFeats(lvl).slice(0,3).map(function(f){
+      return '<div class="sheet-line"><span class="k">✓ ' + f + '</span></div>';
+    }).join("");
+    document.getElementById("sheetBody").innerHTML =
+      '<div class="sheet-title">' + l.icon + ' ' + l.name + '</div>' +
+      '<div class="sheet-price-box">' +
+        '<div class="sheet-amount">¥' + amt + '<small> ' + per + '</small></div>' +
+        (saveTxt ? '<div style="color:var(--gold);font-size:12px;font-weight:700;margin-top:4px">' + saveTxt + '</div>' : '') +
+      '</div>' +
+      '<div class="sheet-line"><span class="k">订阅周期</span><span class="v">' + per + '订阅 · 自动续费可随时取消</span></div>' +
+      '<div class="sheet-line"><span class="k">生效时间</span><span class="v">支付后立即生效</span></div>' +
+      '<div class="sheet-line"><span class="k">到期时间</span><span class="v gold">' + fmtDate(calcExpires(lvl, billing)) + '</span></div>' +
+      feats +
+      '<button class="btn" id="sheetConfirm">确认支付 ¥' + amt + '（模拟）</button>' +
+      '<button class="btn ghost" id="sheetCancel">暂不订阅</button>';
+    pending = { level:lvl, plan:billing };
+    showSheet(true);
+  }
+
+  function showSheet(on){
+    document.getElementById("sheetMask").classList.toggle("show", on);
+    document.getElementById("sheet").classList.toggle("show", on);
+  }
+
+  function confirmBuy(){
+    if(!pending) return;
+    var expires = calcExpires(pending.level, pending.plan);
+    state = { level:pending.level, expires:expires, plan:pending.plan };
+    save(state);
+    showSheet(false);
+    pending = null;
+    renderAll();
+    toast("🎉 已开通 " + LEVELS[state.level].name + "（" + (state.plan==="yearly"?"年付":"月付") + "），到期 " + fmtDate(state.expires));
+  }
+
+  /* ── Toast ── */
+  var toastTimer = null;
+  function toast(msg){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2800);
+  }
+
+  /* ── 事件 ── */
+  function bindEvents(){
+    document.getElementById("btnMonthly").addEventListener("click", function(){
+      billing = "monthly"; syncBill();
+    });
+    document.getElementById("btnYearly").addEventListener("click", function(){
+      billing = "yearly"; syncBill();
+    });
+    document.getElementById("planGrid").addEventListener("click", function(e){
+      var b = e.target.closest("[data-buy]");
+      if(b) openSheet(b.getAttribute("data-buy"));
+    });
+    document.getElementById("sheetBody").addEventListener("click", function(e){
+      if(e.target.id === "sheetConfirm") confirmBuy();
+      if(e.target.id === "sheetCancel") showSheet(false);
+    });
+    document.getElementById("sheetMask").addEventListener("click", function(){ showSheet(false); });
+    document.querySelectorAll(".faq-q").forEach(function(q){
+      q.addEventListener("click", function(){
+        var item = q.parentElement;
+        var wasOpen = item.classList.contains("open");
+        document.querySelectorAll(".faq-item.open").forEach(function(i){ i.classList.remove("open"); });
+        if(!wasOpen) item.classList.add("open");
+      });
+    });
+  }
+
+  function syncBill(){
+    document.getElementById("btnMonthly").classList.toggle("active", billing==="monthly");
+    document.getElementById("btnYearly").classList.toggle("active", billing==="yearly");
+    var saveTxt = billing==="yearly" ? "年付省 ¥589" : "年付最高省 ¥1589";
+    document.getElementById("billSave").textContent = saveTxt;
+    renderPlans();
+  }
+
+  function renderAll(){
+    renderStatus();
+    renderPlans();
+    renderCompare();
+  }
+
+  /* ── init ── */
+  state = normalize(load());
+  if(state.level !== "free" && !state.plan) { state.plan = "monthly"; save(state); }
+  bindEvents();
+  syncBill();
+  renderAll();
+})();
+</script>
+</body>
+</html>
