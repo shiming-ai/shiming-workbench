@@ -5,16 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>💸 赚钱看板 · Crazy Friday</title>
 <style>
+/* ===== Light Theme Override ===== */
+html,body{background:#F7F8FB !important;color:#1A1D29 !important}
+body{background-image:radial-gradient(rgba(91,91,214,.06) 1px,transparent 1px) !important;background-size:26px 26px !important}
+body::before,body::after{opacity:.3;background-image:radial-gradient(rgba(91,91,214,.06) 1px,transparent 1px)}
+body::before{background:radial-gradient(ellipse at center,rgba(91,91,214,.08),transparent 65%) !important}
+body::after{background:radial-gradient(ellipse at center,rgba(236,72,153,.04),transparent 65%) !important}
+
+.back{background:#fff !important;border-color:#E8EAEF !important;color:#1A1D29 !important;box-shadow:var(--shadow) !important}
+.back:hover{background:#F7F8FB !important}
+.logo{background:linear-gradient(120deg,#5B5BD6,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+.tag{color:#5B5BD6 !important;border-color:rgba(91,91,214,.25) !important;background:rgba(91,91,214,.08) !important}
+
+.card{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.card::before{background:linear-gradient(90deg,transparent,rgba(91,91,214,.12),transparent) !important}
+
+.hero{background:linear-gradient(150deg,rgba(91,91,214,.08),rgba(236,72,153,.04)) !important;border:1px solid #E8EAEF !important}
+.hero-label{color:#5A6072 !important}
+.hero-total{background:linear-gradient(135deg,#1A1D29,#5B5BD6 45%,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+
+.kpi{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.kpi-txt b{background:linear-gradient(120deg,#5B5BD6,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+.kpi-txt span{color:#9298AB !important}
+
+.bar{box-shadow:0 0 14px rgba(91,91,214,.18) !important}
+.bar::before{background:rgba(255,255,255,.6) !important}
+.bar::after{background:#fff !important;border-color:#E8EAEF !important;color:#1A1D29 !important;box-shadow:var(--shadow-md) !important}
+.b-label{color:#9298AB !important}
+
+.empty{color:#9298AB !important}
+
+.src{border-bottom:1px solid #EEF0F5 !important}
+.src-ic{background:rgba(91,91,214,.08) !important;border-color:rgba(91,91,214,.2) !important}
+.src-bar{background:#EEF0F5 !important}
+.src-val b{color:#1A1D29 !important}
+.src-val span{color:#9298AB !important}
+
+.row{border-bottom:1px solid #EEF0F5 !important}
+.row-sub{color:#9298AB !important}
+.badge.ok{color:#059669 !important;border-color:rgba(16,185,129,.3) !important;background:rgba(16,185,129,.08) !important}
+.badge.warn{color:#B45309 !important;border-color:rgba(245,158,11,.3) !important;background:rgba(245,158,11,.08) !important}
+.badge.bad{color:#DC2626 !important;border-color:rgba(239,68,68,.3) !important;background:rgba(239,68,68,.08) !important}
+.badge.pur{color:#7C3AED !important;border-color:rgba(139,92,246,.3) !important;background:rgba(139,92,246,.08) !important}
+.badge.idle{color:#6B7280 !important;border-color:rgba(107,114,128,.25) !important;background:rgba(107,114,128,.06) !important}
+
+.net-minus,.net-eq{color:#9298AB !important}
+.foot{color:#9298AB !important}
+
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0a1a;
-  --card:rgba(255,255,255,.05);
-  --bd:rgba(255,255,255,.09);
-  --text:#f4f1ff;
-  --muted:#9d94c0;
-  --pur:#7C3AED;
+  --bg:#F7F8FB;
+  --card:#FFFFFF;
+  --bd:#E8EAEF;
+  --text:#1A1D29;
+  --muted:#5A6072;
+  --pur:#5B5BD6;
   --pink:#EC4899;
-  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+  --grad:linear-gradient(135deg,#5B5BD6,#8B5CF6 50%,#EC4899);
 }
 html{-webkit-text-size-adjust:100%}
 body{
