@@ -707,6 +707,21 @@ function renderContent(){
 }
 
 function renderHome(c){
+  /* 读取同域 localStorage 经营数据（与时铭工作台共享） */
+  function ls(key, d){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):d; }catch(e){ return d; } }
+  const today = (()=>{ const t=new Date(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); })();
+  const incomes = ls('incomes',[]);
+  const expenses = ls('expenses',[]);
+  const orders = ls('orders',[]);
+  const crmList = ls('crmList',[]);
+  const authProds = ls('wb_auth_products',[]);
+  const todayIncome = incomes.filter(i=>i.time&&i.time.startsWith(today)).reduce((s,i)=>s+(i.amount||0),0);
+  const todayExpense = expenses.filter(e=>e.time&&e.time.startsWith(today)).reduce((s,e)=>s+(e.amount||0),0);
+  const pendingOrders = orders.filter(o=>o.status==='进行中'||o.status==='待付款').length;
+  const activeClients = crmList.filter(c=>c.status!=='已完成'&&c.status!=='已流失').length;
+  const authUsed = authProds.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
+  const authTotal = authProds.reduce((s,p)=>s+(parseInt(p.total)||0),0);
+
   c.innerHTML = `
     <div class="crumb"><span class="b-prev">Crazy Friday</span><span class="b-sep">›</span><span class="b-now">总览</span></div>
     <div class="hero">
@@ -730,10 +745,16 @@ function renderHome(c){
       <div class="q">一句话定位：<span class="grad">一个人 + AI，就是一家公司。</span></div>
       <div class="sub">我们要做中国版 Fiverr / Upwork 的 AI 垂直生态 —— 比猪八戒更轻、更聚焦一人公司，让个体用 AI 完成从获客、接单、交付、复盘的全流程闭环。</div>
     </div>
-    <div class="stat-row">
-      <div class="stat-card"><div class="n">9</div><div class="l">一级分类</div></div>
-      <div class="stat-card"><div class="n">50+</div><div class="l">规划模块</div></div>
-      <div class="stat-card"><div class="n g">6</div><div class="l">已上线</div></div>
+    <div class="section">
+      <div class="sec-hd"><h2>📈 今日经营快照</h2><span class="more" onclick="window.open('workbench/index.html','_blank')">进入运营台 →</span></div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="n g">¥${todayIncome}</div><div class="l">今日收入</div></div>
+        <div class="stat-card"><div class="n">¥${todayExpense}</div><div class="l">今日支出</div></div>
+        <div class="stat-card"><div class="n">${pendingOrders}</div><div class="l">待处理订单</div></div>
+        <div class="stat-card"><div class="n">${activeClients}</div><div class="l">跟进中客户</div></div>
+        <div class="stat-card"><div class="n">${authUsed}</div><div class="l">已授权客户</div></div>
+        <div class="stat-card"><div class="n">${Math.max(0,authTotal-authUsed)}</div><div class="l">可卖名额</div></div>
+      </div>
     </div>
     <div class="section">
       <div class="sec-hd"><h2>⭐ 我的常用</h2><span class="more" onclick="navigate('ai-product')">更多 →</span></div>
@@ -747,20 +768,23 @@ function renderHome(c){
       </div>
     </div>
     <div class="section">
+      <div class="sec-hd"><h2>💼 业务线总览</h2><span class="more" onclick="toast('🛠 业务线详情 · 即将上线')">7 条业务线</span></div>
+      <div class="grid cols-3">
+        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(168,85,247,.15)">🛍️</div><div class="body"><div class="nm">AI 工作台售卖</div><div class="de">39 行业 + 旗舰 ¥599 起</div></div></div>
+        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(236,72,153,.15)">🛡️</div><div class="body"><div class="nm">授权 / 卖名额</div><div class="de">每名额=一份年费</div></div></div>
+        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(16,185,129,.15)">🎬</div><div class="body"><div class="nm">AI 漫剧</div><div class="de">内容业务 ¥3k-1w/月</div></div></div>
+        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(59,130,246,.15)">🎓</div><div class="body"><div class="nm">一人公司 AI 营</div><div class="de">课程 + 学员转化</div></div></div>
+        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(245,158,11,.15)">🛠️</div><div class="body"><div class="nm">轻定制</div><div class="de">¥999 起</div></div></div>
+        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(94,234,212,.15)">🧠</div><div class="body"><div class="nm">深度定制</div><div class="de">¥1999 / ¥2999+</div></div></div>
+      </div>
+    </div>
+    <div class="section">
       <div class="sec-hd"><h2>🚀 创业与项目</h2><span class="more" onclick="navigate('incubator')">项目孵化 →</span></div>
       <div class="grid cols-2">
         <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic">🌱</div><div class="body"><div class="nm">项目孵化中心</div><div class="de">Idea → 评估 → 立项 → MVP → 测试 → 获客 → 复盘</div></div><span class="ar">›</span></a>
         <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">📦</div><div class="body"><div class="nm">AI项目库</div><div class="de">已建/在建/废弃项目档案</div></div><span class="ar">›</span></a>
         <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">🧠</div><div class="body"><div class="nm">超脑工坊</div><div class="de">调用 AI 员工帮助执行</div></div><span class="ar">›</span></a>
         <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">🤝</div><div class="body"><div class="nm">接单工坊</div><div class="de">真实商业订单接入</div></div><span class="ar">›</span></a>
-      </div>
-    </div>
-    <div class="section">
-      <div class="sec-hd"><h2>🌐 AI 生态</h2><span class="more" onclick="toast('🤍 AI 生态正在搭建')">查看全部</span></div>
-      <div class="grid cols-3">
-        <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">🛍️</div><div class="body"><div class="nm">AI应用市场</div><div class="de">应用下载</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">✨</div><div class="body"><div class="nm">Skill 商店</div><div class="de">技能模板</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">🏢</div><div class="body"><div class="nm">服务商中心</div><div class="de">代运营体系</div></div><span class="ar">›</span></a>
       </div>
     </div>
     <div class="card" style="text-align:center;padding:24px 18px;background:linear-gradient(180deg,rgba(168,85,247,.06),rgba(255,255,255,.015))">
@@ -774,6 +798,7 @@ function renderHome(c){
   `;
   bindCardEvents();
 }
+
 
 function renderIncubator(c){
   c.innerHTML = `
