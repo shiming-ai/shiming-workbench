@@ -443,71 +443,54 @@ body::after{content:'';position:fixed;top:-220px;left:50%;transform:translateX(-
 const NAV_CONFIG = [
   { id:'home', standalone:true, name:'总览', icon:'🏠', desc:'全局概览与数据看板' },
 
-  { id:'brand', name:'品牌与战略', icon:'🎯', items:[
-    { id:'brand-card', name:'品牌名片', icon:'🏷️', desc:'品牌定位与名片', url:'brand.html' },
-    { id:'blueprint', name:'AI时代生态蓝图', icon:'🌐', desc:'生态结构与价值地图', url:'cf.html' },
-    { id:'roadshow', name:'路演大屏', icon:'🖥️', desc:'路演展示与大屏视图', url:'invest.html' },
-    { id:'bp', name:'商业计划书', icon:'📄', desc:'BP 全文与执行方案', url:'bp.html', badge:'BP' },
-  ]},
-
-  { id:'ai-product', name:'AI 产品', icon:'🤖', items:[
-    { id:'baby', name:'宝贝成长旗舰', icon:'👶', desc:'儿童成长生态旗舰', url:'baby.html' },
+  /* ===== 核心功能 ===== */
+  { id:'core', name:'核心功能', icon:'⚡', items:[
+    { id:'ai-overview', name:'AI 总览', icon:'🤖', desc:'AI 能力与机会总览', url:'money.html' },
+    { id:'money', name:'赚钱看板', icon:'💰', desc:'收入/订单/客户数据看板', url:'money.html', badge:'NEW' },
+    { id:'workbench', name:'AI 工作台', icon:'🛠️', desc:'39 个行业工作台', url:'wb-engine.html?sku=life' },
+    { id:'ai-apps', name:'AI 应用', icon:'📱', desc:'已上架/可下载应用', status:'soon' },
+    { id:'skill-store', name:'Skill Store', icon:'✨', desc:'技能商店 · 卖技能赚钱', url:'skills.html', badge:'NEW' },
+    { id:'baby', name:'宝贝成长工作台', icon:'👶', desc:'儿童成长生态旗舰', url:'baby.html' },
     { id:'automation', name:'AI自动化运营台', icon:'⚡', desc:'自动化流程与运营', url:'automation.html' },
-    { id:'industry36', name:'36行业工作台', icon:'🧩', desc:'39 个行业解决方案', url:'wb-engine.html?sku=life' },
-    { id:'bundle', name:'Crazy Friday 全家桶', icon:'🎁', desc:'全案产品与资源包', url:'wb-engine.html?sku=life', badge:'¥1999' },
-    { id:'photographer', name:'摄影师工作台', icon:'📷', desc:'约拍/后期/客户管理', status:'soon' },
-    { id:'study', name:'学习工作台', icon:'📚', desc:'考研/雅思/打卡', status:'soon' },
-    { id:'love', name:'恋爱工作台', icon:'💞', desc:'恋爱/约会/情感', status:'soon' },
-    { id:'food', name:'餐饮工作台', icon:'🍱', desc:'门店/外卖/排班', status:'soon' },
-    { id:'fitness', name:'健身工作台', icon:'💪', desc:'私教/会员/体测', status:'soon' },
-    { id:'solo', name:'一人公司工作台', icon:'🦸', desc:'多业务线并行', status:'soon' },
   ]},
 
-  { id:'entrepreneur', name:'创业与项目', icon:'🚀', items:[
-    { id:'incubator', name:'项目孵化中心', icon:'🌱', desc:'从 Idea 到商业验证', url:'#incubator', badge:'NEW', status:'new' },
-    { id:'project-lib', name:'AI项目库', icon:'📦', desc:'已建/在建/废弃项目', status:'soon' },
+  /* ===== 业务体系 ===== */
+  { id:'biz-sys', name:'业务体系', icon:'🏢', items:[
+    { id:'incubator', name:'项目孵化中心', icon:'🌱', desc:'从 Idea 到商业验证', url:'#incubator', badge:'NEW' },
+    { id:'orders', name:'接单工坊', icon:'🤝', desc:'外包需求 · 报价 · 接单', url:'orders.html', badge:'NEW' },
     { id:'superbrain', name:'超脑工坊', icon:'🧠', desc:'AI 员工调用执行', status:'soon' },
-    { id:'orders', name:'接单工坊', icon:'🤝', desc:'真实商业订单接入', status:'soon' },
+    { id:'customer-order', name:'客户与订单', icon:'📋', desc:'客户/订单/授权', url:'authorize.html' },
+    { id:'data-center', name:'数据中心', icon:'📊', desc:'业务数据看板', url:'money.html' },
+    { id:'bundle', name:'Crazy Friday 全家桶', icon:'🎁', desc:'全案产品与资源包', url:'wb-engine.html?sku=life', badge:'¥1999' },
   ]},
 
-  { id:'ai-eco', name:'AI 生态', icon:'🛍️', items:[
-    { id:'app-market', name:'AI应用市场', icon:'🛍️', desc:'已上架/可下载应用', status:'soon' },
-    { id:'skill-shop', name:'Skill 商店', icon:'✨', desc:'技能模板商店', status:'soon' },
-    { id:'service', name:'服务商中心', icon:'🏢', desc:'代运营/服务商体系', status:'soon' },
-    { id:'knowledge', name:'知识库', icon:'📚', desc:'课程/方法论/SOP', status:'soon' },
-    { id:'tools', name:'AI工具中心', icon:'🧰', desc:'Prompt/Agent/Workflow', status:'soon' },
-  ]},
-
-  { id:'biz', name:'业务运营', icon:'📊', items:[
-    { id:'customer', name:'客户中心', icon:'👥', desc:'客户档案与跟进', status:'soon' },
-    { id:'order-c', name:'订单中心', icon:'📋', desc:'订单/授权/续费', url:'order-workbench.html' },
-    { id:'data', name:'数据中心', icon:'📊', desc:'业务数据看板', status:'soon' },
-    { id:'member', name:'会员中心', icon:'👑', desc:'会员/积分/等级', status:'soon' },
-    { id:'monetize', name:'商业化中心', icon:'💰', desc:'销售/授权/收款', status:'soon' },
-  ]},
-
-  { id:'content', name:'内容与增长', icon:'📣', items:[
+  /* ===== 资源支持 ===== */
+  { id:'resource', name:'资源支持', icon:'📚', items:[
+    { id:'lib', name:'资源库', icon:'🗂️', desc:'素材/模板/资料', status:'soon' },
     { id:'content-c', name:'内容中心', icon:'📣', desc:'多平台内容矩阵', status:'soon' },
-    { id:'xhs', name:'小红书运营', icon:'📱', desc:'笔记/图文/引流', status:'soon' },
-    { id:'comic', name:'AI漫剧中心', icon:'🎬', desc:'AI 漫剧制作/分发', status:'soon' },
-    { id:'growth', name:'增长中心', icon:'📈', desc:'获客/激活/留存', status:'soon' },
-    { id:'media', name:'素材库', icon:'🗂️', desc:'图片/视频/文案', status:'soon' },
+    { id:'learn', name:'学习中心', icon:'🎓', desc:'课程/方法论/SOP', status:'soon' },
+    { id:'service-c', name:'服务商中心', icon:'🏢', desc:'代运营/服务商体系', status:'soon' },
   ]},
 
-  { id:'open', name:'开放生态', icon:'🌐', items:[
-    { id:'partner', name:'商务合作', icon:'💼', desc:'渠道/代理/分销', url:'partner.html' },
-    { id:'developer', name:'开发者中心', icon:'🧑‍💻', desc:'API/SDK/Doc', url:'hub.html' },
-    { id:'api', name:'API / 开放能力', icon:'🔌', desc:'接口与开放平台', status:'soon' },
-    { id:'partners', name:'合作伙伴', icon:'🤝', desc:'战略联盟/合作商', status:'soon' },
+  /* ===== 商业变现 ===== */
+  { id:'monetize', name:'商业变现', icon:'💳', items:[
+    { id:'pay-c', name:'变现收款', icon:'💰', desc:'SKU/下单/收款', url:'pay.html' },
+    { id:'authorize', name:'授权管理', icon:'🛡️', desc:'产品/客户/名额', url:'authorize.html', badge:'42' },
+    { id:'pro', name:'Pro 会员', icon:'👑', desc:'订阅 · 等级 · 权益', url:'pro.html', badge:'NEW' },
+    { id:'partner-c', name:'招商合作', icon:'🤝', desc:'渠道/代理/分销', url:'partner.html' },
+    { id:'roadshow', name:'路演大屏', icon:'🖥️', desc:'路演展示与大屏视图', url:'invest.html' },
+    { id:'bp', name:'商业计划书', icon:'📄', desc:'BP 全文与执行方案', url:'bp.html' },
+    { id:'brand-card', name:'品牌名片', icon:'🏷️', desc:'品牌定位与名片', url:'brand.html' },
   ]},
 
+  /* ===== 系统 ===== */
   { id:'system', name:'系统', icon:'⚙️', items:[
     { id:'settings', name:'设置', icon:'⚙️', desc:'系统偏好/外观', status:'soon' },
-    { id:'permission', name:'权限管理', icon:'🔐', desc:'角色/权限分配', status:'soon' },
     { id:'notify', name:'消息通知', icon:'🔔', desc:'系统/订单/活动', status:'soon' },
     { id:'account', name:'账户', icon:'👤', desc:'个人资料/账号安全', status:'soon' },
   ]},
 ];
+
 
 /* 全部模块扁平化 */
 const ALL_MODULES = (() => {
@@ -711,89 +694,155 @@ function renderHome(c){
   function ls(key, d){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):d; }catch(e){ return d; } }
   const today = (()=>{ const t=new Date(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); })();
   const incomes = ls('incomes',[]);
-  const expenses = ls('expenses',[]);
   const orders = ls('orders',[]);
   const crmList = ls('crmList',[]);
   const authProds = ls('wb_auth_products',[]);
+  const cfOrders = ls('cf_orders',[]);
+  const cfSkills = ls('cf_skills',[]);
   const todayIncome = incomes.filter(i=>i.time&&i.time.startsWith(today)).reduce((s,i)=>s+(i.amount||0),0);
-  const todayExpense = expenses.filter(e=>e.time&&e.time.startsWith(today)).reduce((s,e)=>s+(e.amount||0),0);
-  const pendingOrders = orders.filter(o=>o.status==='进行中'||o.status==='待付款').length;
+  const totalIncome = incomes.reduce((s,i)=>s+(i.amount||0),0);
+  const pendingOrders = orders.filter(o=>o.status==='进行中'||o.status==='待付款').length + cfOrders.filter(o=>o.status==='open').length;
   const activeClients = crmList.filter(c=>c.status!=='已完成'&&c.status!=='已流失').length;
   const authUsed = authProds.reduce((s,p)=>s+(p.clients?p.clients.length:0),0);
-  const authTotal = authProds.reduce((s,p)=>s+(parseInt(p.total)||0),0);
+  const totalClients = authUsed + activeClients;
+  const myOpportunities = cfOrders.filter(o=>o.status==='open').length;
+  const skillSales = cfSkills.reduce((s,k)=>s+(k.sales||0),0);
 
   c.innerHTML = `
     <div class="crumb"><span class="b-prev">Crazy Friday</span><span class="b-sep">›</span><span class="b-now">总览</span></div>
-    <div class="hero">
+
+    <!-- Hero -->
+    <div class="hero" style="padding:32px 28px">
       <div class="hero-left">
-        <div class="hero-h">Crazy Friday · 商业计划书</div>
-        <div class="hero-sub">AI 时代的一人公司生态 · 商业计划书</div>
-        <div class="hero-meta">
-          <div>版本 V1.0 · 2026-08-12</div>
-          <div>创始人：时铭（Shiming）</div>
-          <div>shim16506@gmail.com</div>
-        </div>
-        <div class="hero-cta">
-          <button class="btn" onclick="copyBP()">✨ 一键复制 BP 全文</button>
-          <button class="btn ghost" onclick="window.open('invest.html','_blank')">📄 打开 / 导出 PDF</button>
+        <div class="hero-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:800;padding:5px 12px;border-radius:20px;background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.3);color:#d8b4fe;letter-spacing:1px;margin-bottom:12px">🚀 CRAZY FRIDAY · AI 商业控制台</div>
+        <div class="hero-h" style="font-size:30px;line-height:1.2">1 个人 + AI，<br>就是一家公司。</div>
+        <div class="hero-sub" style="font-size:13px;color:var(--ink2);margin-top:8px;line-height:1.7">从想法到收入，全流程 AI 驱动。<br>让一个人的能力，变成一家公司的效率。</div>
+        <div class="hero-cta" style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn" onclick="navigate('money')">💰 开始探索赚钱</button>
+          <button class="btn ghost" onclick="navigate('workbench')">🛠️ 创建工作台</button>
         </div>
       </div>
-      <div class="hero-right"><div class="hero-cube">CF</div></div>
-    </div>
-    <div class="quote-card">
-      <div class="q-mark">"</div>
-      <div class="q">一句话定位：<span class="grad">一个人 + AI，就是一家公司。</span></div>
-      <div class="sub">我们要做中国版 Fiverr / Upwork 的 AI 垂直生态 —— 比猪八戒更轻、更聚焦一人公司，让个体用 AI 完成从获客、接单、交付、复盘的全流程闭环。</div>
-    </div>
-    <div class="section">
-      <div class="sec-hd"><h2>📈 今日经营快照</h2><span class="more" onclick="window.open('workbench/index.html','_blank')">进入运营台 →</span></div>
-      <div class="stat-row">
-        <div class="stat-card"><div class="n g">¥${todayIncome}</div><div class="l">今日收入</div></div>
-        <div class="stat-card"><div class="n">¥${todayExpense}</div><div class="l">今日支出</div></div>
-        <div class="stat-card"><div class="n">${pendingOrders}</div><div class="l">待处理订单</div></div>
-        <div class="stat-card"><div class="n">${activeClients}</div><div class="l">跟进中客户</div></div>
-        <div class="stat-card"><div class="n">${authUsed}</div><div class="l">已授权客户</div></div>
-        <div class="stat-card"><div class="n">${Math.max(0,authTotal-authUsed)}</div><div class="l">可卖名额</div></div>
+      <div class="hero-right">
+        <div style="width:140px;height:140px;border-radius:28px;background:linear-gradient(135deg,#7C3AED,#EC4899);display:flex;align-items:center;justify-content:center;font-size:52px;box-shadow:0 20px 60px rgba(168,85,247,.5),inset 0 1px 0 rgba(255,255,255,.3);position:relative;transform:rotate(-4deg)">
+          <span style="transform:rotate(4deg)">🚀</span>
+          <span style="position:absolute;width:90px;height:8px;background:rgba(168,85,247,.5);border-radius:4px;filter:blur(6px);bottom:-16px"></span>
+        </div>
       </div>
     </div>
+
+    <!-- 今天 4 卡 -->
     <div class="section">
-      <div class="sec-hd"><h2>⭐ 我的常用</h2><span class="more" onclick="navigate('ai-product')">更多 →</span></div>
+      <div class="sec-hd"><h2>📊 今天</h2><span class="more" onclick="navigate('money')">全部数据 →</span></div>
+      <div class="stat-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="n g">${totalClients}</div><div class="l">我的机会</div></div>
+        <div class="stat-card"><div class="n">${myOpportunities}</div><div class="l">待接单</div></div>
+        <div class="stat-card"><div class="n">${pendingOrders}</div><div class="l">待处理</div></div>
+        <div class="stat-card"><div class="n" style="background:linear-gradient(135deg,#FBBF24,#F59E0B);-webkit-background-clip:text;-webkit-text-fill-color:transparent">${skillSales}</div><div class="l">Skill 售出</div></div>
+      </div>
+    </div>
+
+    <!-- 数据概览 -->
+    <div class="card" style="margin-bottom:18px;padding:16px 18px">
+      <div class="sec-hd" style="margin-bottom:10px"><h2>📈 数据概览</h2><span class="more" onclick="navigate('money')">赚钱看板 →</span></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center">
+        <div><div style="font-size:16px;font-weight:900;color:#fff">¥${totalIncome}</div><div style="font-size:9.5px;color:var(--ink3);margin-top:2px">累计收入</div></div>
+        <div><div style="font-size:16px;font-weight:900;color:#fff">¥${todayIncome}<span style="color:#34D399;font-size:10px"> ↑今日</span></div><div style="font-size:9.5px;color:var(--ink3);margin-top:2px">今日新增</div></div>
+        <div><div style="font-size:16px;font-weight:900;color:#fff">${orders.length}</div><div style="font-size:9.5px;color:var(--ink3);margin-top:2px">订单总数</div></div>
+        <div><div style="font-size:16px;font-weight:900;color:#fff">${authProds.length}</div><div style="font-size:9.5px;color:var(--ink3);margin-top:2px">在售产品</div></div>
+      </div>
+    </div>
+
+    <!-- 快速开始 -->
+    <div class="section">
+      <div class="sec-hd"><h2>⚡ 快速开始</h2></div>
+      <div class="grid cols-4" style="grid-template-columns:repeat(4,1fr)">
+        <a class="mod-card" href="orders.html" onclick="if(event)event.preventDefault();navigate('orders')"><div class="ic" style="background:rgba(168,85,247,.15)">🤝</div><div class="body"><div class="nm">进入接单工坊</div><div class="de">接真实订单</div></div></a>
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(236,72,153,.15)">🌱</div><div class="body"><div class="nm">发布项目</div><div class="de">孵化你的 Idea</div></div></a>
+        <a class="mod-card" href="#workbench" data-id="workbench"><div class="ic" style="background:rgba(16,185,129,.15)">🛠️</div><div class="body"><div class="nm">创建工作台</div><div class="de">36 行业任选</div></div></a>
+        <a class="mod-card" href="skills.html" onclick="if(event)event.preventDefault();navigate('skill-store')"><div class="ic" style="background:rgba(245,158,11,.15)">✨</div><div class="body"><div class="nm">Skill 商店</div><div class="de">卖技能赚钱</div></div></a>
+      </div>
+    </div>
+
+    <!-- 你想做什么？ -->
+    <div class="section">
+      <div class="sec-hd"><h2>🎯 你想做什么？</h2></div>
       <div class="grid cols-3">
-        <a class="mod-card" href="#baby" data-id="baby"><div class="ic">👶</div><div class="body"><div class="nm">宝贝成长旗舰</div><div class="de">儿童成长生态旗舰</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="#automation" data-id="automation"><div class="ic">⚡</div><div class="body"><div class="nm">AI自动化运营台</div><div class="de">自动化流程与运营</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="#industry36" data-id="industry36"><div class="ic">🧩</div><div class="body"><div class="nm">36 行业工作台</div><div class="de">39 行业解决方案</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic">🌱</div><div class="body"><div class="nm">项目孵化中心</div><div class="de">从 Idea 到商业验证</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="#bp" data-id="bp"><div class="ic">📄</div><div class="body"><div class="nm">商业计划书</div><div class="de">BP 全文与执行方案</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="#bundle" data-id="bundle"><div class="ic">🎁</div><div class="body"><div class="nm">全家桶</div><div class="de">全案产品与资源包</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="money.html" style="background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(236,72,153,.08));border-color:rgba(168,85,247,.4)" onclick="if(event)event.preventDefault();navigate('money')"><div class="ic" style="background:linear-gradient(135deg,#7C3AED,#EC4899);font-size:22px">💰</div><div class="body"><div class="nm" style="font-size:14px">我要赚钱</div><div class="de">接单 / 卖技能 / 卖工作台</div></div><span class="ar" style="color:#d8b4fe">›</span></a>
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(94,234,212,.15)">💡</div><div class="body"><div class="nm">我要创意</div><div class="de">发现 AI 机会</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(59,130,246,.15)">🚀</div><div class="body"><div class="nm">我要孵化项目</div><div class="de">Idea → 产品</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#core" data-id="ai-apps"><div class="ic" style="background:rgba(236,72,153,.15)">🤖</div><div class="body"><div class="nm">我要组建 AI 团队</div><div class="de">AI 员工 + 智能体</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#resource" data-id="learn"><div class="ic" style="background:rgba(245,158,11,.15)">📚</div><div class="body"><div class="nm">我要学习</div><div class="de">课程 / 方法论</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#monetize" data-id="pro"><div class="ic" style="background:linear-gradient(135deg,#FBBF24,#F59E0B)">👑</div><div class="body"><div class="nm">Pro 会员</div><div class="de">解锁全部能力</div></div><span class="ar">›</span></a>
       </div>
     </div>
+
+    <!-- AI 工作台市场 -->
     <div class="section">
-      <div class="sec-hd"><h2>💼 业务线总览</h2><span class="more" onclick="toast('🛠 业务线详情 · 即将上线')">7 条业务线</span></div>
+      <div class="sec-hd"><h2>🛍️ AI 工作台市场</h2><span class="more" onclick="window.open('wb-engine.html?sku=life','_blank')">全部工作台 →</span></div>
+      <div class="card" style="padding:12px;margin-bottom:12px">
+        <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px">
+          ${['🔥 推荐','📣 营销','📝 内容创作','🛒 电商','🎨 设计','💻 开发','📊 数据分析','🎓 教育','➕ 更多'].map((t,i)=>`<span onclick="toast('${t} · 即将上线')" style="flex-shrink:0;font-size:11px;font-weight:800;padding:6px 13px;border-radius:16px;background:${i===0?'linear-gradient(135deg,#7C3AED,#EC4899)':'rgba(255,255,255,.04)'};color:${i===0?'#fff':'var(--ink2)'};border:${i===0?'none':'1px solid var(--line)'};cursor:pointer">${t}</span>`).join('')}
+        </div>
+      </div>
       <div class="grid cols-3">
-        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(168,85,247,.15)">🛍️</div><div class="body"><div class="nm">AI 工作台售卖</div><div class="de">39 行业 + 旗舰 ¥599 起</div></div></div>
-        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(236,72,153,.15)">🛡️</div><div class="body"><div class="nm">授权 / 卖名额</div><div class="de">每名额=一份年费</div></div></div>
-        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(16,185,129,.15)">🎬</div><div class="body"><div class="nm">AI 漫剧</div><div class="de">内容业务 ¥3k-1w/月</div></div></div>
-        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(59,130,246,.15)">🎓</div><div class="body"><div class="nm">一人公司 AI 营</div><div class="de">课程 + 学员转化</div></div></div>
-        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(245,158,11,.15)">🛠️</div><div class="body"><div class="nm">轻定制</div><div class="de">¥999 起</div></div></div>
-        <div class="mod-card" style="cursor:default"><div class="ic" style="background:rgba(94,234,212,.15)">🧠</div><div class="body"><div class="nm">深度定制</div><div class="de">¥1999 / ¥2999+</div></div></div>
+        <a class="mod-card" href="#baby" data-id="baby"><div class="ic">👶</div><div class="body"><div class="nm">宝贝成长工作台</div><div class="de">¥599/年 · 儿童成长生态</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#industry36" data-id="industry36"><div class="ic">📷</div><div class="body"><div class="nm">摄影师工作台</div><div class="de">约拍/后期/客户管理</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#industry36" data-id="industry36"><div class="ic">🎬</div><div class="body"><div class="nm">自媒体工作台</div><div class="de">选题/脚本/账号矩阵</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#industry36" data-id="industry36"><div class="ic">🛒</div><div class="body"><div class="nm">电商运营工作台</div><div class="de">9 大平台一屏管</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#industry36" data-id="industry36"><div class="ic">📈</div><div class="body"><div class="nm">增长营销工作台</div><div class="de">获客/转化/增长</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#industry36" data-id="industry36"><div class="ic">🧩</div><div class="body"><div class="nm">36 行业全览</div><div class="de">39 个行业工作台</div></div><span class="ar">›</span></a>
       </div>
     </div>
+
+    <!-- 本周值得做的 AI 项目 -->
     <div class="section">
-      <div class="sec-hd"><h2>🚀 创业与项目</h2><span class="more" onclick="navigate('incubator')">项目孵化 →</span></div>
+      <div class="sec-hd"><h2>🔥 本周值得做的 AI 项目</h2><span class="more" onclick="navigate('incubator')">孵化中心 →</span></div>
+      <div class="grid cols-3">
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(168,85,247,.15)">🎬</div><div class="body"><div class="nm">AI 短视频批量生成</div><div class="de">¥12k+/月 · 需求 9.5w</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(16,185,129,.15)">💬</div><div class="body"><div class="nm">智能客服与知识库</div><div class="de">¥9.8k+/月 · 需求 6.7w</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(236,72,153,.15)">✍️</div><div class="body"><div class="nm">AI 代写爆款内容</div><div class="de">¥9k+/月 · 趋势上升</div></div><span class="ar">›</span></a>
+      </div>
+    </div>
+
+    <!-- Skill Store 精选 -->
+    <div class="section">
+      <div class="sec-hd"><h2>✨ Skill Store 精选</h2><span class="more" onclick="navigate('skill-store')">全部技能 →</span></div>
+      <div class="grid cols-3">
+        <a class="mod-card" href="#skill-store" data-id="skill-store"><div class="ic" style="background:rgba(168,85,247,.15)">🎓</div><div class="body"><div class="nm">Prompt 提问工程师</div><div class="de">¥1200 · 学会高效提问</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#skill-store" data-id="skill-store"><div class="ic" style="background:rgba(236,72,153,.15)">🤖</div><div class="body"><div class="nm">自动化工作流</div><div class="de">¥860+ · 效率翻倍</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#skill-store" data-id="skill-store"><div class="ic" style="background:rgba(16,185,129,.15)">🎨</div><div class="body"><div class="nm">AI 绘画课</div><div class="de">¥640+ · 变现技能</div></div><span class="ar">›</span></a>
+      </div>
+    </div>
+
+    <!-- 接单工坊 -->
+    <div class="section">
+      <div class="sec-hd"><h2>🤝 接单工坊</h2><span class="more" onclick="navigate('orders')">进入接单 →</span></div>
       <div class="grid cols-2">
-        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic">🌱</div><div class="body"><div class="nm">项目孵化中心</div><div class="de">Idea → 评估 → 立项 → MVP → 测试 → 获客 → 复盘</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">📦</div><div class="body"><div class="nm">AI项目库</div><div class="de">已建/在建/废弃项目档案</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">🧠</div><div class="body"><div class="nm">超脑工坊</div><div class="de">调用 AI 员工帮助执行</div></div><span class="ar">›</span></a>
-        <a class="mod-card" href="javascript:void(0)" onclick="event.preventDefault();toast('🚀 即将上线')"><div class="ic">🤝</div><div class="body"><div class="nm">接单工坊</div><div class="de">真实商业订单接入</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="orders.html" onclick="if(event)event.preventDefault();navigate('orders')"><div class="ic" style="background:rgba(168,85,247,.15)">📦</div><div class="body"><div class="nm">外包需求推荐</div><div class="de">按能力匹配 · 报价即接</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="orders.html" onclick="if(event)event.preventDefault();navigate('orders')"><div class="ic" style="background:rgba(236,72,153,.15)">🎬</div><div class="body"><div class="nm">AI 创作接单</div><div class="de">文案/剪辑/设计</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="orders.html" onclick="if(event)event.preventDefault();navigate('orders')"><div class="ic" style="background:rgba(16,185,129,.15)">📱</div><div class="body"><div class="nm">小红书代运营</div><div class="de">账号矩阵/内容排期</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="orders.html" onclick="if(event)event.preventDefault();navigate('orders')"><div class="ic" style="background:rgba(245,158,11,.15)">🎨</div><div class="body"><div class="nm">Logo 设计</div><div class="de">品牌视觉定制</div></div><span class="ar">›</span></a>
       </div>
     </div>
-    <div class="card" style="text-align:center;padding:24px 18px;background:linear-gradient(180deg,rgba(168,85,247,.06),rgba(255,255,255,.015))">
-      <div style="display:flex;justify-content:center;gap:18px;flex-wrap:wrap">
-        <div style="text-align:center"><div style="font-size:10.5px;color:var(--ink2);font-weight:700">🛡️ 品牌总台 · 对外展示版</div><div style="font-size:9px;color:var(--ink3);margin-top:2px">品牌形象与官网展示</div></div>
-        <div style="text-align:center"><div style="font-size:10.5px;color:var(--ink2);font-weight:700">🔄 实时同步 · 数据后台 v6.0</div><div style="font-size:9px;color:var(--ink3);margin-top:2px">数据实时更新与同步</div></div>
-        <div style="text-align:center"><div style="font-size:10.5px;color:var(--ink2);font-weight:700">🔐 安全可靠 · 隐私保护</div><div style="font-size:9px;color:var(--ink3);margin-top:2px">企业级安全与数据保护</div></div>
+
+    <!-- Crazy Friday Universe -->
+    <div class="section">
+      <div class="sec-hd"><h2>🌐 Crazy Friday Universe</h2></div>
+      <div class="grid cols-3">
+        <a class="mod-card" href="index.html" onclick="if(event)event.preventDefault();window.open('index.html','_blank')"><div class="ic" style="background:rgba(168,85,247,.15)">🏛️</div><div class="body"><div class="nm">官网</div><div class="de">品牌与生态</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="orders.html" onclick="if(event)event.preventDefault();window.open('orders.html','_blank')"><div class="ic" style="background:rgba(236,72,153,.15)">🤝</div><div class="body"><div class="nm">接单工坊</div><div class="de">外包需求</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#incubator" data-id="incubator"><div class="ic" style="background:rgba(16,185,129,.15)">🌱</div><div class="body"><div class="nm">项目孵化中心</div><div class="de">Idea → 产品</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="skills.html" onclick="if(event)event.preventDefault();window.open('skills.html','_blank')"><div class="ic" style="background:rgba(245,158,11,.15)">✨</div><div class="body"><div class="nm">Skill Store</div><div class="de">技能商店</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#workbench" data-id="workbench"><div class="ic" style="background:rgba(59,130,246,.15)">🛍️</div><div class="body"><div class="nm">AI 工作台市场</div><div class="de">36 行业</div></div><span class="ar">›</span></a>
+        <a class="mod-card" href="#pro" data-id="pro"><div class="ic" style="background:linear-gradient(135deg,#FBBF24,#F59E0B)">👑</div><div class="body"><div class="nm">Pro 会员</div><div class="de">星球俱乐部</div></div><span class="ar">›</span></a>
       </div>
-      <div style="font-size:9.5px;color:var(--ink3);margin-top:14px;letter-spacing:.5px">Crazy Friday © 2026</div>
+    </div>
+
+    <!-- Pro 会员入口 -->
+    <div class="card" style="text-align:center;padding:24px 18px;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.06));border-color:rgba(168,85,247,.3)">
+      <div style="font-size:13px;font-weight:900;color:#fff">👑 Crazy Friday Pro</div>
+      <div style="font-size:11px;color:var(--ink2);margin-top:4px">解锁全部 AI 工具 · 无限使用 · 优先接单</div>
+      <button class="btn" style="margin-top:14px" onclick="navigate('pro')">升级 Pro →</button>
     </div>
   `;
   bindCardEvents();
