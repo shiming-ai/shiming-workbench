@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>💸 赚钱看板 · Crazy Friday</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a1a;
+  --card:rgba(255,255,255,.05);
+  --bd:rgba(255,255,255,.09);
+  --text:#f4f1ff;
+  --muted:#9d94c0;
+  --pur:#7C3AED;
+  --pink:#EC4899;
+  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(rgba(124,58,237,.26) 1.5px,transparent 1.5px);
+  background-size:26px 26px;
+  color:var(--text);
+  font-family:Georgia,"Songti SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  min-height:100vh;
+  padding:0 16px 40px;
+  position:relative;
+}
+/* 顶部紫色光晕 + 左下粉光 */
+body::before{
+  content:'';position:fixed;top:-220px;left:50%;transform:translateX(-50%);
+  width:760px;height:460px;
+  background:radial-gradient(ellipse at center,rgba(124,58,237,.38),transparent 65%);
+  filter:blur(34px);pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;bottom:-260px;right:-180px;
+  width:560px;height:420px;
+  background:radial-gradient(ellipse at center,rgba(236,72,153,.18),transparent 65%);
+  filter:blur(40px);pointer-events:none;z-index:0;
+}
+main{max-width:900px;margin:0 auto;position:relative;z-index:1}
+
+/* ===== 顶栏 ===== */
+.topbar{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:22px 4px 10px;position:relative;z-index:1}
+.back{
+  background:rgba(255,255,255,.06);border:1px solid var(--bd);color:var(--text);
+  padding:9px 15px;border-radius:999px;font-size:14px;cursor:pointer;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:.2s;font-family:inherit;flex:none;
+}
+.back:hover{background:rgba(255,255,255,.12);transform:translateX(-2px)}
+.title-wrap{flex:1;min-width:0}
+.logo{
+  font-size:26px;font-weight:700;letter-spacing:.5px;
+  background:linear-gradient(120deg,#c4b5fd,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{font-size:13px;color:var(--muted);margin-top:2px}
+.tag{
+  font-size:12px;color:#c4b5fd;border:1px solid rgba(196,181,253,.4);
+  padding:3px 10px;border-radius:999px;background:rgba(124,58,237,.15);flex:none;
+}
+
+/* ===== 卡片 ===== */
+.card{
+  position:relative;background:var(--card);border:1px solid var(--bd);
+  border-radius:22px;padding:22px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  animation:rise .5s ease both;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+}
+.card h2{font-size:17px;font-weight:700;letter-spacing:.3px;margin-bottom:16px}
+.card h2 small{font-weight:400;font-size:12px;color:var(--muted);margin-left:6px}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ===== Hero ===== */
+.hero{
+  background:linear-gradient(150deg,rgba(124,58,237,.34),rgba(236,72,153,.16));
+  border-radius:26px;padding:30px 26px 24px;
+}
+.hero-label{font-size:13px;color:#c8bff2;letter-spacing:1px}
+.hero-total{
+  font-size:54px;font-weight:700;line-height:1.15;margin:6px 0 20px;
+  background:linear-gradient(135deg,#fff,#d8b4fe 45%,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-family:Georgia,serif;
+}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;min-width:0;
+}
+.kpi-ic{
+  width:34px;height:34px;border-radius:10px;flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--grad);
+}
+.kpi-txt{min-width:0}
+.kpi-txt b{
+  display:block;font-size:16px;font-family:Georgia,serif;
+  background:linear-gradient(120deg,#f0e9ff,#f9a8d4);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.kpi-txt span{font-size:11px;color:var(--muted);display:block;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== 双栏布局 ===== */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+
+/* ===== 趋势柱状图 ===== */
+.bars{height:200px;display:flex;align-items:flex-end;gap:8px;padding-top:30px}
+.bar-wrap{flex:1;height:100%;display:flex;flex-direction:column;min-width:0}
+.bar-zone{flex:1;display:flex;align-items:flex-end;justify-content:center}
+.bar{
+  position:relative;width:70%;max-width:34px;min-height:3px;
+  border-radius:8px 8px 4px 4px;
+  background:linear-gradient(180deg,#EC4899,#7C3AED);
+  box-shadow:0 0 14px rgba(124,58,237,.35);
+  transition:transform .2s;
+}
+.bar::before{
+  content:'';position:absolute;top:3px;left:12%;right:12%;height:2px;border-radius:2px;
+  background:rgba(255,255,255,.45);
+}
+.bar:hover{transform:scaleY(1.04)}
+.bar::after{
+  content:attr(data-amount);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:#171231;border:1px solid rgba(255,255,255,.15);color:#fff;
+  font-size:11px;padding:4px 8px;border-radius:8px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:.15s;font-family:Georgia,serif;z-index:5;
+}
+.bar:hover::after{opacity:1}
+.b-label{font-size:10px;color:var(--muted);text-align:center;white-space:nowrap;margin-top:8px}
+
+/* ===== 空状态 ===== */
+.empty{padding:34px 10px;text-align:center;color:var(--muted)}
+.empty span{font-size:38px;display:block;margin-bottom:10px;opacity:.9}
+.empty p{font-size:13px;line-height:1.7}
+
+/* ===== 来源分析 ===== */
+.src{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.src:last-child{border-bottom:none;padding-bottom:0}
+.src-ic{
+  width:38px;height:38px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:rgba(124,58,237,.18);border:1px solid rgba(196,181,253,.25);
+}
+.src-meta{flex:1;min-width:0}
+.src-name{font-size:14px;font-weight:600}
+.src-bar{height:6px;border-radius:6px;background:rgba(255,255,255,.08);margin-top:7px;overflow:hidden}
+.src-bar i{display:block;height:100%;border-radius:6px;background:var(--grad);transition:width .6s ease}
+.src-val{text-align:right;flex:none}
+.src-val b{display:block;font-size:14px;font-family:Georgia,serif;color:#f0e9ff}
+.src-val span{font-size:10px;color:var(--muted)}
+
+/* ===== 列表行 ===== */
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.row:last-child{border-bottom:none;padding-bottom:0}
+.row-main{flex:1;min-width:0}
+.row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.row-amt{text-align:right;flex:none}
+.row-amt b{display:block;font-size:14px;font-family:Georgia,serif}
+.row-amt span{display:block;margin-top:3px}
+.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid;line-height:1.5}
+.badge.ok{color:#6ee7b7;border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.12)}
+.badge.warn{color:#fcd34d;border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.12)}
+.badge.bad{color:#fca5a5;border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.12)}
+.badge.pur{color:#d8b4fe;border-color:rgba(192,132,252,.4);background:rgba(192,132,252,.12)}
+.badge.idle{color:#cbd5e1;border-color:rgba(203,213,225,.3);background:rgba(203,213,225,.1)}
+.avatar{
+  width:38px;height:38px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--grad);color:#fff;font-weight:700;font-size:15px;
+}
+
+/* ===== 净收入 ===== */
+.net{margin-top:14px;text-align:center}
+.net-row{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:6px}
+.net-item span{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.net-item b{font-size:22px;font-family:Georgia,serif}
+.net-minus,.net-eq{color:var(--muted);font-size:20px}
+.net-final b{
+  font-size:34px;background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.net-final.neg b{background:linear-gradient(135deg,#f87171,#fb7185);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.foot{text-align:center;color:rgba(157,148,192,.6);font-size:11px;margin-top:26px;position:relative;z-index:1}
+
+/* ===== 移动端 ===== */
+@media(max-width:760px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .duo{grid-template-columns:1fr}
+  .hero-total{font-size:42px}
+}
+@media(max-width:380px){
+  .kpis{grid-template-columns:1fr}
+  .hero{padding:24px 18px}
+  .hero-total{font-size:36px}
+  .net-row{gap:10px}
+  .net-final b{font-size:26px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="back" onclick="history.back()">‹ 返回</button>
+  <div class="title-wrap">
+    <h1 class="logo">💸 赚钱看板</h1>
+    <p class="sub">Crazy Friday · 商业化数据总览</p>
+  </div>
+  <span class="tag">v6</span>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-label">累计收入 · 全部来源</p>
+    <div class="hero-total" id="heroTotal">¥0</div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <!-- 趋势 + 来源 -->
+  <div class="duo">
+    <section class="card">
+      <h2>📈 收入趋势 <small>近 7 天</small></h2>
+      <div id="trendBars" class="bars"></div>
+    </section>
+    <section class="card">
+      <h2>🧩 收入来源分析</h2>
+      <div id="sourceList"></div>
+    </section>
+  </div>
+
+  <!-- 订单 + 客户 -->
+  <div class="duo">
+    <section class="card">
+      <h2>🛒 订单列表 <small>最近 5 条</small></h2>
+      <div id="orderList"></div>
+    </section>
+    <section class="card">
+      <h2>👥 客户列表 <small>最近 5 位</small></h2>
+      <div id="clientList"></div>
+    </section>
+  </div>
+
+  <!-- 净收入 -->
+  <section class="card net">
+    <h2>💰 净收入结算</h2>
+    <div class="net-row">
+      <div class="net-item"><span>总收入</span><b id="netIn">¥0</b></div>
+      <div class="net-minus">−</div>
+      <div class="net-item"><span>总支出</span><b id="netOut">¥0</b></div>
+      <div class="net-eq">=</div>
+      <div class="net-item net-final"><span>净收入</span><b id="netFinal">¥0</b></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">Money Board · 数据实时同步自工作台 localStorage</footer>
+
+<script>
+(function(){
+'use strict';
+
+function ls(key,d){try{var v=localStorage.getItem(key);return v?JSON.parse(v):d}catch(e){return d}}
+
+var incomes   = ls('incomes',[]);
+var expenses  = ls('expenses',[]);
+var orders    = ls('orders',[]);
+var crmList   = ls('crmList',[]);
+var wb        = ls('wb_auth_products',[]);
+var cfOrders  = ls('cf_orders',[]);
+var cfSkills  = ls('cf_skills',[]);
+
+function $(id){return document.getElementById(id)}
+
+function num(v){var n=Number(v);return isFinite(n)?n:0}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+function fmt(n){n=Math.round(n*100)/100;return '¥'+n.toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:2})}
+function pad(n){return String(n).padStart(2,'0')}
+function localDay(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function getDay(t){
+  if(!t)return '';
+  var s=String(t);
+  var m=s.match(/^\d{4}-\d{2}-\d{2}/);
+  if(m)return m[0];
+  var d=new Date(s.replace(' ','T'));
+  return isNaN(d)?'':localDay(d);
+}
+function timeVal(t){if(!t)return 0;var d=new Date(String(t).replace(' ','T'));return isNaN(d)?0:d.getTime()}
+function fmtTime(t){
+  if(!t)return '—';
+  var d=new Date(String(t).replace(' ','T'));
+  if(isNaN(d))return esc(t);
+  return pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+function lastNDays(n){
+  var arr=[],now=new Date();
+  for(var i=n-1;i>=0;i--){arr.push(localDay(new Date(now.getFullYear(),now.getMonth(),now.getDate()-i)))}
+  return arr;
+}
+function empty(emoji,text){return '<div class="empty"><span>'+emoji+'</span><p>'+text+'</p></div>'}
+function badge(st){
+  var s=String(st==null?'':st).toLowerCase();
+  var rules=[
+    [/完成|paid|success|已支付|已付款|done/,'ok'],
+    [/待|pending|process|未付|review/,'warn'],
+    [/取消|cancel|refund|退款|fail|失败|closed/,'bad'],
+    [/授权|active|trial|试用/,'pur']
+  ];
+  for(var i=0;i<rules.length;i++){
+    if(rules[i][0].test(s))return '<span class="badge '+rules[i][1]+'">'+esc(st)+'</span>';
+  }
+  return '<span class="badge idle">'+esc(st||'未知')+'</span>';
+}
+
+/* ============ KPI ============ */
+var today=localDay(new Date());
+var todayIncome=incomes.filter(function(x){return getDay(x.time)===today}).reduce(function(s,x){return s+num(x.amount)},0);
+var todayOrders=orders.filter(function(x){return getDay(x.time)===today}).length+cfOrders.filter(function(x){return getDay(x.time)===today}).length;
+var clientCount=crmList.length+wb.reduce(function(s,p){return s+(Array.isArray(p.clients)?p.clients.length:0)},0);
+var authCount=wb.reduce(function(s,p){var c=Array.isArray(p.clients)?p.clients.length:0;return s+(c>0?c:num(p.total))},0);
+
+function kpi(emoji,label,val){
+  return '<div class="kpi"><div class="kpi-ic">'+emoji+'</div><div class="kpi-txt"><b>'+val+'</b><span>'+label+'</span></div></div>';
+}
+$('kpis').innerHTML=
+  kpi('💸','今日收入',fmt(todayIncome))+
+  kpi('🛒','今日订单',todayOrders+' 单')+
+  kpi('👥','客户',clientCount+' 位')+
+  kpi('🔑','授权',authCount+' 项');
+
+/* ============ 累计收入（动画滚动） ============ */
+var totalIn=incomes.reduce(function(s,x){return s+num(x.amount)},0);
+var totalOut=expenses.reduce(function(s,x){return s+num(x.amount)},0);
+var heroEl=$('heroTotal'),_t0=null;
+function step(ts){
+  if(!_t0)_t0=ts;
+  var p=Math.min(1,(ts-_t0)/900);
+  heroEl.textContent=fmt(totalIn*(1-Math.pow(1-p,3)));
+  if(p<1)requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+
+/* ============ 近7天趋势 ============ */
+var days=lastNDays(7);
+var amounts=days.map(function(d){
+  return incomes.filter(function(x){return getDay(x.time)===d}).reduce(function(s,x){return s+num(x.amount)},0);
+});
+var maxA=Math.max.apply(null,amounts.concat([1]));
+if(amounts.reduce(function(a,b){return a+b},0)<=0){
+  $('trendBars').innerHTML=empty('📭','近 7 天还没有收入记录<br>先去工作台卖出第一桶金吧');
+}else{
+  $('trendBars').innerHTML=amounts.map(function(a,i){
+    var h=a>0?Math.max(8,Math.round(a/maxA*100)):3;
+    return '<div class="bar-wrap"><div class="bar-zone"><div class="bar" style="height:'+h+'%" data-amount="'+fmt(a)+'"></div></div><span class="b-label">'+days[i].slice(5)+'</span></div>';
+  }).join('');
+}
+
+/* ============ 收入来源分析（按数据估算） ============ */
+function catSum(re){
+  return incomes.filter(function(x){return re.test(String(x.cat||''))}).reduce(function(s,x){return s+num(x.amount)},0);
+}
+var srcs=[
+  {name:'工作台售卖',icon:'💼',v:orders.reduce(function(s,o){return s+num(o.amount)},0)+catSum(/工作台|售卖|sale|workbench|product|产品/i)},
+  {name:'接单工坊',  icon:'🧑‍💻',v:cfOrders.reduce(function(s,o){return s+num(o.price)},0)+catSum(/接单|gig|cf_|服务/i)},
+  {name:'Skill Store',icon:'⚡',v:cfSkills.reduce(function(s,k){return s+num(k.price)*num(k.sales)},0)+catSum(/skill|技能|store|插件/i)},
+  {name:'授权分销',  icon:'🔑',v:wb.reduce(function(s,p){return s+num(p.price)*num(p.total)},0)+catSum(/授权|auth|license|licence|会员/i)}
+];
+var srcTotal=srcs.reduce(function(s,x){return s+x.v},0);
+if(srcTotal<=0){
+  $('sourceList').innerHTML=empty('🧩','暂无收入来源数据<br>去售卖、接单、上架 Skill 或做授权分销吧');
+}else{
+  var srcMax=Math.max.apply(null,srcs.map(function(x){return x.v}));
+  $('sourceList').innerHTML=srcs.map(function(x){
+    var pct=srcMax>0?Math.round(x.v/srcMax*100):0;
+    return '<div class="src"><div class="src-ic">'+x.icon+'</div><div class="src-meta"><div class="src-name">'+x.name+'</div><div class="src-bar"><i style="width:'+pct+'%"></i></div></div><div class="src-val"><b>'+fmt(x.v)+'</b><span>'+(srcTotal>0?Math.round(x.v/srcTotal*100):0)+'%</span></div></div>';
+  }).join('');
+}
+
+/* ============ 订单列表（合并工作台 + 接单工坊） ============ */
+var orderRows=orders.map(function(o){
+  return {name:o.name,amount:num(o.amount),status:o.status,time:o.time,tag:'工作台'};
+}).concat(cfOrders.map(function(o){
+  return {name:o.title,amount:num(o.price),status:o.status,time:o.time,tag:'接单工坊'};
+})).filter(function(o){return o.name})
+  .sort(function(a,b){return timeVal(b.time)-timeVal(a.time)})
+  .slice(0,5);
+
+if(!orderRows.length){
+  $('orderList').innerHTML=empty('🛒','还没有订单<br>成交第一单后这里会点亮');
+}else{
+  $('orderList').innerHTML=orderRows.map(function(o){
+    return '<div class="row"><div class="row-main"><div class="row-name">'+esc(o.name)+'</div><div class="row-sub">'+o.tag+' · '+fmtTime(o.time)+'</div></div><div class="row-amt"><b>'+fmt(o.amount)+'</b><span>'+badge(o.status)+'</span></div></div>';
+  }).join('');
+}
+
+/* ============ 客户列表（crmList + 授权产品 clients） ============ */
+var clientRows=[];
+crmList.forEach(function(c){
+  if(c&&c.name)clientRows.push({name:c.name,status:c.status||'潜在客户'});
+});
+wb.forEach(function(p){
+  (Array.isArray(p.clients)?p.clients:[]).forEach(function(c){
+    if(c==null)return;
+    var r=typeof c==='string'
+      ?{name:c,status:'授权中'}
+      :(c&&typeof c==='object'?{name:c.name||c.username||c.nickname||c.email||'',status:c.status||'授权中'}:null);
+    if(r&&r.name)clientRows.push(r);
+  });
+});
+var topClients=clientRows.slice(0,5);
+if(!topClients.length){
+  $('clientList').innerHTML=empty('👥','还没有客户<br>把产品卖出去，客户就在路上');
+}else{
+  $('clientList').innerHTML=topClients.map(function(c){
+    var ch=(c.name||'?').trim().charAt(0);
+    return '<div class="row"><div class="avatar">'+esc(ch)+'</div><div class="row-main"><div class="row-name">'+esc(c.name)+'</div><div class="row-sub">'+badge(c.status)+'</div></div></div>';
+  }).join('');
+}
+
+/* ============ 净收入 ============ */
+$('netIn').textContent=fmt(totalIn);
+$('netOut').textContent=fmt(totalOut);
+var net=totalIn-totalOut;
+var netFinal=$('netFinal');
+netFinal.textContent=fmt(net);
+if(net<0)netFinal.closest('.net-final').classList.add('neg');
+})();
+</script>
+</body>
+</html>
