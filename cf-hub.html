@@ -945,6 +945,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('menuBtn').addEventListener('click', openDrawer);
   document.getElementById('drawerClose').addEventListener('click', closeDrawer);
   document.getElementById('drawerMask').addEventListener('click', closeDrawer);
+  if(location.search.indexOf('drawer=open') >= 0) setTimeout(openDrawer, 50);
 
   const onSearch = (e) => {
     State.searchQ = e.target.value;
