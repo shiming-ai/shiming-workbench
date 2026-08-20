@@ -3,23 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0a1a">
+<meta name="theme-color" content="#F7F8FB">
 <meta name="description" content="Crazy Friday · 接单工坊 · 接外包订单赚钱">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="zh-CN">
 <title>🤝 接单工坊 · Crazy Friday</title>
 <style>
+/* ===== Light Theme Override ===== */
+html,body{background:#F7F8FB !important;color:#1A1D29 !important}
+body{background-image:radial-gradient(rgba(91,91,214,.06) 1px,transparent 1px) !important;background-size:26px 26px !important}
+body::before,body::after{opacity:.3;background-image:radial-gradient(rgba(91,91,214,.06) 1px,transparent 1px)}
+body::before{background:radial-gradient(ellipse at center,rgba(91,91,214,.08),transparent 65%) !important}
+body::after{background:radial-gradient(ellipse at center,rgba(236,72,153,.04),transparent 65%) !important}
+
+.back{background:#fff !important;border-color:#E8EAEF !important;color:#1A1D29 !important;box-shadow:var(--shadow) !important}
+.back:hover{background:#F7F8FB !important}
+.logo{background:linear-gradient(120deg,#5B5BD6,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+.tag{color:#5B5BD6 !important;border-color:rgba(91,91,214,.25) !important;background:rgba(91,91,214,.08) !important}
+
+.hero{background:linear-gradient(150deg,rgba(91,91,214,.08),rgba(236,72,153,.04)) !important;border-color:#E8EAEF !important}
+.hero::before{background:linear-gradient(90deg,transparent,rgba(91,91,214,.12),transparent) !important}
+.hero-label{color:#5A6072 !important}
+.hero-title{background:linear-gradient(135deg,#1A1D29,#5B5BD6 45%,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+
+.kpi{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.kpi-ic{box-shadow:0 4px 14px rgba(91,91,214,.25) !important}
+.kpi b{background:linear-gradient(120deg,#5B5BD6,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+
+.tabs{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.tab.on{box-shadow:0 4px 16px rgba(91,91,214,.3) !important}
+
+.oc{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.oc::before{background:linear-gradient(90deg,transparent,rgba(91,91,214,.12),transparent) !important}
+.tag-badge{color:#5B5BD6 !important;border-color:rgba(91,91,214,.25) !important;background:rgba(91,91,214,.08) !important}
+.tag-badge.t-dev{background:rgba(59,130,246,.1) !important;border-color:rgba(59,130,246,.3) !important;color:#2563EB !important}
+.tag-badge.t-video{background:rgba(236,72,153,.1) !important;border-color:rgba(236,72,153,.3) !important;color:#DB2777 !important}
+.tag-badge.t-design{background:rgba(245,158,11,.1) !important;border-color:rgba(245,158,11,.3) !important;color:#B45309 !important}
+.tag-badge.t-copy{background:rgba(16,185,129,.1) !important;border-color:rgba(16,185,129,.3) !important;color:#059669 !important}
+.oc-budget{background:linear-gradient(120deg,#5B5BD6,#EC4899) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important}
+.oc-btn{box-shadow:0 4px 16px rgba(91,91,214,.3) !important}
+.oc-btn.done{background:rgba(16,185,129,.08) !important;border-color:rgba(16,185,129,.3) !important;color:#059669 !important}
+.oc-btn.wait{background:rgba(245,158,11,.08) !important;border-color:rgba(245,158,11,.3) !important;color:#B45309 !important}
+
+.fbtn{background:#fff !important;border-color:#E8EAEF !important;color:#5A6072 !important}
+.fbtn.on{box-shadow:0 3px 12px rgba(91,91,214,.3) !important}
+.my-oc{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.st-accepted{background:rgba(245,158,11,.1) !important;border-color:rgba(245,158,11,.3) !important;color:#B45309 !important}
+.st-done{background:rgba(16,185,129,.08) !important;border-color:rgba(16,185,129,.3) !important;color:#059669 !important}
+.st-cancelled{background:rgba(239,68,68,.08) !important;border-color:rgba(239,68,68,.3) !important;color:#DC2626 !important}
+.my-oc-meta b{color:#1A1D29 !important}
+.progress{background:#EEF0F5 !important}
+.act-done{background:rgba(16,185,129,.08) !important;color:#059669 !important;border-color:rgba(16,185,129,.3) !important}
+.act-done:hover{background:rgba(16,185,129,.15) !important}
+.act-cancel{background:rgba(239,68,68,.08) !important;color:#DC2626 !important;border-color:rgba(239,68,68,.28) !important}
+.act-cancel:hover{background:rgba(239,68,68,.14) !important}
+
+.sheet{background:#fff !important;color:#1A1D29 !important;border-color:#DFE2E9 !important}
+.sheet-grab{background:#DFE2E9 !important}
+.sheet-info{background:#F7F8FB !important;border-color:#E8EAEF !important}
+.sheet-info b{color:#1A1D29 !important}
+.sheet input[type=number],.sheet select{background:#F7F8FB !important;border-color:#E8EAEF !important;color:#1A1D29 !important}
+.sheet input:focus,.sheet select:focus{border-color:rgba(91,91,214,.5) !important;background:#fff !important}
+.sheet input::placeholder{color:#9298AB !important}
+.sheet-cancel{background:#F7F8FB !important;border-color:#DFE2E9 !important;color:#5A6072 !important}
+
+.empty{background:#fff !important;border-color:#DFE2E9 !important;color:#9298AB !important}
+.empty b{color:#5B5BD6 !important}
+footer.foot{color:#9298AB !important}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0a0a1a;
-  --card:rgba(255,255,255,.05);
-  --bd:rgba(255,255,255,.09);
-  --bd2:rgba(255,255,255,.14);
-  --text:#f4f1ff;
-  --muted:#9d94c0;
-  --pur:#7C3AED;
+  --bg:#F7F8FB;
+  --card:#FFFFFF;
+  --bd:#E8EAEF;
+  --bd2:#DFE2E9;
+  --text:#1A1D29;
+  --muted:#5A6072;
+  --pur:#5B5BD6;
   --pink:#EC4899;
-  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
+  --grad:linear-gradient(135deg,#5B5BD6,#8B5CF6 50%,#EC4899);
   --green:#10B981;
   --amber:#F59E0B;
   --red:#EF4444;
