@@ -5,16 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>👑 Crazy Friday Pro 会员</title>
 <style>
+/* ===== Light Theme Override ===== */
+html,body{background:#F7F8FB !important;color:#1A1D29 !important}
+body{background-image:radial-gradient(rgba(91,91,214,.06) 1px,transparent 1px) !important;background-size:26px 26px !important}
+.glow{opacity:.5;background:radial-gradient(closest-side,rgba(91,91,214,.1),rgba(236,72,153,.04) 60%,transparent) !important}
+
+.back{background:#fff !important;border-color:#E8EAEF !important;color:#1A1D29 !important;box-shadow:var(--shadow) !important}
+.head-title{background:var(--grad) !important;-webkit-background-clip:text !important;background-clip:text !important;-webkit-text-fill-color:transparent !important}
+
+.status-card{background:linear-gradient(135deg,rgba(91,91,214,.1),rgba(236,72,153,.05)) !important;border-color:#E8EAEF !important;box-shadow:var(--shadow-md) !important}
+.status-card::after{background:radial-gradient(closest-side,rgba(245,158,11,.12),transparent) !important}
+.status-label{color:#5A6072 !important}
+.status-badge{background:rgba(255,255,255,.8) !important;box-shadow:inset 0 0 0 1px rgba(91,91,214,.2) !important}
+.status-chip{background:rgba(245,158,11,.12) !important;border-color:rgba(245,158,11,.4) !important;color:#B45309 !important}
+.status-meta{color:#5A6072 !important}
+.status-meta b{color:#1A1D29 !important}
+.progress-head{color:#5A6072 !important}
+.progress-track{background:#EEF0F5 !important}
+.progress-note{color:#9298AB !important}
+
+.bill-switch{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.bill-btn.active{box-shadow:0 4px 16px rgba(91,91,214,.3) !important}
+
+.plan-card{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.plan-card.hot{background:linear-gradient(160deg,rgba(91,91,214,.08),rgba(236,72,153,.05)),#fff !important;border-color:rgba(91,91,214,.5) !important;box-shadow:0 12px 44px rgba(91,91,214,.15) !important}
+.plan-feats li{color:#5A6072 !important}
+.plan-btn.ghost{background:#F7F8FB !important;border-color:#E8EAEF !important;color:#1A1D29 !important}
+.plan-btn:disabled{background:#EEF0F5 !important;color:#9298AB !important}
+
+.cmp-wrap{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+thead th.col-hot{background:rgba(91,91,214,.08) !important}
+tbody tr{border-color:#EEF0F5 !important}
+td:first-child{color:#1A1D29 !important}
+td.hot{background:rgba(91,91,214,.06) !important}
+
+.faq-item{background:#fff !important;border-color:#E8EAEF !important;box-shadow:var(--shadow) !important}
+.faq-q .arr{color:#B45309 !important}
+
+.sheet{background:#fff !important;color:#1A1D29 !important;border-color:#DFE2E9 !important}
+.sheet-grab{background:#DFE2E9 !important}
+.sheet-line{border-color:#EEF0F5 !important}
+.sheet-price-box{background:rgba(91,91,214,.06) !important;border-color:rgba(91,91,214,.25) !important}
+.btn.ghost{background:#F7F8FB !important;border-color:#E8EAEF !important;color:#5A6072 !important}
+
 :root{
-  --bg:#0a0a1a;
-  --grad:linear-gradient(135deg,#7C3AED,#EC4899);
-  --gold:#FBBF24;
-  --glass:rgba(255,255,255,.06);
-  --border:rgba(255,255,255,.12);
-  --text:#f4f4ff;
-  --muted:#9a9ab8;
-  --ok:#34d399;
-  --no:#565678;
+  --bg:#F7F8FB;
+  --grad:linear-gradient(135deg,#5B5BD6,#8B5CF6 50%,#EC4899);
+  --gold:#B45309;
+  --glass:#FFFFFF;
+  --border:#E8EAEF;
+  --text:#1A1D29;
+  --muted:#5A6072;
+  --ok:#059669;
+  --no:#C5C9D4;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
