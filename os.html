@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crazy Friday · 时铭 | 一个人+AI=一家公司 · 六条变现线总入口</title>
+<meta name="description" content="Crazy Friday 疯狂星期五 —— 时铭真实运营中的 AI 一人公司母系统。AI工作台定制、接单工坊、一人公司AI营、AI漫剧、项目孵化投资(1-200万)、生态合伙人招募。一个链接看懂全部业务与合作方式。">
+<meta name="theme-color" content="#0a0a1a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="一个人 + AI = 一家公司 | Crazy Friday · 时铭">
+<meta property="og:description" content="不是课程，不是工具，是一套真实在跑的 AI 商业系统。六条变现线：工作台定制 / 接单服务 / AI营课程 / AI漫剧 / 孵化投资 / 合伙人招募。">
+<meta property="og:url" content="https://shiming-ai.github.io/shiming-workbench/os.html">
+<meta property="og:image" content="https://shiming-ai.github.io/shiming-workbench/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c3aed'/><stop offset='1' stop-color='%23ec4899'/></linearGradient></defs><rect width='100' height='100' rx='24' fill='url(%23g)'/><text x='50' y='67' font-size='44' font-weight='700' fill='white' text-anchor='middle' font-family='Helvetica,Arial,sans-serif'>CF</text></svg>">
+<link rel="manifest" href="https://shiming-ai.github.io/shiming-workbench/manifest.json">
+<link rel="apple-touch-icon" href="https://shiming-ai.github.io/shiming-workbench/baby-icon-180.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{
+    --bg:#0a0a1a; --bg2:#0d0d20; --bg3:#12122b;
+    --purple:#a855f7; --purple-deep:#7c3aed; --pink:#ec4899;
+    --grad:linear-gradient(135deg,#7c3aed,#ec4899);
+    --grad-soft:linear-gradient(135deg,rgba(124,58,237,.18),rgba(236,72,153,.10));
+    --ink:#fff; --ink2:#d8dae8; --ink3:#a0a4b8; --ink4:#6d7088;
+    --line:rgba(255,255,255,.08); --line-strong:rgba(168,85,247,.28);
+    --glass:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+    --r-card:20px; --r-btn:13px;
+    --green:#00d9a3; --orange:#ff9f43; --blue:#3b9eff;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC","Microsoft YaHei","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(900px 500px at 12% -5%,rgba(124,58,237,.20),transparent 60%),
+               radial-gradient(700px 420px at 92% 8%,rgba(236,72,153,.14),transparent 60%),
+               radial-gradient(600px 600px at 50% 100%,rgba(59,158,255,.07),transparent 65%)}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 18px}
+a{color:inherit;text-decoration:none}
+.emo{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+
+/* ===== 顶部导航 ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,26,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1080px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;flex-shrink:0}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;letter-spacing:-.5px;color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.4)}
+.logo-txt{line-height:1.15}
+.logo-txt small{display:block;font-size:9px;color:var(--ink4);font-weight:600;letter-spacing:.8px}
+.nav-links{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:7px 11px;border-radius:9px;font-size:12.5px;color:var(--ink3);white-space:nowrap;transition:.2s;font-weight:600}
+.nav-links a:hover,.nav-links a.on{color:#fff;background:rgba(255,255,255,.07)}
+.nav-wx{padding:8px 14px;border-radius:var(--r-btn);background:var(--grad);font-size:12.5px;font-weight:700;white-space:nowrap;flex-shrink:0}
+
+/* ===== HERO ===== */
+.hero{padding:110px 0 54px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:7px 15px;border-radius:999px;background:var(--grad-soft);border:1px solid var(--line-strong);font-size:12px;color:var(--ink2);font-weight:600;margin-bottom:22px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(0,217,163,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(0,217,163,0)}100%{box-shadow:0 0 0 0 rgba(0,217,163,0)}}
+h1{font-size:clamp(30px,8.4vw,58px);font-weight:900;line-height:1.18;letter-spacing:-.5px;margin-bottom:18px}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(14px,3.6vw,17px);color:var(--ink2);max-width:660px;margin:0 auto 12px;line-height:1.75}
+.hero-sub b{color:#fff;font-weight:700}
+.hero-note{font-size:12.5px;color:var(--ink4);margin-bottom:30px}
+.hero-btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-bottom:38px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:52px;padding:0 26px;border-radius:var(--r-btn);font-size:15px;font-weight:700;cursor:pointer;border:none;transition:transform .18s,box-shadow .18s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 26px rgba(124,58,237,.36)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--ink2);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--line-strong);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;max-width:720px;margin:0 auto}
+.stat{background:var(--glass);border:1px solid var(--line);border-radius:15px;padding:15px 6px;text-align:center}
+.stat .v{font-size:clamp(17px,4.4vw,24px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
+.stat .l{font-size:10.5px;color:var(--ink4);margin-top:3px;font-weight:600}
+
+/* ===== 通用区块 ===== */
+.sec{padding:62px 0;position:relative}
+.sec-tag{text-align:center;font-size:11px;letter-spacing:2.4px;color:var(--purple);font-weight:800;margin-bottom:10px}
+.sec-h{text-align:center;font-size:clamp(22px,5.6vw,34px);font-weight:900;line-height:1.3;margin-bottom:12px}
+.sec-d{text-align:center;font-size:13.5px;color:var(--ink3);max-width:620px;margin:0 auto 34px;line-height:1.75}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);max-width:1080px;margin:0 auto}
+
+/* ===== 30秒看懂 ===== */
+.understand{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:30px}
+.und{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-card);padding:24px 20px;position:relative;overflow:hidden}
+.und::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:.85}
+.und .n{font-size:11px;font-weight:800;color:var(--purple);letter-spacing:1.5px;margin-bottom:9px}
+.und h3{font-size:16px;font-weight:800;margin-bottom:8px;line-height:1.45}
+.und p{font-size:12.8px;color:var(--ink3);line-height:1.72}
+.flywheel{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-card);padding:28px 20px;text-align:center}
+.fly{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 12px}
+.fly-item{padding:13px 17px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);min-width:132px}
+.fly-item .fi{font-size:22px;display:block;margin-bottom:5px}
+.fly-item .ft{font-size:13px;font-weight:800;margin-bottom:2px}
+.fly-item .fs{font-size:10.5px;color:var(--ink4)}
+.fly-arrow{color:var(--purple);font-size:17px;font-weight:900}
+.fly-note{font-size:12.5px;color:var(--ink3);line-height:1.8}
+
+/* ===== 六条变现线 ===== */
+.lines{display:grid;gap:13px}
+.line{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-card);padding:22px;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.line:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.line.hot{border-color:rgba(236,72,153,.32)}
+.line.hot::before{content:'主力营收';position:absolute;top:14px;right:14px;font-size:10px;font-weight:800;color:var(--pink);background:rgba(236,72,153,.13);padding:4px 9px;border-radius:999px}
+.line-head{display:flex;align-items:flex-start;gap:13px;margin-bottom:12px}
+.line-ico{width:46px;height:46px;border-radius:13px;background:var(--grad-soft);border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.line-no{font-size:10px;font-weight:800;color:var(--ink4);letter-spacing:1.5px;margin-bottom:2px}
+.line h3{font-size:17.5px;font-weight:900;margin-bottom:4px}
+.line-tag{font-size:11.5px;color:var(--purple);font-weight:700}
+.line-desc{font-size:13.5px;color:var(--ink2);line-height:1.75;margin-bottom:12px}
+.line-meta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.chip{font-size:11px;padding:5px 11px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink3);font-weight:600}
+.chip.g{color:var(--green);border-color:rgba(0,217,163,.25);background:rgba(0,217,163,.08)}
+.chip.o{color:var(--orange);border-color:rgba(255,159,67,.25);background:rgba(255,159,67,.08)}
+.line-acts{display:flex;gap:9px;flex-wrap:wrap}
+.line-acts a{padding:9px 17px;border-radius:11px;font-size:12.5px;font-weight:700;transition:.2s}
+.la-main{background:var(--grad);color:#fff}
+.la-sub{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink2)}
+.la-sub:hover{border-color:var(--line-strong);color:#fff}
+
+/* ===== 更多变现（小网格）===== */
+.more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
+.more{display:block;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:15px 13px;transition:.22s}
+.more:hover{border-color:var(--line-strong);background:rgba(168,85,247,.07);transform:translateY(-2px)}
+.more .mi{font-size:19px;display:block;margin-bottom:6px}
+.more .mt{font-size:13px;font-weight:700;margin-bottom:2px}
+.more .ms{font-size:10.5px;color:var(--ink4);line-height:1.5}
+
+/* ===== 产品矩阵 ===== */
+.prods{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.prod{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-card);padding:22px;transition:.25s}
+.prod:hover{border-color:var(--line-strong)}
+.prod.wide{grid-column:span 2;display:flex;gap:20px;align-items:center}
+.prod.wide .pi{font-size:30px;margin-bottom:0}
+.prod.wide .p-body{flex:1}
+.prod.wide .p-acts{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.prod .pi{font-size:26px;margin-bottom:10px}
+.prod h3{font-size:16px;font-weight:800;margin-bottom:7px}
+.prod p{font-size:12.5px;color:var(--ink3);line-height:1.7;margin-bottom:13px}
+.prod a{font-size:12.5px;font-weight:700;color:var(--purple)}
+
+/* ===== 投资人 / 合伙人专区 ===== */
+.zone{background:linear-gradient(160deg,rgba(124,58,237,.10),rgba(236,72,153,.045));border:1px solid var(--line-strong);border-radius:24px;padding:32px 22px}
+.zone-h{display:flex;align-items:center;gap:11px;margin-bottom:8px}
+.zone-h .zi{font-size:26px}
+.zone-h h2{font-size:clamp(19px,4.6vw,25px);font-weight:900}
+.zone-sub{font-size:13.5px;color:var(--ink2);line-height:1.75;margin-bottom:22px}
+.zone-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:9px;margin-bottom:22px}
+.zs{background:rgba(10,10,26,.5);border:1px solid var(--line);border-radius:13px;padding:14px 8px;text-align:center}
+.zs .zv{font-size:19px;font-weight:900;color:#fff;line-height:1.2}
+.zs .zl{font-size:10.5px;color:var(--ink4);margin-top:3px}
+.moats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:22px}
+.moat{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:13px;padding:14px 15px}
+.moat h4{font-size:13px;font-weight:800;margin-bottom:5px}
+.moat p{font-size:11.5px;color:var(--ink4);line-height:1.65}
+.zone-acts{display:flex;gap:9px;flex-wrap:wrap}
+.zone-acts a{padding:11px 19px;border-radius:12px;font-size:13px;font-weight:700;transition:.2s}
+
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:20px}
+.role{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:15px;padding:19px 16px}
+.role .ri{font-size:22px;margin-bottom:8px}
+.role h4{font-size:14.5px;font-weight:800;margin-bottom:6px}
+.role p{font-size:11.8px;color:var(--ink3);line-height:1.68;margin-bottom:9px}
+.role .rr{font-size:11px;color:var(--green);font-weight:700}
+
+/* ===== 数字 ===== */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:11px}
+.num{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:22px 14px;text-align:center}
+.num .nv{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.num .nl{font-size:11.5px;color:var(--ink3);margin-top:5px;font-weight:600}
+.num .nd{font-size:10.5px;color:var(--ink4);margin-top:3px}
+
+/* ===== 路线图 ===== */
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rd{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-card);padding:22px 18px;position:relative}
+.rd.now{border-color:rgba(0,217,163,.3)}
+.rd .rp{display:inline-block;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;margin-bottom:11px;background:rgba(255,255,255,.06);color:var(--ink3)}
+.rd.now .rp{background:rgba(0,217,163,.13);color:var(--green)}
+.rd h4{font-size:15px;font-weight:800;margin-bottom:9px}
+.rd ul{list-style:none;font-size:12px;color:var(--ink3);line-height:1.85}
+.rd li::before{content:'·';color:var(--purple);font-weight:900;margin-right:6px}
+
+/* ===== 创始人 ===== */
+.founder{background:var(--glass);border:1px solid var(--line);border-radius:24px;padding:30px 22px;display:flex;gap:20px;align-items:flex-start}
+.f-avatar{width:64px;height:64px;border-radius:20px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:800;color:#fff;flex-shrink:0}
+.f-txt blockquote{font-size:14px;line-height:1.9;color:var(--ink2);border-left:2px solid var(--purple);padding-left:14px;margin-bottom:12px}
+.f-txt blockquote b{color:#fff}
+.f-name{font-size:13px;font-weight:800;margin-bottom:2px}
+.f-role{font-size:11.5px;color:var(--ink4)}
+.ip-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.ip{font-size:11.5px;padding:6px 12px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink2);font-weight:600}
+
+/* ===== FAQ ===== */
+.faq{max-width:760px;margin:0 auto}
+.faq-i{background:var(--glass);border:1px solid var(--line);border-radius:15px;margin-bottom:9px;overflow:hidden}
+.faq-q{padding:16px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q .ar{color:var(--purple);font-size:17px;transition:.3s;flex-shrink:0}
+.faq-i.open .faq-q .ar{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{padding:0 18px 16px;font-size:12.8px;color:var(--ink3);line-height:1.8}
+
+/* ===== 资产地图 ===== */
+.map-cat{margin-bottom:16px}
+.map-cat h4{font-size:12.5px;color:var(--purple);font-weight:800;letter-spacing:1px;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.map-cat h4::after{content:'';flex:1;height:1px;background:var(--line)}
+.map-links{display:flex;flex-wrap:wrap;gap:7px}
+.map-links a{font-size:11.8px;padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.035);border:1px solid var(--line);color:var(--ink3);transition:.2s}
+.map-links a:hover{border-color:var(--line-strong);color:#fff;background:rgba(168,85,247,.09)}
+.map-more{text-align:center;margin-top:6px}
+.map-more button{background:none;border:1px dashed var(--line-strong);color:var(--purple);font-size:12.5px;font-weight:700;padding:11px 26px;border-radius:12px;cursor:pointer}
+.map-extra{display:none}
+.map-extra.show{display:block}
+
+/* ===== 底部 CTA ===== */
+.final{text-align:center;padding:70px 0 40px}
+.final h2{font-size:clamp(24px,6vw,38px);font-weight:900;line-height:1.28;margin-bottom:14px}
+.final p{font-size:14px;color:var(--ink3);margin-bottom:28px;line-height:1.8}
+.wx-cards{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+.wx-card{background:var(--glass);border:1px dashed var(--line-strong);border-radius:16px;padding:17px 26px;min-width:180px}
+.wx-card .wl{font-size:11px;color:var(--ink4);margin-bottom:5px}
+.wx-card .wv{font-size:17px;font-weight:800;color:var(--pink)}
+.wx-card .wc{font-size:10.5px;color:var(--ink4);margin-top:5px}
+
+footer{padding:34px 0 100px;text-align:center;border-top:1px solid var(--line);position:relative;z-index:1}
+.f-logo{font-size:14px;font-weight:800;margin-bottom:7px}
+.f-sub{font-size:11.5px;color:var(--ink4);line-height:1.8;margin-bottom:14px}
+.f-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:11.5px;color:var(--ink4);margin-bottom:12px}
+.f-links a:hover{color:var(--purple)}
+.f-copy{font-size:11px;color:var(--ink4)}
+
+/* ===== 移动端底部固定条 ===== */
+.dock{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(10,10,26,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:9px}
+.dock a{flex:1;text-align:center;padding:12px 8px;border-radius:12px;font-size:13px;font-weight:700}
+.dock .d1{background:var(--grad);color:#fff}
+.dock .d2{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink2)}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(20px);background:rgba(20,20,40,.96);border:1px solid var(--line-strong);color:#fff;padding:12px 22px;border-radius:13px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:300;white-space:nowrap;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:768px){
+    .understand,.prods,.roles,.road{grid-template-columns:1fr}
+    .prod.wide{grid-column:span 1;flex-direction:column;align-items:flex-start;gap:0}
+    .prod.wide .pi{margin-bottom:10px;font-size:26px}
+    .prod.wide .p-acts{width:100%}
+    .prod.wide .p-acts a{flex:1;text-align:center}
+    .stats{grid-template-columns:repeat(3,1fr)}
+    .stats .stat:nth-child(4),.stats .stat:nth-child(5){grid-column:span 1}
+    .founder{flex-direction:column;text-align:center}
+    .f-txt blockquote{border-left:none;border-top:2px solid var(--purple);padding-left:0;padding-top:12px;text-align:left}
+    .nav-links{display:none}
+    .sec{padding:46px 0}
+    .zone{padding:26px 17px}
+    .wx-card{min-width:150px;padding:15px 18px}
+}
+@media(max-width:400px){.line-acts a{flex:1;text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- ===== 导航 ===== -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="https://shiming-ai.github.io/shiming-workbench/os.html" class="logo">
+      <span class="logo-mark">CF</span>
+      <span class="logo-txt">Crazy Friday<small>AI 一人公司母系统</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#what">做什么</a>
+      <a href="#lines">变现线</a>
+      <a href="#products">产品</a>
+      <a href="#invest">投资人</a>
+      <a href="#partner">合伙人</a>
+      <a href="#numbers">数据</a>
+      <a href="#founder">创始人</a>
+      <a href="#contact">联系</a>
+    </div>
+    <a href="#contact" class="nav-wx">加微信</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="badge"><span class="pulse"></span>AI 一人公司母系统 · 真实运营中</div>
+    <h1>一个人 + AI<br><span class="g">= 一家公司</span></h1>
+    <p class="hero-sub">
+      Crazy Friday 不是课程，也不是工具，是<b>我自己每天都在用</b>的一套 AI 商业系统。<br>
+      工作台定制 · 接单服务 · AI 营课程 · AI 漫剧 · 孵化投资 · 生态合伙人<br>
+      —— <b>六条变现线，一套系统跑通</b>。
+    </p>
+    <p class="hero-note">时铭 · 一个人 + AI，管客户、管财务、管内容、管交付</p>
+    <div class="hero-btns">
+      <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="btn btn-primary">🚀 定制我的工作台</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" class="btn btn-ghost">📱 先体验 Demo</a>
+      <a href="#contact" class="btn btn-ghost">💬 加微信聊合作</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">6</div><div class="l">核心工坊</div></div>
+      <div class="stat"><div class="v">36</div><div class="l">行业场景</div></div>
+      <div class="stat"><div class="v">40+</div><div class="l">交付客户</div></div>
+      <div class="stat"><div class="v">1-5天</div><div class="l">交付周期</div></div>
+      <div class="stat"><div class="v">12</div><div class="l">功能模块</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- ===== 30 秒看懂 ===== -->
+<section class="sec" id="what">
+  <div class="wrap">
+    <div class="sec-tag reveal">WHAT I DO</div>
+    <h2 class="sec-h reveal">30 秒，看懂我在做什么</h2>
+    <p class="sec-d reveal">如果只能记住一句话：<b>我把"一个人做一门生意"需要的全部能力，做成了 AI 系统——自己先用，跑通了再交付、再教学、再投资。</b></p>
+
+    <div class="understand">
+      <div class="und reveal">
+        <div class="n">01 · 自用</div>
+        <h3>先给自己造一套系统</h3>
+        <p>客户、财务、内容、订单、复盘——原本要 5-10 个人的活，我花 2 天做了个 AI 工作台，一个人全扛了。它现在每天在跑，不是 PPT。</p>
+      </div>
+      <div class="und reveal">
+        <div class="n">02 · 交付</div>
+        <h3>同样的系统，卖给你</h3>
+        <p>把这套能力按行业改造成 36 种场景：一人公司、电商、餐饮、考研、恋爱、摄影……1-5 天交付，永久域名，手机打开就是 App。</p>
+      </div>
+      <div class="und reveal">
+        <div class="n">03 · 放大</div>
+        <h3>开放三种合作方式</h3>
+        <p>你可以<b>买一套</b>（工作台定制）、<b>学一套</b>（AI 营课程），或者<b>一起做</b>（项目孵化、投资、合伙人）——总有一种适合你。</p>
+      </div>
+    </div>
+
+    <div class="flywheel reveal">
+      <h3 style="font-size:16px;font-weight:800;margin-bottom:6px">三层生态飞轮 · 每层给下一层供血</h3>
+      <div class="fly">
+        <div class="fly-item"><span class="emo">📱</span><div class="ft">内容增长层</div><div class="fs">多平台矩阵 · AI漫剧</div></div>
+        <span class="fly-arrow">→</span>
+        <div class="fly-item"><span class="emo">🤖</span><div class="ft">AI 应用层</div><div class="fs">工作台 · 客服 · 工作流</div></div>
+        <span class="fly-arrow">→</span>
+        <div class="fly-item"><span class="emo">💰</span><div class="ft">商业变现层</div><div class="fs">定制 · 课程 · 孵化</div></div>
+      </div>
+      <p class="fly-note">内容带来流量 → 流量转成 AI 应用客户 → 需求沉淀成可变现产品 → 收入反哺内容生产<br>
+      <span style="color:var(--ink4);font-size:11.5px">工具库、课程、咨询、接单工坊彼此导流，形成自增长闭环</span></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 六条变现线 ===== -->
+<section class="sec" id="lines">
+  <div class="wrap">
+    <div class="sec-tag reveal">6 REVENUE LINES</div>
+    <h2 class="sec-h reveal">六条变现线，各进各的门</h2>
+    <p class="sec-d reveal">不管你是想买、想学、想合作还是想投资——对号入座，点进去就是你要的东西</p>
+
+    <div class="lines">
+      <!-- 1 -->
+      <div class="line hot reveal">
+        <div class="line-head">
+          <div class="line-ico emo">💼</div>
+          <div><div class="line-no">LINE 01</div><h3>AI 工作台定制</h3><div class="line-tag">现金流基本盘 · ¥999 起</div></div>
+        </div>
+        <p class="line-desc">1-5 天交付一套专属 AI 工作台，客户、财务、内容排期、订单交付一页管完。手机添加到桌面就是 App，数据存在你自己浏览器里。</p>
+        <div class="line-meta">
+          <span class="chip g">已交付 40+</span><span class="chip">36 种行业场景</span><span class="chip">永久域名</span><span class="chip o">1-5 天交付</span><span class="chip">不满意可退</span>
+        </div>
+        <div class="line-acts">
+          <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="la-main">立即定制 →</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" class="la-sub">体验展示版</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/demo-gallery.html" class="la-sub">36 种活法案例</a>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="line reveal">
+        <div class="line-head">
+          <div class="line-ico emo">🤝</div>
+          <div><div class="line-no">LINE 02</div><h3>接单工坊 · 商业服务</h3><div class="line-tag">稳定现金流 · 全平台</div></div>
+        </div>
+        <p class="line-desc">类目报白、账号解封、店铺申诉、黄 V 认证、团购开通、AI 定制开发——需求发布与自动匹配，报价、订单、交付、售后全流程在线。</p>
+        <div class="line-meta">
+          <span class="chip">抖音 / 快手 / 小红书 / 视频号 / 淘宝 / 拼多多</span><span class="chip g">智能报价引擎</span><span class="chip">交付追踪</span>
+        </div>
+        <div class="line-acts">
+          <a href="https://shiming-ai.github.io/shiming-workbench/orders.html" class="la-main">进入接单工坊 →</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/services.html" class="la-sub">看服务中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/orders.html" class="la-sub">App 内接单</a>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="line reveal">
+        <div class="line-head">
+          <div class="line-ico emo">🎓</div>
+          <div><div class="line-no">LINE 03</div><h3>一人公司 AI 营</h3><div class="line-tag">知识付费 · 课程 + 陪跑</div></div>
+        </div>
+        <p class="line-desc">从 0 到 1 跑通一人公司的系统课：AI 工具、方法论、变现路径、实战训练营、社群与导师陪跑。适合想用 AI 创业但不知道从哪开始的人。</p>
+        <div class="line-meta">
+          <span class="chip">系统化课程</span><span class="chip">实战训练营</span><span class="chip">导师陪跑</span><span class="chip o">Pro 会员</span>
+        </div>
+        <div class="line-acts">
+          <a href="https://shiming-ai.github.io/shiming-workbench/ai-camp.html" class="la-main">了解 AI 营 →</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/pro.html" class="la-sub">Pro 会员权益</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/academy.html" class="la-sub">App 内课程</a>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="line reveal">
+        <div class="line-head">
+          <div class="line-ico emo">🎬</div>
+          <div><div class="line-no">LINE 04</div><h3>AI 漫剧 · 内容矩阵</h3><div class="line-tag">IP 资产 · 合作开放</div></div>
+        </div>
+        <p class="line-desc">AI 漫剧 + 多平台内容矩阵（小红书 / 抖音 / 知乎 / 视频号 / B站 / 公众号），一个选题生成全平台内容。内容不只是流量，更是可沉淀的长期资产。</p>
+        <div class="line-meta">
+          <span class="chip">剧本合作</span><span class="chip">角色授权</span><span class="chip">平台分发</span><span class="chip">广告植入</span><span class="chip g">内容代运营</span>
+        </div>
+        <div class="line-acts">
+          <a href="https://shiming-ai.github.io/shiming-workbench/demo-media.html" class="la-main">看自媒体工作台 →</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/automation.html" class="la-sub">自动化运营台</a>
+          <a href="#contact" class="la-sub">聊内容合作</a>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="line reveal">
+        <div class="line-head">
+          <div class="line-ico emo">🚀</div>
+          <div><div class="line-no">LINE 05</div><h3>项目孵化 · 投资</h3><div class="line-tag">股权增值 · 1-200 万</div></div>
+        </div>
+        <p class="line-desc"><b>模式 A</b>：你有项目和团队，我们出钱，不干预运营，纯财务投资。<br><b>模式 B</b>：你出想法我们出钱+技术+资源联合打造；或我们出项目你来执行，利润分成。</p>
+        <div class="line-meta">
+          <span class="chip g">1-200 万额度</span><span class="chip">模式A 5-15% 股权</span><span class="chip">模式B 7-25% 股权</span><span class="chip">全程陪跑</span>
+        </div>
+        <div class="line-acts">
+          <a href="https://shiming-ai.github.io/shiming-workbench/bp.html" class="la-main">看一页纸 BP →</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/invest.html" class="la-sub">招商合作中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/incubation.html" class="la-sub">提交项目</a>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="line reveal">
+        <div class="line-head">
+          <div class="line-ico emo">👥</div>
+          <div><div class="line-no">LINE 06</div><h3>生态合伙人 · 授权</h3><div class="line-tag">规模杠杆 · 招募中</div></div>
+        </div>
+        <p class="line-desc">适合有客户资源的机构、代理商、社群主、同行：给你独立空间 + 数据隔离 + 授权名额，一起把市场做大，利润共享。</p>
+        <div class="line-meta">
+          <span class="chip">卖名额</span><span class="chip">独立空间</span><span class="chip">数据隔离</span><span class="chip g">品牌授权</span>
+        </div>
+        <div class="line-acts">
+          <a href="https://shiming-ai.github.io/shiming-workbench/partner.html" class="la-main">合伙人计划 →</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/authorize.html" class="la-sub">授权总台</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/agreement.html" class="la-sub">共创协议</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 更多变现 -->
+    <div style="margin-top:34px" class="reveal">
+      <h4 style="font-size:13px;color:var(--purple);font-weight:800;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px">更多 AI 变现入口 <span style="flex:1;height:1px;background:var(--line)"></span></h4>
+      <div class="more-grid">
+        <a class="more" href="https://af3da2f9900991ade.app.workbuddy.link/index.html" style="border-color:rgba(236,72,153,.3)"><span class="mi emo">📕</span><div class="mt">小红书 AI 运营</div><div class="ms">工作台 + 卖家后台</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/skills.html"><span class="mi emo">🎯</span><div class="mt">技能商店</div><div class="ms">AI Skill 交易</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/mall.html"><span class="mi emo">🛍️</span><div class="mt">模板市集</div><div class="ms">成品模板选购</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/store.html"><span class="mi emo">🏪</span><div class="mt">工作台商店</div><div class="ms">¥599/年起</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/playbook.html"><span class="mi emo">📖</span><div class="mt">变现玩法库</div><div class="ms">可复制的打法</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/tools.html"><span class="mi emo">🧰</span><div class="mt">AI 工具库</div><div class="ms">提效工具合集</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/daily.html"><span class="mi emo">📰</span><div class="mt">AI 变现日报</div><div class="ms">每日机会速递</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/inspiration.html"><span class="mi emo">💡</span><div class="mt">变现灵感</div><div class="ms">项目灵感库</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/money.html"><span class="mi emo">💸</span><div class="mt">赚钱看板</div><div class="ms">收入全景</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/pay.html"><span class="mi emo">💳</span><div class="mt">收款中心</div><div class="ms">变现结算</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/assets.html"><span class="mi emo">📦</span><div class="mt">资产沉淀库</div><div class="ms">可复用资产</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/roadmap.html"><span class="mi emo">🗺️</span><div class="mt">创业路线图</div><div class="ms">0→1 路径</div></a>
+        <a class="more" href="https://shiming-ai.github.io/shiming-workbench/cfapp/apps.html"><span class="mi emo">🤖</span><div class="mt">AI 应用市场</div><div class="ms">应用与插件</div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 产品矩阵 ===== -->
+<section class="sec" id="products">
+  <div class="wrap">
+    <div class="sec-tag reveal">PRODUCTS</div>
+    <h2 class="sec-h reveal">已经造出来的东西</h2>
+    <p class="sec-d reveal">不是概念图，是现在就能点开用的产品</p>
+    <div class="prods">
+      <div class="prod wide reveal" style="border-color:rgba(236,72,153,.3)">
+        <div class="pi emo">📕</div>
+        <div class="p-body">
+          <h3>小红书 AI 运营工作台 <span style="font-size:10px;padding:3px 8px;border-radius:999px;background:rgba(236,72,153,.14);color:var(--pink);font-weight:800;vertical-align:middle;margin-left:4px">NEW</span></h3>
+          <p>面向小红书场景的 AI 运营系统，<b>双端打通</b>：用户端工作台 + 卖家管理后台。从内容运营到卖家侧管理，一套系统覆盖完整链路——可在线直接体验。</p>
+          <div class="p-acts">
+            <a href="https://af3da2f9900991ade.app.workbuddy.link/index.html" class="la-main">📕 进入工作台 →</a>
+            <a href="https://af3da2f9900991ade.app.workbuddy.link/seller.html" class="la-sub">🏪 卖家后台</a>
+          </div>
+        </div>
+      </div>
+      <div class="prod reveal"><div class="pi emo">📱</div><h3>一人公司 App</h3><p>30+ 页面的完整产品：工坊、商城、接单、孵化、会员、数据中心、消息、搜索。这就是"一人公司"该有的样子。</p><a href="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html">打开 App →</a></div>
+      <div class="prod reveal"><div class="pi emo">🎨</div><h3>展示版工作台</h3><p>13 个真实场景：一人公司、超级个体、电商、餐饮、考研、恋爱、健身、摄影、英语、创作者、宠物、旅行。客户点开就能体验。</p><a href="https://shiming-ai.github.io/shiming-workbench/demo.html">体验 Demo →</a></div>
+      <div class="prod reveal"><div class="pi emo">🌈</div><h3>36 种活法案例广场</h3><p>36 个行业场景一次性看完——总有一个像你。看中了直接照着改，1-5 天变成你自己的。</p><a href="https://shiming-ai.github.io/shiming-workbench/demo-gallery.html">逛案例广场 →</a></div>
+      <div class="prod reveal"><div class="pi emo">🧠</div><h3>总工作台 8.0</h3><p>八大平台级模块的中枢：内容、客户、订单、财务、交付、数据、自动化、AI 员工，一个后台全打通。</p><a href="https://shiming-ai.github.io/shiming-workbench/cf-hub.html">进入总工作台 →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 投资人专区 ===== -->
+<section class="sec" id="invest">
+  <div class="wrap">
+    <div class="zone reveal">
+      <div class="zone-h"><span class="zi emo">📊</span><h2>给投资人的 60 秒</h2></div>
+      <p class="zone-sub">如果你想判断"这件事值不值得聊"，看这一块就够了。更完整版在一页纸 BP 和招商路演大屏里。</p>
+
+      <div class="zone-stats">
+        <div class="zs"><div class="zv">40+</div><div class="zl">已交付客户</div></div>
+        <div class="zs"><div class="zv">36</div><div class="zl">行业场景</div></div>
+        <div class="zs"><div class="zv">12</div><div class="zl">功能模块</div></div>
+        <div class="zs"><div class="zv">8</div><div class="zl">内容平台</div></div>
+        <div class="zs"><div class="zv">18</div><div class="zl">AI 业务类型</div></div>
+        <div class="zs"><div class="zv">1-5天</div><div class="zl">交付周期</div></div>
+      </div>
+
+      <div class="moats">
+        <div class="moat"><h4>🔁 项目孵化机制</h4><p>母系统每年可孕育多个新项目，验证成功即纳入生态，不靠单点运气。</p></div>
+        <div class="moat"><h4>🕸 业务线互相导流</h4><p>工具库、课程、咨询、接单工坊彼此供血，获客成本持续下降。</p></div>
+        <div class="moat"><h4>💰 现金流 + 股权双轮</h4><p>服务带来现金流，孵化投资带来长期增值，两条腿走路。</p></div>
+        <div class="moat"><h4>📈 网络效应</h4><p>服务越多创业者，平台数据、案例库、资源越丰富，壁垒越高。</p></div>
+        <div class="moat"><h4>🧠 AI 能力沉淀</h4><p>每个项目的方法论、SOP、工作流都沉淀为可复用资产。</p></div>
+      </div>
+
+      <div class="zone-acts">
+        <a href="https://shiming-ai.github.io/shiming-workbench/bp.html" class="la-main">📄 一页纸 BP</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/invest-dashboard.html" class="la-sub">📺 招商路演大屏</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/invest.html" class="la-sub">🏛 招商合作中心</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/roadmap.html" class="la-sub">🗺 三年路线图</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/data.html" class="la-sub">📈 数据中心</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 合伙人专区 ===== -->
+<section class="sec" id="partner" style="padding-top:0">
+  <div class="wrap">
+    <div class="zone reveal">
+      <div class="zone-h"><span class="zi emo">👥</span><h2>招募生态合伙人</h2></div>
+      <p class="zone-sub">如果你手上有客户、有社群、有渠道——与其从零开始，不如站在已经跑通的系统上一起分市场。</p>
+
+      <div class="roles">
+        <div class="role"><div class="ri emo">🏷️</div><h4>渠道合伙人</h4><p>有客户资源的机构、代理、社群主。给你授权名额和独立空间，卖出去就是你的。</p><div class="rr">✓ 独立空间 · 数据隔离</div></div>
+        <div class="role"><div class="ri emo">🏙️</div><h4>城市 / 行业合伙人</h4><p>在某个城市或垂直行业有深耕，共同开拓本地市场，共享品牌与方法论。</p><div class="rr">✓ 品牌授权 · 联合交付</div></div>
+        <div class="role"><div class="ri emo">🚀</div><h4>项目共创伙伴</h4><p>你出想法 / 项目，我们出钱、技术、资源，联合打造，利润分成。</p><div class="rr">✓ 1-200万 · 全程陪跑</div></div>
+      </div>
+
+      <div class="zone-acts">
+        <a href="https://shiming-ai.github.io/shiming-workbench/partner.html" class="la-main">🤝 合伙人计划</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/authorize.html" class="la-sub">🛡 授权总台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/agreement.html" class="la-sub">📄 共创伙伴协议</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/partners.html" class="la-sub">🌐 生态合作伙伴</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 数字 ===== -->
+<section class="sec" id="numbers">
+  <div class="wrap">
+    <div class="sec-tag reveal">BY THE NUMBERS</div>
+    <h2 class="sec-h reveal">用数字说话</h2>
+    <p class="sec-d reveal">不是 PPT，是真实在跑的系统</p>
+    <div class="nums">
+      <div class="num reveal"><div class="nv">12</div><div class="nl">功能模块</div><div class="nd">客户/财务/内容/交付全覆盖</div></div>
+      <div class="num reveal"><div class="nv">8</div><div class="nl">内容平台</div><div class="nd">一个选题全平台分发</div></div>
+      <div class="num reveal"><div class="nv">18</div><div class="nl">AI 业务类型</div><div class="nd">客服·文案·开发·运营·财务</div></div>
+      <div class="num reveal"><div class="nv">36</div><div class="nl">行业场景</div><div class="nd">总有一个适合你</div></div>
+      <div class="num reveal"><div class="nv">1-5天</div><div class="nl">交付周期</div><div class="nd">最快 1 天出 demo</div></div>
+      <div class="num reveal"><div class="nv">119</div><div class="nl">页面资产</div><div class="nd">产品/案例/工具全部在线</div></div>
+    </div>
+
+    <div class="road" style="margin-top:26px">
+      <div class="rd now reveal"><span class="rp">进行中</span><h4>2026 · MVP 验证期</h4><ul><li>AI 工作台已上线</li><li>落地页转化中</li><li>小红书内容引流中</li><li>目标：服务 40+ 客户</li><li>跑通定制→课程→共创闭环</li></ul></div>
+      <div class="rd reveal"><span class="rp">下一阶段</span><h4>2027-2028 · 规模化期</h4><ul><li>AI 营课程体系上线</li><li>AI 应用市场开放</li><li>孵化 3-5 个项目</li><li>目标：服务 200+ 客户</li><li>建立 AI 应用资产库</li></ul></div>
+      <div class="rd reveal"><span class="rp">长期</span><h4>2029+ · 生态期</h4><ul><li>AI 一人公司生态成型</li><li>孵化项目独立运营</li><li>内容矩阵品牌化</li><li>成为赛道标杆</li><li>孵化项目总估值破亿</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 创始人 ===== -->
+<section class="sec" id="founder">
+  <div class="wrap">
+    <div class="sec-tag reveal">FOUNDER</div>
+    <h2 class="sec-h reveal">为什么是我</h2>
+    <div class="founder reveal">
+      <div class="f-avatar">时</div>
+      <div class="f-txt">
+        <blockquote>
+          我做过电商、搞过内容、踩过无数坑。直到用 AI 把所有业务串起来，才发现——<b>一个人 + AI，真的等于一家公司</b>。<br><br>
+          我花 2 天给自己做了一个 AI 工作台，用它管客户、管财务、管内容、管交付。从此一个人拥有了传统公司的全部生产力。<br><br>
+          Crazy Friday 不是课程，不是工具，是一套<b>真正在运营的 AI 商业系统</b>。我自己每天都在用，每条业务线都在真实跑通。
+        </blockquote>
+        <div class="f-name">时铭</div>
+        <div class="f-role">Crazy Friday 创始人 · AI 一人公司实践者</div>
+        <div class="ip-row">
+          <span class="ip">⚡ Crazy Friday</span><span class="ip">🧪 Friday Lab</span><span class="ip">📚 一人公司 AI 营</span><span class="ip">🎬 AI 漫剧工坊</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== FAQ ===== -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-tag reveal">FAQ</div>
+    <h2 class="sec-h reveal">你可能想问的</h2>
+    <div class="faq">
+      <div class="faq-i reveal"><div class="faq-q">做出来的是什么？是 App 吗？<span class="ar">+</span></div><div class="faq-a"><p>网页版工作台，手机浏览器打开就能用。可以添加到手机桌面，用起来跟 App 一模一样，永久域名不会失效，电脑也能用。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">我不懂技术，能用吗？<span class="ar">+</span></div><div class="faq-a"><p>完全不用懂技术。你说业务和需求，剩下的我全搞定。交付后打开链接就能用，跟发微信一样简单。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">数据存在哪？安全吗？<span class="ar">+</span></div><div class="faq-a"><p>数据存在你自己的浏览器本地，不上传服务器，只有你能看到。支持一键导出备份，换手机也能恢复。比云端更安全。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">合伙人具体怎么合作？<span class="ar">+</span></div><div class="faq-a"><p>三种角色：渠道合伙人（拿授权名额去卖，独立空间数据隔离）、城市/行业合伙人（联合开拓）、项目共创伙伴（你出想法我们出钱+技术+资源）。详见合伙人计划页，也可以直接加微信聊。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">项目投资怎么申请？额度多少？<span class="ar">+</span></div><div class="faq-a"><p>联系我们，提交项目简介，面试沟通，签署协议。额度 1-200 万，模式A 占股 5-15%（纯财务投资、不干预运营），模式B 占股 7-25%（联合打造或你来执行）。全程陪跑：MVP 验证 → Demo 制作 → 产品测试 → 商业验证 → 上线推广。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">可以投资 Crazy Friday 本身吗？<span class="ar">+</span></div><div class="faq-a"><p>欢迎交流，我们也在寻找战略合作伙伴。如果你看好 AI 一人公司赛道，欢迎加微信深入沟通合作与投资机会。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">AI 漫剧怎么合作？<span class="ar">+</span></div><div class="faq-a"><p>AI 漫剧是我们的自有内容业务线，支持剧本合作、角色授权、平台分发、广告植入等多种合作方式。无论你是内容创作者、品牌方还是平台方，都欢迎加微信探讨。</p></div></div>
+      <div class="faq-i reveal"><div class="faq-q">不满意能退吗？<span class="ar">+</span></div><div class="faq-a"><p>交付前可以随时提修改意见。交付后 3 天内不满意全额退款（已产生的定制成本除外）。先看 demo 再决定，不盲目付费。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 资产地图 ===== -->
+<section class="sec" id="map">
+  <div class="wrap">
+    <div class="sec-tag reveal">SITEMAP</div>
+    <h2 class="sec-h reveal">全部资产地图</h2>
+    <p class="sec-d reveal">Crazy Friday 全部在线页面，一个不漏</p>
+
+    <div class="map-cat reveal">
+      <h4>🏠 品牌与门户</h4>
+      <div class="map-links">
+        <a href="https://shiming-ai.github.io/shiming-workbench/">母系统官网</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/os.html">总入口（本页）</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/share.html">一页纸介绍</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/brand.html">品牌页</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/qr.html">扫码分享页</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/roadmap.html">母系统路线图</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/about.html">关于</a>
+      </div>
+    </div>
+
+    <div class="map-cat reveal">
+      <h4>💼 获客与转化</h4>
+      <div class="map-links">
+        <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">落地页</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo.html">展示版工作台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-gallery.html">36 种活法广场</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-case.html">行业案例 6.0</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-media.html">自媒体工作台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/store.html">工作台商店</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/mall.html">模板市集</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/skills.html">技能商店</a>
+      </div>
+    </div>
+
+    <div class="map-cat reveal">
+      <h4>🎨 13 个行业场景 Demo</h4>
+      <div class="map-links">
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-solo.html">超级个体</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-creator.html">创作者</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-ecom.html">电商运营</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-food.html">餐饮店</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-study.html">考研学习</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-love.html">恋爱记录</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-fitness.html">健身减脂</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-photo.html">摄影作品</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-english.html">英语学习</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-pet.html">宠物</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-travel.html">旅行</a>
+      </div>
+    </div>
+
+    <div class="map-cat reveal">
+      <h4>📕 小红书 · 内容运营</h4>
+      <div class="map-links">
+        <a href="https://af3da2f9900991ade.app.workbuddy.link/index.html">小红书 AI 运营工作台</a>
+        <a href="https://af3da2f9900991ade.app.workbuddy.link/seller.html">卖家管理后台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/demo-media.html">自媒体工作台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/automation.html">自动化运营台</a>
+        <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/daily.html">AI 变现日报</a>
+      </div>
+    </div>
+
+    <div class="map-extra" id="mapExtra">
+      <div class="map-cat">
+        <h4>💰 投资 · 招商 · 合伙人</h4>
+        <div class="map-links">
+          <a href="https://shiming-ai.github.io/shiming-workbench/invest.html">招商合作中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/invest-dashboard.html">招商路演大屏</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/bp.html">一页纸 BP</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/partner.html">生态合伙人</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/authorize.html">授权总台</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/agreement.html">共创伙伴协议</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/incubation.html">项目孵化中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/partners.html">生态合作伙伴</a>
+        </div>
+      </div>
+      <div class="map-cat">
+        <h4>🎓 课程与变现</h4>
+        <div class="map-links">
+          <a href="https://shiming-ai.github.io/shiming-workbench/ai-camp.html">一人公司 AI 营</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/pro.html">Pro 会员</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/academy.html">App 内课程</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/playbook.html">变现玩法库</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/tools.html">AI 工具库</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/daily.html">AI 变现日报</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/inspiration.html">变现灵感</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/money.html">赚钱看板</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/pay.html">收款中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/orders.html">接单工坊</a>
+        </div>
+      </div>
+      <div class="map-cat">
+        <h4>🧠 App 与工作台</h4>
+        <div class="map-links">
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html">一人公司 App</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cf-hub.html">总工作台 8.0</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/hub.html">生态中枢</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/hub-v2.html">AI Agent 工作台</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cf.html">一人公司生态</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/opc.html">OPC 工场</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/brain.html">超脑工坊</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/apps.html">AI 应用市场</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/member.html">会员中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/me.html">我的驾驶舱</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/roadmap.html">创业路线图</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/discover.html">发现</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/search.html">全站搜索</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/messages.html">消息</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/data.html">数据中心</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/automation.html">自动化运营台</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/assets.html">资产沉淀库</a>
+          <a href="https://shiming-ai.github.io/shiming-workbench/mydaily.html">MyDaily</a>
+        </div>
+      </div>
+    </div>
+    <div class="map-more"><button onclick="document.getElementById('mapExtra').classList.toggle('show');this.textContent=document.getElementById('mapExtra').classList.contains('show')?'收起更多 ↑':'展开全部 40+ 页面 ↓'">展开全部 40+ 页面 ↓</button></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 底部 CTA ===== -->
+<section class="final" id="contact">
+  <div class="wrap">
+    <h2 class="reveal">一个链接说完了<br>剩下的一句话，微信里聊</h2>
+    <p class="reveal">定制工作台 · 项目共创 · 课程学习 · 漫剧合作 · 合伙人 · 投资对接<br>加微信时备注你想聊哪一块，我直接给你对应的资料</p>
+    <div class="wx-cards reveal">
+      <div class="wx-card" onclick="copyWx('Yshim16506')">
+        <div class="wl">微信①（点一下复制）</div><div class="wv">Yshim16506</div><div class="wc">主号 · 商务合作</div>
+      </div>
+      <div class="wx-card" onclick="copyWx('R26184352Y')">
+        <div class="wl">微信②（点一下复制）</div><div class="wv">R26184352Y</div><div class="wc">备用号 · 防失联</div>
+      </div>
+    </div>
+    <div class="hero-btns reveal" style="margin-bottom:0">
+      <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="btn btn-primary">🚀 定制我的工作台</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" class="btn btn-ghost">📱 先体验 Demo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-logo">Crazy Friday · 疯狂星期五</div>
+    <div class="f-sub">AI 一人公司母系统 · 让每个人都能拥有 AI 驱动的商业能力<br>一个人 + AI = 一家公司</div>
+    <div class="f-links">
+      <a href="https://shiming-ai.github.io/shiming-workbench/">官网首页</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/landing.html">工作台定制</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/demo.html">体验 Demo</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/invest.html">招商合作</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/partner.html">合伙人</a>
+      <a href="https://shiming-ai.github.io/shiming-workbench/cfapp/index.html">一人公司 App</a>
+    </div>
+    <div class="f-copy">© 2026 Crazy Friday 疯狂星期五 · 时铭 · AI × CREATOR</div>
+  </div>
+</footer>
+
+<!-- 移动端底部条 -->
+<div class="dock">
+  <a href="https://shiming-ai.github.io/shiming-workbench/landing.html" class="d1">🚀 定制工作台</a>
+  <a href="https://shiming-ai.github.io/shiming-workbench/demo.html" class="d2">📱 体验 Demo</a>
+  <a href="#" class="d2" onclick="copyWx('Yshim16506');return false;">💬 加微信</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+function toast(msg,duration=2200){
+    const t=document.getElementById('toast');
+    t.textContent=msg;t.classList.add('show');
+    clearTimeout(window._tt);
+    window._tt=setTimeout(()=>t.classList.remove('show'),duration);
+}
+function copyWx(id){
+    const done=()=>toast('✅ 已复制微信号：'+id);
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(id).then(done).catch(()=>fb());
+    }else fb();
+    function fb(){
+        const ta=document.createElement('textarea');ta.value=id;
+        ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy');done();}catch(e){toast('请长按手动复制：'+id);}
+        document.body.removeChild(ta);
+    }
+}
+// FAQ 折叠
+document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+        const item=q.parentElement,a=q.nextElementSibling;
+        const open=item.classList.contains('open');
+        document.querySelectorAll('.faq-i').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').style.maxHeight=null;});
+        if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+    });
+});
+// 滚动出现
+const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// 导航高亮
+const secs=[...document.querySelectorAll('section[id]')];
+const navA=[...document.querySelectorAll('.nav-links a')];
+window.addEventListener('scroll',()=>{
+    let cur='';
+    secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+    navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+</body>
+</html>
