@@ -168,7 +168,7 @@ async function licDecodeAny(code){
 /* ---------- 卖家工具：生成客户 ---------- */
 /* 默认后端 API（工作台前端可部署在任何静态托管，如 GitHub Pages；
  * API 始终指向这个后端，客户在地址栏看不到它，只看到品牌域名） */
-const DEFAULT_API = 'https://af3da2f9900991ade.app.workbuddy.link';
+const DEFAULT_API = 'https://cf-cloud-sync.netlify.app/api';
 function genCustomerUid(seq){
   // V2 紧凑 uid：7 字符 base32（去 C 前缀）
   return b32Enc(Date.now() % (32**7) + seq, 7);
