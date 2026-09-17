@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#17171c">
+<meta name="description" content="一个人 + AI，就是一家公司的开始。一站式搞定选题、创作、排期、变现、复盘的小红书AI运营工作台。">
+<title>Crazy Friday. 小红书AI运营工作台</title>
+<style>
+  :root{
+    --brand:#ff2442; --brand2:#ff5778; --brand3:#ff8aa6;
+    --ink:#ffffff; --ink2:rgba(255,255,255,.75); --ink3:rgba(255,255,255,.55);
+    --line:rgba(255,255,255,.11); --line2:rgba(255,255,255,.07);
+    --card:#1c1c24;
+    --bg:#0b0b0f; --bg2:#131318;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.28);
+    --shadow-md:0 6px 20px -6px rgba(0,0,0,.42), 0 2px 6px rgba(0,0,0,.32);
+    --shadow-lg:0 24px 60px -18px rgba(0,0,0,.55), 0 8px 20px -8px rgba(0,0,0,.45);
+    --radius:18px; --radius-lg:26px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(255,36,66,.16)}
+  a{text-decoration:none;color:inherit}
+  button{cursor:pointer;font-family:inherit;border:none;background:none;color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+
+  /* ================= Nav ================= */
+  .nav{position:sticky;top:0;z-index:90;background:rgba(11,11,15,.82);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;letter-spacing:-.4px;color:#fff}
+  .logo-ico{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(255,36,66,.32);position:relative;overflow:hidden}
+  .logo-ico::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.32),transparent 55%)}
+  .logo-ico svg{width:15px;height:15px;stroke:#fff;position:relative;z-index:1}
+  .logo .dot{color:var(--brand)}
+  .nav-cta{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2));padding:9px 22px;border-radius:99px;box-shadow:0 6px 18px rgba(255,36,66,.34);transition:.25s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(255,36,66,.4)}
+  .nav-cta:active{transform:translateY(0) scale(.97)}
+  /* V6.35 落地页 ↔ 体验版：导航常驻「免费体验」入口，随时可跳 */
+  .nav-btns{display:flex;align-items:center;gap:8px}
+  .nav-cta.ghost{background:rgba(255,255,255,.08);color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.12);box-shadow:none}
+  .nav-cta.ghost:hover{color:#fff;border-color:rgba(255,36,66,.55);background:rgba(255,36,66,.14)}
+  .nav-cta.demo{position:relative;animation:navDemoPulse 2.6s ease-in-out infinite}
+  @keyframes navDemoPulse{
+    0%,100%{box-shadow:0 6px 18px rgba(255,36,66,.34),0 0 0 0 rgba(255,36,66,.34)}
+    50%{box-shadow:0 6px 18px rgba(255,36,66,.4),0 0 0 7px rgba(255,36,66,0)}
+  }
+
+  /* ================= Hero ================= */
+  .hero{position:relative;padding:76px 0 0;text-align:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:
+    radial-gradient(900px 420px at 50% -6%,rgba(255,36,66,.18),transparent 62%),
+    radial-gradient(700px 320px at 12% 8%,rgba(255,138,166,.10),transparent 60%),
+    radial-gradient(700px 320px at 88% 6%,rgba(255,87,120,.09),transparent 60%),
+    linear-gradient(180deg,#15151b 0%,#0b0b0f 60%,#0b0b0f 100%)}
+  .hero-bg::after{content:"";position:absolute;inset:0;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 .028 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .hero .wrap{position:relative;z-index:1}
+  .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--brand);padding:6px 16px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.4px;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px)}
+  .hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 3px rgba(255,36,66,.18)}
+  .hero h1{font-size:clamp(32px,5.8vw,52px);font-weight:900;line-height:1.16;letter-spacing:-2px;margin-top:26px;color:#fff}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--brand) 10%,var(--brand2) 55%,#ff9db1 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .sub{font-size:clamp(14.5px,2.4vw,17px);color:var(--ink2);margin-top:20px;line-height:1.9;max-width:620px;margin-left:auto;margin-right:auto}
+  .hero .sub b{color:#fff;font-weight:800}
+  .hero-cta{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  /* V6.35 体验入口说明行：把「零门槛」讲清楚，降低点击犹豫 */
+  .hero-note{margin-top:16px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;font-size:13px;color:var(--ink3)}
+  .hero-note i{font-style:normal;color:rgba(255,255,255,.18);font-size:11px}
+  .hero-note a{color:var(--brand);font-weight:600;text-decoration:none;margin-left:6px;border-bottom:1px dashed rgba(255,36,66,.4)}
+  .hero-note a:hover{opacity:.8}
+  .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-size:16px;font-weight:800;padding:16px 40px;border-radius:99px;box-shadow:0 14px 34px -8px rgba(255,36,66,.55),0 4px 12px rgba(255,36,66,.3);transition:.25s;letter-spacing:.3px;position:relative;overflow:hidden}
+  .btn-primary::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.25),transparent 50%);pointer-events:none}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 44px -10px rgba(255,36,66,.6),0 6px 16px rgba(255,36,66,.34)}
+  .btn-primary:active{transform:translateY(0) scale(.98)}
+  .btn-line{border:1.5px solid rgba(255,255,255,.14);color:#fff;font-size:15px;font-weight:700;padding:15px 34px;border-radius:99px;background:rgba(255,255,255,.06);transition:.25s;backdrop-filter:blur(6px)}
+  .btn-line:hover{border-color:var(--brand);color:var(--brand);background:rgba(255,36,66,.12)}
+  .hero-contact{margin-top:22px;font-size:13px;color:var(--ink2);cursor:pointer;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);border-radius:18px;padding:10px 18px;transition:.25s;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px);max-width:560px;width:fit-content;flex-wrap:wrap;justify-content:center;line-height:1.8;box-sizing:border-box;word-break:break-all;overflow-wrap:anywhere}
+  .hero-contact b{word-break:break-all}
+  .hero-contact .copy-hint{flex-shrink:0}
+  .hero-contact:hover{border-color:rgba(255,36,66,.35);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+  .hero-contact b{color:#fff;font-weight:800;letter-spacing:.3px}
+  .hero-contact .copy-hint{font-size:11px;color:var(--brand);background:rgba(255,36,66,.12);border-radius:8px;padding:2px 9px;font-weight:600}
+
+  /* ===== 信任条（数据证明） ===== */
+  .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:760px;margin:34px auto 0}
+  .trust-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:14px 10px;backdrop-filter:blur(8px);box-shadow:var(--shadow-sm)}
+  .trust-item b{display:block;font-size:19px;font-weight:900;letter-spacing:-.5px;color:#fff}
+  .trust-item b i{font-style:normal;color:var(--brand)}
+  .trust-item span{font-size:11px;color:var(--ink3);display:block;margin-top:2px}
+
+  /* ===== 产品 Mockup（精致暗色窗口 + 浮动卡） ===== */
+  .mockup-zone{position:relative;z-index:1;margin-top:56px;padding-bottom:30px}
+  .mock{width:min(900px,96%);margin:0 auto;background:linear-gradient(180deg,#1e1e25,#14141a);border-radius:20px;box-shadow:0 40px 90px -30px rgba(20,20,26,.5),0 16px 40px -16px rgba(20,20,26,.35),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;border:1px solid rgba(255,255,255,.07);position:relative}
+  .mock::before{content:"";position:absolute;inset:0;background:radial-gradient(640px 260px at 30% -20%,rgba(255,36,66,.14),transparent 60%);pointer-events:none}
+  .mock-bar{display:flex;align-items:center;gap:7px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)}
+  .mock-bar i{width:11px;height:11px;border-radius:50%;background:#3a3a44}
+  .mock-bar i:nth-child(1){background:#ff5f57}.mock-bar i:nth-child(2){background:#febc2e}.mock-bar i:nth-child(3){background:#28c840}
+  .mock-bar .url{flex:1;margin-left:14px;background:rgba(255,255,255,.05);border-radius:7px;font-size:11px;color:#8a8a92;padding:5px 12px;text-align:left;letter-spacing:.3px;font-family:ui-monospace,Menlo,monospace}
+  .mock-body{display:flex;min-height:320px}
+  .mock-side{width:120px;background:rgba(0,0,0,.16);padding:18px 0;border-right:1px solid rgba(255,255,255,.05);flex-shrink:0}
+  .m-brand{display:flex;align-items:center;gap:8px;padding:0 16px 14px;border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:10px}
+  .m-brand .lg{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#ff2442,#ff5778);position:relative}
+  .m-brand .lg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.3),transparent 60%)}
+  .m-brand span{font-size:11px;font-weight:800;color:#f2f2f7}
+  .m-item{display:flex;align-items:center;gap:9px;padding:8px 16px;font-size:11px;color:#9a9aa3;margin-bottom:2px;border-radius:0 8px 8px 0;position:relative}
+  .m-item i{width:5px;height:5px;border-radius:50%;background:#3d3d46;flex-shrink:0}
+  .m-item.on{background:linear-gradient(90deg,rgba(255,36,66,.16),transparent);color:#fff;font-weight:600}
+  .m-item.on::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:linear-gradient(180deg,#ff2442,#ff5778)}
+  .m-item.on i{background:#ff5778;box-shadow:0 0 6px #ff5778}
+  .mock-main{flex:1;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-content:start}
+  .mc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.055);border-radius:12px;padding:14px;position:relative;overflow:hidden;transition:.2s}
+  .mc::after{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+  .mc .lab{font-size:9.5px;color:#8a8a92;letter-spacing:.4px;margin-bottom:7px}
+  .mc .num{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1.2}
+  .mc .num.red{color:#ff5778}
+  .mc .up{font-size:10px;color:#4ade80;font-weight:700}
+  .mc .bars{margin-top:9px;display:flex;gap:4px;align-items:flex-end;height:26px}
+  .mc .bars i{flex:1;border-radius:3px 3px 1px 1px;background:rgba(255,255,255,.09)}
+  .mc .bars i:nth-child(1){height:46%}.mc .bars i:nth-child(2){height:72%}.mc .bars i:nth-child(3){height:58%}.mc .bars i:nth-child(4){height:88%}.mc .bars i:nth-child(5){height:66%}
+  .mc .bars.red i{background:linear-gradient(180deg,rgba(255,36,66,.5),rgba(255,36,66,.16))}
+  .mc .chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .mc .chip-row s{font-size:8.5px;color:#ff8aa6;background:rgba(255,36,66,.16);border-radius:4px;padding:2px 7px;text-decoration:none}
+  .mc .chip-row s.gray{color:#9a9aa3;background:rgba(255,255,255,.06)}
+  .mc .line{height:7px;border-radius:4px;background:rgba(255,255,255,.09);margin-top:8px}
+  .mc .line.w{width:62%}
+  .mc-row{grid-column:1/-1;display:flex;gap:12px}
+  .mc-row .mc{flex:1}
+  /* 浮动卡片 */
+  .float{position:absolute;background:rgba(22,22,28,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:13px 16px;box-shadow:0 18px 44px -12px rgba(0,0,0,.55);z-index:3;animation:floaty 6s ease-in-out infinite;display:flex;align-items:center;gap:11px}
+  .float .f-ico{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .float .f-ico svg{width:19px;height:19px;stroke:var(--brand)}
+  .float b{font-size:13px;font-weight:800;display:block;letter-spacing:-.2px;color:#fff}
+  .float span{font-size:10.5px;color:var(--ink3);display:block;margin-top:1px}
+  .f1{top:-24px;right:-14px;animation-delay:0s}
+  .f2{bottom:-26px;left:4%;animation-delay:1.8s}
+  .f3{top:30%;left:-30px;animation-delay:3.4s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+  /* ================= 通用区块 ================= */
+  .sec{padding:72px 0 8px}
+  .sec-title{text-align:center;font-size:clamp(22px,3.6vw,30px);font-weight:900;letter-spacing:-.8px}
+  .sec-sub{text-align:center;font-size:13.5px;color:var(--ink3);margin-top:12px;line-height:1.75}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ================= 功能卡片 ================= */
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(315px,1fr));gap:16px;margin-top:42px}
+  .feat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px 22px;transition:.28s cubic-bezier(.22,.61,.36,1);overflow:hidden;box-shadow:var(--shadow-sm)}
+  .feat::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 180px at 50% -40%,rgba(255,36,66,.12),transparent 62%);opacity:0;transition:.28s}
+  .feat::after{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+  .feat:hover{border-color:rgba(255,36,66,.3);box-shadow:0 20px 50px -16px rgba(255,36,66,.18),0 8px 20px -8px rgba(0,0,0,.35);transform:translateY(-4px)}
+  .feat:hover::before{opacity:1}
+  .feat-ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;transition:.28s}
+  .feat-ico svg{width:24px;height:24px}
+  .feat:hover .feat-ico{transform:scale(1.06)}
+  .feat h3{font-size:15.5px;font-weight:800;letter-spacing:-.2px}
+  .feat p{font-size:12.5px;color:var(--ink2);line-height:1.8;margin-top:8px}
+  .c-red{background:linear-gradient(135deg,rgba(255,36,66,.16),rgba(255,87,120,.12));color:var(--brand)}
+  .c-gray{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.05));color:#fff}
+  .c-green{background:linear-gradient(135deg,rgba(23,163,90,.14),rgba(23,163,90,.09));color:#34d399}
+  .c-blue{background:linear-gradient(135deg,rgba(47,111,228,.12),rgba(47,111,228,.08));color:#60a5fa}
+  .c-gold{background:linear-gradient(135deg,rgba(255,149,0,.16),rgba(255,149,0,.1));color:#fbbf24}
+
+  /* ================= 能力地图 ================= */
+  .cap-grid{margin-top:42px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .cap-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.10);border-radius:var(--radius);padding:26px;transition:.28s cubic-bezier(.22,.61,.36,1);overflow:hidden;box-shadow:var(--shadow-sm)}
+  .cap-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--cap-accent),transparent);opacity:.8}
+  .cap-card::after{content:"";position:absolute;top:-40%;right:-20%;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,var(--cap-accent),transparent 70%);opacity:.08;transition:.28s}
+  .cap-card:hover{border-color:rgba(255,255,255,.22);box-shadow:0 24px 55px -16px rgba(0,0,0,.5),0 0 40px -12px var(--cap-accent);transform:translateY(-5px)}
+  .cap-card:hover::after{opacity:.14}
+  .cap-head{display:flex;align-items:center;gap:9px;font-size:15.5px;font-weight:900;letter-spacing:-.2px;color:#fff;margin-bottom:4px}
+  .cap-dot{width:9px;height:9px;border-radius:50%;box-shadow:0 0 10px var(--cap-accent)}
+  .cap-desc{font-size:12.5px;color:var(--ink3);margin-bottom:18px}
+  .cap-list{display:grid;grid-template-columns:1fr;gap:10px}
+  .cap-item{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px}
+  .cap-item b{font-size:13px;font-weight:700;color:#fff}
+  .cap-item i{font-size:11.5px;color:var(--ink3);font-style:normal}
+  @media(max-width:760px){
+    .cap-grid{grid-template-columns:1fr}
+    .cap-list{grid-template-columns:1fr}
+  }
+
+  /* ================= 三步 ================= */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:42px;position:relative}
+  .steps::before{content:"";position:absolute;top:39px;left:16.6%;right:16.6%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(255,36,66,.22) 20%,rgba(255,36,66,.22) 80%,transparent)}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 22px;text-align:center;transition:.25s;box-shadow:var(--shadow-sm);position:relative}
+  .step:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+  .step-n{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 20px -4px rgba(255,36,66,.5);position:relative}
+  .step h4{font-size:15px;font-weight:800;letter-spacing:-.2px}
+  .step p{font-size:12.5px;color:var(--ink2);line-height:1.8;margin-top:8px}
+
+  /* V6.35 落地页 ↔ 体验版：零门槛试用区块（视觉上要压过其它 section） */
+  .try-box{margin-top:42px;position:relative;border-radius:var(--radius-lg);background:linear-gradient(160deg,#1a1518 0%,#1c1c24 45%,#1a1518 100%);border:1.5px solid rgba(255,36,66,.28);padding:44px 38px 38px;text-align:center;overflow:hidden;box-shadow:0 24px 60px -18px rgba(0,0,0,.45),0 0 80px -30px rgba(255,36,66,.18)}
+  .try-box::before{content:"";position:absolute;top:-52%;left:50%;transform:translateX(-50%);width:76%;height:150%;border-radius:50%;background:radial-gradient(circle,rgba(255,36,66,.18),transparent 62%);pointer-events:none}
+  .try-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,36,66,.32);color:var(--brand);font-size:12px;font-weight:700;padding:6px 15px;border-radius:99px;letter-spacing:.3px;box-shadow:var(--shadow-sm)}
+  .try-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 3px rgba(255,36,66,.22)}
+  .try-box h3{font-size:26px;font-weight:900;letter-spacing:-.7px;margin-top:18px;position:relative;color:#fff}
+  .try-sub{font-size:14px;color:var(--ink2);line-height:1.85;margin:12px auto 0;max-width:640px;position:relative}
+  .try-sub b{color:#fff;font-weight:800}
+  .try-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 28px;text-align:left;position:relative}
+  .ts{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:16px 16px;box-shadow:var(--shadow-sm)}
+  .ts-n{flex-shrink:0;width:26px;height:26px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 12px -3px rgba(255,36,66,.5)}
+  .ts b{display:block;font-size:13.5px;font-weight:800;line-height:1.5;color:#fff}
+  .ts i{display:block;font-style:normal;font-size:12px;color:var(--ink3);line-height:1.65;margin-top:3px}
+  .try-cta{display:flex;flex-direction:column;align-items:center;gap:12px;position:relative}
+  .try-hint{font-size:12.5px;color:var(--ink3)}
+  .try-hint a{color:var(--brand);font-weight:700;text-decoration:none;border-bottom:1px dashed rgba(255,36,66,.4)}
+  /* ================= 手机 App 级体验 ================= */
+  .app-show{margin-top:42px;display:grid;grid-template-columns:280px 1fr;gap:34px;align-items:center}
+  .app-phone{width:280px;height:580px;border-radius:40px;background:linear-gradient(180deg,#2a2a32,#1a1a20);border:10px solid #2c2c34;box-shadow:0 40px 80px -24px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.08);position:relative;overflow:hidden;margin:0 auto}
+  .app-phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#1a1a20;border-radius:12px;z-index:2}
+  .app-screen{position:absolute;inset:8px;border-radius:32px;background:#0f0f12;overflow:hidden;padding:34px 14px 14px;display:flex;flex-direction:column;gap:10px}
+  .app-status{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:rgba(255,255,255,.7);padding:0 4px}
+  .app-header{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;margin-top:2px}
+  .app-header .app-green{font-size:10px;font-weight:600;color:#4ade80;background:rgba(74,222,128,.12);padding:3px 8px;border-radius:99px}
+  .app-card{background:linear-gradient(150deg,#1f1f27,#15151b);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;position:relative;overflow:hidden}
+  .app-card::before{content:"";position:absolute;top:-30%;right:-20%;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(255,36,66,.25),transparent 65%)}
+  .app-hello{font-size:15px;font-weight:800;line-height:1.35;position:relative}
+  .app-hello b{font-weight:900;color:var(--brand)}
+  .app-date{font-size:11px;color:var(--ink3);margin-top:6px}
+  .app-tips{background:rgba(255,36,66,.08);border:1px solid rgba(255,36,66,.18);border-radius:14px;padding:11px;font-size:11px}
+  .app-tips .app-tag{display:inline-block;font-size:9px;font-weight:700;color:var(--brand);background:rgba(255,36,66,.12);padding:2px 6px;border-radius:5px;margin-right:5px}
+  .app-tips b{color:#fff;font-weight:700}
+  .app-tips p{margin-top:5px;color:var(--ink2)}
+  .app-tips p b{color:var(--brand);font-weight:800}
+  .app-onboard{background:#1a1a22;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:13px}
+  .app-ob-title{font-size:11px;font-weight:800;margin-bottom:9px}
+  .app-ob-row{display:flex;align-items:center;gap:8px;font-size:10.5px;margin-bottom:7px}
+  .app-ob-row span{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:900;font-size:10px;display:flex;align-items:center;justify-content:center}
+  .app-ob-row b{color:#fff;font-weight:700}
+  .app-ob-row i{margin-left:auto;color:var(--brand);font-weight:700;font-style:normal}
+  .app-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .app-metrics > div{background:#1a1a22;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px}
+  .app-metrics i{display:block;font-size:9px;color:var(--ink3)}
+  .app-metrics b{display:block;font-size:17px;font-weight:900;color:#fff;margin-top:2px}
+  .app-metrics span{font-size:9px;color:var(--ink3)}
+  .app-tabs{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--ink3);padding:0 4px 6px}
+  .app-tabs .on{color:var(--brand);font-weight:700}
+  .app-tabs .fab{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 8px 20px -6px rgba(255,36,66,.55)}
+  .app-copy{display:flex;flex-direction:column;justify-content:center;gap:18px}
+  .app-copy h3{font-size:24px;font-weight:900;letter-spacing:-.5px;color:#fff}
+  .app-copy ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .app-copy li{font-size:14px;color:var(--ink2);line-height:1.7;padding-left:26px;position:relative}
+  .app-copy li::before{content:"✓";position:absolute;left:0;color:var(--brand);font-weight:900}
+  .app-copy li b{color:#fff;font-weight:800}
+  @media(max-width:760px){
+    .try-box{padding:32px 20px 28px}
+    .try-box h3{font-size:21px}
+    .try-steps{grid-template-columns:1fr;gap:10px}
+    .app-show{grid-template-columns:1fr}
+    .app-copy{text-align:center;align-items:center}
+    .app-copy ul{text-align:left}
+  }
+
+  /* ================= 安全深色区 ================= */
+  .safety{margin-top:42px;border-radius:var(--radius-lg);padding:42px 34px;background:linear-gradient(150deg,#1b1b21 0%,#232329 60%,#1b1b21 100%);color:#fff;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;overflow:hidden;box-shadow:0 30px 70px -24px rgba(22,22,26,.45)}
+  .safety::before{content:"";position:absolute;top:-60%;right:-14%;width:52%;height:190%;border-radius:50%;background:radial-gradient(circle,rgba(255,36,66,.22),transparent 60%)}
+  .safety::after{content:"";position:absolute;bottom:-70%;left:-10%;width:42%;height:180%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.05),transparent 62%)}
+  .safety-item{position:relative;z-index:1;display:flex;gap:15px;align-items:flex-start}
+  .s-ico{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;backdrop-filter:blur(6px)}
+  .s-ico svg{width:21px;height:21px;stroke:#ff8aa6}
+  .safety-item h5{font-size:14px;font-weight:800;letter-spacing:.1px}
+  .safety-item p{font-size:12px;color:rgba(255,255,255,.56);line-height:1.8;margin-top:5px}
+
+  /* ================= FAQ ================= */
+  .faq{margin-top:42px;max-width:760px;margin-left:auto;margin-right:auto}
+  .faq-item{border:1px solid rgba(255,255,255,.10);border-radius:14px;margin-bottom:10px;background:var(--card);transition:.22s;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .faq-item:hover{border-color:rgba(255,36,66,.35)}
+  .faq-item h4{font-size:14px;font-weight:700;padding:17px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;color:#fff}
+  .faq-item h4::before{content:"Q";color:var(--brand);font-weight:900;font-size:11px;background:rgba(255,36,66,.12);border-radius:7px;padding:2px 8px;flex-shrink:0}
+  .faq-item h4 .arr{margin-left:auto;font-size:11px;color:var(--ink3);transition:.25s;transform:rotate(0deg)}
+  .faq-item.open h4 .arr{transform:rotate(180deg);color:var(--brand)}
+  .faq-item p{font-size:12.5px;color:var(--ink2);line-height:1.85;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+  .faq-item.open p{max-height:300px;padding:0 20px 17px}
+
+  /* ================= CTA 底部 ================= */
+  .cta-bottom{margin:76px 0 26px;border-radius:var(--radius-lg);background:linear-gradient(150deg,#15151b,#1e1e25 55%,#232329);color:#fff;text-align:center;padding:60px 24px;position:relative;overflow:hidden;box-shadow:0 40px 90px -28px rgba(0,0,0,.55)}
+  .cta-bottom::before{content:"";position:absolute;top:-60%;left:50%;transform:translateX(-50%);width:70%;height:190%;border-radius:50%;background:radial-gradient(circle,rgba(255,36,66,.38),transparent 58%);filter:blur(4px)}
+  .cta-bottom::after{content:"";position:absolute;bottom:-80%;left:-8%;width:44%;height:190%;border-radius:50%;background:radial-gradient(circle,rgba(255,87,120,.18),transparent 60%)}
+  .cta-bottom h2{position:relative;z-index:1;font-size:clamp(22px,4vw,32px);font-weight:900;letter-spacing:-.8px}
+  .cta-bottom p{position:relative;z-index:1;font-size:13.5px;color:rgba(255,255,255,.6);margin-top:14px;line-height:1.85}
+  .cta-bottom .btn-white{margin-top:0;display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--brand);font-size:16px;font-weight:800;padding:16px 44px;border-radius:99px;position:relative;z-index:1;box-shadow:0 16px 40px -8px rgba(0,0,0,.5);transition:.25s}
+  .cta-bottom .btn-white:hover{transform:translateY(-2px);box-shadow:0 22px 52px -10px rgba(0,0,0,.55)}
+  .cta-bottom .btn-white:active{transform:scale(.98)}
+  /* V6.35 底部双 CTA：先体验 / 直接开通 */
+  .cta-bottom-btns{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+  .cta-bottom .btn-white.ghost{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.45);box-shadow:none;font-size:15px;padding:15px 30px;backdrop-filter:blur(6px)}
+  .cta-bottom .btn-white.ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px);box-shadow:none}
+
+  footer{text-align:center;padding:28px 0 46px;color:var(--ink3);font-size:11px;line-height:2}
+  footer a{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
+  .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(24px);background:#1b1b21;color:#fff;font-size:13px;padding:13px 26px;border-radius:99px;opacity:0;transition:.35s cubic-bezier(.22,.61,.36,1);z-index:99;pointer-events:none;box-shadow:0 16px 44px -10px rgba(0,0,0,.4)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:720px){
+    .nav .wrap{padding:0 16px;height:54px}
+    .nav-cta{padding:8px 15px;font-size:12.5px;min-height:36px;display:inline-flex;align-items:center}
+    .nav-btns{gap:6px}
+    .logo{font-size:15px;gap:8px}
+    .logo-ico{width:26px;height:26px}
+    .hero{padding:56px 0 0}
+    .hero h1{letter-spacing:-1.2px}
+    .hero-cta{flex-direction:column;align-items:stretch;max-width:280px;margin:34px auto 0;gap:10px}
+    .hero-cta .btn-primary,.hero-cta .btn-line{width:100%;text-align:center;justify-content:center}
+    .hero-contact{flex-direction:column;align-items:center;text-align:center;width:100%;max-width:340px;margin-left:auto;margin-right:auto;font-size:13px;padding:14px 16px;line-height:1.9;gap:4px}
+    .hero-contact .copy-hint{align-self:center}
+    .trust{grid-template-columns:repeat(2,1fr)}
+    .feat-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr;gap:12px}
+    .steps::before{display:none}
+    .safety{grid-template-columns:1fr;padding:30px 22px}
+    .panorama{grid-template-columns:1fr}
+    .mock{width:100%;transform:scale(.92);transform-origin:top center}
+    .mock-body{min-height:auto}
+    .mock-side{display:none}
+    .mock-main{grid-template-columns:repeat(2,1fr);padding:14px;gap:9px}
+    .mc{padding:11px}
+    .mc .num{font-size:16px}
+    .mc .lab{font-size:9px}
+    .mc-row{grid-template-columns:repeat(2,1fr)}
+    .mc-row .mc:last-child{display:none}
+    .float{display:none}
+  }
+  @media(max-width:380px){.mock{transform:scale(.86)}.mock-main{grid-template-columns:1fr}.mc-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="wrap">
+    <div class="logo">
+      <span class="logo-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      Crazy Friday<span class="dot">.</span>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-cta ghost" onclick="copyContact()">联系卖家</button>
+      <button class="nav-cta demo" onclick="goDemo()">▶ 免费体验</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-badge">小红书 AI 运营工作台 · 已上线</div>
+    <h1>一个人 + AI<br><span class="grad">就是一家公司的开始</span></h1>
+    <p class="sub">一个人做小红书，选题、写文案、追热点、管排期、看数据、跑变现，全得自己扛。<br>Crazy Friday 把 AI 塞进整条运营链路，<b>从灵感到收钱，一个工作台替你扛</b>。</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="goDemo()">▶ 免费体验完整版</button>
+      <button class="btn-line" onclick="copyContact()">📩 我有激活码 · 直接开通</button>
+    </div>
+    <div class="hero-note">
+      <span>不用注册</span><i>·</i><span>不用输码</span><i>·</i><span>打开就是一套正在运营的完整账号</span>
+      <a href="javascript:void(0)" onclick="scrollToSec()">先看看都有什么 ↓</a>
+    </div>
+    <div class="hero-contact" onclick="copyContact()"><span>微信：<b>R26184352Y</b></span><span>邮箱：<b>shim16506@gmail.com</b></span><span class="copy-hint">点击一键复制</span></div>
+
+    <div class="trust">
+      <div class="trust-item"><b>20<i>+</i></b><span>功能模块</span></div>
+      <div class="trust-item"><b>9</b><span>大发布工具箱</span></div>
+      <div class="trust-item"><b>5</b><span>大变现体系</span></div>
+      <div class="trust-item"><b>10<i>+</i></b><span>AI 创作场景</span></div>
+    </div>
+
+    <div class="mockup-zone">
+      <div class="float f1">
+        <span class="f-ico c-red"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+        <div><b>今日收益 +¥186</b><span>变现日报 · 刚刚更新</span></div>
+      </div>
+      <div class="float f2">
+        <span class="f-ico c-green"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+        <div><b>热点已就位 · 28 条</b><span>今日热门 · AI 自动整理</span></div>
+      </div>
+      <div class="float f3">
+        <span class="f-ico c-blue"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a3 3 0 0 1-3 3H8l-5 4V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3z"/></svg></span>
+        <div><b>笔记已发布 ✅</b><span>AI 创作 → 一键发布</span></div>
+      </div>
+      <div class="mock">
+        <div class="mock-bar">
+          <i></i><i></i><i></i>
+          <span class="url">crazy-friday · 小红书AI运营工作台</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <div class="m-brand"><span class="lg"></span><span>运营台</span></div>
+            <div class="m-item on"><i></i>选题雷达</div>
+            <div class="m-item"><i></i>今日热门</div>
+            <div class="m-item"><i></i>AI创作中心</div>
+            <div class="m-item"><i></i>发布计划</div>
+            <div class="m-item"><i></i>数据复盘</div>
+            <div class="m-item"><i></i>变现商业</div>
+            <div class="m-item"><i></i>多账号矩阵</div>
+          </div>
+          <div class="mock-main">
+            <div class="mc">
+              <div class="lab">本月预测收益</div>
+              <div class="num red">¥3,680</div>
+              <div class="bars red"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="mc">
+              <div class="lab">粉丝增长</div>
+              <div class="num">12.6w</div>
+              <div class="up">▲ 8.4%</div>
+            </div>
+            <div class="mc">
+              <div class="lab">今日热点选题</div>
+              <div class="num red">28</div>
+              <div class="chip-row"><s>入秋穿搭</s><s>开学季</s><s class="gray">+26</s></div>
+            </div>
+            <div class="mc">
+              <div class="lab">AI 一键创作</div>
+              <div class="num">草稿</div>
+              <div class="line"></div><div class="line w"></div>
+            </div>
+            <div class="mc">
+              <div class="lab">发布计划</div>
+              <div class="num">周四 09:00</div>
+              <div class="chip-row"><s class="gray">待发布 3</s></div>
+            </div>
+            <div class="mc">
+              <div class="lab">账号健康度</div>
+              <div class="num">92</div>
+              <div class="up">安全运行中</div>
+            </div>
+            <div class="mc-row">
+              <div class="mc"><div class="lab">违禁词扫描</div><div class="num" style="font-size:13px;color:#4ade80">✓ 0 风险</div></div>
+              <div class="mc"><div class="lab">本周目标</div><div class="num" style="font-size:13px">4/6 篇</div></div>
+              <div class="mc"><div class="lab">私域合规</div><div class="num" style="font-size:13px;color:#ff8aa6">待检查 1</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec" id="features">
+    <div class="sec-title reveal">一套工具，管完小红书整条生意</div>
+    <div class="sec-sub reveal">从零到变现，覆盖博主完整运营链路</div>
+    <div class="feat-grid">
+      <div class="feat reveal"><div class="feat-ico c-red"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 9l-4 3.6 1.2 5.4-4.2-2.8-4.2 2.8L9 12.6 5 9l5.2-.8z"/></svg></div><h3>AI 创作中心</h3><p>10 种内容场景 + 9 大发布工具箱：标题、种草文案、干货笔记、视频脚本、封面标题、智能标签……一句话出一篇可发笔记。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-gray"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></div><h3>爆款深度拆解</h3><p>拆解爆款的标题钩子、正文节奏、评论区高互动点，一键生成同题不同表达的原创版本，风格复刻不撞车。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-green"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a3 3 0 0 1-3 3H8l-5 4V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3z"/></svg></div><h3>风控合规护航</h3><p>发布前违禁词扫描 + 变现风控检测 + 账号健康度体检，自动改写违规表述，安全运营不踩限流坑。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-gold"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 13H7zM9 8V6a3 3 0 0 1 6 0v2"/></svg></div><h3>变现商业中心</h3><p>商单报价、带货选品、知识付费、私域合规、轻量变现五大体系，AI 生成可直接落地的完整方案。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-red"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14a2 2 0 0 0 2 2h13V5H6a2 2 0 0 0-2 2zM20 5H6"/></svg></div><h3>变现日报中心</h3><p>每天自动更新：平台新规、新玩法、赛道行情、爆款案例、风险预警、行动清单，减少信息差。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-gray"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01"/></svg></div><h3>多账号矩阵</h3><p>2-5 个账号一套管理：数据完全隔离、顶栏一键切换、内容一键转投，主号测款副号放量。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-green"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 8v8l8 6 8-6V8z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>选题→排期联动</h3><p>选题雷达一键加入发布计划、热点日历提前踩点、发布到点提醒、每周一自动运营周报。</p></div>
+      <div class="feat reveal"><div class="feat-ico c-blue"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>数据 100% 私有</h3><p>所有数据只保存在你的设备浏览器里，卖家都看不到。换设备随时导出备份，一次购买终身数据无忧。</p></div>
+    </div>
+  </div>
+
+  <div class="sec" id="panorama">
+    <div class="sec-title reveal">打开工作台，就像打开一个真实在跑的账号</div>
+    <div class="sec-sub reveal">20+ 功能模块全部集成在一个页面，不用在十几个工具之间切来切去</div>
+    <div class="cap-grid">
+      <div class="cap-card reveal" style="--cap-accent:#ff2442">
+        <div class="cap-head"><span class="cap-dot" style="background:#ff2442"></span>选题与热点</div>
+        <div class="cap-desc">不再靠感觉拍脑袋</div>
+        <div class="cap-list">
+          <div class="cap-item"><b>选题雷达</b><i>搜索量 / 竞争度 / 热度趋势</i></div>
+          <div class="cap-item"><b>今日热门</b><i>AI 自动整理 30+ 赛道热点</i></div>
+          <div class="cap-item"><b>爆款拆解</b><i>六维拆透 + 同题原创</i></div>
+          <div class="cap-item"><b>热点日历</b><i>618 / 双 11 提前 30 天布局</i></div>
+        </div>
+      </div>
+      <div class="cap-card reveal" style="--cap-accent:#ff8aa6">
+        <div class="cap-head"><span class="cap-dot" style="background:#ff8aa6"></span>创作与发布</div>
+        <div class="cap-desc">从灵感笔记到可发内容</div>
+        <div class="cap-list">
+          <div class="cap-item"><b>AI 一键创作</b><i>标题 / 正文 / 封面 / 话题 / 脚本</i></div>
+          <div class="cap-item"><b>发布前检查台</b><i>标题正文打分 + 逐项改稿</i></div>
+          <div class="cap-item"><b>违禁词扫描</b><i>发布前自动标红 + 改写</i></div>
+          <div class="cap-item"><b>发布计划</b><i>排期 / 改期 / 批量操作</i></div>
+        </div>
+      </div>
+      <div class="cap-card reveal" style="--cap-accent:#4ade80">
+        <div class="cap-head"><span class="cap-dot" style="background:#4ade80"></span>数据与复盘</div>
+        <div class="cap-desc">像看 App 后台一样看自己的号</div>
+        <div class="cap-list">
+          <div class="cap-item"><b>数据复盘</b><i>7 / 30 / 90 天趋势折线</i></div>
+          <div class="cap-item"><b>账号健康度</b><i>多维评分 + 优化建议</i></div>
+          <div class="cap-item"><b>对标账号</b><i>自动追踪 + 笔记表现</i></div>
+          <div class="cap-item"><b>每周周报</b><i>自动汇总 + 下周行动</i></div>
+        </div>
+      </div>
+      <div class="cap-card reveal" style="--cap-accent:#fbbf24">
+        <div class="cap-head"><span class="cap-dot" style="background:#fbbf24"></span>变现与商业</div>
+        <div class="cap-desc">从流量到收入的完整链路</div>
+        <div class="cap-list">
+          <div class="cap-item"><b>电商带货中心</b><i>商品 / 订单 / GMV / 佣金</i></div>
+          <div class="cap-item"><b>变现方案</b><i>5 种变现路径 AI 拓展</i></div>
+          <div class="cap-item"><b>收益预估</b><i>按粉丝与报价算收入</i></div>
+          <div class="cap-item"><b>变现日报</b><i>行业新玩法 + 风险预警</i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="tryfree">
+    <div class="try-box reveal">
+      <div class="try-tag">不用注册 · 不用输码 · 不用加微信</div>
+      <h3>先亲手玩一遍，再决定买不买</h3>
+      <p class="try-sub">我们准备了一套<b>正在真实运营的演示账号</b>：12 篇笔记（含 1 篇 12.8w 阅读爆款）、8 条排期、6 个商品 12 笔带货订单、30 天增长曲线。打开就能点、能改、能跑工具。</p>
+      <div class="try-steps">
+        <div class="ts"><span class="ts-n">1</span><div><b>点开体验链接</b><i>手机电脑都能开，不用下载，不占内存</i></div></div>
+        <div class="ts"><span class="ts-n">2</span><div><b>随便点随便改</b><i>独立演示数据，怎么折腾都不影响任何人</i></div></div>
+        <div class="ts"><span class="ts-n">3</span><div><b>满意就一键开通</b><i>点底部「激活我的」，就是你自己全新的工作台</i></div></div>
+      </div>
+      <div class="try-cta">
+        <button class="btn-primary" onclick="goDemo()">▶ 打开免费体验版</button>
+        <span class="try-hint">看完直接想买？<a href="javascript:void(0)" onclick="copyContact()">联系卖家拿激活码</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title reveal">三步上手</div>
+    <div class="sec-sub reveal">没有复杂设置，激活即用</div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-n">1</div><h4>打开专属链接</h4><p>手机 / 电脑浏览器打开我们发给你的专属链接，无需注册登录。</p></div>
+      <div class="step reveal"><div class="step-n">2</div><h4>输入激活码</h4><p>输入激活码一键激活，全部功能直接开放，没有隐藏付费点。</p></div>
+      <div class="step reveal"><div class="step-n">3</div><h4>开始运营</h4><p>设置你的运营目标，AI 按需推荐功能。菜单「添加到主屏幕」即享 App 体验。</p></div>
+    </div>
+  </div>
+
+
+  <div class="sec" id="appfeel">
+    <div class="sec-title reveal">手机打开，就是 App</div>
+    <div class="sec-sub reveal">不用下载、不占内存，浏览器「添加到主屏幕」就是原生应用体验</div>
+    <div class="app-show reveal">
+      <div class="app-phone">
+        <div class="app-screen">
+          <div class="app-status"><span>02:30</span><span>🌙 48%</span></div>
+          <div class="app-header"><span>工作台首页</span><span class="app-green">已接入 AI 4 天</span></div>
+          <div class="app-card">
+            <div class="app-hello">夜深了，还在努力， <b>Crazy Friday</b></div>
+            <div class="app-date">2026年8月30日 星期日</div>
+          </div>
+          <div class="app-tips">
+            <div><span class="app-tag">AI 智能建议</span><b>深夜好，这是为你生成的今日建议</b></div>
+            <p>有 <b>2</b> 条排期内容今天到期，记得发布</p>
+          </div>
+          <div class="app-onboard">
+            <div class="app-ob-title">欢迎使用！3 步快速上手</div>
+            <div class="app-ob-row"><span>1</span><b>改成你的名字</b><i>去改</i></div>
+            <div class="app-ob-row"><span>2</span><b>看看全部功能</b><i>去看</i></div>
+            <div class="app-ob-row"><span>3</span><b>试一次 AI 创作</b><i>去试</i></div>
+          </div>
+          <div class="app-metrics">
+            <div><i>本周曝光</i><b>4.9w</b><span>近 7 天</span></div>
+            <div><i>本周互动</i><b>4.3k</b><span>点赞 + 收藏</span></div>
+          </div>
+          <div class="app-tabs"><span class="on">首页</span><span>发现</span><span class="fab">✎</span><span>计划</span><span>我的</span></div>
+        </div>
+      </div>
+      <div class="app-copy">
+        <h3>在手机上用起来，和原生 App 没区别</h3>
+        <ul>
+          <li><b>添加到主屏幕</b>：iOS / 安卓都支持，一键变成桌面图标</li>
+          <li><b>离线可用</b>：Service Worker 缓存，没网也能看数据和写稿</li>
+          <li><b>响应式布局</b>：320px 到 4K 屏，自动适配</li>
+          <li><b>数据仍在本地</b>：手机上的内容同样存在本机，安全不丢</li>
+        </ul>
+        <button class="btn-primary" onclick="goDemo()">▶ 在手机上先试试</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title reveal">安全与隐私</div>
+    <div class="safety reveal">
+      <div class="safety-item"><span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><div><h5>数据仅存本机</h5><p>选题、草稿、数据都保存在你自己的浏览器里，不经过服务器，卖家也无法查看。</p></div></div>
+      <div class="safety-item"><span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14a2 2 0 0 0 2 2h13V5H6a2 2 0 0 0-2 2zM20 5H6"/></svg></span><div><h5>升级不丢数据</h5><p>产品持续更新，每次升级自动备份、只增不减，你的内容一条都不会丢。</p></div></div>
+      <div class="safety-item"><span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span><div><h5>AI 随用随付</h5><p>AI 功能接入你自己的 DeepSeek Key，几块钱用很久，成本透明可控。</p></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title reveal">常见问题</div>
+    <div class="faq">
+      <div class="faq-item reveal"><h4>这个工作台和普通文案工具有什么区别？<span class="arr">▾</span></h4><p>我们不只生成文案。选题 → 创作 → 查重 → 排期 → 发布 → 数据 → 变现 → 矩阵，是覆盖整条运营链路的工作台，AI 还带"账号人设"，越用越懂你的风格。</p></div>
+      <div class="faq-item reveal"><h4>AI 功能怎么用？需要额外付费吗？<span class="arr">▾</span></h4><p>会员激活后全部功能开放。AI 调用接入你自己的 DeepSeek API Key（在「设置 → AI 接入」填一次），按量计费几块钱能用很久，没有隐藏订阅。</p></div>
+      <div class="faq-item reveal"><h4>换手机 / 换电脑，数据会丢吗？<span class="arr">▾</span></h4><p>在「设置中心 → 数据备份」导出 JSON 文件，新设备导入即可完整恢复。建议每月备份一次。</p></div>
+      <div class="faq-item reveal"><h4>可以先试用吗？<span class="arr">▾</span></h4><p>可以，而且是<b>零门槛</b>：点任意「免费体验」按钮，直接打开一整套正在运营的演示账号——12 篇笔记、8 条排期、12 笔带货订单、30 天增长曲线都在里面，随便点随便改，不用注册也不用输码。体验数据是完全独立的，不会和你的真实数据混在一起。</p></div>
+      <div class="faq-item reveal"><h4>如何开通？价格是多少？<span class="arr">▾</span></h4><p>建议先<b>免费体验</b>一遍再决定。想直接开通的话，点击「联系卖家」，回复后我们会把最新开通方式和激活码发给你。当前为年度会员档，全部功能开放。</p></div>
+    </div>
+  </div>
+
+  <div class="cta-bottom reveal">
+    <h2>现在就开始你的 AI 运营之路</h2>
+    <p>还没试过？<b style="color:#ffd0d8">先免费体验一遍</b>，满意再开通 · 3 分钟完成<br>一个人 + AI，就是一家公司的开始</p>
+    <div class="cta-bottom-btns">
+      <a class="btn-white" href="javascript:void(0)" onclick="goDemo()">▶ 先去免费体验</a>
+      <a class="btn-white ghost" href="javascript:void(0)" onclick="copyContact()">📩 我已有激活码 · 直接开通</a>
+    </div>
+  </div>
+
+  <footer>
+    Crazy Friday. 小红书AI运营工作台 · 一个人 + AI，就是一家公司的开始<br>
+    页面展示内容仅供介绍，具体功能与开通方式以实际为准 · <a href="javascript:void(0)" onclick="showLegal()">隐私与数据条款</a>
+  </footer>
+</div>
+
+<div class="toast" id="toast">已复制卖家联系方式，去微信粘贴即可 📋</div>
+
+<script>
+function copyContact(){
+  var wechat = '', email = '';
+  try{
+    var c = JSON.parse(localStorage.getItem('xhs_seller_contact')||'null');
+    if(c){ if(c.wechat) wechat = c.wechat; if(c.email) email = c.email; }
+  }catch(e){}
+  if(!wechat) wechat = 'R26184352Y';
+  if(!email) email = 'shim16506@gmail.com';
+  copyIt('微信：' + wechat + '\n邮箱：' + email);
+}
+function copyIt(t){
+  function done(){ var el=document.getElementById('toast'); el.classList.add('show'); setTimeout(function(){ el.classList.remove('show'); }, 2200); }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done).catch(function(){ legacy(t); done(); }); }
+  else { legacy(t); done(); }
+  function legacy(v){ var ta=document.createElement('textarea'); ta.value=v; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+}
+function scrollToSec(){ var el=document.getElementById('features'); if(el) el.scrollIntoView({behavior:'smooth'}); }
+/* V6.35 落地页 → 体验版：带来源标记，体验版据此把 CTA 换成「立即开通」并给出联系方式 */
+function goDemo(){
+  try{ location.href = location.origin + '/?demo=1&from=lp'; }
+  catch(e){ location.href = '/?demo=1&from=lp'; }
+}
+function showLegal(){
+  var t=document.getElementById('toast');
+  t.textContent='条款详见工作台内「隐私与数据条款」入口，本页面不展示全文';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+/* FAQ 手风琴 */
+document.querySelectorAll('.faq-item h4').forEach(function(h){
+  h.addEventListener('click', function(){
+    var item=h.parentNode;
+    var wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(o){ o.classList.remove('open'); });
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+/* 滚动渐入（支持降级：不支持 IntersectionObserver 时直接显示） */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  },{threshold:.12});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>
