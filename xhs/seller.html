@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Crazy Friday. · 卖家客户管理</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+  .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+  .top h1{font-size:20px;font-weight:800;letter-spacing:-.3px}
+  .top .sub{font-size:12px;color:var(--text3);margin-top:3px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+  .card h3{font-size:14px;font-weight:700;margin-bottom:14px}
+  .add-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+  .add-grid label{display:block;font-size:11px;color:var(--text3);margin-bottom:4px}
+  .add-grid input,.add-grid select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text);font-size:13px;outline:none}
+  .add-grid input:focus,.add-grid select:focus{border-color:var(--red2)}
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:1020px}
+  th{text-align:left;padding:10px 10px;color:var(--text3);font-weight:600;font-size:11px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  td .mono{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;background:var(--line2);padding:3px 8px;border-radius:5px;white-space:nowrap}
+  .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600}
+  .tag.year{background:var(--soft-green);color:var(--green)}
+  .tag.pro{background:var(--soft-red);color:var(--red)}
+  .tag.ok{background:var(--soft-green);color:var(--green)}
+  .tag.exp{background:var(--soft-red);color:var(--red)}
+  .tag.warn{background:var(--soft-orange);color:var(--orange)}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .mini-btn{font-size:11px;padding:4px 10px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--text2);cursor:pointer;transition:.12s;white-space:nowrap}
+  .mini-btn:hover{border-color:var(--red2);color:var(--red)}
+  .mini-btn.danger{color:var(--red)}
+  .empty{padding:30px;text-align:center;color:var(--text3);font-size:13px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+  .st-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .st-num{font-size:22px;font-weight:800;letter-spacing:-.5px}
+  .st-label{font-size:11px;color:var(--text3);margin-top:2px}
+  .tip{font-size:11.5px;color:var(--text3);line-height:1.8;background:var(--line2);border-radius:9px;padding:12px 14px;margin-top:14px}
+  .tag.refund{background:var(--line2);color:var(--text3)}
+  .row-refund{opacity:.62}
+  .cf-tabs{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+  .cf-tab{padding:5px 14px;border-radius:16px;font-size:12px;color:var(--text2);background:var(--line2);cursor:pointer;font-weight:500;transition:.15s}
+  .cf-tab.active{background:var(--red);color:#fff}
+  .link-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .link-row .mono{flex:1}
+  /* ===== 云端差异提示条 ===== */
+  .diff-banner{display:none;align-items:center;gap:10px;background:#fff8e1;border:1px solid #ffe08a;color:#8a6d1a;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;cursor:pointer;transition:.2s;line-height:1.6}
+  .diff-banner.show{display:flex;flex-wrap:wrap}
+  .diff-banner:hover{background:#fff3cc}
+  .diff-banner b{font-weight:800}
+  .diff-banner .btn-mini{margin-left:auto;background:#f5c518;color:#5a4600;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer;flex-shrink:0}
+  .diff-banner .btn-mini:hover{background:#e6b400}
+  .diff-banner .icon{font-size:15px}
+  @media (max-width:560px){.diff-banner .btn-mini{margin-left:0}}
+  @media (max-width:560px){.card{padding:14px}.wrap{padding:16px 10px 40px}}
+.cloud-sync{font-size:11.5px;margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;border-radius:10px;background:rgba(10,132,255,.06);border:1px solid rgba(10,132,255,.18)}
+.cloud-sync .cs-dot{width:7px;height:7px;border-radius:50%;background:#0a84ff;flex-shrink:0}
+.cloud-sync-idle .cs-dot{background:rgba(0,0,0,.3)}
+.cloud-sync-saving .cs-dot{background:#0a84ff;animation:csPulse 1s ease infinite}
+.cloud-sync-saved .cs-dot{background:#34c759}
+.cloud-sync-error .cs-dot{background:#ff3b30}
+@keyframes csPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.cloud-sync.is-saved{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.18)}
+.cloud-sync-error{background:rgba(255,59,48,.06);border-color:rgba(255,59,48,.2)}
+</style>
+
+<style id="cf-seller-lock">
+/* ===== 卖家后台口令锁 ===== */
+#cfLock{position:fixed;inset:0;z-index:999999;background:#15151a;display:flex;align-items:center;justify-content:center;padding:20px;
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif}
+#cfLock .box{width:100%;max-width:340px;text-align:center}
+#cfLock .ico{font-size:40px;margin-bottom:16px}
+#cfLock h2{color:#f5f5f7;font-size:19px;font-weight:800;margin-bottom:8px;letter-spacing:-.3px}
+#cfLock p{color:#8b8b93;font-size:12.5px;line-height:1.7;margin-bottom:22px}
+#cfLock input{width:100%;padding:14px 16px;border:1px solid #2e2e36;border-radius:11px;background:#1d1d24;color:#f5f5f7;
+  font-size:15px;text-align:center;letter-spacing:3px;outline:none;transition:border-color .2s;box-sizing:border-box}
+#cfLock input:focus{border-color:#c8304a}
+#cfLock button{width:100%;margin-top:11px;padding:14px;border:0;border-radius:11px;background:#c8304a;color:#fff;
+  font-size:14.5px;font-weight:700;cursor:pointer;transition:opacity .2s}
+#cfLock button:active{opacity:.8}
+#cfLock .err{color:#ff5c5c;font-size:12px;margin-top:11px;height:16px}
+#cfLock.shake .box{animation:cfShake .4s}
+@keyframes cfShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+html.cf-locked body>*:not(#cfLock){display:none!important}
+</style>
+</head>
+<body>
+<div id="cfLock">
+  <div class="box">
+    <div class="ico">🔒</div>
+    <h2>卖家管理后台</h2>
+    <p>本页面为私有后台，仅限管理员访问<br>请输入访问口令</p>
+    <input id="cfLockInput" type="password" inputmode="numeric" placeholder="••••••" autocomplete="off">
+    <button id="cfLockBtn">进入后台</button>
+    <div class="err" id="cfLockErr"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>Crazy Friday<span style="color:var(--red2)">.</span> <span id="prodNameTitle">卖家客户管理</span></h1>
+      <div class="sub" id="prodSubTitle">客户记录永久保留 · 数据按 uid 隔离 · 到期自动锁定 · 退货留档可查</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="healthLight" title="服务状态" style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text3);background:var(--line2);padding:6px 11px;border-radius:99px;white-space:nowrap"><span id="hlDot" style="width:8px;height:8px;border-radius:50%;background:#aaa;display:inline-block;flex-shrink:0"></span><span id="hlText">检测中…</span></span>
+      <a href="products.html" class="btn btn-ghost btn-sm" style="text-decoration:none">📦 全部产品</a>
+      <button class="btn btn-ghost btn-sm" onclick="exportCsv()">⬇️ 导出客户名单</button>
+      <button class="btn btn-red btn-sm" onclick="openLinkToWorkbench()">🖥️ 打开工作台</button>
+    </div>
+  </div>
+
+  <div class="diff-banner" id="diffBanner" onclick="onDiffBannerClick()" role="button"></div>
+  <div class="stats" id="statBox"></div>
+
+  <div class="card">
+    <h3>📞 联系方式 <span style="font-size:11px;color:var(--text3);font-weight:400">（客户续费时可见）</span></h3>
+    <div class="add-grid">
+      <div><label>微信号（可选）</label><input id="contactWx" placeholder="如 R26184352Y"></div>
+      <div><label>邮箱（可选）</label><input id="contactEm" placeholder="如 shim16506@gmail.com"></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-red btn-sm" onclick="saveContact()">保存</button></div>
+    </div>
+    <div id="contactMsg" style="font-size:12px;min-height:18px;margin-top:8px;color:var(--text3)"></div>
+  </div>
+
+  <div class="card" id="cloudCard" style="border-color:rgba(10,132,255,.3)">
+    <h3>☁️ 云端防护 <span id="cloudStatus" style="font-size:11px;color:var(--text3);font-weight:400"></span></h3>
+    <div id="cloudTip" style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.8"></div>
+    <div class="add-grid">
+      <div style="grid-column:span 2"><label>API 地址（已自动填好，可改用你自己的 Worker）</label><input id="cloudApi" placeholder="https://xxx.workers.dev"></div>
+      <div><label>卖家密钥（SELLER_SECRET）</label><input id="cloudSecret" type="password" placeholder="部署 Worker 时设置的口令"></div>
+      <div style="display:flex;align-items:flex-end;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="testCloud()">测试连接</button>
+        <button class="btn btn-red btn-sm" onclick="saveCloud()">保存配置</button>
+      </div>
+    </div>
+    <div id="cloudMsg" style="font-size:12px;min-height:20px;margin-top:10px"></div>
+    <div id="cloudSync" class="cloud-sync cloud-sync-idle" style="font-size:11.5px;margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span class="cs-dot"></span><span class="cs-text">☁️ 客户列表 · 自动同步到云端</span>
+      <button class="btn btn-ghost btn-sm" style="margin-left:auto;padding:4px 10px;font-size:11px" onclick="loadFromCloud().then(function(ok){Toast(ok?'已从云端拉取最新客户列表':'拉取失败，请检查云端防护'); if(ok) render();})">🔄 立即同步</button>
+    </div>
+  </div>
+
+  <div class="card" id="renewCard" style="border-color:rgba(255,149,0,.35)">
+    <h3>⏰ 续费管理 <span style="font-size:11px;color:var(--text3);font-weight:400">（云端数据 · 任何设备打开都在）</span></h3>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.8">自动列出 <b>30 天内到期</b> 和 <b>已过期</b> 的客户，一键复制续费话术直接发微信。数据来自云端，不依赖本机缓存。</div>
+    <div id="renewList" style="font-size:12px;color:var(--text3)">加载中…</div>
+  </div>
+
+  <div class="card" id="aiCard" style="border-color:rgba(191,90,242,.3)">
+    <h3>🤖 AI 大模型（零配置 AI） <span id="aiStatus" style="font-size:11px;color:var(--text3);font-weight:400"></span></h3>
+    <div style="font-size:12px;color:var(--text2);line-height:1.8">填一个 <b>DeepSeek Key</b>，<b>所有客户免配置开箱即用</b>（每客户每日免费额度，成本你可控）。不填则客户需自助填自己的 Key。</div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <input id="aiKey" type="password" placeholder="sk- 卖家统一 DeepSeek API Key（可选）" style="flex:1;min-width:220px">
+      <button class="btn btn-red btn-sm" onclick="saveAi()">保存启用</button>
+      <button class="btn btn-ghost btn-sm" onclick="testAi()">测试</button>
+    </div>
+    <div id="aiMsg" style="font-size:12px;min-height:18px;margin-top:8px"></div>
+    <div style="font-size:10.5px;color:var(--text4);margin-top:6px">💡 填了它 = 客户零门槛（推荐，转化率更高）；不填 = 客户自助注册 platform.deepseek.com</div>
+  </div>
+
+  <div class="card">
+    <h3>🛟 数据安全（卖家端）</h3>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.8">客户列表保存在<b>当前浏览器</b>中。换电脑 / 清理缓存前，请先导出备份；已登记到云端的激活码也能一键恢复。</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="exportCustomersJson()">⬇️ 导出客户列表</button>
+      <button class="btn btn-ghost btn-sm" onclick="importCustomersJson()">⬆️ 导入客户列表</button>
+      <button class="btn btn-red btn-sm" onclick="restoreFromCloud()">☁️ 从云端恢复</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>➕ 新增客户</h3>
+    <div class="add-grid">
+      <div><label>客户名称</label><input id="cName" placeholder="如：王姐 / 美妆工作室"></div>
+      <div><label>套餐</label><select id="cPlan"><option value="年度会员">年度会员（统一档位）</option><option value="标准版">标准版（历史客户）</option><option value="尊享版">尊享版（历史客户）</option></select></div>
+      <div><label>有效期（天）</label><input id="cDays" type="number" value="365" min="1"></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-red btn-block" onclick="addCustomer()">生成客户</button></div>
+    </div>
+    <div class="tip">💡 生成后会出现「专属链接」和「激活码」。把这两样发给客户即可。<b>每个客户必须用自己专属的链接打开</b>，数据才会独立保存。客户之间数据互不干扰。<b>客户记录永久保留</b>：即使停用、到期或退货，记录都不会丢失，使用时长一目了然。</div>
+  </div>
+
+  <div class="card">
+    <h3 style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">📋 客户列表 <span id="countLabel" style="font-size:12px;color:var(--text3);font-weight:400"></span>
+      <span style="margin-left:auto"><button class="mini-btn" onclick="fetchUsage()">🔄 刷新使用数据</button></span>
+    </h3>
+    <div class="table-wrap" id="tableBox"></div>
+  </div>
+</div>
+
+<script src="js/license.js"></script>
+<script>
+/* ===== V6.14 多产品：seller.html?p=<产品ID> 管理指定产品客户 =====
+ * 无 p 参数 = 小红书（默认产品），行为与之前完全一致 */
+const CF_P = new URLSearchParams(location.search).get('p') || 'xhs';
+let CF_NAME = '小红书AI运营工作台';
+function withP(url){
+  return (CF_P && CF_P !== 'xhs') ? url + (url.indexOf('?') >= 0 ? '&' : '?') + 'p=' + encodeURIComponent(CF_P) : url;
+}
+if(CF_P !== 'xhs'){
+  fetch('/api/product?p=' + CF_P).then(r=>r.json()).then(j=>{
+    if(j.ok && j.data){
+      CF_NAME = j.data.name;
+      const t = document.getElementById('prodNameTitle');
+      if(t) t.textContent = '客户管理 · ' + j.data.name;
+      const s = document.getElementById('prodSubTitle');
+      if(s) s.textContent = '产品「' + j.data.name + '」· 客户数据独立存储 · 与其它产品完全隔离';
+      document.title = j.data.name + ' · 卖家客户管理';
+    }
+  }).catch(()=>{});
+}
+const SELLER_KEY = 'xhs_seller_customers';
+/* ---------- 云端防护 ---------- */
+function getCloudCfg(){
+  try{ return JSON.parse(localStorage.getItem('xhs_seller_cloud')||'null'); }catch(e){ return null; }
+}
+function saveCloudCfg(cfg){
+  localStorage.setItem('xhs_seller_cloud', JSON.stringify(cfg));
+}
+function cloudApiUrl(p){ const cfg=getCloudCfg(); return cfg&&cfg.api ? cfg.api.replace(/\/$/,'')+p : ''; }
+async function cloudReq(p, payload, withSecret, forceGet){
+  const cfg = getCloudCfg();
+  if(!cfg || !cfg.api) return {ok:false, reason:'未配置云端'};
+  // V6.39 修复：GET（/status /api/customers）服务端只认 URL 参数密钥 → GET 时把 secret 拼进 URL；
+  // POST（/issue /revoke 等）服务端读 body → secret 放 body。此前 GET 不带密钥导致后台拉不到客户列表。
+  const isGet = !!forceGet || p === '/status';
+  let url = withP(cfg.api.replace(/\/$/,'') + p);
+  const body = {...(payload||{})};
+  if(withSecret && cfg.secret){
+    if(isGet) url += (url.indexOf('?') >= 0 ? '&' : '?') + 'secret=' + encodeURIComponent(cfg.secret);
+    else body.secret = cfg.secret;
+  }
+  try{
+    const res = await fetch(url, {
+      method: isGet ? 'GET' : 'POST',
+      headers:{'Content-Type':'application/json'},
+      body: isGet ? undefined : JSON.stringify(body)
+    });
+    return await res.json();
+  }catch(e){ return {ok:false, reason:'无法连接云端'}; }
+}
+async function testCloud(){
+  const api = document.getElementById('cloudApi').value.trim();
+  const msg = document.getElementById('cloudMsg');
+  if(!api){ msg.innerHTML='<span style="color:var(--red)">请先填写 API 地址</span>'; return; }
+  msg.innerHTML = '测试中…';
+  try{
+    const res = await fetch(api.replace(/\/$/,'')+'/ping');
+    const j = await res.json();
+    if(j.ok){ msg.innerHTML='<span style="color:var(--green)">✓ 连接成功：'+j.name+'</span>'; }
+    else msg.innerHTML='<span style="color:var(--red)">连接失败</span>';
+  }catch(e){ msg.innerHTML='<span style="color:var(--red)">无法连接，请检查地址是否为 https</span>'; }
+}
+function saveCloud(){
+  const api = document.getElementById('cloudApi').value.trim();
+  const secret = document.getElementById('cloudSecret').value.trim();
+  const msg = document.getElementById('cloudMsg');
+  if(!api || !secret){ msg.innerHTML='<span style="color:var(--red)">请填写 API 地址和卖家密钥</span>'; return; }
+  saveCloudCfg({api, secret});
+  msg.innerHTML='<span style="color:var(--green)">✓ 已保存，新生成的客户将自动登记到云端</span>';
+  renderCloudStatus();
+  setTimeout(syncAllToCloud, 300);
+}
+/* ===== 云端零配置：首次打开自动启用（前端托管与后端解耦，API 指向默认后端） ===== */
+function autoSetupCloud(){
+  const cfg = getCloudCfg();
+  if(cfg && cfg.api && cfg.secret) return;
+  const api = (typeof DEFAULT_API!=='undefined' && DEFAULT_API) || location.origin || '';
+  if(!/^https?:\/\//i.test(api)) return;
+  const secret = 'Cf26xhs8!@L' + '1c3nse'; // 与 server.js 默认 SELLER_SECRET 一致（可手动修改后保存）
+  saveCloudCfg({api, secret});
+}
+/* 批量把本地客户补登记到云端（幂等：已存在视为成功），老客户也能被云端管控 */
+async function syncAllToCloud(){
+  if(!getCloudCfg()) return;
+  let ok = 0, fail = 0;
+  for(const c of customers){
+    const r = await cloudReq('/issue', {code:c.code, uid:c.uid, expireAt:c.expireAt, plan:c.plan}, true);
+    if(r.ok || (r.reason && r.reason.indexOf('已存在')>=0)) ok++;
+    else fail++;
+  }
+  if(ok) Toast('☁️ 云端已就绪：'+ok+' 位客户已自动登记'+(fail?('，'+fail+' 位失败'):''));
+  renderCloudStatus();
+}
+function saveContact(){
+  const wx = document.getElementById('contactWx').value.trim();
+  const em = document.getElementById('contactEm').value.trim();
+  setContactInfo({wechat:wx, email:em});
+  document.getElementById('contactMsg').textContent = '✓ 已保存，客户到期/续费页将显示';
+  document.getElementById('contactMsg').style.color = 'var(--green)';
+}
+function fillContactInputs(){
+  const c = getContactInfo();
+  if(!c) return;
+  const wx = document.getElementById('contactWx'); if(wx && c.wechat) wx.value = c.wechat;
+  const em = document.getElementById('contactEm'); if(em && c.email) em.value = c.email;
+  const msg = document.getElementById('contactMsg');
+  if(msg && (c.wechat||c.email)){ msg.textContent='已配置：'+(c.wechat?'微信 ':'')+(c.email?'邮箱':''); msg.style.color='var(--text3)'; }
+}
+fillContactInputs();
+function renderCloudStatus(){
+  const el = document.getElementById('cloudStatus');
+  const cfg = getCloudCfg();
+  if(el) el.textContent = cfg && cfg.api ? '已开启（自动配置）' : '未开启（纯本地校验）';
+  // 回填
+  const apiIn = document.getElementById('cloudApi');
+  const secIn = document.getElementById('cloudSecret');
+  if(cfg && cfg.api){ if(apiIn) apiIn.value = cfg.api; if(secIn) secIn.value = cfg.secret; }
+  const tip = document.getElementById('cloudTip');
+  if(tip) tip.innerHTML = cfg && cfg.api
+    ? '✅ <b>云端已自动开启</b>：激活码云端登记 + 停用即时生效 + 使用时长统计已接通。'
+    : '保存后，新生成的客户将自动登记到云端。';
+}
+async function issueToCloud(c){
+  if(!getCloudCfg()) return true;
+  const r = await cloudReq('/issue', {code:c.code, uid:c.uid, expireAt:c.expireAt, plan:c.plan}, true);
+  if(!r.ok && r.reason==='激活码已存在，请勿重复登记') return true;
+  return r.ok;
+}
+async function revokeInCloud(c){
+  if(!getCloudCfg()) return;
+  await cloudReq('/revoke', {code:c.code}, true);
+}
+async function unrevokeInCloud(c){
+  if(!getCloudCfg()) return;
+  await cloudReq('/unrevoke', {code:c.code}, true);
+}
+let customers = load();
+let custFilter = 'all';        // all | active | inactive | refunded
+let usageMap = {};             // code -> {firstSeen,lastSeen,activeDays}（云端）
+
+/* V6.26 启动即拉取云端客户列表（任一设备打开后台都能看到全部客户） */
+setTimeout(function(){
+  loadFromCloud().then(function(ok){
+    if(ok){ render(); }
+  });
+}, 800);
+
+function load(){
+  try{ return JSON.parse(localStorage.getItem(SELLER_KEY)||'[]'); }catch(e){ return []; }
+}
+function save(){ localStorage.setItem(SELLER_KEY, JSON.stringify(customers)); syncToCloud(); }
+
+/* V6.26 客户列表云端同步：解决"换设备看不到客户"核心痛点
+ *  - 任意设备打开后台 → 自动从云端拉取最新客户列表
+ *  - 本地新增/修改 → 立即同步到云端
+ *  - 顶部显示"云端同步中 / 已同步 x 分钟前" */
+let _cloudSyncState = {state:'idle', at:''}; // state: idle|saving|saved|error
+function setCloudSyncUi(){
+  const el = document.getElementById('cloudSync');
+  if(!el) return;
+  const map = {idle:'☁️ 客户列表 · 自动同步到云端', saving:'☁️ 同步中…', saved:'☁️ 已同步云端', error:'☁️ 同步失败（点击重试）'};
+  el.textContent = map[_cloudSyncState.state] || map.idle;
+  el.className = 'cloud-sync cloud-sync-' + _cloudSyncState.state;
+  if(_cloudSyncState.state==='saved' && _cloudSyncState.at){
+    const diff = Math.max(0, Math.round((Date.now() - new Date(_cloudSyncState.at).getTime())/60000));
+    if(diff >= 1) el.textContent += ' · ' + (diff<60?diff+' 分钟前':'已同步');
+    el.className += ' is-saved';
+  }
+}
+async function syncToCloud(){
+  const cfg = getCloudCfg();
+  if(!cfg){ _cloudSyncState.state='idle'; setCloudSyncUi(); return; }
+  _cloudSyncState.state='saving'; setCloudSyncUi();
+  try{
+    const r = await cloudReq('/api/customers', {customers: customers}, true);
+    if(r && r.ok){
+      _cloudSyncState = {state:'saved', at: new Date().toISOString()};
+      setCloudSyncUi();
+      setTimeout(()=>{ if(_cloudSyncState.state==='saved') setCloudSyncUi(); }, 5000);
+    }else{
+      _cloudSyncState.state='error';
+      setCloudSyncUi();
+    }
+  }catch(e){ _cloudSyncState.state='error'; setCloudSyncUi(); }
+}
+async function loadFromCloud(){
+  const cfg = getCloudCfg();
+  if(!cfg) return false;
+  try{
+    const r = await cloudReq('/api/customers', {}, true, true);  // forceGet：GET + query secret
+    if(r && r.ok && Array.isArray(r.customers)){
+      if(r.customers.length || !customers.length){
+        customers = r.customers;
+        save(); // 同步到本地缓存
+        render();
+      }
+      _cloudSyncState = {state:'saved', at: r.updatedAt || new Date().toISOString()};
+      setCloudSyncUi();
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+
+function fmtDate(d){ const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function addDays(n){ const d=new Date(); d.setDate(d.getDate()+n); return fmtDate(d); }
+function daysLeft(expireAt){
+  const today=new Date(); today.setHours(0,0,0,0);
+  return Math.round((new Date(expireAt+'T00:00:00')-today)/864e5);
+}
+/* 使用时长：优先云端心跳（真实活跃），否则按开通日到今天的本地估算 */
+function usageInfo(c){
+  const u = usageMap[c.code];
+  const start = (u && u.firstSeen) || c.createdAt || c.expireAt;
+  let end = new Date();
+  if(daysLeft(c.expireAt)<=0){ end = new Date(c.expireAt+'T00:00:00'); }
+  const elapsed = start ? Math.max(1, Math.round((end - new Date(start+'T00:00:00'))/864e5)) : 0;
+  return {
+    elapsed,                        // 已使用天数
+    active: (u && u.activeDays)||0, // 云端真实活跃天数
+    lastSeen: (u && u.lastSeen)||'',// 最近活跃（云端）
+    cloud: !!u
+  };
+}
+/* 从云端拉取全部使用统计（配置云端后自动） */
+async function fetchUsage(){
+  if(!getCloudCfg()) return;
+  const r = await cloudReq('/usage', {}, true);
+  if(r.ok && Array.isArray(r.data)){
+    usageMap = {};
+    r.data.forEach(u=>{ usageMap[u.code] = u; });
+    render();
+  }
+}
+
+/* ===== AI 大模型配置（DeepSeek） ===== */
+async function saveAi(){
+  const key = document.getElementById('aiKey').value.trim();
+  const msg = document.getElementById('aiMsg');
+  if(!key){ msg.innerHTML='<span style="color:var(--red)">请先填入 API Key</span>'; return; }
+  const cfg = getCloudCfg();
+  if(!cfg){ msg.innerHTML='<span style="color:var(--red)">请先完成云端防护配置</span>'; return; }
+  const r = await cloudReq('/ai-config', {apiKey:key}, true);
+  if(r.ok){ msg.innerHTML='<span style="color:var(--green)">✓ AI 服务已启用，会员客户即可使用</span>'; document.getElementById('aiKey').value=''; refreshAiStatus(); }
+  else msg.innerHTML='<span style="color:var(--red)">保存失败：'+(r.reason||'未知错误')+'</span>';
+}
+async function testAi(){
+  const msg = document.getElementById('aiMsg');
+  const cfg = getCloudCfg();
+  if(!cfg){ msg.innerHTML='<span style="color:var(--red)">请先完成云端防护配置</span>'; return; }
+  msg.innerHTML = '测试中…';
+  try{
+    const st = await (await fetch(withP(cfg.api.replace(/\/$/,'')+'/ai-status?secret='+cfg.secret))).json();
+    msg.innerHTML = (st.ok && st.configured)
+      ? '<span style="color:var(--green)">✓ AI 服务已配置可用（模型 '+st.model+'）</span>'
+      : '<span style="color:var(--red)">AI 尚未配置，请粘贴 DeepSeek API Key 后保存</span>';
+  }catch(e){ msg.innerHTML='<span style="color:var(--red)">无法连接服务</span>'; }
+}
+async function refreshAiStatus(){
+  const cfg = getCloudCfg();
+  const el = document.getElementById('aiStatus');
+  if(!el) return;
+  if(!cfg){ el.textContent='（需先配置云端）'; return; }
+  try{
+    const st = await (await fetch(withP(cfg.api.replace(/\/$/,'')+'/ai-status?secret='+cfg.secret))).json();
+    el.textContent = st.ok && st.configured ? '· 已启用' : '· 未配置';
+  }catch(e){ el.textContent=''; }
+}
+
+/* ===== 卖家数据安全：导出 / 导入 / 云端恢复 ===== */
+function sellerToday(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function exportCustomersJson(){
+  if(!customers.length){ alert('还没有客户'); return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(customers, null, 2)], {type:'application/json'}));
+  a.download = 'CrazyFriday_客户列表备份_' + sellerToday() + '.json';
+  a.click();
+}
+function importCustomersJson(){
+  const input = document.createElement('input'); input.type='file'; input.accept='.json';
+  input.onchange = ()=>{
+    const f = input.files[0]; if(!f) return;
+    const rd = new FileReader();
+    rd.onload = ()=>{
+      try{
+        const arr = JSON.parse(rd.result);
+        if(!Array.isArray(arr)) throw 0;
+        let added = 0;
+        arr.forEach(c=>{
+          if(!c || !c.uid) return;
+          if(customers.some(x=>x.uid===c.uid)) return;
+          customers.push(Object.assign({refunded:false, plan:c.plan||'标准版'}, c));
+          added++;
+        });
+        save(); render();
+        alert('已导入 '+added+' 位客户（按 UID 去重）。');
+      }catch(e){ alert('文件格式不正确，请选择之前导出的客户列表 JSON'); }
+    };
+    rd.readAsText(f);
+  };
+  input.click();
+}
+async function restoreFromCloud(){
+  const cfg = getCloudCfg();
+  if(!cfg){ alert('请先在「云端防护」完成配置'); return; }
+  if(!confirm('将从云端拉取全部已登记激活码，按 UID 去重合并到客户列表（不覆盖现有客户）？')) return;
+  try{
+    const res = await fetch(withP(cfg.api.replace(/\/$/,'') + '/status?secret=' + encodeURIComponent(cfg.secret)));
+    const r = await res.json();
+    if(!r.ok || !Array.isArray(r.data)){ alert('拉取失败：'+(r.reason||'云端返回异常')); return; }
+    let added = 0;
+    r.data.forEach(function(x){
+      if(!x.code || !x.uid) return;
+      if(customers.some(c=>c.uid===x.uid)) return;
+      const expireAt = x.expireAt || '2026-08-27';
+      customers.push({
+        id:x.uid, name:'云端恢复·' + x.uid.slice(0,4), plan:x.plan||'标准版',
+        uid:x.uid, expireAt, code:x.code, link:buildCustomerLink(x.uid),
+        createdAt:x.issuedAt||sellerToday(), refunded:false
+      });
+      added++;
+    });
+    save(); render();
+    alert('已从云端恢复 '+added+' 位客户。现有客户列表不受影响。');
+  }catch(e){ alert('恢复失败：无法连接云端，请检查配置'); }
+}
+
+/* ===== V6.16 自动云端同步：打开后台自动检测差异 + 顶栏黄条一键恢复 ===== */
+function restoreCloudMissing(){
+  const cfg = getCloudCfg();
+  if(!cfg){ return; }
+  return fetch(withP(cfg.api.replace(/\/$/,'') + '/status?secret=' + encodeURIComponent(cfg.secret)))
+    .then(r=>r.json())
+    .then(r=>{
+      if(!r.ok || !Array.isArray(r.data)) return;
+      let added = 0;
+      r.data.forEach(function(x){
+        if(!x.code || !x.uid) return;
+        if(customers.some(c=>c.uid===x.uid)) return;
+        const expireAt = x.expireAt || '2026-08-27';
+        customers.push({
+          id:x.uid, name:'云端恢复·' + x.uid.slice(0,4), plan:x.plan||'标准版',
+          uid:x.uid, expireAt, code:x.code, link:buildCustomerLink(x.uid),
+          createdAt:x.issuedAt||sellerToday(), refunded:false
+        });
+        added++;
+      });
+      if(added){ save(); render(); Toast('☁️ 已自动恢复 '+added+' 位云端客户'); }
+      detectCloudDiff();
+    })
+    .catch(function(){});
+}
+async function detectCloudDiff(){
+  const banner = document.getElementById('diffBanner');
+  if(!banner) return;
+  const cfg = getCloudCfg();
+  if(!cfg || !cfg.api || !cfg.secret){ banner.classList.remove('show'); return; }
+  try{
+    const r = await cloudReq('/status', {}, true);
+    if(!r.ok || !Array.isArray(r.data)) return;
+    const cloudUids = new Set(r.data.filter(x=>x.uid).map(x=>x.uid));
+    const localUids = new Set(customers.map(c=>c.uid));
+    const cloudOnly = [...cloudUids].filter(u=>!localUids.has(u)).length;
+    const localOnly = [...localUids].filter(u=>!cloudUids.has(u)).length;
+    if(cloudOnly > 0){
+      banner.className = 'diff-banner show';
+      banner.dataset.mode = 'restore';
+      banner.innerHTML = '<span class="icon">☁️</span> 云端有 <b>'+cloudOnly+'</b> 位客户未在本地显示' +
+        (localOnly>0 ? '（本地另有 '+localOnly+' 位未登记云端）' : '') +
+        '<span class="btn-mini">点击恢复</span>';
+    } else if(localOnly > 0){
+      banner.className = 'diff-banner show';
+      banner.dataset.mode = 'sync';
+      banner.innerHTML = '<span class="icon">⚠️</span> 本地有 <b>'+localOnly+'</b> 位客户未登记到云端' +
+        '<span class="btn-mini">点击同步</span>';
+    } else {
+      banner.classList.remove('show');
+    }
+  }catch(e){}
+}
+/* V6.28 服务健康灯：轮询 ping + 激活码数，服务挂了卖家立刻知道 */
+async function healthCheck(){
+  const dot = document.getElementById('hlDot');
+  const txt = document.getElementById('hlText');
+  if(!dot || !txt) return;
+  try{
+    const cfg = getCloudCfg();
+    if(!cfg || !cfg.api){ dot.style.background='#aaa'; txt.textContent='未配置云端'; return; }
+    const ping = await fetch(cfg.api.replace(/\/$/,'') + '/ping', {cache:'no-store'});
+    if(!ping.ok) throw new Error('ping fail');
+    const st = await cloudReq('/status', {}, true);
+    const n = (st && st.ok && Array.isArray(st.data)) ? st.data.length : '?';
+    dot.style.background = '#34c759';
+    txt.textContent = '服务正常 · 激活码 ' + n + ' 条';
+    document.getElementById('healthLight').title = '最后检测：' + new Date().toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    dot.style.background = '#ff3b30';
+    txt.textContent = '服务异常！点此刷新';
+    document.getElementById('healthLight').title = '无法连接云端服务';
+  }
+}
+/* V6.28 续费管理：从云端拉取 30 天内到期 + 已过期客户，一键复制续费话术 */
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+async function loadRenew(){
+  const box = document.getElementById('renewList');
+  if(!box) return;
+  const cfg = getCloudCfg();
+  if(!cfg || !cfg.api || !cfg.secret){ box.innerHTML = '<span style="color:var(--text4)">请先配置云端防护</span>'; return; }
+  try{
+    const r = await cloudReq('/status', {}, true);
+    if(!r.ok || !Array.isArray(r.data)){ box.innerHTML = '<span style="color:var(--text4)">云端不可达</span>'; return; }
+    const today = new Date(); today.setHours(0,0,0,0);
+    const soon = r.data.filter(x=>x.uid && !x.revoked).map(x=>{
+      const days = Math.round((new Date(x.expireAt+'T00:00:00')-today)/864e5);
+      return { uid:x.uid, code:x.code, expireAt:x.expireAt, days };
+    }).filter(x=>x.days <= 30).sort((a,b)=>a.days-b.days);
+    if(!soon.length){ box.innerHTML = '<span style="color:var(--green)">🎉 暂无 30 天内到期的客户</span>'; return; }
+    box.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px">' + soon.map(x=>{
+      const over = x.days < 0;
+      const tag = over ? '<span style="font-size:9.5px;font-weight:700;color:#d63a3a;background:rgba(255,59,48,.12);padding:1px 7px;border-radius:5px">已过期</span>'
+                       : '<span style="font-size:9.5px;font-weight:700;color:#c2700a;background:rgba(255,149,0,.14);padding:1px 7px;border-radius:5px">剩 '+x.days+' 天</span>';
+      return '<div style="display:flex;align-items:center;gap:10px;background:var(--line2);border-radius:10px;padding:9px 12px;flex-wrap:wrap">' +
+        '<div style="flex:1;min-width:0"><div style="font-weight:700;font-size:12.5px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'+esc(x.uid)+' '+tag+'</div>' +
+        '<div style="font-size:11px;color:var(--text3);margin-top:2px">到期 '+x.expireAt+(over?' · 请尽快联系续费':'')+'</div></div>' +
+        '<button class="btn btn-red btn-sm" onclick="copyRenewTxt(this,\''+esc(x.uid)+'\',\''+x.expireAt+'\')">📋 复制续费话术</button>' +
+      '</div>';
+    }).join('') + '</div>';
+  }catch(e){ box.innerHTML = '<span style="color:var(--text4)">云端不可达</span>'; }
+}
+function copyRenewTxt(btn, uid, expireAt){
+  const cfg = getCloudCfg();
+  const link = (cfg&&cfg.api ? cfg.api.replace(/\/$/,'') : location.origin) + '/index.html?uid=' + encodeURIComponent(uid);
+  const txt = '【到期提醒】亲爱的 '+uid+'，你的工作台年度会员将于 '+expireAt+' 到期，需要续费请点击下方链接，或直接回复我开通。\n\n你的数据已完整保留，续费后无缝继续使用，不会丢失任何内容。\n👉 专属链接：'+link;
+  const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t);
+  t.select(); try{ document.execCommand('copy'); }catch(err){}
+  document.body.removeChild(t);
+  const old = btn.textContent; btn.textContent = '✓ 已复制'; setTimeout(()=>{ btn.textContent = old; }, 1500);
+}
+
+/* 检测是否被 service worker 缓存了旧版（用于提示用户强制刷新） */
+function checkSwHint(){
+  try{
+    if(!('serviceWorker' in navigator)) return;
+    navigator.serviceWorker.getRegistration().then(reg=>{
+      if(!reg) return;
+      // 如果已激活的 sw 是旧的（v26），黄条提示强制刷新
+      if(reg.active && reg.active.scriptURL){
+        fetch('/sw.js', {cache:'no-store'}).then(r=>r.text()).then(txt=>{
+          const m = txt.match(/const CACHE = 'xhs-wb-v(\d+)'/);
+          if(!m) return;
+          const newVer = parseInt(m[1]);
+          // 从 localStorage 读上次记录版本
+          const oldVer = parseInt(localStorage.getItem('xhs_sw_ver')||'0');
+          if(oldVer && oldVer < newVer){
+            // 已是新版本，删除 sw 让下次重新注册
+            if(oldVer > 0 && oldVer < newVer){
+              reg.unregister().then(()=>{
+                localStorage.setItem('xhs_sw_ver', String(newVer));
+                location.reload();
+              });
+            }
+          } else if(!oldVer){
+            localStorage.setItem('xhs_sw_ver', String(newVer));
+          }
+        });
+      }
+    });
+  }catch(e){}
+}
+function onDiffBannerClick(){
+  const mode = document.getElementById('diffBanner').dataset.mode || 'restore';
+  if(mode === 'restore'){
+    document.getElementById('diffBanner').innerHTML = '<span class="icon">⏳</span> 正在恢复…';
+    restoreCloudMissing();
+  } else {
+    document.getElementById('diffBanner').innerHTML = '<span class="icon">⏳</span> 正在同步…';
+    syncAllToCloud();
+    setTimeout(detectCloudDiff, 1500);
+  }
+}
+
+async function addCustomer(){
+  const name = document.getElementById('cName').value.trim();
+  if(!name){ alert('请输入客户名称'); return; }
+  const plan = document.getElementById('cPlan').value;
+  const days = Math.max(1, parseInt(document.getElementById('cDays').value)||365);
+  const uid = genCustomerUid(customers.length+1);
+  const expireAt = addDays(days);
+  const code = buildLicense(uid, expireAt, plan);
+  const link = buildCustomerLink(uid);
+  customers.push({id:uid, name, plan, uid, expireAt, code, link, createdAt:fmtDate(new Date()), refunded:false});
+  // 云端登记（配置后）
+  const okCloud = await issueToCloud(customers[customers.length-1]);
+  save();
+  document.getElementById('cName').value='';
+  render();
+  if(okCloud) copyDeliver(uid);
+  else alert('⚠️ 云端登记失败，请检查云端防护配置');
+}
+
+function copyDeliver(uid){
+  const c = customers.find(x=>x.uid===uid); if(!c) return;
+  const txt = [
+    '【Crazy Friday. ' + CF_NAME + ' · 专属开通】',
+    '',
+    '👤 客户：'+c.name+'（'+c.plan+' · '+c.expireAt+' 到期）',
+    '🔗 专属链接：'+c.link,
+    '🔑 激活码：'+c.code,
+    '',
+    '使用方式：手机/电脑打开链接 → 输入激活码 → 开始运营',
+    '📲 小技巧：浏览器菜单「添加到主屏幕」，以后像 App 一样全屏打开',
+    '⚠️ 请勿公开分享链接，数据仅保存在各自设备。'
+  ].join('\n');
+  copyText2(txt);
+  alert('客户已生成！交付话术已复制，直接粘贴发给客户即可。\n\n' + txt);
+}
+function copyText2(t){
+  if(navigator.clipboard){ navigator.clipboard.writeText(t).catch(()=>fallbackCopy(t)); }
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+  ta.select(); try{ document.execCommand('copy'); }catch(e){}
+  document.body.removeChild(ta);
+}
+
+function extendDays(uid){
+  const c = customers.find(x=>x.uid===uid); if(!c) return;
+  const d = prompt('延长多少天？', '30');
+  if(!d) return;
+  const add = parseInt(d)||0;
+  if(add<=0){ alert('请输入大于 0 的天数'); return; }
+  const base = Math.max(daysLeft(c.expireAt), 0);
+  c.expireAt = addDays(base + add);
+  c.code = buildLicense(c.uid, c.expireAt, c.plan);
+  save(); render(); alert('已延长 '+add+' 天，新到期日：'+c.expireAt+'，新激活码已更新');
+}
+async function setExpired(uid){
+  const c = customers.find(x=>x.uid===uid); if(!c) return;
+  if(!confirm('确认停用「'+c.name+'」？客户打开后将立即被锁定（数据保留）。')) return;
+  await revokeInCloud(c);
+  c.expireAt = addDays(-1);
+  c.code = buildLicense(c.uid, c.expireAt, c.plan);
+  save(); render(); alert('已停用并云端吊销。客户下次打开立即锁定，数据保留。');
+}
+async function reEnable(uid){
+  const c = customers.find(x=>x.uid===uid); if(!c) return;
+  const d = prompt('重新启用，到期日期？（格式 2027-08-26）', addDays(365));
+  if(!d) return;
+  c.expireAt = d;
+  c.code = buildLicense(c.uid, c.expireAt, c.plan);
+  await unrevokeInCloud(c);
+  save(); render(); alert('已重新启用，新到期日：'+d+'，新激活码已更新');
+}
+/* ===== 退货登记（软删除）：客户记录永久保留，可随时恢复 ===== */
+function refundCustomer(uid){
+  const c = customers.find(x=>x.uid===uid); if(!c) return;
+  if(!confirm('确认登记「'+c.name+'」退货？\n\n客户记录将永久保留（不会丢失），可在「已退货」中随时查看或恢复。\n客户设备上的数据不受影响。')) return;
+  c.refunded = true;
+  c.refundedAt = fmtDate(new Date());
+  save(); render();
+  alert('已登记退货 ✅\n记录已永久保留，可在「已退货」筛选下查看，也可随时恢复。');
+}
+function restoreCustomer(uid){
+  const c = customers.find(x=>x.uid===uid); if(!c) return;
+  c.refunded = false; delete c.refundedAt;
+  save(); render();
+  alert('已恢复「'+c.name+'」为正常客户。');
+}
+function setFilter(f){
+  custFilter = f;
+  syncFilterTabs();
+  render();
+}
+function syncFilterTabs(){
+  document.querySelectorAll('.cf-tab').forEach(el=>el.classList.toggle('active', el.dataset.f===custFilter));
+}
+function filteredCustomers(){
+  return customers.filter(c=>{
+    if(c.refunded) return custFilter==='all' || custFilter==='refunded';
+    const dl = daysLeft(c.expireAt);
+    if(custFilter==='active') return dl>0;
+    if(custFilter==='inactive') return dl<=0;
+    return true;
+  });
+}
+function copyLink(uid){ const c=customers.find(x=>x.uid===uid); if(c) copyText2(c.link); }
+function copyCode(uid){ const c=customers.find(x=>x.uid===uid); if(c) copyText2(c.code); }
+function exportCsv(){
+  if(!customers.length){ alert('还没有客户'); return; }
+  const rows = [['名称','套餐','UID','开通日','到期日','已用天数','最近活跃(云端)','状态','退货日期','激活码','链接','创建时间']];
+  customers.forEach(c=>{
+    const u = usageInfo(c);
+    const state = c.refunded ? '已退货' : (daysLeft(c.expireAt)<=0 ? '已到期/停用' : '生效中');
+    rows.push([c.name,c.plan,c.uid,c.createdAt,c.expireAt,u.elapsed+'天',u.lastSeen||'',state,c.refundedAt||'',c.code,c.link,c.createdAt]);
+  });
+  const csv = '\uFEFF'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='CrazyFriday_客户名单.csv'; a.click();
+}
+function openLinkToWorkbench(){
+  location.href = (CF_P && CF_P !== 'xhs') ? ('p-home.html?p=' + encodeURIComponent(CF_P)) : 'index.html';
+}
+
+/* ===== V6.14 多产品：客户专属链接 =====
+ * 小红书（无 p）→ index.html?uid=xxx（与之前完全一致）
+ * 其它产品 → p-home.html?p=<产品ID>&uid=xxx（产品壳入口，后续可替换为产品专属页面） */
+function buildCustomerLink(uid){
+  const base = location.origin + location.pathname.replace(/[^/]*$/,'');
+  let link;
+  if(CF_P && CF_P !== 'xhs'){
+    link = base + 'p-home.html?p=' + encodeURIComponent(CF_P) + '&uid=' + uid;
+  }else{
+    link = base + 'index.html?uid=' + uid;
+  }
+  let api = DEFAULT_API || '';
+  try{
+    const cfg = getCloudCfg();
+    if(cfg && cfg.api) api = cfg.api;
+  }catch(e){}
+  if(api && /^https?:\/\//i.test(api) && api.replace(/\/$/,'') !== location.origin.replace(/\/$/,'')){
+    link += '&cloud=' + encodeURIComponent(api.replace(/\/$/,''));
+  }
+  return link;
+}
+
+function render(){
+  const stat = document.getElementById('statBox');
+  const active = customers.filter(c=>!c.refunded && daysLeft(c.expireAt)>0).length;
+  const expiring = customers.filter(c=>!c.refunded && daysLeft(c.expireAt)>0 && daysLeft(c.expireAt)<=30).length;
+  const refunded = customers.filter(c=>c.refunded).length;
+  stat.innerHTML = `
+    <div class="st-card"><div class="st-num">${customers.length}</div><div class="st-label">累计客户（永久保留）</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--green)">${active}</div><div class="st-label">生效中</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--orange)">${expiring}</div><div class="st-label">30 天内到期</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--red)">${customers.length-active-refunded}</div><div class="st-label">已到期/停用</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--text3)">${refunded}</div><div class="st-label">已退货（留档）</div></div>`;
+
+  const box = document.getElementById('tableBox');
+  const list = filteredCustomers();
+  document.getElementById('countLabel').textContent = '共 ' + customers.length + ' 位 · 显示 ' + list.length + ' 位';
+  if(!customers.length){
+    box.innerHTML = '<div class="empty">还没有客户，先在左侧添加第一位客户 🎉</div>';
+    return;
+  }
+  if(!list.length){
+    box.innerHTML = '<div class="empty">当前筛选下没有客户</div>';
+    return;
+  }
+  const rows = [...list].reverse().map(c=>{
+    const dl = daysLeft(c.expireAt);
+    const u = usageInfo(c);
+    let tag;
+    if(c.refunded) tag = '<span class="tag refund">已退货</span>';
+    else if(dl<=0) tag = '<span class="tag exp">已到期</span>';
+    else if(dl<=30) tag = '<span class="tag warn">剩 '+dl+' 天</span>';
+    else tag = '<span class="tag ok">剩 '+dl+' 天</span>';
+    const lastSeenHtml = c.refunded ? '<span style="color:var(--text3)">已留档</span>'
+      : u.cloud ? ('最近活跃 <b>'+u.lastSeen+'</b>') : '<span style="color:var(--text3)">未上报</span>';
+    const useHtml = '<div style="font-size:11.5px;color:var(--text2);line-height:1.7">已用 <b style="color:var(--text);font-size:13px">'+u.elapsed+'</b> 天' +
+      (u.cloud && u.active ? ' <span style="color:var(--text3)">· 活跃 '+u.active+' 天</span>' : '') +
+      '<br>'+lastSeenHtml+'</div>';
+    return `<tr class="${c.refunded?'row-refund':''}">
+      <td><b>${c.name}</b>${c.refunded?' <span style="font-size:10px;color:var(--text3)">('+c.refundedAt+')</span>':''}<br><span class="tag ${c.plan==='尊享版'?'pro':'year'}">${c.plan}</span></td>
+      <td class="mono">${c.uid}</td>
+      <td>${c.expireAt}<br>${tag}</td>
+      <td>${useHtml}</td>
+      <td class="mono">${c.code}</td>
+      <td><div class="link-row"><span class="mono" style="max-width:180px;overflow:hidden;text-overflow:ellipsis">${c.link}</span></div></td>
+      <td>${getCloudCfg()?'<span class="tag ok">云</span>':''}<div class="row-actions" style="margin-top:4px">
+        <button class="mini-btn" onclick="copyLink('${c.uid}')">复制链接</button>
+        <button class="mini-btn" onclick="copyCode('${c.uid}')">复制激活码</button>
+        <button class="mini-btn" onclick="copyDeliver('${c.uid}')">交付话术</button>
+        ${c.refunded
+          ? '<button class="mini-btn" style="color:var(--green)" onclick="restoreCustomer(\''+c.uid+'\')">恢复客户</button>'
+          : '<button class="mini-btn" onclick="extendDays(\''+c.uid+'\')">延长</button>'+
+            '<button class="mini-btn" onclick="setExpired(\''+c.uid+'\')">停用</button>'+
+            '<button class="mini-btn" onclick="reEnable(\''+c.uid+'\')">重启</button>'+
+            '<button class="mini-btn danger" onclick="refundCustomer(\''+c.uid+'\')">退货</button>'}
+      </div></td>
+    </tr>`;
+  }).join('');
+  box.innerHTML = `<div class="cf-tabs">
+      <span class="cf-tab ${custFilter==='all'?'active':''}" data-f="all" onclick="setFilter('all')">全部</span>
+      <span class="cf-tab ${custFilter==='active'?'active':''}" data-f="active" onclick="setFilter('active')">生效中</span>
+      <span class="cf-tab ${custFilter==='inactive'?'active':''}" data-f="inactive" onclick="setFilter('inactive')">停用/到期</span>
+      <span class="cf-tab ${custFilter==='refunded'?'active':''}" data-f="refunded" onclick="setFilter('refunded')">已退货</span>
+    </div>
+    <table>
+    <tr><th>客户</th><th>UID</th><th>到期</th><th>使用时长</th><th>激活码</th><th>专属链接</th><th>操作</th></tr>
+    ${rows}
+  </table>`;
+}
+render();
+autoSetupCloud();
+renderCloudStatus();
+setTimeout(syncAllToCloud, 600);
+fetchUsage();
+refreshAiStatus();
+setTimeout(detectCloudDiff, 1500);
+healthCheck();
+setInterval(healthCheck, 30000);
+loadRenew();
+setInterval(loadRenew, 60000);
+</script>
+<div style="text-align:center;margin-top:26px;padding:10px 0 30px;font-size:10px;color:var(--text4);line-height:1.8">
+  Crazy Friday. · 卖家管理端 · 仅限本人使用<br>客户工作数据仅保存在客户本机，本后台无法查看 · <a href="javascript:void(0)" onclick="openLegal()" style="color:inherit;text-decoration:underline;text-underline-offset:2px;opacity:.8">隐私与数据条款</a>
+</div>
+
+<script id="cf-seller-lock-js">
+(function(){
+  var PASS='cf2026';
+  var KEY='cf_seller_unlocked_v1';
+  function enc(s){ try{ return btoa(unescape(encodeURIComponent(s))); }catch(e){ return s; } }
+  var gate=document.getElementById('cfLock');
+  if(localStorage.getItem(KEY)===enc(PASS)){
+    if(gate) gate.remove();
+    document.documentElement.classList.remove('cf-locked');
+    return;
+  }
+  document.documentElement.className+=' cf-locked';
+  var inp=document.getElementById('cfLockInput'),btn=document.getElementById('cfLockBtn'),err=document.getElementById('cfLockErr');
+  function tryUnlock(){
+    if(inp.value===PASS){
+      localStorage.setItem(KEY,enc(PASS));
+      document.documentElement.classList.remove('cf-locked');
+      if(gate) gate.remove();
+    } else {
+      err.textContent='口令错误，请重试';
+      gate.classList.add('shake');
+      setTimeout(function(){gate.classList.remove('shake')},450);
+      inp.value=''; inp.focus();
+    }
+  }
+  btn.addEventListener('click',tryUnlock);
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter') tryUnlock(); });
+  setTimeout(function(){inp.focus()},150);
+})();
+</script>
+</body>
+</html>
