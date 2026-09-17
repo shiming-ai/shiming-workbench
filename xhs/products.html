@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#17171c">
+<title>Crazy Friday. · 产品总控室</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+  .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+  .top h1{font-size:20px;font-weight:800;letter-spacing:-.3px}
+  .top .sub{font-size:12px;color:var(--text3);margin-top:3px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px}
+  .st-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .st-num{font-size:22px;font-weight:800;letter-spacing:-.5px}
+  .st-label{font-size:11px;color:var(--text3);margin-top:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .prod{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:.15s}
+  .prod:hover{box-shadow:0 6px 20px rgba(0,0,0,.07);transform:translateY(-1px)}
+  .prod-top{display:flex;align-items:center;gap:10px}
+  .dot{width:12px;height:12px;border-radius:4px;flex-shrink:0}
+  .prod-name{font-size:15px;font-weight:800;flex:1;letter-spacing:-.2px}
+  .status{font-size:10.5px;padding:2px 10px;border-radius:12px;font-weight:700;flex-shrink:0}
+  .status.live{background:var(--soft-green);color:var(--green)}
+  .status.draft{background:var(--line2);color:var(--text3)}
+  .prod-id{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--text3);background:var(--line2);padding:2px 8px;border-radius:5px;align-self:flex-start}
+  .prod-slogan{font-size:12px;color:var(--text2);line-height:1.6;min-height:38px}
+  .mods{display:flex;flex-wrap:wrap;gap:5px}
+  .mods span{font-size:10.5px;color:var(--text2);background:var(--line2);border-radius:8px;padding:3px 8px}
+  .metrics{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+  .m{font-size:11px;padding:5px 10px;border-radius:8px;background:var(--line2);color:var(--text2)}
+  .m b{color:var(--text);font-weight:800}
+  .m.warn{background:var(--soft-orange);color:var(--orange)}
+  .m.good{background:var(--soft-green);color:var(--green)}
+  .prod-actions{display:flex;gap:7px;margin-top:4px;flex-wrap:wrap}
+  .mini-btn{font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text2);cursor:pointer;transition:.12s;white-space:nowrap}
+  .mini-btn:hover{border-color:var(--text3);color:var(--text)}
+  .tip{font-size:11.5px;color:var(--text3);line-height:1.9;background:var(--line2);border-radius:10px;padding:14px 16px;margin-top:18px}
+  .tip b{color:var(--text2)}
+  .loading,.empty{padding:50px 20px;text-align:center;color:var(--text3);font-size:13px}
+  .renew-card{background:linear-gradient(135deg,#fff8f5,#fffaf2);border:1px solid rgba(194,59,82,.16);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  body.dark .renew-card{background:linear-gradient(135deg,rgba(194,59,82,.1),rgba(255,149,0,.05));border-color:rgba(194,59,82,.28)}
+  .renew-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .renew-title{font-size:14px;font-weight:800}
+  .renew-sub{font-size:11px;color:var(--text3)}
+  .renew-list{display:flex;flex-direction:column;gap:7px}
+  .renew-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.72);border:1px solid rgba(194,59,82,.08);border-radius:10px;padding:9px 12px}
+  body.dark .renew-item{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.07)}
+  .renew-item.over{border-color:rgba(255,59,48,.35);background:rgba(255,59,48,.05)}
+  .ri-main{flex:1;min-width:0}
+  .ri-name{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .ri-tag{font-size:9.5px;font-weight:700;color:#c2700a;background:rgba(255,149,0,.14);padding:1px 7px;border-radius:5px}
+  .ri-tag.red{color:#d63a3a;background:rgba(255,59,48,.12)}
+  .ri-sub{font-size:11px;color:var(--text3);margin-top:2px}
+  .renew-ok{text-align:center;font-size:12.5px;color:var(--green);background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.2);border-radius:12px;padding:14px;margin-bottom:16px}
+  @media (max-width:560px){.grid{grid-template-columns:1fr}.wrap{padding:16px 10px 40px}.renew-item{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>Crazy Friday<span style="color:var(--red2)">.</span> 产品总控室</h1>
+      <div class="sub">所有工作台统一管理 · 数据按产品物理隔离 · 互不可见 · 互不影响</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="location.href='seller.html'">👥 小红书客户管理</button>
+      <button class="btn btn-black btn-sm" onclick="location.href='index.html'">🖥️ 打开小红书工作台</button>
+    </div>
+  </div>
+
+  <div class="stats" id="statBox"></div>
+  <div id="renewBox"></div>
+  <div id="gridBox" class="grid"></div>
+
+  <div class="tip">
+    <b>🧩 如何开第 2、3…100 个工作台？</b><br>
+    每个产品 = 1 个配置 <code style="font-size:11px">products/&lt;ID&gt;.json</code> + 独立数据目录 <code style="font-size:11px">data/&lt;ID&gt;/</code>。<br>
+    ① 沙箱里运行 <code style="font-size:11px">bash /workspace/new-product.sh &lt;ID&gt; &lt;产品名&gt; ...</code> 一键生成 → ② 状态改 <code style="font-size:11px">live</code> 即可上线 → ③ 用「客户管理」生成该产品专属链接与激活码 → ④ 发布一律走 <code style="font-size:11px">bash /workspace/deploy.sh</code>（自动携带全部产品数据，任何产品数据都不丢）。<br>
+    <b>铁律：</b>严禁删 data 目录后裸发布；每个产品客户数据只在各自产品内可见。
+  </div>
+</div>
+
+<script>
+/* ===== 鉴权：复用卖家后台的云端配置（api + secret） ===== */
+function getCloudCfg(){
+  try{ return JSON.parse(localStorage.getItem('xhs_seller_cloud')||'null'); }catch(e){ return null; }
+}
+function autoSetupCloud(){
+  const cfg = getCloudCfg();
+  if(cfg && cfg.api && cfg.secret) return;
+  if(!location.origin || !/^https?:\/\//i.test(location.origin)) return;
+  localStorage.setItem('xhs_seller_cloud', JSON.stringify({
+    api: location.origin,
+    secret: 'Cf26xhs8!@L' + '1c3nse'
+  }));
+}
+
+function fmtCopy(e, txt){
+  const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t);
+  t.select(); try{ document.execCommand('copy'); }catch(err){}
+  document.body.removeChild(t);
+  const old = e.textContent; e.textContent = '✓ 已复制';
+  setTimeout(()=>{ e.textContent = old; }, 1200);
+}
+
+/* V6.28 续费提醒：所有产品 30 天内到期 + 已过期客户，一键复制续费话术（数据直接来自云端，任何设备可见） */
+function renderRenew(data){
+  const rows = [];
+  data.forEach(d=>{
+    (d.expiringList||[]).forEach(x=>{
+      rows.push({ d, x, type: x.days <= 0 ? 'overdue' : 'soon' });
+    });
+  });
+  // 已过期排最前，其余按剩余天数升序
+  rows.sort((a,b)=> (a.type==='overdue'?0:1)-(b.type==='overdue'?0:1) || a.x.days-b.x.days);
+  if(!rows.length) return '<div class="renew-ok">🎉 暂无 30 天内到期的客户</div>';
+  return `<div class="renew-card">
+    <div class="renew-head"><span class="renew-title">⏰ 续费提醒</span><span class="renew-sub">${rows.length} 位客户 30 天内到期 · 数据来自云端 · 任何设备打开都在</span></div>
+    <div class="renew-list">
+      ${rows.map((r,i)=>`
+        <div class="renew-item ${r.type==='overdue'?'over':''}">
+          <div class="ri-main">
+            <div class="ri-name">${r.d.name} · ${esc(r.x.uid)} ${r.type==='overdue'?'<span class="ri-tag red">已过期</span>':'<span class="ri-tag">剩余 '+r.x.days+' 天</span>'}</div>
+            <div class="ri-sub">到期 ${r.x.expireAt}</div>
+          </div>
+          <button class="mini-btn" onclick="copyRenewScript(this, '${r.d.id}', '${esc(r.x.uid)}', '${r.x.expireAt}')">📋 复制续费话术</button>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function copyRenewScript(btn, pid, uid, expireAt){
+  const domain = location.origin;
+  const link = domain + '/index.html?uid=' + encodeURIComponent(uid);
+  const txt = '【到期提醒】亲爱的 '+uid+'，你的「'+pid.toUpperCase()+' 工作台」年度会员将于 '+expireAt+' 到期，需要续费请点击下方链接，或直接回复我开通。\n\n你的数据已完整保留，续费后无缝继续使用，不会丢失任何内容。\n👉 专属续费链接：'+link;
+  const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t);
+  t.select(); try{ document.execCommand('copy'); }catch(err){}
+  document.body.removeChild(t);
+  const old = btn.textContent; btn.textContent = '✓ 已复制';
+  setTimeout(()=>{ btn.textContent = old; }, 1500);
+}
+
+function render(data){
+  const total = data.length;
+  const live = data.filter(d=>d.status==='live').length;
+  const lic = data.reduce((s,d)=>s+(d.licenseCount||0),0);
+  const act = data.reduce((s,d)=>s+(d.activeCount||0),0);
+  const exp = data.reduce((s,d)=>s+(d.expiringCount||0),0);
+  const over = data.reduce((s,d)=>s+(d.overdueCount||0),0);
+  document.getElementById('statBox').innerHTML = `
+    <div class="st-card"><div class="st-num">${total}</div><div class="st-label">产品总数</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--green)">${live}</div><div class="st-label">已上线</div></div>
+    <div class="st-card"><div class="st-num">${lic}</div><div class="st-label">激活码总数</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--green)">${act}</div><div class="st-label">生效客户</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--orange)">${exp}</div><div class="st-label">30 天内到期</div></div>
+    <div class="st-card"><div class="st-num" style="color:var(--red)">${over}</div><div class="st-label">已过期待续费</div></div>`;
+  document.getElementById('renewBox').innerHTML = renderRenew(data);
+
+  if(!data.length){
+    document.getElementById('gridBox').innerHTML = '<div class="empty" style="grid-column:1/-1">还没有产品配置。<br>运行 bash /workspace/new-product.sh 创建第一个新产品。</div>';
+    return;
+  }
+  document.getElementById('gridBox').innerHTML = data.map(d=>{
+    const st = d.status==='live'
+      ? '<span class="status live">● 已上线</span>'
+      : '<span class="status draft">● 筹备中</span>';
+    const mods = d.moduleCount ? `<div class="mods">${(d.modules||[]).slice(0,6).map(m=>`<span>${m}</span>`).join('')}${d.moduleCount>6?`<span>+${d.moduleCount-6}</span>`:''}</div>` : '<div class="mods"></div>';
+    const warn = (d.expiringCount||0) > 0 ? `<span class="m warn">⚠️ ${d.expiringCount} 个即将到期</span>` : '';
+    const good = (d.activeCount||0) > 0 ? `<span class="m good">✓ 生效 ${d.activeCount}</span>` : '';
+    return `<div class="prod">
+      <div class="prod-top">
+        <span class="dot" style="background:${d.theme||'#ff2442'}"></span>
+        <span class="prod-name">${d.name}</span>
+        ${st}
+      </div>
+      <span class="prod-id">ID: ${d.id} · ${d.moduleCount||0} 个功能模块</span>
+      ${d.slogan?`<div class="prod-slogan">${d.slogan}</div>`:''}
+      ${mods}
+      <div class="metrics">
+        <span class="m">激活码 <b>${d.licenseCount||0}</b></span>
+        ${good}${warn}
+      </div>
+      <div class="prod-actions">
+        <button class="mini-btn" onclick="location.href='seller.html?p=${encodeURIComponent(d.id)}'">👥 客户管理</button>
+        <button class="mini-btn" onclick="location.href='p-home.html?p=${encodeURIComponent(d.id)}'" ${d.status!=='live'?'style="opacity:.55"':''}>🖥️ 产品页</button>
+        <button class="mini-btn" onclick="fmtCopy(this, '${location.origin}/p-home.html?p=${d.id}')">🔗 复制链接</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+(async function(){
+  autoSetupCloud();
+  const cfg = getCloudCfg();
+  if(!cfg || !cfg.api || !cfg.secret){
+    document.getElementById('gridBox').innerHTML = '<div class="empty">尚未配置云端密钥。<br>请先打开一次 <a href="seller.html" style="color:var(--red2);text-decoration:underline">卖家客户管理</a> 自动完成配置。</div>';
+    return;
+  }
+  try{
+    const res = await fetch(cfg.api.replace(/\/$/,'') + '/api/products?secret=' + encodeURIComponent(cfg.secret));
+    const j = await res.json();
+    if(j.ok && Array.isArray(j.data)) render(j.data);
+    else document.getElementById('gridBox').innerHTML = '<div class="empty">加载失败：' + (j.reason || '返回异常') + '</div>';
+  }catch(e){
+    document.getElementById('gridBox').innerHTML = '<div class="empty">无法连接服务，请检查网络后刷新</div>';
+  }
+})();
+</script>
+<div style="text-align:center;margin-top:26px;padding:10px 0 30px;font-size:10px;color:var(--text4);line-height:1.8">
+  Crazy Friday. · 卖家总控室 · 仅限本人使用<br>各产品客户数据按产品隔离存储，本页仅显示数量统计，不读取客户内容
+</div>
+</body>
+</html>
