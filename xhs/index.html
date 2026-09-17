@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#15151a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Crazy Friday">
+<meta name="description" content="Crazy Friday. 小红书AI运营工作台 · 一个人 = 一支AI内容团队 · 选题/创作/发布/复盘/变现一站式">
+<meta name="keywords" content="小红书,AI,运营,工作台,内容创作,数据复盘,爆款拆解">
+<meta name="author" content="Crazy Friday.">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- 社交分享卡片（用户发到微信/小红书/QQ 时显示） -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Crazy Friday. 小红书AI运营工作台">
+<meta property="og:description" content="一个人 + AI = 一支内容团队 · 选题 / 创作 / 发布 / 复盘 / 变现 一站式搞定">
+<meta property="og:image" content="icon-512.png">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="Crazy Friday.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crazy Friday. 小红书AI运营工作台">
+<meta name="twitter:description" content="一个人 + AI = 一支内容团队 · 一站式完成小红书运营">
+
+<title>小红书AI运营工作台 · Crazy Friday</title>
+
+<!-- 真实 PNG 图标（iOS / Android / 桌面 PWA 全部支持） -->
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="mask-icon" href="icon-192.png" color="#15151a">
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ===== 授权门（激活码） ===== -->
+<div class="license-gate" id="licenseGate" style="display:none">
+  <div class="lg-card">
+    <div class="lg-badge-row">
+      <span class="lg-badge">🔒 正版授权</span>
+      <span class="lg-badge">☁️ 云端校验</span>
+      <span class="lg-badge">🛡️ 一码一机</span>
+    </div>
+    <div class="lg-logo">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h14a2 2 0 0 1 2 2v14l-4-4H4z"/><path d="M8 9h8M8 13h6"/></svg>
+    </div>
+    <div class="lg-name">Crazy Friday<span class="lg-dot">.</span></div>
+    <div class="lg-sub">小红书 AI 运营工作台 · 授权激活</div>
+    <div class="lg-input-row">
+      <input id="licInput" placeholder="输入激活码（CF-XXXX-XXXX-XXXX）" autocomplete="off">
+      <button class="btn btn-red" id="licBtn" onclick="doActivate()">激活</button>
+    </div>
+    <div id="licMsg" style="font-size:12px;color:var(--red);min-height:18px;margin-top:8px"></div>
+    <div id="licRecoverTip" style="display:none;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:9px 12px;margin-top:10px;font-size:11.5px;color:rgba(255,255,255,.72);text-align:left;line-height:1.6">🔄 已在本设备激活过？通常会自动恢复，无需重新输入。若长期未打开导致恢复失败，直接输入激活码即可，数据不受影响。</div>
+    <div id="revokedTip" style="display:none;align-items:center;gap:8px;background:rgba(255,59,48,.14);border:1px solid rgba(255,59,48,.35);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:12px;color:#ffb4ae;text-align:left;line-height:1.6">⚠️ 你的授权已被停用，请联系卖家处理。你的数据已完整保留，输入卖家提供的新激活码即可继续使用。</div>
+    <div class="lg-promise">
+      <div><b>✅ 激活即解锁</b><span>全部模块 · 无隐藏付费</span></div>
+      <div><b>🔐 数据归你</b><span>仅存本设备 · 可导出带走</span></div>
+      <div><b>⏳ 到期提醒</b><span>到期前自动提示 · 数据永久保留</span></div>
+    </div>
+    <div class="lg-sep">涵盖</div>
+    <div class="lg-chips">
+      <span>🔍 选题</span><span>🤖 AI 创作</span><span>📊 数据复盘</span><span>💰 变现</span><span>📅 排期</span><span>👥 矩阵</span>
+    </div>
+    <button class="btn btn-ghost lg-demo" onclick="enterDemoMode()">先体验演示模式 →</button>
+    <div class="lg-foot">
+      激活码请联系卖家获取 · 仅限本人使用，请勿外泄<br>
+      数据仅保存在本设备 · <a href="javascript:void(0)" onclick="openLegal()">隐私与数据条款</a>
+    </div>
+  </div>
+</div>
+<div class="license-expired" id="licenseExpired" style="display:none">
+  <div class="lg-card">
+    <div class="lg-logo" style="background:linear-gradient(135deg,#3a3a44,#2a2a32);box-shadow:0 10px 30px rgba(0,0,0,.3)">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l3 3"/></svg>
+    </div>
+    <div class="lg-name">会员已到期</div>
+    <div class="lg-sub" id="expiredInfo">有效期已结束，数据已为你完整保留。</div>
+    <button class="btn btn-red" style="width:100%;margin-top:18px" onclick="openRenew()">联系卖家续费</button>
+    <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="exportData()">导出我的数据</button>
+    <div id="expContactBox" style="margin-top:16px"></div>
+    <div class="lg-foot">续费后数据无缝恢复，不会丢失任何内容</div>
+  </div>
+</div>
+
+<!-- ===== 品牌启动页 Splash ===== -->
+<div class="splash" id="splash">
+  <div class="splash-bg"></div>
+  <div class="splash-halo"></div>
+  <div class="splash-inner">
+    <div class="splash-logo" id="splashLogo">
+      <svg viewBox="0 0 120 120" width="84" height="84">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="var(--red)"/><stop offset="1" stop-color="#8f2f42"/>
+          </linearGradient>
+        </defs>
+        <rect x="6" y="6" width="108" height="108" rx="26" fill="url(#lg1)"/>
+        <path d="M44 60l10 10 22-22" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+        <circle cx="60" cy="94" r="4.5" fill="#fff" opacity=".85"/>
+      </svg>
+    </div>
+    <div class="splash-name" id="splashName">Crazy Friday<span class="sp-dot">.</span></div>
+    <div class="splash-sub">小红书 AI 运营工作台</div>
+    <div class="splash-tag">一个人 + AI，就是一家公司的开始</div>
+    <div class="splash-bar"><i id="splashBarI"></i></div>
+    <div class="splash-member"><span class="splash-pill">👑 年度会员 · 运营官</span></div>
+    <div class="splash-ver">WORKBENCH v6.24 · POWERED BY CRAZY FRIDAY</div>
+  </div>
+</div>
+
+<!-- ===== 新用户 4 页滑动开屏引导（V6.9） ===== -->
+<div class="intro" id="introOverlay" style="display:none">
+  <button class="intro-skip" id="introSkip">跳过</button>
+  <div class="intro-track" id="introTrack">
+    <div class="intro-page">
+      <div class="ip-visual"><svg viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="var(--red)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="10" width="68" height="76" rx="12"/><path d="M30 34h36M30 48h36M30 62h22"/></svg></div>
+      <div class="ip-title">AI小红书智能运营工作台</div>
+      <div class="ip-sub">一站式搞定笔记创作、风控合规、账号诊断、变现操盘</div>
+    </div>
+    <div class="intro-page">
+      <div class="ip-visual"><svg viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="var(--red)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="42" cy="40" r="18"/><path d="M42 22c18 0 30 12 30 30"/><path d="M60 56l22 22M72 78l10-10"/></svg></div>
+      <div class="ip-title">全能 AI 运营 Agent 助理</div>
+      <div class="ip-sub">真人文风重塑、爆款选题预判、矩阵差异化文案、商单报价分析、评论话术生成，全场景智能辅助</div>
+    </div>
+    <div class="intro-page">
+      <div class="ip-visual"><svg viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="var(--red)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M48 14 20 28v22c0 16 12 26 28 32 16-6 28-16 28-32V28z"/><path d="m36 46 8 8 16-18"/></svg></div>
+      <div class="ip-title">全流程风控合规护航</div>
+      <div class="ip-sub">自动违禁词检测、变现文案合规校验、多账号数据隔离，安全运营不踩限流坑；精准变现路径规划，提升商单带货收益</div>
+    </div>
+    <div class="intro-page">
+      <div class="ip-visual"><svg viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="var(--red)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M48 16v64M48 20c-10-6-24-4-28 2-4 7 4 12 8 16 4-2 12-6 20-6"/><path d="M48 20c10-6 24-4 28 2 4 7-4 12-8 16-4-2-12-6-20-6"/><path d="M48 80c-10 6-24 4-28-2"/></svg></div>
+      <div class="ip-title">按需匹配专属运营方案</div>
+      <div class="ip-sub">根据你的运营目标，智能高亮功能、定制新手任务，新手起号 / 变现增收 / 爆款打造 / 矩阵运营，一人一套专属路径</div>
+    </div>
+  </div>
+  <div class="intro-dots" id="introDots"></div>
+  <div class="intro-btn-wrap">
+    <button class="btn btn-red btn-block intro-next" id="introNext">下一步</button>
+  </div>
+</div>
+
+<!-- ===== V6.33 体验模式横幅：明确告知当前是独立演示数据 ===== -->
+<div id="demoBanner" style="display:none;position:fixed;z-index:60;left:0;right:0;bottom:0;background:linear-gradient(90deg,#ff9f0a,#ff6482);color:#fff;padding:10px 14px;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:0 -4px 18px rgba(0,0,0,.18);font-size:12.5px;padding-bottom:calc(10px + env(safe-area-inset-bottom))">
+  <span style="font-size:16px">🧪</span>
+  <span id="demoBannerTip" style="flex:1;min-width:0;line-height:1.5"><b>体验版</b> · 这是一个演示账号，随便点、随便改，都不会影响任何人的真实数据</span>
+  <span id="demoAiBadge" style="display:none;flex-shrink:0;font-size:11px;font-weight:700;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.35);padding:4px 10px;border-radius:99px">🔥 AI 体验剩 5 次</span>
+  <button id="demoBannerBtn" onclick="exitDemoMode()" style="background:#fff;color:#ff4d6d;border:none;border-radius:8px;padding:7px 13px;font-size:12px;cursor:pointer;font-weight:700;white-space:nowrap;min-height:32px;flex-shrink:0">激活我的</button>
+</div>
+
+<!-- ===== 桌面侧边栏 ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10a3 3 0 0 1 3 3v13a2 2 0 0 1-2 2H5z"/><path d="M5 4v18M9 4v18M9 9h7M9 13h7"/></svg></div>
+    <div class="brand-text">
+      <div class="brand-name">小红书AI工作台</div>
+      <div class="brand-sub">Crazy Friday · WORKBENCH</div>
+    </div>
+  </div>
+  <nav class="nav" id="sideNav">
+    <div class="nav-group">工作台</div>
+    <a class="nav-item" data-page="dashboard"><span class="nav-ico" data-icon="home"></span><span>工作台首页</span></a>
+    <a class="nav-item" data-page="features"><span class="nav-ico" data-icon="grid"></span><span>功能地图</span></a>
+    <div class="nav-group">运营核心</div>
+    <a class="nav-item" data-page="topics"><span class="nav-ico" data-icon="compass"></span><span>选题雷达</span><span class="nav-badge" id="navBadgeTopics">0</span></a>
+    <a class="nav-item" data-page="trending"><span class="nav-ico" data-icon="trend"></span><span>今日热门</span></a>
+    <a class="nav-item" data-page="viral"><span class="nav-ico" data-icon="trend"></span><span>爆款拆解</span></a>
+    <a class="nav-item" data-page="create"><span class="nav-ico" data-icon="pen"></span><span>AI创作中心</span></a>
+    <a class="nav-item" data-page="publish"><span class="nav-ico" data-icon="camera"></span><span>图文发布</span></a>
+    <a class="nav-item" data-page="schedule"><span class="nav-ico" data-icon="calendar"></span><span>发布计划</span><span class="nav-badge" id="navBadgeSchedule">0</span></a>
+    <a class="nav-item" data-page="analytics"><span class="nav-ico" data-icon="chart"></span><span>数据复盘</span></a>
+    <a class="nav-item" data-page="assets"><span class="nav-ico" data-icon="folder"></span><span>素材管理</span></a>
+    <div class="nav-group">运营增长</div>
+    <a class="nav-item" data-page="diagnosis"><span class="nav-ico" data-icon="steth"></span><span>账号诊断</span></a>
+    <a class="nav-item" data-page="benchmark"><span class="nav-ico" data-icon="crosshair"></span><span>对标账号</span></a>
+    <a class="nav-item" data-page="toolbox"><span class="nav-ico" data-icon="wrench"></span><span>运营工具箱</span></a>
+    <a class="nav-item" data-page="ideas"><span class="nav-ico" data-icon="bulb"></span><span>灵感笔记</span></a>
+    <div class="nav-group">变现中枢</div>
+    <a class="nav-item" data-page="money"><span class="nav-ico" data-icon="star"></span><span>变现管理</span></a>
+    <a class="nav-item" data-page="vmoney"><span class="nav-ico" data-icon="briefcase"></span><span>变现商业</span></a>
+    <a class="nav-item" data-page="vreport"><span class="nav-ico" data-icon="news"></span><span>变现日报</span></a>
+    <a class="nav-item" data-page="shop"><span class="nav-ico" data-icon="cart"></span><span>电商带货中心</span><span class="nav-badge" id="navBadgeShop" style="display:none">NEW</span></a>
+    <div class="nav-group">我的</div>
+    <a class="nav-item" data-page="library"><span class="nav-ico" data-icon="archive"></span><span>内容库</span></a>
+    <a class="nav-item" data-page="favorites"><span class="nav-ico" data-icon="star"></span><span>灵感收藏夹</span></a>
+    <div class="nav-group">会员与系统</div>
+    <a class="nav-item" data-page="membership"><span class="nav-ico" data-icon="crown"></span><span>会员中心</span></a>
+    <a class="nav-item" data-page="settings"><span class="nav-ico" data-icon="gear"></span><span>设置中心</span></a>
+    <a class="nav-item" data-page="help"><span class="nav-ico" data-icon="bulb"></span><span>帮助与常见问题</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-card" onclick="navigate('membership')" style="cursor:pointer">
+      <div class="user-avatar" id="userAvatar"></div>
+      <div class="user-info">
+        <div class="user-name" id="userName">Crazy Friday.</div>
+        <div class="user-role">运营官 · 年度会员</div>
+      </div>
+    </div>
+    <div class="sub-card-mini" onclick="navigate('membership')" style="cursor:pointer">
+      <div class="s-title">⭐ <span id="subPlanName">年度会员</span></div>
+      <div class="s-meta">有效期至 <span id="subExpire">--</span> · 剩余 <span id="subDays">--</span> 天</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== 遮罩（移动端） ===== -->
+<div class="mask" id="mask"></div>
+<div class="page-load-bar" id="pageLoadBar"></div>
+
+<!-- ===== 主区域 ===== -->
+<main class="main" id="main">
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <div class="topbar-title" id="topbarTitle">工作台首页</div>
+    <div class="ai-ready" id="aiReady" title="AI 已就绪，开箱即用" style="display:none"><i></i><span>AI 已就绪</span></div>
+    <div class="topbar-actions">
+      <!-- V6.31.2 顶栏操作排序：低频主题/搜索放左，高频 AI/新建放右，降低月亮突兀感 -->
+      <button class="icon-btn topbar-theme" id="themeBtn" title="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 13a9 9 0 1 1-10-10 7 7 0 0 0 10 10z"/></svg></button>
+      <button class="icon-btn" id="searchBtn" title="搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <select id="wsSwitcher" title="切换矩阵账号" style="display:none"></select>
+      <button class="icon-btn" id="aiSidekickBtn" title="AI 运营助理" onclick="openSidekick()" style="color:var(--red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a3 3 0 0 1-3 3H8l-5 4V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3z"/></svg></button>
+      <button class="btn btn-ghost btn-sm" id="quickCreateBtn" onclick="openQuickCreate()" style="margin-right:2px">＋ 新建</button>
+    </div>
+  </header>
+  <div class="content" id="content"></div>
+
+  <!-- V6.47 移动端底部 Tab 栏（App 感：一眼是原生应用） -->
+  <nav class="bottom-tab" id="bottomTab" aria-label="主导航">
+    <button class="bt-item" data-page="dashboard" onclick="navigate('dashboard')">
+      <span class="bt-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+      <span class="bt-label">首页</span>
+    </button>
+    <button class="bt-item" data-page="topics" onclick="navigate('topics')">
+      <span class="bt-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+      <span class="bt-label">发现</span>
+    </button>
+    <div class="bt-fab-wrap">
+      <button class="bt-fab" onclick="navigate('create')" aria-label="创作">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      </button>
+      <span class="bt-label">创作</span>
+    </div>
+    <button class="bt-item" data-page="schedule" onclick="navigate('schedule')">
+      <span class="bt-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+      <span class="bt-label">计划</span>
+    </button>
+    <button class="bt-item" data-page="settings" onclick="navigate('settings')">
+      <span class="bt-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span>
+      <span class="bt-label">我的</span>
+    </button>
+  </nav>
+
+  <!-- 选题雷达独立搜索框（V6.27 bug 修复：原 oninput 重渲染销毁 input 导致无法输入） -->
+  <div id="topicSearchBar" style="display:none"></div>
+</main>
+
+<!-- ===== 移动端底部导航 ===== -->
+<nav class="tabbar" id="tabbar">
+  <a class="tab-item" data-page="dashboard"><span class="tab-ico" data-icon="home"></span><span>首页</span></a>
+  <a class="tab-item" data-page="trending"><span class="tab-ico" data-icon="compass"></span><span>发现</span></a>
+  <a class="tab-item tab-center" data-page="create" title="创作"><span class="tab-plus"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span>创作</span><span class="tab-badge" id="tabBadgeCreate">3</span></a>
+  <a class="tab-item" data-page="schedule"><span class="tab-ico" data-icon="calendar"></span><span>计划</span></a>
+  <a class="tab-item" id="tabMeBtn" onclick="openMobileDrawer()"><span class="tab-ico" data-icon="grid"></span><span>我的</span></a>
+</nav>
+
+<!-- ===== 移动端 Drawer（我的） ===== -->
+<div class="mask" id="drawerMask" style="display:none" onclick="closeMobileDrawer()"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="md-head">
+    <div class="md-user">
+      <div class="md-avatar" id="mdAvatar"></div>
+      <div>
+        <div class="md-name" id="mdUserName">Crazy Friday.</div>
+        <div class="md-role">运营官 · 年度会员</div>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="closeMobileDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="md-group">运营</div>
+  <a class="md-item" onclick="mdNav('analytics')"><span class="md-ico" data-icon="chart"></span><span>数据复盘</span></a>
+  <a class="md-item" onclick="mdNav('viral')"><span class="md-ico" data-icon="flame"></span><span>爆款拆解</span></a>
+  <a class="md-item" onclick="mdNav('assets')"><span class="md-ico" data-icon="folder"></span><span>素材管理</span></a>
+  <a class="md-item" onclick="mdNav('ideas')"><span class="md-ico" data-icon="bulb"></span><span>灵感笔记</span></a>
+  <a class="md-item" onclick="mdNav('library')"><span class="md-ico" data-icon="archive"></span><span>内容库</span></a>
+  <div class="md-group">增长</div>
+  <a class="md-item" onclick="mdNav('diagnosis')"><span class="md-ico" data-icon="steth"></span><span>账号诊断</span></a>
+  <a class="md-item" onclick="mdNav('benchmark')"><span class="md-ico" data-icon="crosshair"></span><span>对标账号</span></a>
+  <a class="md-item" onclick="mdNav('toolbox')"><span class="md-ico" data-icon="wrench"></span><span>运营工具箱</span></a>
+  <a class="md-item" onclick="mdNav('money')"><span class="md-ico" data-icon="star"></span><span>变现管理</span></a>
+  <a class="md-item" onclick="mdNav('vmoney')"><span class="md-ico" data-icon="briefcase"></span><span>变现商业</span></a>
+  <a class="md-item" onclick="mdNav('vreport')"><span class="md-ico" data-icon="news"></span><span>变现日报</span></a>
+  <a class="md-item" onclick="mdNav('shop')"><span class="md-ico" data-icon="cart"></span><span>电商带货中心</span><span class="pill red" style="font-size:9px">NEW</span></a>
+  <a class="md-item" onclick="mdNav('favorites')"><span class="md-ico" data-icon="star"></span><span>灵感收藏夹</span></a>
+  <div class="md-group">会员与系统</div>
+  <a class="md-item" onclick="mdNav('membership')"><span class="md-ico" data-icon="crown"></span><span>会员中心</span></a>
+  <a class="md-item" onclick="mdNav('settings')"><span class="md-ico" data-icon="gear"></span><span>设置中心</span></a>
+  <a class="md-item" onclick="mdNav('help')"><span class="md-ico" data-icon="bulb"></span><span>帮助与常见问题</span></a>
+  <div class="md-foot">Crazy Friday. · 小红书AI运营工作台<br>Powered by Crazy Friday.<br><a href="javascript:void(0)" onclick="openLegal()" style="color:var(--text4);font-size:10px;text-decoration:underline;text-underline-offset:2px;opacity:.8">隐私与数据条款</a></div>
+</div>
+
+<!-- ===== 通用弹窗 ===== -->
+<div class="modal-mask" id="modalMask" style="display:none"></div>
+<div class="modal" id="modal" style="display:none">
+  <div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="icon-btn" onclick="Modal.close()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="modal-body" id="modalBody"></div>
+</div>
+
+<!-- ===== 自动保存状态 ===== -->
+<div class="save-state" id="saveState"></div>
+
+<!-- ===== 轻提示 ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- V6.48 GitHub 开源组件（Apache/MIT 授权，自托管离线可用） -->
+  <script src="vendor/fuse.min.js"></script>
+  <script src="vendor/html2canvas.min.js"></script>
+  <script src="vendor/qrcode.min.js"></script>
+  <script src="vendor/echarts.min.js"></script>
+  <script src="js/data.js"></script>
+<script src="js/license.js"></script>
+<script src="js/app.js"></script>
+<script src="js/pro-tools.js"></script>
+<script>
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>
