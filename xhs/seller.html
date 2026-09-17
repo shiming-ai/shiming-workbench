@@ -98,6 +98,13 @@ html.cf-locked body>*:not(#cfLock){display:none!important}
   </div>
 </div>
 
+  <!-- ===== 数据备份提醒（新增 · 纯提示，不改动原有逻辑） ===== -->
+  <div id="cfBackupTip" style="display:none;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,149,0,.12);border:1px solid rgba(255,149,0,.38);border-radius:12px;padding:11px 14px;margin-bottom:14px;font-size:12.5px;color:#ffd28a;line-height:1.6">
+    <span id="cfBackupMsg">💾 客户数据只存在这台设备的浏览器里，建议导出备份</span>
+    <button onclick="exportCustomersJson&&exportCustomersJson();localStorage.setItem('cf_last_backup',String(Date.now()));document.getElementById('cfBackupTip').style.display='none'"
+      style="padding:6px 13px;border:0;border-radius:8px;background:#ff9500;color:#1a1a1a;font-size:12px;font-weight:800;cursor:pointer">立即备份</button>
+    <span onclick="document.getElementById('cfBackupTip').style.display='none'" style="cursor:pointer;opacity:.7;font-size:15px">✕</span>
+  </div>
 <div class="wrap">
   <div class="top">
     <div>
@@ -903,7 +910,7 @@ setInterval(loadRenew, 60000);
 
 <script id="cf-seller-lock-js">
 (function(){
-  var PASS='cf2026';
+  var PASS='Xhs@2026cf';
   var KEY='cf_seller_unlocked_v1';
   function enc(s){ try{ return btoa(unescape(encodeURIComponent(s))); }catch(e){ return s; } }
   var gate=document.getElementById('cfLock');
@@ -929,6 +936,25 @@ setInterval(loadRenew, 60000);
   btn.addEventListener('click',tryUnlock);
   inp.addEventListener('keydown',function(e){ if(e.key==='Enter') tryUnlock(); });
   setTimeout(function(){inp.focus()},150);
+})();
+</script>
+
+<script>
+/* ===== 备份提醒逻辑（新增） ===== */
+(function(){
+  try{
+    var raw = localStorage.getItem('xhs_seller_customers');
+    var n = 0;
+    if(raw){ var arr = JSON.parse(raw); n = Array.isArray(arr) ? arr.length : (arr&&arr.length)||0; }
+    var last = parseInt(localStorage.getItem('cf_last_backup')||'0',10);
+    var days = last ? (Date.now()-last)/86400000 : 999;
+    if(n > 0 && days > 7){
+      var t = document.getElementById('cfBackupTip');
+      var m = document.getElementById('cfBackupMsg');
+      if(m) m.textContent = '💾 你有 ' + n + ' 条客户数据只存在这台设备上，已 ' + Math.floor(days) + ' 天没备份';
+      if(t) t.style.display = 'flex';
+    }
+  }catch(e){}
 })();
 </script>
 </body>
