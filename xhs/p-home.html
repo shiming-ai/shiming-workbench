@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#ff2442">
+<title id="pageTitle">AI运营工作台</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f6f6f8;color:#17171c;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  .nav{background:#1b1b21;color:#fff;padding:14px 0}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;letter-spacing:.3px}
+  .logo-ico{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--brand,#ff2442),#ff5778);display:flex;align-items:center;justify-content:center}
+  .logo-ico svg{width:14px;height:14px;stroke:#fff}
+  .logo .dot{color:var(--brand,#ff2442)}
+  .hero{background:linear-gradient(150deg,var(--brand,#ff2442),#ff5778 60%,#ff8aa6);color:#fff;border-radius:20px;margin:26px 0 0;padding:40px 28px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;top:-45%;right:-12%;width:55%;height:170%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.16),transparent 60%)}
+  .hero h1{position:relative;z-index:1;font-size:26px;font-weight:900;letter-spacing:-.5px}
+  .hero p{position:relative;z-index:1;font-size:13.5px;opacity:.9;margin-top:10px;line-height:1.8}
+  .hero .contact{margin-top:18px;font-size:12.5px;opacity:.95;display:inline-flex;gap:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:9px 18px}
+  .card{background:#fff;border:1px solid #ececef;border-radius:16px;padding:22px;margin-top:16px}
+  .card h3{font-size:15px;font-weight:800;margin-bottom:12px}
+  .mods{display:flex;flex-wrap:wrap;gap:8px}
+  .mods span{font-size:12.5px;color:#3a3a42;background:#f6f6f8;border:1px solid #ececef;border-radius:10px;padding:7px 14px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  .step{background:#fff;border:1px solid #ececef;border-radius:14px;padding:18px;text-align:center}
+  .step-n{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand,#ff2442),#ff5778);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:14px}
+  .step h4{font-size:13.5px;font-weight:800}
+  .step p{font-size:11.5px;color:#8a8a92;line-height:1.7;margin-top:5px}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 12px;border-radius:14px;margin-left:6px}
+  .status.live{background:#eefaf3;color:#17a35a}
+  .status.draft{background:#f4f4f6;color:#8a8a92}
+  .hint{font-size:11px;color:#b0b0b6;text-align:center;margin:22px 0 40px;line-height:1.8}
+  @media(max-width:640px){.steps{grid-template-columns:1fr}.hero{padding:32px 20px}}
+</style>
+</head>
+<body>
+<div class="nav"><div class="wrap">
+  <div class="logo"><span class="logo-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span id="brand">产品</span><span class="dot">.</span></div>
+  <span id="prodStatus"></span>
+</div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <h1 id="prodName"></h1>
+    <p id="prodSlogan"></p>
+    <div class="contact" id="contactLine"></div>
+  </div>
+  <div class="card"><h3>📦 功能模块</h3><div class="mods" id="mods"></div></div>
+  <div class="card"><h3>🚀 三步上手</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><h4>打开链接</h4><p>浏览器打开卖家发给你的专属链接，无需注册</p></div>
+      <div class="step"><div class="step-n">2</div><h4>输入激活码</h4><p>一键激活，全部功能开放</p></div>
+      <div class="step"><div class="step-n">3</div><h4>开始运营</h4><p>设置目标，AI 按需推荐功能</p></div>
+    </div>
+  </div>
+  <p class="hint" id="footNote"></p>
+</div>
+
+<script>
+(function(){
+  var p = new URLSearchParams(location.search).get('p') || 'xhs';
+  fetch('/api/product?p=' + p).then(function(r){ return r.json(); }).then(function(j){
+    if(!j.ok){ document.getElementById('prodName').textContent = '产品不存在'; return; }
+    var d = j.data;
+    document.title = d.name + ' · ' + d.brand;
+    document.getElementById('pageTitle').textContent = document.title;
+    if(d.theme){ document.getElementById('metaTheme').content = d.theme; document.documentElement.style.setProperty('--brand', d.theme); }
+    document.getElementById('brand').textContent = d.brand;
+    document.getElementById('prodName').textContent = d.name;
+    document.getElementById('prodSlogan').textContent = d.slogan || '';
+    var st = document.getElementById('prodStatus');
+    if(d.status === 'live'){ st.className='status live'; st.textContent='● 已上线'; }
+    else { st.className='status draft'; st.textContent='● 筹备中'; }
+    var c = d.contact || {};
+    var line = [];
+    if(c.wechat) line.push('微信：' + c.wechat);
+    if(c.email) line.push('邮箱：' + c.email);
+    document.getElementById('contactLine').textContent = line.join(' · ') || '联系卖家';
+    document.getElementById('mods').innerHTML = (d.modules||[]).map(function(m){ return '<span>'+m+'</span>'; }).join('');
+    document.getElementById('footNote').textContent = d.name + ' · 开通方式请私聊卖家 · 数据仅保存在客户本机';
+  }).catch(function(){ document.getElementById('prodName').textContent = '加载失败，请稍后重试'; });
+})();
+</script>
+</body>
+</html>
