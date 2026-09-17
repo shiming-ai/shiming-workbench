@@ -218,6 +218,8 @@ if(CF_P !== 'xhs'){
     }
   }).catch(()=>{});
 }
+/* 云端后端默认地址（Crazy Friday 云端同步），不配置也能直接用 */
+var DEFAULT_API = 'https://cf-cloud-sync.netlify.app/api';
 const SELLER_KEY = 'xhs_seller_customers';
 /* ---------- 云端防护 ---------- */
 function getCloudCfg(){
