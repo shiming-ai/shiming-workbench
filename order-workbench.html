@@ -222,7 +222,7 @@ body::before {
 <div id="toast"></div>
 
 <script>
-const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', CLOUD_URL='https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const ORDERS_KEY='cf_orders', PARTNERS_KEY='cf_partners', MARKET_KEY='cf_market', CLOUD_URL='https://cf-cloud-sync.netlify.app/api/leads';
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function $(id){return document.getElementById(id)}
@@ -313,7 +313,8 @@ function deletePartner(i){if(!confirm('删除？'))return;const p=load(PARTNERS_
 
 // 云端同步
 function syncCloud(){
-    fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c').then(r=>r.json()).then(cloud=>{
+    /* V6.44：改接自建后端（原三方存储已下线，同步一直静默失败） */
+    fetch(CLOUD_URL, {cache:'no-store'}).then(r=>r.json()).then(cloud=>{
         const items=(cloud&&cloud.partners)||[];
         if(!items.length)return;
         const partners=load(PARTNERS_KEY,[]);
