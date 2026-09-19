@@ -289,7 +289,7 @@ function tick(){
 tick(); setInterval(tick, 1000);
 
 /* ===== 云端真实数据 ===== */
-const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const CLOUD = 'https://cf-cloud-sync.netlify.app/api/leads';
 function fmt(n){ return n >= 10000 ? (n/10000).toFixed(1)+'万+' : n+'+' ; }
 fetch(CLOUD).then(r=>r.json()).then(cloud=>{
     const p = (cloud.partners||[]).length;
