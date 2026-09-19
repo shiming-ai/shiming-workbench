@@ -184,7 +184,9 @@ body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-
     </div>
 </div>
 <script>
-const DEMO_CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+/* V6.44 修复：jsonblob.com 已下线（全站 404），改接自建后端。
+   成交播报 / 真实案例两块都靠它，此前只能一直走「连接失败」降级。 */
+const DEMO_CLOUD = 'https://cf-cloud-sync.netlify.app/api/leads';
 /* 实时成交滚动条（独立实现，供未引入 app.js 的页面使用） */
 (function(){
     const host = document.getElementById('cfLiveTicker'); if (!host) return;
