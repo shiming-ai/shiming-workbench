@@ -257,7 +257,7 @@ function cfPWA(){
 document.addEventListener('DOMContentLoaded', cfPWA);
 
 /* ===== 全局数据层 & 权限体系（自动化盈利系统 v1） ===== */
-const CF_CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const CF_CLOUD = 'https://cf-cloud-sync.netlify.app/api/leads';
 const CF_ME_KEY = 'cf_member_level';
 
 /* 会员级别：free / pro / biz */
