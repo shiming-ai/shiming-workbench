@@ -233,7 +233,15 @@ function getCloudConfig(){
   }catch(e){}
   // 3) 一体托管回退：当前 origin 即云端 API（工作台与后端同源，无需任何配置）
   //    V6.12.3：这让专属链接可以省略 &cloud= 参数，链接大幅缩短
-  if(location.origin && /^https?:\/\//i.test(location.origin)) return {api: location.origin.replace(/\/$/,'')};
+  //    V6.44 修复：必须排除纯静态托管域名。GitHub Pages 上 location.origin 是
+  //    shiming-ai.github.io，静态站没有后端，兜底返回它会让 /recover /status 等请求
+  //    全部打到静态站变成 404/405（实测 /recover 405）。此时应返回 null，让上层
+  //    走「未配置云端」分支，而不是发出注定失败的请求。
+  try{
+    const o = location.origin || '';
+    if(/^https?:\/\//i.test(o) && !/^https?:\/\/[^/]*github\.io$/i.test(o)
+       && !/\/shiming-workbench/i.test(o)) return {api: o.replace(/\/$/,'')};
+  }catch(e){}
   return null;
 }
 function setCloudConfig(cfg){
