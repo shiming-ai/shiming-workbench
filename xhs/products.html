@@ -86,12 +86,24 @@
 <script>
 /* ===== 鉴权：复用卖家后台的云端配置（api + secret） ===== */
 function getCloudCfg(){
-  try{ return JSON.parse(localStorage.getItem('xhs_seller_cloud')||'null'); }catch(e){ return null; }
+  try{
+    const c = JSON.parse(localStorage.getItem('xhs_seller_cloud')||'null');
+    if(!c || !c.api) return c;
+    /* V6.44：丢弃历史遗留的坏配置（被 autoSetupCloud 误写成静态站地址的），并自动清除 */
+    const isBadStatic = /github\.io$/i.test(c.api) || /\/shiming-workbench/i.test(c.api);
+    if(isBadStatic){ try{ localStorage.removeItem('xhs_seller_cloud'); }catch(e2){} return null; }
+    return c;
+  }catch(e){ return null; }
 }
 function autoSetupCloud(){
   const cfg = getCloudCfg();
   if(cfg && cfg.api && cfg.secret) return;
   if(!location.origin || !/^https?:\/\//i.test(location.origin)) return;
+  /* V6.44 修复：绝不能把 location.origin 当云端地址。
+     GitHub Pages 是纯静态站、没有后端，写进去会让所有云端请求打到静态站上变成 404
+     （实测：/api/products 报 404）。仅在真正的一体托管域名下才自动配置。 */
+  const isBackend = /^https?:\/\/(cf-cloud-sync\.netlify\.app|localhost|127\.0\.0\.1)/i.test(location.origin);
+  if(!isBackend) return;
   localStorage.setItem('xhs_seller_cloud', JSON.stringify({
     api: location.origin,
     secret: 'Cf26xhs8!@L' + '1c3nse'
