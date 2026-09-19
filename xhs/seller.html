@@ -946,28 +946,52 @@ setInterval(loadRenew, 60000);
 
 <script id="cf-seller-lock-js">
 (function(){
-  var PASS='Xhs@2026cf';
-  var KEY='cf_seller_unlocked_v1';
-  function enc(s){ try{ return btoa(unescape(encodeURIComponent(s))); }catch(e){ return s; } }
+  /* V6.44 安全加固：口令不再明文写在前端。
+     原实现把口令以明文常量直接暴露在网页源码里，任何人查看源代码即可进入后台。
+     现在改为：口令只存服务端（Netlify 环境变量 SELLER_GATE_PASS），
+     前端把输入的口令提交给 /api/gate 校验，服务端返回通过凭证。
+     源码里不再包含任何口令信息；解锁状态只保存服务端签发的凭证。 */
+  var KEY='cf_seller_unlocked_v2';
+  var CLOUD='https://cf-cloud-sync.netlify.app';
   var gate=document.getElementById('cfLock');
-  if(localStorage.getItem(KEY)===enc(PASS)){
-    if(gate) gate.remove();
-    document.documentElement.classList.remove('cf-locked');
-    return;
-  }
+  function unlock(){ document.documentElement.classList.remove('cf-locked'); if(gate) gate.remove(); }
+
+  // 已解锁（本地存着凭证）→ 直接放行，无需再次联网
+  try{ if(localStorage.getItem(KEY)){ unlock(); return; } }catch(e){}
+
   document.documentElement.className+=' cf-locked';
   var inp=document.getElementById('cfLockInput'),btn=document.getElementById('cfLockBtn'),err=document.getElementById('cfLockErr');
+  function shake(msg){
+    err.textContent=msg;
+    gate.classList.add('shake');
+    setTimeout(function(){gate.classList.remove('shake')},450);
+    inp.value=''; inp.focus();
+  }
   function tryUnlock(){
-    if(inp.value===PASS){
-      localStorage.setItem(KEY,enc(PASS));
-      document.documentElement.classList.remove('cf-locked');
-      if(gate) gate.remove();
-    } else {
-      err.textContent='口令错误，请重试';
-      gate.classList.add('shake');
-      setTimeout(function(){gate.classList.remove('shake')},450);
-      inp.value=''; inp.focus();
-    }
+    var v=(inp.value||'').trim();
+    if(!v){ shake('请输入口令'); return; }
+    btn.disabled=true; btn.textContent='校验中…'; err.textContent='';
+    // 优先用卖家后台已配置的云端地址，否则用内置后端
+    var base=CLOUD;
+    try{
+      var c=JSON.parse(localStorage.getItem('xhs_seller_cloud')||'null');
+      if(c && c.api && /^https?:\/\//i.test(c.api) && !/github\.io/i.test(c.api))
+        base=c.api.replace(/\/$/,'').replace(/\/api$/,'');
+    }catch(e){}
+    fetch(base+'/api/gate',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pass:v})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        btn.disabled=false; btn.textContent='进入后台';
+        if(j && j.ok && j.token){
+          try{ localStorage.setItem(KEY, j.token); }catch(e){}
+          unlock();
+        } else { shake((j && j.reason) || '口令错误，请重试'); }
+      })
+      .catch(function(){
+        btn.disabled=false; btn.textContent='进入后台';
+        shake('无法连接校验服务，请检查网络');
+      });
   }
   btn.addEventListener('click',tryUnlock);
   inp.addEventListener('keydown',function(e){ if(e.key==='Enter') tryUnlock(); });
