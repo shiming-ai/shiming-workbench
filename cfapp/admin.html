@@ -125,7 +125,7 @@
 <div id="toast"></div>
 <script src="app.js"></script>
 <script>
-const CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const CLOUD_URL = 'https://cf-cloud-sync.netlify.app/api/leads';
 const HANDLED_KEY = 'cf_handled_leads';
 
 function getHandled(){ try{ return JSON.parse(localStorage.getItem(HANDLED_KEY))||[] }catch(e){ return [] } }
