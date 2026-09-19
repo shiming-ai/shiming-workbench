@@ -226,14 +226,18 @@ function getCloudCfg(){
 function saveCloudCfg(cfg){
   localStorage.setItem('xhs_seller_cloud', JSON.stringify(cfg));
 }
-function cloudApiUrl(p){ const cfg=getCloudCfg(); return cfg&&cfg.api ? cfg.api.replace(/\/$/,'')+p : ''; }
+function cloudApiUrl(p){ const cfg=getCloudCfg(); return cfg&&cfg.api ? cfg.api.replace(/\/$/,'').replace(/\/api$/,'')+p : ''; }
 async function cloudReq(p, payload, withSecret, forceGet){
   const cfg = getCloudCfg();
   if(!cfg || !cfg.api) return {ok:false, reason:'未配置云端'};
   // V6.39 修复：GET（/status /api/customers）服务端只认 URL 参数密钥 → GET 时把 secret 拼进 URL；
   // POST（/issue /revoke 等）服务端读 body → secret 放 body。此前 GET 不带密钥导致后台拉不到客户列表。
   const isGet = !!forceGet || p === '/status';
-  let url = withP(cfg.api.replace(/\/$/,'') + p);
+  /* V6.44 修复：配置里的 api 有时带 /api 后缀（如 cf-cloud-sync.netlify.app/api），
+     而这里的 p 已经是 '/api/customers' 这种带前缀路径，直接拼会变成 /api/api/customers
+     （实测 404）。统一去掉 cfg.api 尾部的 /api 再拼，两种配置都能正确工作。 */
+  const base = cfg.api.replace(/\/$/,'').replace(/\/api$/,'');
+  let url = withP(base + p);
   const body = {...(payload||{})};
   if(withSecret && cfg.secret){
     if(isGet) url += (url.indexOf('?') >= 0 ? '&' : '?') + 'secret=' + encodeURIComponent(cfg.secret);
