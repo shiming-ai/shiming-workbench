@@ -5258,7 +5258,10 @@ function delDelivery(i) {
 }
 
 // ========== 案例自动沉淀（接单交付 → 公开案例广场） ==========
-const DEMO_CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+/* V6.44 修复：原用的第三方匿名存储服务已整体下线（连主站都 404），
+   导致案例沉淀一直静默失败。现改接自建后端：读取走公开只读，
+   提交走同域 POST，后端负责落库与去重。 */
+const DEMO_CLOUD_URL = 'https://cf-cloud-sync.netlify.app/api/leads';
 function promptGenerateCase(d) {
     const name = d.name || d.client || '未命名项目';
     if (!confirm('🎬 项目"' + name + '" 已交付！\n\n是否生成对外案例（公开案例广场可展示）？')) return;
@@ -5279,36 +5282,58 @@ function promptGenerateCase(d) {
     const cases = JSON.parse(localStorage.getItem('cf_demo_cases') || '[]');
     cases.unshift(caseItem);
     localStorage.setItem('cf_demo_cases', JSON.stringify(cases));
-    // 同步到云端（jsonblob），公开案例广场可拉取
+    // 同步到云端（自建后端），公开案例广场可拉取
     syncCaseToCloud(caseItem);
     toast('✅ 案例已生成 → 公开案例广场已同步');
 }
 function syncCaseToCloud(caseItem) {
-    fetch(DEMO_CLOUD_URL).then(r=>r.json()).then(cloud=>{
-        if (!cloud.demo_cases) cloud.demo_cases = [];
-        // 去重：同title+time不重复
-        const exists = cloud.demo_cases.some(x => x.title===caseItem.title && x.time===caseItem.time);
-        if (exists) { toast('☁️ 案例已存在云端，无需重复同步'); return Promise.resolve(); }
-        cloud.demo_cases.unshift(caseItem);
-        return fetch(DEMO_CLOUD_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud)});
-    }).then(r=>{
-        if (r && r.ok) toast('☁️ 案例已同步到云端 → 客户可看');
-    }).catch(()=>toast('⚠️ 云端同步失败，本地已保存'));
+    /* V6.44：改造为「双通道自适应」提交案例。
+       通道 A：POST /case      —— 后端已支持时优先使用；
+       通道 B：POST /leads     —— 后端版本较旧（/case 未上线）时自动降级。
+       先查重，再提交；落库与去重由后端负责。 */
+    return fetch(DEMO_CLOUD_URL, {cache:'no-store'})
+      .then(r=>r.json())
+      .then(cloud=>{
+        const arr = cloud.demo_cases || [];
+        const exists = arr.some(x => x.title===caseItem.title && x.time===caseItem.time);
+        if (exists) { toast('☁️ 案例已存在云端，无需重复同步'); return null; }
+        return postCase(caseItem);
+      })
+      .then(j=>{
+        if (!j) return;
+        if (j.ok) toast('☁️ 案例已同步到云端 → 客户可看');
+        else toast('⚠️ 云端同步失败：' + (j.reason || '未知原因'));
+      })
+      .catch(()=>toast('⚠️ 云端同步失败，本地已保存'));
+}
+/* 单条案例提交：自动选择可用通道 */
+function postCase(caseItem) {
+    const CASE_URL = DEMO_CLOUD_URL.replace(/\/leads$/, '/case');
+    return fetch(CASE_URL, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ case: caseItem })
+    }).then(r=>r.json()).catch(()=>({ok:false}))
+      .then(j=>{
+        // /case 未上线时后端会回「未知接口」或 401，此时降级走 /leads
+        if (j && j.ok) return j;
+        return fetch(DEMO_CLOUD_URL, {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ demo_case: caseItem })
+        }).then(r=>r.json()).catch(()=>({ok:false, reason:'网络异常'}));
+      });
 }
 // 手动同步所有本地案例到云端
 function syncAllLocalCasesToCloud() {
     const cases = JSON.parse(localStorage.getItem('cf_demo_cases') || '[]');
     if (!cases.length) return toast('本地暂无案例');
     if (!confirm('将 ' + cases.length + ' 条本地案例同步到云端？')) return;
-    fetch(DEMO_CLOUD_URL).then(r=>r.json()).then(cloud=>{
-        if (!cloud.demo_cases) cloud.demo_cases = [];
-        cases.forEach(c => {
-            if (!cloud.demo_cases.some(x => x.title===c.title && x.time===c.time)) {
-                cloud.demo_cases.unshift(c);
-            }
-        });
-        return fetch(DEMO_CLOUD_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud)});
-    }).then(r=>{ if (r && r.ok) toast('☁️ 已批量同步'); }).catch(()=>toast('同步失败'));
+    /* V6.44：逐条提交，替代原先的整包回写（同样走双通道自适应） */
+    Promise.all(cases.map(c => postCase(c)))
+      .then(rs=>{
+        const ok = rs.filter(r=>r && r.ok).length;
+        toast('☁️ 已同步 ' + ok + '/' + cases.length + ' 条案例');
+      })
+      .catch(()=>toast('同步失败'));
 }
 
 function copyDeliveryInfo(i) {
