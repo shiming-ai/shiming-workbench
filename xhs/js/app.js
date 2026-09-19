@@ -3223,7 +3223,17 @@ function renderAnaOverview(){
     ${ (window.echarts && days.length>=2) ? '' : '<div class="line-legend"><span class="lg"><i style="background:var(--text)"></i>曝光</span><span class="lg"><i style="background:var(--blue)"></i>互动</span><span class="lg"><i style="background:var(--green)"></i>涨粉</span></div>' }
   </div>`;
   // V6.48 GitHub 开源 ECharts：专业交互式图表（悬浮看值/缩放/平滑）
+  // V6.44 性能优化：echarts 改为懒加载（首屏省 960KB）。
+  //   未加载时本函数已用内置 SVG 折线图降级渲染，体验不受影响；
+  //   加载完成后自动重绘一次，升级为交互式图表。
   if(window.echarts && $('#anaEcChart')){ initAnaEChart(days); }
+  else if(typeof loadECharts === 'function' && !window.__echartsLoading){
+    // 说明：此时图表区显示的是内置 SVG 折线图（降级方案），功能完整可用。
+    // 后台静默加载 echarts，加载完成后若仍停留在数据分析页则自动重绘为交互式图表。
+    loadECharts(function(){
+      if(currentPage === 'ana') renderAnaOverview();
+    });
+  }
 }
 function initAnaEChart(days){
   const el = $('#anaEcChart'); if(!el) return;
