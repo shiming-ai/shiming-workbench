@@ -81,7 +81,10 @@
 <div id="toast"></div>
 <script src="app.js"></script>
 <script>
-const CLOUD_URL = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+/* V6.44 修复：原用的 jsonblob.com 免费存储已整体下线（全站 404）。
+   后果不只是控制台报错——「发布需求」其实只写进了浏览器本地、跨设备完全看不到，
+   提示语却仍显示「已同步云端」。现改接自建后端，接单大厅重新真正可用。 */
+const CLOUD_URL = 'https://cf-cloud-sync.netlify.app/api/leads';
 const MY_KEY = 'cf_my_grabs';
 const LS_KEY = 'cf_orders_v1';
 
@@ -190,13 +193,16 @@ function publishReq(){
     const desc = prompt('需求描述：', '需要一个小红书运营AI工作台');
     const price = prompt('预算（元，可填范围）：', '3000-5000');
     const req = { _id: Date.now(), type:'lead', name, desc, price, time: new Date().toLocaleString('zh-CN') };
-    // 写云端
-    fetch(CLOUD_URL).then(r=>r.json()).then(cloud=>{
-        if (!cloud.leads) cloud.leads = [];
-        cloud.leads.push(req);
-        return fetch(CLOUD_URL, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud) });
-    }).then(()=>{ toast('✅ 需求已发布，同步到云端后台'); renderMarket(); })
-    .catch(()=>{ toast('✅ 需求已发布（本地）'); });
+    // 写云端（V6.44：改走自建后端，POST 单条 lead）
+    fetch(CLOUD_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+                       body: JSON.stringify({ lead: req }) })
+      .then(r=>r.json())
+      .then(j=>{
+        if (j && j.ok) { toast('✅ 需求已发布，同步到云端后台'); }
+        else { toast('✅ 需求已发布（本地）：' + ((j && j.reason) || '云端暂不可用')); }
+        renderMarket();
+      })
+      .catch(()=>{ toast('✅ 需求已发布（本地）'); renderMarket(); });
 }
 function switchOTab(t) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
