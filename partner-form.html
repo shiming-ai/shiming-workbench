@@ -725,7 +725,7 @@ function submitForm() {
     // ===== 云同步双通道 =====
     // 通道A: Formspree 邮件通知（填 endpoint 后启用）
     const FORMSPREE_ENDPOINT = 'https://formsubmit.co/1109028348@qq.com'; // ✅ 已激活
-    // 通道B: jsonblob 云存储（量大版-自动进后台）
+    // 通道B: 自建云存储（量大版-自动进后台）
     // 通道C: Supabase 云数据库（预留，以后可加）
     const SUPABASE_URL = '';
     const SUPABASE_KEY = '';
@@ -737,18 +737,17 @@ function submitForm() {
             body: JSON.stringify(data)
         }).catch(e => console.error('Formspree失败:', e));
     }
-    // jsonblob 云端写入（量大版核心：每条登记自动存云端，后台自动显示）
+    /* 云端写入（核心：每条登记自动存云端，卖家后台自动显示）。
+       V6.44：原为 GET 全量 + PUT 整包回写，依赖的三方存储已下线（全站 404），
+       登记实际只留在本机、跨设备看不到。现改为 POST 单条，互不覆盖。 */
     try {
-        fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c')
-            .then(r => r.json()).then(cloud => {
-                if (!cloud.partners) cloud.partners = [];
-                cloud.partners.push({ ...data, _id: Date.now() });
-                return fetch('https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c', {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(cloud)
-                });
-            }).catch(e => console.error('jsonblob写入失败:', e));
+        fetch('https://cf-cloud-sync.netlify.app/api/leads', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ partner: Object.assign({}, data, { _id: Date.now() }) })
+        }).then(r => r.json()).then(j => {
+            if (!j || !j.ok) console.error('云端登记失败:', j && j.reason);
+        }).catch(e => console.error('云端登记失败:', e));
     } catch(e) {}
     if (SUPABASE_URL && SUPABASE_KEY) {
         fetch(SUPABASE_URL + '/rest/v1/partner_regs', {
