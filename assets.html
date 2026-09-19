@@ -118,7 +118,7 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
 <div class="toast" id="toast"></div>
 
 <script>
-const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const CLOUD = 'https://cf-cloud-sync.netlify.app/api/leads';
 const LS_KEY = 'cf_assets';
 const $ = id => document.getElementById(id);
 function load(k,d){ try{ return JSON.parse(localStorage.getItem(k))||d }catch(e){ return d } }
@@ -180,11 +180,11 @@ function shelfAsset(id){
     const list = load(LS_KEY, []); const a = list.find(x=>x.id===id); if(!a) return;
     if (!a.pack) { packAsset(id); const na = load(LS_KEY, []).find(x=>x.id===id); a.pack = na.pack; }
     const item = JSON.parse(a.pack); item.status = 'on_shelf'; item.shelf_time = new Date().toISOString().slice(0,10);
-    fetch(CLOUD).then(r=>r.json()).then(c=>{
-        c.products = c.products || [];
-        if (!c.products.find(p=>p.id===a.id)) c.products.unshift(item);
-        return fetch(CLOUD, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(c) });
-    }).then(()=>{
+    /* V6.44：原为先拉全量再整包回写（依赖已下线的三方存储）。
+       现改为 POST 单条上架，避免「读-改-写」竞态覆盖他人数据。 */
+    fetch(CLOUD, { method:'POST', headers:{'Content-Type':'application/json'},
+                   body: JSON.stringify({ asset: item }) })
+    .then(r=>r.json()).then(()=>{
         a.shelf = true; a.onShelf = true; a.shelfTime = item.shelf_time; save(LS_KEY, list);
         renderAssets(); loadShelf(); toast('🛍️ 已上架云端市集！');
     }).catch(()=>toast('⚠️ 云端暂不可用，稍后重试'));
