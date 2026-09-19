@@ -316,15 +316,43 @@ function renderCloudStatus(){
   const secIn = document.getElementById('cloudSecret');
   if(cfg && cfg.api){ if(apiIn) apiIn.value = cfg.api; if(secIn) secIn.value = cfg.secret; }
   const tip = document.getElementById('cloudTip');
+  try{ const pd=getPending().length; if(tip && pd){ tip.innerHTML += '<br>⏳ 有 '+pd+' 条待补传云端，云端恢复后会自动同步。'; } }catch(e){}
+  if(cfg && cfg.api){ setTimeout(function(){ flushPending(); }, 1500); }
   if(tip) tip.innerHTML = cfg && cfg.api
     ? '✅ <b>云端已自动开启</b>：激活码云端登记 + 停用即时生效 + 使用时长统计已接通。'
     : '保存后，新生成的客户将自动登记到云端。';
 }
+/* 云端不可写时把登记请求排队，恢复后自动补传 —— 保证任何时候都能开新客户 */
+const PENDING_KEY='xhs_cloud_pending';
+let _lastCloudIssueErr='';
+function getPending(){ try{ const a=JSON.parse(localStorage.getItem(PENDING_KEY)||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function setPending(a){ try{ localStorage.setItem(PENDING_KEY, JSON.stringify(a)); }catch(e){} }
+function addPending(p){ const a=getPending(); if(!a.some(function(x){ return x && x.code===p.code; })){ a.push(p); setPending(a); } }
+async function flushPending(){
+  const a=getPending();
+  if(!a || !a.length) return 0;
+  if(!getCloudCfg()) return 0;
+  let done=0;
+  for(const p of a){
+    let r=null;
+    try{ r = await cloudReq('/issue', p, true); }catch(e){ break; }
+    if(r && (r.ok || (r.reason && r.reason.indexOf('已存在')>=0))){ done++; continue; }
+    break;
+  }
+  if(done){ setPending(getPending().slice(done)); try{ renderCloudStatus(); }catch(e){} }
+  return done;
+}
 async function issueToCloud(c){
+  _lastCloudIssueErr='';
   if(!getCloudCfg()) return true;
-  const r = await cloudReq('/issue', {code:c.code, uid:c.uid, expireAt:c.expireAt, plan:c.plan}, true);
-  if(!r.ok && r.reason==='激活码已存在，请勿重复登记') return true;
-  return r.ok;
+  const payload={code:c.code, uid:c.uid, expireAt:c.expireAt, plan:c.plan};
+  let r=null;
+  try{ r = await cloudReq('/issue', payload, true); }catch(e){ r={ok:false, reason:'网络异常'}; }
+  if(r && r.ok) return true;
+  if(r && r.reason==='激活码已存在，请勿重复登记') return true;
+  addPending(payload);
+  _lastCloudIssueErr=(r && r.reason)?r.reason:'未知原因';
+  return true; /* 不阻断开客户：本机已保存，云端恢复后自动补传 */
 }
 async function revokeInCloud(c){
   if(!getCloudCfg()) return;
@@ -690,12 +718,12 @@ async function addCustomer(){
   const link = buildCustomerLink(uid);
   customers.push({id:uid, name, plan, uid, expireAt, code, link, createdAt:fmtDate(new Date()), refunded:false});
   // 云端登记（配置后）
-  const okCloud = await issueToCloud(customers[customers.length-1]);
+  await issueToCloud(customers[customers.length-1]);
   save();
   document.getElementById('cName').value='';
   render();
-  if(okCloud) copyDeliver(uid);
-  else alert('⚠️ 云端登记失败，请检查云端防护配置');
+  copyDeliver(uid);
+  if(_lastCloudIssueErr){ try{ Toast('⚠️ 客户已开通并保存到本机；云端登记暂未成功（'+_lastCloudIssueErr+'），恢复后会自动补传'); }catch(e){} }
 }
 
 function copyDeliver(uid){
