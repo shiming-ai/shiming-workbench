@@ -295,7 +295,7 @@ function showMyPurchases(){
 document.getElementById('searchInput').addEventListener('input', e => { searchKw = e.target.value; renderList(); });
 
 /* 云端自研资产：从资产沉淀库上架的 products 动态渲染 */
-/* V6.44 修复：jsonblob.com 已下线，改接自建后端 */
+/* V6.44 修复：原三方存储已下线，改接自建后端 */
 const CLOUD_URL = 'https://cf-cloud-sync.netlify.app/api/leads';
 function loadCloudProducts(){
     const box = document.getElementById('cloudProducts');
