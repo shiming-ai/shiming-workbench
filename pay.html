@@ -341,7 +341,7 @@ body::before {
 
 <script>
 /* ===== 常量 ===== */
-const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const CLOUD = 'https://cf-cloud-sync.netlify.app/api/leads';
 const LS_QR = 'cf_pay_qr';
 const LS_ORDERS = 'cf_pay_orders';
 const LS_SEL = 'cf_pay_sel';
@@ -469,13 +469,22 @@ function confirmPaid(id){
     if (!o) return;
     o.receipt = receipt; o.pay_time = today(); o.pay_status = 'paid';
     save(LS_ORDERS, orders); renderOrders();
-    /* 云端入库：orders + leads（后台可见） */
-    fetch(CLOUD).then(r=>r.json()).then(cloud=>{
-        cloud.orders = cloud.orders || []; cloud.orders.unshift(o);
-        cloud.leads = cloud.leads || [];
-        cloud.leads.unshift({ _id:'ord_'+o._id, name:'[已付款] '+o.sku_name, desc:'客户：'+o.name+' · 微信：'+o.wechat+(o.note?' · 备注：'+o.note:''), price:o.price, time:o.time, source:'pay' });
-        return fetch(CLOUD, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cloud) });
-    }).then(()=>toast('✅ 订单已入库（云端+后台可见）')).catch(()=>toast('⚠️ 云端暂不可用，订单已存本机'));
+    /* 云端入库：orders + leads（后台可见）。
+       V6.44：原为先拉全量再整包回写（依赖已下线的三方存储，且多端并发会互相覆盖）。
+       现改为两条 POST：订单进 orders 板，同时生成一条线索进 leads 板。 */
+    const postBoard = (payload) => fetch(CLOUD, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+    }).then(r=>r.json());
+    Promise.all([
+        postBoard({ order: o }),
+        postBoard({ lead: { _id:'ord_'+o._id, name:'[已付款] '+o.sku_name,
+            desc:'客户：'+o.name+' · 微信：'+o.wechat+(o.note?' · 备注：'+o.note:''),
+            price:o.price, time:o.time, source:'pay' } })
+    ]).then(rs=>{
+        if (rs.every(r=>r && r.ok)) toast('✅ 订单已入库（云端+后台可见）');
+        else toast('⚠️ 云端写入不完整，订单已存本机');
+    }).catch(()=>toast('⚠️ 云端暂不可用，订单已存本机'));
     /* 跨板块已购标记：让 store/mall/member 能显示"已购买" */
     const qs = new URLSearchParams(location.search);
     const bkey = qs.get('bkey');
