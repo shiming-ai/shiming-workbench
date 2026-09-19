@@ -331,7 +331,30 @@
   <script src="vendor/fuse.min.js"></script>
   <script src="vendor/html2canvas.min.js"></script>
   <script src="vendor/qrcode.min.js"></script>
-  <script src="vendor/echarts.min.js"></script>
+  <!-- V6.44 性能优化：echarts 有 960KB，是首屏最大的单文件。
+       它只用于「数据分析」页的交互式图表，且 app.js 已内置 SVG 折线图降级方案
+       （window.echarts 不存在时自动用 lineChartSVG）。
+       因此改为按需懒加载：首屏不下载，客户真正打开数据分析页时再异步加载，
+       加载完成自动重绘一次图表。首屏体积从 ~1.2MB 降到 ~300KB。 -->
+  <script>
+  (function(){
+    window.__echartsLoading = false;
+    window.loadECharts = function(cb){
+      if(window.echarts){ if(cb) cb(); return Promise.resolve(true); }
+      if(window.__echartsPromise) return window.__echartsPromise.then(function(){ if(cb) cb(); return true; });
+      window.__echartsLoading = true;
+      window.__echartsPromise = new Promise(function(resolve){
+        var sc = document.createElement('script');
+        sc.src = 'vendor/echarts.min.js';
+        sc.onload = function(){ window.__echartsLoading = false; resolve(true); };
+        sc.onerror = function(){ window.__echartsLoading = false; resolve(false); };
+        document.head.appendChild(sc);
+      });
+      window.__echartsPromise.then(function(){ if(cb) cb(); });
+      return window.__echartsPromise;
+    };
+  })();
+  </script>
   <script src="js/data.js"></script>
 <script src="js/license.js"></script>
 <script src="js/app.js"></script>
