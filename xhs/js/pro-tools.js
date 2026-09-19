@@ -1286,9 +1286,12 @@ function getDailyReport(){
 }
 async function syncDailyReport(){
   try{
-    const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-    if(!cfg || !cfg.api) return;
-    const r = await fetch(cfg.api + '/dailyreport', { cache:'no-store' });
+    /* V6.44 修复：原用 getCloudConfig().api —— 在 GitHub Pages 上它会兜底返回静态站
+       地址（shiming-ai.github.io），导致 /dailyreport 打到静态站变 404。
+       改为优先用 app.js 里的 cfCloudBase()（只认真正的后端地址），拿不到就静默跳过。 */
+    const base = (typeof cfCloudBase === 'function') ? cfCloudBase() : '';
+    if(!base) return;
+    const r = await fetch(base + '/api/dailyreport', { cache:'no-store' });
     const j = await r.json();
     if(j.ok && j.data && j.data.body){
       const prev = getDailyReport();
