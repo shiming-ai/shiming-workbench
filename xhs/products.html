@@ -200,7 +200,8 @@ function render(data){
     return;
   }
   try{
-    const res = await fetch(cfg.api.replace(/\/$/,'') + '/api/products?secret=' + encodeURIComponent(cfg.secret));
+    const base = cfg.api.replace(/\/$/,'').replace(/\/api$/,'');
+    const res = await fetch(base + '/api/products?secret=' + encodeURIComponent(cfg.secret));
     const j = await res.json();
     if(j.ok && Array.isArray(j.data)) render(j.data);
     else document.getElementById('gridBox').innerHTML = '<div class="empty">加载失败：' + (j.reason || '返回异常') + '</div>';
