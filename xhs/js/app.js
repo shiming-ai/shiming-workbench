@@ -1107,9 +1107,8 @@ function updateBadges(){
 async function checkAiReady(){
   try{
     if(LIC_STATE.status !== 'activated') return;
-    const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-    if(!cfg || !cfg.api) return;
-    const j = await (await fetch(cfg.api.replace(/\/$/,'') + '/ai-ready', { cache:'no-store' })).json();
+    const base = cfCloudBase(); if(!base) return;
+    const j = await (await fetch(base + '/api/ai-ready', { cache:'no-store' })).json();
     const el = document.getElementById('aiReady');
     if(el){
       if(j && j.ok && j.ready){
@@ -1645,9 +1644,8 @@ function getOpportunity(){
 }
 async function syncOpportunity(){
   try{
-    const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-    if(!cfg || !cfg.api) return;
-    const r = await fetch(cfg.api + '/opportunity', { cache:'no-store' });
+    const base = cfCloudBase(); if(!base) return;
+    const r = await fetch(base + '/api/opportunity', { cache:'no-store' });
     const j = await r.json();
     if(j.ok && j.data && j.data.list && j.data.list.length){
       const prev = getOpportunity();
@@ -1708,9 +1706,8 @@ function showOpportunity(){
 }
 async function syncHotDaily(){
   try{
-    const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-    if(!cfg || !cfg.api) return;
-    const r = await fetch(cfg.api + '/hotdaily', { cache:'no-store' });
+    const base = cfCloudBase(); if(!base) return;
+    const r = await fetch(base + '/api/hotdaily', { cache:'no-store' });
     const j = await r.json();
     if(j.ok && j.data && j.data.list && j.data.list.length){
       const prev = getHotDaily();
@@ -2327,14 +2324,30 @@ function todayAnchor(){
   return { tag:'📅 今年第 '+dayOfYear+' 天', sub:'今年已过 '+pass+'%，别让账号也停下来' };
 }
 /* ② 每日锦囊（服务端每天不同；本地兜底） */
+/* ===== 云端基址解析（V6.44 修复） =====
+   旧代码取址函数在 GitHub Pages 上会兜底返回 location.origin（= shiming-ai.github.io），
+   导致 /dailytip /hotdaily /opportunity 等请求打到静态站点变成 404/405。
+   这里统一改为优先使用真正的后端地址；拿不到地址就静默跳过，不发无效请求。 */
+function cfCloudBase(){
+  try{
+    var manual = localStorage.getItem('xhs_seller_cloud');
+    if(manual){ var c=JSON.parse(manual); if(c && c.api && /^https?:\/\//i.test(c.api)) return c.api.replace(/\/$/,'').replace(/\/api$/,''); }
+  }catch(e){}
+  try{
+    var own = JSON.parse(localStorage.getItem('xhs_cloud_api')||'null');
+    if(own && own.api && /cf-cloud-sync|netlify/i.test(own.api)) return own.api.replace(/\/$/,'').replace(/\/api$/,'');
+  }catch(e){}
+  try{ var q=new URLSearchParams(location.search).get('cloud'); if(q && /^https?:\/\//i.test(q)) return q.replace(/\/$/,'').replace(/\/api$/,''); }catch(e){}
+  try{ if(/cf-cloud-sync|netlify/i.test(location.origin)) return location.origin.replace(/\/$/,'').replace(/\/api$/,''); }catch(e){}
+  return (typeof CF_CLOUD_API !== 'undefined' && CF_CLOUD_API) ? String(CF_CLOUD_API).replace(/\/$/,'').replace(/\/api$/,'') : '';
+}
 function getDailyTip(){
   try{ return JSON.parse(localStorage.getItem('xhs_dailytip')||'null'); }catch(e){ return null; }
 }
 async function syncDailyTip(){
   try{
-    const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-    if(!cfg || !cfg.api) return;
-    const r = await fetch(cfg.api + '/dailytip', { cache:'no-store' });
+    const base = cfCloudBase(); if(!base) return;
+    const r = await fetch(base + '/api/dailytip', { cache:'no-store' });
     const j = await r.json();
     if(j.ok && j.data && j.data.tip){
       const prev = getDailyTip();
@@ -4794,12 +4807,12 @@ function doXhLinkDetect(){
   const box = $('#xhLinkResult');
   if(!box) return;
   box.innerHTML = '<div class="loading">正在识别账号…（需要几秒，小红书偶尔会慢）</div>';
-  const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-  if(!cfg || !cfg.api){
+  const base = cfCloudBase(); if(!base){
     box.innerHTML = '<div style="padding:10px 12px;background:var(--soft-red);border:1px solid rgba(194,59,82,.25);border-radius:8px;font-size:12px;color:var(--red)">识别服务暂不可用，请稍后再试。</div>';
     return;
   }
-  fetch(cfg.api + '/xh-proxy?url=' + encodeURIComponent(link), { cache:'no-store' })
+  if(!base){ box.innerHTML = '<div style="padding:10px 12px;background:var(--soft-red);border:1px solid rgba(194,59,82,.25);border-radius:8px;font-size:12px;color:var(--red)">识别服务未配置云端，暂不可用。</div>'; return; }
+      fetch(base + '/xh-proxy?url=' + encodeURIComponent(link), { cache:'no-store' })
     .then(r=>r.json())
     .then(j=>{
       if(!j.ok){ box.innerHTML = '<div style="padding:10px 12px;background:var(--soft-red);border:1px solid rgba(194,59,82,.25);border-radius:8px;font-size:12px;color:var(--red);line-height:1.7">⚠️ ' + esc(j.reason || '识别失败') + '</div>'; return; }
@@ -5781,9 +5794,8 @@ function openUpdateLog(){
 let __verBannerShown = false;
 async function checkRemoteVersion(){
   try{
-    const cfg = (typeof getCloudConfig==='function') ? getCloudConfig() : null;
-    if(!cfg || !cfg.api) return;
-    const r = await fetch(cfg.api.replace(/\/$/,'') + '/api/version', { cache:'no-store' });
+    const base = cfCloudBase(); if(!base) return;
+    const r = await fetch(base + '/api/version', { cache:'no-store' });
     const j = await r.json();
     if(!j.ok || !j.version) return;
     // V6.43 去重：该版本看过 / 今天已提示过 → 不再提示（同一天多次发版客户也只看到一次横幅）
