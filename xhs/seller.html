@@ -262,7 +262,7 @@ async function testCloud(){
   if(!api){ msg.innerHTML='<span style="color:var(--red)">请先填写 API 地址</span>'; return; }
   msg.innerHTML = '测试中…';
   try{
-    const res = await fetch(api.replace(/\/$/,'')+'/ping');
+    const res = await fetch(api.replace(/\/$/,'').replace(/\/api$/,'')+'/api/ping');
     const j = await res.json();
     if(j.ok){ msg.innerHTML='<span style="color:var(--green)">✓ 连接成功：'+j.name+'</span>'; }
     else msg.innerHTML='<span style="color:var(--red)">连接失败</span>';
@@ -486,7 +486,7 @@ async function testAi(){
   if(!cfg){ msg.innerHTML='<span style="color:var(--red)">请先完成云端防护配置</span>'; return; }
   msg.innerHTML = '测试中…';
   try{
-    const st = await (await fetch(withP(cfg.api.replace(/\/$/,'')+'/ai-status?secret='+cfg.secret))).json();
+    const st = await (await fetch(withP(cfg.api.replace(/\/$/,'').replace(/\/api$/,'')+'/api/ai-status?secret='+cfg.secret))).json();
     msg.innerHTML = (st.ok && st.configured)
       ? '<span style="color:var(--green)">✓ AI 服务已配置可用（模型 '+st.model+'）</span>'
       : '<span style="color:var(--red)">AI 尚未配置，请粘贴 DeepSeek API Key 后保存</span>';
@@ -498,7 +498,7 @@ async function refreshAiStatus(){
   if(!el) return;
   if(!cfg){ el.textContent='（需先配置云端）'; return; }
   try{
-    const st = await (await fetch(withP(cfg.api.replace(/\/$/,'')+'/ai-status?secret='+cfg.secret))).json();
+    const st = await (await fetch(withP(cfg.api.replace(/\/$/,'').replace(/\/api$/,'')+'/api/ai-status?secret='+cfg.secret))).json();
     el.textContent = st.ok && st.configured ? '· 已启用' : '· 未配置';
   }catch(e){ el.textContent=''; }
 }
@@ -622,7 +622,7 @@ async function healthCheck(){
   try{
     const cfg = getCloudCfg();
     if(!cfg || !cfg.api){ dot.style.background='#aaa'; txt.textContent='未配置云端'; return; }
-    const ping = await fetch(cfg.api.replace(/\/$/,'') + '/ping', {cache:'no-store'});
+    const ping = await fetch(cfg.api.replace(/\/$/,'').replace(/\/api$/,'') + '/api/ping', {cache:'no-store'});
     if(!ping.ok) throw new Error('ping fail');
     const st = await cloudReq('/status', {}, true);
     const n = (st && st.ok && Array.isArray(st.data)) ? st.data.length : '?';
