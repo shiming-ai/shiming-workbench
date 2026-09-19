@@ -288,7 +288,7 @@
         document.getElementById('st3').textContent = '9';
         document.getElementById('st4').textContent = '16';
         /* 实时云端数据：线索+成交（数据诚实，读不到回退本地估算）
-           V6.44：原用的 jsonblob.com 第三方免费存储已整体下线（全站 404），
+           V6.44：原用的第三方免费存储已整体下线（全站 404），
            继续请求只会在控制台刷 404 报错、对功能无任何帮助（本就有 catch 降级）。
            改为直接用本地估算，行为与「读不到云端」时完全一致，页面表现不变。 */
         document.getElementById('st1').textContent = (totalViews/100).toFixed(0)+'K+';
