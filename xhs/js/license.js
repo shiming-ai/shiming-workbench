@@ -606,7 +606,10 @@ async function aiAsk(prompt, system, model, onChunk){
     }
     const cfg = getCloudConfig();
     // demo 未激活时可能没有云端配置：回退到当前服务源（同源部署必可达）
-    const apiBase = (cfg && cfg.api) ? cfg.api.replace(/\/$/,'') : (location.origin || '');
+    /* V6.44 修复：原先缺配置时回退 location.origin，在 GitHub Pages 上会打到静态站
+       （静态站没有后端，实测 AI 请求失败）。改为回退内置后端 DEFAULT_API。 */
+    const apiBase = (cfg && cfg.api) ? cfg.api.replace(/\/$/,'')
+                    : String(DEFAULT_API || '').replace(/\/api$/, '').replace(/\/$/, '');
     if(!apiBase) return {ok:false, msg:'AI 服务未就绪，请联系卖家开启'};
     const userKey = isDemo ? '' : getLocalAiKey();
     // 客户端超时 35s，防止服务端 hang 死导致"AI 创作中..."卡死
