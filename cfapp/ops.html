@@ -111,11 +111,11 @@ body { background:var(--bg); color:var(--text); min-height:100vh; font-family:-a
         </div>
     </div>
 
-    <div class="foot">Crazy Friday · 经营看板（对内）· 数据源：jsonblob 云端 · 页面仅本人使用<br>升级路线：数据源将切换 Supabase 实时库 · 10 秒自动刷新</div>
+    <div class="foot">Crazy Friday · 经营看板（对内）· 数据源：自建云端 · 页面仅本人使用<br>升级路线：数据源将切换 Supabase 实时库 · 10 秒自动刷新</div>
 </div>
 
 <script>
-const CLOUD = 'https://jsonblob.com/api/jsonBlob/019ff242-81a8-7e0f-b2cf-3a5e938a6a6c';
+const CLOUD = 'https://cf-cloud-sync.netlify.app/api/leads';
 const $ = id => document.getElementById(id);
 function goBack(){ history.length>1 ? history.back() : location.href='admin.html'; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
