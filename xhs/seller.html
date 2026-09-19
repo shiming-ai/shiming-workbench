@@ -237,7 +237,11 @@ async function cloudReq(p, payload, withSecret, forceGet){
      而这里的 p 已经是 '/api/customers' 这种带前缀路径，直接拼会变成 /api/api/customers
      （实测 404）。统一去掉 cfg.api 尾部的 /api 再拼，两种配置都能正确工作。 */
   const base = cfg.api.replace(/\/$/,'').replace(/\/api$/,'');
-  let url = withP(base + p);
+  /* V6.44 修复：调用方混用了两种写法（'/status' 与 '/api/customers'）。
+     后端路由统一在 /api/ 下，这里补全前缀，两种写法都能正确命中。
+     此前 '/status' '/usage' 会打到 https://后端/status（无路由）→ 后台拉不到数据。 */
+  let path = p.startsWith('/api/') ? p : (p === '/api' ? '/api' : '/api' + p);
+  let url = withP(base + path);
   const body = {...(payload||{})};
   if(withSecret && cfg.secret){
     if(isGet) url += (url.indexOf('?') >= 0 ? '&' : '?') + 'secret=' + encodeURIComponent(cfg.secret);
